@@ -1,0 +1,6 @@
+{
+  "SERVICES_BASE_URL": "http://localhost:4201/proxyapi/",
+  "SBI_BASE_URL": "http://127.0.0.1",
+  "SDK_BASE_URL": "http://localhost:9099/biosdk-service/",
+  "login": "login/"
+}
