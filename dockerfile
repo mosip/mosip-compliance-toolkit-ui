@@ -61,3 +61,6 @@ EXPOSE 8080
  #  unzip -o pre-registration-i18n-bundle.zip ; \
   # nginx ; \
    #sleep infinity
+
+CMD nginx ; \
+sleep infinity   
