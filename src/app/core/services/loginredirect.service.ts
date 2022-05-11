@@ -15,14 +15,13 @@ export class LoginRedirectService {
     const stateParam = uuid();
     this.cookie.set('state', stateParam, undefined, '/');
     console.log('returning false login redirect' + stateParam);
-    // mkurl = 'http://localhost:4201/';
     let url1 = `${this.appService.getConfig().SERVICES_BASE_URL}${
       this.appService.getConfig().login
     }` +
     btoa(url) +
     '?state=' +
     stateParam;
-    console.log(url1); 
-     window.location.href = url1;
+    //console.log(url1); 
+    window.location.href = url1;
   }
 }

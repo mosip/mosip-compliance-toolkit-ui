@@ -5,9 +5,9 @@ import { AuthguardService } from './core/services/authguard.service';
 import { HomeComponent } from './core/home/home.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'main', pathMatch: 'full'},
+  { path: '', redirectTo: 'toolkit', pathMatch: 'full'},
   {
-    path: 'main',
+    path: 'toolkit',
     component: MainLayoutComponent,
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
