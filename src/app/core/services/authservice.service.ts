@@ -15,21 +15,21 @@ export class AuthService {
 
   isAuthenticated(): Observable<boolean> {
     console.log('isAuthenticated');
-    // return this.http
-    //   .get(
-    //     `${
-    //       this.appService.getConfig().SERVICES_BASE_URL
-    //     }admin/authorize/admin/validateToken`,
-    //     { observe: 'response' }
-    //   )
-    //   .pipe(
-    //     map((res) => res.status === 200),
-    //     catchError((error) => {
-    //       console.log(error);
-    //       return of(false);
-    //     })
-    //   );
-    return of(false);
+    return this.http
+      .get(
+        `${
+          this.appService.getConfig().SERVICES_BASE_URL
+        }authorize/admin/validateToken`,
+        { observe: 'response' }
+      )
+      .pipe(
+        map((res) => res.status === 200),
+        catchError((error) => {
+          console.log(error);
+          return of(false);
+        })
+      );
+    //return of(false);
   }
 
   isLanguagesSet() {

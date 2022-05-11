@@ -22,7 +22,7 @@ export class CanDeactivateGuardService
     state: RouterStateSnapshot
   ) {
     const url: string = state.url;
-    console.log('canDeactivate: ' + url);
+    console.log('Url: ' + url);
 
     return component.canDeactivate ? component.canDeactivate() : true;
   }
