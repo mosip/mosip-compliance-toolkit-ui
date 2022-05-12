@@ -26,6 +26,8 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
+        with:
+          version: 14
 
       - name: npm install
         run: cd ${{ env.SERVICE_LOCATION }} && npm install --ignore-scripts
@@ -42,24 +44,6 @@ jobs:
         run: |
           # Strip git ref prefix from version
           echo "BRANCH_NAME=$(echo ${{ github.ref }} | sed -e 's,.*/\(.*\),\1,')" >> $GITHUB_ENV
-
-      - name: run sonar analysis
-        run: |
-          cd "./${{env.SERVICE_LOCATION}}"
-          echo "sonar.host.url=https://sonarcloud.io/
-               sonar.login=${{ secrets.SONAR_TOKEN }}
-               sonar.projectKey=mosip_compliance-toolkit-ui
-               sonar.organization=${{ secrets.ORG_KEY }}
-               sonar.sourceEncoding=UTF-8
-               sonar.sources=src
-               sonar.exclusions=**/node_modules/**
-               sonar.tests=src
-               sonar.test.inclusions=**/*.spec.ts
-               sonar.typescript.lcov.reportPaths=coverage/lcov.info" >> sonar-project.properties
-          npm install sonar-scanner && npm run sonar
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Get current date
         id: date
@@ -108,6 +92,8 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
+        with:
+          version: 14
 
       - name: npm install
         run: cd ${{ env.SERVICE_LOCATION }} && npm install --ignore-scripts
