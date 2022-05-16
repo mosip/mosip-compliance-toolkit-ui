@@ -1,0 +1,139 @@
+.mat-toolbar {
+  color: #ffffff;
+  top: 0px;
+  left: 0px;
+  width: 1920px;
+  height: 50px;
+  background: #0b6a82 0% 0% no-repeat padding-box;
+  box-shadow: 0px 2px 6px #0000000a;
+  opacity: 1;
+}
+
+.mosip-logo {
+  flex: 2;
+  margin: 6px 0 0px;
+  opacity: 1;
+  cursor: pointer !important;
+}
+
+.mosip-logo span {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.mosip-logo .mosip-text {
+  font-size: 16px;
+  opacity: 1;
+  font-family: "Roboto", sans-serif;
+}
+
+.mosip-logo img {
+  max-width: 100%;
+  max-height: 100%;
+  width: 40px;
+  height: 40px;
+}
+
+.version-txt {
+  font-size: 12px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  display: block;
+  margin-top: -15px;
+}
+
+[dir*="rtl"] .profile {
+  text-align: end !important;
+}
+
+.profile {
+  flex: 2;
+  text-align: right;
+}
+
+.profile span {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.profile img {
+  margin-top: 10px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #ffffff;
+}
+
+@media (max-width: 600px) {
+  .mosip-logo {
+    flex: 1;
+  }
+
+  .profile {
+    flex: 1;
+  }
+}
+
+#menuButton {
+  display: inline-block;
+  margin: 2px;
+  position: relative;
+  font-size: 17px !important;
+  padding: 10px 10px 10px 10px;
+}
+
+.mat-caption {
+  text-align: left;
+  color: #ffffff;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+}
+
+.menu-button {
+  background: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+.profile {
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  font-size: 10px;
+}
+
+.profile+* .cdk-overlay-pane>div.mat-menu-panel {
+  margin-top: 21px !important;
+}
+
+.mat-menu-item {
+  line-height: 40px !important;
+}
+
+.mat-menu-content:not(:empty) {
+  min-height: auto !important;
+  padding: 0 !important;
+}
+
+.mat-menu-panel {
+  min-height: auto !important;
+}
+
+.mat-menu {
+  border-radius: 0 !important;
+}
+
+:host::ng-deep .mat-menu-content {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.mat-menu-item {
+  line-height: 30px !important;
+  height: 35px !important;
+  font-size: smaller;
+  font-family: "Roboto", sans-serif;
+}

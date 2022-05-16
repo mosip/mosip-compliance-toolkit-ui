@@ -14,23 +14,30 @@ import { DataService } from './services/data-service';
 
 import { MainLayoutComponent } from './main-layout/main-layout.component';
 import { HomeComponent } from './home/home.component';
+import { HeaderComponent } from './header/header.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
+  imports: [CommonModule, MaterialModule, RouterModule, HttpClientModule],
+  declarations: [HomeComponent, MainLayoutComponent, HeaderComponent, DashboardComponent],
+  exports: [
+    HomeComponent,
+    MainLayoutComponent,
+    HeaderComponent,
     MaterialModule,
     RouterModule,
-    HttpClientModule,
   ],
-  declarations: [HomeComponent, MainLayoutComponent],
-  exports: [HomeComponent, MainLayoutComponent, MaterialModule, RouterModule],
-  providers: [DataService, AuthService, LoginRedirectService, AuthguardService,
-    CanDeactivateGuardService, 
+  providers: [
+    DataService,
+    AuthService,
+    LoginRedirectService,
+    AuthguardService,
+    CanDeactivateGuardService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
-export class CoreModule { }
+export class CoreModule {}
