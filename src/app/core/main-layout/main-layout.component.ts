@@ -12,6 +12,5 @@ export class MainLayoutComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
   }
   ngAfterViewInit() {
-    //this.sideMenuService.appDrawer = this.appDrawer;
   }
 }
