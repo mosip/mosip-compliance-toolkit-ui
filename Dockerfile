@@ -63,4 +63,4 @@ EXPOSE 8080
    #sleep infinity
 
 CMD nginx ; \
-sleep infinity   
+sleep infinity
