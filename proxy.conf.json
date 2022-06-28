@@ -1,6 +1,6 @@
 {
     "/proxyapi": {
-      "target": "http://localhost:8080/v1/toolkit/",
+      "target": "http://localhost:8099/v1/toolkit/",
       "secure": false,
       "changeOrigin": false,
       "pathRewrite": {
