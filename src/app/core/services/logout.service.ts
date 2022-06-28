@@ -26,11 +26,13 @@ export class LogoutService {
 
   logout() {
     let adminUrl = this.appService.getConfig().toolkitUiUrl;
+    window.location.href = `${this.appService.getConfig().SERVICES_BASE_URL}${this.appService.getConfig().logout}?redirecturi=`+btoa(window.location.href);
+/*
     this.http
-      .delete(
+      .get(
         `${this.appService.getConfig().SERVICES_BASE_URL}${
           this.appService.getConfig().logout
-        }`,
+        }?redirecturi=`+btoa(window.location.href),
         {
           observe: 'response',
           responseType: "json",
@@ -56,6 +58,6 @@ export class LogoutService {
         (error: HttpErrorResponse) => {
           window.alert(error.message);
         }
-      );
+      );*/
   }
 }
