@@ -17,6 +17,12 @@ export class DataService {
 
   SERVICES_BASE_URL = this.appConfigService.getConfig()['SERVICES_BASE_URL'];
 
+  getProjects() {
+    let url = `${this.SERVICES_BASE_URL}getProjects`;
+    console.log('url:' + url);
+    return this.httpClient.get(url);
+  }
+
   getTestCases(type: string) {
     let url = `${this.SERVICES_BASE_URL}getTestCases?type=${type}`;
     console.log('url:' + url);

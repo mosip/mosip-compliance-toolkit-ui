@@ -11,9 +11,9 @@ const routes: Routes = [
     path: 'toolkit',
     component: MainLayoutComponent,
     children: [
-      { path: '', redirectTo: 'home', pathMatch: 'full' },
-      { path: 'home', component: HomeComponent },
-      { path: 'dashboard', redirectTo: 'dashboard', pathMatch: 'full' },
+      // { path: '', redirectTo: 'home', pathMatch: 'full' },
+      // { path: 'home', component: HomeComponent },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
     ],  
     canActivateChild : [AuthguardService]
