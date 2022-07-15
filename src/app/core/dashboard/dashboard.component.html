@@ -27,7 +27,7 @@
     </ng-container>
     <ng-container matColumnDef="lastRunDt">
         <th mat-header-cell *matHeaderCellDef> Last Run Date </th>
-        <td mat-cell *matCellDef="let element"> {{element.lastRunDt}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.lastRunDt | date: 'short'}} </td>
     </ng-container>
     <ng-container matColumnDef="lastRunStatus">
         <th mat-header-cell *matHeaderCellDef> Last Run Status </th>
