@@ -10,6 +10,9 @@
     </button>
 </div>
 <p></p>
+<div class="spinner" *ngIf="!dataLoaded">
+    <mat-spinner diameter="50"></mat-spinner>
+</div>
 <mat-menu #appMenu="matMenu">
     <ng-template matMenuContent let-myobject="myobject">
         <button mat-menu-item (click)="editProject(myobject)">Edit</button>
@@ -24,7 +27,7 @@
     </mat-form-field>
 </p>
 <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" matSort class="dashboard-table">
+    <table mat-table [dataSource]="dataSource" matSort class="dashboard-table" *ngIf="dataLoaded">
         <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
         <ng-container matColumnDef="name">

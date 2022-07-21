@@ -12,14 +12,15 @@ import { CanDeactivateGuardService } from './services/can-deactivate-guard.servi
 import { LoginRedirectService } from './services/loginredirect.service';
 import { DataService } from './services/data-service';
 
-import { MainLayoutComponent } from './main-layout/main-layout.component';
-import { HomeComponent } from './home/home.component';
-import { HeaderComponent } from './header/header.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { MainLayoutComponent } from './components/main-layout/main-layout.component';
+import { HomeComponent } from './components/home/home.component';
+import { HeaderComponent } from './components/header/header.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ProjectComponent } from './components/project/project.component';
 
 @NgModule({
   imports: [CommonModule, MaterialModule, RouterModule, HttpClientModule],
-  declarations: [HomeComponent, MainLayoutComponent, HeaderComponent, DashboardComponent],
+  declarations: [HomeComponent, MainLayoutComponent, HeaderComponent, DashboardComponent, ProjectComponent],
   exports: [
     HomeComponent,
     MainLayoutComponent,

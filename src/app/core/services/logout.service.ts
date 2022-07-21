@@ -25,7 +25,7 @@ export class LogoutService {
   ) {}
 
   logout() {
-    let adminUrl = this.appService.getConfig().toolkitUiUrl;
+    //let adminUrl = this.appService.getConfig().toolkitUiUrl;
     window.location.href = `${this.appService.getConfig().SERVICES_BASE_URL}${this.appService.getConfig().logout}?redirecturi=`+btoa(window.location.href);
 /*
     this.http

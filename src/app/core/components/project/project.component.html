@@ -1,0 +1,110 @@
+<div class="mat-elevation-z8">
+    <div class="formContainer">
+        <form formGroup="projectForm">
+            <div class="fieldWrapper">
+                <span class="fieldLabel">
+                    <mat-label>Project Name:
+                        <span class="required-annotation">*</span>
+                    </mat-label>
+                </span>
+                <span class="fieldContainer">
+                    <mat-form-field appearance="legacy" [style.width.px]=327>
+                        <mat-label>Project Name:</mat-label>
+                        <input matInput formControlName="name" #keyboardRef #input />
+                    </mat-form-field>
+                </span>
+                <p>
+                <mat-error *ngIf="projectForm.controls['name'].hasError('required')">
+                    Project Name is <strong>required</strong>
+                </mat-error>
+            </p>
+            </div>
+            <div class="fieldWrapper">
+                <span class="fieldLabel">
+                    <mat-label>Project Type:
+                        <span class="required-annotation">*</span>
+                    </mat-label>
+                </span>
+                <span class="fieldContainer">
+                    <div [style.width.px]=327>
+                        <mat-radio-group aria-label="Select an option" formControlName="projectType" appearance="legacy"
+                            value="SDK">
+                            <mat-radio-button value="SBI">SBI</mat-radio-button>
+                            <mat-radio-button value="SDK">SDK</mat-radio-button>
+                            <mat-radio-button value="ABIS">ABIS</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </span>
+            </div>
+            <div class="fieldWrapper">
+                <span class="fieldLabel">
+                    <mat-label>URL:
+                        <span class="required-annotation">*</span>
+                    </mat-label>
+                </span>
+                <span class="fieldContainer">
+                    <mat-form-field appearance="legacy" [style.width.px]=327>
+                        <mat-label>URL:</mat-label>
+                        <input matInput formControlName="url" #keyboardRef #input />
+                    </mat-form-field>
+                </span>
+            </div>
+            <div class="fieldWrapper">
+                <span class="fieldLabel">
+                    <mat-label>Purpose:
+                        <span class="required-annotation">*</span>
+                    </mat-label>
+                </span>
+                <span class="fieldContainer">
+                    <mat-form-field appearance="legacy" [style.width.px]=327>
+                        <mat-label>Purpose:</mat-label>
+                        <mat-select formControlName="purpose" #singleSelect>
+                            <mat-option value="matcher">
+                                Matcher
+                            </mat-option>
+                            <mat-option value="quality-check">
+                                Quality Check
+                            </mat-option>
+                            <mat-option value="extract-template">
+                                Extract Template
+                            </mat-option>
+                            <mat-option value="convert-format">
+                                Convert Format
+                            </mat-option>
+                            <mat-option value="segment">
+                                Segment
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </span>
+            </div>
+            <div class="fieldWrapper">
+                <span class="fieldLabel">
+                    <mat-label>Select Test Data:
+                        <span class="required-annotation">*</span>
+                    </mat-label>
+                </span>
+                <span class="fieldContainer">
+                    <mat-form-field appearance="legacy" [style.width.px]=327>
+                        <mat-label>Select Test Data:</mat-label>
+                        <mat-select formControlName="bioTestData" #singleSelect>
+                            <mat-option value="DEFAULT">
+                                MOSIP-DEFAULT
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </span>
+            </div>
+        </form>
+    </div>
+    <div class="button-container">
+        <button mat-flat-button color="accent" (click)="showDashboard()" class="add-button">
+            <mat-icon>home</mat-icon>
+            Dashboard
+        </button>
+        <button mat-flat-button color="accent" (click)="saveProject()" class="add-button">
+            <mat-icon>add</mat-icon>
+            Add Project
+        </button>
+    </div>
+</div>

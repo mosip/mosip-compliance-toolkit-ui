@@ -1,10 +1,11 @@
 import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 
 import { AppConfigService } from 'src/app/app-config.service';
-import { UserProfileService } from '../services/user-profile.service';
-import { DataService } from '../services/data-service';
-import { LogoutService } from '../services/logout.service';
-
+import { UserProfileService } from '../../services/user-profile.service';
+import { DataService } from '../../services/data-service';
+import { LogoutService } from '../../services/logout.service';
+import { AuthService } from '../../services/authservice.service';
+import { Router } from "@angular/router";
 // import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 // import { MatDialog } from '@angular/material';
 
@@ -29,10 +30,12 @@ export class HeaderComponent implements OnInit {
     ],
   };
   constructor(
+    public authService: AuthService,
     private appConfigService: AppConfigService,
     private userProfileService: UserProfileService,
     private logoutService: LogoutService,
-    private dataService: DataService
+    private dataService: DataService,
+    private router: Router,
   ) {
     this.appVersion = appConfigService.getConfig()['version'];
   }
@@ -44,6 +47,13 @@ export class HeaderComponent implements OnInit {
       this.userName = this.userProfileService.getDisplayUserName();
     } else {
       this.userName = this.userProfileService.getUsername();
+    }
+  }
+  onLogoClick() {
+    if (this.authService.isAuthenticated()) {
+      this.router.navigateByUrl(`toolkit/dashboard`);
+    } else {
+      this.router.navigateByUrl(``);
     }
   }
 }
