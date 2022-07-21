@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DataService } from 'src/app/core/services/data-service';
 import { Subscription } from 'rxjs';
 import {MatTableDataSource} from '@angular/material/table';
+import { Router } from "@angular/router";
 
 export interface ProjectData {
   'id': string,
@@ -32,11 +33,13 @@ export class DashboardComponent implements OnInit {
     'lastRunStatus',
     'actions',
   ];
+  dataLoaded = false;
   subscriptions: Subscription[] = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private dataService: DataService
   ) {}
@@ -45,6 +48,7 @@ export class DashboardComponent implements OnInit {
     await this.getProjects();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.dataLoaded = true;
   }
 
   async getProjects() {
@@ -63,7 +67,9 @@ export class DashboardComponent implements OnInit {
     
   }
 
-  addProject() {}
+  addProject() {
+    this.router.navigateByUrl(`toolkit/project`);
+  }
 
   editProject(project: any) {
     alert('you have selected to edit: ' + project.name);

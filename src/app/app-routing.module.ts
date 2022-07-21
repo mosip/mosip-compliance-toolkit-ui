@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
-import { MainLayoutComponent } from './core/main-layout/main-layout.component';
+import { MainLayoutComponent } from './core/components/main-layout/main-layout.component';
 import { AuthguardService } from './core/services/authguard.service';
-import { HomeComponent } from './core/home/home.component';
-import { DashboardComponent } from './core/dashboard/dashboard.component';
+import { HomeComponent } from './core/components/home/home.component';
+import { DashboardComponent } from './core/components/dashboard/dashboard.component';
+import { ProjectComponent } from './core/components/project/project.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'toolkit', pathMatch: 'full'},
@@ -15,6 +16,7 @@ const routes: Routes = [
       // { path: 'home', component: HomeComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
+      { path: 'project', component: ProjectComponent },
     ],  
     canActivateChild : [AuthguardService]
   }
@@ -25,8 +27,8 @@ const routes: Routes = [
     RouterModule.forRoot(routes, {
       useHash: true,
       preloadingStrategy: PreloadAllModules,
-      enableTracing: false,
-      onSameUrlNavigation: 'reload'
+      onSameUrlNavigation: 'reload',
+      enableTracing: false
     })
   ],
   exports: [RouterModule]
