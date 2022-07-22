@@ -14,7 +14,6 @@ export class AuthService {
   ) {}
 
   isAuthenticated(): Observable<boolean> {
-    console.log('isAuthenticated');
     return this.http
       .get(
         `${

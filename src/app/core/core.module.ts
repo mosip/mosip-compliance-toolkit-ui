@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MaterialModule } from './material.module';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { BrowserModule } from '@angular/platform-browser';
 
 import { AuthInterceptor } from './services/httpinterceptor';
 import { AuthService } from './services/authservice.service';
@@ -19,7 +21,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProjectComponent } from './components/project/project.component';
 
 @NgModule({
-  imports: [CommonModule, MaterialModule, RouterModule, HttpClientModule],
+  imports: [CommonModule, MaterialModule, RouterModule, HttpClientModule, FormsModule, ReactiveFormsModule, BrowserModule],
   declarations: [HomeComponent, MainLayoutComponent, HeaderComponent, DashboardComponent, ProjectComponent],
   exports: [
     HomeComponent,
@@ -27,6 +29,9 @@ import { ProjectComponent } from './components/project/project.component';
     HeaderComponent,
     MaterialModule,
     RouterModule,
+    FormsModule, 
+    ReactiveFormsModule,
+    BrowserModule
   ],
   providers: [
     DataService,

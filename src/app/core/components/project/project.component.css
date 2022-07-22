@@ -3,15 +3,15 @@
   width: 100%;
   flex-direction: column;
   background-color: white;
-  padding: 10px;
+  padding: 20px;
 }
 .fieldWrapper {
   display: flex;
   flex: 1;
   justify-content: center;
   align-items: center;
-  padding: 10px;
-  height: 40px;
+  padding: 10px; 
+  height: 50px;
 }
 .fieldLabel {
   flex: 0.1;
@@ -23,6 +23,20 @@
   color: grey;
   align-items: center;
 }
+.errWrapper {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+.spacer {
+  flex: 0.1
+}
+.errFieldMessage {
+  flex: 0.3;
+  color: grey;
+  align-items: center;
+}
 .mat-radio-button ~ .mat-radio-button {
   margin-left: 35px;
 }
@@ -30,7 +44,6 @@
   color: red;
   margin-left: 3px;
 }
-
 .button-container {
   padding: 20px;
   display: flex;
