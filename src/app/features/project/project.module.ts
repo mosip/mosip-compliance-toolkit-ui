@@ -1,19 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AddProjectRoutingModule } from './add-project-routing.module';
+import { ProjectRoutingModule } from './project-routing.module';
 import { AddProjectComponent } from './add-project/add-project.component';
 import { BreadcrumbModule, BreadcrumbService  } from 'xng-breadcrumb';
 import { MaterialModule } from '../../core/material.module';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { ViewProjectComponent } from './view-project/view-project.component';
 
 @NgModule({
   declarations: [
-    AddProjectComponent
+    AddProjectComponent,
+    ViewProjectComponent
   ],
   imports: [
     CommonModule,
-    AddProjectRoutingModule,
+    ProjectRoutingModule,
     BreadcrumbModule,
     MaterialModule,
     FormsModule,
@@ -21,4 +23,4 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
   ],
   providers: [BreadcrumbService]
 })
-export class AddProjectModule { }
+export class ProjectModule { }
