@@ -2,9 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { MaterialModule } from './material.module';
+import { BreadcrumbModule, BreadcrumbService  } from 'xng-breadcrumb';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserModule } from '@angular/platform-browser';
+
+import { MaterialModule } from './material.module';
 
 import { AuthInterceptor } from './services/httpinterceptor';
 import { AuthService } from './services/authservice.service';
@@ -21,7 +23,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProjectComponent } from './components/project/project.component';
 
 @NgModule({
-  imports: [CommonModule, MaterialModule, RouterModule, HttpClientModule, FormsModule, ReactiveFormsModule, BrowserModule],
+  imports: [BreadcrumbModule, CommonModule, MaterialModule, RouterModule, HttpClientModule, FormsModule, ReactiveFormsModule, BrowserModule],
   declarations: [HomeComponent, MainLayoutComponent, HeaderComponent, DashboardComponent, ProjectComponent],
   exports: [
     HomeComponent,
@@ -31,7 +33,8 @@ import { ProjectComponent } from './components/project/project.component';
     RouterModule,
     FormsModule, 
     ReactiveFormsModule,
-    BrowserModule
+    BrowserModule,
+    BreadcrumbModule
   ],
   providers: [
     DataService,
@@ -44,6 +47,7 @@ import { ProjectComponent } from './components/project/project.component';
       useClass: AuthInterceptor,
       multi: true,
     },
+    BreadcrumbService
   ],
 })
 export class CoreModule {}
