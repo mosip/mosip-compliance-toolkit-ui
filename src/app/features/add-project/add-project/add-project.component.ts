@@ -5,17 +5,18 @@ import {
   Validators,
   AbstractControl,
 } from '@angular/forms';
-import { AuthService } from '../../services/authservice.service';
+import { AuthService } from '../../../core/services/authservice.service';
 import { Router } from '@angular/router';
-import { DataService } from '../../services/data-service';
+import { DataService } from '../../../core/services/data-service';
 import * as appConstants from 'src/app/app.constants';
+import { BreadcrumbService  } from 'xng-breadcrumb';
 
 @Component({
   selector: 'app-project',
-  templateUrl: './project.component.html',
-  styleUrls: ['./project.component.css'],
+  templateUrl: './add-project.component.html',
+  styleUrls: ['./add-project.component.css'],
 })
-export class ProjectComponent implements OnInit {
+export class AddProjectComponent implements OnInit {
   projectForm = new FormGroup({});
   commonControls = ['name', 'projectType'];
   sdkControls = ['sdkUrl', 'sdkPurpose', 'bioTestData'];
@@ -26,10 +27,12 @@ export class ProjectComponent implements OnInit {
   constructor(
     public authService: AuthService,
     private dataService: DataService,
+    private breadcrumbService: BreadcrumbService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
+    this.breadcrumbService.set('@projectName','Add a New Project');
     this.allControls = [
       ...this.commonControls,
       ...this.sbiControls,
@@ -130,9 +133,9 @@ export class ProjectComponent implements OnInit {
 
   showDashboard() {
     if (this.authService.isAuthenticated()) {
-      this.router.navigateByUrl(`toolkit/dashboard`);
+      this.router.navigate([`toolkit/dashboard`]);
     } else {
-      this.router.navigateByUrl(``);
+      this.router.navigate([``]);
     }
   }
 }

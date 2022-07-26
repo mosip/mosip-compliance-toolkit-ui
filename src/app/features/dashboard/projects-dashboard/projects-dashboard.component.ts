@@ -1,28 +1,28 @@
-import {OnInit, Component, ViewChild} from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
+import { OnInit, Component, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from 'src/app/core/services/data-service';
 import { Subscription } from 'rxjs';
-import {MatTableDataSource} from '@angular/material/table';
-import { Router } from "@angular/router";
+import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 
 export interface ProjectData {
-  'id': string,
-  'name': string,
-  'projectType': string,
-  'collectionsCount': number,
-  'crDate': Date,
-  'lastRunDt': Date,
-  'lastRunStatus': string
+  id: string;
+  name: string;
+  projectType: string;
+  collectionsCount: number;
+  crDate: Date;
+  lastRunDt: Date;
+  lastRunStatus: string;
 }
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css'],
+  selector: 'app-projects-dashboard',
+  templateUrl: './projects-dashboard.component.html',
+  styleUrls: ['./projects-dashboard.component.css'],
 })
-export class DashboardComponent implements OnInit {
+export class ProjectsDashboardComponent implements OnInit {
   dataSource: MatTableDataSource<ProjectData>;
   displayedColumns: string[] = [
     'name',
@@ -56,23 +56,23 @@ export class DashboardComponent implements OnInit {
       this.subscriptions.push(
         this.dataService.getProjects().subscribe((response: any) => {
           console.log(response);
-          this.dataSource = new MatTableDataSource(response['response']['projects']);
+          this.dataSource = new MatTableDataSource(
+            response['response']['projects']
+          );
           resolve(true);
         })
       );
     });
   }
 
-  ngAfterViewInit() {
-    
-  }
+  ngAfterViewInit() {}
 
   addProject() {
-    this.router.navigateByUrl(`toolkit/project`);
+    this.router.navigate([`toolkit/project/new`]);
   }
 
   editProject(project: any) {
-    alert('you have selected to edit: ' + project.name);
+    this.router.navigate([`toolkit/project/${project.id}`]);
   }
 
   deleteProject(project: any) {

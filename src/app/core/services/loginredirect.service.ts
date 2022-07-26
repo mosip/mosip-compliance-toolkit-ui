@@ -14,7 +14,7 @@ export class LoginRedirectService {
     console.log(url);
     const stateParam = uuid();
     this.cookie.set('state', stateParam, undefined, '/');
-    console.log('returning false login redirect' + stateParam);
+    //console.log('returning false login redirect' + stateParam);
     let url1 = `${this.appService.getConfig().SERVICES_BASE_URL}${
       this.appService.getConfig().login
     }` +

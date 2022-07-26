@@ -5,7 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from './core/core.module';
+import { MaterialModule } from './core/material.module';
 import { CookieService } from 'ngx-cookie-service';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 const appInitialization = (appConfig: AppConfigService) => {
   return () => {
@@ -20,6 +22,9 @@ const appInitialization = (appConfig: AppConfigService) => {
     AppRoutingModule,
     BrowserAnimationsModule,
     CoreModule,
+    MaterialModule,
+    FormsModule, 
+    ReactiveFormsModule
   ],
   providers: [
     CookieService,
