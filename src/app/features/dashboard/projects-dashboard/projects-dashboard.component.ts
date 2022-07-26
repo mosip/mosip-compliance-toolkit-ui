@@ -68,11 +68,11 @@ export class ProjectsDashboardComponent implements OnInit {
   ngAfterViewInit() {}
 
   addProject() {
-    this.router.navigate([`toolkit/project/new`]);
+    this.router.navigate([`toolkit/project/add`]);
   }
 
   editProject(project: any) {
-    this.router.navigate([`toolkit/project/${project.id}`]);
+    this.router.navigate([`toolkit/project/${project.projectType}/${project.id}`]);
   }
 
   deleteProject(project: any) {

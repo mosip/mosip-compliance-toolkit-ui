@@ -19,10 +19,11 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'project/new',
+        path: 'project',
+        data: {breadcrumb: { label: 'Project', disable: true } },
         loadChildren: () =>
-          import('./features/add-project/add-project.module').then(
-            (m) => m.AddProjectModule
+          import('./features/project/project.module').then(
+            (m) => m.ProjectModule
           ),
       },
     ],

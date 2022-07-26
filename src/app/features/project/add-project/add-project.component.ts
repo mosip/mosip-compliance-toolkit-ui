@@ -9,7 +9,6 @@ import { AuthService } from '../../../core/services/authservice.service';
 import { Router } from '@angular/router';
 import { DataService } from '../../../core/services/data-service';
 import * as appConstants from 'src/app/app.constants';
-import { BreadcrumbService  } from 'xng-breadcrumb';
 
 @Component({
   selector: 'app-project',
@@ -27,12 +26,12 @@ export class AddProjectComponent implements OnInit {
   constructor(
     public authService: AuthService,
     private dataService: DataService,
-    private breadcrumbService: BreadcrumbService,
+    
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.breadcrumbService.set('@projectName','Add a New Project');
+    
     this.allControls = [
       ...this.commonControls,
       ...this.sbiControls,
