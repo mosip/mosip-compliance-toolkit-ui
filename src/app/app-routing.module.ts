@@ -7,19 +7,26 @@ import { DashboardComponent } from './core/components/dashboard/dashboard.compon
 import { ProjectComponent } from './core/components/project/project.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'toolkit', pathMatch: 'full'},
+  { path: '', redirectTo: 'toolkit', pathMatch: 'full' },
   {
     path: 'toolkit',
     component: MainLayoutComponent,
+    data: { breadcrumb: 'Home' },
     children: [
-      // { path: '', redirectTo: 'home', pathMatch: 'full' },
-      // { path: 'home', component: HomeComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'dashboard', component: DashboardComponent },
-      { path: 'project', component: ProjectComponent },
-    ],  
-    canActivateChild : [AuthguardService]
-  }
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+        data: { breadcrumb: ' Projects Dashboard' },
+      },
+      {
+        path: 'project',
+        component: ProjectComponent,
+        data: { breadcrumb: 'Add a new Project' },
+      },
+    ],
+    canActivateChild: [AuthguardService],
+  },
 ];
 
 @NgModule({
@@ -27,10 +34,10 @@ const routes: Routes = [
     RouterModule.forRoot(routes, {
       useHash: true,
       preloadingStrategy: PreloadAllModules,
-      onSameUrlNavigation: 'reload',
-      enableTracing: false
-    })
+      onSameUrlNavigation: 'ignore',
+      enableTracing: true,
+    }),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}
