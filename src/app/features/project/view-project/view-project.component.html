@@ -1,52 +1,43 @@
-
 <p>
     <xng-breadcrumb></xng-breadcrumb>
 </p>
-<div class="mat-elevation-z8">
-    <div class="formContainer">
-        <form [formGroup]="projectForm">
+<div class="spinner" *ngIf="!dataLoaded">
+    <mat-spinner diameter="50"></mat-spinner>
+</div>
+<div class="mat-elevation-z8" >
+    <form [formGroup]="projectForm" *ngIf="dataLoaded">
+        <div class="formContainer">
             <div class="fieldWrapper">
                 <span class="fieldLabel">
                     <mat-label>Project Name:
-                        <span class="required-annotation">*</span>
                     </mat-label>
                 </span>
                 <span class="fieldContainer">
                     <mat-form-field appearance="legacy" [style.width.px]=327>
-                        <mat-label>Project Name:</mat-label>
                         <input matInput formControlName="name" #keyboardRef #input />
-                        <mat-error *ngIf="projectForm.controls['name'].hasError('required')">
-                            Project Name is required
-                        </mat-error>
                     </mat-form-field>
                 </span>
             </div>
             <div class="fieldWrapper">
                 <span class="fieldLabel">
                     <mat-label>Project Type:
-                        <span class="required-annotation">*</span>
                     </mat-label>
                 </span>
                 <span class="fieldContainer">
                     <div [style.width.px]=327>
-                        <mat-radio-group aria-label="Select an option" formControlName="projectType" appearance="legacy"
-                            >
+                        <mat-radio-group aria-label="Select an option" formControlName="projectType"
+                            appearance="legacy">
                             <mat-radio-button value="SBI">SBI</mat-radio-button>
                             <mat-radio-button value="SDK">SDK</mat-radio-button>
                             <mat-radio-button value="ABIS">ABIS</mat-radio-button>
                         </mat-radio-group>
-                        <mat-error
-                            *ngIf="projectForm.touched && projectForm.controls['projectType'].hasError('required')">
-                            Project Type is required
-                        </mat-error>
                     </div>
                 </span>
             </div>
-            <div *ngIf="projectForm.controls['projectType']?.value == 'SDK'">
+            <span *ngIf="projectForm.controls['projectType']?.value == 'SDK'">
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
                         <mat-label>URL:
-                            <span class="required-annotation">*</span>
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
@@ -65,7 +56,6 @@
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
                         <mat-label>Purpose:
-                            <span class="required-annotation">*</span>
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
@@ -97,7 +87,6 @@
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
                         <mat-label>Select Test Data:
-                            <span class="required-annotation">*</span>
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
@@ -114,17 +103,15 @@
                         </mat-form-field>
                     </span>
                 </div>
-            </div>
-            <div *ngIf="projectForm.controls['projectType']?.value == 'SBI'">
+            </span>
+            <span *ngIf="projectForm.controls['projectType']?.value == 'SBI'">
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
                         <mat-label>Purpose:
-                            <span class="required-annotation">*</span>
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
                         <mat-form-field appearance="legacy" [style.width.px]=327>
-                            <mat-label>Purpose:</mat-label>
                             <mat-select formControlName="sbiPurpose" #singleSelect>
                                 <mat-option value="Registration">
                                     Registration
@@ -133,21 +120,16 @@
                                     Auth
                                 </mat-option>
                             </mat-select>
-                            <mat-error *ngIf="projectForm.controls['sbiPurpose'].hasError('required')">
-                                Purpose is required
-                            </mat-error>
                         </mat-form-field>
                     </span>
                 </div>
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
                         <mat-label>Device Type:
-                            <span class="required-annotation">*</span>
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
                         <mat-form-field appearance="legacy" [style.width.px]=327>
-                            <mat-label>Device Type:</mat-label>
                             <mat-select formControlName="deviceType" #singleSelect>
                                 <mat-option value="Finger">
                                     Finger
@@ -159,21 +141,16 @@
                                     Face
                                 </mat-option>
                             </mat-select>
-                            <mat-error *ngIf="projectForm.controls['deviceType'].hasError('required')">
-                                Device Type is required
-                            </mat-error>
                         </mat-form-field>
                     </span>
                 </div>
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
                         <mat-label>Device Sub Type:
-                            <span class="required-annotation">*</span>
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
                         <mat-form-field appearance="legacy" [style.width.px]=327>
-                            <mat-label>Device Sub Type:</mat-label>
                             <mat-select formControlName="deviceSubType" #singleSelect>
                                 <mat-option value="Slab" *ngIf="projectForm.controls['deviceType'].value == 'Finger'">
                                     Slab
@@ -195,18 +172,14 @@
                                     Full face
                                 </mat-option>
                             </mat-select>
-                            <mat-error *ngIf="projectForm.controls['deviceSubType'].hasError('required')">
-                                Device Sub Type is required
-                            </mat-error>
                         </mat-form-field>
                     </span>
                 </div>
-            </div>
-            <div *ngIf="projectForm.controls['projectType']?.value == 'ABIS'">
+            </span>
+            <span *ngIf="projectForm.controls['projectType']?.value == 'ABIS'">
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
                         <mat-label>URL:
-                            <span class="required-annotation">*</span>
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
@@ -225,7 +198,6 @@
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
                         <mat-label>Username:
-                            <span class="required-annotation">*</span>
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
@@ -241,14 +213,15 @@
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
                         <mat-label>Password:
-                            <span class="required-annotation">*</span>
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
                         <mat-form-field appearance="legacy" [style.width.px]=327>
                             <mat-label>Password:</mat-label>
-                            <input matInput placeholder="Password" [type]="hidePassword ? 'password' : 'text'" formControlName="password">
-                            <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            <input matInput placeholder="Password" [type]="hidePassword ? 'password' : 'text'"
+                                formControlName="password">
+                            <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility_off'
+                                : 'visibility'}}</mat-icon>
                             <mat-error *ngIf="projectForm.controls['password'].hasError('required')">
                                 Password is required
                             </mat-error>
@@ -258,7 +231,6 @@
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
                         <mat-label>Queue Name:
-                            <span class="required-annotation">*</span>
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
@@ -271,9 +243,9 @@
                         </mat-form-field>
                     </span>
                 </div>
-            </div>
-        </form>
-    </div>
+            </span>
+        </div>
+    </form>
     <div class="button-container">
         <!-- <button mat-flat-button color="accent" (click)="showDashboard()" class="add-button">
             <mat-icon>home</mat-icon>

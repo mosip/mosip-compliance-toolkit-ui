@@ -1,25 +1,23 @@
 .formContainer {
     display: flex;
     width: 100%;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
     background-color: white;
     padding: 20px;
   }
   .fieldWrapper {
-    display: flex;
-    flex: 1;
-    justify-content: center;
-    align-items: center;
+    width: 30%;
     padding: 10px; 
     height: 50px;
   }
   .fieldLabel {
-    flex: 0.1;
     color: grey;
     font-weight: bolder;
   }
   .fieldContainer {
-    flex: 0.3;
     color: grey;
     align-items: center;
   }

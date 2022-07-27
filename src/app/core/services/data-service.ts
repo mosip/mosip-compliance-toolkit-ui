@@ -24,7 +24,7 @@ export class DataService {
   }
 
   getSbiProject(projectId: string) {
-    let url = `${this.SERVICES_BASE_URL}getSbiProject?id=${projectId}`;
+    let url = `${this.SERVICES_BASE_URL}getSbiProject/${projectId}`;
     console.log('url:' + url);
     return this.httpClient.get(url);
   }

@@ -16,16 +16,18 @@ import { DataService } from './services/data-service';
 import { MainLayoutComponent } from './components/main-layout/main-layout.component';
 import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './components/header/header.component';
+import { DialogComponent } from './components/dialog/dialog.component';
 
 @NgModule({
   imports: [CommonModule, MaterialModule, RouterModule, HttpClientModule],
-  declarations: [HomeComponent, MainLayoutComponent, HeaderComponent],
+  declarations: [HomeComponent, MainLayoutComponent, HeaderComponent, DialogComponent],
   exports: [
     HomeComponent,
     MainLayoutComponent,
     HeaderComponent,
     MaterialModule,
-    RouterModule
+    RouterModule,
+    DialogComponent
   ],
   providers: [
     DataService,
