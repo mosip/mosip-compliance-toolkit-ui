@@ -11,6 +11,8 @@ import { AuthService } from '../../../core/services/authservice.service';
 import { DataService } from '../../../core/services/data-service';
 import { Subscription } from 'rxjs';
 import * as appConstants from 'src/app/app.constants';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../../../core/components/dialog/dialog.component';
 
 @Component({
   selector: 'app-view-project',
@@ -35,25 +37,43 @@ export class ViewProjectComponent implements OnInit {
     public authService: AuthService,
     private dataService: DataService,
     private router: Router,
+    private dialog: MatDialog,
     private breadcrumbService: BreadcrumbService,
     private activatedRoute: ActivatedRoute
   ) {}
 
   async ngOnInit() {
     await this.getProjectId();
-    if ((this.projectType = appConstants.SBI)) {
+    if (this.projectType == appConstants.SBI) {
       this.allControls = [...this.commonControls, ...this.sbiControls];
-
       this.allControls.forEach((controlId) => {
         this.projectForm.addControl(controlId, new FormControl(''));
-        this.projectForm.controls[controlId].setValidators(Validators.required);
+        this.projectForm.controls[controlId].disable({ onlySelf: true });
       });
       await this.getSbiProjectDetails();
+      if (this.projectData) {
+        this.projectForm.controls['name'].setValue(this.projectData.name);
+        this.projectForm.controls['projectType'].setValue(appConstants.SBI);
+        this.projectForm.controls['specVersion'].setValue(
+          this.projectData.sbiVersion
+        );
+        this.projectForm.controls['sbiPurpose'].setValue(
+          this.projectData.purpose
+        );
+        this.projectForm.controls['deviceType'].setValue(
+          this.projectData.deviceType
+        );
+        this.projectForm.controls['deviceSubType'].setValue(
+          this.projectData.deviceSubType
+        );
+      }
     }
-    this.breadcrumbService.set(
-      '@projectId',
-      `View ${this.projectType} Project - ${this.projectId}`
-    );
+    if (this.projectData) {
+      this.breadcrumbService.set(
+        '@projectId',
+        `${this.projectType} Project - ${this.projectData.name}`
+      );
+    }
     this.dataLoaded = true;
   }
 
@@ -69,19 +89,41 @@ export class ViewProjectComponent implements OnInit {
 
   async getSbiProjectDetails() {
     return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService
-          .getSbiProject(this.projectId)
-          .subscribe((response: any) => {
-            console.log(response);
-            this.projectData = response['response'];
-            resolve(true);
-          })
+      this.dataService.getSbiProject(this.projectId).subscribe(
+        (response: any) => {
+          console.log(response);
+          this.projectData = response['response'];
+          resolve(true);
+        },
+        (error) => {
+          this.showErrorMessage(error);
+          resolve(false);
+        }
       );
     });
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
+  /**
+   * @description This is a dialoug box whenever an error comes from the server, it will appear.
+   *
+   * @private
+   * @memberof DemographicComponent
+   */
+  private showErrorMessage(errorsList: any) {
+    let error = errorsList[0];
+    const titleOnError = 'Error';
+    const message = error.errorCode + ' - ' + error.message;
+    const body = {
+      case: 'ERROR',
+      title: titleOnError,
+      message: message,
+    };
+    this.dialog.open(DialogComponent, {
+      width: '400px',
+      data: body,
+    });
   }
 }

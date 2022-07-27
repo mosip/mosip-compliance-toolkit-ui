@@ -6,6 +6,7 @@ import { DataService } from 'src/app/core/services/data-service';
 import { Subscription } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import * as appConstants from 'src/app/app.constants';
 
 export interface ProjectData {
   id: string;
@@ -71,12 +72,14 @@ export class ProjectsDashboardComponent implements OnInit {
     this.router.navigate([`toolkit/project/add`]);
   }
 
-  editProject(project: any) {
-    this.router.navigate([`toolkit/project/${project.projectType}/${project.id}`]);
+  viewProject(project: any) {
+    if ((project.projectType == appConstants.SBI)) {
+      this.router.navigate([`toolkit/project/${project.projectType}/${project.id}`]);
+    }
   }
 
   deleteProject(project: any) {
-    alert('you have selected to delete: ' + project.name);
+    alert('not available');
   }
 
   applyFilter(event: Event) {

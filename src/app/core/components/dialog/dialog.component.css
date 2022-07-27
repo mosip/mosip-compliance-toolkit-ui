@@ -1,0 +1,14 @@
+mat-dialog-content {
+    height: 750 px;
+    word-wrap: break-word;
+}
+.mat-dialog-title {
+    color: #fd518c;
+    font-size: 16px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #fd518c;
+  }
+.subHeader {
+    color: black;
+    font-size: larger;
+}
