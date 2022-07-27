@@ -23,6 +23,12 @@ export class DataService {
     return this.httpClient.get(url);
   }
 
+  getProjectCollections(projectId: string, projectType: string) {
+    let url = `${this.SERVICES_BASE_URL}getProjectCollections?projectId=${projectId}&type=${projectType}`;
+    console.log('url:' + url);
+    return this.httpClient.get(url);
+  }
+
   getSbiProject(projectId: string) {
     let url = `${this.SERVICES_BASE_URL}getSbiProject/${projectId}`;
     console.log('url:' + url);

@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import {
   FormGroup,
   FormControl,
@@ -14,6 +17,13 @@ import * as appConstants from 'src/app/app.constants';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../../core/components/dialog/dialog.component';
 
+export interface CollectionsData {
+  id: string;
+  name: string;
+  testcasesCount: number;
+  crDtimes: Date;
+  runDtimes: Date;
+}
 @Component({
   selector: 'app-view-project',
   templateUrl: './view-project.component.html',
@@ -23,16 +33,20 @@ export class ViewProjectComponent implements OnInit {
   projectId: string;
   projectType: string;
   projectForm = new FormGroup({});
-  projectData: any;
-  commonControls = ['name', 'projectType'];
-  sdkControls = ['sdkUrl', 'sdkPurpose', 'bioTestData'];
-  sbiControls = ['specVersion', 'sbiPurpose', 'deviceType', 'deviceSubType'];
-  abisControls = ['abisUrl', 'username', 'password', 'queueName'];
+  projectFormData: any;
   allControls: string[];
+  dataSource: MatTableDataSource<CollectionsData>;
+  displayedColumns: string[] = [
+    'name',
+    'testcasesCount',
+    'crDtimes',
+    'runDtimes'
+  ];
   hidePassword = true;
   subscriptions: Subscription[] = [];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   dataLoaded = false;
-
   constructor(
     public authService: AuthService,
     private dataService: DataService,
@@ -43,41 +57,54 @@ export class ViewProjectComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    await this.getProjectId();
+    await this.getProjectIdAndType();
     if (this.projectType == appConstants.SBI) {
-      this.allControls = [...this.commonControls, ...this.sbiControls];
-      this.allControls.forEach((controlId) => {
-        this.projectForm.addControl(controlId, new FormControl(''));
-        this.projectForm.controls[controlId].disable({ onlySelf: true });
-      });
+      this.initSbiProjectForm();
       await this.getSbiProjectDetails();
-      if (this.projectData) {
-        this.projectForm.controls['name'].setValue(this.projectData.name);
-        this.projectForm.controls['projectType'].setValue(appConstants.SBI);
-        this.projectForm.controls['specVersion'].setValue(
-          this.projectData.sbiVersion
-        );
-        this.projectForm.controls['sbiPurpose'].setValue(
-          this.projectData.purpose
-        );
-        this.projectForm.controls['deviceType'].setValue(
-          this.projectData.deviceType
-        );
-        this.projectForm.controls['deviceSubType'].setValue(
-          this.projectData.deviceSubType
-        );
-      }
+      this.populateSbiProjectForm();
     }
-    if (this.projectData) {
+    await this.getProjectCollections();
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    
+    if (this.projectFormData) {
       this.breadcrumbService.set(
         '@projectId',
-        `${this.projectType} Project - ${this.projectData.name}`
+        `${this.projectType} Project - ${this.projectFormData.name}`
       );
     }
     this.dataLoaded = true;
   }
 
-  getProjectId() {
+  initSbiProjectForm() {
+    this.allControls = [
+      ...appConstants.commonControls,
+      ...appConstants.sbiControls,
+    ];
+    this.allControls.forEach((controlId) => {
+      this.projectForm.addControl(controlId, new FormControl(''));
+    });
+  }
+
+  populateSbiProjectForm() {
+    if (this.projectFormData) {
+      this.projectForm.controls['name'].setValue(this.projectFormData.name);
+      this.projectForm.controls['projectType'].setValue(appConstants.SBI);
+      this.projectForm.controls['sbiSpecVersion'].setValue(
+        this.projectFormData.sbiVersion
+      );
+      this.projectForm.controls['sbiPurpose'].setValue(
+        this.projectFormData.purpose
+      );
+      this.projectForm.controls['deviceType'].setValue(
+        this.projectFormData.deviceType
+      );
+      this.projectForm.controls['deviceSubType'].setValue(
+        this.projectFormData.deviceSubType
+      );
+    }
+  }
+  getProjectIdAndType() {
     return new Promise((resolve) => {
       this.activatedRoute.params.subscribe((param) => {
         this.projectId = param['id'];
@@ -89,16 +116,36 @@ export class ViewProjectComponent implements OnInit {
 
   async getSbiProjectDetails() {
     return new Promise((resolve, reject) => {
-      this.dataService.getSbiProject(this.projectId).subscribe(
-        (response: any) => {
+      this.subscriptions.push(
+        this.dataService.getSbiProject(this.projectId).subscribe(
+          (response: any) => {
+            console.log(response);
+            this.projectFormData = response['response'];
+            resolve(true);
+          },
+          (error) => {
+            this.showErrorMessage(error);
+            resolve(false);
+          }
+        )
+      );
+    });
+  }
+
+  async getProjectCollections() {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.getProjectCollections(this.projectId, this.projectType).subscribe((response: any) => {
           console.log(response);
-          this.projectData = response['response'];
+          this.dataSource = new MatTableDataSource(
+            response['response']['collectionsSummaryList']
+          );
           resolve(true);
         },
         (error) => {
           this.showErrorMessage(error);
           resolve(false);
-        }
+        })
       );
     });
   }
@@ -125,5 +172,16 @@ export class ViewProjectComponent implements OnInit {
       width: '400px',
       data: body,
     });
+  }
+  
+  showDashboard() {
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate([`toolkit/dashboard`]);
+    } else {
+      this.router.navigate([``]);
+    }
+  }
+  addCollection() {
+
   }
 }
