@@ -118,6 +118,29 @@
             <div *ngIf="projectForm.controls['projectType']?.value == 'SBI'">
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
+                        <mat-label>Spec Version:
+                            <span class="required-annotation">*</span>
+                        </mat-label>
+                    </span>
+                    <span class="fieldContainer">
+                        <mat-form-field appearance="legacy" [style.width.px]=327>
+                            <mat-label>Spec Version:</mat-label>
+                            <mat-select formControlName="sbiSpecVersion" #singleSelect>
+                                <mat-option value="0.9.5">
+                                    0.9.5
+                                </mat-option>
+                                <mat-option value="1.0.0">
+                                    1.0.0
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="projectForm.controls['sbiSpecVersion'].hasError('required')">
+                                Spec Version is required
+                            </mat-error>
+                        </mat-form-field>
+                    </span>
+                </div>
+                <div class="fieldWrapper">
+                    <span class="fieldLabel">
                         <mat-label>Purpose:
                             <span class="required-annotation">*</span>
                         </mat-label>

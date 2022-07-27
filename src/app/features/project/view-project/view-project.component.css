@@ -1,62 +1,77 @@
 .formContainer {
-    display: flex;
-    width: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-    padding: 20px;
-  }
-  .fieldWrapper {
-    width: 30%;
-    padding: 10px; 
-    height: 50px;
-  }
-  .fieldLabel {
-    color: grey;
-    font-weight: bolder;
-  }
-  .fieldContainer {
-    color: grey;
-    align-items: center;
-  }
-  .errWrapper {
-    display: flex;
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-  }
-  .spacer {
-    flex: 0.1
-  }
-  .errFieldMessage {
-    flex: 0.3;
-    color: grey;
-    align-items: center;
-  }
-  .mat-radio-button ~ .mat-radio-button {
-    margin-left: 35px;
-  }
-  .required-annotation {
-    color: red;
-    margin-left: 3px;
-  }
-  .button-container {
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    width: 95%;
-    position: fixed;
-    bottom: 0px;
-    left: 10px;
-    background-color: white;
-    border-top: 1px solid #ddd;
-  }
-  
-  .button-container + .add-button {
-    margin-left: 8px;
-  }
-  ::ng-deep.mat-select-value {
-    padding: 5px !important;
-  }
+  /* width: 100%; */
+  background-color: white;
+  padding: 5px;
+  padding-left: 10px;
+}
+.rowContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+.fieldWrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 5px;
+  /* height: 50px; */
+}
+.fieldLabel {
+  width: 20%;
+}
+.fieldContainer {
+  width: 80%;
+  align-items: center;
+}
+.spacer {
+  flex: 0.1;
+}
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 35px;
+}
+.required-annotation {
+  color: red;
+  margin-left: 3px;
+}
+.list-container {
+  padding: 20px;
+  background-color: white;
+  border-top: 1px solid #ddd;
+}
+.button-container {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  width: 95%;
+  position: fixed;
+  bottom: 0px;
+  left: 10px;
+  background-color: white;
+  border-top: 1px solid #ddd;
+}
+
+.button-container + .add-button {
+  margin-left: 8px;
+}
+::ng-deep.mat-select-value {
+  padding: 5px !important;
+}
+
+.collections-table {
+  width: 100%;
+}
+.collections-header-container {
+  padding-bottom: 16px;
+}
+.collections-button + .collections-button {
+  margin-left: 8px;
+}
+
+.mat-form-field-appearance-legacy.mat-form-field-readonly .mat-form-field-underline {
+	background-color: rgba(127, 127, 127, 0.25);
+color: blue;
+}

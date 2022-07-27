@@ -4,7 +4,7 @@
 <div class="spinner" *ngIf="!dataLoaded">
     <mat-spinner diameter="50"></mat-spinner>
 </div>
-<div class="mat-elevation-z8" >
+<div class="mat-elevation-z8">
     <form [formGroup]="projectForm" *ngIf="dataLoaded">
         <div class="formContainer">
             <div class="fieldWrapper">
@@ -14,7 +14,7 @@
                 </span>
                 <span class="fieldContainer">
                     <mat-form-field appearance="legacy" [style.width.px]=327>
-                        <input matInput formControlName="name" #keyboardRef #input />
+                        <input matInput formControlName="name" #keyboardRef #input [readonly]="true" />
                     </mat-form-field>
                 </span>
             </div>
@@ -25,8 +25,8 @@
                 </span>
                 <span class="fieldContainer">
                     <div [style.width.px]=327>
-                        <mat-radio-group aria-label="Select an option" formControlName="projectType"
-                            appearance="legacy">
+                        <mat-radio-group aria-label="Select an option" formControlName="projectType" appearance="legacy"
+                            [disabled]="true">
                             <mat-radio-button value="SBI">SBI</mat-radio-button>
                             <mat-radio-button value="SDK">SDK</mat-radio-button>
                             <mat-radio-button value="ABIS">ABIS</mat-radio-button>
@@ -105,75 +105,101 @@
                 </div>
             </span>
             <span *ngIf="projectForm.controls['projectType']?.value == 'SBI'">
-                <div class="fieldWrapper">
-                    <span class="fieldLabel">
-                        <mat-label>Purpose:
-                        </mat-label>
-                    </span>
-                    <span class="fieldContainer">
-                        <mat-form-field appearance="legacy" [style.width.px]=327>
-                            <mat-select formControlName="sbiPurpose" #singleSelect>
-                                <mat-option value="Registration">
-                                    Registration
-                                </mat-option>
-                                <mat-option value="Auth">
-                                    Auth
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </span>
+                <div class="rowContainer">
+                    <div class="fieldWrapper">
+                        <span class="fieldLabel">
+                            <mat-label>Spec Version:
+                            </mat-label>
+                        </span>
+                        <span class="fieldContainer">
+                            <mat-form-field appearance="legacy" [style.width.px]=327>
+                                <mat-select formControlName="sbiSpecVersion" #singleSelect [disabled]="true">
+                                    <mat-option value="0.9.5">
+                                        0.9.5
+                                    </mat-option>
+                                    <mat-option value="1.0.0">
+                                        1.0.0
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </span>
+                    </div>
+                    <div class="fieldWrapper">
+                        <span class="fieldLabel">
+                            <mat-label>Purpose:
+                            </mat-label>
+                        </span>
+                        <span class="fieldContainer">
+                            <mat-form-field appearance="legacy" [style.width.px]=327>
+                                <mat-select formControlName="sbiPurpose" #singleSelect [disabled]="true">
+                                    <mat-option value="Registration">
+                                        Registration
+                                    </mat-option>
+                                    <mat-option value="Auth">
+                                        Auth
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </span>
+                    </div>
                 </div>
-                <div class="fieldWrapper">
-                    <span class="fieldLabel">
-                        <mat-label>Device Type:
-                        </mat-label>
-                    </span>
-                    <span class="fieldContainer">
-                        <mat-form-field appearance="legacy" [style.width.px]=327>
-                            <mat-select formControlName="deviceType" #singleSelect>
-                                <mat-option value="Finger">
-                                    Finger
-                                </mat-option>
-                                <mat-option value="Iris">
-                                    Iris
-                                </mat-option>
-                                <mat-option value="Face">
-                                    Face
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </span>
-                </div>
-                <div class="fieldWrapper">
-                    <span class="fieldLabel">
-                        <mat-label>Device Sub Type:
-                        </mat-label>
-                    </span>
-                    <span class="fieldContainer">
-                        <mat-form-field appearance="legacy" [style.width.px]=327>
-                            <mat-select formControlName="deviceSubType" #singleSelect>
-                                <mat-option value="Slab" *ngIf="projectForm.controls['deviceType'].value == 'Finger'">
-                                    Slab
-                                </mat-option>
-                                <mat-option value="Single" *ngIf="projectForm.controls['deviceType'].value == 'Finger'">
-                                    Single
-                                </mat-option>
-                                <mat-option value="Touchless"
-                                    *ngIf="projectForm.controls['deviceType'].value == 'Finger'">
-                                    Touchless
-                                </mat-option>
-                                <mat-option value="Single" *ngIf="projectForm.controls['deviceType'].value == 'Iris'">
-                                    Single
-                                </mat-option>
-                                <mat-option value="Double" *ngIf="projectForm.controls['deviceType'].value == 'Iris'">
-                                    Double
-                                </mat-option>
-                                <mat-option value="Full" *ngIf="projectForm.controls['deviceType'].value == 'Face'">
-                                    Full face
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </span>
+                <div class="rowContainer">
+                    <div class="fieldWrapper">
+                        <span class="fieldLabel">
+                            <mat-label>Device Type:
+                            </mat-label>
+                        </span>
+                        <span class="fieldContainer">
+                            <mat-form-field appearance="legacy" [style.width.px]=327>
+                                <mat-select formControlName="deviceType" #singleSelect [disabled]="true">
+                                    <mat-option value="Finger">
+                                        Finger
+                                    </mat-option>
+                                    <mat-option value="Iris">
+                                        Iris
+                                    </mat-option>
+                                    <mat-option value="Face">
+                                        Face
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </span>
+                    </div>
+                    <div class="fieldWrapper">
+                        <span class="fieldLabel">
+                            <mat-label>Device Sub Type:
+                            </mat-label>
+                        </span>
+                        <span class="fieldContainer">
+                            <mat-form-field appearance="legacy" [style.width.px]=327>
+                                <mat-select formControlName="deviceSubType" #singleSelect [disabled]="true">
+                                    <mat-option value="Slab"
+                                        *ngIf="projectForm.controls['deviceType'].value == 'Finger'">
+                                        Slab
+                                    </mat-option>
+                                    <mat-option value="Single"
+                                        *ngIf="projectForm.controls['deviceType'].value == 'Finger'">
+                                        Single
+                                    </mat-option>
+                                    <mat-option value="Touchless"
+                                        *ngIf="projectForm.controls['deviceType'].value == 'Finger'">
+                                        Touchless
+                                    </mat-option>
+                                    <mat-option value="Single"
+                                        *ngIf="projectForm.controls['deviceType'].value == 'Iris'">
+                                        Single
+                                    </mat-option>
+                                    <mat-option value="Double"
+                                        *ngIf="projectForm.controls['deviceType'].value == 'Iris'">
+                                        Double
+                                    </mat-option>
+                                    <mat-option value="Full" *ngIf="projectForm.controls['deviceType'].value == 'Face'">
+                                        Full face
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </span>
+                    </div>
                 </div>
             </span>
             <span *ngIf="projectForm.controls['projectType']?.value == 'ABIS'">
@@ -246,12 +272,44 @@
             </span>
         </div>
     </form>
+    <div class="list-container">
+        <div class="collections-header-container">
+            <button mat-flat-button color="accent" (click)="addCollection()" class="collections-button">
+                <mat-icon>add</mat-icon>
+                Add Collection
+            </button>
+        </div>
+        <table mat-table [dataSource]="dataSource" matSort class="collections-table">
+            <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.name}} </td>
+            </ng-container>
+            <ng-container matColumnDef="testcasesCount">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Testcases </th>
+                <td mat-cell *matCellDef="let element"> {{element.testcasesCount}} </td>
+            </ng-container>
+            <ng-container matColumnDef="crDtimes">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Creation Date </th>
+                <td mat-cell *matCellDef="let element"> {{element.crDtimes | date: 'short' }} </td>
+            </ng-container>
+            <ng-container matColumnDef="runDtimes">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Run Date </th>
+                <td mat-cell *matCellDef="let element"> {{element.runDtimes | date: 'short'}} </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 50, 100]" aria-label="Select page of users"></mat-paginator>
+    </div>
     <div class="button-container">
-        <!-- <button mat-flat-button color="accent" (click)="showDashboard()" class="add-button">
+        <button mat-flat-button color="accent" (click)="showDashboard()" class="add-button">
             <mat-icon>home</mat-icon>
             Dashboard
         </button>
-        <button mat-flat-button color="accent" (click)="saveProject()" class="add-button">
+        <!--<button mat-flat-button color="accent" (click)="saveProject()" class="add-button">
             <mat-icon>add</mat-icon>
             Add Project
         </button> -->
