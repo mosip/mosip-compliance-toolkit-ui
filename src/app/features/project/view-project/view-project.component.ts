@@ -23,7 +23,7 @@ import { TestCaseModel } from 'src/app/core/models/testcase';
 export interface CollectionsData {
   id: string;
   name: string;
-  testcasesCount: number;
+  testCaseCount: number;
   crDtimes: Date;
   runDtimes: Date;
 }
@@ -41,7 +41,7 @@ export class ViewProjectComponent implements OnInit {
   dataSource: MatTableDataSource<CollectionsData>;
   displayedColumns: string[] = [
     'name',
-    'testcasesCount',
+    'testCaseCount',
     'crDtimes',
     'runDtimes',
     'actions',
@@ -148,7 +148,7 @@ export class ViewProjectComponent implements OnInit {
             (response: any) => {
               console.log(response);
               this.dataSource = new MatTableDataSource(
-                response['response']['collectionsSummaryList']
+                response['response']['collectionTestrunDtoList']
               );
               resolve(true);
             },
@@ -164,12 +164,7 @@ export class ViewProjectComponent implements OnInit {
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
-  /**
-   * @description This is a dialoug box whenever an error comes from the server, it will appear.
-   *
-   * @private
-   * @memberof DemographicComponent
-   */
+  
   private showErrorMessage(errorsList: any) {
     let error = errorsList[0];
     const titleOnError = 'Error';

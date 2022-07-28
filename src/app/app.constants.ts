@@ -12,3 +12,4 @@ export const sbiControls = [
   'deviceSubType',
 ];
 export const abisControls = ['abisUrl', 'username', 'password', 'queueName'];
+export const SBI_PROJECT_ADD_ID ="mosip.toolkit.sbi.project.add";

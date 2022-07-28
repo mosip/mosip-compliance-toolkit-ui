@@ -181,9 +181,9 @@
                                 <span class="fieldContainer">
                                     <mat-form-field appearance="legacy" [style.width.px]=327>
                                         <mat-select formControlName="deviceSubType" #singleSelect [disabled]="true">
-                                            <mat-option value="Slab"
+                                            <mat-option value="Slap"
                                                 *ngIf="projectForm.controls['deviceType'].value == 'Finger'">
-                                                Slab
+                                                Slap
                                             </mat-option>
                                             <mat-option value="Single"
                                                 *ngIf="projectForm.controls['deviceType'].value == 'Finger'">
@@ -299,9 +299,9 @@
                 <td mat-cell *matCellDef="let element">
                     {{element.name}} </td>
             </ng-container>
-            <ng-container matColumnDef="testcasesCount">
+            <ng-container matColumnDef="testCaseCount">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Testcases </th>
-                <td mat-cell *matCellDef="let element"> {{element.testcasesCount}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.testCaseCount}} </td>
             </ng-container>
             <ng-container matColumnDef="crDtimes">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Creation Date </th>

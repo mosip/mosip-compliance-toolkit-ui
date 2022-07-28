@@ -36,6 +36,12 @@ export class DataService {
     return this.httpClient.get(url);
   }
 
+  addSbiProject(body: any) {
+    let url = `${this.SERVICES_BASE_URL}addSbiProject`;
+    console.log('url:' + url);
+    return this.httpClient.post(url, body);
+  }
+
   getTestCases(type: string) {
     let url = `${this.SERVICES_BASE_URL}getTestCases?type=${type}`;
     console.log('url:' + url);
