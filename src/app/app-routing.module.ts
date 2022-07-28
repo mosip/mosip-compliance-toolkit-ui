@@ -20,7 +20,7 @@ const routes: Routes = [
       },
       {
         path: 'project',
-        data: {breadcrumb: { label: 'Project', disable: true } },
+        data: { breadcrumb: { label: 'Project', disable: true } },
         loadChildren: () =>
           import('./features/project/project.module').then(
             (m) => m.ProjectModule
@@ -29,6 +29,14 @@ const routes: Routes = [
     ],
     canActivateChild: [AuthguardService],
   },
+  {
+    path: 'collections',
+    loadChildren: () =>
+      import('./features/collections/collections.module').then(
+        (m) => m.CollectionsModule
+      ),
+  },
+  { path: 'TestRun', loadChildren: () => import('./features/test-run/test-run.module').then(m => m.TestRunModule) },
 ];
 
 @NgModule({

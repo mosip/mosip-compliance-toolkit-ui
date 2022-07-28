@@ -12,10 +12,13 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../../../core/services/authservice.service';
 import { DataService } from '../../../core/services/data-service';
+import { SbiTestCaseService } from '../../../core/services/sbi-testcase-service';
+import { AppConfigService } from '../../../app-config.service';
 import { Subscription } from 'rxjs';
 import * as appConstants from 'src/app/app.constants';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../../core/components/dialog/dialog.component';
+import { TestCaseModel } from 'src/app/core/models/testcase';
 
 export interface CollectionsData {
   id: string;
@@ -40,20 +43,24 @@ export class ViewProjectComponent implements OnInit {
     'name',
     'testcasesCount',
     'crDtimes',
-    'runDtimes'
+    'runDtimes',
+    'actions',
   ];
   hidePassword = true;
   subscriptions: Subscription[] = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   dataLoaded = false;
+  panelOpenState = false;
   constructor(
     public authService: AuthService,
     private dataService: DataService,
     private router: Router,
     private dialog: MatDialog,
     private breadcrumbService: BreadcrumbService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private sbiTestCaseService: SbiTestCaseService,
+    private appConfigService: AppConfigService
   ) {}
 
   async ngOnInit() {
@@ -66,7 +73,7 @@ export class ViewProjectComponent implements OnInit {
     await this.getProjectCollections();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    
+
     if (this.projectFormData) {
       this.breadcrumbService.set(
         '@projectId',
@@ -135,17 +142,21 @@ export class ViewProjectComponent implements OnInit {
   async getProjectCollections() {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
-        this.dataService.getProjectCollections(this.projectId, this.projectType).subscribe((response: any) => {
-          console.log(response);
-          this.dataSource = new MatTableDataSource(
-            response['response']['collectionsSummaryList']
-          );
-          resolve(true);
-        },
-        (error) => {
-          this.showErrorMessage(error);
-          resolve(false);
-        })
+        this.dataService
+          .getProjectCollections(this.projectId, this.projectType)
+          .subscribe(
+            (response: any) => {
+              console.log(response);
+              this.dataSource = new MatTableDataSource(
+                response['response']['collectionsSummaryList']
+              );
+              resolve(true);
+            },
+            (error) => {
+              this.showErrorMessage(error);
+              resolve(false);
+            }
+          )
       );
     });
   }
@@ -173,7 +184,7 @@ export class ViewProjectComponent implements OnInit {
       data: body,
     });
   }
-  
+
   showDashboard() {
     if (this.authService.isAuthenticated()) {
       this.router.navigate([`toolkit/dashboard`]);
@@ -181,7 +192,46 @@ export class ViewProjectComponent implements OnInit {
       this.router.navigate([``]);
     }
   }
-  addCollection() {
+  addCollection() {}
 
+  async runCollection(row: any) {
+    //first get list of testcases based on collectionId
+    //let testCasesList = new TestCaseModel[];
+    const testcase: TestCaseModel = {
+      testCaseType: 'SBI',
+      testName: 'Discover device',
+      testId: 'SBI1000',
+      specVersion: '0.9.5',
+      testDescription: 'Valid Discover Request',
+      testOrderSequence: 1,
+      methodName: 'device',
+      requestSchema: 'DiscoverRequestSchema',
+      responseSchema: 'DiscoverResponseSchema',
+      validatorDefs: [
+        {
+          name: 'SchemaValidator',
+          description: 'SchemaValidator',
+        }
+      ],
+      otherAttributes: {
+        runtimeInput: '',
+        purpose: ['Registration', 'Auth'],
+        biometricTypes: ['Finger', 'Iris', 'Face'],
+        deviceSubTypes: ['Slap', 'Single', 'Double', 'Full face'],
+        segments: [],
+        exceptions: [],
+        requestedScore: '',
+        bioCount: '',
+        deviceSubId: '',
+        modalities: [],
+      },
+    }  
+    let testCasesList = [testcase];
+    if (this.projectType == appConstants.SBI) {
+      let res = await this.sbiTestCaseService.runCollection(testCasesList);
+      console.log(res);
+    }
+    
   }
+
 }

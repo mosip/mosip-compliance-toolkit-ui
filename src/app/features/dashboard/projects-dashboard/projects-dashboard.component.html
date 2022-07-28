@@ -1,12 +1,12 @@
 <p>
     <xng-breadcrumb></xng-breadcrumb>
 </p>
-<div class="dashboard-button-first-container">
+<div class="dashboard-button-first-container"  *ngIf="dataLoaded">
     <button mat-flat-button color="accent" (click)="addProject()" class="dashboard-button">
         Biometric Data >>
     </button>
 </div>
-<div class="dashboard-button-second-container">
+<div class="dashboard-button-second-container" *ngIf="dataLoaded">
     <button mat-flat-button color="accent" (click)="addProject()" class="dashboard-button">
         <mat-icon>add</mat-icon>
         Add Project
@@ -21,12 +21,12 @@
         <!-- <button mat-menu-item (click)="deleteProject(myobject)">Delete</button> -->
     </ng-template>
 </mat-menu>
-<mat-form-field appearance="legacy">
+<mat-form-field appearance="legacy" *ngIf="dataLoaded">
     <mat-label>Filter</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Search columns" #input>
 </mat-form-field>
-<div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" matSort class="dashboard-table">
+<div class="mat-elevation-z8"  *ngIf="dataLoaded">
+    <table mat-table [dataSource]="dataSource" matSort class="dashboard-table"  *ngIf="dataLoaded">
         <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
         <ng-container matColumnDef="name">
@@ -68,7 +68,9 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         <!-- Row shown when there is no matching data. -->
         <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" colspan="6">No data matching the filter "{{input.value}}"</td>
+            <td class="mat-cell" colspan="6">
+                No data matching the filter
+            </td>
         </tr>
     </table>
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 50, 100]" aria-label="Select page of users"></mat-paginator>

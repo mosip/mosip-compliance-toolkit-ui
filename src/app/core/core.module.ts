@@ -9,6 +9,7 @@ import { AuthInterceptor } from './services/httpinterceptor';
 import { AuthService } from './services/authservice.service';
 import { AuthguardService } from './services/authguard.service';
 import { CanDeactivateGuardService } from './services/can-deactivate-guard.service';
+import { SbiTestCaseService } from './services/sbi-testcase-service';
 
 import { LoginRedirectService } from './services/loginredirect.service';
 import { DataService } from './services/data-service';
@@ -35,6 +36,7 @@ import { DialogComponent } from './components/dialog/dialog.component';
     LoginRedirectService,
     AuthguardService,
     CanDeactivateGuardService,
+    SbiTestCaseService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
