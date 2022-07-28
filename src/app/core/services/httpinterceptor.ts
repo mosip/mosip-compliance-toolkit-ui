@@ -32,7 +32,7 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(
     private redirectService: LoginRedirectService,
     private router: Router,
-    private appService: AppConfigService,
+    private appConfigService: AppConfigService,
     private cookieService: CookieService,
     private userProfileService: UserProfileService
   ) {}
@@ -41,10 +41,20 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    request = request.clone({ withCredentials: true });
-    request = request.clone({
-      setHeaders: { 'X-XSRF-TOKEN': this.cookieService.get('XSRF-TOKEN') },
-    });
+    let isLocalUrl = false;
+    if (this.appConfigService.getConfig()) {
+      const sbiUrl = this.appConfigService.getConfig()['SBI_BASE_URL'];
+      if (request.url.includes(sbiUrl)) {
+        isLocalUrl = true;
+      }
+    }
+    if (!isLocalUrl) {
+      request = request.clone({ withCredentials: true });
+      request = request.clone({
+        setHeaders: { 'X-XSRF-TOKEN': this.cookieService.get('XSRF-TOKEN') },
+      });
+    }
+
     return next.handle(request).pipe(
       tap(
         (event) => {
