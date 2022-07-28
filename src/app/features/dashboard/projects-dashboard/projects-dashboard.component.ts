@@ -46,9 +46,11 @@ export class ProjectsDashboardComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
+    
     await this.getProjects();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    
     this.dataLoaded = true;
   }
 
