@@ -4,7 +4,8 @@
 <div class="spinner" *ngIf="!dataLoaded">
     <mat-spinner diameter="50"></mat-spinner>
 </div>
-<div class="mat-elevation-z8"  *ngIf="dataLoaded">
+<p></p>
+<div class="mat-elevation-z8" *ngIf="dataLoaded">
     <form [formGroup]="projectForm" *ngIf="dataLoaded">
         <mat-accordion>
             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
@@ -284,14 +285,19 @@
             </mat-expansion-panel>
         </mat-accordion>
     </form>
-    <div class="list-container"  *ngIf="dataLoaded">
+    <div class="list-container" *ngIf="dataLoaded">
         <div class="collections-header-container">
             <button mat-flat-button color="accent" (click)="addCollection()" class="collections-button">
                 <mat-icon>add</mat-icon>
                 Add Collection
             </button>
+            <span align="end" *ngIf="projectForm.controls['projectType']?.value == 'SBI'">
+                <button mat-flat-button color="accent" (click)="scanDevice()">
+                    Scan Device
+                </button>
+            </span>
         </div>
-        <table mat-table [dataSource]="dataSource" matSort class="collections-table" *ngIf="dataLoaded">
+        <table mat-table [dataSource]="dataSource" matSort class="collections-table">
             <!--- Note that these columns can be defined in any order.
               The actual rendered columns are set as a property on the row definition" -->
             <ng-container matColumnDef="name">
@@ -313,8 +319,12 @@
             </ng-container>
             <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef> Run </th>
-                <td mat-cell *matCellDef="let row"> <button mat-flat-button color="accent"
-                        (click)="runCollection(row)">Run</button> </td>
+                <td mat-cell *matCellDef="let row">
+                    <button mat-flat-button color="accent" (click)="runCollection(row)" [disabled]="!isScanComplete"
+                        title="{{!isScanComplete ? 'You cannot run till you scan device first.' : 'Click to run the collection'}}">
+                        Run
+                    </button>
+                </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

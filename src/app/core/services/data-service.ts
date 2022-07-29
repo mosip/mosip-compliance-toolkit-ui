@@ -24,8 +24,8 @@ export class DataService {
     return this.httpClient.get(url);
   }
 
-  getProjectCollections(projectId: string, projectType: string) {
-    let url = `${this.SERVICES_BASE_URL}getProjectCollections?projectId=${projectId}&type=${projectType}`;
+  getCollections(projectId: string, projectType: string) {
+    let url = `${this.SERVICES_BASE_URL}getCollections?projectId=${projectId}&type=${projectType}`;
     console.log('url:' + url);
     return this.httpClient.get(url);
   }
@@ -60,8 +60,7 @@ export class DataService {
     return this.httpClient.post(url, body);
   }
 
-  callSBIMethod(methodName: string, methodType: string, requestBody: string, ) {
-    const port = '4501';
+  callSBIMethod(port: string, methodName: string, methodType: string, requestBody: any, ) {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
       accept: 'application/json',

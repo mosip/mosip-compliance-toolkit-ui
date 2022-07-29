@@ -14,8 +14,10 @@ export class AppConfigService {
     this.appConfig = await this.http.get('./assets/config.json').toPromise();
     console.log(this.appConfig.SERVICES_BASE_URL + "configs");
     this.http.get(this.appConfig.SERVICES_BASE_URL + "configs").subscribe(
-      (response) => {
+      (response: any) => {
       console.log(response);
+      this.appConfig = {...this.appConfig, ...response["response"]};
+      console.log(this.appConfig);
       },
       (error) => {
         console.log(error);

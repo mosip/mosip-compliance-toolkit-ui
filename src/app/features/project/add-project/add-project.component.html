@@ -150,7 +150,7 @@
                     <span class="fieldContainer">
                         <mat-form-field appearance="legacy" [style.width.px]=327>
                             <mat-label>Purpose:</mat-label>
-                            <mat-select formControlName="sbiPurpose" #singleSelect>
+                            <mat-select formControlName="sbiPurpose" #singleSelect (selectionChange)="handleSbiPurposeChange()">
                                 <mat-option value="Registration">
                                     Registration
                                 </mat-option>

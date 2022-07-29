@@ -18,6 +18,7 @@ import { Subscription } from 'rxjs';
 import * as appConstants from 'src/app/app.constants';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../../core/components/dialog/dialog.component';
+import { ScanDeviceComponent } from '../../scan-device/scan-device/scan-device.component';
 import { TestCaseModel } from 'src/app/core/models/testcase';
 
 export interface CollectionsData {
@@ -46,6 +47,10 @@ export class ViewProjectComponent implements OnInit {
     'runDtimes',
     'actions',
   ];
+  isScanComplete =
+    localStorage.getItem(appConstants.SCAN_SBI_DEVICE_COMPLETE) == 'true'
+      ? true
+      : false;
   hidePassword = true;
   subscriptions: Subscription[] = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -70,7 +75,7 @@ export class ViewProjectComponent implements OnInit {
       await this.getSbiProjectDetails();
       this.populateSbiProjectForm();
     }
-    await this.getProjectCollections();
+    await this.getCollections();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
@@ -139,16 +144,16 @@ export class ViewProjectComponent implements OnInit {
     });
   }
 
-  async getProjectCollections() {
+  async getCollections() {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
         this.dataService
-          .getProjectCollections(this.projectId, this.projectType)
+          .getCollections(this.projectId, this.projectType)
           .subscribe(
             (response: any) => {
               console.log(response);
               this.dataSource = new MatTableDataSource(
-                response['response']['collectionTestrunDtoList']
+                response['response']['collections']
               );
               resolve(true);
             },
@@ -164,7 +169,7 @@ export class ViewProjectComponent implements OnInit {
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
-  
+
   private showErrorMessage(errorsList: any) {
     let error = errorsList[0];
     const titleOnError = 'Error';
@@ -189,6 +194,25 @@ export class ViewProjectComponent implements OnInit {
   }
   addCollection() {}
 
+  scanDevice() {
+    const body = {
+      title: 'Scan Device',
+    };
+    this.dialog
+      .open(ScanDeviceComponent, {
+        width: '400px',
+        data: body,
+      })
+      .afterClosed()
+      .subscribe(
+        () =>
+          (this.isScanComplete =
+            localStorage.getItem(appConstants.SCAN_SBI_DEVICE_COMPLETE) ==
+            'true'
+              ? true
+              : false)
+      );
+  }
   async runCollection(row: any) {
     //first get list of testcases based on collectionId
     //let testCasesList = new TestCaseModel[];
@@ -206,7 +230,7 @@ export class ViewProjectComponent implements OnInit {
         {
           name: 'SchemaValidator',
           description: 'SchemaValidator',
-        }
+        },
       ],
       otherAttributes: {
         runtimeInput: '',
@@ -220,13 +244,11 @@ export class ViewProjectComponent implements OnInit {
         deviceSubId: '',
         modalities: [],
       },
-    }  
+    };
     let testCasesList = [testcase];
     if (this.projectType == appConstants.SBI) {
       let res = await this.sbiTestCaseService.runCollection(testCasesList);
       console.log(res);
     }
-    
   }
-
 }

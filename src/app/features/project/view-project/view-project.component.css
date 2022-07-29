@@ -70,6 +70,9 @@ mat-expansion-panel-header {
 }
 .collections-header-container {
   padding-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  width: 95%;
 }
 .collections-button + .collections-button {
   margin-left: 8px;

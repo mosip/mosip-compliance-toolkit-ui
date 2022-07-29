@@ -36,7 +36,21 @@ const routes: Routes = [
         (m) => m.CollectionsModule
       ),
   },
-  { path: 'TestRun', loadChildren: () => import('./features/test-run/test-run.module').then(m => m.TestRunModule) },
+  {
+    path: 'testrun',
+    loadChildren: () =>
+      import('./features/test-run/test-run.module').then(
+        (m) => m.TestRunModule
+      ),
+  },
+  {
+    path: 'scan/device',
+    data: { breadcrumb: 'Scan Device' },
+    loadChildren: () =>
+      import('./features/scan-device/scan-device.module').then(
+        (m) => m.ScanDeviceModule
+      ),
+  },
 ];
 
 @NgModule({
