@@ -86,7 +86,9 @@ export class AuthInterceptor implements HttpInterceptor {
         },
         (err) => {
           if (err instanceof HttpErrorResponse) {
-            this.showHomePage();
+            if (!isLocalUrl) {
+              this.showHomePage();
+            }
             //TODO alert ERROR
           }
         }

@@ -149,6 +149,11 @@ export class AddProjectComponent implements OnInit {
     }
   }
 
+  handleSbiPurposeChange() {
+    console.log("handleSbiPurposeChange");
+    this.projectForm.controls['deviceSubType'].setValue("");
+  }
+
   async addSbiProject(request: any) {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(

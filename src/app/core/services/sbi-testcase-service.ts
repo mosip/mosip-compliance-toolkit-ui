@@ -16,10 +16,9 @@ export class SbiTestCaseService {
     private dataService: DataService,
     private appConfigService: AppConfigService
   ) {}
-
+  
   
   async runCollection(testCasesList: TestCaseModel[]) {
-    
     /*testCasesList.forEach(async (testCase) => {
       const requestBody = this.populateSBIRequest(testCase);
       console.log(requestBody);
@@ -32,25 +31,21 @@ export class SbiTestCaseService {
     });*/
     const requestBody = this.populateSBIRequest(testCasesList[0]);
     console.log(requestBody);
-    if (testCasesList[0].methodName == 'device') {
-      // await this.dataService.callSBIMethod('MOSIPDISC', requestBody, testCasesList[0]).subscribe((response: any) => {
-      //   console.log(response);
-      //   return response;
-      // });
-      let res = await this.callSBIMethod('MOSIPDISC', requestBody, testCasesList[0]);
-      return res;
+    const methodName = testCasesList[0].methodName;
+    if (methodName == 'device') {
+      //let res = await this.callSBIMethod('MOSIPDISC', requestBody, methodName);
+      //return res;
     }
-    
   }
 
-  callSBIMethod(methodType: string, requestBody: any, testCase: any) {
-    const url = this.appConfigService.getConfig()['SBI_BASE_URL'];
-    const port = '4501';
-    const methodName = testCase.methodName;
-    let methodUrl = url + ':' + port + '/' + methodName;
-    console.log(methodUrl);
+  callSBIMethod(
+    port: string,
+    methodType: string,
+    requestBody: any,
+    methodName: string
+  ) {
     this.dataService
-      .callSBIMethod(methodName, methodType, requestBody)
+      .callSBIMethod(port, methodName, methodType, requestBody)
       .subscribe(
         (response) => {
           console.log(response);
@@ -166,5 +161,4 @@ export class SbiTestCaseService {
     });
     return bioSubTypes;
   }
-
 }

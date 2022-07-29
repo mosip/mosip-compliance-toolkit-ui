@@ -13,3 +13,4 @@ export const sbiControls = [
 ];
 export const abisControls = ['abisUrl', 'username', 'password', 'queueName'];
 export const SBI_PROJECT_ADD_ID ="mosip.toolkit.sbi.project.add";
+export const SCAN_SBI_DEVICE_COMPLETE = "scanSbiDeviceComplete";
