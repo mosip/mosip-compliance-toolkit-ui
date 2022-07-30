@@ -34,15 +34,15 @@ export class AddProjectComponent implements OnInit {
 
   ngOnInit(): void {
     this.allControls = [
-      ...appConstants.commonControls,
-      ...appConstants.sbiControls,
-      ...appConstants.sdkControls,
-      ...appConstants.abisControls,
+      ...appConstants.COMMON_CONTROLS,
+      ...appConstants.SBI_CONTROLS,
+      ...appConstants.SDK_CONTROLS,
+      ...appConstants.ABIS_CONTROLS,
     ];
     this.allControls.forEach((controlId) => {
       this.projectForm.addControl(controlId, new FormControl(''));
     });
-    appConstants.commonControls.forEach((controlId) => {
+    appConstants.COMMON_CONTROLS.forEach((controlId) => {
       this.projectForm.controls[controlId].setValidators(Validators.required);
     });
   }
@@ -51,7 +51,7 @@ export class AddProjectComponent implements OnInit {
     const projectType = this.projectForm.controls['projectType'].value;
     console.log(`selected project type: ${projectType}`);
     if (projectType == appConstants.SDK) {
-      appConstants.sdkControls.forEach((controlId) => {
+      appConstants.SDK_CONTROLS.forEach((controlId) => {
         this.projectForm.controls[controlId].setValidators(Validators.required);
         if (controlId == 'sdkUrl') {
           this.projectForm.controls[controlId].setValidators([
@@ -60,30 +60,30 @@ export class AddProjectComponent implements OnInit {
           ]);
         }
       });
-      appConstants.sbiControls.forEach((controlId) => {
+      appConstants.SBI_CONTROLS.forEach((controlId) => {
         this.projectForm.controls[controlId].clearValidators();
         this.projectForm.controls[controlId].updateValueAndValidity();
       });
-      appConstants.abisControls.forEach((controlId) => {
+      appConstants.ABIS_CONTROLS.forEach((controlId) => {
         this.projectForm.controls[controlId].clearValidators();
         this.projectForm.controls[controlId].updateValueAndValidity();
       });
     }
     if (projectType == appConstants.SBI) {
-      appConstants.sbiControls.forEach((controlId) => {
+      appConstants.SBI_CONTROLS.forEach((controlId) => {
         this.projectForm.controls[controlId].setValidators(Validators.required);
       });
-      appConstants.sdkControls.forEach((controlId) => {
+      appConstants.SDK_CONTROLS.forEach((controlId) => {
         this.projectForm.controls[controlId].clearValidators();
         this.projectForm.controls[controlId].updateValueAndValidity();
       });
-      appConstants.abisControls.forEach((controlId) => {
+      appConstants.ABIS_CONTROLS.forEach((controlId) => {
         this.projectForm.controls[controlId].clearValidators();
         this.projectForm.controls[controlId].updateValueAndValidity();
       });
     }
     if (projectType == appConstants.ABIS) {
-      appConstants.abisControls.forEach((controlId) => {
+      appConstants.ABIS_CONTROLS.forEach((controlId) => {
         this.projectForm.controls[controlId].setValidators(Validators.required);
         if (controlId == 'abisUrl') {
           this.projectForm.controls[controlId].setValidators([
@@ -92,11 +92,11 @@ export class AddProjectComponent implements OnInit {
           ]);
         }
       });
-      appConstants.sbiControls.forEach((controlId) => {
+      appConstants.SBI_CONTROLS.forEach((controlId) => {
         this.projectForm.controls[controlId].clearValidators();
         this.projectForm.controls[controlId].updateValueAndValidity();
       });
-      appConstants.sdkControls.forEach((controlId) => {
+      appConstants.SDK_CONTROLS.forEach((controlId) => {
         this.projectForm.controls[controlId].clearValidators();
         this.projectForm.controls[controlId].updateValueAndValidity();
       });
@@ -104,24 +104,24 @@ export class AddProjectComponent implements OnInit {
   }
 
   async saveProject() {
-    appConstants.commonControls.forEach((controlId) => {
+    appConstants.COMMON_CONTROLS.forEach((controlId) => {
       this.projectForm.controls[controlId].markAsTouched();
     });
     this.projectForm.controls['projectType'].markAsTouched();
     const projectType = this.projectForm.controls['projectType'].value;
     console.log(`saveProject for type: ${projectType}`);
     if (projectType == appConstants.SDK) {
-      appConstants.sdkControls.forEach((controlId) => {
+      appConstants.SDK_CONTROLS.forEach((controlId) => {
         this.projectForm.controls[controlId].markAsTouched();
       });
     }
     if (projectType == appConstants.SBI) {
-      appConstants.sbiControls.forEach((controlId) => {
+      appConstants.SBI_CONTROLS.forEach((controlId) => {
         this.projectForm.controls[controlId].markAsTouched();
       });
     }
     if (projectType == appConstants.ABIS) {
-      appConstants.abisControls.forEach((controlId) => {
+      appConstants.ABIS_CONTROLS.forEach((controlId) => {
         this.projectForm.controls[controlId].markAsTouched();
       });
     }

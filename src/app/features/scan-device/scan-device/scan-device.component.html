@@ -1,39 +1,43 @@
 <h2 mat-dialog-title class="mat-dialog-title-error" *ngIf="input.title">{{ input.title }}</h2>
 <mat-dialog-content style="white-space: pre-line;">
     <span *ngIf="!scanComplete">Scanning for devices..</span>
-    <span *ngIf="scanComplete">Scanning complete</span>
+    <span *ngIf="scanComplete && portsData.length > 0" style="color: #fd518c;">Scanning complete. Select port and device.</span>
+    <span *ngIf="scanComplete && portsData.length <= 0" style="color: #fd518c;">Scanning failed. Connect your device and scan again.</span>
     <div class="spinner" *ngIf="!scanComplete">
         <mat-spinner diameter="50"></mat-spinner>
     </div>
     <p></p>
     <div *ngIf="scanComplete">
-        <form [formGroup]="scanForm" *ngIf="scanComplete">
+        <!-- <span *ngIf="portsData.length == 0" style="color: #fd518c;">
+            Scanning failed. Connect your device and try again. 
+        </span> -->
+        <form [formGroup]="scanForm" *ngIf="scanComplete && portsData.length > 0">
             <div class="formContainer">
-                <mat-form-field appearance="legacy" [style.width.px]=327>
+                <mat-form-field appearance="legacy" [style.width.px]=500>
                     <mat-label>Available Ports:</mat-label>
-                    <mat-select formControlName="availablePort" #singleSelect>
-                        <ng-container *ngFor="let dropdown of availableSbiPorts">
+                    <mat-select formControlName="ports" #singleSelect (selectionChange)="showDevices()">
+                        <ng-container *ngFor="let dropdown of portsData">
                             <mat-option [value]="dropdown">
                                 {{ dropdown}}
                             </mat-option>
                         </ng-container>
                     </mat-select>
-                    <mat-error *ngIf="scanForm.controls['availablePort'].hasError('required')">
+                    <mat-error *ngIf="scanForm.controls['ports'].hasError('required')">
                         Port is required
                     </mat-error>
                 </mat-form-field>
                 <p></p>
-                <mat-form-field appearance="legacy" [style.width.px]=327>
+                <mat-form-field appearance="legacy" [style.width.px]=500>
                     <mat-label>Device:</mat-label>
-                    <mat-select formControlName="availableDevices" #singleSelect>
-                        <ng-container *ngFor="let dropdown of availableSbiDevices">
-                            <mat-option [value]="dropdown">
-                                {{ dropdown}}
+                    <mat-select formControlName="devices" #singleSelect>
+                        <ng-container *ngFor="let dropdown of devicesData">
+                            <mat-option [value]="dropdown" title="{{getDeviceLabel(dropdown)}}">
+                                {{getDeviceLabel(dropdown)}}
                             </mat-option>
                         </ng-container>
                     </mat-select>
-                    <mat-error *ngIf="scanForm.controls['availableDevices'].hasError('required')">
-                        Port is required
+                    <mat-error *ngIf="scanForm.controls['devices'].hasError('required')">
+                        Device is required
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -41,5 +45,6 @@
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-flat-button color="accent" (click)="closeMe()">Close</button>
+    <button mat-flat-button color="accent" (click)="save()" *ngIf="scanComplete && portsData.length > 0">Save</button>
+    <button mat-flat-button color="accent" (click)="startScan()" *ngIf="scanComplete && portsData.length <= 0">Scan Again</button>
 </mat-dialog-actions>
