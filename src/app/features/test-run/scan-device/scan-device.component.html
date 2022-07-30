@@ -1,4 +1,4 @@
-<h2 mat-dialog-title class="mat-dialog-title-error" *ngIf="input.title">{{ input.title }}</h2>
+<h2 mat-dialog-title *ngIf="input.title">{{ input.title }}</h2>
 <mat-dialog-content style="white-space: pre-line;">
     <span *ngIf="!scanComplete">Scanning for devices..</span>
     <span *ngIf="scanComplete && !previousScanAvailable && portsData.length > 0" style="color: #fd518c;">Scanning

@@ -18,8 +18,9 @@ import { Subscription } from 'rxjs';
 import * as appConstants from 'src/app/app.constants';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../../core/components/dialog/dialog.component';
-import { ScanDeviceComponent } from '../../scan-device/scan-device/scan-device.component';
+import { ScanDeviceComponent } from '../../test-run/scan-device/scan-device.component';
 import { TestCaseModel } from 'src/app/core/models/testcase';
+import { ExecuteTestRunComponent } from '../../test-run/execute-test-run/execute-test-run.component';
 
 export interface CollectionsData {
   id: string;
@@ -94,7 +95,7 @@ export class ViewProjectComponent implements OnInit {
       ...appConstants.SBI_CONTROLS,
     ];
     this.allControls.forEach((controlId) => {
-      this.projectForm.addControl(controlId, new FormControl(''));
+      this.projectForm.addControl(controlId, new FormControl({value: '', disabled: true}));
     });
   }
 
@@ -207,15 +208,14 @@ export class ViewProjectComponent implements OnInit {
       .subscribe(
         () =>
           (this.isScanComplete =
-            localStorage.getItem(appConstants.SBI_SCAN_COMPLETE) ==
-            'true'
+            localStorage.getItem(appConstants.SBI_SCAN_COMPLETE) == 'true'
               ? true
               : false)
       );
   }
   async runCollection(row: any) {
     //first get list of testcases based on collectionId
-    //let testCasesList = new TestCaseModel[];
+    let testCasesList = [];
     const testcase: TestCaseModel = {
       testCaseType: 'SBI',
       testName: 'Discover device',
@@ -245,10 +245,17 @@ export class ViewProjectComponent implements OnInit {
         modalities: [],
       },
     };
-    let testCasesList = [testcase];
-    if (this.projectType == appConstants.SBI) {
-      let res = await this.sbiTestCaseService.runCollection(testCasesList);
-      console.log(res);
-    }
+    testCasesList.push(testcase);
+    const body = {
+      title: `Executing collection: ${row.name}, Total testcases: ${row.testCaseCount}`,
+      testCasesList: testCasesList
+    };
+    this.dialog
+      .open(ExecuteTestRunComponent, {
+        width: '700px',
+        data: body,
+      })
+      .afterClosed()
+      .subscribe();
   }
 }
