@@ -1,0 +1,25 @@
+.title {
+  color: #fd518c;
+  font-size: 16px;
+  text-transform: uppercase;
+  border-bottom: 1px solid #fd518c;
+}
+
+.spinner {
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5vw;
+  display: flex;
+}
+.main-line {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  align-items: center;
+}
+.spacer {
+  flex: 1 1 auto;
+}
+.run-container .mat-dialog-container{
+  background-color: greenyellow !important;
+}

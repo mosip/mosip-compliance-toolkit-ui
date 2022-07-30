@@ -44,9 +44,10 @@
         </form>
     </div>
 </mat-dialog-content>
-<mat-dialog-actions>
+<mat-dialog-actions align="end">
     <button mat-flat-button color="accent" (click)="startScan()"
         *ngIf="scanComplete && (portsData.length <= 0 || previousScanAvailable)">Scan
         Again</button>
+    <span class="spacer"></span>
     <button mat-flat-button color="accent" (click)="save()" *ngIf="scanComplete && portsData.length > 0">Save</button>
 </mat-dialog-actions>
