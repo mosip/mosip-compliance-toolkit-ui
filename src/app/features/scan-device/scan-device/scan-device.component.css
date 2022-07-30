@@ -4,3 +4,14 @@
     padding: 5px;
     padding-left: 10px;
   }
+  .spinner {
+    flex-direction: column;
+    align-items: center;
+    /* margin-top: 18vw; */
+    display: flex;
+  }
+  mat-dialog-actions {
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+  }

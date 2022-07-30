@@ -48,7 +48,7 @@ export class ViewProjectComponent implements OnInit {
     'actions',
   ];
   isScanComplete =
-    localStorage.getItem(appConstants.SCAN_SBI_DEVICE_COMPLETE) == 'true'
+    localStorage.getItem(appConstants.SBI_SCAN_COMPLETE) == 'true'
       ? true
       : false;
   hidePassword = true;
@@ -90,8 +90,8 @@ export class ViewProjectComponent implements OnInit {
 
   initSbiProjectForm() {
     this.allControls = [
-      ...appConstants.commonControls,
-      ...appConstants.sbiControls,
+      ...appConstants.COMMON_CONTROLS,
+      ...appConstants.SBI_CONTROLS,
     ];
     this.allControls.forEach((controlId) => {
       this.projectForm.addControl(controlId, new FormControl(''));
@@ -200,14 +200,14 @@ export class ViewProjectComponent implements OnInit {
     };
     this.dialog
       .open(ScanDeviceComponent, {
-        width: '400px',
+        width: '600px',
         data: body,
       })
       .afterClosed()
       .subscribe(
         () =>
           (this.isScanComplete =
-            localStorage.getItem(appConstants.SCAN_SBI_DEVICE_COMPLETE) ==
+            localStorage.getItem(appConstants.SBI_SCAN_COMPLETE) ==
             'true'
               ? true
               : false)
