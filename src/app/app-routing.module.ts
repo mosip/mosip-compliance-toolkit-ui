@@ -43,14 +43,6 @@ const routes: Routes = [
         (m) => m.TestRunModule
       ),
   },
-  {
-    path: 'scan/device',
-    data: { breadcrumb: 'Scan Device' },
-    loadChildren: () =>
-      import('./features/scan-device/scan-device.module').then(
-        (m) => m.ScanDeviceModule
-      ),
-  },
 ];
 
 @NgModule({

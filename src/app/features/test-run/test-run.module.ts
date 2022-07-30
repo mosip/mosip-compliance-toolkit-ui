@@ -6,12 +6,14 @@ import { BreadcrumbModule, BreadcrumbService  } from 'xng-breadcrumb';
 import { MaterialModule } from '../../core/material.module';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
-import { TestRunComponent } from './test-run/test-run.component';
+import { ExecuteTestRunComponent } from './execute-test-run/execute-test-run.component';
+import { ScanDeviceComponent } from './scan-device/scan-device.component';
 
 
 @NgModule({
   declarations: [
-    TestRunComponent
+    ExecuteTestRunComponent,
+    ScanDeviceComponent
   ],
   imports: [
     CommonModule,

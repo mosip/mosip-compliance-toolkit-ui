@@ -35,7 +35,7 @@
                         <span class="fieldContainer">
                             <div [style.width.px]=327>
                                 <mat-radio-group aria-label="Select an option" formControlName="projectType"
-                                    appearance="legacy" [disabled]="true">
+                                    appearance="legacy">
                                     <mat-radio-button value="SBI">SBI</mat-radio-button>
                                     <mat-radio-button value="SDK">SDK</mat-radio-button>
                                     <mat-radio-button value="ABIS">ABIS</mat-radio-button>
@@ -122,7 +122,7 @@
                                 </span>
                                 <span class="fieldContainer">
                                     <mat-form-field appearance="legacy" [style.width.px]=327>
-                                        <mat-select formControlName="sbiSpecVersion" #singleSelect [disabled]="true">
+                                        <mat-select formControlName="sbiSpecVersion" #singleSelect>
                                             <mat-option value="0.9.5">
                                                 0.9.5
                                             </mat-option>
@@ -140,7 +140,7 @@
                                 </span>
                                 <span class="fieldContainer">
                                     <mat-form-field appearance="legacy" [style.width.px]=327>
-                                        <mat-select formControlName="sbiPurpose" #singleSelect [disabled]="true">
+                                        <mat-select formControlName="sbiPurpose" #singleSelect>
                                             <mat-option value="Registration">
                                                 Registration
                                             </mat-option>
@@ -160,7 +160,7 @@
                                 </span>
                                 <span class="fieldContainer">
                                     <mat-form-field appearance="legacy" [style.width.px]=327>
-                                        <mat-select formControlName="deviceType" #singleSelect [disabled]="true">
+                                        <mat-select formControlName="deviceType" #singleSelect>
                                             <mat-option value="Finger">
                                                 Finger
                                             </mat-option>
@@ -181,7 +181,7 @@
                                 </span>
                                 <span class="fieldContainer">
                                     <mat-form-field appearance="legacy" [style.width.px]=327>
-                                        <mat-select formControlName="deviceSubType" #singleSelect [disabled]="true">
+                                        <mat-select formControlName="deviceSubType" #singleSelect>
                                             <mat-option value="Slap"
                                                 *ngIf="projectForm.controls['deviceType'].value == 'Finger'">
                                                 Slap
@@ -320,8 +320,9 @@
             <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef> Run </th>
                 <td mat-cell *matCellDef="let row">
-                    <button mat-flat-button color="accent" (click)="runCollection(row)" [disabled]="!isScanComplete"
-                        title="{{!isScanComplete ? 'You cannot run till you scan device first.' : 'Click to run the collection'}}">
+                    <button mat-flat-button color="accent" (click)="runCollection(row)"
+                        [disabled]="!isScanComplete || row.testCaseCount == 0"
+                        title="{{!isScanComplete ? 'You cannot run till you scan device first.' : row.testCaseCount == 0 ? 'Add testcases first':'Click to run the collection'}}">
                         Run
                     </button>
                 </td>

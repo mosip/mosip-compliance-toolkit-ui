@@ -1,11 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TestRunComponent } from './test-run/test-run.component';
+import { ScanDeviceComponent } from './scan-device/scan-device.component';
+import { ExecuteTestRunComponent } from './execute-test-run/execute-test-run.component';
 
-const routes: Routes = [{ path: '', component: TestRunComponent }];
+const routes: Routes = [
+  { path: 'execute', component: ExecuteTestRunComponent, data: { breadcrumb: 'Execute Test Run' },},
+  {
+    path: 'scan/device',
+    data: { breadcrumb: 'Scan Device' },
+    component: ScanDeviceComponent,
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class TestRunRoutingModule { }
+export class TestRunRoutingModule {}
