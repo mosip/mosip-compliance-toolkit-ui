@@ -10,4 +10,8 @@
     /* margin-top: 18vw; */
     display: flex;
   }
-  
+  mat-dialog-actions {
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+  }

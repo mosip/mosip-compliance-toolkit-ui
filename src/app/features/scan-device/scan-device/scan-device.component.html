@@ -1,16 +1,16 @@
 <h2 mat-dialog-title class="mat-dialog-title-error" *ngIf="input.title">{{ input.title }}</h2>
 <mat-dialog-content style="white-space: pre-line;">
     <span *ngIf="!scanComplete">Scanning for devices..</span>
-    <span *ngIf="scanComplete && portsData.length > 0" style="color: #fd518c;">Scanning complete. Select port and device.</span>
-    <span *ngIf="scanComplete && portsData.length <= 0" style="color: #fd518c;">Scanning failed. Connect your device and scan again.</span>
+    <span *ngIf="scanComplete && !previousScanAvailable && portsData.length > 0" style="color: #fd518c;">Scanning
+        complete. Select port and device.</span>
+    <span *ngIf="scanComplete && portsData.length <= 0" style="color: #fd518c;">Scanning failed. Connect your device and
+        scan again.</span>
+    <span *ngIf="scanComplete && previousScanAvailable" style="color: #fd518c;">Scanning already complete.</span>
     <div class="spinner" *ngIf="!scanComplete">
         <mat-spinner diameter="50"></mat-spinner>
     </div>
     <p></p>
     <div *ngIf="scanComplete">
-        <!-- <span *ngIf="portsData.length == 0" style="color: #fd518c;">
-            Scanning failed. Connect your device and try again. 
-        </span> -->
         <form [formGroup]="scanForm" *ngIf="scanComplete && portsData.length > 0">
             <div class="formContainer">
                 <mat-form-field appearance="legacy" [style.width.px]=500>
@@ -31,7 +31,7 @@
                     <mat-label>Device:</mat-label>
                     <mat-select formControlName="devices" #singleSelect>
                         <ng-container *ngFor="let dropdown of devicesData">
-                            <mat-option [value]="dropdown" title="{{getDeviceLabel(dropdown)}}">
+                            <mat-option value="{{myjson.stringify(dropdown)}}" title="{{getDeviceLabel(dropdown)}}">
                                 {{getDeviceLabel(dropdown)}}
                             </mat-option>
                         </ng-container>
@@ -44,7 +44,9 @@
         </form>
     </div>
 </mat-dialog-content>
-<mat-dialog-actions align="end">
+<mat-dialog-actions>
+    <button mat-flat-button color="accent" (click)="startScan()"
+        *ngIf="scanComplete && (portsData.length <= 0 || previousScanAvailable)">Scan
+        Again</button>
     <button mat-flat-button color="accent" (click)="save()" *ngIf="scanComplete && portsData.length > 0">Save</button>
-    <button mat-flat-button color="accent" (click)="startScan()" *ngIf="scanComplete && portsData.length <= 0">Scan Again</button>
 </mat-dialog-actions>
