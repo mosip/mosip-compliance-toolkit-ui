@@ -1,22 +1,22 @@
-<h2 mat-dialog-title *ngIf="input.title">{{ input.title }}</h2>
-<mat-dialog-content style="white-space: pre-line;">
-    <!-- <span *ngIf="!scanComplete">Scanning for devices..</span>
-    <span *ngIf="scanComplete && !previousScanAvailable && portsData.length > 0" style="color: #fd518c;">Scanning
-        complete. Select port and device.</span>
-    <span *ngIf="scanComplete && portsData.length <= 0" style="color: #fd518c;">Scanning failed. Connect your device and
-        scan again.</span>
-    <span *ngIf="scanComplete && previousScanAvailable" style="color: #fd518c;">Scanning already complete.</span>
-    <div class="spinner" *ngIf="!scanComplete">
+<h2 mat-dialog-title class="title" *ngIf="input.title">{{ input.title }}</h2>
+<mat-dialog-content style="white-space: pre-line;" class="run-container">
+    <span class="main-line">
+        <span *ngIf="!runComplete">Execution of testcases for <b>{{input.collectionName}}</b> has started..</span>
+        <span *ngIf="runComplete">
+            <mat-icon>check_circle</mat-icon>Execution complete for <b>{{input.collectionName}}</b></span>
+        <span align="end">
+            <mat-icon>timelapse</mat-icon>
+            <cd-timer #basicTimer format="hms"></cd-timer>
+        </span>
+    </span>
+    <div *ngIf="!runComplete">
+        Executing testcase: {{currectTestCaseId}} - {{currectTestCaseName}}
+    </div>
+    <div class="spinner" *ngIf="!runComplete">
         <mat-spinner diameter="50"></mat-spinner>
     </div>
-    <p></p>
-    <div *ngIf="scanComplete">
-        
-    </div> -->
 </mat-dialog-content>
-<mat-dialog-actions>
-    <!-- <button mat-flat-button color="accent" (click)="startScan()"
-        *ngIf="scanComplete && (portsData.length <= 0 || previousScanAvailable)">Scan
-        Again</button>
-    <button mat-flat-button color="accent" (click)="save()" *ngIf="scanComplete && portsData.length > 0">Save</button> -->
+<mat-dialog-actions align="end">
+    <button mat-flat-button color="accent" *ngIf="!runComplete" (click)="abort()">Abort</button>
+    <button mat-flat-button color="accent" *ngIf="runComplete" (click)="saveTestRun()">Save Test Run</button>
 </mat-dialog-actions>

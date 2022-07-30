@@ -81,11 +81,13 @@ export class ScanDeviceComponent implements OnInit {
     localStorage.removeItem(appConstants.SBI_SCAN_DATA);
     localStorage.removeItem(appConstants.SBI_SCAN_COMPLETE);
   }
-  
+
   async startScan() {
     this.scanComplete = false;
     this.resetPreviousScan();
-    await this.scanDevices();
+    for (const sbiPort of this.SBI_PORTS) {
+      await this.scanDevices(sbiPort);
+    }
     if (this.portsData.length > 0) {
       localStorage.setItem(
         appConstants.SBI_SCAN_DATA,
@@ -95,44 +97,43 @@ export class ScanDeviceComponent implements OnInit {
     this.scanComplete = true;
   }
 
-  async scanDevices() {
+  async scanDevices(sbiPort: string) {
     const requestBody = {
       type: appConstants.BIOMETRIC_DEVICE,
     };
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
-        this.SBI_PORTS.forEach((sbiPort: string) => {
-          this.dataService
-            .callSBIMethod(
-              sbiPort,
-              appConstants.SBI_METHOD_DEVICE,
-              appConstants.SBI_METHOD_DEVICE_KEY,
-              requestBody
-            )
-            .subscribe(
-              (response: any) => {
-                if (response) {
-                  this.portsData.push(sbiPort);
-                  let data = response;
-                  let decodedDataArr: SbiDiscoverResponseModel[] = [];
-                  data.forEach((deviceData: any) => {
-                    const decodedData = this.getDecodedDeviceData(deviceData);
-                    if (decodedData != null) {
-                      decodedDataArr.push(decodedData);
-                    }
-                  });
-                  this.portDevicesData.set(
-                    sbiPort,
-                    JSON.stringify(decodedDataArr)
-                  );
-                  resolve(true);
-                }
-              },
-              (error) => {
+        this.dataService
+          .callSBIMethod(
+            sbiPort,
+            appConstants.SBI_METHOD_DEVICE,
+            appConstants.SBI_METHOD_DEVICE_KEY,
+            requestBody
+          )
+          .subscribe(
+            (response: any) => {
+              if (response) {
+                this.portsData.push(sbiPort);
+                let data = response;
+                let decodedDataArr: SbiDiscoverResponseModel[] = [];
+                data.forEach((deviceData: any) => {
+                  const decodedData = this.getDecodedDeviceData(deviceData);
+                  if (decodedData != null) {
+                    decodedDataArr.push(decodedData);
+                  }
+                });
+                console.log(decodedDataArr);
+                this.portDevicesData.set(
+                  sbiPort,
+                  JSON.stringify(decodedDataArr)
+                );
                 resolve(true);
               }
-            );
-        })
+            },
+            (error) => {
+              resolve(true);
+            }
+          )
       );
     });
   }

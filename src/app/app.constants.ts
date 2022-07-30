@@ -20,3 +20,6 @@ export const SBI_SELECTED_PORT = 'sbiSelectedPort';
 export const BIOMETRIC_DEVICE = 'Biometric Device';
 export const SBI_METHOD_DEVICE = 'device';
 export const SBI_METHOD_DEVICE_KEY = 'MOSIPDISC';
+export const SBI_METHOD_CAPTURE = 'capture';
+export const SBI_METHOD_CAPTURE_KEY = 'CAPTURE';
+export const DEVELOPER = 'Developer';

@@ -247,7 +247,9 @@ export class ViewProjectComponent implements OnInit {
     };
     testCasesList.push(testcase);
     const body = {
-      title: `Executing collection: ${row.name}, Total testcases: ${row.testCaseCount}`,
+      title: `New Test Run Started`,
+      collectionName: row.name,
+      projectType: this.projectType,
       testCasesList: testCasesList
     };
     this.dialog

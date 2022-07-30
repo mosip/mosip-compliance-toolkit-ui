@@ -5,10 +5,10 @@ import { TestRunRoutingModule } from './test-run-routing.module';
 import { BreadcrumbModule, BreadcrumbService  } from 'xng-breadcrumb';
 import { MaterialModule } from '../../core/material.module';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { CdTimerModule } from 'angular-cd-timer';
 
 import { ExecuteTestRunComponent } from './execute-test-run/execute-test-run.component';
 import { ScanDeviceComponent } from './scan-device/scan-device.component';
-
 
 @NgModule({
   declarations: [
@@ -21,7 +21,8 @@ import { ScanDeviceComponent } from './scan-device/scan-device.component';
     BreadcrumbModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CdTimerModule
   ],
   providers: [BreadcrumbService]
 })

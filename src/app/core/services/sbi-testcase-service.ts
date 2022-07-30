@@ -7,6 +7,8 @@ import {
 import { AppConfigService } from '../../app-config.service';
 import { TestCaseModel } from '../models/testcase';
 import { DataService } from './data-service';
+import * as appConstants from 'src/app/app.constants';
+import { SbiDiscoverResponseModel } from '../models/sbi-discover';
 
 @Injectable({
   providedIn: 'root',
@@ -16,25 +18,53 @@ export class SbiTestCaseService {
     private dataService: DataService,
     private appConfigService: AppConfigService
   ) {}
-  
-  
-  async runCollection(testCasesList: TestCaseModel[]) {
-    /*testCasesList.forEach(async (testCase) => {
-      const requestBody = this.populateSBIRequest(testCase);
-      console.log(requestBody);
-      if (testCase.methodName == 'device') {
-        resp = await this.dataService.callSBIMethod('MOSIPDISC', requestBody, testCase);
-      }
-      // if (testCase.methodName == 'capture') {
-      //this.callSBIMethod('CAPTURE', requestBody, testCase);
-      //}
-    });*/
-    const requestBody = this.populateSBIRequest(testCasesList[0]);
-    console.log(requestBody);
-    const methodName = testCasesList[0].methodName;
-    if (methodName == 'device') {
-      //let res = await this.callSBIMethod('MOSIPDISC', requestBody, methodName);
-      //return res;
+
+  async runTestCase(
+    testCase: TestCaseModel,
+    sbiSelectedPort: string,
+    sbiSelectedDevice: string
+  ) {
+    return new Promise(async (resolve, reject) => {
+      const methodRequest = this.createRequest(testCase, sbiSelectedDevice);
+      let methodResponse = await this.executeMethod(
+        testCase.methodName,
+        sbiSelectedPort,
+        methodRequest
+      );
+      console.log(methodResponse);
+      //now validate the response
+      let validationResults = await this.validateResponse(
+        testCase,
+        methodRequest,
+        methodResponse
+      );
+      resolve(validationResults);
+    });
+  }
+
+  async executeMethod(
+    methodName: string,
+    sbiSelectedPort: string,
+    methodRequest: any
+  ) {
+    if (methodName == appConstants.SBI_METHOD_DEVICE) {
+      let methodResponse = await this.callSBIMethod(
+        sbiSelectedPort,
+        appConstants.SBI_METHOD_DEVICE_KEY,
+        methodRequest,
+        methodName
+      );
+      console.log(methodResponse);
+      return methodResponse;
+    }
+    if (methodName == appConstants.SBI_METHOD_CAPTURE) {
+      let methodResponse = await this.callSBIMethod(
+        sbiSelectedPort,
+        appConstants.SBI_METHOD_CAPTURE_KEY,
+        methodRequest,
+        methodName
+      );
+      return methodResponse;
     }
   }
 
@@ -44,58 +74,45 @@ export class SbiTestCaseService {
     requestBody: any,
     methodName: string
   ) {
-    this.dataService
-      .callSBIMethod(port, methodName, methodType, requestBody)
-      .subscribe(
-        (response) => {
-          console.log(response);
-          //this.dataSource = response;
-          // dialog.open(DialogComponent, {
-          //   data: {
-          //     testCase: testCase,
-          //     methodRequest: requestBody,
-          //     methodResponse: response,
-          //     methodStatus: 'Success',
-          //   },
-          // });
-        },
-        (error) => {
-          // dialog.open(DialogComponent, {
-          //   data: {
-          //     testCase: testCase,
-          //     methodRequest: requestBody,
-          //     methodName: methodName,
-          //     methodResponse: error,
-          //     methodStatus: 'error',
-          //   },
-          // });
-        }
-      );
+    return new Promise((resolve, reject) => {
+      this.dataService
+        .callSBIMethod(port, methodName, methodType, requestBody)
+        .subscribe(
+          (response) => {
+            console.log(response);
+            //return response;
+            resolve(response);
+          },
+          (error) => {}
+        );
+    });
   }
 
-  populateSBIRequest(testCase: any): any {
+  createRequest(testCase: TestCaseModel, sbiSelectedDevice: string): any {
+    const selectedSbiDevice: SbiDiscoverResponseModel =
+      JSON.parse(sbiSelectedDevice);
     let request = {};
-    if (testCase.methodName == 'device') {
+    if (testCase.methodName == appConstants.SBI_METHOD_DEVICE) {
       request = {
-        type: 'Biometric Device',
+        type: appConstants.BIOMETRIC_DEVICE,
       };
     }
-    if (testCase.methodName == 'capture') {
+    if (testCase.methodName == appConstants.SBI_METHOD_CAPTURE) {
       request = {
-        env: 'Developer',
-        purpose: testCase.otherAttributes.purpose[0],
-        specVersion: testCase.specVersion,
+        env: appConstants.DEVELOPER,
+        purpose: selectedSbiDevice.purpose,
+        specVersion: selectedSbiDevice.specVersion,
         timeout: 10000,
         captureTime: new Date().toISOString(),
         transactionId: '1636824682071',
         bio: [
           {
-            type: testCase.otherAttributes.biometricTypes[0],
+            type: selectedSbiDevice.digitalIdDecoded.type,
             count: testCase.otherAttributes.bioCount,
             exception: testCase.otherAttributes.exceptions,
             requestedScore: testCase.otherAttributes.requestedScore,
             deviceId: '4',
-            deviceSubId: testCase.otherAttributes.deviceSubId,
+            deviceSubId: selectedSbiDevice.deviceSubId,
             previousHash: '',
             bioSubType: this.getBioSubType(testCase.otherAttributes.segments),
           },
@@ -160,5 +177,36 @@ export class SbiTestCaseService {
       bioSubTypes.push(mappedVal);
     });
     return bioSubTypes;
+  }
+
+  async validateResponse(
+    testCase: TestCaseModel,
+    methodRequest: any,
+    methodResponse: any
+  ) {
+    return new Promise((resolve, reject) => {
+      console.log('validateResponse called');
+      let validateRequest = {
+        testCaseType: testCase.testCaseType,
+        testName: testCase.testName,
+        testDescription: testCase.testDescription,
+        responseSchema: testCase.responseSchema,
+        methodResponse: JSON.stringify(methodResponse),
+        methodRequest: JSON.stringify(methodRequest),
+        validatorDefs: testCase.validatorDefs,
+      };
+      console.log(validateRequest);
+      let request = {
+        id: appConstants.SBI_PROJECT_ADD_ID,
+        version: appConstants.VERSION,
+        requesttime: new Date().toISOString(),
+        request: validateRequest,
+      };
+      this.dataService.validateResponse(request).subscribe((response) => {
+        console.log(response);
+        resolve(response);
+        //this.testCaseResults = JSON.stringify(response);
+      });
+    });
   }
 }
