@@ -1,4 +1,4 @@
-.title {
+.mat-dialog-title {
   color: #fd518c;
   font-size: 16px;
   text-transform: uppercase;
@@ -16,10 +16,26 @@
   justify-content: space-between;
   width: 90%;
   align-items: center;
+  padding-bottom: 30px;
 }
 .spacer {
   flex: 1 1 auto;
 }
-.run-container .mat-dialog-container{
-  background-color: greenyellow !important;
+mat-dialog-container{
+  background-color: #ff4081 !important;
+}
+.custom-class mat-icon {
+  vertical-align: middle;
+}
+mat-dialog-actions {
+  padding-top: 10px;
+  border-top: 1px solid #ff4081;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.link {
+  cursor: pointer;
+  color: #ff4081;
 }

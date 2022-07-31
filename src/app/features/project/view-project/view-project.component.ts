@@ -219,7 +219,36 @@ export class ViewProjectComponent implements OnInit {
     const testcase: TestCaseModel = {
       testCaseType: 'SBI',
       testName: 'Discover device',
-      testId: 'SBI1000',
+      testId: 'SBI0001',
+      specVersion: '0.9.5',
+      testDescription: 'Valid Discover Request',
+      testOrderSequence: 1,
+      methodName: 'device',
+      requestSchema: 'DiscoverRequestSchema',
+      responseSchema: 'DiscoverResponseSchema',
+      validatorDefs: [
+        {
+          name: 'SchemaValidator',
+          description: 'SchemaValidator',
+        }
+      ],
+      otherAttributes: {
+        runtimeInput: '',
+        purpose: ['Registration', 'Auth'],
+        biometricTypes: ['Finger', 'Iris', 'Face'],
+        deviceSubTypes: ['Slap', 'Single', 'Double', 'Full face'],
+        segments: [],
+        exceptions: [],
+        requestedScore: '',
+        bioCount: '',
+        deviceSubId: '',
+        modalities: [],
+      },
+    };
+    const testcase1: TestCaseModel = {
+      testCaseType: 'SBI',
+      testName: 'Discover device',
+      testId: 'SBI0002',
       specVersion: '0.9.5',
       testDescription: 'Valid Discover Request',
       testOrderSequence: 1,
@@ -231,6 +260,10 @@ export class ViewProjectComponent implements OnInit {
           name: 'SchemaValidator',
           description: 'SchemaValidator',
         },
+        {
+          name: 'SignatureValidator',
+          description: 'SignatureValidator',
+        }
       ],
       otherAttributes: {
         runtimeInput: '',
@@ -246,6 +279,7 @@ export class ViewProjectComponent implements OnInit {
       },
     };
     testCasesList.push(testcase);
+    testCasesList.push(testcase1);
     const body = {
       title: `New Test Run Started`,
       collectionName: row.name,
