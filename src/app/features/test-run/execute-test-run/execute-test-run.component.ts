@@ -17,11 +17,15 @@ export class ExecuteTestRunComponent implements OnInit {
   input: any;
   panelOpenState = false;
   subscriptions: Subscription[] = [];
+  scanComplete = true;
   runComplete = false;
   currectTestCaseId: string;
   currectTestCaseName: string;
+  errorsExist = false;
+  errorsSummary = '';
   @ViewChild('basicTimer', { static: true }) basicTimer: CdTimerComponent;
-
+  countOfSuccessTestcases = 0;
+  countOfFailedTestcases = 0;
   constructor(
     private dialogRef: MatDialogRef<ExecuteTestRunComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -32,9 +36,10 @@ export class ExecuteTestRunComponent implements OnInit {
 
   ngOnInit() {
     this.input = this.data;
-    this.basicTimer.start();
-    this.executeRun();
-    
+    if (this.scanComplete) {
+      this.basicTimer.start();
+      this.executeRun();
+    }
   }
 
   async executeRun() {
@@ -44,24 +49,60 @@ export class ExecuteTestRunComponent implements OnInit {
     const sbiSelectedDevice = localStorage.getItem(
       appConstants.SBI_SELECTED_DEVICE
     );
+    this.errorsExist = false;
     if (sbiSelectedPort && sbiSelectedDevice) {
       const testCasesList: TestCaseModel[] = this.input.testCasesList;
       for (const testCase of testCasesList) {
         this.currectTestCaseId = testCase.testId;
         this.currectTestCaseName = testCase.testName;
+        let allValidatorsPassed = false;
+        let res: any = null;
         if (this.input.projectType == appConstants.SBI) {
-          let res = await this.sbiTestCaseService.runTestCase(testCase, sbiSelectedPort, sbiSelectedDevice);
-          if (res) {
-            this.basicTimer.stop();
-            this.runComplete = true;
+          res = await this.sbiTestCaseService.runTestCase(
+            testCase,
+            sbiSelectedPort,
+            sbiSelectedDevice
+          );
+          this.currectTestCaseId = '';
+          this.currectTestCaseName = '';
+        }
+        if (res && res['response']) {
+          let countofPassedValidators = 0;
+          const response = res['response'];
+          const errors = res['errors'];
+          if (errors && errors.length > 0) {
+            this.errorsExist = true;
+            errors.forEach((err: any) => {
+              this.errorsSummary = err['errorCode'] + ' - ' + err['message'];
+            });
+          }
+          const validationsList = response['validationsList'];
+          if (validationsList) {
+            validationsList.forEach((validationitem: any) => {
+              if (validationitem.status == 'success') {
+                countofPassedValidators++;
+              }
+            });
+            if (validationsList.length == countofPassedValidators) {
+              allValidatorsPassed = true;
+            }
           }
         }
+        if (allValidatorsPassed) {
+          this.countOfSuccessTestcases++;
+        } else {
+          this.countOfFailedTestcases++;
+        }
       }
+      this.basicTimer.stop();
+      this.runComplete = true;
     } else {
-      //TODO
+      this.scanComplete = false;
     }
   }
-  abort() {}
-
-  saveTestRun(){}
+  close() {
+    this.dialogRef.close();
+  }
+  saveTestRun() {}
+  showTestRunDetails() {}
 }

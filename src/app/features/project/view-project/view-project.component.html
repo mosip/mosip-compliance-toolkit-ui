@@ -293,6 +293,8 @@
             </button>
             <span align="end" *ngIf="projectForm.controls['projectType']?.value == 'SBI'">
                 <button mat-flat-button color="accent" (click)="scanDevice()">
+                    <mat-icon *ngIf="isScanComplete">check_circle</mat-icon>
+                    <mat-icon *ngIf="!isScanComplete">radio_button_unchecked</mat-icon>
                     Scan Device
                 </button>
             </span>
