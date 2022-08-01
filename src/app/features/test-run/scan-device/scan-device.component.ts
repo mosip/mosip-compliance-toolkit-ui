@@ -6,6 +6,7 @@ import { AppConfigService } from '../../../app-config.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { SbiDiscoverResponseModel } from 'src/app/core/models/sbi-discover';
+import Utils from "src/app/app.utils";
 
 @Component({
   selector: 'app-scan-device',
@@ -30,7 +31,9 @@ export class ScanDeviceComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dataService: DataService,
     private appConfigService: AppConfigService
-  ) {}
+  ) {  
+    dialogRef.disableClose = true;  
+  }  
 
   async ngOnInit() {
     this.scanForm.addControl(
@@ -117,7 +120,7 @@ export class ScanDeviceComponent implements OnInit {
                 let data = response;
                 let decodedDataArr: SbiDiscoverResponseModel[] = [];
                 data.forEach((deviceData: any) => {
-                  const decodedData = this.getDecodedDeviceData(deviceData);
+                  const decodedData = Utils.getDecodedDeviceData(deviceData);
                   if (decodedData != null) {
                     decodedDataArr.push(decodedData);
                   }
@@ -156,29 +159,7 @@ export class ScanDeviceComponent implements OnInit {
       this.devicesData = [];
     }
   }
-  getDecodedDeviceData(deviceData: any) {
-    try {
-      const digitalIdDecoded = JSON.parse(atob(deviceData.digitalId));
-      const deviceDataNew: SbiDiscoverResponseModel = {
-        deviceId: deviceData.deviceId,
-        purpose: deviceData.purpose,
-        deviceSubId: deviceData.deviceSubId,
-        digitalId: deviceData.digitalId,
-        digitalIdDecoded: digitalIdDecoded,
-        deviceStatus: deviceData.deviceStatus,
-        deviceCode: deviceData.deviceCode,
-        error: deviceData.error,
-        certification: deviceData.certification,
-        specVersion: deviceData.specVersion,
-        callbackId: deviceData.callbackId,
-        serviceVersion: deviceData.serviceVersion,
-      };
-      return deviceDataNew;
-    } catch (error) {
-      return null;
-    }
-  }
-
+  
   public save() {
     this.scanForm.controls['ports'].markAsTouched();
     this.scanForm.controls['devices'].markAsTouched();

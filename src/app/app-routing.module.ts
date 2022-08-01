@@ -26,22 +26,24 @@ const routes: Routes = [
             (m) => m.ProjectModule
           ),
       },
+      {
+        path: 'collections',
+        data: { breadcrumb: { label: 'Collections', disable: true } },
+        loadChildren: () =>
+          import('./features/collections/collections.module').then(
+            (m) => m.CollectionsModule
+          ),
+      },
+      {
+        path: 'testrun',
+        data: { breadcrumb: { label: 'Test Run', disable: true } },
+        loadChildren: () =>
+          import('./features/test-run/test-run.module').then(
+            (m) => m.TestRunModule
+          ),
+      },
     ],
     canActivateChild: [AuthguardService],
-  },
-  {
-    path: 'collections',
-    loadChildren: () =>
-      import('./features/collections/collections.module').then(
-        (m) => m.CollectionsModule
-      ),
-  },
-  {
-    path: 'testrun',
-    loadChildren: () =>
-      import('./features/test-run/test-run.module').then(
-        (m) => m.TestRunModule
-      ),
   },
 ];
 

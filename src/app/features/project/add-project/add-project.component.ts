@@ -12,7 +12,7 @@ import * as appConstants from 'src/app/app.constants';
 import { Subscription } from 'rxjs';
 import { SbiProjectModel } from 'src/app/core/models/sbi-project';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../../../core/components/dialog/dialog.component';
+import Utils from 'src/app/app.utils';
 
 @Component({
   selector: 'app-project',
@@ -25,6 +25,8 @@ export class AddProjectComponent implements OnInit {
   subscriptions: Subscription[] = [];
   hidePassword = true;
   dataLoaded = true;
+  dataSubmitted = false;
+
   constructor(
     public authService: AuthService,
     private dataService: DataService,
@@ -144,6 +146,7 @@ export class AddProjectComponent implements OnInit {
           request: projectData,
         };
         this.dataLoaded = false;
+        this.dataSubmitted = true;
         await this.addSbiProject(request);
       }
     }
@@ -162,17 +165,22 @@ export class AddProjectComponent implements OnInit {
             console.log(response);
             if (response.errors && response.errors.length > 0) {
               this.dataLoaded = true;
+              this.dataSubmitted = false;
               resolve(true);
-              this.showErrorMessage(response.errors);
+              Utils.showErrorMessage(response.errors, this.dialog);
             } else {
               this.dataLoaded = true;
-              this.showSuccessMessage();
+              const dialogRef = Utils.showSuccessMessage('Project created successfully', this.dialog);
+              dialogRef.afterClosed().subscribe((res) => {
+                this.showDashboard();
+              });
               resolve(true);
             }
           },
-          (error) => {
+          (errors) => {
             this.dataLoaded = true;
-            this.showErrorMessage(error);
+            this.dataSubmitted = false;
+            Utils.showErrorMessage(errors, this.dialog);
             resolve(false);
           }
         )
@@ -180,45 +188,10 @@ export class AddProjectComponent implements OnInit {
     });
   }
 
-  private showErrorMessage(errorsList: any) {
-    let error = errorsList[0];
-    const titleOnError = 'Error';
-    const message = error.errorCode + ' - ' + error.message;
-    const body = {
-      case: 'ERROR',
-      title: titleOnError,
-      message: message,
-    };
-    this.dialog.open(DialogComponent, {
-      width: '400px',
-      data: body,
-    });
-  }
-
-  private showSuccessMessage() {
-    const title = 'Success';
-    const message = 'Project created successfully';
-    const body = {
-      case: 'SUCCESS',
-      title: title,
-      message: message,
-    };
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: '400px',
-      data: body,
-    });
-    dialogRef.afterClosed().subscribe((res) => {
-      this.showDashboard();
-    });
-  }
-
   showDashboard() {
-    if (this.authService.isAuthenticated()) {
-      this.router.navigate([`toolkit/dashboard`]);
-    } else {
-      this.router.navigate([``]);
-    }
+   this.router.navigate([`toolkit/dashboard`]);
   }
+
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }

@@ -4,23 +4,16 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  AbstractControl,
-} from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { AuthService } from '../../../core/services/authservice.service';
 import { DataService } from '../../../core/services/data-service';
-import { SbiTestCaseService } from '../../../core/services/sbi-testcase-service';
-import { AppConfigService } from '../../../app-config.service';
 import { Subscription } from 'rxjs';
 import * as appConstants from 'src/app/app.constants';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../../../core/components/dialog/dialog.component';
 import { ScanDeviceComponent } from '../../test-run/scan-device/scan-device.component';
 import { TestCaseModel } from 'src/app/core/models/testcase';
 import { ExecuteTestRunComponent } from '../../test-run/execute-test-run/execute-test-run.component';
+import Utils from 'src/app/app.utils';
 
 export interface CollectionsData {
   id: string;
@@ -64,9 +57,7 @@ export class ViewProjectComponent implements OnInit {
     private router: Router,
     private dialog: MatDialog,
     private breadcrumbService: BreadcrumbService,
-    private activatedRoute: ActivatedRoute,
-    private sbiTestCaseService: SbiTestCaseService,
-    private appConfigService: AppConfigService
+    private activatedRoute: ActivatedRoute
   ) {}
 
   async ngOnInit() {
@@ -79,7 +70,6 @@ export class ViewProjectComponent implements OnInit {
     await this.getCollections();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-
     if (this.projectFormData) {
       this.breadcrumbService.set(
         '@projectId',
@@ -95,7 +85,10 @@ export class ViewProjectComponent implements OnInit {
       ...appConstants.SBI_CONTROLS,
     ];
     this.allControls.forEach((controlId) => {
-      this.projectForm.addControl(controlId, new FormControl({value: '', disabled: true}));
+      this.projectForm.addControl(
+        controlId,
+        new FormControl({ value: '', disabled: true })
+      );
     });
   }
 
@@ -122,8 +115,8 @@ export class ViewProjectComponent implements OnInit {
       this.activatedRoute.params.subscribe((param) => {
         this.projectId = param['id'];
         this.projectType = param['projectType'];
-        resolve(true);
       });
+      resolve(true);
     });
   }
 
@@ -136,8 +129,8 @@ export class ViewProjectComponent implements OnInit {
             this.projectFormData = response['response'];
             resolve(true);
           },
-          (error) => {
-            this.showErrorMessage(error);
+          (errors) => {
+            Utils.showErrorMessage(errors, this.dialog);;
             resolve(false);
           }
         )
@@ -158,8 +151,8 @@ export class ViewProjectComponent implements OnInit {
               );
               resolve(true);
             },
-            (error) => {
-              this.showErrorMessage(error);
+            (errors) => {
+              Utils.showErrorMessage(errors, this.dialog);
               resolve(false);
             }
           )
@@ -171,21 +164,6 @@ export class ViewProjectComponent implements OnInit {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
-  private showErrorMessage(errorsList: any) {
-    let error = errorsList[0];
-    const titleOnError = 'Error';
-    const message = error.errorCode + ' - ' + error.message;
-    const body = {
-      case: 'ERROR',
-      title: titleOnError,
-      message: message,
-    };
-    this.dialog.open(DialogComponent, {
-      width: '400px',
-      data: body,
-    });
-  }
-
   showDashboard() {
     if (this.authService.isAuthenticated()) {
       this.router.navigate([`toolkit/dashboard`]);
@@ -193,7 +171,15 @@ export class ViewProjectComponent implements OnInit {
       this.router.navigate([``]);
     }
   }
-  addCollection() {}
+  addCollection() {
+    this.router.navigate([`toolkit/collections/add`], {
+      queryParams: {
+        projectId: this.projectId,
+        projectType: this.projectType,
+      },
+      queryParamsHandling: 'merge'
+    });
+  }
 
   scanDevice() {
     const body = {
@@ -230,7 +216,7 @@ export class ViewProjectComponent implements OnInit {
         {
           name: 'SchemaValidator',
           description: 'SchemaValidator',
-        }
+        },
       ],
       otherAttributes: {
         runtimeInput: '',
@@ -263,7 +249,7 @@ export class ViewProjectComponent implements OnInit {
         {
           name: 'SignatureValidator',
           description: 'SignatureValidator',
-        }
+        },
       ],
       otherAttributes: {
         runtimeInput: '',
@@ -284,7 +270,7 @@ export class ViewProjectComponent implements OnInit {
       title: `New Test Run Started`,
       collectionName: row.name,
       projectType: this.projectType,
-      testCasesList: testCasesList
+      testCasesList: testCasesList,
     };
     this.dialog
       .open(ExecuteTestRunComponent, {

@@ -6,10 +6,12 @@ import { ViewcollectionsComponent } from './viewcollections/viewcollections.comp
 const routes: Routes = [
   {
     path: 'add',
-    component: AddCollectionsComponent,
     data: {
-      breadcrumb: 'Add a new Collection',
+      breadcrumb: {
+        alias: 'collectionData',
+      },
     },
+    component: AddCollectionsComponent,
   },
   {
     path: ':projectType/:id',
