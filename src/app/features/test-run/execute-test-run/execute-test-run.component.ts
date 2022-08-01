@@ -32,7 +32,9 @@ export class ExecuteTestRunComponent implements OnInit {
     private dataService: DataService,
     private sbiTestCaseService: SbiTestCaseService,
     private appConfigService: AppConfigService
-  ) {}
+  ) {  
+    dialogRef.disableClose = true;  
+  }
 
   ngOnInit() {
     this.input = this.data;

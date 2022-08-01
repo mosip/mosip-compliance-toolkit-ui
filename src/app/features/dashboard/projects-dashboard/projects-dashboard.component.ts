@@ -6,7 +6,9 @@ import { DataService } from 'src/app/core/services/data-service';
 import { Subscription } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 import * as appConstants from 'src/app/app.constants';
+import Utils from 'src/app/app.utils';
 
 export interface ProjectData {
   id: string;
@@ -42,28 +44,34 @@ export class ProjectsDashboardComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private dialog: MatDialog,
     private dataService: DataService
   ) {}
 
   async ngOnInit() {
-    
     await this.getProjects();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    
+
     this.dataLoaded = true;
   }
 
   async getProjects() {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
-        this.dataService.getProjects().subscribe((response: any) => {
-          console.log(response);
-          this.dataSource = new MatTableDataSource(
-            response['response']['projects']
-          );
-          resolve(true);
-        })
+        this.dataService.getProjects().subscribe(
+          (response: any) => {
+            console.log(response);
+            this.dataSource = new MatTableDataSource(
+              response['response']['projects']
+            );
+            resolve(true);
+          },
+          (errors) => {
+            Utils.showErrorMessage(errors, this.dialog);
+            resolve(false);
+          }
+        )
       );
     });
   }
@@ -75,9 +83,9 @@ export class ProjectsDashboardComponent implements OnInit {
   }
 
   viewProject(project: any) {
-    if ((project.projectType == appConstants.SBI)) {
-      this.router.navigate([`toolkit/project/${project.projectType}/${project.id}`]);
-    }
+    this.router.navigate([
+      `toolkit/project/${project.projectType}/${project.id}`,
+    ]);
   }
 
   deleteProject(project: any) {

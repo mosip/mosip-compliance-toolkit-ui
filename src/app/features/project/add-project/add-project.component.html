@@ -308,14 +308,14 @@
             </div>
         </form>
     </div>
-    <div class="button-container">
-        <button mat-flat-button color="accent" (click)="showDashboard()" class="add-button">
-            <mat-icon>home</mat-icon>
-            Dashboard
-        </button>
-        <button mat-flat-button color="accent" (click)="saveProject()" class="add-button">
-            <mat-icon>save</mat-icon>
-            Add Project
-        </button>
-    </div>
+</div>
+<div class="button-container">
+    <button mat-flat-button color="accent" (click)="showDashboard()" class="add-button">
+        <mat-icon>home</mat-icon>
+        Dashboard
+    </button>
+    <button mat-flat-button color="accent" [disabled]="dataSubmitted" (click)="saveProject()" class="add-button">
+        <mat-icon>save</mat-icon>
+        Save Project
+    </button>
 </div>

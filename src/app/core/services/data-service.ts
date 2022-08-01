@@ -24,10 +24,10 @@ export class DataService {
     return this.httpClient.get(url);
   }
 
-  getCollections(projectId: string, projectType: string) {
-    let url = `${this.SERVICES_BASE_URL}getCollections?projectId=${projectId}&type=${projectType}`;
+  addSbiProject(body: any) {
+    let url = `${this.SERVICES_BASE_URL}addSbiProject`;
     console.log('url:' + url);
-    return this.httpClient.get(url);
+    return this.httpClient.post(url, body);
   }
 
   getSbiProject(projectId: string) {
@@ -36,14 +36,31 @@ export class DataService {
     return this.httpClient.get(url);
   }
 
-  addSbiProject(body: any) {
-    let url = `${this.SERVICES_BASE_URL}addSbiProject`;
+  getCollections(projectId: string, projectType: string) {
+    let url = `${this.SERVICES_BASE_URL}getCollections?projectId=${projectId}&type=${projectType}`;
+    console.log('url:' + url);
+    return this.httpClient.get(url);
+  }
+
+  addCollection(body: any) {
+    let url = `${this.SERVICES_BASE_URL}addCollection`;
     console.log('url:' + url);
     return this.httpClient.post(url, body);
   }
 
-  getTestCases(type: string) {
-    let url = `${this.SERVICES_BASE_URL}getTestCases?type=${type}`;
+  addCollectionTestcases(body: any) {
+    let url = `${this.SERVICES_BASE_URL}addCollectionTestcases`;
+    console.log('url:' + url);
+    return this.httpClient.post(url, body);
+  }
+
+  getSbiTestCases(
+    specVersion: string,
+    purpose: string,
+    deviceType: string,
+    deviceSubType: string
+  ) {
+    let url = `${this.SERVICES_BASE_URL}getSbiTestCases?specVersion=${specVersion}&purpose=${purpose}&deviceType=${deviceType}&deviceSubType=${deviceSubType}`;
     console.log('url:' + url);
     return this.httpClient.get(url);
   }
@@ -60,7 +77,12 @@ export class DataService {
     return this.httpClient.post(url, body);
   }
 
-  callSBIMethod(port: string, methodName: string, methodType: string, requestBody: any, ) {
+  callSBIMethod(
+    port: string,
+    methodName: string,
+    methodType: string,
+    requestBody: any
+  ) {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
       accept: 'application/json',
@@ -68,7 +90,7 @@ export class DataService {
     let methodUrl = this.SBI_BASE_URL + ':' + port + '/' + methodName;
     return this.httpClient.request(methodType, methodUrl, {
       body: requestBody,
-      headers: headers 
+      headers: headers,
     });
   }
 
