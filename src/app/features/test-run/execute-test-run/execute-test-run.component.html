@@ -1,4 +1,11 @@
-<h2 mat-dialog-title class="mat-dialog-title">Executing Test Run</h2>
+<h2 mat-dialog-title class="mat-dialog-title">
+    <div class="custom-class">
+        Executing Test Run
+        <span class="spacer"></span>
+        <mat-icon [ngStyle]="{color: '#fd518c'}">timelapse</mat-icon>
+        <cd-timer #basicTimer format="hms"></cd-timer>
+    </div>
+</h2>
 <mat-dialog-content *ngIf="!dataLoaded" style="white-space: pre-line;" class="run-container">
     <span *ngIf="!errInFetchingTestcases">Fetching testcases for the collection..</span>
     <div class="spinner">
@@ -24,12 +31,12 @@
             started..</span>
         <span *ngIf="scanComplete && runComplete">
             Execution complete for <b>{{collectionName}}</b></span>
-        <span>
+        <!-- <span *ngIf="!dataLoaded || !scanComplete || !runComplete || errInFetchingTestcases">
             <div class="custom-class">
                 <mat-icon [ngStyle]="{color: '#fd518c'}">timelapse</mat-icon>
                 <cd-timer #basicTimer format="hms"></cd-timer>
             </div>
-        </span>
+        </span> -->
     </span>
     <div *ngIf="errorsExist">
         <div class="custom-class">
@@ -44,7 +51,7 @@
         <mat-spinner diameter="50"></mat-spinner>
     </div>
     <div *ngIf="scanComplete && runComplete && !errorsExist">
-        <p>Total {{testCasesList.length > 1 ? input.testCasesList.length + ' testcases have' :
+        <p>Total {{testCasesList.length > 1 ? testCasesList.length + ' testcases have' :
             testCasesList.length + ' testcase has'}} executed successfully.
             Overall result for testcases:</p>
         <div class="custom-class">

@@ -1,4 +1,11 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  Inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as appConstants from 'src/app/app.constants';
 import { DataService } from '../../../core/services/data-service';
@@ -14,7 +21,9 @@ import Utils from 'src/app/app.utils';
   templateUrl: './execute-test-run.component.html',
   styleUrls: ['./execute-test-run.component.css'],
 })
-export class ExecuteTestRunComponent implements OnInit {
+export class ExecuteTestRunComponent
+  implements OnInit
+{
   input: any;
   collectionId: string;
   projectType: string;
@@ -42,23 +51,20 @@ export class ExecuteTestRunComponent implements OnInit {
   ) {
     dialogRef.disableClose = true;
   }
-
+  
   async ngOnInit() {
     this.input = this.data;
     this.collectionId = this.input.collectionId;
     this.projectType = this.input.projectType;
+    this.basicTimer.start();
     if (this.projectType == appConstants.SBI && this.scanComplete) {
       await this.getCollection();
       await this.getTestcasesForCollection();
       this.dataLoaded = true;
       if (!this.errInFetchingTestcases) {
-        if (this.basicTimer) {
-          this.basicTimer.start();
-        }
+        this.basicTimer.reset();
         await this.executeRun();
-        if (this.basicTimer) {
-          this.basicTimer.stop();
-        }
+        this.basicTimer.stop();
       }
     }
   }
@@ -71,7 +77,7 @@ export class ExecuteTestRunComponent implements OnInit {
             if (response.errors && response.errors.length > 0) {
               this.errInFetchingTestcases = true;
               resolve(true);
-            }  
+            }
             this.collectionName = response['response']['name'];
             resolve(true);
           },
@@ -92,7 +98,7 @@ export class ExecuteTestRunComponent implements OnInit {
             if (response.errors && response.errors.length > 0) {
               this.errInFetchingTestcases = true;
               resolve(true);
-            }  
+            }
             console.log(response);
             this.testCasesList = response['response']['testcases'];
             resolve(true);
@@ -118,7 +124,6 @@ export class ExecuteTestRunComponent implements OnInit {
       for (const testCase of testCasesList) {
         this.currectTestCaseId = testCase.testId;
         this.currectTestCaseName = testCase.testName;
-        let allValidatorsPassed = false;
         let res: any = null;
         console.log('executing testcase: ' + testCase.testName);
         if (this.projectType == appConstants.SBI) {
@@ -130,39 +135,46 @@ export class ExecuteTestRunComponent implements OnInit {
           this.currectTestCaseId = '';
           this.currectTestCaseName = '';
         }
-        if (res && res['response']) {
-          let countofPassedValidators = 0;
-          const response = res['response'];
-          const errors = res['errors'];
-          if (errors && errors.length > 0) {
-            this.errorsExist = true;
-            errors.forEach((err: any) => {
-              this.errorsSummary = err['errorCode'] + ' - ' + err['message'];
-            });
-          }
-          const validationsList = response['validationsList'];
-          if (validationsList) {
-            validationsList.forEach((validationitem: any) => {
-              if (validationitem.status == 'success') {
-                countofPassedValidators++;
-              }
-            });
-            if (validationsList.length == countofPassedValidators) {
-              allValidatorsPassed = true;
-            }
-          }
-        }
-        if (allValidatorsPassed) {
-          this.countOfSuccessTestcases++;
-        } else {
-          this.countOfFailedTestcases++;
-        }
+        this.calculateTestcaseResults(res);
       }
       this.runComplete = true;
     } else {
       this.scanComplete = false;
     }
   }
+
+  calculateTestcaseResults(res: any) {
+    let allValidatorsPassed = false;
+    if (res && res['response']) {
+      let countofPassedValidators = 0;
+      const response = res['response'];
+      const errors = res['errors'];
+      if (errors && errors.length > 0) {
+        this.errorsExist = true;
+        errors.forEach((err: any) => {
+          this.errorsSummary = err['errorCode'] + ' - ' + err['message'];
+        });
+      } else {
+        const validationsList = response['validationsList'];
+        if (validationsList) {
+          validationsList.forEach((validationitem: any) => {
+            if (validationitem.status == 'success') {
+              countofPassedValidators++;
+            }
+          });
+          if (validationsList.length == countofPassedValidators) {
+            allValidatorsPassed = true;
+          }
+        }
+      }
+    }
+    if (allValidatorsPassed) {
+      this.countOfSuccessTestcases++;
+    } else {
+      this.countOfFailedTestcases++;
+    }
+  }
+
   close() {
     this.dialogRef.close();
   }
