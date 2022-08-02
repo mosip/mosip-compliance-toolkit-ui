@@ -164,7 +164,7 @@ export class AddCollectionsComponent implements OnInit {
       `toolkit/project/${this.projectType}/${this.projectId}`,
     ]);
   }
-  
+
   async saveCollection() {
     this.collectionForm.controls['name'].markAsTouched();
     if (this.collectionForm.valid) {
@@ -188,7 +188,28 @@ export class AddCollectionsComponent implements OnInit {
         };
         this.dataLoaded = false;
         this.dataSubmitted = true;
-        await this.addCollection(request);
+        let collectionResp: any = await this.addCollection(request);
+        if (collectionResp) {
+          const collectionId = collectionResp['response']['collectionId'];
+          let selectedTestcaseArr: string[] = [];
+          this.dataSource.data.forEach((row: TestCaseModel) => {
+            if (this.selection.isSelected(row)) {
+              selectedTestcaseArr.push(row.testId);
+            }
+          });
+          let collectionTestcasesReq = {
+            collectionId: collectionId,
+            testcases: selectedTestcaseArr
+          }
+          let request1 = {
+            id: appConstants.SBI_COLLECTION_ADD_ID,
+            version: appConstants.VERSION,
+            requesttime: new Date().toISOString(),
+            request: collectionTestcasesReq,
+          };
+          console.log(request1);
+          await this.addTestcasesForCollection(request1);
+        }
       }
     }
   }
@@ -204,12 +225,7 @@ export class AddCollectionsComponent implements OnInit {
               resolve(true);
               Utils.showErrorMessage(response.errors, this.dialog);
             } else {
-              this.dataLoaded = true;
-              const dialogRef = Utils.showSuccessMessage('Collection created successfully', this.dialog);
-              dialogRef.afterClosed().subscribe((res) => {
-                this.backToProject();
-              });
-              resolve(true);
+              resolve(response);
             }
           },
           (errors) => {
@@ -223,4 +239,36 @@ export class AddCollectionsComponent implements OnInit {
     });
   }
 
+  async addTestcasesForCollection(request: any) {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.addTestcasesForCollection(request).subscribe(
+          (response: any) => {
+            if (response.errors && response.errors.length > 0) {
+              this.dataLoaded = true;
+              this.dataSubmitted = false;
+              resolve(true);
+              Utils.showErrorMessage(response.errors, this.dialog);
+            } else {
+              this.dataLoaded = true;
+              const dialogRef = Utils.showSuccessMessage(
+                'Collection created successfully',
+                this.dialog
+              );
+              dialogRef.afterClosed().subscribe((res) => {
+                this.backToProject();
+              });
+              resolve(response);
+            }
+          },
+          (errors) => {
+            this.dataLoaded = true;
+            this.dataSubmitted = false;
+            Utils.showErrorMessage(errors, this.dialog);
+            resolve(false);
+          }
+        )
+      );
+    });
+  }
 }
