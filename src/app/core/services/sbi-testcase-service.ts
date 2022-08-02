@@ -31,7 +31,8 @@ export class SbiTestCaseService {
         sbiSelectedPort,
         methodRequest
       );
-      console.log(methodResponse);
+      console.log("calling validateResp");
+
       //now validate the response
       let validationResults = await this.validateResponse(
         testCase,
@@ -54,7 +55,7 @@ export class SbiTestCaseService {
         methodRequest,
         methodName
       );
-      console.log(methodResponse);
+      //console.log(methodResponse);
       return methodResponse;
     }
     if (methodName == appConstants.SBI_METHOD_CAPTURE) {
@@ -79,7 +80,7 @@ export class SbiTestCaseService {
         .callSBIMethod(port, methodName, methodType, requestBody)
         .subscribe(
           (response) => {
-            console.log(response);
+            //console.log(response);
             //return response;
             resolve(response);
           },
@@ -120,7 +121,7 @@ export class SbiTestCaseService {
         customOpts: null,
       };
     }
-    console.log(JSON.stringify(request));
+    //console.log(JSON.stringify(request));
 
     return request;
     //return JSON.stringify(request);
@@ -185,7 +186,7 @@ export class SbiTestCaseService {
     methodResponse: any
   ) {
     return new Promise((resolve, reject) => {
-      console.log('validateResponse called');
+      //console.log('validateResponse called');
       let validateRequest = {
         testCaseType: testCase.testCaseType,
         testName: testCase.testName,
@@ -195,7 +196,7 @@ export class SbiTestCaseService {
         methodRequest: JSON.stringify(methodRequest),
         validatorDefs: testCase.validatorDefs,
       };
-      console.log(validateRequest);
+      //console.log(validateRequest);
       let request = {
         id: appConstants.VALIDATIONS_POST_ID,
         version: appConstants.VERSION,
@@ -203,9 +204,12 @@ export class SbiTestCaseService {
         request: validateRequest,
       };
       this.dataService.validateResponse(request).subscribe((response) => {
-        console.log(response);
+        //console.log(response);
         resolve(response);
         //this.testCaseResults = JSON.stringify(response);
+      },
+      (errors) => {
+        resolve(errors);
       });
     });
   }
