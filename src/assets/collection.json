@@ -4,7 +4,8 @@
     "responsetime": "2022-08-02T11:06:27.596Z",
     "metadata": null,
     "response": {
-      "collectionId": "101"
+      "collectionId": "101",
+      "name": "Test Collection"
     },
     "errors": []
   }

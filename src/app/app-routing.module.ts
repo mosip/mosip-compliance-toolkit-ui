@@ -27,14 +27,6 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'collections',
-        data: { breadcrumb: { label: 'Collections', disable: true } },
-        loadChildren: () =>
-          import('./features/collections/collections.module').then(
-            (m) => m.CollectionsModule
-          ),
-      },
-      {
         path: 'testrun',
         data: { breadcrumb: { label: 'Test Run', disable: true } },
         loadChildren: () =>

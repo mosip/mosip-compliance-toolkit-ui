@@ -3,7 +3,6 @@ import {
   FormGroup,
   FormControl,
   Validators,
-  AbstractControl,
 } from '@angular/forms';
 import { AuthService } from '../../../core/services/authservice.service';
 import { Router } from '@angular/router';
@@ -35,6 +34,10 @@ export class AddProjectComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.initForm();
+  }
+
+  initForm() {
     this.allControls = [
       ...appConstants.COMMON_CONTROLS,
       ...appConstants.SBI_CONTROLS,
@@ -153,8 +156,8 @@ export class AddProjectComponent implements OnInit {
   }
 
   handleSbiPurposeChange() {
-    console.log("handleSbiPurposeChange");
-    this.projectForm.controls['deviceSubType'].setValue("");
+    console.log('handleSbiPurposeChange');
+    this.projectForm.controls['deviceSubType'].setValue('');
   }
 
   async addSbiProject(request: any) {
@@ -170,7 +173,10 @@ export class AddProjectComponent implements OnInit {
               Utils.showErrorMessage(response.errors, this.dialog);
             } else {
               this.dataLoaded = true;
-              const dialogRef = Utils.showSuccessMessage('Project created successfully', this.dialog);
+              const dialogRef = Utils.showSuccessMessage(
+                'Project created successfully',
+                this.dialog
+              );
               dialogRef.afterClosed().subscribe((res) => {
                 this.showDashboard();
               });
@@ -189,7 +195,7 @@ export class AddProjectComponent implements OnInit {
   }
 
   showDashboard() {
-   this.router.navigate([`toolkit/dashboard`]);
+    this.router.navigate([`toolkit/dashboard`]);
   }
 
   ngOnDestroy(): void {

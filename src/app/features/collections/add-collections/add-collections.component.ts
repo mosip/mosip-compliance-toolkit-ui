@@ -1,10 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  AbstractControl,
-} from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/authservice.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../../../core/services/data-service';
@@ -12,7 +7,6 @@ import * as appConstants from 'src/app/app.constants';
 import { Subscription } from 'rxjs';
 import { SbiProjectModel } from 'src/app/core/models/sbi-project';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../../../core/components/dialog/dialog.component';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -54,21 +48,25 @@ export class AddCollectionsComponent implements OnInit {
 
   async ngOnInit() {
     this.initForm();
-    await this.getProjectIdAndType();
+    await this.initProjectIdAndType();
     if (this.projectType == appConstants.SBI) {
       await this.getSbiProjectDetails();
       await this.getSbiTestcases();
-      this.setBreadCrumb();
+      this.initBreadCrumb();
     }
     this.dataSource.sort = this.sort;
     this.dataLoaded = true;
   }
 
-  setBreadCrumb() {
+  initBreadCrumb() {
     if (this.sbiProjectData) {
       this.breadcrumbService.set(
-        '@collectionData',
-        `Add a New Collection for ${this.projectType} Project - ${this.sbiProjectData.name}`
+        '@projectBreadCrumb',
+        `${this.projectType} Project - ${this.sbiProjectData.name}`
+      );
+      this.breadcrumbService.set(
+        '@collectionBreadCrumb',
+        `Add`
       );
     }
   }
@@ -79,9 +77,9 @@ export class AddCollectionsComponent implements OnInit {
       new FormControl('', [Validators.required])
     );
   }
-  getProjectIdAndType() {
+  initProjectIdAndType() {
     return new Promise((resolve) => {
-      this.activatedRoute.queryParams.subscribe((param) => {
+      this.activatedRoute.params.subscribe((param) => {
         this.projectId = param['projectId'];
         this.projectType = param['projectType'];
       });
@@ -199,8 +197,8 @@ export class AddCollectionsComponent implements OnInit {
           });
           let collectionTestcasesReq = {
             collectionId: collectionId,
-            testcases: selectedTestcaseArr
-          }
+            testcases: selectedTestcaseArr,
+          };
           let request1 = {
             id: appConstants.SBI_COLLECTION_ADD_ID,
             version: appConstants.VERSION,

@@ -6,18 +6,33 @@ import { ViewProjectComponent } from './view-project/view-project.component';
 const routes: Routes = [
   {
     path: 'add',
+    pathMatch: 'full',
     component: AddProjectComponent,
     data: {
-      breadcrumb: "Add a new Project",
+      breadcrumb: 'Add a new Project',
     },
-  }, {
-    path: ':projectType/:id',
-    component: ViewProjectComponent,
-    data: {
-      breadcrumb: {
-        alias: 'projectId',
+  },
+  {
+    path: ':projectType/:projectId',
+    children: [
+      {
+        path: '',
+        component: ViewProjectComponent,
+        data: {
+          breadcrumb: {
+            alias: 'projectBreadCrumb',
+          },
+        },
       },
-    },
+      {
+        path: 'collection',
+        data: { breadcrumb: { label: 'Collections', disable: true } },
+        loadChildren: () =>
+          import('../collections/collections.module').then(
+            (m) => m.CollectionsModule
+          ),
+      },
+    ],
   },
 ];
 

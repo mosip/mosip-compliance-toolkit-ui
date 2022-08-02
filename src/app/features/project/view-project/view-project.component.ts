@@ -16,7 +16,7 @@ import { ExecuteTestRunComponent } from '../../test-run/execute-test-run/execute
 import Utils from 'src/app/app.utils';
 
 export interface CollectionsData {
-  id: string;
+  collectionId: string;
   name: string;
   testCaseCount: number;
   crDtimes: Date;
@@ -61,7 +61,7 @@ export class ViewProjectComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    await this.getProjectIdAndType();
+    await this.initProjectIdAndType();
     if (this.projectType == appConstants.SBI) {
       this.initSbiProjectForm();
       await this.getSbiProjectDetails();
@@ -70,13 +70,27 @@ export class ViewProjectComponent implements OnInit {
     await this.getCollections();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.initBreadCrumb();
+    this.dataLoaded = true;
+  }
+
+  initProjectIdAndType() {
+    return new Promise((resolve) => {
+      this.activatedRoute.params.subscribe((param) => {
+        this.projectId = param['projectId'];
+        this.projectType = param['projectType'];
+      });
+      resolve(true);
+    });
+  }
+
+  initBreadCrumb() {
     if (this.projectFormData) {
       this.breadcrumbService.set(
-        '@projectId',
+        '@projectBreadCrumb',
         `${this.projectType} Project - ${this.projectFormData.name}`
       );
     }
-    this.dataLoaded = true;
   }
 
   initSbiProjectForm() {
@@ -110,15 +124,6 @@ export class ViewProjectComponent implements OnInit {
       );
     }
   }
-  getProjectIdAndType() {
-    return new Promise((resolve) => {
-      this.activatedRoute.params.subscribe((param) => {
-        this.projectId = param['id'];
-        this.projectType = param['projectType'];
-      });
-      resolve(true);
-    });
-  }
 
   async getSbiProjectDetails() {
     return new Promise((resolve, reject) => {
@@ -130,7 +135,7 @@ export class ViewProjectComponent implements OnInit {
             resolve(true);
           },
           (errors) => {
-            Utils.showErrorMessage(errors, this.dialog);;
+            Utils.showErrorMessage(errors, this.dialog);
             resolve(false);
           }
         )
@@ -171,14 +176,17 @@ export class ViewProjectComponent implements OnInit {
       this.router.navigate([``]);
     }
   }
+
   addCollection() {
-    this.router.navigate([`toolkit/collections/add`], {
-      queryParams: {
-        projectId: this.projectId,
-        projectType: this.projectType,
-      },
-      queryParamsHandling: 'merge'
-    });
+    this.router.navigate([
+      `toolkit/project/${this.projectType}/${this.projectId}/collection/add`,
+    ]);
+  }
+
+  viewCollection(collection: any) {
+    this.router.navigate([
+      `toolkit/project/${this.projectType}/${this.projectId}/collection/${collection.collectionId}`,
+    ]);
   }
 
   scanDevice() {
