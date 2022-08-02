@@ -43,9 +43,17 @@ export class DataService {
   }
 
   addCollection(body: any) {
-    let url = `${this.SERVICES_BASE_URL}addCollection`;
-    console.log('url:' + url);
-    return this.httpClient.post(url, body);
+    // let url = `${this.SERVICES_BASE_URL}addCollection`;
+    // console.log('url:' + url);
+    // return this.httpClient.post(url, body);
+    return this.httpClient.get('./assets/addCollection.json')
+  }
+
+  addTestcasesForCollection(body: any) {
+    // let url = `${this.SERVICES_BASE_URL}addTestcasesForCollection`;
+    // console.log('url:' + url);
+    // return this.httpClient.post(url, body);
+    return this.httpClient.get('./assets/addTestcasesForCollection.json')
   }
 
   addCollectionTestcases(body: any) {
