@@ -50,10 +50,8 @@ export class DataService {
   }
 
   getCollection(collectionId: string) {
-    // let url = `${this.SERVICES_BASE_URL}getCollection?collectionId=${collectionId}`;
-    // console.log('url:' + url);
-    // return this.httpClient.post(url, body);
-    return this.httpClient.get('./assets/collection.json');
+    let url = `${this.SERVICES_BASE_URL}getCollection/${collectionId}`;
+    return this.httpClient.get(url);
   }
 
   addTestcasesForCollection(body: any) {
@@ -64,10 +62,8 @@ export class DataService {
   }
 
   getTestcasesForCollection(collectionId: string) {
-    // let url = `${this.SERVICES_BASE_URL}getTestcasesForCollection?collectionId=${collectionId}`;
-    // console.log('url:' + url);
-    // return this.httpClient.post(url, body);
-    return this.httpClient.get('./assets/testcasesForCollection.json');
+    let url = `${this.SERVICES_BASE_URL}getTestcasesForCollection/${collectionId}`;
+    return this.httpClient.get(url);
   }
 
   getSbiTestCases(

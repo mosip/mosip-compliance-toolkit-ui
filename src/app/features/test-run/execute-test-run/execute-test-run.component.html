@@ -1,17 +1,29 @@
-<h2 mat-dialog-title class="mat-dialog-title" *ngIf="input.title">{{ input.title }}</h2>
-<mat-dialog-content style="white-space: pre-line;" class="run-container">
+<h2 mat-dialog-title class="mat-dialog-title">Executing Test Run</h2>
+<mat-dialog-content *ngIf="!dataLoaded" style="white-space: pre-line;" class="run-container">
+    <span *ngIf="!errInFetchingTestcases">Fetching testcases for the collection..</span>
+    <div class="spinner">
+        <mat-spinner diameter="50"></mat-spinner>
+    </div>
+</mat-dialog-content>
+<div class="custom-class" *ngIf="errInFetchingTestcases">
+    <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon> Unable to get testcases for the collection.
+    <p></p>
+    <p></p>
+</div>
+<mat-dialog-content style="white-space: pre-line;" class="run-container" *ngIf="dataLoaded && !errInFetchingTestcases">
     <span class="main-line">
         <span *ngIf="!scanComplete">
             <div class="custom-class">
                 <p>
-                    <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon>No device selected. Please scan device first.
+                    <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon>No device selected. Please scan device
+                    first.
                 </p>
             </div>
         </span>
-        <span *ngIf="scanComplete && !runComplete">Execution of testcases for <b>{{input.collectionName}}</b> has
+        <span *ngIf="scanComplete && !runComplete">Execution of testcases for <b>{{collectionName}}</b> has
             started..</span>
         <span *ngIf="scanComplete && runComplete">
-            Execution complete for <b>{{input.collectionName}}</b></span>
+            Execution complete for <b>{{collectionName}}</b></span>
         <span>
             <div class="custom-class">
                 <mat-icon [ngStyle]="{color: '#fd518c'}">timelapse</mat-icon>
@@ -32,12 +44,13 @@
         <mat-spinner diameter="50"></mat-spinner>
     </div>
     <div *ngIf="scanComplete && runComplete && !errorsExist">
-        <p>Total {{input.testCasesList.length > 1 ? input.testCasesList.length + ' testcases have' :
-            input.testCasesList.length + ' testcase has'}} executed successfully.
+        <p>Total {{testCasesList.length > 1 ? input.testCasesList.length + ' testcases have' :
+            testCasesList.length + ' testcase has'}} executed successfully.
             Overall result for testcases:</p>
         <div class="custom-class">
             <p>
-                <mat-icon [ngStyle]="{color: 'green'}">check_circle</mat-icon> {{countOfSuccessTestcases}} have passed.
+                <mat-icon [ngStyle]="{color: 'green'}">check_circle</mat-icon> {{countOfSuccessTestcases}} have
+                passed.
             </p>
         </div>
         <div class="custom-class">
@@ -50,10 +63,12 @@
         </p>
     </div>
 </mat-dialog-content>
-<mat-dialog-actions align="end"  *ngIf="!scanComplete || (scanComplete && runComplete)">
-    <button mat-flat-button color="accent" *ngIf="!scanComplete || (scanComplete && runComplete)"
+<mat-dialog-actions align="end" *ngIf="!scanComplete || (scanComplete && runComplete) || errInFetchingTestcases">
+    <button mat-flat-button color="accent"
+        *ngIf="!scanComplete || (scanComplete && runComplete) || errInFetchingTestcases"
         (click)="close()">Close</button>
     <span class="spacer"></span>
-    <button mat-flat-button color="accent"  disabled="true" *ngIf="scanComplete && runComplete && !errorsExist" (click)="saveTestRun()">Save Test
+    <button mat-flat-button color="accent" disabled="true" *ngIf="scanComplete && runComplete && !errorsExist"
+        (click)="saveTestRun()">Save Test
         Run</button>
 </mat-dialog-actions>

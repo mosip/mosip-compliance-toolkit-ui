@@ -111,8 +111,8 @@ export class SbiTestCaseService {
             count: testCase.otherAttributes.bioCount,
             exception: testCase.otherAttributes.exceptions,
             requestedScore: testCase.otherAttributes.requestedScore,
-            deviceId: '4',
-            deviceSubId: selectedSbiDevice.deviceSubId,
+            deviceId: selectedSbiDevice.deviceId,
+            deviceSubId: selectedSbiDevice.deviceSubId[0],
             previousHash: '',
             bioSubType: this.getBioSubType(testCase.otherAttributes.segments),
           },
@@ -197,7 +197,7 @@ export class SbiTestCaseService {
       };
       console.log(validateRequest);
       let request = {
-        id: appConstants.SBI_PROJECT_ADD_ID,
+        id: appConstants.VALIDATIONS_POST_ID,
         version: appConstants.VERSION,
         requesttime: new Date().toISOString(),
         request: validateRequest,

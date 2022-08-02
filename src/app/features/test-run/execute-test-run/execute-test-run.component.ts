@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { CdTimerComponent } from 'angular-cd-timer';
 import { SbiTestCaseService } from '../../../core/services/sbi-testcase-service';
 import { TestCaseModel } from 'src/app/core/models/testcase';
+import Utils from 'src/app/app.utils';
 
 @Component({
   selector: 'app-execute-test-run',
@@ -15,7 +16,10 @@ import { TestCaseModel } from 'src/app/core/models/testcase';
 })
 export class ExecuteTestRunComponent implements OnInit {
   input: any;
-  panelOpenState = false;
+  collectionId: string;
+  projectType: string;
+  collectionName: string;
+  errInFetchingTestcases = false;
   subscriptions: Subscription[] = [];
   scanComplete = true;
   runComplete = false;
@@ -23,27 +27,84 @@ export class ExecuteTestRunComponent implements OnInit {
   currectTestCaseName: string;
   errorsExist = false;
   errorsSummary = '';
+  testCasesList: any;
+  dataLoaded = false;
   @ViewChild('basicTimer', { static: true }) basicTimer: CdTimerComponent;
   countOfSuccessTestcases = 0;
   countOfFailedTestcases = 0;
+
   constructor(
     private dialogRef: MatDialogRef<ExecuteTestRunComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dataService: DataService,
     private sbiTestCaseService: SbiTestCaseService,
     private appConfigService: AppConfigService
-  ) {  
-    dialogRef.disableClose = true;  
+  ) {
+    dialogRef.disableClose = true;
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.input = this.data;
-    if (this.scanComplete) {
-      this.basicTimer.start();
-      this.executeRun();
+    this.collectionId = this.input.collectionId;
+    this.projectType = this.input.projectType;
+    if (this.projectType == appConstants.SBI && this.scanComplete) {
+      await this.getCollection();
+      await this.getTestcasesForCollection();
+      this.dataLoaded = true;
+      if (!this.errInFetchingTestcases) {
+        if (this.basicTimer) {
+          this.basicTimer.start();
+        }
+        await this.executeRun();
+        if (this.basicTimer) {
+          this.basicTimer.stop();
+        }
+      }
     }
   }
 
+  async getCollection() {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.getCollection(this.collectionId).subscribe(
+          (response: any) => {
+            if (response.errors && response.errors.length > 0) {
+              this.errInFetchingTestcases = true;
+              resolve(true);
+            }  
+            this.collectionName = response['response']['name'];
+            resolve(true);
+          },
+          (errors) => {
+            this.errInFetchingTestcases = true;
+            resolve(true);
+          }
+        )
+      );
+    });
+  }
+
+  async getTestcasesForCollection() {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.getTestcasesForCollection(this.collectionId).subscribe(
+          (response: any) => {
+            if (response.errors && response.errors.length > 0) {
+              this.errInFetchingTestcases = true;
+              resolve(true);
+            }  
+            console.log(response);
+            this.testCasesList = response['response']['testcases'];
+            resolve(true);
+          },
+          (errors) => {
+            this.errInFetchingTestcases = true;
+            resolve(true);
+          }
+        )
+      );
+    });
+  }
   async executeRun() {
     const sbiSelectedPort = localStorage.getItem(
       appConstants.SBI_SELECTED_PORT
@@ -53,13 +114,14 @@ export class ExecuteTestRunComponent implements OnInit {
     );
     this.errorsExist = false;
     if (sbiSelectedPort && sbiSelectedDevice) {
-      const testCasesList: TestCaseModel[] = this.input.testCasesList;
+      const testCasesList: TestCaseModel[] = this.testCasesList;
       for (const testCase of testCasesList) {
         this.currectTestCaseId = testCase.testId;
         this.currectTestCaseName = testCase.testName;
         let allValidatorsPassed = false;
         let res: any = null;
-        if (this.input.projectType == appConstants.SBI) {
+        console.log('executing testcase: ' + testCase.testName);
+        if (this.projectType == appConstants.SBI) {
           res = await this.sbiTestCaseService.runTestCase(
             testCase,
             sbiSelectedPort,
@@ -96,7 +158,6 @@ export class ExecuteTestRunComponent implements OnInit {
           this.countOfFailedTestcases++;
         }
       }
-      this.basicTimer.stop();
       this.runComplete = true;
     } else {
       this.scanComplete = false;
