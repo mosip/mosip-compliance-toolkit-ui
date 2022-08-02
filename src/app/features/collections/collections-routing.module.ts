@@ -14,7 +14,7 @@ const routes: Routes = [
     component: AddCollectionsComponent,
   },
   {
-    path: 'view/:id',
+    path: ':collectionId',
     data: {
       breadcrumb: {
         alias: 'collectionBreadCrumb',

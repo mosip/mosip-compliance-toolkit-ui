@@ -185,10 +185,10 @@ export class ViewProjectComponent implements OnInit {
 
   viewCollection(collection: any) {
     this.router.navigate([
-      `toolkit/project/${this.projectType}/${this.projectId}/collections/view/${collection.collectionId}`,
+      `toolkit/project/${this.projectType}/${this.projectId}/collections/${collection.collectionId}`,
     ]);
   }
-  
+
   scanDevice() {
     const body = {
       title: 'Scan Device',
