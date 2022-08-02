@@ -66,7 +66,7 @@ export class AddCollectionsComponent implements OnInit {
       );
       this.breadcrumbService.set(
         '@collectionBreadCrumb',
-        `Add a New Collection`
+        `Add`
       );
     }
   }

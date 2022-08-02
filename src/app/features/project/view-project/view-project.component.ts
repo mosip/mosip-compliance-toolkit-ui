@@ -179,13 +179,13 @@ export class ViewProjectComponent implements OnInit {
 
   addCollection() {
     this.router.navigate([
-      `toolkit/project/${this.projectType}/${this.projectId}/collections/add`,
+      `toolkit/project/${this.projectType}/${this.projectId}/collection/add`,
     ]);
   }
 
   viewCollection(collection: any) {
     this.router.navigate([
-      `toolkit/project/${this.projectType}/${this.projectId}/collections/${collection.collectionId}`,
+      `toolkit/project/${this.projectType}/${this.projectId}/collection/${collection.collectionId}`,
     ]);
   }
 

@@ -25,7 +25,7 @@ const routes: Routes = [
         },
       },
       {
-        path: 'collections',
+        path: 'collection',
         data: { breadcrumb: { label: 'Collections', disable: true } },
         loadChildren: () =>
           import('../collections/collections.module').then(
