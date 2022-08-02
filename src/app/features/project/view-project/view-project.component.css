@@ -83,3 +83,7 @@ mat-expansion-panel-header {
   margin-top: 18vw;
   display: flex;
 }
+.link {
+  cursor: pointer;
+  color: #ff4081;
+}

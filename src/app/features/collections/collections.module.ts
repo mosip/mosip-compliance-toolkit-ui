@@ -7,13 +7,13 @@ import { MaterialModule } from '../../core/material.module';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { AddCollectionsComponent } from './add-collections/add-collections.component';
-import { ViewcollectionsComponent } from './viewcollections/viewcollections.component';
+import { ViewCollectionsComponent } from './view-collections/view-collections.component';
 
 
 @NgModule({
   declarations: [
     AddCollectionsComponent,
-    ViewcollectionsComponent
+    ViewCollectionsComponent
   ],
   imports: [
     CommonModule,
