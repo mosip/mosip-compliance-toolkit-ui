@@ -208,77 +208,9 @@ export class ViewProjectComponent implements OnInit {
       );
   }
   async runCollection(row: any) {
-    //first get list of testcases based on collectionId
-    let testCasesList = [];
-    const testcase: TestCaseModel = {
-      testCaseType: 'SBI',
-      testName: 'Discover device',
-      testId: 'SBI0001',
-      specVersion: '0.9.5',
-      testDescription: 'Valid Discover Request',
-      testOrderSequence: 1,
-      methodName: 'device',
-      requestSchema: 'DiscoverRequestSchema',
-      responseSchema: 'DiscoverResponseSchema',
-      validatorDefs: [
-        {
-          name: 'SchemaValidator',
-          description: 'SchemaValidator',
-        },
-      ],
-      otherAttributes: {
-        runtimeInput: '',
-        purpose: ['Registration', 'Auth'],
-        biometricTypes: ['Finger', 'Iris', 'Face'],
-        deviceSubTypes: ['Slap', 'Single', 'Double', 'Full face'],
-        segments: [],
-        exceptions: [],
-        requestedScore: '',
-        bioCount: '',
-        deviceSubId: '',
-        modalities: [],
-      },
-    };
-    const testcase1: TestCaseModel = {
-      testCaseType: 'SBI',
-      testName: 'Discover device',
-      testId: 'SBI0002',
-      specVersion: '0.9.5',
-      testDescription: 'Valid Discover Request',
-      testOrderSequence: 1,
-      methodName: 'device',
-      requestSchema: 'DiscoverRequestSchema',
-      responseSchema: 'DiscoverResponseSchema',
-      validatorDefs: [
-        {
-          name: 'SchemaValidator',
-          description: 'SchemaValidator',
-        },
-        {
-          name: 'SignatureValidator',
-          description: 'SignatureValidator',
-        },
-      ],
-      otherAttributes: {
-        runtimeInput: '',
-        purpose: ['Registration', 'Auth'],
-        biometricTypes: ['Finger', 'Iris', 'Face'],
-        deviceSubTypes: ['Slap', 'Single', 'Double', 'Full face'],
-        segments: [],
-        exceptions: [],
-        requestedScore: '',
-        bioCount: '',
-        deviceSubId: '',
-        modalities: [],
-      },
-    };
-    testCasesList.push(testcase);
-    testCasesList.push(testcase1);
     const body = {
-      title: `New Test Run Started`,
-      collectionName: row.name,
-      projectType: this.projectType,
-      testCasesList: testCasesList,
+      collectionId: row.collectionId,
+      projectType: this.projectType
     };
     this.dialog
       .open(ExecuteTestRunComponent, {
