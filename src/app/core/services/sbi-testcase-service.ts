@@ -9,6 +9,7 @@ import { TestCaseModel } from '../models/testcase';
 import { DataService } from './data-service';
 import * as appConstants from 'src/app/app.constants';
 import { SbiDiscoverResponseModel } from '../models/sbi-discover';
+import Utils from 'src/app/app.utils';
 
 @Injectable({
   providedIn: 'root',
@@ -31,13 +32,20 @@ export class SbiTestCaseService {
         sbiSelectedPort,
         methodRequest
       );
-      console.log("calling validateResp");
-
+      console.log('decoding');
+      console.log(methodResponse);
+      const decodedMethodResp = this.createDecodedResponse(
+        testCase,
+        methodResponse,
+        sbiSelectedDevice
+      );
+      console.log('calling validateResp');
+      console.log(decodedMethodResp);
       //now validate the response
       let validationResults = await this.validateResponse(
         testCase,
         methodRequest,
-        methodResponse
+        decodedMethodResp
       );
       resolve(validationResults);
     });
@@ -180,6 +188,29 @@ export class SbiTestCaseService {
     return bioSubTypes;
   }
 
+  createDecodedResponse(
+    testCase: TestCaseModel,
+    methodResponse: any,
+    sbiSelectedDevice: string
+  ): any {
+    const selectedSbiDevice: SbiDiscoverResponseModel =
+      JSON.parse(sbiSelectedDevice);
+    if (testCase.methodName == appConstants.SBI_METHOD_DEVICE) {
+      let decodedDataArr: SbiDiscoverResponseModel[] = [];
+      methodResponse.forEach((deviceData: any) => {
+        if (deviceData.deviceId === selectedSbiDevice.deviceId) {
+          const decodedData = Utils.getDecodedDeviceData(deviceData);
+          if (decodedData != null) {
+            decodedDataArr.push(decodedData);
+          }
+        }
+      });
+      return decodedDataArr;
+    }
+    return methodResponse;
+    //return JSON.stringify(request);
+  }
+
   async validateResponse(
     testCase: TestCaseModel,
     methodRequest: any,
@@ -203,14 +234,16 @@ export class SbiTestCaseService {
         requesttime: new Date().toISOString(),
         request: validateRequest,
       };
-      this.dataService.validateResponse(request).subscribe((response) => {
-        //console.log(response);
-        resolve(response);
-        //this.testCaseResults = JSON.stringify(response);
-      },
-      (errors) => {
-        resolve(errors);
-      });
+      this.dataService.validateResponse(request).subscribe(
+        (response) => {
+          //console.log(response);
+          resolve(response);
+          //this.testCaseResults = JSON.stringify(response);
+        },
+        (errors) => {
+          resolve(errors);
+        }
+      );
     });
   }
 }

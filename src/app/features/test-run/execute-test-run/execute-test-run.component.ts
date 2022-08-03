@@ -15,18 +15,18 @@ import { CdTimerComponent } from 'angular-cd-timer';
 import { SbiTestCaseService } from '../../../core/services/sbi-testcase-service';
 import { TestCaseModel } from 'src/app/core/models/testcase';
 import Utils from 'src/app/app.utils';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-execute-test-run',
   templateUrl: './execute-test-run.component.html',
   styleUrls: ['./execute-test-run.component.css'],
 })
-export class ExecuteTestRunComponent
-  implements OnInit
-{
+export class ExecuteTestRunComponent implements OnInit {
   input: any;
   collectionId: string;
   projectType: string;
+  projectId: string;
   collectionName: string;
   errInFetchingTestcases = false;
   subscriptions: Subscription[] = [];
@@ -37,6 +37,7 @@ export class ExecuteTestRunComponent
   errorsExist = false;
   errorsSummary = '';
   testCasesList: any;
+  testRunId: string;
   dataLoaded = false;
   @ViewChild('basicTimer', { static: true }) basicTimer: CdTimerComponent;
   countOfSuccessTestcases = 0;
@@ -46,16 +47,18 @@ export class ExecuteTestRunComponent
     private dialogRef: MatDialogRef<ExecuteTestRunComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dataService: DataService,
+    private router: Router,
     private sbiTestCaseService: SbiTestCaseService,
     private appConfigService: AppConfigService
   ) {
     dialogRef.disableClose = true;
   }
-  
+
   async ngOnInit() {
     this.input = this.data;
     this.collectionId = this.input.collectionId;
     this.projectType = this.input.projectType;
+    this.projectId = this.input.projectId;
     this.basicTimer.start();
     if (this.projectType == appConstants.SBI && this.scanComplete) {
       await this.getCollection();
@@ -136,6 +139,9 @@ export class ExecuteTestRunComponent
           this.currectTestCaseName = '';
         }
         this.calculateTestcaseResults(res);
+        //save the testrun
+        //TODO
+        this.testRunId = "100";
       }
       this.runComplete = true;
     } else {
@@ -179,5 +185,11 @@ export class ExecuteTestRunComponent
     this.dialogRef.close();
   }
   saveTestRun() {}
-  showTestRunDetails() {}
+
+  viewTestRun() {
+    this.dialogRef.close();
+    this.router.navigate([
+      `toolkit/project/${this.projectType}/${this.projectId}/collection/${this.collectionId}/testrun/${this.testRunId}`,
+    ]);
+  }
 }

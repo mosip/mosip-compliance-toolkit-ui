@@ -11,7 +11,6 @@ import { Subscription } from 'rxjs';
 import * as appConstants from 'src/app/app.constants';
 import { MatDialog } from '@angular/material/dialog';
 import { ScanDeviceComponent } from '../../test-run/scan-device/scan-device.component';
-import { TestCaseModel } from 'src/app/core/models/testcase';
 import { ExecuteTestRunComponent } from '../../test-run/execute-test-run/execute-test-run.component';
 import Utils from 'src/app/app.utils';
 
@@ -40,6 +39,7 @@ export class ViewProjectComponent implements OnInit {
     'crDtimes',
     'runDtimes',
     'actions',
+    'actionsMore',
   ];
   isScanComplete =
     localStorage.getItem(appConstants.SBI_SCAN_COMPLETE) == 'true'
@@ -210,7 +210,8 @@ export class ViewProjectComponent implements OnInit {
   async runCollection(row: any) {
     const body = {
       collectionId: row.collectionId,
-      projectType: this.projectType
+      projectType: this.projectType,
+      projectId: this.projectId
     };
     this.dialog
       .open(ExecuteTestRunComponent, {
@@ -219,5 +220,11 @@ export class ViewProjectComponent implements OnInit {
       })
       .afterClosed()
       .subscribe();
+  }
+
+  viewTestRun(row: any) {
+    this.router.navigate([
+      `toolkit/project/${this.projectType}/${this.projectId}/collection/${row.collectionId}/testrun/100`,
+    ]);
   }
 }

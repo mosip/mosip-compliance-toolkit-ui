@@ -176,10 +176,12 @@ export class AddCollectionsComponent implements OnInit {
         this.dataLoaded = false;
         this.dataSubmitted = true;
         const collectionData = {
-          name: this.collectionForm.controls['name'].value,
+          projectType: this.projectType,
+          projectId: this.projectId,
+          collectionName: this.collectionForm.controls['name'].value,
         };
         let request = {
-          id: appConstants.SBI_COLLECTION_ADD_ID,
+          id: appConstants.COLLECTION_ADD_ID,
           version: appConstants.VERSION,
           requesttime: new Date().toISOString(),
           request: collectionData,
@@ -189,21 +191,21 @@ export class AddCollectionsComponent implements OnInit {
         let collectionResp: any = await this.addCollection(request);
         if (collectionResp) {
           const collectionId = collectionResp['response']['collectionId'];
-          let selectedTestcaseArr: string[] = [];
+          let selectedTestcaseArr: object[] = [];
           this.dataSource.data.forEach((row: TestCaseModel) => {
             if (this.selection.isSelected(row)) {
-              selectedTestcaseArr.push(row.testId);
+              selectedTestcaseArr.push({
+                collectionId: collectionId,
+                testCaseId: row.testId,
+              });
             }
           });
-          let collectionTestcasesReq = {
-            collectionId: collectionId,
-            testcases: selectedTestcaseArr,
-          };
+          
           let request1 = {
-            id: appConstants.SBI_COLLECTION_ADD_ID,
+            id: appConstants.COLLECTION_TESTCASES_ADD_ID,
             version: appConstants.VERSION,
             requesttime: new Date().toISOString(),
-            request: collectionTestcasesReq,
+            request: selectedTestcaseArr,
           };
           console.log(request1);
           await this.addTestcasesForCollection(request1);

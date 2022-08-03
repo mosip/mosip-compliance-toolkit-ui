@@ -15,12 +15,25 @@ const routes: Routes = [
   },
   {
     path: ':collectionId',
-    data: {
-      breadcrumb: {
-        alias: 'collectionBreadCrumb',
+    children: [
+      {
+        path: '',
+        data: {
+          breadcrumb: {
+            alias: 'collectionBreadCrumb',
+          },
+        },
+        component: ViewCollectionsComponent,
       },
-    },
-    component: ViewCollectionsComponent,
+      {
+        path: 'testrun',
+        data: { breadcrumb: { label: 'Test Run', skip: true } },
+        loadChildren: () =>
+          import('../../features/test-run/test-run.module').then(
+            (m) => m.TestRunModule
+          ),
+      },
+    ],
   },
 ];
 

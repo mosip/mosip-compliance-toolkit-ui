@@ -5,6 +5,12 @@
     <mat-spinner diameter="50"></mat-spinner>
 </div>
 <p></p>
+<mat-menu #appMenu="matMenu">
+    <ng-template matMenuContent let-myobject="myobject">
+        <button mat-menu-item (click)="viewTestRun(myobject)">View Last Test Run</button>
+        <!-- <button mat-menu-item (click)="deleteProject(myobject)">Delete</button> -->
+    </ng-template>
+</mat-menu>
 <div class="mat-elevation-z8" *ngIf="dataLoaded">
     <form [formGroup]="projectForm" *ngIf="dataLoaded">
         <mat-accordion>
@@ -328,6 +334,14 @@
                         [disabled]="!isScanComplete || row.testCaseCount == 0"
                         title="{{!isScanComplete ? 'You cannot run till you scan device first.' : row.testCaseCount == 0 ? 'Add testcases first':'Click to run the collection'}}">
                         Run
+                    </button>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="actionsMore" stickyEnd>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button [matMenuTriggerFor]="appMenu" [matMenuTriggerData]="{myobject: element}">
+                        <mat-icon>more_vert</mat-icon>
                     </button>
                 </td>
             </ng-container>

@@ -54,7 +54,16 @@
         </ng-container>
         <ng-container matColumnDef="lastRunStatus">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Run Status </th>
-            <td mat-cell *matCellDef="let element"> {{element.lastRunStatus}} </td>
+            <td mat-cell *matCellDef="let element">
+                <span class="custom-class" *ngIf="element.lastRunStatus == 'success'">
+                    <mat-icon [ngStyle]="{color: 'green'}">check_circle</mat-icon>
+                    Success
+                </span>
+                <span class="custom-class" *ngIf="element.lastRunStatus == 'failed'">
+                    <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon>
+                    Failure
+                </span>
+            </td>
         </ng-container>
         <ng-container matColumnDef="actions" stickyEnd>
             <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>

@@ -20,18 +20,10 @@ const routes: Routes = [
       },
       {
         path: 'project',
-        data: { breadcrumb: { label: 'Project', disable: true } },
+        data: { breadcrumb: { label: 'Project', skip: true } },
         loadChildren: () =>
           import('./features/project/project.module').then(
             (m) => m.ProjectModule
-          ),
-      },
-      {
-        path: 'testrun',
-        data: { breadcrumb: { label: 'Test Run', disable: true } },
-        loadChildren: () =>
-          import('./features/test-run/test-run.module').then(
-            (m) => m.TestRunModule
           ),
       },
     ],
