@@ -9,11 +9,13 @@ import { CdTimerModule } from 'angular-cd-timer';
 
 import { ExecuteTestRunComponent } from './execute-test-run/execute-test-run.component';
 import { ScanDeviceComponent } from './scan-device/scan-device.component';
+import { TestRunComponent } from './test-run/test-run.component';
 
 @NgModule({
   declarations: [
     ExecuteTestRunComponent,
-    ScanDeviceComponent
+    ScanDeviceComponent,
+    TestRunComponent
   ],
   imports: [
     CommonModule,

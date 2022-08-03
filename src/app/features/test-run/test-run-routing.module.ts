@@ -2,13 +2,27 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ScanDeviceComponent } from './scan-device/scan-device.component';
 import { ExecuteTestRunComponent } from './execute-test-run/execute-test-run.component';
+import { TestRunComponent } from './test-run/test-run.component';
 
 const routes: Routes = [
-  { path: 'execute', component: ExecuteTestRunComponent, data: { breadcrumb: 'Execute Test Run' },},
+  {
+    path: 'execute',
+    component: ExecuteTestRunComponent,
+    data: { breadcrumb: 'Execute Test Run' },
+  },
   {
     path: 'scan/device',
     data: { breadcrumb: 'Scan Device' },
     component: ScanDeviceComponent,
+  },
+  {
+    path: ':runId',
+    data: {
+      breadcrumb: {
+        alias: 'testrunBreadCrumb',
+      },
+    },
+    component: TestRunComponent,
   },
 ];
 

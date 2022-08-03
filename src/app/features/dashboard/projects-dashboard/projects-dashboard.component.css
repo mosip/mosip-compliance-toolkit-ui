@@ -29,3 +29,6 @@
   cursor: pointer;
   color: #ff4081;
 }
+.custom-class mat-icon {
+  vertical-align: middle;
+}

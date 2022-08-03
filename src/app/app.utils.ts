@@ -16,8 +16,8 @@ export default class Utils {
         ...deviceData,
         digitalIdDecoded: digitalIdDecoded,
       };
-      //console.log('decoded');
-      //console.log(deviceDataDecoded);
+      console.log('decoded');
+      console.log(deviceDataDecoded);
       return deviceDataDecoded;
     } catch (error) {
       return null;
@@ -56,6 +56,9 @@ export default class Utils {
     }
     if (customMsg) {
       message = customMsg;
+    }
+    if (message == '') {
+      message = "Unexpected error occured."
     }
     const body = {
       case: 'ERROR',

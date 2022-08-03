@@ -43,10 +43,8 @@ export class DataService {
   }
 
   addCollection(body: any) {
-    // let url = `${this.SERVICES_BASE_URL}addCollection`;
-    // //console.log('url:' + url);
-    // return this.httpClient.post(url, body);
-    return this.httpClient.get('./assets/collection.json');
+    let url = `${this.SERVICES_BASE_URL}addCollection`;
+    return this.httpClient.post(url, body);
   }
 
   getCollection(collectionId: string) {
@@ -55,14 +53,13 @@ export class DataService {
   }
 
   addTestcasesForCollection(body: any) {
-    // let url = `${this.SERVICES_BASE_URL}addTestcasesForCollection`;
-    // //console.log('url:' + url);
-    // return this.httpClient.post(url, body);
-    return this.httpClient.get('./assets/testcasesForCollection.json');
+    let url = `${this.SERVICES_BASE_URL}addTestCasesForCollection`;
+    //console.log('url:' + url);
+    return this.httpClient.post(url, body);
   }
 
   getTestcasesForCollection(collectionId: string) {
-    let url = `${this.SERVICES_BASE_URL}getTestcasesForCollection/${collectionId}`;
+    let url = `${this.SERVICES_BASE_URL}getTestCasesForCollection/${collectionId}`;
     return this.httpClient.get(url);
   }
 
@@ -87,6 +84,13 @@ export class DataService {
     let url = `${this.SERVICES_BASE_URL}validateResponse`;
     //console.log('url:' + url);
     return this.httpClient.post(url, body);
+  }
+
+  getTestRun(collectionId: string, runId: string) {
+    // let url = `${this.SERVICES_BASE_URL}getTestRun/${collectionId}/${runId}`;
+    // //console.log('url:' + url);
+    // return this.httpClient.gt(url);
+    return this.httpClient.get('./assets/testrun.json');
   }
 
   callSBIMethod(
