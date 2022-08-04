@@ -9,12 +9,15 @@ import { SbiProjectModel } from 'src/app/core/models/sbi-project';
 import { MatDialog } from '@angular/material/dialog';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
-import { TestCaseModel } from 'src/app/core/models/testcase';
-import { SelectionModel } from '@angular/cdk/collections';
 import Utils from 'src/app/app.utils';
 import { TestRunModel } from 'src/app/core/models/testrun';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  animate,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-test-run',
@@ -22,9 +25,12 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   styleUrls: ['./test-run.component.css'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition(
+        'expanded <=> collapsed',
+        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+      ),
     ]),
   ],
 })
@@ -39,11 +45,15 @@ export class TestRunComponent implements OnInit {
   dataLoaded = false;
   sbiProjectData: SbiProjectModel;
   dataSource: MatTableDataSource<TestRunModel>;
-  displayedColumns: string[] = ['testOrderSequence', 'testId', 'testName', 'resultStatus'];
+  displayedColumns: string[] = [
+    'testOrderSequence',
+    'testId',
+    'testName',
+    'resultStatus',
+  ];
   columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
   expandedElement: TestRunModel | null;
   dataSubmitted = false;
-  @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     public authService: AuthService,
@@ -62,7 +72,6 @@ export class TestRunComponent implements OnInit {
     }
     await this.getTestRun();
     this.initBreadCrumb();
-    this.dataSource.sort = this.sort;
     this.dataLoaded = true;
   }
 
@@ -83,7 +92,8 @@ export class TestRunComponent implements OnInit {
       this.subscriptions.push(
         this.dataService.getTestRun(this.collectionId, this.runId).subscribe(
           (response: any) => {
-            console.log(response);
+            console.log('TEST RUN');
+            console.log(response['response']['testcases']);
             this.dataSource = new MatTableDataSource(
               response['response']['testcases']
             );
@@ -108,11 +118,7 @@ export class TestRunComponent implements OnInit {
         '@collectionBreadCrumb',
         `${this.collectionName}`
       );
-      this.breadcrumbService.set(
-        '@testrunBreadCrumb',
-        `${this.runId}`
-      );
-      
+      this.breadcrumbService.set('@testrunBreadCrumb', `${this.runId}`);
     }
   }
 

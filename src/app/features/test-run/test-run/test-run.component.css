@@ -1,32 +1,59 @@
-  .button-container {
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    width: 95%;
-    position: fixed;
-    bottom: 0px;
-    left: 10px;
-    background-color: white;
-    border-top: 1px solid #ddd;
-  }
-  .button-container + .add-button {
-    margin-left: 8px;
-  }
-  .spinner {
-    flex-direction: column;
-    align-items: center;
-    margin-top: 18vw;
-    display: flex;
-  }
-  .testcases-table {
-    width: 100%;
-    
-  }
-  .table-container {
-    height: 400px;
-    max-width: 100%;
-    overflow: auto;
-  }
-  .custom-class mat-icon {
-    vertical-align: middle;
-  }
+.button-container {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  width: 95%;
+  position: fixed;
+  bottom: 0px;
+  left: 10px;
+  background-color: white;
+  border-top: 1px solid #ddd;
+}
+.button-container + .add-button {
+  margin-left: 8px;
+}
+.spinner {
+  flex-direction: column;
+  align-items: center;
+  margin-top: 18vw;
+  display: flex;
+}
+.table-container {
+  height: 400px;
+  max-width: 100%;
+  overflow: auto;
+}
+.testcases-table {
+  width: 100%;
+}
+.custom-class mat-icon {
+  vertical-align: middle;
+}
+tr.expanded-row {
+  height: 0;
+}
+tr.table-row:not(.table-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.table-row:not(.table-expanded-row):active {
+  background: #efefef;
+}
+
+.table-row td {
+  border-bottom-width: 0;
+}
+
+.expanded-details {
+  overflow: hidden;
+  display: flex;
+}
+/* 
+.example-element-diagram {
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+} */

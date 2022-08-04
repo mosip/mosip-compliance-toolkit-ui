@@ -9,8 +9,9 @@ export default class Utils {
     return isoDate;
   }
 
-  static getDecodedDeviceData(deviceData: any) {
+  static getDecodedDiscoverDevice(deviceData: any) {
     try {
+      console.log(deviceData);
       const digitalIdDecoded = JSON.parse(atob(deviceData.digitalId));
       const deviceDataDecoded: SbiDiscoverResponseModel = {
         ...deviceData,
@@ -20,14 +21,45 @@ export default class Utils {
       console.log(deviceDataDecoded);
       return deviceDataDecoded;
     } catch (error) {
+      console.log(error);
       return null;
     }
   }
 
-  static showSuccessMessage(
-    message: string,
-    dialog: MatDialog
-  ) {
+  static getDecodedDeviceInfo(deviceInfoResp: any) {
+    try {
+      let deviceInfoDecoded: any = Utils.parseJwt(deviceInfoResp.deviceInfo);
+      //console.log('deviceInfoDecoded');
+      //console.log(deviceInfoDecoded);
+      const digitalIdDecoded = Utils.parseJwt(deviceInfoDecoded.digitalId);
+      //console.log('digitalIdDecoded');
+      //console.log(digitalIdDecoded);
+      deviceInfoDecoded = {
+        ...deviceInfoDecoded,
+        digitalIdDecoded: digitalIdDecoded,
+      };
+      const deviceInfoDecodedFull = {
+        deviceInfo: deviceInfoResp.deviceInfo,
+        deviceInfoDecoded: deviceInfoDecoded,
+      };
+      console.log('deviceInfoDecodedFull');
+      console.log(deviceInfoDecodedFull);
+      return deviceInfoDecodedFull;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+
+  static parseJwt(token: string) {
+    try {
+      return JSON.parse(atob(token.split('.')[1]));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static showSuccessMessage(message: string, dialog: MatDialog) {
     const title = 'Success';
     const body = {
       case: 'SUCCESS',
@@ -44,7 +76,7 @@ export default class Utils {
   static showErrorMessage(
     errorsList: any,
     dialog: MatDialog,
-    customMsg?: string,
+    customMsg?: string
   ) {
     const titleOnError = 'Error';
     let message = '';
@@ -58,7 +90,7 @@ export default class Utils {
       message = customMsg;
     }
     if (message == '') {
-      message = "Unexpected error occured."
+      message = 'Unexpected error occured.';
     }
     const body = {
       case: 'ERROR',

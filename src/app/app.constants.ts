@@ -25,8 +25,12 @@ export const ABIS_CONTROLS = ['abisUrl', 'username', 'password', 'queueName'];
 export const BIOMETRIC_DEVICE = 'Biometric Device';
 export const SBI_METHOD_DEVICE = 'device';
 export const SBI_METHOD_DEVICE_KEY = 'MOSIPDISC';
+export const SBI_METHOD_DEVICE_INFO = 'info';
+export const SBI_METHOD_DEVICE_INFO_KEY = 'MOSIPDINFO';
 export const SBI_METHOD_CAPTURE = 'capture';
 export const SBI_METHOD_CAPTURE_KEY = 'CAPTURE';
+export const SBI_METHOD_RCAPTURE = 'capture';
+export const SBI_METHOD_RCAPTURE_KEY = 'RCAPTURE';
 export const DEVELOPER = 'Developer';
 
 //localStorage keys
