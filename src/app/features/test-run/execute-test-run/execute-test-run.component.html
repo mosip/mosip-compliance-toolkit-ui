@@ -75,7 +75,7 @@
         *ngIf="!scanComplete || (scanComplete && runComplete) || errInFetchingTestcases"
         (click)="close()">Close</button>
     <span class="spacer"></span>
-    <button mat-flat-button color="accent" disabled="true" *ngIf="scanComplete && runComplete && !errorsExist"
+    <!-- <button mat-flat-button color="accent" disabled="true" *ngIf="scanComplete && runComplete && !errorsExist"
         (click)="saveTestRun()">Save Test
-        Run</button>
+        Run</button> -->
 </mat-dialog-actions>

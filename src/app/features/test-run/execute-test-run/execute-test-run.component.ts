@@ -65,7 +65,7 @@ export class ExecuteTestRunComponent implements OnInit {
       await this.getTestcasesForCollection();
       this.dataLoaded = true;
       if (!this.errInFetchingTestcases) {
-        this.basicTimer.reset();
+        //this.basicTimer.reset();
         await this.executeRun();
         this.basicTimer.stop();
       }

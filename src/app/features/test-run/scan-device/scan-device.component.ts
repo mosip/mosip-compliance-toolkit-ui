@@ -120,7 +120,7 @@ export class ScanDeviceComponent implements OnInit {
                 let data = response;
                 let decodedDataArr: SbiDiscoverResponseModel[] = [];
                 data.forEach((deviceData: any) => {
-                  const decodedData = Utils.getDecodedDeviceData(deviceData);
+                  const decodedData = Utils.getDecodedDiscoverDevice(deviceData);
                   if (decodedData != null) {
                     decodedDataArr.push(decodedData);
                   }

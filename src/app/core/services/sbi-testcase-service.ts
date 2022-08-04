@@ -1,9 +1,4 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-} from '@angular/common/http';
 import { AppConfigService } from '../../app-config.service';
 import { TestCaseModel } from '../models/testcase';
 import { DataService } from './data-service';
@@ -66,10 +61,29 @@ export class SbiTestCaseService {
       //console.log(methodResponse);
       return methodResponse;
     }
+    if (methodName == appConstants.SBI_METHOD_DEVICE_INFO) {
+      let methodResponse = await this.callSBIMethod(
+        sbiSelectedPort,
+        appConstants.SBI_METHOD_DEVICE_INFO_KEY,
+        methodRequest,
+        methodName
+      );
+      //console.log(methodResponse);
+      return methodResponse;
+    }
     if (methodName == appConstants.SBI_METHOD_CAPTURE) {
       let methodResponse = await this.callSBIMethod(
         sbiSelectedPort,
         appConstants.SBI_METHOD_CAPTURE_KEY,
+        methodRequest,
+        methodName
+      );
+      return methodResponse;
+    }
+    if (methodName == appConstants.SBI_METHOD_RCAPTURE) {
+      let methodResponse = await this.callSBIMethod(
+        sbiSelectedPort,
+        appConstants.SBI_METHOD_RCAPTURE_KEY,
         methodRequest,
         methodName
       );
@@ -103,21 +117,47 @@ export class SbiTestCaseService {
     let request = {};
     if (testCase.methodName == appConstants.SBI_METHOD_DEVICE) {
       request = {
-        type: appConstants.BIOMETRIC_DEVICE,
+        type: selectedSbiDevice.digitalIdDecoded.type
       };
+    }
+    if (testCase.methodName == appConstants.SBI_METHOD_DEVICE_INFO) {
+      //no params
     }
     if (testCase.methodName == appConstants.SBI_METHOD_CAPTURE) {
       request = {
         env: appConstants.DEVELOPER,
         purpose: selectedSbiDevice.purpose,
-        specVersion: selectedSbiDevice.specVersion,
-        timeout: 10000,
+        specVersion: selectedSbiDevice.specVersion[0],
+        timeout: '10000',
         captureTime: new Date().toISOString(),
-        transactionId: '1636824682071',
+        transactionId: testCase.testId + '-' + new Date().getUTCMilliseconds(),
+        domainUri: '', //TODO
         bio: [
           {
             type: selectedSbiDevice.digitalIdDecoded.type,
-            count: testCase.otherAttributes.bioCount,
+            count: parseInt(testCase.otherAttributes.bioCount),
+            requestedScore: testCase.otherAttributes.requestedScore,
+            deviceId: selectedSbiDevice.deviceId,
+            deviceSubId: selectedSbiDevice.deviceSubId[0],
+            previousHash: '',
+            bioSubType: this.getBioSubType(testCase.otherAttributes.segments),
+          },
+        ],
+        customOpts: null,
+      };
+    }
+    if (testCase.methodName == appConstants.SBI_METHOD_RCAPTURE) {
+      request = {
+        env: appConstants.DEVELOPER,
+        purpose: selectedSbiDevice.purpose,
+        specVersion: selectedSbiDevice.specVersion[0],
+        timeout: '10000',
+        captureTime: new Date().toISOString(),
+        transactionId: testCase.testId + '-' + new Date().getUTCMilliseconds(),
+        bio: [
+          {
+            type: selectedSbiDevice.digitalIdDecoded.type,
+            count: parseInt(testCase.otherAttributes.bioCount),
             exception: testCase.otherAttributes.exceptions,
             requestedScore: testCase.otherAttributes.requestedScore,
             deviceId: selectedSbiDevice.deviceId,
@@ -130,7 +170,6 @@ export class SbiTestCaseService {
       };
     }
     //console.log(JSON.stringify(request));
-
     return request;
     //return JSON.stringify(request);
   }
@@ -199,11 +238,23 @@ export class SbiTestCaseService {
       let decodedDataArr: SbiDiscoverResponseModel[] = [];
       methodResponse.forEach((deviceData: any) => {
         if (deviceData.deviceId === selectedSbiDevice.deviceId) {
-          const decodedData = Utils.getDecodedDeviceData(deviceData);
+          const decodedData = Utils.getDecodedDiscoverDevice(deviceData);
           if (decodedData != null) {
             decodedDataArr.push(decodedData);
           }
         }
+      });
+      return decodedDataArr;
+    }
+    if (testCase.methodName == appConstants.SBI_METHOD_DEVICE_INFO) {
+      let decodedDataArr: any[] = [];
+      methodResponse.forEach((deviceInfo: any) => {
+        //if (deviceInfo.deviceId === selectedSbiDevice.deviceId) {
+          const decodedData = Utils.getDecodedDeviceInfo(deviceInfo);
+          if (decodedData != null) {
+            decodedDataArr.push(decodedData);
+          }
+        //}
       });
       return decodedDataArr;
     }
