@@ -54,6 +54,7 @@ export class TestRunComponent implements OnInit {
   columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
   expandedElement: TestRunModel | null;
   dataSubmitted = false;
+  panelOpenState = false;
   runDetails: any;
 
   constructor(
@@ -160,6 +161,11 @@ export class TestRunComponent implements OnInit {
     });
   }
 
+  getValidationsList(row: any): any[] {
+    let jsonData = JSON.parse(row.resultDescription);
+    let list = jsonData["validationsList"];
+    return list;
+  }
   backToProject() {
     this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}`,
