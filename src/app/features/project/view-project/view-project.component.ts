@@ -20,6 +20,7 @@ export interface CollectionsData {
   testCaseCount: number;
   crDtimes: Date;
   runDtimes: Date;
+  runId: string;
 }
 @Component({
   selector: 'app-view-project',
@@ -219,12 +220,19 @@ export class ViewProjectComponent implements OnInit {
         data: body,
       })
       .afterClosed()
-      .subscribe();
+      .subscribe(() =>
+      {
+        console.log("closed");
+        //this.router.navigate([`toolkit/dashboard`]);
+        // this.router.navigate([
+        //   `toolkit/project/${this.projectType}/${this.projectId}`,
+        // ]);
+      });
   }
 
   viewTestRun(row: any) {
     this.router.navigate([
-      `toolkit/project/${this.projectType}/${this.projectId}/collection/${row.collectionId}/testrun/100`,
+      `toolkit/project/${this.projectType}/${this.projectId}/collection/${row.collectionId}/testrun/${row.runId}`,
     ]);
   }
 }

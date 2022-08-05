@@ -2,12 +2,28 @@ export const AUTH_ERROR_CODE = ['KER-ATH-007', 'KER-ATH-006'];
 
 //service request id's
 export const SBI_PROJECT_ADD_ID = 'mosip.toolkit.sbi.project.add';
-export const VALIDATIONS_POST_ID = 'mosip.toolkit.api.id.validations';
+export const VALIDATIONS_ADD_ID = 'mosip.toolkit.api.id.validations';
 export const COLLECTION_ADD_ID = 'mosip.toolkit.collection.add';
 export const COLLECTION_TESTCASES_ADD_ID = 'mosip.toolkit.collection.testcase.add';
+export const TEST_RUN_ADD_ID = 'mosip.toolkit.testrun.add';
+export const TEST_RUN_UPDATE_ID = 'mosip.toolkit.testrun.update';
+export const TEST_RUN_DETAILS_ADD_ID = 'mosip.toolkit.testrun.details.add';
 
 export const VERSION = '1.0';
 
+export const SUCCESS = 'success';
+export const FAILED = 'failed';
+export const VALIDATIONS_LIST = 'validationsList';
+export const VALIDATIONS_RESPONSE = 'validationResponse';
+export const NAME = 'name';
+export const RESPONSE = 'response';
+export const ERROR_CODE = 'errorCode';
+export const MESSAGE = 'message';
+export const ERRORS = 'errors';
+export const TESTCASES = 'testcases';
+export const ID = 'id';
+export const COLLECTION_ID = 'collectionId';
+export const PROJECT_ID = 'projectId';
 export const SDK = 'SDK';
 export const SBI = 'SBI';
 export const ABIS = 'ABIS';

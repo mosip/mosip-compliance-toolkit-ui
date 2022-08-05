@@ -27,22 +27,23 @@ export class SbiTestCaseService {
         sbiSelectedPort,
         methodRequest
       );
-      console.log('decoding');
-      console.log(methodResponse);
       const decodedMethodResp = this.createDecodedResponse(
         testCase,
         methodResponse,
         sbiSelectedDevice
       );
-      console.log('calling validateResp');
-      console.log(decodedMethodResp);
       //now validate the response
-      let validationResults = await this.validateResponse(
+      let validationResponse = await this.validateResponse(
         testCase,
         methodRequest,
         decodedMethodResp
       );
-      resolve(validationResults);
+      let finalResponse = {
+        methodResponse: JSON.stringify(methodResponse),
+        methodRequest: JSON.stringify(methodRequest),
+        validationResponse: validationResponse
+      }
+      resolve(finalResponse);
     });
   }
 
@@ -280,7 +281,7 @@ export class SbiTestCaseService {
       };
       //console.log(validateRequest);
       let request = {
-        id: appConstants.VALIDATIONS_POST_ID,
+        id: appConstants.VALIDATIONS_ADD_ID,
         version: appConstants.VERSION,
         requesttime: new Date().toISOString(),
         request: validateRequest,
