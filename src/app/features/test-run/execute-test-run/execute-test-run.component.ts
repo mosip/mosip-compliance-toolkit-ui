@@ -1,11 +1,4 @@
-import {
-  AfterViewChecked,
-  AfterViewInit,
-  Component,
-  Inject,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as appConstants from 'src/app/app.constants';
 import { DataService } from '../../../core/services/data-service';
@@ -14,7 +7,6 @@ import { Subscription } from 'rxjs';
 import { CdTimerComponent } from 'angular-cd-timer';
 import { SbiTestCaseService } from '../../../core/services/sbi-testcase-service';
 import { TestCaseModel } from 'src/app/core/models/testcase';
-import Utils from 'src/app/app.utils';
 import { Router } from '@angular/router';
 
 @Component({
@@ -28,20 +20,29 @@ export class ExecuteTestRunComponent implements OnInit {
   projectType: string;
   projectId: string;
   collectionName: string;
-  errInFetchingTestcases = false;
   subscriptions: Subscription[] = [];
   scanComplete = true;
   runComplete = false;
   currectTestCaseId: string;
   currectTestCaseName: string;
-  errorsExist = false;
+  errorsInGettingTestcases = false;
+  errorsInValidators = false;
+  errorsInSavingTestRun = false;
   errorsSummary = '';
   testCasesList: any;
   testRunId: string;
   dataLoaded = false;
+  startTestRunDt: string;
+  endTestRunDt: string;
   @ViewChild('basicTimer', { static: true }) basicTimer: CdTimerComponent;
   countOfSuccessTestcases = 0;
   countOfFailedTestcases = 0;
+  sbiSelectedPort = localStorage.getItem(appConstants.SBI_SELECTED_PORT)
+    ? localStorage.getItem(appConstants.SBI_SELECTED_PORT)
+    : null;
+  sbiSelectedDevice = localStorage.getItem(appConstants.SBI_SELECTED_DEVICE)
+    ? localStorage.getItem(appConstants.SBI_SELECTED_DEVICE)
+    : null;
 
   constructor(
     private dialogRef: MatDialogRef<ExecuteTestRunComponent>,
@@ -60,32 +61,42 @@ export class ExecuteTestRunComponent implements OnInit {
     this.projectType = this.input.projectType;
     this.projectId = this.input.projectId;
     this.basicTimer.start();
-    if (this.projectType == appConstants.SBI && this.scanComplete) {
+    if (this.performValidations()) {
       await this.getCollection();
       await this.getTestcasesForCollection();
       this.dataLoaded = true;
-      if (!this.errInFetchingTestcases) {
-        //this.basicTimer.reset();
+      if (!this.errorsInGettingTestcases) {
         await this.executeRun();
-        this.basicTimer.stop();
       }
     }
+    this.basicTimer.stop();
   }
 
+  performValidations(): boolean {
+    if (this.projectType === appConstants.SBI) {
+      if (!(this.sbiSelectedPort && this.sbiSelectedDevice)) {
+        this.scanComplete = false;
+        this.dataLoaded = true;
+        return false;
+      }
+    }
+    return true;
+  }
   async getCollection() {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
         this.dataService.getCollection(this.collectionId).subscribe(
           (response: any) => {
             if (response.errors && response.errors.length > 0) {
-              this.errInFetchingTestcases = true;
+              this.errorsInGettingTestcases = true;
               resolve(true);
             }
-            this.collectionName = response['response']['name'];
+            this.collectionName =
+              response[appConstants.RESPONSE][appConstants.NAME];
             resolve(true);
           },
           (errors) => {
-            this.errInFetchingTestcases = true;
+            this.errorsInGettingTestcases = true;
             resolve(true);
           }
         )
@@ -99,72 +110,203 @@ export class ExecuteTestRunComponent implements OnInit {
         this.dataService.getTestcasesForCollection(this.collectionId).subscribe(
           (response: any) => {
             if (response.errors && response.errors.length > 0) {
-              this.errInFetchingTestcases = true;
+              this.errorsInGettingTestcases = true;
               resolve(true);
             }
             console.log(response);
-            this.testCasesList = response['response']['testcases'];
+            this.testCasesList =
+              response[appConstants.RESPONSE][appConstants.TESTCASES];
             resolve(true);
           },
           (errors) => {
-            this.errInFetchingTestcases = true;
+            this.errorsInGettingTestcases = true;
             resolve(true);
           }
         )
       );
     });
   }
+
   async executeRun() {
-    const sbiSelectedPort = localStorage.getItem(
-      appConstants.SBI_SELECTED_PORT
-    );
-    const sbiSelectedDevice = localStorage.getItem(
-      appConstants.SBI_SELECTED_DEVICE
-    );
-    this.errorsExist = false;
-    if (sbiSelectedPort && sbiSelectedDevice) {
-      const testCasesList: TestCaseModel[] = this.testCasesList;
+    this.errorsInValidators = false;
+    const testCasesList: TestCaseModel[] = this.testCasesList;
+    //first create a testrun in db
+    await this.addTestRun();
+    if (!this.errorsInSavingTestRun) {
       for (const testCase of testCasesList) {
         this.currectTestCaseId = testCase.testId;
         this.currectTestCaseName = testCase.testName;
-        let res: any = null;
-        console.log('executing testcase: ' + testCase.testName);
-        if (this.projectType == appConstants.SBI) {
-          res = await this.sbiTestCaseService.runTestCase(
-            testCase,
-            sbiSelectedPort,
-            sbiSelectedDevice
-          );
-          this.currectTestCaseId = '';
-          this.currectTestCaseName = '';
-        }
-        this.calculateTestcaseResults(res);
-        //save the testrun
-        //TODO
-        this.testRunId = "100";
+        const res: any = await this.executeTestCase(testCase);
+        this.calculateTestcaseResults(res[appConstants.VALIDATIONS_RESPONSE]);
+        this.currectTestCaseId = '';
+        this.currectTestCaseName = '';
+        //update the test run details in db
+        await this.addTestRunDetails(testCase, res);
       }
-      this.runComplete = true;
-    } else {
-      this.scanComplete = false;
+      //update the testrun in db with execution time
+      await this.updateTestRun();
     }
+    this.runComplete = true;
   }
 
+  async addTestRun() {
+    this.startTestRunDt = new Date().toISOString();
+    const testRunRequest = {
+      collectionId: this.collectionId,
+      runDtimes: this.startTestRunDt,
+    };
+    let request = {
+      id: appConstants.TEST_RUN_ADD_ID,
+      version: appConstants.VERSION,
+      requesttime: new Date().toISOString(),
+      request: testRunRequest,
+    };
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.addTestRun(request).subscribe(
+          (response: any) => {
+            if (response.errors && response.errors.length > 0) {
+              this.errorsInSavingTestRun = true;
+              resolve(true);
+            }
+            this.testRunId = response[appConstants.RESPONSE][appConstants.ID];
+            resolve(true);
+          },
+          (errors) => {
+            this.errorsInSavingTestRun = true;
+            resolve(true);
+          }
+        )
+      );
+    });
+  }
+
+  async updateTestRun() {
+    this.endTestRunDt = new Date().toISOString();
+    const testRunRequest = {
+      id: this.testRunId,
+      collectionId: this.collectionId,
+      runDtimes: this.startTestRunDt,
+      executionDtimes: this.endTestRunDt,
+    };
+    let request = {
+      id: appConstants.TEST_RUN_UPDATE_ID,
+      version: appConstants.VERSION,
+      requesttime: new Date().toISOString(),
+      request: testRunRequest,
+    };
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.updateTestRun(request).subscribe(
+          (response: any) => {
+            if (response.errors && response.errors.length > 0) {
+              this.errorsInSavingTestRun = true;
+              resolve(true);
+            }
+            resolve(true);
+          },
+          (errors) => {
+            this.errorsInSavingTestRun = true;
+            resolve(true);
+          }
+        )
+      );
+    });
+  }
+
+  async addTestRunDetails(testCase: TestCaseModel, res: any) {
+    let resultStatus = appConstants.FAILED;
+    let countofPassedValidators = 0;
+    let validations: any = [];
+    if (
+      res &&
+      res[appConstants.VALIDATIONS_RESPONSE] &&
+      res[appConstants.VALIDATIONS_RESPONSE][appConstants.RESPONSE]
+    ) {
+      const validationsList =
+        res[appConstants.VALIDATIONS_RESPONSE][appConstants.RESPONSE][
+          appConstants.VALIDATIONS_LIST
+        ];
+      if (validationsList && validationsList.length > 0) {
+        validationsList.forEach((validationitem: any) => {
+          if (validationitem.status == appConstants.SUCCESS) {
+            countofPassedValidators++;
+          }
+        });
+        if (validationsList.length == countofPassedValidators) {
+          resultStatus = appConstants.SUCCESS;
+        } else {
+          resultStatus = appConstants.FAILED;
+        }
+        validations = validationsList;
+      }
+    }
+    const testRunRequest = {
+      runId: this.testRunId,
+      testcaseId: testCase.testId,
+      methodRequest: res.methodRequest,
+      methodResponse: res.methodResponse,
+      resultStatus: resultStatus,
+      resultDescription: JSON.stringify({
+        validationsList: validations,
+      }),
+    };
+    let request = {
+      id: appConstants.TEST_RUN_DETAILS_ADD_ID,
+      version: appConstants.VERSION,
+      requesttime: new Date().toISOString(),
+      request: testRunRequest,
+    };
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.addTestRunDetails(request).subscribe(
+          (response: any) => {
+            if (response.errors && response.errors.length > 0) {
+              this.errorsInSavingTestRun = true;
+              resolve(true);
+            }
+            console.log(response);
+            resolve(true);
+          },
+          (errors) => {
+            this.errorsInSavingTestRun = true;
+            resolve(true);
+          }
+        )
+      );
+    });
+  }
+  async executeTestCase(testCase: any) {
+    return new Promise(async (resolve, reject) => {
+      if (this.projectType === appConstants.SBI) {
+        const res = await this.sbiTestCaseService.runTestCase(
+          testCase,
+          this.sbiSelectedPort ? this.sbiSelectedPort : '',
+          this.sbiSelectedDevice ? this.sbiSelectedDevice : ''
+        );
+        resolve(res);
+      } else {
+        resolve(true);
+      }
+    });
+  }
   calculateTestcaseResults(res: any) {
     let allValidatorsPassed = false;
-    if (res && res['response']) {
+    if (res && res[appConstants.RESPONSE]) {
       let countofPassedValidators = 0;
-      const response = res['response'];
-      const errors = res['errors'];
+      const response = res[appConstants.RESPONSE];
+      const errors = res[appConstants.RESPONSE];
       if (errors && errors.length > 0) {
-        this.errorsExist = true;
+        this.errorsInValidators = true;
         errors.forEach((err: any) => {
-          this.errorsSummary = err['errorCode'] + ' - ' + err['message'];
+          this.errorsSummary =
+            err[appConstants.ERROR_CODE] + ' - ' + err[appConstants.MESSAGE];
         });
       } else {
-        const validationsList = response['validationsList'];
+        const validationsList = response[appConstants.VALIDATIONS_LIST];
         if (validationsList) {
           validationsList.forEach((validationitem: any) => {
-            if (validationitem.status == 'success') {
+            if (validationitem.status == appConstants.SUCCESS) {
               countofPassedValidators++;
             }
           });
@@ -188,8 +330,9 @@ export class ExecuteTestRunComponent implements OnInit {
 
   viewTestRun() {
     this.dialogRef.close();
+    console.log(`toolkit/project/${this.projectType}/${this.projectId}/collection/${this.collectionId}/testrun/${this.testRunId}`);
     this.router.navigate([
-      `toolkit/project/${this.projectType}/${this.projectId}/collection/${this.collectionId}/testrun/${this.testRunId}`,
+      `toolkit/project/${this.projectType}/${this.projectId}/collection/${this.collectionId}/testrun/${this.testRunId}`
     ]);
   }
 }

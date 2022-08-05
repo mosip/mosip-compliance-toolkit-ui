@@ -33,7 +33,7 @@ mat-dialog-container{
   width: 100%;
 }
 mat-dialog-actions {
-  padding-top: 10px;
+  margin-top: 25px;
   border-top: 1px solid #ff4081;
   display: flex;
   justify-content: space-between;

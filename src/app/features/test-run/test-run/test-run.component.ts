@@ -54,6 +54,7 @@ export class TestRunComponent implements OnInit {
   columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
   expandedElement: TestRunModel | null;
   dataSubmitted = false;
+  runDetails: any;
 
   constructor(
     public authService: AuthService,
@@ -94,6 +95,7 @@ export class TestRunComponent implements OnInit {
           (response: any) => {
             console.log('TEST RUN');
             console.log(response['response']['testcases']);
+            this.runDetails = response['response'];
             this.dataSource = new MatTableDataSource(
               response['response']['testcases']
             );
@@ -118,7 +120,7 @@ export class TestRunComponent implements OnInit {
         '@collectionBreadCrumb',
         `${this.collectionName}`
       );
-      this.breadcrumbService.set('@testrunBreadCrumb', `${this.runId}`);
+      this.breadcrumbService.set('@testrunBreadCrumb', `Test Run - (${new Date(this.runDetails.runDtimes).toLocaleString()})`);
     }
   }
 

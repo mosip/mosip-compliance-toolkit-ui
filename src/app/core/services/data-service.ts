@@ -86,6 +86,23 @@ export class DataService {
     return this.httpClient.post(url, body);
   }
 
+  addTestRun(body: any) {
+    let url = `${this.SERVICES_BASE_URL}addTestRun`;
+    //console.log('url:' + url);
+    return this.httpClient.post(url, body);
+  }
+
+  updateTestRun(body: any) {
+    let url = `${this.SERVICES_BASE_URL}updateTestRun`;
+    //console.log('url:' + url);
+    return this.httpClient.put(url, body);
+  }
+
+  addTestRunDetails(body: any) {
+    let url = `${this.SERVICES_BASE_URL}addTestRunDetails`;
+    //console.log('url:' + url);
+    return this.httpClient.post(url, body);
+  }
   getTestRun(collectionId: string, runId: string) {
     // let url = `${this.SERVICES_BASE_URL}getTestRun/${collectionId}/${runId}`;
     // //console.log('url:' + url);

@@ -6,6 +6,8 @@
   "response": {
     "collectionId": "101",
     "runId": "100",
+    "runDtimes": "2022-08-02T11:30:31.584Z",
+    "executionDtimes": "2022-08-02T11:32:31.584Z",
     "testcases": [
       {
         "testId": "SBI1000",
