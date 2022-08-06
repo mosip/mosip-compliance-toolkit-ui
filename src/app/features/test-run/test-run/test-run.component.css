@@ -20,11 +20,11 @@
 }
 .table-container {
   height: 500px;
-  /* max-width: 100%; */
   overflow: auto;
 }
 .testcases-table {
-  /* width: 100%; */
+  width: 100%;
+  /* width: 50%; */
 }
 .custom-class mat-icon {
   vertical-align: middle;
@@ -43,6 +43,10 @@ mat-accordion {
   border: 1px solid #ddd;
   background: 1px solid #ddd;
 }
+mat-expansion-panel {
+  /* background-color: rgba(119, 136, 153, 0.26);
+  color: black; */
+}
 .table-row td {
   border-bottom-width: 0;
 }
@@ -54,16 +58,21 @@ mat-accordion {
 }
 .details-container {
   border: 2px solid black;
-  padding: 8px;
+  padding: 20px;
   font-weight: lighter;
   margin: 8px 0;
   height: 104px;
 }
 .json-content {
-  overflow: auto;
+  word-wrap: break-word;
+  
 }
 .json-content-table {
   overflow: auto;
   display: flex;
   flex-direction: column;
+}
+mat-panel-title {
+  display: flex;
+  justify-content: space-between;
 }

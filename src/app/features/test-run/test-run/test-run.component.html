@@ -5,7 +5,10 @@
     <mat-spinner diameter="50"></mat-spinner>
 </div>
 <div class="mat-elevation-z8" *ngIf="dataLoaded">
-    <div class="table-container">
+    <div *ngIf="dataSource.data.length <= 0" [ngStyle]="{color: 'red', padding: '30px'}">
+        Test run details are not available.
+    </div>
+    <div class="table-container" *ngIf="dataSource.data.length > 0">
         <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="testcases-table">
             <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
@@ -75,13 +78,15 @@
                             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title>Result Status:
-                                        <span class="custom-class" *ngIf="element.resultStatus== 'success'">
-                                            <mat-icon [ngStyle]="{color: 'green'}">check_circle</mat-icon>
-                                            Success
-                                        </span>
-                                        <span class="custom-class" *ngIf="element.resultStatus == 'failed'">
-                                            <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon>
-                                            Failure
+                                        <span>
+                                            <span class="custom-class" *ngIf="element.resultStatus== 'success'">
+                                                <mat-icon [ngStyle]="{color: 'green'}">check_circle</mat-icon>
+                                                Success
+                                            </span>
+                                            <span class="custom-class" *ngIf="element.resultStatus == 'failed'">
+                                                <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon>
+                                                Failure
+                                            </span>
                                         </span>
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
