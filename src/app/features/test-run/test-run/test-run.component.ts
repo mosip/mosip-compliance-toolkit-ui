@@ -18,6 +18,7 @@ import {
   transition,
   animate,
 } from '@angular/animations';
+import { TestCaseModel } from 'src/app/core/models/testcase';
 
 @Component({
   selector: 'app-test-run',
@@ -92,14 +93,22 @@ export class TestRunComponent implements OnInit {
   async getTestRun() {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
-        this.dataService.getTestRun(this.collectionId, this.runId).subscribe(
-          (response: any) => {
-            console.log('TEST RUN');
-            console.log(response['response']['testcases']);
+        this.dataService.getTestRunDetails(this.runId).subscribe(
+          async (response: any) => {
             this.runDetails = response['response'];
-            this.dataSource = new MatTableDataSource(
-              response['response']['testcases']
-            );
+            let list: any[] = response['response']['testRunDetailsList'];
+            let tableData = [];
+            for (const testRun of list) {
+              const testId: string = testRun.testcaseId;
+              const testCase: any = await this.getTestCase(testId);
+              tableData.push({
+                ...testRun,
+                testId: testId,
+                testName: testCase['testName'],
+                testOrderSequence: testCase['testOrderSequence'],
+              });
+            }
+            this.dataSource = new MatTableDataSource(tableData);
             resolve(true);
           },
           (errors) => {
@@ -121,7 +130,10 @@ export class TestRunComponent implements OnInit {
         '@collectionBreadCrumb',
         `${this.collectionName}`
       );
-      this.breadcrumbService.set('@testrunBreadCrumb', `Test Run - (${new Date(this.runDetails.runDtimes).toLocaleString()})`);
+      this.breadcrumbService.set(
+        '@testrunBreadCrumb',
+        `Test Run - (${new Date(this.runDetails.runDtimes).toLocaleString()})`
+      );
     }
   }
 
@@ -132,6 +144,22 @@ export class TestRunComponent implements OnInit {
           (response: any) => {
             this.collectionName = response['response']['name'];
             resolve(true);
+          },
+          (errors) => {
+            Utils.showErrorMessage(errors, this.dialog);
+            resolve(false);
+          }
+        )
+      );
+    });
+  }
+
+  async getTestCase(testcaseId: string) {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.getTestCase(testcaseId).subscribe(
+          (response: any) => {
+            resolve(response['response']);
           },
           (errors) => {
             Utils.showErrorMessage(errors, this.dialog);
@@ -163,7 +191,7 @@ export class TestRunComponent implements OnInit {
 
   getValidationsList(row: any): any[] {
     let jsonData = JSON.parse(row.resultDescription);
-    let list = jsonData["validationsList"];
+    let list = jsonData['validationsList'];
     return list;
   }
   backToProject() {
