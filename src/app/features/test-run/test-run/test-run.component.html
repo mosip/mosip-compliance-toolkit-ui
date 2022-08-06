@@ -33,7 +33,7 @@
                         <mat-icon [ngStyle]="{color: 'green'}">check_circle</mat-icon>
                         Success
                     </span>
-                    <span class="custom-class" *ngIf="element.resultStatus == 'failed'">
+                    <span class="custom-class" *ngIf="element.resultStatus == 'failure'">
                         <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon>
                         Failure
                     </span>
@@ -83,7 +83,7 @@
                                                 <mat-icon [ngStyle]="{color: 'green'}">check_circle</mat-icon>
                                                 Success
                                             </span>
-                                            <span class="custom-class" *ngIf="element.resultStatus == 'failed'">
+                                            <span class="custom-class" *ngIf="element.resultStatus == 'failure'">
                                                 <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon>
                                                 Failure
                                             </span>
@@ -97,14 +97,14 @@
                                                 <span class="custom-class" *ngIf="item.status== 'success'">
                                                     <mat-icon [ngStyle]="{color: 'green'}">check_circle</mat-icon>
                                                 </span>
-                                                <span class="custom-class" *ngIf="item.status == 'failed'">
+                                                <span class="custom-class" *ngIf="item.status == 'failure'">
                                                     <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon>
                                                 </span>&nbsp;
                                                 <b>{{item.validatorName}}</b>&nbsp;({{item.validatorDescription}})
                                             </span>
                                             <span *ngIf="item.status== 'success'"
                                                 [ngStyle]="{color: 'green'}">{{item.description}}</span>
-                                            <span *ngIf="item.status== 'failed'"
+                                            <span *ngIf="item.status== 'failure'"
                                                 [ngStyle]="{color: 'red'}">{{item.description}}</span>
                                         </div>
                                     </div>

@@ -215,7 +215,7 @@ export class ExecuteTestRunComponent implements OnInit {
   }
 
   async addTestRunDetails(testCase: TestCaseModel, res: any) {
-    let resultStatus = appConstants.FAILED;
+    let resultStatus = appConstants.FAILURE;
     let countofPassedValidators = 0;
     let validations: any = [];
     if (
@@ -236,7 +236,7 @@ export class ExecuteTestRunComponent implements OnInit {
         if (validationsList.length == countofPassedValidators) {
           resultStatus = appConstants.SUCCESS;
         } else {
-          resultStatus = appConstants.FAILED;
+          resultStatus = appConstants.FAILURE;
         }
         validations = validationsList;
       }

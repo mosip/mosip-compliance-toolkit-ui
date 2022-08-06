@@ -12,7 +12,7 @@ export const TEST_RUN_DETAILS_ADD_ID = 'mosip.toolkit.testrun.details.add';
 export const VERSION = '1.0';
 
 export const SUCCESS = 'success';
-export const FAILED = 'failed';
+export const FAILURE = 'failure';
 export const VALIDATIONS_LIST = 'validationsList';
 export const VALIDATIONS_RESPONSE = 'validationResponse';
 export const NAME = 'name';

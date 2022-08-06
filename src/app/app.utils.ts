@@ -39,6 +39,7 @@ export default class Utils {
         digitalIdDecoded: digitalIdDecoded,
       };
       const deviceInfoDecodedFull = {
+        error:deviceInfoResp.error,
         deviceInfo: deviceInfoResp.deviceInfo,
         deviceInfoDecoded: deviceInfoDecoded,
       };
