@@ -29,11 +29,33 @@ export default class Utils {
   static getDecodedDeviceInfo(deviceInfoResp: any) {
     try {
       let deviceInfoDecoded: any = Utils.parseJwt(deviceInfoResp.deviceInfo);
-      //console.log('deviceInfoDecoded');
-      //console.log(deviceInfoDecoded);
       const digitalIdDecoded = Utils.parseJwt(deviceInfoDecoded.digitalId);
-      //console.log('digitalIdDecoded');
-      //console.log(digitalIdDecoded);
+      deviceInfoDecoded = {
+        ...deviceInfoDecoded,
+        digitalIdDecoded: digitalIdDecoded,
+      };
+      const deviceInfoDecodedFull = {
+        error:deviceInfoResp.error,
+        deviceInfo: deviceInfoResp.deviceInfo,
+        deviceInfoDecoded: deviceInfoDecoded,
+      };
+      console.log('deviceInfoDecodedFull');
+      console.log(deviceInfoDecodedFull);
+      return deviceInfoDecodedFull;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+
+  static getDecodedUnregistetedDeviceInfo(deviceInfoResp: any) {
+    try {
+      let deviceInfoDecoded: any = JSON.parse(atob(deviceInfoResp.deviceInfo));
+      console.log('deviceInfoDecoded');
+      console.log(deviceInfoDecoded);
+      const digitalIdDecoded = JSON.parse(deviceInfoDecoded.digitalId);
+      console.log('digitalIdDecoded');
+      console.log(digitalIdDecoded);
       deviceInfoDecoded = {
         ...deviceInfoDecoded,
         digitalIdDecoded: digitalIdDecoded,

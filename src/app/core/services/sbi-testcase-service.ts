@@ -41,8 +41,8 @@ export class SbiTestCaseService {
       let finalResponse = {
         methodResponse: JSON.stringify(methodResponse),
         methodRequest: JSON.stringify(methodRequest),
-        validationResponse: validationResponse
-      }
+        validationResponse: validationResponse,
+      };
       resolve(finalResponse);
     });
   }
@@ -118,7 +118,7 @@ export class SbiTestCaseService {
     let request = {};
     if (testCase.methodName == appConstants.SBI_METHOD_DEVICE) {
       request = {
-        type: selectedSbiDevice.digitalIdDecoded.type
+        type: selectedSbiDevice.digitalIdDecoded.type,
       };
     }
     if (testCase.methodName == appConstants.SBI_METHOD_DEVICE_INFO) {
@@ -238,24 +238,47 @@ export class SbiTestCaseService {
     if (testCase.methodName == appConstants.SBI_METHOD_DEVICE) {
       let decodedDataArr: SbiDiscoverResponseModel[] = [];
       methodResponse.forEach((deviceData: any) => {
-        if (deviceData.deviceId === selectedSbiDevice.deviceId) {
-          const decodedData = Utils.getDecodedDiscoverDevice(deviceData);
-          if (decodedData != null) {
-            decodedDataArr.push(decodedData);
-          }
+        const decodedData = Utils.getDecodedDiscoverDevice(deviceData);
+        if (decodedData != null) {
+          decodedDataArr.push(decodedData);
         }
       });
       return decodedDataArr;
     }
     if (testCase.methodName == appConstants.SBI_METHOD_DEVICE_INFO) {
+      //device info - unregistered device - sample code for testing
+      // methodResponse = [
+      //   {
+      //     deviceInfo:
+      //       'eyJzcGVjVmVyc2lvbiI6WyIwLjkuNSJdLCJlbnYiOiJTdGFnaW5nIiwiZGlnaXRhbElkIjoie1wic2VyaWFsTm9cIjpcIjEyMzQ1Njc5OTBcIixcIm1ha2VcIjpcIk1PU0lQXCIsXCJtb2RlbFwiOlwiU0lOR0xFMDFcIixcInR5cGVcIjpcIkZpbmdlclwiLFwiZGV2aWNlU3ViVHlwZVwiOlwiU2luZ2xlXCIsXCJkZXZpY2VQcm92aWRlcklkXCI6XCJNT1NJUC5QUk9YWS5TQklcIixcImRldmljZVByb3ZpZGVyXCI6XCJNT1NJUFwiLFwiZGF0ZVRpbWVcIjpcIjIwMjItMDgtMDhUMTM6MTA6MTZaXCJ9IiwiZGV2aWNlSWQiOiIiLCJkZXZpY2VDb2RlIjoiIiwicHVycG9zZSI6IiIsInNlcnZpY2VWZXJzaW9uIjoiMC45LjUiLCJkZXZpY2VTdGF0dXMiOiJOb3QgUmVnaXN0ZXJlZCIsImZpcm13YXJlIjoiTU9TSVAuU0lOR0xFLjEuMC4wLjAiLCJjZXJ0aWZpY2F0aW9uIjoiTDAiLCJkZXZpY2VTdWJJZCI6WzBdLCJjYWxsYmFja0lkIjoiaHR0cDovLzEyNy4wLjAuMTo0NTAxLyJ9',
+      //     error: {
+      //       errorCode: '100',
+      //       errorInfo: 'Device not registered',
+      //     },
+      //   },
+      // ];
       let decodedDataArr: any[] = [];
-      methodResponse.forEach((deviceInfo: any) => {
-        //if (deviceInfo.deviceId === selectedSbiDevice.deviceId) {
-          const decodedData = Utils.getDecodedDeviceInfo(deviceInfo);
-          if (decodedData != null) {
-            decodedDataArr.push(decodedData);
+      methodResponse.forEach((deviceInfoResp: any) => {
+        if (deviceInfoResp && deviceInfoResp.deviceInfo == '') {
+          decodedDataArr.push(deviceInfoResp);
+        } else {
+          //chk if device is registered
+          let arr = deviceInfoResp.deviceInfo.split('.');
+          if (arr.length == 3) {
+            //this is registered device
+            const decodedData = Utils.getDecodedDeviceInfo(deviceInfoResp);
+            if (decodedData != null) {
+              decodedDataArr.push(decodedData);
+            }
+          } else {
+            //this is unregistered device
+            const decodedData =
+              Utils.getDecodedUnregistetedDeviceInfo(deviceInfoResp);
+            if (decodedData != null) {
+              decodedDataArr.push(decodedData);
+            }
           }
-        //}
+        }
       });
       return decodedDataArr;
     }
