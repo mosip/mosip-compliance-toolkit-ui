@@ -300,6 +300,7 @@ export class SbiTestCaseService {
         responseSchema: testCase.responseSchema,
         methodResponse: JSON.stringify(methodResponse),
         methodRequest: JSON.stringify(methodRequest),
+        methodName: testCase.methodName,
         validatorDefs: testCase.validatorDefs,
       };
       //console.log(validateRequest);
