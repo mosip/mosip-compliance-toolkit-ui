@@ -18,6 +18,7 @@ export interface ProjectData {
   crDate: Date;
   lastRunDt: Date;
   lastRunStatus: string;
+  lastRunId: string;
 }
 
 @Component({
@@ -60,11 +61,25 @@ export class ProjectsDashboardComponent implements OnInit {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
         this.dataService.getProjects().subscribe(
-          (response: any) => {
+          async (response: any) => {
             console.log(response);
-            this.dataSource = new MatTableDataSource(
-              response['response']['projects']
-            );
+            let dataArr = response['response']['projects'];
+            let tableData = [];
+            for (let row of dataArr) {
+              if (row.lastRunId) {
+                let runStatus = await this.getTestRunStatus(row.lastRunId);
+                tableData.push({
+                  ...row,
+                  lastRunStatus: runStatus,
+                });
+              } else {
+                tableData.push({
+                  ...row,
+                  lastRunStatus: '',
+                });
+              }
+            }
+            this.dataSource = new MatTableDataSource(tableData);
             resolve(true);
           },
           (errors) => {
@@ -76,6 +91,21 @@ export class ProjectsDashboardComponent implements OnInit {
     });
   }
 
+  async getTestRunStatus(runId: string) {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.getTestRunStatus(runId).subscribe(
+          (response: any) => {
+            resolve(response['response']['resultStatus']);
+          },
+          (errors) => {
+            Utils.showErrorMessage(errors, this.dialog);
+            resolve(false);
+          }
+        )
+      );
+    });
+  }
   ngAfterViewInit() {}
 
   addProject() {
