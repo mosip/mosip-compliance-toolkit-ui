@@ -47,7 +47,6 @@ export class TestRunComponent implements OnInit {
   sbiProjectData: SbiProjectModel;
   dataSource: MatTableDataSource<TestRunModel>;
   displayedColumns: string[] = [
-    'testOrderSequence',
     'testId',
     'testName',
     'resultStatus',
@@ -104,8 +103,7 @@ export class TestRunComponent implements OnInit {
               tableData.push({
                 ...testRun,
                 testId: testId,
-                testName: testCase['testName'],
-                testOrderSequence: testCase['testOrderSequence'],
+                testName: testCase['testName']
               });
             }
             this.dataSource = new MatTableDataSource(tableData);

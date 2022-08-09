@@ -30,7 +30,11 @@ export class ViewCollectionsComponent implements OnInit {
   sbiProjectData: SbiProjectModel;
   dataSource: MatTableDataSource<TestCaseModel>;
   selection = new SelectionModel<TestCaseModel>(true, []);
-  displayedColumns: string[] = ['testOrderSequence', 'testId', 'testName'];
+  displayedColumns: string[] = [
+  'testId',
+  'testName',
+  'testDescription',
+  'validatorDefs'];
   dataSubmitted = false;
   @ViewChild(MatSort) sort: MatSort;
 

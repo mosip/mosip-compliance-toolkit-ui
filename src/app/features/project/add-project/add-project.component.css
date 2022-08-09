@@ -50,3 +50,12 @@
     margin-top: 18vw;
     display: flex;
   }
+  .cell-list {
+    padding: 10px;
+    font-size: smaller;
+  }
+  .testcases-table {
+    font-size: smaller;
+  
+    width: 100%;
+  }
