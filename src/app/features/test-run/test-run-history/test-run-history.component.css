@@ -9,7 +9,7 @@
     flex: 1;
     justify-content: first baseline;
     align-items: center;
-    padding: 5px; 
+    padding: 5px;
     height: 50px;
   }
   .fieldLabel {
@@ -18,9 +18,6 @@
   .fieldContainer {
     flex: 0.3;
     align-items: center;
-  }
-  .mat-radio-button ~ .mat-radio-button {
-    margin-left: 35px;
   }
   .required-annotation {
     color: red;
@@ -37,12 +34,8 @@
     background-color: white;
     border-top: 1px solid #ddd;
   }
-  
   .button-container + .add-button {
     margin-left: 8px;
-  }
-  ::ng-deep.mat-select-value {
-    padding: 5px !important;
   }
   .spinner {
     flex-direction: column;
@@ -50,12 +43,15 @@
     margin-top: 18vw;
     display: flex;
   }
-  .cell-list {
-    padding: 10px;
-    font-size: smaller;
-  }
   .testcases-table {
-    font-size: smaller;
-  
     width: 100%;
+    
+  }
+  .table-container {
+    height: 400px;
+    max-width: 100%;
+    overflow: auto;
+  }
+  .custom-class mat-icon {
+    vertical-align: middle;
   }

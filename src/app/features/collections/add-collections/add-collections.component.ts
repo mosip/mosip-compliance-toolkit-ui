@@ -30,9 +30,10 @@ export class AddCollectionsComponent implements OnInit {
   selection = new SelectionModel<TestCaseModel>(true, []);
   displayedColumns: string[] = [
     'actions',
-    'testOrderSequence',
     'testId',
     'testName',
+    'testDescription',
+    'validatorDefs'
   ];
   dataSubmitted = false;
   @ViewChild(MatSort) sort: MatSort;
@@ -153,7 +154,7 @@ export class AddCollectionsComponent implements OnInit {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
-      row.testOrderSequence + 1
+      row.testId + 1
     }`;
   }
 

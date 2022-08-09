@@ -132,11 +132,25 @@ export class ExecuteTestRunComponent implements OnInit {
     const testCasesList: TestCaseModel[] = this.testCasesList;
     //first create a testrun in db
     await this.addTestRun();
+    //sort the testcases based on the testId
+    testCasesList.sort(function (a: TestCaseModel, b: TestCaseModel) {
+      if (a.testId > b.testId) return 1;
+      if (a.testId < b.testId) return -1;
+      return 0;
+    });
     if (!this.errorsInSavingTestRun) {
       for (const testCase of testCasesList) {
         this.currectTestCaseId = testCase.testId;
         this.currectTestCaseName = testCase.testName;
         const res: any = await this.executeTestCase(testCase);
+        const errors = res[appConstants.ERRORS];
+        if (errors && errors.length > 0) {
+          this.errorsInValidators = true;
+          errors.forEach((err: any) => {
+            this.errorsSummary =
+              err[appConstants.ERROR_CODE] + ' - ' + err[appConstants.MESSAGE];
+          });
+        }
         this.calculateTestcaseResults(res[appConstants.VALIDATIONS_RESPONSE]);
         this.currectTestCaseId = '';
         this.currectTestCaseName = '';
@@ -295,24 +309,15 @@ export class ExecuteTestRunComponent implements OnInit {
     if (res && res[appConstants.RESPONSE]) {
       let countofPassedValidators = 0;
       const response = res[appConstants.RESPONSE];
-      const errors = res[appConstants.RESPONSE];
-      if (errors && errors.length > 0) {
-        this.errorsInValidators = true;
-        errors.forEach((err: any) => {
-          this.errorsSummary =
-            err[appConstants.ERROR_CODE] + ' - ' + err[appConstants.MESSAGE];
-        });
-      } else {
-        const validationsList = response[appConstants.VALIDATIONS_LIST];
-        if (validationsList) {
-          validationsList.forEach((validationitem: any) => {
-            if (validationitem.status == appConstants.SUCCESS) {
-              countofPassedValidators++;
-            }
-          });
-          if (validationsList.length == countofPassedValidators) {
-            allValidatorsPassed = true;
+      const validationsList = response[appConstants.VALIDATIONS_LIST];
+      if (validationsList) {
+        validationsList.forEach((validationitem: any) => {
+          if (validationitem.status == appConstants.SUCCESS) {
+            countofPassedValidators++;
           }
+        });
+        if (validationsList.length == countofPassedValidators) {
+          allValidatorsPassed = true;
         }
       }
     }
@@ -330,9 +335,11 @@ export class ExecuteTestRunComponent implements OnInit {
 
   viewTestRun() {
     this.dialogRef.close();
-    console.log(`toolkit/project/${this.projectType}/${this.projectId}/collection/${this.collectionId}/testrun/${this.testRunId}`);
-    this.router.navigate([
+    console.log(
       `toolkit/project/${this.projectType}/${this.projectId}/collection/${this.collectionId}/testrun/${this.testRunId}`
+    );
+    this.router.navigate([
+      `toolkit/project/${this.projectType}/${this.projectId}/collection/${this.collectionId}/testrun/${this.testRunId}`,
     ]);
   }
 }

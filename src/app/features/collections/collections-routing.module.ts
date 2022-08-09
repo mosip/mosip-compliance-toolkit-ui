@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { TestRunHistoryComponent } from '../test-run/test-run-history/test-run-history.component';
 import { AddCollectionsComponent } from './add-collections/add-collections.component';
 import { ViewCollectionsComponent } from './view-collections/view-collections.component';
 
@@ -33,6 +34,15 @@ const routes: Routes = [
             (m) => m.TestRunModule
           ),
       },
+      {
+        path: 'testrunhistory',
+        data: {
+          breadcrumb: {
+            alias: 'testrunBreadCrumb',
+          },
+        },
+        component: TestRunHistoryComponent,
+      }
     ],
   },
 ];

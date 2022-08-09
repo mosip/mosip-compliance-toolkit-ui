@@ -8,7 +8,7 @@
 <mat-menu #appMenu="matMenu">
     <ng-template matMenuContent let-myobject="myobject">
         <button mat-menu-item (click)="viewTestRun(myobject)">View Last Test Run</button>
-        <!-- <button mat-menu-item (click)="deleteProject(myobject)">Delete</button> -->
+        <button mat-menu-item (click)="viewTestRunsHistory(myobject)">Test Run History</button>
     </ng-template>
 </mat-menu>
 <div class="mat-elevation-z8" *ngIf="dataLoaded">
@@ -291,7 +291,7 @@
             </mat-expansion-panel>
         </mat-accordion>
     </form>
-    <div class="list-container" *ngIf="dataLoaded">
+    <div class="list-container">
         <div class="collections-header-container">
             <button mat-flat-button color="accent" (click)="addCollection()" class="collections-button">
                 <mat-icon>add</mat-icon>

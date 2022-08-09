@@ -235,4 +235,10 @@ export class ViewProjectComponent implements OnInit {
       `toolkit/project/${this.projectType}/${this.projectId}/collection/${row.collectionId}/testrun/${row.runId}`,
     ]);
   }
+
+  viewTestRunsHistory(row: any) {
+    this.router.navigate([
+      `toolkit/project/${this.projectType}/${this.projectId}/collection/${row.collectionId}/testrunhistory`,
+    ]);
+  }
 }

@@ -116,6 +116,18 @@ export class DataService {
     return this.httpClient.get(url);
   }
 
+  getTestRunHistory(collectionId: string) {
+    let url = `${this.SERVICES_BASE_URL}getTestRunHistory?collectionId=${collectionId}`;
+    console.log('url:' + url);
+    return this.httpClient.get(url);
+  }
+
+  getTestRunStatus(runId: string) {
+    let url = `${this.SERVICES_BASE_URL}getTestRunStatus/${runId}`;
+    console.log('url:' + url);
+    return this.httpClient.get(url);
+  }
+
   callSBIMethod(
     port: string,
     methodName: string,

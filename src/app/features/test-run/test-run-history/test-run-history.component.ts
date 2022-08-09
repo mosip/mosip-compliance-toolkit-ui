@@ -10,29 +10,32 @@ import { MatDialog } from '@angular/material/dialog';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { TestCaseModel } from 'src/app/core/models/testcase';
 import Utils from 'src/app/app.utils';
+import { TestRunHistoryModel } from 'src/app/core/models/testrunhistory';
 
 @Component({
-  selector: 'app-viewcollections',
-  templateUrl: './view-collections.component.html',
-  styleUrls: ['./view-collections.component.css'],
+  selector: 'app-test-run-history',
+  templateUrl: './test-run-history.component.html',
+  styleUrls: ['./test-run-history.component.css'],
 })
-export class ViewCollectionsComponent implements OnInit {
+export class TestRunHistoryComponent implements OnInit {
   collectionId: string;
   collectionName: string;
   projectId: string;
   projectType: string;
-  collectionForm = new FormGroup({});
   subscriptions: Subscription[] = [];
   dataLoaded = false;
   sbiProjectData: SbiProjectModel;
-  dataSource: MatTableDataSource<TestCaseModel>;
+  dataSource: MatTableDataSource<TestRunHistoryModel>;
   displayedColumns: string[] = [
-  'testId',
-  'testName',
-  'testDescription',
-  'validatorDefs'];
+    'runId',
+    'lastRunTime',
+    'runStatus',
+    'testCaseCount',
+    'passCaseCount',
+    'failCaseCount',
+    'actions',
+  ];
   dataSubmitted = false;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -46,15 +49,13 @@ export class ViewCollectionsComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    this.initForm();
     await this.initAllParams();
     await this.getCollection();
-    this.populateCollection();
     if (this.projectType == appConstants.SBI) {
       await this.getSbiProjectDetails();
       this.initBreadCrumb();
     }
-    await this.getTestcasesForCollection();
+    await this.getTestRunHistory();
     this.dataSource.sort = this.sort;
     this.dataLoaded = true;
   }
@@ -69,14 +70,8 @@ export class ViewCollectionsComponent implements OnInit {
         '@collectionBreadCrumb',
         `${this.collectionName}`
       );
+      this.breadcrumbService.set('@testrunBreadCrumb', `Test Run History`);
     }
-  }
-
-  initForm() {
-    this.collectionForm.addControl(
-      'name',
-      new FormControl({ value: '', disabled: true }, [Validators.required])
-    );
   }
 
   initAllParams() {
@@ -107,8 +102,20 @@ export class ViewCollectionsComponent implements OnInit {
     });
   }
 
-  populateCollection() {
-    this.collectionForm.controls['name'].setValue(this.collectionName);
+  async getTestRunStatus(runId: string) {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.getTestRunStatus(runId).subscribe(
+          (response: any) => {
+            resolve(response['response']['resultStatus']);
+          },
+          (errors) => {
+            Utils.showErrorMessage(errors, this.dialog);
+            resolve(false);
+          }
+        )
+      );
+    });
   }
 
   async getSbiProjectDetails() {
@@ -130,15 +137,30 @@ export class ViewCollectionsComponent implements OnInit {
     });
   }
 
-  async getTestcasesForCollection() {
+  async getTestRunHistory() {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
-        this.dataService.getTestcasesForCollection(this.collectionId).subscribe(
-          (response: any) => {
+        this.dataService.getTestRunHistory(this.collectionId).subscribe(
+          async (response: any) => {
             console.log(response);
-            this.dataSource = new MatTableDataSource(
-              response['response']['testcases']
-            );
+            let dataArr = response['response'];
+            dataArr.sort(function (
+              a: TestRunHistoryModel,
+              b: TestRunHistoryModel
+            ) {
+              if (a.lastRunTime < b.lastRunTime) return 1;
+              if (a.lastRunTime > b.lastRunTime) return -1;
+              return 0;
+            });
+            let tableData = [];
+            for (let row of dataArr) {
+              let runStatus = await this.getTestRunStatus(row.runId);
+              tableData.push({
+                ...row,
+                runStatus: runStatus
+              });
+            }
+            this.dataSource = new MatTableDataSource(tableData);
             resolve(true);
           },
           (errors) => {
@@ -152,6 +174,12 @@ export class ViewCollectionsComponent implements OnInit {
   backToProject() {
     this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}`,
+    ]);
+  }
+
+  viewTestRun(row: any) {
+    this.router.navigate([
+      `toolkit/project/${this.projectType}/${this.projectId}/collection/${this.collectionId}/testrun/${row.runId}`,
     ]);
   }
 }
