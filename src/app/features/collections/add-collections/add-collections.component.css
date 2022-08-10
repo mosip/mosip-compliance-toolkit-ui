@@ -49,7 +49,6 @@
 }
 .testcases-table {
   width: 100%;
-  
 }
 .table-container {
   height: 400px;
@@ -58,4 +57,17 @@
 }
 .custom-class mat-icon {
   vertical-align: middle;
+}
+.mat-column-testId {
+  flex: none;
+  width: 100px;
+}
+.mat-column-actions {
+  flex: none;
+  width: 50px;
+}
+.cell-list {
+  /* padding: 20px; */
+  font-size: smaller;
+  word-wrap: break-word;
 }

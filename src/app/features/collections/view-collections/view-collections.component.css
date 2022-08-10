@@ -52,3 +52,13 @@
   max-width: 100%;
   overflow: auto;
 }
+.cell-list {
+  /* padding: 20px; */
+  font-size: smaller;
+  word-wrap: break-word;
+}
+
+.mat-column-testId {
+  flex: none;
+  width: 100px;
+}
