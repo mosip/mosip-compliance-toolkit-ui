@@ -32,10 +32,10 @@ export class AddCollectionsComponent implements OnInit {
     'testId',
     'testName',
     'testDescription',
-    'validatorDefs'
+    'validatorDefs',
   ];
   dataSubmitted = false;
-  
+
   constructor(
     public authService: AuthService,
     private activatedRoute: ActivatedRoute,
@@ -62,10 +62,7 @@ export class AddCollectionsComponent implements OnInit {
         '@projectBreadCrumb',
         `${this.projectType} Project - ${this.sbiProjectData.name}`
       );
-      this.breadcrumbService.set(
-        '@collectionBreadCrumb',
-        `Add`
-      );
+      this.breadcrumbService.set('@collectionBreadCrumb', `Add`);
     }
   }
 
@@ -138,9 +135,13 @@ export class AddCollectionsComponent implements OnInit {
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
+    if (this.dataSource) {
+      const numSelected = this.selection.selected.length;
+      const numRows = this.dataSource.data.length;
+      return numSelected === numRows;
+    } else {
+      return false;
+    }
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
@@ -205,7 +206,7 @@ export class AddCollectionsComponent implements OnInit {
               });
             }
           });
-          
+
           let request1 = {
             id: appConstants.COLLECTION_TESTCASES_ADD_ID,
             version: appConstants.VERSION,
