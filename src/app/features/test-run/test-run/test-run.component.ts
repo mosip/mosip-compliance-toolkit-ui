@@ -106,6 +106,12 @@ export class TestRunComponent implements OnInit {
                 testName: testCase['testName']
               });
             }
+            //sort the testcases based on the testId
+            tableData.sort(function (a: TestRunModel, b: TestRunModel) {
+              if (a.testId > b.testId) return 1;
+              if (a.testId < b.testId) return -1;
+              return 0;
+            });
             this.dataSource = new MatTableDataSource(tableData);
             resolve(true);
           },

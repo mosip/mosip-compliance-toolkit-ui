@@ -31,33 +31,16 @@ export class AppComponent {
     this.subscribed = router.events.subscribe(event => {
       this.navigationInterceptor(event);
     });
-    // this.router.events.subscribe(event => {
-    //   if (event instanceof NavigationStart) {
-    //     console.log("NavigationStart");
-    //     this.loading = true;
-    //   }
-    //   if (event instanceof NavigationEnd) {
-    //     console.log("NavigationEnd");
-    //     this.loading = false;
-    //   }
-  
-    //   // Set loading state to false in both of the below events to hide the spinner in case a request fails
-    //   if (event instanceof NavigationCancel) {
-    //     this.loading = false;
-    //   }
-    //   if (event instanceof NavigationError) {
-    //     this.loading = false;
-    //   }
-    // }); 
+    
   }
 
   navigationInterceptor(event: any): void {
     if (event instanceof NavigationStart) {
-      console.log("NavigationStart");
+      //console.log("NavigationStart");
       this.loading = true;
     }
     if (event instanceof NavigationEnd) {
-      console.log("NavigationEnd");
+      //console.log("NavigationEnd");
       this.loading = false;
     }
 

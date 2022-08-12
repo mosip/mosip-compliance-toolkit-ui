@@ -28,6 +28,8 @@ export class ExecuteTestRunComponent implements OnInit {
   errorsInGettingTestcases = false;
   errorsInValidators = false;
   errorsInSavingTestRun = false;
+  initiateCapture = false;
+  showInitiateCaptureBtn = false;
   errorsSummary = '';
   testCasesList: any;
   testRunId: string;
@@ -66,7 +68,7 @@ export class ExecuteTestRunComponent implements OnInit {
       await this.getTestcasesForCollection();
       this.dataLoaded = true;
       if (!this.errorsInGettingTestcases) {
-        await this.executeRun();
+        await this.createTestRun();
       }
     }
     this.basicTimer.stop();
@@ -127,40 +129,73 @@ export class ExecuteTestRunComponent implements OnInit {
     });
   }
 
-  async executeRun() {
-    this.errorsInValidators = false;
-    const testCasesList: TestCaseModel[] = this.testCasesList;
-    //first create a testrun in db
-    await this.addTestRun();
+  async createTestRun() {
+    const testCasesListSorted: TestCaseModel[] = this.testCasesList;
     //sort the testcases based on the testId
-    testCasesList.sort(function (a: TestCaseModel, b: TestCaseModel) {
+    testCasesListSorted.sort(function (a: TestCaseModel, b: TestCaseModel) {
       if (a.testId > b.testId) return 1;
       if (a.testId < b.testId) return -1;
       return 0;
     });
+    //first create a testrun in db
+    await this.addTestRun();
+    this.testCasesList = testCasesListSorted;
     if (!this.errorsInSavingTestRun) {
-      for (const testCase of testCasesList) {
-        this.currectTestCaseId = testCase.testId;
-        this.currectTestCaseName = testCase.testName;
-        const res: any = await this.executeTestCase(testCase);
-        const errors = res[appConstants.ERRORS];
-        if (errors && errors.length > 0) {
-          this.errorsInValidators = true;
-          errors.forEach((err: any) => {
-            this.errorsSummary =
-              err[appConstants.ERROR_CODE] + ' - ' + err[appConstants.MESSAGE];
-          });
-        }
-        this.calculateTestcaseResults(res[appConstants.VALIDATIONS_RESPONSE]);
-        this.currectTestCaseId = '';
-        this.currectTestCaseName = '';
-        //update the test run details in db
-        await this.addTestRunDetails(testCase, res);
-      }
-      //update the testrun in db with execution time
-      await this.updateTestRun();
+      await this.runExecuteForLoop(true);
     }
     this.runComplete = true;
+    this.basicTimer.stop();
+  }
+
+  async runExecuteForLoop(proceedLoop: boolean) {
+    for (const testCase of this.testCasesList) {
+      let resumeTestRun = false;
+      if (
+        !proceedLoop &&
+        this.currectTestCaseId != '' &&
+        this.currectTestCaseId == testCase.testId
+      ) {
+        resumeTestRun = true;
+      }
+      if (resumeTestRun || proceedLoop) {
+        proceedLoop = true;
+        this.currectTestCaseId = testCase.testId;
+        console.log(`this.currectTestCaseId: ${this.currectTestCaseId}`);
+        this.currectTestCaseName = testCase.testName;
+        if (!this.initiateCapture) {
+          this.checkIfToShowInitiateCaptureBtn(testCase);
+        }
+        const res: any = await this.executeCurrentTestCase(testCase);
+        // const errors = res[appConstants.ERRORS];
+        // if (errors && errors.length > 0) {
+        //   this.errorsInValidators = true;
+        //   errors.forEach((err: any) => {
+        //     this.errorsSummary =
+        //       err[appConstants.ERROR_CODE] + ' - ' + err[appConstants.MESSAGE];
+        //   });
+        // }
+        if (res) {
+          this.calculateTestcaseResults(res[appConstants.VALIDATIONS_RESPONSE]);
+          //update the test run details in db
+          await this.addTestRunDetails(testCase, res);
+           //update the testrun in db with execution time
+          await this.updateTestRun();
+          this.currectTestCaseId = '';
+          this.currectTestCaseName = '';
+        }
+      }
+    }
+  }
+
+  checkIfToShowInitiateCaptureBtn(testCase: TestCaseModel) {
+    if (this.projectType === appConstants.SBI) {
+      if (
+        testCase.methodName == appConstants.SBI_METHOD_CAPTURE ||
+        testCase.methodName == appConstants.SBI_METHOD_RCAPTURE
+      ) {
+        this.showInitiateCaptureBtn = true;
+      }
+    }
   }
 
   async addTestRun() {
@@ -279,7 +314,7 @@ export class ExecuteTestRunComponent implements OnInit {
               this.errorsInSavingTestRun = true;
               resolve(true);
             }
-            console.log(response);
+           // console.log(response);
             resolve(true);
           },
           (errors) => {
@@ -290,15 +325,39 @@ export class ExecuteTestRunComponent implements OnInit {
       );
     });
   }
-  async executeTestCase(testCase: any) {
+  async executeCurrentTestCase(testCase: TestCaseModel) {
     return new Promise(async (resolve, reject) => {
       if (this.projectType === appConstants.SBI) {
-        const res = await this.sbiTestCaseService.runTestCase(
-          testCase,
-          this.sbiSelectedPort ? this.sbiSelectedPort : '',
-          this.sbiSelectedDevice ? this.sbiSelectedDevice : ''
-        );
-        resolve(res);
+        if (
+          testCase.methodName == appConstants.SBI_METHOD_CAPTURE ||
+          testCase.methodName == appConstants.SBI_METHOD_RCAPTURE
+        ) {
+          // console.log(testCase.methodName);
+          // console.log(
+          //   `this.showInitiateCaptureBtn ${this.showInitiateCaptureBtn}`
+          // );
+          // console.log(`this.initiateCapture ${this.initiateCapture}`);
+          if (this.initiateCapture) {
+            //reset
+            this.initiateCapture = false;
+            //now trigger the method.
+            const res = await this.sbiTestCaseService.runTestCase(
+              testCase,
+              this.sbiSelectedPort ? this.sbiSelectedPort : '',
+              this.sbiSelectedDevice ? this.sbiSelectedDevice : ''
+            );
+            resolve(res);
+          } else {
+            //resolve(false);
+          }
+        } else {
+          const res = await this.sbiTestCaseService.runTestCase(
+            testCase,
+            this.sbiSelectedPort ? this.sbiSelectedPort : '',
+            this.sbiSelectedDevice ? this.sbiSelectedDevice : ''
+          );
+          resolve(res);
+        }
       } else {
         resolve(true);
       }
@@ -326,6 +385,14 @@ export class ExecuteTestRunComponent implements OnInit {
     } else {
       this.countOfFailedTestcases++;
     }
+  }
+
+  async setInitiateCapture() {
+    this.initiateCapture = true;
+    this.showInitiateCaptureBtn = false;
+    await this.runExecuteForLoop(false);
+    this.runComplete = true;
+    this.basicTimer.stop();
   }
 
   close() {

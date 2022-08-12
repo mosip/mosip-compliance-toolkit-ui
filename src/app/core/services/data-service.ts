@@ -20,25 +20,25 @@ export class DataService {
 
   getProjects() {
     let url = `${this.SERVICES_BASE_URL}getProjects`;
-    //console.log('url:' + url);
+    ////console.log('url:' + url);
     return this.httpClient.get(url);
   }
 
   addSbiProject(body: any) {
     let url = `${this.SERVICES_BASE_URL}addSbiProject`;
-    //console.log('url:' + url);
+    ////console.log('url:' + url);
     return this.httpClient.post(url, body);
   }
 
   getSbiProject(projectId: string) {
     let url = `${this.SERVICES_BASE_URL}getSbiProject/${projectId}`;
-    //console.log('url:' + url);
+    ////console.log('url:' + url);
     return this.httpClient.get(url);
   }
 
   getCollections(projectId: string, projectType: string) {
     let url = `${this.SERVICES_BASE_URL}getCollections?projectId=${projectId}&type=${projectType}`;
-    //console.log('url:' + url);
+    ////console.log('url:' + url);
     return this.httpClient.get(url);
   }
 
@@ -54,7 +54,7 @@ export class DataService {
 
   addTestcasesForCollection(body: any) {
     let url = `${this.SERVICES_BASE_URL}addTestCasesForCollection`;
-    //console.log('url:' + url);
+    ////console.log('url:' + url);
     return this.httpClient.post(url, body);
   }
 
@@ -70,61 +70,61 @@ export class DataService {
     deviceSubType: string
   ) {
     let url = `${this.SERVICES_BASE_URL}getSbiTestCases?specVersion=${specVersion}&purpose=${purpose}&deviceType=${deviceType}&deviceSubType=${deviceSubType}`;
-    //console.log('url:' + url);
+    ////console.log('url:' + url);
     return this.httpClient.get(url);
   }
 
   validateRequest(body: any) {
     let url = `${this.SERVICES_BASE_URL}validateRequest`;
-    //console.log('url:' + url);
+    ////console.log('url:' + url);
     return this.httpClient.post(url, body);
   }
 
   validateResponse(body: any) {
     let url = `${this.SERVICES_BASE_URL}validateResponse`;
-    //console.log('url:' + url);
+    ////console.log('url:' + url);
     return this.httpClient.post(url, body);
   }
 
   addTestRun(body: any) {
     let url = `${this.SERVICES_BASE_URL}addTestRun`;
-    //console.log('url:' + url);
+    ////console.log('url:' + url);
     return this.httpClient.post(url, body);
   }
 
   updateTestRun(body: any) {
     let url = `${this.SERVICES_BASE_URL}updateTestRun`;
-    //console.log('url:' + url);
+    ////console.log('url:' + url);
     return this.httpClient.put(url, body);
   }
 
   addTestRunDetails(body: any) {
     let url = `${this.SERVICES_BASE_URL}addTestRunDetails`;
-    //console.log('url:' + url);
+    ////console.log('url:' + url);
     return this.httpClient.post(url, body);
   }
 
   getTestRunDetails(runId: string) {
     let url = `${this.SERVICES_BASE_URL}getTestRunDetails/${runId}`;
-    console.log('url:' + url);
+    //console.log('url:' + url);
     return this.httpClient.get(url);
   }
 
   getTestCase(testId: string) {
     let url = `${this.SERVICES_BASE_URL}getTestCase/${testId}`;
-    console.log('url:' + url);
+    //console.log('url:' + url);
     return this.httpClient.get(url);
   }
 
   getTestRunHistory(collectionId: string) {
     let url = `${this.SERVICES_BASE_URL}getTestRunHistory?collectionId=${collectionId}`;
-    console.log('url:' + url);
+    //console.log('url:' + url);
     return this.httpClient.get(url);
   }
 
   getTestRunStatus(runId: string) {
     let url = `${this.SERVICES_BASE_URL}getTestRunStatus/${runId}`;
-    console.log('url:' + url);
+    //console.log('url:' + url);
     return this.httpClient.get(url);
   }
 
@@ -146,7 +146,7 @@ export class DataService {
   }
 
   callSDKMethod(url: string, body: any) {
-    //console.log('url:' + url);
+    ////console.log('url:' + url);
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
       accept: 'application/json',
@@ -160,7 +160,7 @@ export class DataService {
     modalities: string
   ) {
     let url = `${this.SERVICES_BASE_URL}generateRequestForSDK?methodName=${methodName}&testcaseId=${testcaseId}&modalities=${modalities}`;
-    //console.log('url:' + url);
+    ////console.log('url:' + url);
     return this.httpClient.get(url);
   }
 }

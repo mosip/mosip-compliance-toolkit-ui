@@ -131,7 +131,7 @@ export class ViewProjectComponent implements OnInit {
       this.subscriptions.push(
         this.dataService.getSbiProject(this.projectId).subscribe(
           (response: any) => {
-            console.log(response);
+            //console.log(response);
             this.projectFormData = response['response'];
             resolve(true);
           },
@@ -151,7 +151,7 @@ export class ViewProjectComponent implements OnInit {
           .getCollections(this.projectId, this.projectType)
           .subscribe(
             (response: any) => {
-              console.log(response);
+              //console.log(response);
               this.dataSource = new MatTableDataSource(
                 response['response']['collections']
               );
@@ -222,7 +222,7 @@ export class ViewProjectComponent implements OnInit {
       .afterClosed()
       .subscribe(() =>
       {
-        console.log("closed");
+        //console.log("closed");
         //this.router.navigate([`toolkit/dashboard`]);
         // this.router.navigate([
         //   `toolkit/project/${this.projectType}/${this.projectId}`,
