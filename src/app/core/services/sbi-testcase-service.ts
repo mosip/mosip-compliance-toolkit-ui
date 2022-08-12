@@ -86,7 +86,7 @@ export class SbiTestCaseService {
         sbiSelectedPort,
         appConstants.SBI_METHOD_RCAPTURE_KEY,
         methodRequest,
-        methodName
+        appConstants.SBI_METHOD_CAPTURE
       );
       return methodResponse;
     }

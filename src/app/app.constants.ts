@@ -45,7 +45,7 @@ export const SBI_METHOD_DEVICE_INFO = 'info';
 export const SBI_METHOD_DEVICE_INFO_KEY = 'MOSIPDINFO';
 export const SBI_METHOD_CAPTURE = 'capture';
 export const SBI_METHOD_CAPTURE_KEY = 'CAPTURE';
-export const SBI_METHOD_RCAPTURE = 'capture';
+export const SBI_METHOD_RCAPTURE = 'rcapture';
 export const SBI_METHOD_RCAPTURE_KEY = 'RCAPTURE';
 export const DEVELOPER = 'Developer';
 
