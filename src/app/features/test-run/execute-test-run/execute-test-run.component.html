@@ -6,78 +6,109 @@
         <cd-timer #basicTimer format="hms"></cd-timer>
     </div>
 </h2>
-<mat-dialog-content *ngIf="!dataLoaded" style="white-space: pre-line;" class="run-container">
-    <span *ngIf="!errorsInGettingTestcases">Fetching testcases for the collection..</span>
-    <div class="spinner">
-        <mat-spinner diameter="50"></mat-spinner>
-    </div>
-</mat-dialog-content>
-<div class="custom-class" *ngIf="errorsInGettingTestcases">
-    <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon> Unable to get testcases for the collection.
-    <p></p>
-    <p></p>
-</div>
-<mat-dialog-content style="white-space: pre-line;" class="run-container"
-    *ngIf="dataLoaded && !errorsInGettingTestcases">
-    <span class="main-line">
-        <span *ngIf="!scanComplete">
-            <div class="custom-class">
-                <p>
-                    <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon>No device selected. Please scan device
-                    first.
-                </p>
+<mat-dialog-content style="white-space: pre-line;" class="run-container">
+    <span *ngIf="!scanComplete">
+        <span class="custom-class">
+            <p>
+                <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon>No device selected. Please scan device
+                first.
+            </p>
+        </span>
+    </span>
+    <span *ngIf="scanComplete">
+        <span *ngIf="!dataLoaded">
+            <span *ngIf="!errorsInGettingTestcases">Fetching testcases for the collection..</span>
+            <div class="spinner">
+                <mat-spinner diameter="50"></mat-spinner>
             </div>
         </span>
-        <span *ngIf="scanComplete && !runComplete">Execution of testcases for <b>{{collectionName}}</b> has
-            started..</span>
-        <span *ngIf="scanComplete && runComplete && !errorsInSavingTestRun">
-            Execution complete for <b>{{collectionName}}</b></span>
+        <span *ngIf="dataLoaded">
+            <span *ngIf="errorsInGettingTestcases" class="custom-class">
+                <p>
+                    <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon>Unable to get testcases for the collection.
+                </p>
+            </span>
+            <span *ngIf="!errorsInGettingTestcases">
+                <span *ngIf="!runComplete">
+                    Execution of testcases for collection <b>{{collectionName}}</b> has started..
+                    <h2>Executing testcase: {{currectTestCaseId}} - {{currectTestCaseName}}</h2>
+                    <div *ngIf="!showInitiateCaptureBtn" class="spinner">
+                        <mat-spinner diameter="50"></mat-spinner>
+                    </div>
+                    <div *ngIf="showInitiateCaptureBtn">
+                        <span [ngStyle]="{color: '#fd518c'}">Please click on initiate capture to capture the biometrics
+                            from the
+                            device..</span>
+                    </div>
+                </span>
+                <span *ngIf="runComplete">
+                    <div *ngIf="errorsInValidators">
+                        <div class="custom-class">
+                            <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon> There were errors while processing the
+                            validators.
+                            <p>{{this.errorsSummary}}</p>
+                        </div>
+                    </div>
+                    <div *ngIf="errorsInSavingTestRun">
+                        <div class="custom-class">
+                            <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon> Unable to save / update test run
+                            details. Please try
+                            again.
+                            <span class="spacer"></span>
+                        </div>
+                    </div>
+                    <div *ngIf="!errorsInValidators && !errorsInSavingTestRun">
+                        <p>Total {{testCasesList.length > 1 ? testCasesList.length + ' testcases have' :
+                            testCasesList.length + ' testcase has'}} executed successfully.
+                            Overall result for testcases:</p>
+                        <div class="custom-class">
+                            <p>
+                                <mat-icon [ngStyle]="{color: 'green'}">check_circle</mat-icon>
+                                {{countOfSuccessTestcases}} have
+                                passed.
+                            </p>
+                        </div>
+                        <div class="custom-class">
+                            <p>
+                                <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon> {{countOfFailedTestcases}} have
+                                failed.
+                            </p>
+                        </div>
+                        <p>
+                            For a detailed report <a class="link" (click)="viewTestRun()">click here</a>.
+                        </p>
+                    </div>
+                </span>
+            </span>
+        </span>
     </span>
-    <div *ngIf="errorsInValidators">
-        <div class="custom-class">
-            <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon> There were errors while processing the validators.
-            <p>{{this.errorsSummary}}</p>
-        </div>
-    </div>
-    <div *ngIf="errorsInSavingTestRun">
-        <div class="custom-class">
-            <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon> Unable to save / update test run details. Please try
-            again.
-            <span class="spacer"></span>
-        </div>
-    </div>
-    <div *ngIf="scanComplete && !runComplete">
-        <p>Executing testcase: {{currectTestCaseId}} - {{currectTestCaseName}}</p>
-    </div>
-    <div class="spinner" *ngIf="scanComplete && !runComplete">
-        <mat-spinner diameter="50"></mat-spinner>
-    </div>
-    <div *ngIf="scanComplete && runComplete && !errorsInValidators && !errorsInSavingTestRun">
-        <p>Total {{testCasesList.length > 1 ? testCasesList.length + ' testcases have' :
-            testCasesList.length + ' testcase has'}} executed successfully.
-            Overall result for testcases:</p>
-        <div class="custom-class">
-            <p>
-                <mat-icon [ngStyle]="{color: 'green'}">check_circle</mat-icon> {{countOfSuccessTestcases}} have
-                passed.
-            </p>
-        </div>
-        <div class="custom-class">
-            <p>
-                <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon> {{countOfFailedTestcases}} have failed.
-            </p>
-        </div>
-        <p>
-            For a detailed report <a class="link" (click)="viewTestRun()">click here</a>.
-        </p>
-    </div>
 </mat-dialog-content>
-<mat-dialog-actions align="end" *ngIf="!scanComplete || (scanComplete && runComplete) || errorsInGettingTestcases">
-    <button mat-flat-button color="accent"
-        *ngIf="!scanComplete || (scanComplete && runComplete) || errorsInGettingTestcases"
-        (click)="close()">Close</button>
-    <span class="spacer"></span>
-    <button mat-flat-button color="accent"
-        *ngIf="scanComplete && runComplete && !errorsInValidators && !errorsInSavingTestRun" (click)="viewTestRun()">
-        View Test Run</button>
+<mat-dialog-actions align="end"> 
+    <div *ngIf="!scanComplete">
+        <button mat-flat-button color="accent" (click)="close()">Close</button>
+    </div>
+    <div *ngIf="scanComplete">
+        <div *ngIf="errorsInGettingTestcases">
+            <button mat-flat-button color="accent" (click)="close()">Close</button>
+        </div>
+        <div *ngIf="!errorsInGettingTestcases">
+            <div *ngIf="!runComplete">
+                <div *ngIf="showInitiateCaptureBtn"  class="custom-class">
+                    <button mat-flat-button color="accent" (click)="close()">Close</button>
+                    <div class="spacer"></div>&nbsp;&nbsp;
+                    <button mat-flat-button color="accent" (click)="setInitiateCapture()">Initiate Capture</button>
+                </div>
+            </div>
+            <div *ngIf="runComplete">
+                <div *ngIf="!errorsInValidators && !errorsInSavingTestRun"  class="custom-class">
+                    <button mat-flat-button color="accent" (click)="close()">Close</button>
+                    <div class="spacer"></div>&nbsp;&nbsp;
+                    <button mat-flat-button color="accent" (click)="viewTestRun()">View Test Run</button>                                
+                </div>
+                <div *ngIf="errorsInValidators || errorsInSavingTestRun">
+                    <button mat-flat-button color="accent" (click)="close()">Close</button>
+                </div>
+            </div>    
+        </div>
+    </div>
 </mat-dialog-actions>

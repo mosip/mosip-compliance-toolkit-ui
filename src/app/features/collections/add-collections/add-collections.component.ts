@@ -119,8 +119,15 @@ export class AddCollectionsComponent implements OnInit {
           )
           .subscribe(
             (response: any) => {
-              console.log(response);
-              this.dataSource = new MatTableDataSource(response['response']);
+              //console.log(response);
+              let testcases = response['response'];
+              //sort the testcases based on the testId
+              testcases.sort(function (a: TestCaseModel, b: TestCaseModel) {
+                if (a.testId > b.testId) return 1;
+                if (a.testId < b.testId) return -1;
+                return 0;
+              });
+              this.dataSource = new MatTableDataSource(testcases);
               resolve(true);
             },
             (errors) => {

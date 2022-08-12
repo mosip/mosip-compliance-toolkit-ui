@@ -29,10 +29,11 @@ export class ViewCollectionsComponent implements OnInit {
   sbiProjectData: SbiProjectModel;
   dataSource: MatTableDataSource<TestCaseModel>;
   displayedColumns: string[] = [
-  'testId',
-  'testName',
-  'testDescription',
-  'validatorDefs'];
+    'testId',
+    'testName',
+    'testDescription',
+    'validatorDefs'
+  ];
   dataSubmitted = false;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -135,10 +136,15 @@ export class ViewCollectionsComponent implements OnInit {
       this.subscriptions.push(
         this.dataService.getTestcasesForCollection(this.collectionId).subscribe(
           (response: any) => {
-            console.log(response);
-            this.dataSource = new MatTableDataSource(
-              response['response']['testcases']
-            );
+            //console.log(response);
+            let testcases = response['response']['testcases'];
+            //sort the testcases based on the testId
+            testcases.sort(function (a: TestCaseModel, b: TestCaseModel) {
+              if (a.testId > b.testId) return 1;
+              if (a.testId < b.testId) return -1;
+              return 0;
+            });
+            this.dataSource = new MatTableDataSource(testcases);
             resolve(true);
           },
           (errors) => {

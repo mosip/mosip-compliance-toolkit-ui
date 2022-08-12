@@ -11,14 +11,14 @@ export default class Utils {
 
   static getDecodedDiscoverDevice(deviceData: any) {
     try {
-      console.log(deviceData);
+      //console.log(deviceData);
       const digitalIdDecoded = JSON.parse(atob(deviceData.digitalId));
       const deviceDataDecoded: SbiDiscoverResponseModel = {
         ...deviceData,
         digitalIdDecoded: digitalIdDecoded,
       };
-      console.log('decoded');
-      console.log(deviceDataDecoded);
+      //console.log('decoded');
+      //console.log(deviceDataDecoded);
       return deviceDataDecoded;
     } catch (error) {
       console.log(error);
@@ -39,8 +39,8 @@ export default class Utils {
         deviceInfo: deviceInfoResp.deviceInfo,
         deviceInfoDecoded: deviceInfoDecoded,
       };
-      console.log('deviceInfoDecodedFull');
-      console.log(deviceInfoDecodedFull);
+      //console.log('deviceInfoDecodedFull');
+      //console.log(deviceInfoDecodedFull);
       return deviceInfoDecodedFull;
     } catch (error) {
       console.log(error);
@@ -51,11 +51,11 @@ export default class Utils {
   static getDecodedUnregistetedDeviceInfo(deviceInfoResp: any) {
     try {
       let deviceInfoDecoded: any = JSON.parse(atob(deviceInfoResp.deviceInfo));
-      console.log('deviceInfoDecoded');
-      console.log(deviceInfoDecoded);
+      //console.log('deviceInfoDecoded');
+      //console.log(deviceInfoDecoded);
       const digitalIdDecoded = JSON.parse(deviceInfoDecoded.digitalId);
-      console.log('digitalIdDecoded');
-      console.log(digitalIdDecoded);
+      //console.log('digitalIdDecoded');
+      //console.log(digitalIdDecoded);
       deviceInfoDecoded = {
         ...deviceInfoDecoded,
         digitalIdDecoded: digitalIdDecoded,
@@ -65,8 +65,8 @@ export default class Utils {
         deviceInfo: deviceInfoResp.deviceInfo,
         deviceInfoDecoded: deviceInfoDecoded,
       };
-      console.log('deviceInfoDecodedFull');
-      console.log(deviceInfoDecodedFull);
+      //console.log('deviceInfoDecodedFull');
+      //console.log(deviceInfoDecodedFull);
       return deviceInfoDecodedFull;
     } catch (error) {
       console.log(error);
