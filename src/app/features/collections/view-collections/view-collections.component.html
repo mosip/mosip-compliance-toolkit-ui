@@ -4,8 +4,8 @@
 <div class="spinner" *ngIf="!dataLoaded">
     <mat-spinner diameter="50"></mat-spinner>
 </div>
-<div class="mat-elevation-z8"  *ngIf="dataLoaded">
-    <div class="formContainer">
+<div class="mat-elevation-z8">
+    <div class="formContainer" *ngIf="dataLoaded">
         <form [formGroup]="collectionForm">
             <div class="fieldWrapper">
                 <span class="fieldLabel">

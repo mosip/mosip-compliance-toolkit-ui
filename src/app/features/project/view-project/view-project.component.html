@@ -11,7 +11,7 @@
         <button mat-menu-item (click)="viewTestRunsHistory(myobject)">Test Run History</button>
     </ng-template>
 </mat-menu>
-<div class="mat-elevation-z8" *ngIf="dataLoaded">
+<div class="mat-elevation-z8">
     <form [formGroup]="projectForm" *ngIf="dataLoaded">
         <mat-accordion>
             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">

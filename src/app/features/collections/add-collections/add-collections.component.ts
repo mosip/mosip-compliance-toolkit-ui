@@ -9,7 +9,6 @@ import { SbiProjectModel } from 'src/app/core/models/sbi-project';
 import { MatDialog } from '@angular/material/dialog';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
 import { TestCaseModel } from 'src/app/core/models/testcase';
 import { SelectionModel } from '@angular/cdk/collections';
 import Utils from 'src/app/app.utils';
@@ -36,8 +35,7 @@ export class AddCollectionsComponent implements OnInit {
     'validatorDefs'
   ];
   dataSubmitted = false;
-  @ViewChild(MatSort) sort: MatSort;
-
+  
   constructor(
     public authService: AuthService,
     private activatedRoute: ActivatedRoute,
@@ -55,7 +53,6 @@ export class AddCollectionsComponent implements OnInit {
       await this.getSbiTestcases();
       this.initBreadCrumb();
     }
-    this.dataSource.sort = this.sort;
     this.dataLoaded = true;
   }
 

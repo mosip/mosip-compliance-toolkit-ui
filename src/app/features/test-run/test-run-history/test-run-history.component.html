@@ -4,8 +4,8 @@
 <div class="spinner" *ngIf="!dataLoaded">
     <mat-spinner diameter="50"></mat-spinner>
 </div>
-<div class="mat-elevation-z8" *ngIf="dataLoaded">
-    <h2 style="padding: 10px;">Test Run History</h2>
+<div class="mat-elevation-z8">
+    <h2 style="padding: 10px;" *ngIf="dataLoaded">Test Run History</h2>
     <div class="table-container">
         <table mat-table [dataSource]="dataSource" matSort class="testcases-table">
             <!--- Note that these columns can be defined in any order.
@@ -58,7 +58,7 @@
         </table>
     </div>
 </div>
-<div class="button-container">
+<div class="button-container"  *ngIf="dataLoaded">
     <button mat-flat-button color="accent" (click)="backToProject()" class="add-button">
         Back
     </button>
