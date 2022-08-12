@@ -392,7 +392,7 @@ export class ExecuteTestRunComponent implements OnInit {
     this.showInitiateCaptureBtn = false;
     await this.runExecuteForLoop(false);
     this.runComplete = true;
-    this.basicTimer.stop();
+    //this.basicTimer.stop();
   }
 
   close() {

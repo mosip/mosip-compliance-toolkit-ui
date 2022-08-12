@@ -58,12 +58,14 @@
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end" *ngIf="scanComplete">
+    <button mat-flat-button color="accent" (click)="close()">Close</button>
+    <span class="spacer" *ngIf="(portsData.length <= 0 || previousScanAvailable)"></span>
     <button mat-flat-button color="accent" (click)="startScan()"
         *ngIf="(portsData.length <= 0 || previousScanAvailable)">
         <mat-icon>cached</mat-icon>
         Scan Again
     </button>
-    <span class="spacer"></span>
+    <span class="spacer" *ngIf="portsData.length > 0"></span>
     <button mat-flat-button color="accent" (click)="save()" *ngIf="portsData.length > 0">
         <mat-icon>save</mat-icon>
         Save

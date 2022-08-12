@@ -18,7 +18,7 @@ import {
   transition,
   animate,
 } from '@angular/animations';
-import { TestCaseModel } from 'src/app/core/models/testcase';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-test-run',
@@ -136,7 +136,7 @@ export class TestRunComponent implements OnInit {
       );
       this.breadcrumbService.set(
         '@testrunBreadCrumb',
-        `Test Run - (${new Date(this.runDetails.runDtimes).toLocaleString()})`
+        `Test Run - (${new Date(this.runDetails.runDtimes).toLocaleString()} - ${moment(this.runDetails.runDtimes).local().format('YYYY-MM-DD hh:mm A')})`
       );
     }
   }
