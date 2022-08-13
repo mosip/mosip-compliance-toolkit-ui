@@ -22,28 +22,54 @@ export class SbiTestCaseService {
   ) {
     return new Promise(async (resolve, reject) => {
       const methodRequest = this.createRequest(testCase, sbiSelectedDevice);
-      let methodResponse = await this.executeMethod(
-        testCase.methodName,
-        sbiSelectedPort,
+      //now validate the response
+      let validationRequest: any = await this.validateRequest(
+        testCase,
         methodRequest
       );
-      const decodedMethodResp = this.createDecodedResponse(
-        testCase,
-        methodResponse,
-        sbiSelectedDevice
-      );
-      //now validate the response
-      let validationResponse = await this.validateResponse(
-        testCase,
-        methodRequest,
-        decodedMethodResp
-      );
-      let finalResponse = {
-        methodResponse: JSON.stringify(methodResponse),
-        methodRequest: JSON.stringify(methodRequest),
-        validationResponse: validationResponse,
-      };
-      resolve(finalResponse);
+      if (
+        validationRequest &&
+        validationRequest[appConstants.RESPONSE] &&
+        validationRequest[appConstants.RESPONSE].status == appConstants.SUCCESS
+      ) {
+        let methodResponse = await this.executeMethod(
+          testCase.methodName,
+          sbiSelectedPort,
+          methodRequest
+        );
+        const decodedMethodResp = this.createDecodedResponse(
+          testCase,
+          methodResponse,
+          sbiSelectedDevice
+        );
+        //now validate the response
+        let validationResponse = await this.validateResponse(
+          testCase,
+          methodRequest,
+          decodedMethodResp
+        );
+        let finalResponse = {
+          methodResponse: JSON.stringify(methodResponse),
+          methodRequest: JSON.stringify(methodRequest),
+          validationResponse: validationResponse,
+        };
+        resolve(finalResponse);
+      } else {
+        let validationResponse = {
+          response: {
+            validationsList: [validationRequest[appConstants.RESPONSE]],
+          },
+          errors: []
+        };
+        let finalResponse = {
+          methodResponse: 'Method not invoked since request is invalid.',
+          methodRequest: JSON.stringify(methodRequest),
+          validationResponse: validationResponse,
+        };
+        console.log('request schema validation failed');
+        console.log(finalResponse);
+        resolve(finalResponse);
+      }
     });
   }
 
@@ -315,6 +341,35 @@ export class SbiTestCaseService {
           //console.log(response);
           resolve(response);
           //this.testCaseResults = JSON.stringify(response);
+        },
+        (errors) => {
+          resolve(errors);
+        }
+      );
+    });
+  }
+
+  async validateRequest(testCase: TestCaseModel, methodRequest: any) {
+    return new Promise((resolve, reject) => {
+      //console.log('validateRequest called');
+      let validateRequest = {
+        testCaseType: testCase.testCaseType,
+        testName: testCase.testName,
+        testDescription: testCase.testDescription,
+        requestSchema: testCase.requestSchema,
+        methodRequest: JSON.stringify(methodRequest),
+      };
+      //console.log(validateRequest);
+      let request = {
+        id: appConstants.VALIDATIONS_ADD_ID,
+        version: appConstants.VERSION,
+        requesttime: new Date().toISOString(),
+        request: validateRequest,
+      };
+      this.dataService.validateRequest(request).subscribe(
+        (response) => {
+          console.log(response);
+          resolve(response);
         },
         (errors) => {
           resolve(errors);

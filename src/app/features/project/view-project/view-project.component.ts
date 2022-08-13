@@ -212,7 +212,7 @@ export class ViewProjectComponent implements OnInit {
     const body = {
       collectionId: row.collectionId,
       projectType: this.projectType,
-      projectId: this.projectId
+      projectId: this.projectId,
     };
     this.dialog
       .open(ExecuteTestRunComponent, {
@@ -220,13 +220,12 @@ export class ViewProjectComponent implements OnInit {
         data: body,
       })
       .afterClosed()
-      .subscribe(() =>
-      {
-        //console.log("closed");
-        //this.router.navigate([`toolkit/dashboard`]);
-        // this.router.navigate([
-        //   `toolkit/project/${this.projectType}/${this.projectId}`,
-        // ]);
+      .subscribe((result: any) => {
+        //console.log('closed');
+        //console.log(result);
+        if (result == 'reloadProjectDetails') {
+          window.location.reload();
+        }
       });
   }
 

@@ -136,7 +136,7 @@ export class TestRunComponent implements OnInit {
       );
       this.breadcrumbService.set(
         '@testrunBreadCrumb',
-        `Test Run - (${new Date(this.runDetails.runDtimes).toLocaleString()} - ${moment(this.runDetails.runDtimes).local().format('YYYY-MM-DD hh:mm A')})`
+        `Test Run - (${new Date(this.runDetails.runDtimes).toLocaleString()})`
       );
     }
   }

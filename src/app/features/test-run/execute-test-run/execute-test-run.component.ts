@@ -166,14 +166,7 @@ export class ExecuteTestRunComponent implements OnInit {
           this.checkIfToShowInitiateCaptureBtn(testCase);
         }
         const res: any = await this.executeCurrentTestCase(testCase);
-        // const errors = res[appConstants.ERRORS];
-        // if (errors && errors.length > 0) {
-        //   this.errorsInValidators = true;
-        //   errors.forEach((err: any) => {
-        //     this.errorsSummary =
-        //       err[appConstants.ERROR_CODE] + ' - ' + err[appConstants.MESSAGE];
-        //   });
-        // }
+        this.handleErr(res);
         if (res) {
           this.calculateTestcaseResults(res[appConstants.VALIDATIONS_RESPONSE]);
           //update the test run details in db
@@ -187,6 +180,16 @@ export class ExecuteTestRunComponent implements OnInit {
     }
   }
 
+  handleErr(res: any) {
+    const errors = res[appConstants.ERRORS];
+    if (errors && errors.length > 0) {
+      this.errorsInValidators = true;
+      errors.forEach((err: any) => {
+        this.errorsSummary =
+          err[appConstants.ERROR_CODE] + ' - ' + err[appConstants.MESSAGE];
+      });
+    }
+  }
   checkIfToShowInitiateCaptureBtn(testCase: TestCaseModel) {
     if (this.projectType === appConstants.SBI) {
       if (
@@ -392,16 +395,15 @@ export class ExecuteTestRunComponent implements OnInit {
     this.showInitiateCaptureBtn = false;
     await this.runExecuteForLoop(false);
     this.runComplete = true;
-    //this.basicTimer.stop();
+    this.basicTimer.stop();
   }
 
   close() {
-    this.dialogRef.close();
+    this.dialogRef.close('reloadProjectDetails');
   }
-  saveTestRun() {}
-
+  
   viewTestRun() {
-    this.dialogRef.close();
+    this.dialogRef.close('');
     console.log(
       `toolkit/project/${this.projectType}/${this.projectId}/collection/${this.collectionId}/testrun/${this.testRunId}`
     );
