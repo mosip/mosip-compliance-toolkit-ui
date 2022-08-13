@@ -20,25 +20,21 @@ export class DataService {
 
   getProjects() {
     let url = `${this.SERVICES_BASE_URL}getProjects`;
-    ////console.log('url:' + url);
     return this.httpClient.get(url);
   }
 
   addSbiProject(body: any) {
     let url = `${this.SERVICES_BASE_URL}addSbiProject`;
-    ////console.log('url:' + url);
     return this.httpClient.post(url, body);
   }
 
   getSbiProject(projectId: string) {
     let url = `${this.SERVICES_BASE_URL}getSbiProject/${projectId}`;
-    ////console.log('url:' + url);
     return this.httpClient.get(url);
   }
 
   getCollections(projectId: string, projectType: string) {
     let url = `${this.SERVICES_BASE_URL}getCollections?projectId=${projectId}&type=${projectType}`;
-    ////console.log('url:' + url);
     return this.httpClient.get(url);
   }
 
@@ -54,7 +50,6 @@ export class DataService {
 
   addTestcasesForCollection(body: any) {
     let url = `${this.SERVICES_BASE_URL}addTestCasesForCollection`;
-    ////console.log('url:' + url);
     return this.httpClient.post(url, body);
   }
 
@@ -70,13 +65,11 @@ export class DataService {
     deviceSubType: string
   ) {
     let url = `${this.SERVICES_BASE_URL}getSbiTestCases?specVersion=${specVersion}&purpose=${purpose}&deviceType=${deviceType}&deviceSubType=${deviceSubType}`;
-    ////console.log('url:' + url);
     return this.httpClient.get(url);
   }
 
   validateRequest(body: any) {
     let url = `${this.SERVICES_BASE_URL}validateRequest`;
-    ////console.log('url:' + url);
     return this.httpClient.post(url, body);
   }
 
