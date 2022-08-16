@@ -107,6 +107,13 @@ export class ExecuteTestRunComponent implements OnInit {
             'Please select appropriate device, while scanning, to execute testcases for this project. \n The device type of the selected device is not matching the project.';
           return false;
         }
+        if (this.projectData.deviceSubType != selectedSbiDevice.digitalIdDecoded.deviceSubType) {
+          this.scanComplete = false;
+          this.dataLoaded = true;
+          this.validationErrMsg =
+            'Please select appropriate device, while scanning, to execute testcases for this project. \n The device sub type of the selected device is not matching the project.';
+          return false;
+        }
       }
     }
     return true;
