@@ -8,6 +8,8 @@ import { CdTimerComponent } from 'angular-cd-timer';
 import { SbiTestCaseService } from '../../../core/services/sbi-testcase-service';
 import { TestCaseModel } from 'src/app/core/models/testcase';
 import { Router } from '@angular/router';
+import { SbiProjectModel } from 'src/app/core/models/sbi-project';
+import { SbiDiscoverResponseModel } from 'src/app/core/models/sbi-discover';
 
 @Component({
   selector: 'app-execute-test-run',
@@ -19,10 +21,12 @@ export class ExecuteTestRunComponent implements OnInit {
   collectionId: string;
   projectType: string;
   projectId: string;
+  projectData: SbiProjectModel;
   collectionName: string;
   subscriptions: Subscription[] = [];
   scanComplete = true;
   runComplete = false;
+  validationErrMsg: string;
   currectTestCaseId: string;
   currectTestCaseName: string;
   errorsInGettingTestcases = false;
@@ -63,7 +67,7 @@ export class ExecuteTestRunComponent implements OnInit {
     this.projectType = this.input.projectType;
     this.projectId = this.input.projectId;
     this.basicTimer.start();
-    if (this.performValidations()) {
+    if (await this.performValidations()) {
       await this.getCollection();
       await this.getTestcasesForCollection();
       this.dataLoaded = true;
@@ -74,16 +78,58 @@ export class ExecuteTestRunComponent implements OnInit {
     this.basicTimer.stop();
   }
 
-  performValidations(): boolean {
+  async performValidations(): Promise<boolean> {
     if (this.projectType === appConstants.SBI) {
+      this.validationErrMsg = '';
       if (!(this.sbiSelectedPort && this.sbiSelectedDevice)) {
         this.scanComplete = false;
         this.dataLoaded = true;
         return false;
       }
+      if (this.sbiSelectedPort && this.sbiSelectedDevice) {
+        await this.getSbiProjectDetails();
+        const selectedSbiDevice: SbiDiscoverResponseModel = JSON.parse(
+          this.sbiSelectedDevice
+        );
+        console.log('selectedSbiDevice');
+        console.log(selectedSbiDevice);
+        if (this.projectData.purpose != selectedSbiDevice.purpose) {
+          this.scanComplete = false;
+          this.dataLoaded = true;
+          this.validationErrMsg =
+            'Please select appropriate device, while scanning, to execute testcases for this project. \n The purpose of the selected device is not matching the project.';
+          return false;
+        }
+        if (this.projectData.deviceType != selectedSbiDevice.digitalIdDecoded.type) {
+          this.scanComplete = false;
+          this.dataLoaded = true;
+          this.validationErrMsg =
+            'Please select appropriate device, while scanning, to execute testcases for this project. \n The device type of the selected device is not matching the project.';
+          return false;
+        }
+      }
     }
     return true;
   }
+
+  async getSbiProjectDetails() {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.getSbiProject(this.projectId).subscribe(
+          (response: any) => {
+            //console.log(response);
+            this.projectData = response['response'];
+            resolve(true);
+          },
+          (errors) => {
+            this.errorsInGettingTestcases = true;
+            resolve(true);
+          }
+        )
+      );
+    });
+  }
+
   async getCollection() {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
@@ -171,7 +217,7 @@ export class ExecuteTestRunComponent implements OnInit {
           this.calculateTestcaseResults(res[appConstants.VALIDATIONS_RESPONSE]);
           //update the test run details in db
           await this.addTestRunDetails(testCase, res);
-           //update the testrun in db with execution time
+          //update the testrun in db with execution time
           await this.updateTestRun();
           this.currectTestCaseId = '';
           this.currectTestCaseName = '';
@@ -317,7 +363,7 @@ export class ExecuteTestRunComponent implements OnInit {
               this.errorsInSavingTestRun = true;
               resolve(true);
             }
-           // console.log(response);
+            // console.log(response);
             resolve(true);
           },
           (errors) => {
@@ -401,7 +447,7 @@ export class ExecuteTestRunComponent implements OnInit {
   close() {
     this.dialogRef.close('reloadProjectDetails');
   }
-  
+
   viewTestRun() {
     this.dialogRef.close('');
     console.log(
