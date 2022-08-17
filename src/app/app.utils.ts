@@ -9,6 +9,24 @@ export default class Utils {
     return isoDate;
   }
 
+  static chkDeviceTypeSubType(
+    decodedData: any,
+    selectedSbiDevice: SbiDiscoverResponseModel
+  ): boolean {
+    if (
+      decodedData != null &&
+      decodedData['deviceInfoDecoded'] &&
+      decodedData['deviceInfoDecoded']['digitalIdDecoded'] &&
+      decodedData['deviceInfoDecoded']['digitalIdDecoded']['type'] ==
+        selectedSbiDevice.digitalIdDecoded.type &&
+      decodedData['deviceInfoDecoded']['digitalIdDecoded']['deviceSubType'] ==
+        selectedSbiDevice.digitalIdDecoded.deviceSubType
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   static getDecodedDiscoverDevice(deviceData: any) {
     try {
       //console.log(deviceData);
@@ -28,14 +46,20 @@ export default class Utils {
 
   static getDecodedDeviceInfo(deviceInfoResp: any) {
     try {
-      let deviceInfoDecoded: any = Utils.parseJwt(deviceInfoResp.deviceInfo);
-      const digitalIdDecoded = Utils.parseJwt(deviceInfoDecoded.digitalId);
+      let deviceInfoDecoded: any;
+      if (deviceInfoResp.deviceInfo) {
+        deviceInfoDecoded = Utils.parseJwt(deviceInfoResp.deviceInfo);
+      }
+      let digitalIdDecoded: any;
+      if (deviceInfoDecoded && deviceInfoDecoded.digitalId) {
+        digitalIdDecoded = Utils.parseJwt(deviceInfoDecoded.digitalId);
+      }
       deviceInfoDecoded = {
         ...deviceInfoDecoded,
         digitalIdDecoded: digitalIdDecoded,
       };
       const deviceInfoDecodedFull = {
-        error:deviceInfoResp.error,
+        error: deviceInfoResp.error,
         deviceInfo: deviceInfoResp.deviceInfo,
         deviceInfoDecoded: deviceInfoDecoded,
       };
@@ -50,23 +74,23 @@ export default class Utils {
 
   static getDecodedUnregistetedDeviceInfo(deviceInfoResp: any) {
     try {
-      let deviceInfoDecoded: any = JSON.parse(atob(deviceInfoResp.deviceInfo));
-      //console.log('deviceInfoDecoded');
-      //console.log(deviceInfoDecoded);
-      const digitalIdDecoded = JSON.parse(deviceInfoDecoded.digitalId);
-      //console.log('digitalIdDecoded');
-      //console.log(digitalIdDecoded);
+      let deviceInfoDecoded: any;
+      if (deviceInfoResp.deviceInfo) {
+        deviceInfoDecoded = JSON.parse(atob(deviceInfoResp.deviceInfo));
+      }  
+      let digitalIdDecoded: any;
+      if (deviceInfoDecoded && deviceInfoDecoded.digitalId) {
+        digitalIdDecoded = JSON.parse(deviceInfoDecoded.digitalId);
+      } 
       deviceInfoDecoded = {
         ...deviceInfoDecoded,
         digitalIdDecoded: digitalIdDecoded,
       };
       const deviceInfoDecodedFull = {
-        error:deviceInfoResp.error,
+        error: deviceInfoResp.error,
         deviceInfo: deviceInfoResp.deviceInfo,
         deviceInfoDecoded: deviceInfoDecoded,
       };
-      //console.log('deviceInfoDecodedFull');
-      //console.log(deviceInfoDecodedFull);
       return deviceInfoDecodedFull;
     } catch (error) {
       console.log(error);
