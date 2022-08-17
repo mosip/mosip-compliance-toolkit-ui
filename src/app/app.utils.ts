@@ -9,17 +9,37 @@ export default class Utils {
     return isoDate;
   }
 
-  static chkDeviceTypeSubType(
+  static chkDeviceTypeSubTypeForDeviceInfo(
+    deviceInfoDecoded: any,
+    selectedSbiDevice: SbiDiscoverResponseModel
+  ): boolean {
+    if (
+      deviceInfoDecoded != null &&
+      deviceInfoDecoded['deviceInfoDecoded'] &&
+      deviceInfoDecoded['deviceInfoDecoded']['digitalIdDecoded'] &&
+      deviceInfoDecoded['deviceInfoDecoded']['digitalIdDecoded']['type'] ==
+        selectedSbiDevice.digitalIdDecoded.type &&
+      deviceInfoDecoded['deviceInfoDecoded']['digitalIdDecoded'][
+        'deviceSubType'
+      ] == selectedSbiDevice.digitalIdDecoded.deviceSubType
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  static chkDeviceTypeSubTypeForData(
     decodedData: any,
     selectedSbiDevice: SbiDiscoverResponseModel
   ): boolean {
     if (
       decodedData != null &&
-      decodedData['deviceInfoDecoded'] &&
-      decodedData['deviceInfoDecoded']['digitalIdDecoded'] &&
-      decodedData['deviceInfoDecoded']['digitalIdDecoded']['type'] ==
+      decodedData['dataDecoded'] &&
+      decodedData['dataDecoded']['digitalIdDecoded'] &&
+      decodedData['dataDecoded']['digitalIdDecoded']['type'] ==
         selectedSbiDevice.digitalIdDecoded.type &&
-      decodedData['deviceInfoDecoded']['digitalIdDecoded']['deviceSubType'] ==
+      decodedData['dataDecoded']['digitalIdDecoded']['deviceSubType'] ==
         selectedSbiDevice.digitalIdDecoded.deviceSubType
     ) {
       return true;
@@ -77,11 +97,69 @@ export default class Utils {
       let deviceInfoDecoded: any;
       if (deviceInfoResp.deviceInfo) {
         deviceInfoDecoded = JSON.parse(atob(deviceInfoResp.deviceInfo));
-      }  
+      }
       let digitalIdDecoded: any;
       if (deviceInfoDecoded && deviceInfoDecoded.digitalId) {
         digitalIdDecoded = JSON.parse(deviceInfoDecoded.digitalId);
-      } 
+      }
+      deviceInfoDecoded = {
+        ...deviceInfoDecoded,
+        digitalIdDecoded: digitalIdDecoded,
+      };
+      const deviceInfoDecodedFull = {
+        error: deviceInfoResp.error,
+        deviceInfo: deviceInfoResp.deviceInfo,
+        deviceInfoDecoded: deviceInfoDecoded,
+      };
+      return deviceInfoDecodedFull;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+
+  static getDecodedDataInfo(dataResp: any) {
+    try {
+      let dataDecoded: any;
+      if (dataResp.data) {
+        dataDecoded = Utils.parseJwt(dataResp.data);
+      }
+      let digitalIdDecoded: any;
+      if (dataDecoded && dataDecoded.digitalId) {
+        digitalIdDecoded = Utils.parseJwt(dataDecoded.digitalId);
+      }
+      dataDecoded = {
+        ...dataDecoded,
+        digitalIdDecoded: digitalIdDecoded,
+      };
+      const dataDecodedFull = {
+        error: dataResp.error,
+        hash: dataResp.hash,
+        sessionKey: dataResp.sessionKey,
+        specVersion: dataResp.specVersion,
+        thumbprint: dataResp.thumbprint,
+        data: dataResp.data,
+        dataDecoded: dataDecoded,
+      };
+      //console.log('getDecodedDataInfo');
+      //console.log(dataDecodedFull);
+      return dataDecodedFull;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+
+  static getDecodedUnregistetedData(deviceInfoResp: any) {
+    try {
+      let deviceInfoDecoded: any;
+      if (deviceInfoResp.deviceInfo) {
+        deviceInfoDecoded = JSON.parse(atob(deviceInfoResp.deviceInfo));
+      }
+      let digitalIdDecoded: any;
+      if (deviceInfoDecoded && deviceInfoDecoded.digitalId) {
+        digitalIdDecoded = JSON.parse(deviceInfoDecoded.digitalId);
+      }
       deviceInfoDecoded = {
         ...deviceInfoDecoded,
         digitalIdDecoded: digitalIdDecoded,

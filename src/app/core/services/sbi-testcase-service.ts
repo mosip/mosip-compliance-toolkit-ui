@@ -273,20 +273,8 @@ export class SbiTestCaseService {
       return decodedDataArr;
     }
     if (testCase.methodName == appConstants.SBI_METHOD_DEVICE_INFO) {
-      //device info - unregistered device - sample code for testing
-      // methodResponse = [
-      //   {
-      //     deviceInfo:
-      //       'eyJzcGVjVmVyc2lvbiI6WyIwLjkuNSJdLCJlbnYiOiJTdGFnaW5nIiwiZGlnaXRhbElkIjoie1wic2VyaWFsTm9cIjpcIjEyMzQ1Njc5OTBcIixcIm1ha2VcIjpcIk1PU0lQXCIsXCJtb2RlbFwiOlwiU0lOR0xFMDFcIixcInR5cGVcIjpcIkZpbmdlclwiLFwiZGV2aWNlU3ViVHlwZVwiOlwiU2luZ2xlXCIsXCJkZXZpY2VQcm92aWRlcklkXCI6XCJNT1NJUC5QUk9YWS5TQklcIixcImRldmljZVByb3ZpZGVyXCI6XCJNT1NJUFwiLFwiZGF0ZVRpbWVcIjpcIjIwMjItMDgtMDhUMTM6MTA6MTZaXCJ9IiwiZGV2aWNlSWQiOiIiLCJkZXZpY2VDb2RlIjoiIiwicHVycG9zZSI6IiIsInNlcnZpY2VWZXJzaW9uIjoiMC45LjUiLCJkZXZpY2VTdGF0dXMiOiJOb3QgUmVnaXN0ZXJlZCIsImZpcm13YXJlIjoiTU9TSVAuU0lOR0xFLjEuMC4wLjAiLCJjZXJ0aWZpY2F0aW9uIjoiTDAiLCJkZXZpY2VTdWJJZCI6WzBdLCJjYWxsYmFja0lkIjoiaHR0cDovLzEyNy4wLjAuMTo0NTAxLyJ9',
-      //     error: {
-      //       errorCode: '100',
-      //       errorInfo: 'Device not registered',
-      //     },
-      //   },
-      // ];
       let decodedDataArr: any[] = [];
       methodResponse.forEach((deviceInfoResp: any) => {
-        //console.log(deviceInfoResp.deviceInfo);
         if (deviceInfoResp && deviceInfoResp.deviceInfo == '') {
           decodedDataArr.push(deviceInfoResp);
         } else {
@@ -295,23 +283,50 @@ export class SbiTestCaseService {
           if (arr.length >= 3) {
             //this is registered device
             const decodedData: any = Utils.getDecodedDeviceInfo(deviceInfoResp);
-            //console.log(decodedData);
-            if (Utils.chkDeviceTypeSubType(decodedData, selectedSbiDevice)) {
+            if (Utils.chkDeviceTypeSubTypeForDeviceInfo(decodedData, selectedSbiDevice)) {
               decodedDataArr.push(decodedData);
             }
           } else {
             //this is unregistered device
             const decodedData: any =
               Utils.getDecodedUnregistetedDeviceInfo(deviceInfoResp);
-            if (Utils.chkDeviceTypeSubType(decodedData, selectedSbiDevice)) {
+            if (Utils.chkDeviceTypeSubTypeForDeviceInfo(decodedData, selectedSbiDevice)) {
               decodedDataArr.push(decodedData);
             }
           }
         }
       });
-      //console.log("------------------------------------------------------");
-      //console.log(decodedDataArr.length);
       return decodedDataArr;
+    }
+    if (
+      testCase.methodName == appConstants.SBI_METHOD_CAPTURE ||
+      testCase.methodName == appConstants.SBI_METHOD_RCAPTURE
+    ) {
+      let decodedDataArr: any[] = [];
+      methodResponse.biometrics.forEach((dataResp: any) => {
+        if (dataResp && dataResp.data == '') {
+          decodedDataArr.push(dataResp);
+        } else {
+          //chk if device is registered
+          let arr = dataResp.data.split('.');
+          if (arr.length >= 3) {
+            //this is registered device
+            const decodedData: any = Utils.getDecodedDataInfo(dataResp);
+            if (Utils.chkDeviceTypeSubTypeForData(decodedData, selectedSbiDevice)) {
+              decodedDataArr.push(decodedData);
+            }
+          } else {
+            //this is unregistered device
+            const decodedData: any = Utils.getDecodedUnregistetedData(dataResp);
+            if (Utils.chkDeviceTypeSubTypeForData(decodedData, selectedSbiDevice)) {
+              decodedDataArr.push(decodedData);
+            }
+          }
+        }
+      });
+      return {
+        biometrics: decodedDataArr,
+      };
     }
     return methodResponse;
     //return JSON.stringify(request);
