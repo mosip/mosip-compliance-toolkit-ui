@@ -46,10 +46,11 @@ export class SbiTestCaseService {
         let validationResponse = await this.validateResponse(
           testCase,
           methodRequest,
-          decodedMethodResp
+          decodedMethodResp,
+          sbiSelectedDevice
         );
         let finalResponse = {
-          methodResponse: JSON.stringify(methodResponse),
+          methodResponse: JSON.stringify(decodedMethodResp),
           methodRequest: JSON.stringify(methodRequest),
           validationResponse: validationResponse,
         };
@@ -59,7 +60,7 @@ export class SbiTestCaseService {
           response: {
             validationsList: [validationRequest[appConstants.RESPONSE]],
           },
-          errors: []
+          errors: [],
         };
         let finalResponse = {
           methodResponse: 'Method not invoked since request is invalid.',
@@ -285,27 +286,31 @@ export class SbiTestCaseService {
       // ];
       let decodedDataArr: any[] = [];
       methodResponse.forEach((deviceInfoResp: any) => {
+        //console.log(deviceInfoResp.deviceInfo);
         if (deviceInfoResp && deviceInfoResp.deviceInfo == '') {
           decodedDataArr.push(deviceInfoResp);
         } else {
           //chk if device is registered
           let arr = deviceInfoResp.deviceInfo.split('.');
-          if (arr.length == 3) {
+          if (arr.length >= 3) {
             //this is registered device
-            const decodedData = Utils.getDecodedDeviceInfo(deviceInfoResp);
-            if (decodedData != null) {
+            const decodedData: any = Utils.getDecodedDeviceInfo(deviceInfoResp);
+            //console.log(decodedData);
+            if (Utils.chkDeviceTypeSubType(decodedData, selectedSbiDevice)) {
               decodedDataArr.push(decodedData);
             }
           } else {
             //this is unregistered device
-            const decodedData =
+            const decodedData: any =
               Utils.getDecodedUnregistetedDeviceInfo(deviceInfoResp);
-            if (decodedData != null) {
+            if (Utils.chkDeviceTypeSubType(decodedData, selectedSbiDevice)) {
               decodedDataArr.push(decodedData);
             }
           }
         }
       });
+      //console.log("------------------------------------------------------");
+      //console.log(decodedDataArr.length);
       return decodedDataArr;
     }
     return methodResponse;
@@ -315,8 +320,11 @@ export class SbiTestCaseService {
   async validateResponse(
     testCase: TestCaseModel,
     methodRequest: any,
-    methodResponse: any
+    methodResponse: any,
+    sbiSelectedDevice: string
   ) {
+    const selectedSbiDevice: SbiDiscoverResponseModel =
+      JSON.parse(sbiSelectedDevice);
     return new Promise((resolve, reject) => {
       //console.log('validateResponse called');
       let validateRequest = {
@@ -327,6 +335,9 @@ export class SbiTestCaseService {
         methodResponse: JSON.stringify(methodResponse),
         methodRequest: JSON.stringify(methodRequest),
         methodName: testCase.methodName,
+        extraInfoJson: JSON.stringify({
+          certificationType: selectedSbiDevice.certification,
+        }),
         validatorDefs: testCase.validatorDefs,
       };
       //console.log(validateRequest);
@@ -368,7 +379,7 @@ export class SbiTestCaseService {
       };
       this.dataService.validateRequest(request).subscribe(
         (response) => {
-          console.log(response);
+          //console.log(response);
           resolve(response);
         },
         (errors) => {
