@@ -1,0 +1,7 @@
+{"response":{
+	"name": "Test",
+	"projectType": "SDK",
+	"sdkUrl": "http://localhost:9099/biosdk-service/",
+	"sdkPurpose": "Matcher",
+	"bioTestData": "testdata.zip"
+}}
