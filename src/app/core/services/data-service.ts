@@ -33,6 +33,12 @@ export class DataService {
     return this.httpClient.get(url);
   }
 
+  getSdkProject(projectId: string) {
+    // let url = `${this.SERVICES_BASE_URL}getSdkProject/${projectId}`;
+    // return this.httpClient.get(url);
+    return this.httpClient.get('./assets/sdkproject.json');
+  }
+
   getCollections(projectId: string, projectType: string) {
     let url = `${this.SERVICES_BASE_URL}getCollections?projectId=${projectId}&type=${projectType}`;
     return this.httpClient.get(url);

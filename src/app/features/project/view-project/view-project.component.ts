@@ -68,6 +68,11 @@ export class ViewProjectComponent implements OnInit {
       await this.getSbiProjectDetails();
       this.populateSbiProjectForm();
     }
+    if (this.projectType == appConstants.SDK) {
+      this.initSdkProjectForm();
+      await this.getSdkProjectDetails();
+      this.populateSdkProjectForm();
+    }
     await this.getCollections();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -107,6 +112,19 @@ export class ViewProjectComponent implements OnInit {
     });
   }
 
+  initSdkProjectForm() {
+    this.allControls = [
+      ...appConstants.COMMON_CONTROLS,
+      ...appConstants.SDK_CONTROLS,
+    ];
+    this.allControls.forEach((controlId) => {
+      this.projectForm.addControl(
+        controlId,
+        new FormControl({ value: '', disabled: true })
+      );
+    });
+  }
+
   populateSbiProjectForm() {
     if (this.projectFormData) {
       this.projectForm.controls['name'].setValue(this.projectFormData.name);
@@ -126,10 +144,44 @@ export class ViewProjectComponent implements OnInit {
     }
   }
 
+  populateSdkProjectForm() {
+    if (this.projectFormData) {
+      this.projectForm.controls['name'].setValue(this.projectFormData.name);
+      this.projectForm.controls['projectType'].setValue(appConstants.SDK);
+      this.projectForm.controls['sdkUrl'].setValue(
+        this.projectFormData.sdkUrl
+      );
+      this.projectForm.controls['sdkPurpose'].setValue(
+        this.projectFormData.sdkPurpose
+      );
+      this.projectForm.controls['bioTestData'].setValue(
+        this.projectFormData.bioTestData
+      );
+    }
+  }
+
   async getSbiProjectDetails() {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
         this.dataService.getSbiProject(this.projectId).subscribe(
+          (response: any) => {
+            //console.log(response);
+            this.projectFormData = response['response'];
+            resolve(true);
+          },
+          (errors) => {
+            Utils.showErrorMessage(errors, this.dialog);
+            resolve(false);
+          }
+        )
+      );
+    });
+  }
+
+  async getSdkProjectDetails() {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.getSdkProject(this.projectId).subscribe(
           (response: any) => {
             //console.log(response);
             this.projectFormData = response['response'];
