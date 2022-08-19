@@ -44,7 +44,11 @@ export class AuthInterceptor implements HttpInterceptor {
     let isLocalUrl = false;
     if (this.appConfigService.getConfig()) {
       const sbiUrl = this.appConfigService.getConfig()['SBI_BASE_URL'];
+      const sdkUrl = localStorage.getItem(appConstants.SDK_PROJECT_URL);
       if (request.url.includes(sbiUrl)) {
+        isLocalUrl = true;
+      }
+      if (sdkUrl && request.url.includes(sdkUrl)) {
         isLocalUrl = true;
       }
     }
