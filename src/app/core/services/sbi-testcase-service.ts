@@ -22,7 +22,7 @@ export class SbiTestCaseService {
   ) {
     return new Promise(async (resolve, reject) => {
       const methodRequest = this.createRequest(testCase, sbiSelectedDevice);
-      //now validate the response
+      //now validate the method request against the Schema
       let validationRequest: any = await this.validateRequest(
         testCase,
         methodRequest
@@ -42,7 +42,7 @@ export class SbiTestCaseService {
           methodResponse,
           sbiSelectedDevice
         );
-        //now validate the response
+        //now validate the method response against all the validators
         let validationResponse = await this.validateResponse(
           testCase,
           methodRequest,

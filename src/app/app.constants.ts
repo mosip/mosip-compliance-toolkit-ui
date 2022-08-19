@@ -54,3 +54,4 @@ export const SBI_SCAN_COMPLETE = 'sbiScanComplete';
 export const SBI_SCAN_DATA = 'sbiScanData';
 export const SBI_SELECTED_DEVICE = 'sbiSelectedDevice';
 export const SBI_SELECTED_PORT = 'sbiSelectedPort';
+export const SDK_PROJECT_URL = 'sdkProjectUrl';

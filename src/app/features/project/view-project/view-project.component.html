@@ -331,9 +331,14 @@
             <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef> Run </th>
                 <td mat-cell *matCellDef="let row">
-                    <button mat-flat-button color="accent" (click)="runCollection(row)"
+                    <button mat-flat-button color="accent" (click)="runCollection(row)" *ngIf="projectType == 'SBI'"
                         [disabled]="!isScanComplete || row.testCaseCount == 0"
                         title="{{!isScanComplete ? 'You cannot run till you scan device first.' : row.testCaseCount == 0 ? 'Add testcases first':'Click to run the collection'}}">
+                        Run
+                    </button>
+                    <button mat-flat-button color="accent" (click)="runCollection(row)" *ngIf="projectType == 'SDK'"
+                        [disabled]="row.testCaseCount == 0"
+                        title="{{row.testCaseCount == 0 ? 'Add testcases first':'Click to run the collection'}}">
                         Run
                     </button>
                 </td>

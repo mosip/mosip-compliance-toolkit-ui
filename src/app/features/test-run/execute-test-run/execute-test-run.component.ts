@@ -6,10 +6,12 @@ import { AppConfigService } from '../../../app-config.service';
 import { Subscription } from 'rxjs';
 import { CdTimerComponent } from 'angular-cd-timer';
 import { SbiTestCaseService } from '../../../core/services/sbi-testcase-service';
+import { SdkTestCaseService } from '../../../core/services/sdk-testcase-service';
 import { TestCaseModel } from 'src/app/core/models/testcase';
 import { Router } from '@angular/router';
 import { SbiProjectModel } from 'src/app/core/models/sbi-project';
 import { SbiDiscoverResponseModel } from 'src/app/core/models/sbi-discover';
+import { SdkProjectModel } from 'src/app/core/models/sdk-project';
 
 @Component({
   selector: 'app-execute-test-run',
@@ -21,7 +23,8 @@ export class ExecuteTestRunComponent implements OnInit {
   collectionId: string;
   projectType: string;
   projectId: string;
-  projectData: SbiProjectModel;
+  sbiProjectData: SbiProjectModel;
+  sdkProjectData: SdkProjectModel;
   collectionName: string;
   subscriptions: Subscription[] = [];
   scanComplete = true;
@@ -56,6 +59,7 @@ export class ExecuteTestRunComponent implements OnInit {
     private dataService: DataService,
     private router: Router,
     private sbiTestCaseService: SbiTestCaseService,
+    private sdkTestCaseService: SdkTestCaseService,
     private appConfigService: AppConfigService
   ) {
     dialogRef.disableClose = true;
@@ -67,6 +71,7 @@ export class ExecuteTestRunComponent implements OnInit {
     this.projectType = this.input.projectType;
     this.projectId = this.input.projectId;
     this.basicTimer.start();
+    localStorage.removeItem(appConstants.SDK_PROJECT_URL);
     if (await this.performValidations()) {
       await this.getCollection();
       await this.getTestcasesForCollection();
@@ -91,23 +96,27 @@ export class ExecuteTestRunComponent implements OnInit {
         const selectedSbiDevice: SbiDiscoverResponseModel = JSON.parse(
           this.sbiSelectedDevice
         );
-        console.log('selectedSbiDevice');
-        console.log(selectedSbiDevice);
-        if (this.projectData.purpose != selectedSbiDevice.purpose) {
+        if (this.sbiProjectData.purpose != selectedSbiDevice.purpose) {
           this.scanComplete = false;
           this.dataLoaded = true;
           this.validationErrMsg =
             'Please select appropriate device, while scanning, to execute testcases for this project. \n The purpose of the selected device is not matching the project.';
           return false;
         }
-        if (this.projectData.deviceType != selectedSbiDevice.digitalIdDecoded.type) {
+        if (
+          this.sbiProjectData.deviceType !=
+          selectedSbiDevice.digitalIdDecoded.type
+        ) {
           this.scanComplete = false;
           this.dataLoaded = true;
           this.validationErrMsg =
             'Please select appropriate device, while scanning, to execute testcases for this project. \n The device type of the selected device is not matching the project.';
           return false;
         }
-        if (this.projectData.deviceSubType != selectedSbiDevice.digitalIdDecoded.deviceSubType) {
+        if (
+          this.sbiProjectData.deviceSubType !=
+          selectedSbiDevice.digitalIdDecoded.deviceSubType
+        ) {
           this.scanComplete = false;
           this.dataLoaded = true;
           this.validationErrMsg =
@@ -125,7 +134,25 @@ export class ExecuteTestRunComponent implements OnInit {
         this.dataService.getSbiProject(this.projectId).subscribe(
           (response: any) => {
             //console.log(response);
-            this.projectData = response['response'];
+            this.sbiProjectData = response['response'];
+            resolve(true);
+          },
+          (errors) => {
+            this.errorsInGettingTestcases = true;
+            resolve(true);
+          }
+        )
+      );
+    });
+  }
+
+  async getSdkProjectDetails() {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.getSdkProject(this.projectId).subscribe(
+          (response: any) => {
+            //console.log(response);
+            this.sdkProjectData = response['response'];
             resolve(true);
           },
           (errors) => {
@@ -388,15 +415,8 @@ export class ExecuteTestRunComponent implements OnInit {
           testCase.methodName == appConstants.SBI_METHOD_CAPTURE ||
           testCase.methodName == appConstants.SBI_METHOD_RCAPTURE
         ) {
-          // console.log(testCase.methodName);
-          // console.log(
-          //   `this.showInitiateCaptureBtn ${this.showInitiateCaptureBtn}`
-          // );
-          // console.log(`this.initiateCapture ${this.initiateCapture}`);
           if (this.initiateCapture) {
-            //reset
             this.initiateCapture = false;
-            //now trigger the method.
             const res = await this.sbiTestCaseService.runTestCase(
               testCase,
               this.sbiSelectedPort ? this.sbiSelectedPort : '',
@@ -414,6 +434,18 @@ export class ExecuteTestRunComponent implements OnInit {
           );
           resolve(res);
         }
+      }
+      if (this.projectType === appConstants.SDK) {
+        await this.getSdkProjectDetails();
+        localStorage.setItem(
+          appConstants.SDK_PROJECT_URL,
+          this.sdkProjectData ? this.sdkProjectData.sdkUrl : ''
+        );
+        const res = await this.sdkTestCaseService.runTestCase(
+          testCase,
+          this.sdkProjectData.sdkUrl
+        );
+        resolve(res);
       } else {
         resolve(true);
       }
