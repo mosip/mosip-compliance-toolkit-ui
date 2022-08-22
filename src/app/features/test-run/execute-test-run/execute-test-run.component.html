@@ -49,22 +49,30 @@
                     </div>
                 </span>
                 <span *ngIf="runComplete">
-                    <div *ngIf="errorsInValidators">
+                    <div *ngIf="serviceErrors">
                         <div class="custom-class">
-                            <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon> There were errors while processing the
-                            validators.
-                            <p>{{this.errorsSummary}}</p>
+                            <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon>
+                            <span [ngStyle]="{color: 'red'}">
+                                There were errors while processing the service.
+                            </span>
+                            <span class="spacer"></span>
                         </div>
+                        <p> <span [ngStyle]="{color: 'red'}">
+                                <span *ngFor="let item of errorsSummary">
+                                    {{item}}<br />
+                                </span>
+                            </span></p>
                     </div>
                     <div *ngIf="errorsInSavingTestRun">
                         <div class="custom-class">
-                            <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon> Unable to save / update test run
-                            details. Please try
-                            again.
+                            <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon>
+                            <span [ngStyle]="{color: 'red'}">
+                                Unable to save / update test run details. Please try again.
+                            </span>
                             <span class="spacer"></span>
                         </div>
                     </div>
-                    <div *ngIf="!errorsInValidators && !errorsInSavingTestRun">
+                    <div *ngIf="!serviceErrors && !errorsInSavingTestRun">
                         <p>Total {{testCasesList.length > 1 ? testCasesList.length + ' testcases have' :
                             testCasesList.length + ' testcase has'}} executed successfully.
                             Overall result for testcases:</p>
@@ -95,12 +103,11 @@
         || (scanComplete && !errorsInGettingTestcases && runComplete)" mat-flat-button color="accent"
         (click)="close()">Close</button>
     <div class="spacer"
-        *ngIf="(scanComplete && !errorsInGettingTestcases && !runComplete && showInitiateCaptureBtn) || (scanComplete && !errorsInGettingTestcases && runComplete && !errorsInValidators && !errorsInSavingTestRun)">
+        *ngIf="(scanComplete && !errorsInGettingTestcases && !runComplete && showInitiateCaptureBtn) || (scanComplete && !errorsInGettingTestcases && runComplete && !serviceErrors && !errorsInSavingTestRun)">
     </div>
     <button *ngIf="scanComplete && !errorsInGettingTestcases && !runComplete && showInitiateCaptureBtn" mat-flat-button
         color="accent" (click)="setInitiateCapture()">Initiate Capture</button>
-    <button
-        *ngIf="scanComplete && !errorsInGettingTestcases && runComplete && !errorsInValidators && !errorsInSavingTestRun"
+    <button *ngIf="scanComplete && !errorsInGettingTestcases && runComplete && !serviceErrors && !errorsInSavingTestRun"
         mat-flat-button color="accent" (click)="viewTestRun()">View Test Run</button>
     <!-- <div *ngIf="scanComplete">
         <div *ngIf="errorsInGettingTestcases">
@@ -115,12 +122,12 @@
                 </div>
             </div>
             <div *ngIf="runComplete">
-                <div *ngIf="!errorsInValidators && !errorsInSavingTestRun"  class="custom-class">
+                <div *ngIf="!serviceErrors && !errorsInSavingTestRun"  class="custom-class">
                     <button mat-flat-button color="accent" (click)="close()">Close</button>
                     <div class="spacer"></div>&nbsp;&nbsp;
                     <button mat-flat-button color="accent" (click)="viewTestRun()">View Test Run</button>                                
                 </div>
-                <div *ngIf="errorsInValidators || errorsInSavingTestRun">
+                <div *ngIf="serviceErrors || errorsInSavingTestRun">
                     <button mat-flat-button color="accent" (click)="close()">Close</button>
                 </div>
             </div>    
