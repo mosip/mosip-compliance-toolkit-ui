@@ -32,29 +32,40 @@ export class SbiTestCaseService {
         validationRequest[appConstants.RESPONSE] &&
         validationRequest[appConstants.RESPONSE].status == appConstants.SUCCESS
       ) {
-        let methodResponse = await this.executeMethod(
+        let methodResponse: any = await this.executeMethod(
           testCase.methodName,
           sbiSelectedPort,
           methodRequest
         );
-        const decodedMethodResp = this.createDecodedResponse(
-          testCase,
-          methodResponse,
-          sbiSelectedDevice
-        );
-        //now validate the method response against all the validators
-        let validationResponse = await this.validateResponse(
-          testCase,
-          methodRequest,
-          decodedMethodResp,
-          sbiSelectedDevice
-        );
-        let finalResponse = {
-          methodResponse: JSON.stringify(decodedMethodResp),
-          methodRequest: JSON.stringify(methodRequest),
-          validationResponse: validationResponse,
-        };
-        resolve(finalResponse);
+        if (methodResponse) {
+          const decodedMethodResp = this.createDecodedResponse(
+            testCase,
+            methodResponse,
+            sbiSelectedDevice
+          );
+          //now validate the method response against all the validators
+          let validationResponse = await this.validateResponse(
+            testCase,
+            methodRequest,
+            decodedMethodResp,
+            sbiSelectedDevice
+          );
+          let finalResponse = {
+            methodResponse: JSON.stringify(decodedMethodResp),
+            methodRequest: JSON.stringify(methodRequest),
+            validationResponse: validationResponse,
+          };
+          resolve(finalResponse);
+        } else {
+          resolve({
+            errors: [
+              {
+                errorCode: 'Connection Failure',
+                message: 'Unable to connect to device / SBI',
+              },
+            ],
+          });
+        }
       } else {
         let validationResponse = {
           response: {
@@ -134,7 +145,9 @@ export class SbiTestCaseService {
             //return response;
             resolve(response);
           },
-          (error) => {}
+          (error) => {
+            resolve(false);
+          }
         );
     });
   }
@@ -283,14 +296,24 @@ export class SbiTestCaseService {
           if (arr.length >= 3) {
             //this is registered device
             const decodedData: any = Utils.getDecodedDeviceInfo(deviceInfoResp);
-            if (Utils.chkDeviceTypeSubTypeForDeviceInfo(decodedData, selectedSbiDevice)) {
+            if (
+              Utils.chkDeviceTypeSubTypeForDeviceInfo(
+                decodedData,
+                selectedSbiDevice
+              )
+            ) {
               decodedDataArr.push(decodedData);
             }
           } else {
             //this is unregistered device
             const decodedData: any =
               Utils.getDecodedUnregistetedDeviceInfo(deviceInfoResp);
-            if (Utils.chkDeviceTypeSubTypeForDeviceInfo(decodedData, selectedSbiDevice)) {
+            if (
+              Utils.chkDeviceTypeSubTypeForDeviceInfo(
+                decodedData,
+                selectedSbiDevice
+              )
+            ) {
               decodedDataArr.push(decodedData);
             }
           }
@@ -312,13 +335,17 @@ export class SbiTestCaseService {
           if (arr.length >= 3) {
             //this is registered device
             const decodedData: any = Utils.getDecodedDataInfo(dataResp);
-            if (Utils.chkDeviceTypeSubTypeForData(decodedData, selectedSbiDevice)) {
+            if (
+              Utils.chkDeviceTypeSubTypeForData(decodedData, selectedSbiDevice)
+            ) {
               decodedDataArr.push(decodedData);
             }
           } else {
             //this is unregistered device
             const decodedData: any = Utils.getDecodedUnregistetedData(dataResp);
-            if (Utils.chkDeviceTypeSubTypeForData(decodedData, selectedSbiDevice)) {
+            if (
+              Utils.chkDeviceTypeSubTypeForData(decodedData, selectedSbiDevice)
+            ) {
               decodedDataArr.push(decodedData);
             }
           }
@@ -355,7 +382,6 @@ export class SbiTestCaseService {
         }),
         validatorDefs: testCase.validatorDefs,
       };
-      //console.log(validateRequest);
       let request = {
         id: appConstants.VALIDATIONS_ADD_ID,
         version: appConstants.VERSION,
@@ -364,9 +390,7 @@ export class SbiTestCaseService {
       };
       this.dataService.validateResponse(request).subscribe(
         (response) => {
-          //console.log(response);
           resolve(response);
-          //this.testCaseResults = JSON.stringify(response);
         },
         (errors) => {
           resolve(errors);
@@ -377,7 +401,6 @@ export class SbiTestCaseService {
 
   async validateRequest(testCase: TestCaseModel, methodRequest: any) {
     return new Promise((resolve, reject) => {
-      //console.log('validateRequest called');
       let validateRequest = {
         testCaseType: testCase.testCaseType,
         testName: testCase.testName,
@@ -385,7 +408,6 @@ export class SbiTestCaseService {
         requestSchema: testCase.requestSchema,
         methodRequest: JSON.stringify(methodRequest),
       };
-      //console.log(validateRequest);
       let request = {
         id: appConstants.VALIDATIONS_ADD_ID,
         version: appConstants.VERSION,
@@ -394,7 +416,6 @@ export class SbiTestCaseService {
       };
       this.dataService.validateRequest(request).subscribe(
         (response) => {
-          //console.log(response);
           resolve(response);
         },
         (errors) => {

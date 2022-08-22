@@ -17,52 +17,75 @@ export class SdkTestCaseService {
   async runTestCase(testCase: TestCaseModel, sdkUrl: string) {
     return new Promise(async (resolve, reject) => {
       const methodRequest: any = await this.generateRequestForSDK(testCase);
-      //now validate the method request against the Schema
-      let validationRequest: any = await this.validateRequest(
-        testCase,
-        methodRequest
-      );
-      if (
-        validationRequest &&
-        validationRequest[appConstants.RESPONSE] &&
-        validationRequest[appConstants.RESPONSE].status == appConstants.SUCCESS
-      ) {
-        let methodResponse = await this.executeMethod(
-          testCase.methodName,
-          sdkUrl,
+      if (methodRequest) {
+        //now validate the method request against the Schema
+        let validationRequest: any = await this.validateRequest(
+          testCase,
           methodRequest
         );
-        const decodedMethodResp = this.createDecodedResponse(
-          testCase,
-          methodResponse
-        );
-        //now validate the method response against all the validators
-        let validationResponse = await this.validateResponse(
-          testCase,
-          methodRequest,
-          decodedMethodResp
-        );
-        let finalResponse = {
-          methodResponse: JSON.stringify(decodedMethodResp),
-          methodRequest: JSON.stringify(methodRequest),
-          validationResponse: validationResponse,
-        };
-        resolve(finalResponse);
+        if (
+          validationRequest &&
+          validationRequest[appConstants.RESPONSE] &&
+          validationRequest[appConstants.RESPONSE].status ==
+            appConstants.SUCCESS
+        ) {
+          let methodResponse: any = await this.executeMethod(
+            testCase.methodName,
+            sdkUrl,
+            methodRequest
+          );
+          if (methodResponse) {
+            const decodedMethodResp = this.createDecodedResponse(
+              testCase,
+              methodResponse
+            );
+            //now validate the method response against all the validators
+            let validationResponse = await this.validateResponse(
+              testCase,
+              methodRequest,
+              decodedMethodResp
+            );
+            let finalResponse = {
+              methodResponse: JSON.stringify(decodedMethodResp),
+              methodRequest: JSON.stringify(methodRequest),
+              validationResponse: validationResponse,
+            };
+            resolve(finalResponse);
+          } else {
+            resolve({
+              errors: [
+                {
+                  errorCode: 'Connection Failure',
+                  message: 'Unable to connect to SDK services',
+                },
+              ],
+            });
+          }
+        } else {
+          let validationResponse = {
+            response: {
+              validationsList: [validationRequest[appConstants.RESPONSE]],
+            },
+            errors: [],
+          };
+          let finalResponse = {
+            methodResponse: 'Method not invoked since request is invalid.',
+            methodRequest: JSON.stringify(methodRequest),
+            validationResponse: validationResponse,
+          };
+          resolve(finalResponse);
+        }
       } else {
-        let validationResponse = {
-          response: {
-            validationsList: [validationRequest[appConstants.RESPONSE]],
-          },
-          errors: [],
-        };
-        let finalResponse = {
-          methodResponse: 'Method not invoked since request is invalid.',
-          methodRequest: JSON.stringify(methodRequest),
-          validationResponse: validationResponse,
-        };
-        console.log('request schema validation failed');
-        console.log(finalResponse);
-        resolve(finalResponse);
+        resolve({
+          errors: [
+            {
+              errorCode: 'Failure',
+              message:
+                'Unable to generate request to SDK service: ' +
+                testCase.methodName,
+            },
+          ],
+        });
       }
     });
   }
@@ -76,30 +99,33 @@ export class SdkTestCaseService {
           //return response;
           resolve(response);
         },
-        (error) => {}
+        (error) => {
+          console.log(error);
+          resolve(false);
+        }
       );
     });
   }
 
   generateRequestForSDK(testCase: TestCaseModel): any {
     return new Promise((resolve, reject) => {
-      //console.log('validateRequest called');
+      console.log('generateRequestForSDK called');
+      console.log(testCase);
       this.dataService
         .generateRequestForSDK(
           testCase.methodName,
           testCase.testId,
-          testCase.otherAttributes.modalities
+          testCase.otherAttributes.modalities.toString()
         )
         .subscribe(
           (response: any) => {
             if (response.errors && response.errors.length > 0) {
-              resolve(response.errors);
+              resolve(false);
             }
-            //console.log(response);
             resolve(response[appConstants.RESPONSE]);
           },
           (errors) => {
-            resolve(errors);
+            resolve(false);
           }
         );
     });
@@ -135,9 +161,7 @@ export class SdkTestCaseService {
       };
       this.dataService.validateResponse(request).subscribe(
         (response) => {
-          //console.log(response);
           resolve(response);
-          //this.testCaseResults = JSON.stringify(response);
         },
         (errors) => {
           resolve(errors);

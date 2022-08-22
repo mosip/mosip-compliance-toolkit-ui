@@ -33,11 +33,11 @@ export class ExecuteTestRunComponent implements OnInit {
   currectTestCaseId: string;
   currectTestCaseName: string;
   errorsInGettingTestcases = false;
-  errorsInValidators = false;
+  serviceErrors = false;
   errorsInSavingTestRun = false;
   initiateCapture = false;
   showInitiateCaptureBtn = false;
-  errorsSummary = '';
+  errorsSummary: string[];
   testCasesList: any;
   testRunId: string;
   dataLoaded = false;
@@ -247,7 +247,7 @@ export class ExecuteTestRunComponent implements OnInit {
         }
         const res: any = await this.executeCurrentTestCase(testCase);
         if (res) {
-          this.handleErr(res);
+          proceedLoop = this.handleErr(res);
           this.calculateTestcaseResults(res[appConstants.VALIDATIONS_RESPONSE]);
           //update the test run details in db
           await this.addTestRunDetails(testCase, res);
@@ -261,14 +261,19 @@ export class ExecuteTestRunComponent implements OnInit {
   }
 
   handleErr(res: any) {
+    console.log('handleErr');
     const errors = res[appConstants.ERRORS];
     if (errors && errors.length > 0) {
-      this.errorsInValidators = true;
+      this.serviceErrors = true;
+      this.errorsSummary = [];
       errors.forEach((err: any) => {
-        this.errorsSummary =
-          err[appConstants.ERROR_CODE] + ' - ' + err[appConstants.MESSAGE];
+        this.errorsSummary.push(
+          err[appConstants.ERROR_CODE] + ' - ' + err[appConstants.MESSAGE]
+        );
       });
+      return false;
     }
+    return true;
   }
   checkIfToShowInitiateCaptureBtn(testCase: TestCaseModel) {
     if (this.projectType === appConstants.SBI) {
