@@ -246,8 +246,8 @@ export class ExecuteTestRunComponent implements OnInit {
           this.checkIfToShowInitiateCaptureBtn(testCase);
         }
         const res: any = await this.executeCurrentTestCase(testCase);
-        this.handleErr(res);
         if (res) {
+          this.handleErr(res);
           this.calculateTestcaseResults(res[appConstants.VALIDATIONS_RESPONSE]);
           //update the test run details in db
           await this.addTestRunDetails(testCase, res);
@@ -410,7 +410,9 @@ export class ExecuteTestRunComponent implements OnInit {
   }
   async executeCurrentTestCase(testCase: TestCaseModel) {
     return new Promise(async (resolve, reject) => {
+      console.log(`this.projectType ${this.projectType}`);
       if (this.projectType === appConstants.SBI) {
+        console.log(testCase);
         if (
           testCase.methodName == appConstants.SBI_METHOD_CAPTURE ||
           testCase.methodName == appConstants.SBI_METHOD_RCAPTURE
@@ -434,8 +436,7 @@ export class ExecuteTestRunComponent implements OnInit {
           );
           resolve(res);
         }
-      }
-      if (this.projectType === appConstants.SDK) {
+      } else if (this.projectType == appConstants.SDK) {
         await this.getSdkProjectDetails();
         localStorage.setItem(
           appConstants.SDK_PROJECT_URL,
