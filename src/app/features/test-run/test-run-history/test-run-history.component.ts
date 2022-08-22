@@ -9,7 +9,6 @@ import { SbiProjectModel } from 'src/app/core/models/sbi-project';
 import { MatDialog } from '@angular/material/dialog';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
 import Utils from 'src/app/app.utils';
 import { TestRunHistoryModel } from 'src/app/core/models/testrunhistory';
 
@@ -36,8 +35,13 @@ export class TestRunHistoryComponent implements OnInit {
     'failCaseCount',
     'actions',
   ];
+  // MatPaginator Inputs
+  totalItems = 0;
+  defaultPageSize = 10;
+  pageSize = this.defaultPageSize;
+  pageIndex = 0;
+  pageSizeOptions: number[] = [5, 10, 15, 20];
   dataSubmitted = false;
-  @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     public authService: AuthService,
@@ -56,7 +60,6 @@ export class TestRunHistoryComponent implements OnInit {
       this.initBreadCrumb();
     }
     await this.getTestRunHistory();
-    this.dataSource.sort = this.sort;
     this.dataLoaded = true;
   }
 
@@ -140,34 +143,19 @@ export class TestRunHistoryComponent implements OnInit {
   async getTestRunHistory() {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
-        this.dataService.getTestRunHistory(this.collectionId).subscribe(
-          async (response: any) => {
-            console.log(response);
-            let dataArr = response['response'];
-            dataArr.sort(function (
-              a: TestRunHistoryModel,
-              b: TestRunHistoryModel
-            ) {
-              if (a.lastRunTime < b.lastRunTime) return 1;
-              if (a.lastRunTime > b.lastRunTime) return -1;
-              return 0;
-            });
-            let tableData = [];
-            for (let row of dataArr) {
-              let runStatus = await this.getTestRunStatus(row.runId);
-              tableData.push({
-                ...row,
-                runStatus: runStatus
-              });
+        this.dataService
+          .getTestRunHistory(this.collectionId, this.pageIndex, this.pageSize)
+          .subscribe(
+            async (response: any) => {
+              console.log(response);
+              await this.populateTableData(response);
+              resolve(true);
+            },
+            (errors) => {
+              Utils.showErrorMessage(errors, this.dialog);
+              resolve(false);
             }
-            this.dataSource = new MatTableDataSource(tableData);
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(errors, this.dialog);
-            resolve(false);
-          }
-        )
+          )
       );
     });
   }
@@ -175,6 +163,46 @@ export class TestRunHistoryComponent implements OnInit {
     this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}`,
     ]);
+  }
+
+  async populateTableData(response: any) {
+    if (response && response['errors'] && response['errors'].length == 0) {
+      if (this.dataSource && this.dataSource.data) {
+        this.dataSource.data = [];
+      }
+      const resp = response['response'];
+      let dataArr = resp['content'];
+      this.totalItems = parseInt(resp['totalElements']);
+      this.pageIndex = parseInt(resp['pageNo']);
+      this.pageSize = parseInt(resp['pageSize']);
+      console.log(`this.totalItems: ${this.totalItems}`);
+      console.log(`this.pageIndex: ${this.pageIndex}`);
+      console.log(`this.pageSize: ${this.pageSize}`);
+      dataArr.sort(function (a: TestRunHistoryModel, b: TestRunHistoryModel) {
+        if (a.lastRunTime < b.lastRunTime) return 1;
+        if (a.lastRunTime > b.lastRunTime) return -1;
+        return 0;
+      });
+      let tableData = [];
+      for (let row of dataArr) {
+        let runStatus = await this.getTestRunStatus(row.runId);
+        tableData.push({
+          ...row,
+          runStatus: runStatus,
+        });
+      }
+      this.dataSource = new MatTableDataSource(tableData);
+    }
+  }
+
+  async showResults(pageEvent: any) {
+    this.dataLoaded = false;
+    if (pageEvent) {
+      this.pageSize = pageEvent.pageSize;
+      this.pageIndex = pageEvent.pageIndex;
+    }
+    await this.getTestRunHistory();
+    this.dataLoaded = true;
   }
 
   viewTestRun(row: any) {
