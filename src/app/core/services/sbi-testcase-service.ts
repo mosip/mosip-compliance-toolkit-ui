@@ -199,7 +199,7 @@ export class SbiTestCaseService {
           {
             type: selectedSbiDevice.digitalIdDecoded.type,
             count: parseInt(testCase.otherAttributes.bioCount),
-            exception: testCase.otherAttributes.exceptions,
+            exception: this.getBioSubType(testCase.otherAttributes.exceptions),
             requestedScore: testCase.otherAttributes.requestedScore,
             deviceId: selectedSbiDevice.deviceId,
             deviceSubId: testCase.otherAttributes.deviceSubId,
