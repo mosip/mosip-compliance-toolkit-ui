@@ -115,8 +115,8 @@ export class DataService {
     return this.httpClient.get(url);
   }
 
-  getTestRunHistory(collectionId: string) {
-    let url = `${this.SERVICES_BASE_URL}getTestRunHistory?collectionId=${collectionId}`;
+  getTestRunHistory(collectionId: string, pageNo: any, pageSize: any) {
+    let url = `${this.SERVICES_BASE_URL}getTestRunHistory?collectionId=${collectionId}&pageNo=${pageNo}&pageSize=${pageSize}`;
     //console.log('url:' + url);
     return this.httpClient.get(url);
   }
