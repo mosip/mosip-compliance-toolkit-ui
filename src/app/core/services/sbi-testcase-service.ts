@@ -374,6 +374,7 @@ export class SbiTestCaseService {
         testName: testCase.testName,
         testDescription: testCase.testDescription,
         responseSchema: testCase.responseSchema,
+        isNegativeTestcase: testCase.isNegativeTestcase ? testCase.isNegativeTestcase : false,
         methodResponse: JSON.stringify(methodResponse),
         methodRequest: JSON.stringify(methodRequest),
         methodName: testCase.methodName,
