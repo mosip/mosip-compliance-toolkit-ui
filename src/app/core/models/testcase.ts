@@ -8,7 +8,7 @@ export class TestCaseModel {
     public testId: string,
     public specVersion: string,
     public testDescription: string,
-    public testOrderSequence: number,
+    public isNegativeTestcase: boolean,
     public methodName: string,
     public requestSchema: string,
     public responseSchema: string,

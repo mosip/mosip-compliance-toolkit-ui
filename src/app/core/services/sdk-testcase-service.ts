@@ -3,7 +3,6 @@ import { AppConfigService } from '../../app-config.service';
 import { TestCaseModel } from '../models/testcase';
 import { DataService } from './data-service';
 import * as appConstants from 'src/app/app.constants';
-import Utils from 'src/app/app.utils';
 
 @Injectable({
   providedIn: 'root',
@@ -47,7 +46,7 @@ export class SdkTestCaseService {
             );
             let finalResponse = {
               methodResponse: JSON.stringify(decodedMethodResp),
-              methodRequest: JSON.stringify(methodRequest),
+              methodRequest: methodRequest,
               validationResponse: validationResponse,
             };
             resolve(finalResponse);
@@ -147,8 +146,9 @@ export class SdkTestCaseService {
         testName: testCase.testName,
         testDescription: testCase.testDescription,
         responseSchema: testCase.responseSchema,
+        isNegativeTestcase: testCase.isNegativeTestcase ? testCase.isNegativeTestcase : false,
         methodResponse: JSON.stringify(methodResponse),
-        methodRequest: JSON.stringify(methodRequest),
+        methodRequest: methodRequest,
         methodName: testCase.methodName,
         validatorDefs: testCase.validatorDefs,
       };
