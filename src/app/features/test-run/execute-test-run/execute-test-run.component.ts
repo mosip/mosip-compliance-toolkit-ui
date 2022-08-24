@@ -32,6 +32,7 @@ export class ExecuteTestRunComponent implements OnInit {
   validationErrMsg: string;
   currectTestCaseId: string;
   currectTestCaseName: string;
+  currentTestDescription: string;
   errorsInGettingTestcases = false;
   serviceErrors = false;
   errorsInSavingTestRun = false;
@@ -242,6 +243,7 @@ export class ExecuteTestRunComponent implements OnInit {
         this.currectTestCaseId = testCase.testId;
         console.log(`this.currectTestCaseId: ${this.currectTestCaseId}`);
         this.currectTestCaseName = testCase.testName;
+        this.currentTestDescription = testCase.testDescription;
         if (!this.initiateCapture) {
           this.checkIfToShowInitiateCaptureBtn(testCase);
         }
@@ -255,6 +257,7 @@ export class ExecuteTestRunComponent implements OnInit {
           await this.updateTestRun();
           this.currectTestCaseId = '';
           this.currectTestCaseName = '';
+          this.currentTestDescription = '';
         }
       }
     }
