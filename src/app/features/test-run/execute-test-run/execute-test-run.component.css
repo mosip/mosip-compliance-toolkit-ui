@@ -11,19 +11,12 @@
   margin-top: 5vw;
   display: flex;
 }
-.main-line {
-  display: flex;
-  justify-content: space-between;
-  width: 90%;
-  align-items: center;
-  padding-bottom: 30px;
-}
 .spacer {
   flex: 1 1 auto;
 }
 mat-dialog-content {
   /* background-color: #ff4081 !important; */
-  min-height: 200px;
+  min-height: 225px;
 }
 .custom-class mat-icon {
   vertical-align: middle;

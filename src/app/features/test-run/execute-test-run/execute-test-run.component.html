@@ -37,13 +37,14 @@
             </span>
             <span *ngIf="!errorsInGettingTestcases">
                 <span *ngIf="!runComplete">
-                    Execution of testcases for collection <b>{{collectionName}}</b> has started..
-                    <h2>Executing testcase: {{currectTestCaseId}} - {{currectTestCaseName}}</h2>
+                    Execution of testcases for collection <b>{{collectionName}}</b> has started.
+                    <p></p>Current testcase: <h2>{{currectTestCaseId}} - {{currectTestCaseName}}</h2>
+                    <i>{{currentTestDescription}}</i>
                     <div *ngIf="!showInitiateCaptureBtn" class="spinner">
                         <mat-spinner diameter="50"></mat-spinner>
                     </div>
                     <div *ngIf="showInitiateCaptureBtn">
-                        <span [ngStyle]="{color: '#fd518c'}">Please click on initiate capture to capture the biometrics
+                        <p></p><span [ngStyle]="{color: '#fd518c'}">Please click on initiate capture to capture the biometrics
                             from the
                             device..</span>
                     </div>
