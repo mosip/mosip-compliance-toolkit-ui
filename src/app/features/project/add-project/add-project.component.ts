@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 import { SbiProjectModel } from 'src/app/core/models/sbi-project';
 import { MatDialog } from '@angular/material/dialog';
 import Utils from 'src/app/app.utils';
+import { SdkProjectModel } from 'src/app/core/models/sdk-project';
 
 @Component({
   selector: 'app-project',
@@ -152,6 +153,24 @@ export class AddProjectComponent implements OnInit {
         this.dataSubmitted = true;
         await this.addSbiProject(request);
       }
+      if (projectType == appConstants.SDK) {
+        const projectData: SdkProjectModel = {
+          name: this.projectForm.controls['name'].value,
+          projectType: this.projectForm.controls['projectType'].value,
+          sdkVersion: this.projectForm.controls['sdkSpecVersion'].value,
+          purpose: this.projectForm.controls['sdkPurpose'].value,
+          url: this.projectForm.controls['sdkUrl'].value
+        };
+        let request = {
+          id: appConstants.SDK_PROJECT_ADD_ID,
+          version: appConstants.VERSION,
+          requesttime: new Date().toISOString(),
+          request: projectData,
+        };
+        this.dataLoaded = false;
+        this.dataSubmitted = true;
+        await this.addSdkProject(request);
+      }
     }
   }
 
@@ -164,6 +183,40 @@ export class AddProjectComponent implements OnInit {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
         this.dataService.addSbiProject(request).subscribe(
+          (response: any) => {
+            console.log(response);
+            if (response.errors && response.errors.length > 0) {
+              this.dataLoaded = true;
+              this.dataSubmitted = false;
+              resolve(true);
+              Utils.showErrorMessage(response.errors, this.dialog);
+            } else {
+              this.dataLoaded = true;
+              const dialogRef = Utils.showSuccessMessage(
+                'Project created successfully',
+                this.dialog
+              );
+              dialogRef.afterClosed().subscribe((res) => {
+                this.showDashboard();
+              });
+              resolve(true);
+            }
+          },
+          (errors) => {
+            this.dataLoaded = true;
+            this.dataSubmitted = false;
+            Utils.showErrorMessage(errors, this.dialog);
+            resolve(false);
+          }
+        )
+      );
+    });
+  }
+
+  async addSdkProject(request: any) {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.addSdkProject(request).subscribe(
           (response: any) => {
             console.log(response);
             if (response.errors && response.errors.length > 0) {

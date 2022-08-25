@@ -28,15 +28,20 @@ export class DataService {
     return this.httpClient.post(url, body);
   }
 
+  addSdkProject(body: any) {
+    let url = `${this.SERVICES_BASE_URL}addSdkProject`;
+    return this.httpClient.post(url, body);
+  }
+
   getSbiProject(projectId: string) {
     let url = `${this.SERVICES_BASE_URL}getSbiProject/${projectId}`;
     return this.httpClient.get(url);
   }
 
   getSdkProject(projectId: string) {
-    // let url = `${this.SERVICES_BASE_URL}getSdkProject/${projectId}`;
-    // return this.httpClient.get(url);
-    return this.httpClient.get('./assets/sdkproject.json');
+    let url = `${this.SERVICES_BASE_URL}getSdkProject/${projectId}`;
+    return this.httpClient.get(url);
+    //return this.httpClient.get('./assets/sdkproject.json');
   }
 
   getCollections(projectId: string, projectType: string) {
@@ -71,6 +76,11 @@ export class DataService {
     deviceSubType: string
   ) {
     let url = `${this.SERVICES_BASE_URL}getSbiTestCases?specVersion=${specVersion}&purpose=${purpose}&deviceType=${deviceType}&deviceSubType=${deviceSubType}`;
+    return this.httpClient.get(url);
+  }
+
+  getSdkTestCases(specVersion: string, sdkPurpose: string) {
+    let url = `${this.SERVICES_BASE_URL}getSdkTestCases?specVersion=${specVersion}&sdkPurpose=${sdkPurpose}`;
     return this.httpClient.get(url);
   }
 

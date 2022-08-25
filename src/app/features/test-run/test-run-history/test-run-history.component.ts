@@ -11,6 +11,7 @@ import { BreadcrumbService } from 'xng-breadcrumb';
 import { MatTableDataSource } from '@angular/material/table';
 import Utils from 'src/app/app.utils';
 import { TestRunHistoryModel } from 'src/app/core/models/testrunhistory';
+import { SdkProjectModel } from 'src/app/core/models/sdk-project';
 
 @Component({
   selector: 'app-test-run-history',
@@ -25,6 +26,7 @@ export class TestRunHistoryComponent implements OnInit {
   subscriptions: Subscription[] = [];
   dataLoaded = false;
   sbiProjectData: SbiProjectModel;
+  sdkProjectData: SdkProjectModel;
   dataSource: MatTableDataSource<TestRunHistoryModel>;
   displayedColumns: string[] = [
     'runId',
@@ -59,6 +61,10 @@ export class TestRunHistoryComponent implements OnInit {
       await this.getSbiProjectDetails();
       this.initBreadCrumb();
     }
+    if (this.projectType == appConstants.SDK) {
+      await this.getSdkProjectDetails();
+      this.initBreadCrumb();
+    }
     await this.getTestRunHistory();
     this.dataLoaded = true;
   }
@@ -69,12 +75,18 @@ export class TestRunHistoryComponent implements OnInit {
         '@projectBreadCrumb',
         `${this.projectType} Project - ${this.sbiProjectData.name}`
       );
-      this.breadcrumbService.set(
-        '@collectionBreadCrumb',
-        `${this.collectionName}`
-      );
-      this.breadcrumbService.set('@testrunBreadCrumb', `Test Run History`);
     }
+    if (this.sdkProjectData) {
+      this.breadcrumbService.set(
+        '@projectBreadCrumb',
+        `${this.projectType} Project - ${this.sdkProjectData.name}`
+      );
+    }
+    this.breadcrumbService.set(
+      '@collectionBreadCrumb',
+      `${this.collectionName}`
+    );
+    this.breadcrumbService.set('@testrunBreadCrumb', `Test Run History`);
   }
 
   initAllParams() {
@@ -140,6 +152,23 @@ export class TestRunHistoryComponent implements OnInit {
     });
   }
 
+  async getSdkProjectDetails() {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.getSdkProject(this.projectId).subscribe(
+          (response: any) => {
+            //console.log(response);
+            this.sdkProjectData = response['response'];
+            resolve(true);
+          },
+          (errors) => {
+            Utils.showErrorMessage(errors, this.dialog);
+            resolve(false);
+          }
+        )
+      );
+    });
+  }
   async getTestRunHistory() {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(

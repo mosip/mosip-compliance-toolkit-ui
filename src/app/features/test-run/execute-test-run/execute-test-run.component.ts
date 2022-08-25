@@ -448,11 +448,11 @@ export class ExecuteTestRunComponent implements OnInit {
         await this.getSdkProjectDetails();
         localStorage.setItem(
           appConstants.SDK_PROJECT_URL,
-          this.sdkProjectData ? this.sdkProjectData.sdkUrl : ''
+          this.sdkProjectData ? this.sdkProjectData.url : ''
         );
         const res = await this.sdkTestCaseService.runTestCase(
           testCase,
-          this.sdkProjectData.sdkUrl
+          this.sdkProjectData.url
         );
         resolve(res);
       } else {

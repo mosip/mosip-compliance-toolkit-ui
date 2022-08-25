@@ -70,6 +70,26 @@
                         </div>
                         <div class="fieldWrapper">
                             <span class="fieldLabel">
+                                <mat-label>Spec Version:
+                                    <span class="required-annotation">*</span>
+                                </mat-label>
+                            </span>
+                            <span class="fieldContainer">
+                                <mat-form-field appearance="legacy" [style.width.px]=327>
+                                    <mat-label>Spec Version:</mat-label>
+                                    <mat-select formControlName="sdkSpecVersion" #singleSelect>
+                                        <mat-option value="0.9.0">
+                                            0.9.0
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="projectForm.controls['sdkSpecVersion'].hasError('required')">
+                                        Spec Version is required
+                                    </mat-error>
+                                </mat-form-field>
+                            </span>
+                        </div>
+                        <div class="fieldWrapper">
+                            <span class="fieldLabel">
                                 <mat-label>Purpose:
                                 </mat-label>
                             </span>
@@ -77,19 +97,19 @@
                                 <mat-form-field appearance="legacy" [style.width.px]=327>
                                     <mat-label>Purpose:</mat-label>
                                     <mat-select formControlName="sdkPurpose" #singleSelect>
-                                        <mat-option value="matcher">
+                                        <mat-option value="Matcher">
                                             Matcher
                                         </mat-option>
-                                        <mat-option value="quality-check">
-                                            Quality Check
+                                        <mat-option value="Check Quality">
+                                            Check Quality
                                         </mat-option>
-                                        <mat-option value="extract-template">
+                                        <mat-option value="Extract Template">
                                             Extract Template
                                         </mat-option>
-                                        <mat-option value="convert-format">
+                                        <mat-option value="Convert Format">
                                             Convert Format
                                         </mat-option>
-                                        <mat-option value="segment">
+                                        <mat-option value="Segment">
                                             Segment
                                         </mat-option>
                                     </mat-select>

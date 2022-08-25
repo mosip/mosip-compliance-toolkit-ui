@@ -149,10 +149,13 @@ export class ViewProjectComponent implements OnInit {
       this.projectForm.controls['name'].setValue(this.projectFormData.name);
       this.projectForm.controls['projectType'].setValue(appConstants.SDK);
       this.projectForm.controls['sdkUrl'].setValue(
-        this.projectFormData.sdkUrl
+        this.projectFormData.url
+      );
+      this.projectForm.controls['sdkSpecVersion'].setValue(
+        this.projectFormData.sdkVersion
       );
       this.projectForm.controls['sdkPurpose'].setValue(
-        this.projectFormData.sdkPurpose
+        this.projectFormData.purpose
       );
       this.projectForm.controls['bioTestData'].setValue(
         this.projectFormData.bioTestData
