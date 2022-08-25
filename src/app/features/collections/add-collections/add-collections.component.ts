@@ -12,6 +12,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { TestCaseModel } from 'src/app/core/models/testcase';
 import { SelectionModel } from '@angular/cdk/collections';
 import Utils from 'src/app/app.utils';
+import { SdkProjectModel } from 'src/app/core/models/sdk-project';
 
 @Component({
   selector: 'app-add-collections',
@@ -25,6 +26,7 @@ export class AddCollectionsComponent implements OnInit {
   subscriptions: Subscription[] = [];
   dataLoaded = false;
   sbiProjectData: SbiProjectModel;
+  sdkProjectData: SdkProjectModel;
   dataSource: MatTableDataSource<TestCaseModel>;
   selection = new SelectionModel<TestCaseModel>(true, []);
   displayedColumns: string[] = [
@@ -53,6 +55,11 @@ export class AddCollectionsComponent implements OnInit {
       await this.getSbiTestcases();
       this.initBreadCrumb();
     }
+    if (this.projectType == appConstants.SDK) {
+      await this.getSdkProjectDetails();
+      await this.getSdkTestcases();
+      this.initBreadCrumb();
+    }
     this.dataLoaded = true;
   }
 
@@ -62,8 +69,14 @@ export class AddCollectionsComponent implements OnInit {
         '@projectBreadCrumb',
         `${this.projectType} Project - ${this.sbiProjectData.name}`
       );
-      this.breadcrumbService.set('@collectionBreadCrumb', `Add`);
     }
+    if (this.sdkProjectData) {
+      this.breadcrumbService.set(
+        '@projectBreadCrumb',
+        `${this.projectType} Project - ${this.sdkProjectData.name}`
+      );
+    }
+    this.breadcrumbService.set('@collectionBreadCrumb', `Add`);
   }
 
   initForm() {
@@ -101,6 +114,24 @@ export class AddCollectionsComponent implements OnInit {
     });
   }
 
+  async getSdkProjectDetails() {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.getSdkProject(this.projectId).subscribe(
+          (response: any) => {
+            //console.log(response);
+            this.sdkProjectData = response['response'];
+            resolve(true);
+          },
+          (errors) => {
+            Utils.showErrorMessage(errors, this.dialog);
+            resolve(false);
+          }
+        )
+      );
+    });
+  }
+
   async getSbiTestcases() {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
@@ -125,6 +156,36 @@ export class AddCollectionsComponent implements OnInit {
               resolve(true);
             },
             (errors) => {
+              Utils.showErrorMessage(errors, this.dialog);
+              resolve(false);
+            }
+          )
+      );
+    });
+  }
+
+  async getSdkTestcases() {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService
+          .getSdkTestCases(
+            this.sdkProjectData.sdkVersion,
+            this.sdkProjectData.purpose
+          )
+          .subscribe(
+            (response: any) => {
+              //console.log(response);
+              let testcases = response['response'];
+              //sort the testcases based on the testId
+              testcases.sort(function (a: TestCaseModel, b: TestCaseModel) {
+                if (a.testId > b.testId) return 1;
+                if (a.testId < b.testId) return -1;
+                return 0;
+              });
+              this.dataSource = new MatTableDataSource(testcases);
+              resolve(true);
+            },
+            (errors: any) => {
               Utils.showErrorMessage(errors, this.dialog);
               resolve(false);
             }

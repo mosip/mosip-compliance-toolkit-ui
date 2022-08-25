@@ -12,6 +12,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { TestCaseModel } from 'src/app/core/models/testcase';
 import Utils from 'src/app/app.utils';
+import { SdkProjectModel } from 'src/app/core/models/sdk-project';
 
 @Component({
   selector: 'app-viewcollections',
@@ -27,6 +28,7 @@ export class ViewCollectionsComponent implements OnInit {
   subscriptions: Subscription[] = [];
   dataLoaded = false;
   sbiProjectData: SbiProjectModel;
+  sdkProjectData: SdkProjectModel;
   dataSource: MatTableDataSource<TestCaseModel>;
   displayedColumns: string[] = [
     'testId',
@@ -55,6 +57,10 @@ export class ViewCollectionsComponent implements OnInit {
       await this.getSbiProjectDetails();
       this.initBreadCrumb();
     }
+    if (this.projectType == appConstants.SDK) {
+      await this.getSdkProjectDetails();
+      this.initBreadCrumb();
+    }
     await this.getTestcasesForCollection();
     this.dataSource.sort = this.sort;
     this.dataLoaded = true;
@@ -65,6 +71,16 @@ export class ViewCollectionsComponent implements OnInit {
       this.breadcrumbService.set(
         '@projectBreadCrumb',
         `${this.projectType} Project - ${this.sbiProjectData.name}`
+      );
+      this.breadcrumbService.set(
+        '@collectionBreadCrumb',
+        `${this.collectionName}`
+      );
+    }
+    if (this.sdkProjectData) {
+      this.breadcrumbService.set(
+        '@projectBreadCrumb',
+        `${this.projectType} Project - ${this.sdkProjectData.name}`
       );
       this.breadcrumbService.set(
         '@collectionBreadCrumb',
@@ -120,6 +136,23 @@ export class ViewCollectionsComponent implements OnInit {
             console.log(response);
             this.sbiProjectData = response['response'];
             console.log(this.sbiProjectData);
+            resolve(true);
+          },
+          (errors) => {
+            Utils.showErrorMessage(errors, this.dialog);
+            resolve(false);
+          }
+        )
+      );
+    });
+  }
+  async getSdkProjectDetails() {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.getSdkProject(this.projectId).subscribe(
+          (response: any) => {
+            //console.log(response);
+            this.sdkProjectData = response['response'];
             resolve(true);
           },
           (errors) => {

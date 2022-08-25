@@ -19,6 +19,7 @@ import {
   animate,
 } from '@angular/animations';
 import * as moment from 'moment';
+import { SdkProjectModel } from 'src/app/core/models/sdk-project';
 
 @Component({
   selector: 'app-test-run',
@@ -45,6 +46,7 @@ export class TestRunComponent implements OnInit {
   subscriptions: Subscription[] = [];
   dataLoaded = false;
   sbiProjectData: SbiProjectModel;
+  sdkProjectData: SdkProjectModel;
   dataSource: MatTableDataSource<TestRunModel>;
   displayedColumns: string[] = [
     'testId',
@@ -71,6 +73,9 @@ export class TestRunComponent implements OnInit {
     await this.getCollection();
     if (this.projectType == appConstants.SBI) {
       await this.getSbiProjectDetails();
+    }
+    if (this.projectType == appConstants.SDK) {
+      await this.getSdkProjectDetails();
     }
     await this.getTestRun();
     this.initBreadCrumb();
@@ -130,15 +135,21 @@ export class TestRunComponent implements OnInit {
         '@projectBreadCrumb',
         `${this.projectType} Project - ${this.sbiProjectData.name}`
       );
+    }
+    if (this.sdkProjectData) {
       this.breadcrumbService.set(
-        '@collectionBreadCrumb',
-        `${this.collectionName}`
-      );
-      this.breadcrumbService.set(
-        '@testrunBreadCrumb',
-        `Test Run - (${new Date(this.runDetails.runDtimes).toLocaleString()})`
+        '@projectBreadCrumb',
+        `${this.projectType} Project - ${this.sdkProjectData.name}`
       );
     }
+    this.breadcrumbService.set(
+      '@collectionBreadCrumb',
+      `${this.collectionName}`
+    );
+    this.breadcrumbService.set(
+      '@testrunBreadCrumb',
+      `Test Run - (${new Date(this.runDetails.runDtimes).toLocaleString()})`
+    );
   }
 
   async getCollection() {
@@ -182,6 +193,24 @@ export class TestRunComponent implements OnInit {
             console.log(response);
             this.sbiProjectData = response['response'];
             console.log(this.sbiProjectData);
+            resolve(true);
+          },
+          (errors) => {
+            Utils.showErrorMessage(errors, this.dialog);
+            resolve(false);
+          }
+        )
+      );
+    });
+  }
+
+  async getSdkProjectDetails() {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.getSdkProject(this.projectId).subscribe(
+          (response: any) => {
+            //console.log(response);
+            this.sdkProjectData = response['response'];
             resolve(true);
           },
           (errors) => {
