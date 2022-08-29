@@ -5,7 +5,6 @@ export class TestRunModel {
     public testName: string,
     public testId: string,
     public testDescription: string,
-    public testOrderSequence: number,
     public methodName: string,
     public methodRequest: string,
     public methodResponse: string,

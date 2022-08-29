@@ -20,6 +20,7 @@ import {
 } from '@angular/animations';
 import * as moment from 'moment';
 import { SdkProjectModel } from 'src/app/core/models/sdk-project';
+import { TestCaseModel } from 'src/app/core/models/testcase';
 
 @Component({
   selector: 'app-test-run',
@@ -47,12 +48,9 @@ export class TestRunComponent implements OnInit {
   dataLoaded = false;
   sbiProjectData: SbiProjectModel;
   sdkProjectData: SdkProjectModel;
+  testcasesList: any;
   dataSource: MatTableDataSource<TestRunModel>;
-  displayedColumns: string[] = [
-    'testId',
-    'testName',
-    'resultStatus',
-  ];
+  displayedColumns: string[] = ['testId', 'testName', 'resultStatus'];
   columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
   expandedElement: TestRunModel | null;
   dataSubmitted = false;
@@ -77,6 +75,7 @@ export class TestRunComponent implements OnInit {
     if (this.projectType == appConstants.SDK) {
       await this.getSdkProjectDetails();
     }
+    await this.getTestcasesForCollection();
     await this.getTestRun();
     this.initBreadCrumb();
     this.dataLoaded = true;
@@ -91,41 +90,6 @@ export class TestRunComponent implements OnInit {
         this.runId = param['runId'];
       });
       resolve(true);
-    });
-  }
-
-  async getTestRun() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getTestRunDetails(this.runId).subscribe(
-          async (response: any) => {
-            this.runDetails = response['response'];
-            let list: any[] = response['response']['testRunDetailsList'];
-            let tableData = [];
-            for (const testRun of list) {
-              const testId: string = testRun.testcaseId;
-              const testCase: any = await this.getTestCase(testId);
-              tableData.push({
-                ...testRun,
-                testId: testId,
-                testName: testCase['testName']
-              });
-            }
-            //sort the testcases based on the testId
-            tableData.sort(function (a: TestRunModel, b: TestRunModel) {
-              if (a.testId > b.testId) return 1;
-              if (a.testId < b.testId) return -1;
-              return 0;
-            });
-            this.dataSource = new MatTableDataSource(tableData);
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
     });
   }
 
@@ -152,6 +116,56 @@ export class TestRunComponent implements OnInit {
     );
   }
 
+  async getTestRun() {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.getTestRunDetails(this.runId).subscribe(
+          async (response: any) => {
+            this.runDetails = response['response'];
+            let list: any[] = response['response']['testRunDetailsList'];
+            let tableData = [];
+            this.testcasesList;
+            for (const testCase of this.testcasesList) {
+              let testRunData = null;
+              for (const testRun of list) {
+                if (testRun.testcaseId == testCase.testId) {
+                  testRunData = testRun;
+                }
+              }
+              tableData.push({
+                testCaseType: testCase.testCaseType,
+                testName: testCase.testName,
+                testId: testCase.testId,
+                testDescription: testCase.testDescription,
+                methodName: testRunData
+                  ? testRunData.methodName
+                  : testCase.methodName,
+                methodRequest: testRunData
+                  ? testRunData.methodRequest
+                  : 'No data available',
+                methodResponse: testRunData
+                  ? testRunData.methodResponse
+                  : 'No data available',
+                resultStatus: testRunData
+                  ? testRunData.resultStatus
+                  : 'failure',
+                resultDescription: testRunData
+                  ? testRunData.resultDescription
+                  : '',
+              });
+            }
+            this.dataSource = new MatTableDataSource(tableData);
+            resolve(true);
+          },
+          (errors) => {
+            Utils.showErrorMessage(errors, this.dialog);
+            resolve(false);
+          }
+        )
+      );
+    });
+  }
+
   async getCollection() {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
@@ -169,12 +183,21 @@ export class TestRunComponent implements OnInit {
     });
   }
 
-  async getTestCase(testcaseId: string) {
+  async getTestcasesForCollection() {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
-        this.dataService.getTestCase(testcaseId).subscribe(
+        this.dataService.getTestcasesForCollection(this.collectionId).subscribe(
           (response: any) => {
-            resolve(response['response']);
+            //console.log(response);
+            let testcases = response['response']['testcases'];
+            //sort the testcases based on the testId
+            testcases.sort(function (a: TestCaseModel, b: TestCaseModel) {
+              if (a.testId > b.testId) return 1;
+              if (a.testId < b.testId) return -1;
+              return 0;
+            });
+            this.testcasesList = testcases;
+            resolve(true);
           },
           (errors) => {
             Utils.showErrorMessage(errors, this.dialog);
@@ -223,10 +246,28 @@ export class TestRunComponent implements OnInit {
   }
 
   getValidationsList(row: any): any[] {
-    let jsonData = JSON.parse(row.resultDescription);
-    let list = jsonData['validationsList'];
-    return list;
+    if (row.resultDescription != '') {
+      let jsonData = JSON.parse(row.resultDescription);
+      let list = jsonData['validationsList'];
+      return list;
+    } else {
+      let data = [];
+      for (const testcase of this.testcasesList) {
+        if (testcase.testId == row.testId) {
+          for (const validator of testcase.validatorDefs) {
+            data.push({
+              validatorName: validator.name,
+              validatorDescription: validator.description,
+              status: 'failure',
+              description: 'No data available',
+            });
+          }
+        }
+      }
+      return data;
+    }
   }
+
   backToProject() {
     this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}`,
