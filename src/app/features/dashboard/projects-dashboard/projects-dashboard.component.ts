@@ -1,6 +1,6 @@
 import { OnInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, MatSortable } from '@angular/material/sort';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from 'src/app/core/services/data-service';
 import { Subscription } from 'rxjs';
@@ -52,6 +52,7 @@ export class ProjectsDashboardComponent implements OnInit {
   async ngOnInit() {
     await this.getProjects();
     this.dataSource.paginator = this.paginator;
+    this.sort.sort(({ id: 'lastRunDt', start: 'desc'}) as MatSortable);
     this.dataSource.sort = this.sort;
 
     this.dataLoaded = true;
