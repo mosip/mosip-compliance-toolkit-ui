@@ -101,8 +101,7 @@
                                             <span *ngIf="item.status== 'success'"
                                                 [ngStyle]="{color: 'green'}">{{item.description}}</span>
                                             <span *ngIf="item.status== 'failure'"
-                                                [ngStyle]="{color: 'red'}">
-                                                <div ng-bind-html="item.description"></div></span>
+                                                [ngStyle]="{color: 'red'}">{{item.description}}</span>
                                         </div>
                                     </div>
                                 </div>
