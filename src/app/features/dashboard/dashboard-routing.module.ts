@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { BiometricDashboardComponent } from './biometric-dashboard/biometric-dashboard.component';
 import { ProjectsDashboardComponent } from './projects-dashboard/projects-dashboard.component';
 
 const routes: Routes = [
@@ -7,6 +8,11 @@ const routes: Routes = [
     path: '',
     component: ProjectsDashboardComponent,
     data: { breadcrumb: 'Projects Dashboard' },
+  },
+  {
+    path: 'biometric',
+    component: BiometricDashboardComponent,
+    data: { breadcrumb: 'Biomteric Data Dashboard' },
   },
 ];
 

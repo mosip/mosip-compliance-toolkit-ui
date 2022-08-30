@@ -34,18 +34,14 @@ export class SdkTestCaseService {
             methodRequest
           );
           if (methodResponse) {
-            const decodedMethodResp = this.createDecodedResponse(
-              testCase,
-              methodResponse
-            );
             //now validate the method response against all the validators
             let validationResponse = await this.validateResponse(
               testCase,
               methodRequest,
-              decodedMethodResp
+              methodResponse
             );
             let finalResponse = {
-              methodResponse: JSON.stringify(decodedMethodResp),
+              methodResponse: JSON.stringify(methodResponse),
               methodRequest: methodRequest,
               validationResponse: validationResponse,
             };
@@ -108,8 +104,6 @@ export class SdkTestCaseService {
 
   generateRequestForSDK(testCase: TestCaseModel): any {
     return new Promise((resolve, reject) => {
-      console.log('generateRequestForSDK called');
-      console.log(testCase);
       this.dataService
         .generateRequestForSDK(
           testCase.methodName,
@@ -130,17 +124,12 @@ export class SdkTestCaseService {
     });
   }
 
-  createDecodedResponse(testCase: TestCaseModel, methodResponse: any): any {
-    return methodResponse;
-  }
-
   async validateResponse(
     testCase: TestCaseModel,
     methodRequest: any,
     methodResponse: any
   ) {
     return new Promise((resolve, reject) => {
-      //console.log('validateResponse called');
       let validateRequest = {
         testCaseType: testCase.testCaseType,
         testName: testCase.testName,
@@ -152,7 +141,6 @@ export class SdkTestCaseService {
         methodName: testCase.methodName,
         validatorDefs: testCase.validatorDefs,
       };
-      //console.log(validateRequest);
       let request = {
         id: appConstants.VALIDATIONS_ADD_ID,
         version: appConstants.VERSION,

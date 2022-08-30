@@ -10,31 +10,29 @@ import { MatDialog } from '@angular/material/dialog';
 import * as appConstants from 'src/app/app.constants';
 import Utils from 'src/app/app.utils';
 
-export interface ProjectData {
+export interface BiometricsData {
   id: string;
   name: string;
-  projectType: string;
-  collectionsCount: number;
+  type: string;
+  purpose: string;
+  partnerId: string;
+  fileId: string;
   crDate: Date;
-  lastRunDt: Date;
-  lastRunStatus: string;
-  lastRunId: string;
 }
 
 @Component({
-  selector: 'app-projects-dashboard',
-  templateUrl: './projects-dashboard.component.html',
-  styleUrls: ['./projects-dashboard.component.css'],
+  selector: 'app-biometric-dashboard',
+  templateUrl: './biometric-dashboard.component.html',
+  styleUrls: ['./biometric-dashboard.component.css'],
 })
-export class ProjectsDashboardComponent implements OnInit {
-  dataSource: MatTableDataSource<ProjectData>;
+export class BiometricDashboardComponent implements OnInit {
+  dataSource: MatTableDataSource<BiometricsData>;
   displayedColumns: string[] = [
     'name',
-    'projectType',
-    'collectionsCount',
+    'type',
+    'purpose',
+    'fileId',
     'crDate',
-    'lastRunDt',
-    'lastRunStatus',
     'actions',
   ];
   dataLoaded = false;
@@ -50,37 +48,22 @@ export class ProjectsDashboardComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    await this.getProjects();
+    await this.getBiometricTestData();
     this.dataSource.paginator = this.paginator;
-    this.sort.sort(({ id: 'lastRunDt', start: 'desc'}) as MatSortable);
+    this.sort.sort({ id: 'crDate', start: 'desc' } as MatSortable);
     this.dataSource.sort = this.sort;
 
     this.dataLoaded = true;
   }
 
-  async getProjects() {
+  async getBiometricTestData() {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
-        this.dataService.getProjects().subscribe(
+        this.dataService.getBiometricTestData().subscribe(
           async (response: any) => {
             console.log(response);
-            let dataArr = response['response']['projects'];
-            let tableData = [];
-            for (let row of dataArr) {
-              if (row.lastRunId) {
-                let runStatus = await this.getTestRunStatus(row.lastRunId);
-                tableData.push({
-                  ...row,
-                  lastRunStatus: runStatus,
-                });
-              } else {
-                tableData.push({
-                  ...row,
-                  lastRunStatus: '',
-                });
-              }
-            }
-            this.dataSource = new MatTableDataSource(tableData);
+            let dataArr = response['response'];
+            this.dataSource = new MatTableDataSource(dataArr);
             resolve(true);
           },
           (errors) => {
@@ -91,24 +74,7 @@ export class ProjectsDashboardComponent implements OnInit {
       );
     });
   }
-
-  async getTestRunStatus(runId: string) {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getTestRunStatus(runId).subscribe(
-          (response: any) => {
-            resolve(response['response']['resultStatus']);
-          },
-          (errors) => {
-            Utils.showErrorMessage(errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-  ngAfterViewInit() {}
-
+  
   addProject() {
     this.router.navigate([`toolkit/project/add`]);
   }
@@ -118,13 +84,13 @@ export class ProjectsDashboardComponent implements OnInit {
       `toolkit/project/${project.projectType}/${project.id}`,
     ]);
   }
-  
-  showBiometricDashboard() {
-    this.router.navigate([`toolkit/dashboard/biometric`]);
-  }
 
   deleteProject(project: any) {
     alert('not available');
+  }
+
+  showProjectsDashboard() {
+    this.router.navigate([`toolkit/dashboard`]);
   }
 
   applyFilter(event: Event) {

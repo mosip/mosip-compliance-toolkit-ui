@@ -172,4 +172,9 @@ export class DataService {
     ////console.log('url:' + url);
     return this.httpClient.get(url);
   }
+
+  getBiometricTestData() {
+    let url = `${this.SERVICES_BASE_URL}getBiometricTestData`;
+    return this.httpClient.get(url);
+  }
 }
