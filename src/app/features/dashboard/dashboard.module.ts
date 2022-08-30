@@ -6,11 +6,13 @@ import { ProjectsDashboardComponent } from './projects-dashboard/projects-dashbo
 import { BreadcrumbModule, BreadcrumbService  } from 'xng-breadcrumb';
 import { MaterialModule } from '../../core/material.module';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { BiometricDashboardComponent } from './biometric-dashboard/biometric-dashboard.component';
 
 
 @NgModule({
   declarations: [
-    ProjectsDashboardComponent
+    ProjectsDashboardComponent,
+    BiometricDashboardComponent
   ],
   imports: [
     CommonModule,
