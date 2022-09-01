@@ -23,6 +23,7 @@ export class AddProjectComponent implements OnInit {
   projectForm = new FormGroup({});
   allControls: string[];
   subscriptions: Subscription[] = [];
+  bioTestDataFileNames: string[] = [];
   hidePassword = true;
   dataLoaded = true;
   dataSubmitted = false;
@@ -34,8 +35,9 @@ export class AddProjectComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.initForm();
+    await this.getBioTestDataFileNames();
   }
 
   initForm() {
@@ -50,6 +52,26 @@ export class AddProjectComponent implements OnInit {
     });
     appConstants.COMMON_CONTROLS.forEach((controlId) => {
       this.projectForm.controls[controlId].setValidators(Validators.required);
+    });
+  }
+
+  async getBioTestDataFileNames() {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService
+          .getBioTestDataFileNames()
+          .subscribe(
+            (response: any) => {
+              //console.log(response);
+              this.bioTestDataFileNames = response[appConstants.RESPONSE];
+              resolve(true);
+            },
+            (errors) => {
+              Utils.showErrorMessage(errors, this.dialog);
+              resolve(false);
+            }
+          )
+      );
     });
   }
 

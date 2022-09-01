@@ -174,4 +174,9 @@ export class DataService {
     let url = `${this.SERVICES_BASE_URL}getBiometricTestData`;
     return this.httpClient.get(url);
   }
+
+  getBioTestDataFileNames() {
+    let url = `${this.SERVICES_BASE_URL}getBioTestDataFileNames`;
+    return this.httpClient.get(url);
+  }
 }

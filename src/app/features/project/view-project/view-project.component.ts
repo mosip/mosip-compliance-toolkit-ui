@@ -55,6 +55,8 @@ export class ViewProjectComponent implements OnInit {
   updatingProjectUrl = false;
   updatingProjectTestData = false;
   panelOpenState = false;
+  bioTestDataFileNames: string[] = [];
+
   constructor(
     public authService: AuthService,
     private dataService: DataService,
@@ -73,6 +75,7 @@ export class ViewProjectComponent implements OnInit {
     }
     if (this.projectType == appConstants.SDK) {
       this.initSdkProjectForm();
+      await this.getBioTestDataFileNames();
       await this.getSdkProjectDetails();
       this.populateSdkProjectForm();
     }
@@ -132,40 +135,22 @@ export class ViewProjectComponent implements OnInit {
     });
   }
 
-  populateSbiProjectForm() {
-    if (this.projectFormData) {
-      this.projectForm.controls['name'].setValue(this.projectFormData.name);
-      this.projectForm.controls['projectType'].setValue(appConstants.SBI);
-      this.projectForm.controls['sbiSpecVersion'].setValue(
-        this.projectFormData.sbiVersion
+  async getBioTestDataFileNames() {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.getBioTestDataFileNames().subscribe(
+          (response: any) => {
+            //console.log(response);
+            this.bioTestDataFileNames = response[appConstants.RESPONSE];
+            resolve(true);
+          },
+          (errors) => {
+            Utils.showErrorMessage(errors, this.dialog);
+            resolve(false);
+          }
+        )
       );
-      this.projectForm.controls['sbiPurpose'].setValue(
-        this.projectFormData.purpose
-      );
-      this.projectForm.controls['deviceType'].setValue(
-        this.projectFormData.deviceType
-      );
-      this.projectForm.controls['deviceSubType'].setValue(
-        this.projectFormData.deviceSubType
-      );
-    }
-  }
-
-  populateSdkProjectForm() {
-    if (this.projectFormData) {
-      this.projectForm.controls['name'].setValue(this.projectFormData.name);
-      this.projectForm.controls['projectType'].setValue(appConstants.SDK);
-      this.projectForm.controls['sdkUrl'].setValue(this.projectFormData.url);
-      this.projectForm.controls['sdkSpecVersion'].setValue(
-        this.projectFormData.sdkVersion
-      );
-      this.projectForm.controls['sdkPurpose'].setValue(
-        this.projectFormData.purpose
-      );
-      this.projectForm.controls['bioTestData'].setValue(
-        this.projectFormData.bioTestDataFileName
-      );
-    }
+    });
   }
 
   async getSbiProjectDetails() {
@@ -202,6 +187,42 @@ export class ViewProjectComponent implements OnInit {
         )
       );
     });
+  }
+
+  populateSbiProjectForm() {
+    if (this.projectFormData) {
+      this.projectForm.controls['name'].setValue(this.projectFormData.name);
+      this.projectForm.controls['projectType'].setValue(appConstants.SBI);
+      this.projectForm.controls['sbiSpecVersion'].setValue(
+        this.projectFormData.sbiVersion
+      );
+      this.projectForm.controls['sbiPurpose'].setValue(
+        this.projectFormData.purpose
+      );
+      this.projectForm.controls['deviceType'].setValue(
+        this.projectFormData.deviceType
+      );
+      this.projectForm.controls['deviceSubType'].setValue(
+        this.projectFormData.deviceSubType
+      );
+    }
+  }
+
+  populateSdkProjectForm() {
+    if (this.projectFormData) {
+      this.projectForm.controls['name'].setValue(this.projectFormData.name);
+      this.projectForm.controls['projectType'].setValue(appConstants.SDK);
+      this.projectForm.controls['sdkUrl'].setValue(this.projectFormData.url);
+      this.projectForm.controls['sdkSpecVersion'].setValue(
+        this.projectFormData.sdkVersion
+      );
+      this.projectForm.controls['sdkPurpose'].setValue(
+        this.projectFormData.purpose
+      );
+      this.projectForm.controls['bioTestData'].setValue(
+        this.projectFormData.bioTestDataFileName
+      );
+    }
   }
 
   async getCollections() {

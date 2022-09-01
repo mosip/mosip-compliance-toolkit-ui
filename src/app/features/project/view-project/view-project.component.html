@@ -134,6 +134,11 @@
                                         <mat-option value="MOSIP_DEFAULT">
                                             MOSIP_DEFAULT
                                         </mat-option>
+                                        <span *ngFor="let item of bioTestDataFileNames">
+                                            <mat-option value="item">
+                                                item
+                                            </mat-option>
+                                        </span>
                                     </mat-select>
                                     <mat-error *ngIf="projectForm.controls['bioTestData'].hasError('required')">
                                         Test Data is required
