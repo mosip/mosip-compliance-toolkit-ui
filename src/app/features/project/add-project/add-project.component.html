@@ -1,5 +1,5 @@
 <p>
-    <xng-breadcrumb  *ngIf="dataLoaded"></xng-breadcrumb>
+    <xng-breadcrumb *ngIf="dataLoaded"></xng-breadcrumb>
 </p>
 <div class="spinner" *ngIf="!dataLoaded">
     <mat-spinner diameter="50"></mat-spinner>
@@ -129,6 +129,11 @@
                                 <mat-option value="MOSIP_DEFAULT">
                                     MOSIP_DEFAULT
                                 </mat-option>
+                                <span *ngFor="let item of bioTestDataFileNames">
+                                    <mat-option value="item">
+                                        item
+                                    </mat-option>
+                                </span>
                             </mat-select>
                             <mat-error *ngIf="projectForm.controls['bioTestData'].hasError('required')">
                                 Test Data is required
@@ -170,7 +175,8 @@
                     <span class="fieldContainer">
                         <mat-form-field appearance="legacy" [style.width.px]=327>
                             <mat-label>Purpose:</mat-label>
-                            <mat-select formControlName="sbiPurpose" #singleSelect (selectionChange)="handleSbiPurposeChange()">
+                            <mat-select formControlName="sbiPurpose" #singleSelect
+                                (selectionChange)="handleSbiPurposeChange()">
                                 <mat-option value="Registration">
                                     Registration
                                 </mat-option>
