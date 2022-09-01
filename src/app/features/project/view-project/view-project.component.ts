@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ScanDeviceComponent } from '../../test-run/scan-device/scan-device.component';
 import { ExecuteTestRunComponent } from '../../test-run/execute-test-run/execute-test-run.component';
 import Utils from 'src/app/app.utils';
+import { SdkProjectModel } from 'src/app/core/models/sdk-project';
 
 export interface CollectionsData {
   collectionId: string;
@@ -51,6 +52,8 @@ export class ViewProjectComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   dataLoaded = false;
+  updatingProjectUrl = false;
+  updatingProjectTestData = false;
   panelOpenState = false;
   constructor(
     public authService: AuthService,
@@ -120,7 +123,11 @@ export class ViewProjectComponent implements OnInit {
     this.allControls.forEach((controlId) => {
       this.projectForm.addControl(
         controlId,
-        new FormControl({ value: '', disabled: true })
+        new FormControl({
+          value: '',
+          disabled:
+            controlId == 'sdkUrl' || controlId == 'bioTestData' ? false : true,
+        })
       );
     });
   }
@@ -148,9 +155,7 @@ export class ViewProjectComponent implements OnInit {
     if (this.projectFormData) {
       this.projectForm.controls['name'].setValue(this.projectFormData.name);
       this.projectForm.controls['projectType'].setValue(appConstants.SDK);
-      this.projectForm.controls['sdkUrl'].setValue(
-        this.projectFormData.url
-      );
+      this.projectForm.controls['sdkUrl'].setValue(this.projectFormData.url);
       this.projectForm.controls['sdkSpecVersion'].setValue(
         this.projectFormData.sdkVersion
       );
@@ -158,7 +163,7 @@ export class ViewProjectComponent implements OnInit {
         this.projectFormData.purpose
       );
       this.projectForm.controls['bioTestData'].setValue(
-        this.projectFormData.bioTestData
+        this.projectFormData.bioTestDataFileName
       );
     }
   }
@@ -276,8 +281,6 @@ export class ViewProjectComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((result: any) => {
-        //console.log('closed');
-        //console.log(result);
         if (result == 'reloadProjectDetails') {
           window.location.reload();
         }
@@ -294,5 +297,99 @@ export class ViewProjectComponent implements OnInit {
     this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}/collection/${row.collectionId}/testrunhistory`,
     ]);
+  }
+
+  async updateProjectUrl() {
+    await this.updateProject('sdkUrl');
+  }
+
+  async updateProjectTestData() {
+    await this.updateProject('bioTestData');
+  }
+
+  async updateProject(attributeName: string) {
+    this.projectForm.controls['projectType'].markAsTouched();
+    const projectType = this.projectForm.controls['projectType'].value;
+    console.log(`updateProject for type: ${projectType}`);
+    if (projectType == appConstants.SDK) {
+      appConstants.SDK_CONTROLS.forEach((controlId) => {
+        this.projectForm.controls[controlId].markAsTouched();
+      });
+    }
+    if (projectType == appConstants.ABIS) {
+      appConstants.ABIS_CONTROLS.forEach((controlId) => {
+        this.projectForm.controls[controlId].markAsTouched();
+      });
+    }
+    if (this.projectForm.valid) {
+      //Save the project in db
+      console.log('valid');
+      if (projectType == appConstants.SDK) {
+        const projectData: SdkProjectModel = {
+          id: this.projectFormData.id,
+          name: this.projectForm.controls['name'].value,
+          projectType: this.projectForm.controls['projectType'].value,
+          sdkVersion: this.projectForm.controls['sdkSpecVersion'].value,
+          purpose: this.projectForm.controls['sdkPurpose'].value,
+          url: this.projectForm.controls['sdkUrl'].value,
+          bioTestDataFileName: this.projectForm.controls['bioTestData'].value,
+        };
+        let request = {
+          id: appConstants.SDK_PROJECT_UPDATE_ID,
+          version: appConstants.VERSION,
+          requesttime: new Date().toISOString(),
+          request: projectData,
+        };
+        if (attributeName == 'sdkUrl') {
+          this.updatingProjectUrl = true;
+        }
+        if (attributeName == 'bioTestData') {
+          this.updatingProjectTestData = true;
+        }
+        await this.updateSdkProject(request, attributeName);
+      }
+    }
+  }
+
+  async updateSdkProject(request: any, attributeName: string) {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.updateSdkProject(request).subscribe(
+          (response: any) => {
+            console.log(response);
+            if (response.errors && response.errors.length > 0) {
+              if (attributeName == 'sdkUrl') {
+                this.updatingProjectUrl = false;
+              }
+              if (attributeName == 'bioTestData') {
+                this.updatingProjectTestData = false;
+              }
+              this.updatingProjectUrl = false;
+              resolve(true);
+              Utils.showErrorMessage(response.errors, this.dialog);
+            } else {
+              if (attributeName == 'sdkUrl') {
+                this.updatingProjectUrl = false;
+              }
+              if (attributeName == 'bioTestData') {
+                this.updatingProjectTestData = false;
+              }
+              this.panelOpenState = true;
+              resolve(true);
+            }
+          },
+          (errors) => {
+            if (attributeName == 'sdkUrl') {
+              this.updatingProjectUrl = false;
+            }
+            if (attributeName == 'bioTestData') {
+              this.updatingProjectTestData = false;
+            }
+            Utils.showErrorMessage(errors, this.dialog);
+            resolve(false);
+          }
+        )
+      );
+    });
   }
 }

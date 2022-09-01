@@ -87,6 +87,9 @@ export class SdkTestCaseService {
 
   async executeMethod(methodName: string, sdkUrl: string, methodRequest: any) {
     return new Promise((resolve, reject) => {
+      if (sdkUrl.lastIndexOf('/') !== (sdkUrl.length - 1)) {
+        sdkUrl += '/';
+      }
       const url = sdkUrl + methodName;
       this.dataService.callSDKMethod(url, methodRequest).subscribe(
         (response) => {

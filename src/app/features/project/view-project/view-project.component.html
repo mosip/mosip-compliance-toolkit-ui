@@ -14,7 +14,7 @@
 <div class="mat-elevation-z8">
     <form [formGroup]="projectForm" *ngIf="dataLoaded">
         <mat-accordion>
-            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [expanded]="panelOpenState">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         Project Name: {{projectForm.controls['name'].value}}
@@ -58,7 +58,7 @@
                             <span class="fieldContainer">
                                 <mat-form-field appearance="legacy" [style.width.px]=327>
                                     <mat-label>URL:</mat-label>
-                                    <input matInput formControlName="sdkUrl" #keyboardRef #input />
+                                    <input matInput formControlName="sdkUrl" #keyboardRef #input (change)="updateProjectUrl()" />
                                     <mat-error *ngIf="projectForm.controls['sdkUrl'].hasError('required')">
                                         URL is required
                                     </mat-error>
@@ -67,6 +67,9 @@
                                     </mat-error>
                                 </mat-form-field>
                             </span>
+                            <div class="spinnerForUpdatingProject" *ngIf="updatingProjectUrl">
+                                <mat-spinner diameter="25"></mat-spinner>
+                            </div>
                         </div>
                         <div class="fieldWrapper">
                             <span class="fieldLabel">
@@ -127,9 +130,9 @@
                             <span class="fieldContainer">
                                 <mat-form-field appearance="legacy" [style.width.px]=327>
                                     <mat-label>Select Test Data:</mat-label>
-                                    <mat-select formControlName="bioTestData" #singleSelect>
-                                        <mat-option value="DEFAULT">
-                                            MOSIP-DEFAULT
+                                    <mat-select formControlName="bioTestData" #singleSelect (selectionChange)="updateProjectTestData()">
+                                        <mat-option value="MOSIP_DEFAULT">
+                                            MOSIP_DEFAULT
                                         </mat-option>
                                     </mat-select>
                                     <mat-error *ngIf="projectForm.controls['bioTestData'].hasError('required')">
@@ -137,6 +140,9 @@
                                     </mat-error>
                                 </mat-form-field>
                             </span>
+                            <div class="spinnerForUpdatingProject" *ngIf="updatingProjectTestData">
+                                <mat-spinner diameter="25"></mat-spinner>
+                            </div>
                         </div>
                     </span>
                     <span *ngIf="projectForm.controls['projectType']?.value == 'SBI'">
