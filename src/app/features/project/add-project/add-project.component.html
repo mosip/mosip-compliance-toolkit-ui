@@ -130,7 +130,7 @@
                                     MOSIP_DEFAULT
                                 </mat-option>
                                 <span *ngFor="let item of bioTestDataFileNames">
-                                    <mat-option value="item">
+                                    <mat-option [value]="item">
                                         {{item}}
                                     </mat-option>
                                 </span>
