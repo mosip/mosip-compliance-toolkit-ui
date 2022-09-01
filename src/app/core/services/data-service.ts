@@ -44,6 +44,11 @@ export class DataService {
     //return this.httpClient.get('./assets/sdkproject.json');
   }
 
+  updateSdkProject(body: any) {
+    let url = `${this.SERVICES_BASE_URL}updateSdkProject`;
+    return this.httpClient.put(url, body);
+  }
+
   getCollections(projectId: string, projectType: string) {
     let url = `${this.SERVICES_BASE_URL}getCollections?projectId=${projectId}&type=${projectType}`;
     return this.httpClient.get(url);
@@ -91,49 +96,43 @@ export class DataService {
 
   validateResponse(body: any) {
     let url = `${this.SERVICES_BASE_URL}validateResponse`;
-    ////console.log('url:' + url);
     return this.httpClient.post(url, body);
   }
 
   addTestRun(body: any) {
     let url = `${this.SERVICES_BASE_URL}addTestRun`;
-    ////console.log('url:' + url);
     return this.httpClient.post(url, body);
   }
 
   updateTestRun(body: any) {
     let url = `${this.SERVICES_BASE_URL}updateTestRun`;
-    ////console.log('url:' + url);
     return this.httpClient.put(url, body);
   }
 
   addTestRunDetails(body: any) {
     let url = `${this.SERVICES_BASE_URL}addTestRunDetails`;
-    ////console.log('url:' + url);
     return this.httpClient.post(url, body);
   }
 
   getTestRunDetails(runId: string) {
     let url = `${this.SERVICES_BASE_URL}getTestRunDetails/${runId}`;
-    //console.log('url:' + url);
+
     return this.httpClient.get(url);
   }
 
   getTestCase(testId: string) {
     let url = `${this.SERVICES_BASE_URL}getTestCase/${testId}`;
-    //console.log('url:' + url);
+
     return this.httpClient.get(url);
   }
 
   getTestRunHistory(collectionId: string, pageNo: any, pageSize: any) {
     let url = `${this.SERVICES_BASE_URL}getTestRunHistory?collectionId=${collectionId}&pageNo=${pageNo}&pageSize=${pageSize}`;
-    //console.log('url:' + url);
     return this.httpClient.get(url);
   }
 
   getTestRunStatus(runId: string) {
     let url = `${this.SERVICES_BASE_URL}getTestRunStatus/${runId}`;
-    //console.log('url:' + url);
     return this.httpClient.get(url);
   }
 
@@ -155,7 +154,6 @@ export class DataService {
   }
 
   callSDKMethod(url: string, body: any) {
-    ////console.log('url:' + url);
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
       accept: 'application/json',
@@ -169,7 +167,6 @@ export class DataService {
     modalities: string
   ) {
     let url = `${this.SERVICES_BASE_URL}generateRequestForSDK?methodName=${methodName}&testcaseId=${testcaseId}&modalities=${modalities}`;
-    ////console.log('url:' + url);
     return this.httpClient.get(url);
   }
 

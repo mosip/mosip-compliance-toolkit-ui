@@ -55,7 +55,6 @@ export class AddProjectComponent implements OnInit {
 
   handleProjectTypeChange() {
     const projectType = this.projectForm.controls['projectType'].value;
-    console.log(`selected project type: ${projectType}`);
     if (projectType == appConstants.SDK) {
       appConstants.SDK_CONTROLS.forEach((controlId) => {
         this.projectForm.controls[controlId].setValidators(Validators.required);
@@ -155,11 +154,13 @@ export class AddProjectComponent implements OnInit {
       }
       if (projectType == appConstants.SDK) {
         const projectData: SdkProjectModel = {
+          id: '',
           name: this.projectForm.controls['name'].value,
           projectType: this.projectForm.controls['projectType'].value,
           sdkVersion: this.projectForm.controls['sdkSpecVersion'].value,
           purpose: this.projectForm.controls['sdkPurpose'].value,
-          url: this.projectForm.controls['sdkUrl'].value
+          url: this.projectForm.controls['sdkUrl'].value,
+          bioTestDataFileName: this.projectForm.controls['bioTestData'].value,
         };
         let request = {
           id: appConstants.SDK_PROJECT_ADD_ID,

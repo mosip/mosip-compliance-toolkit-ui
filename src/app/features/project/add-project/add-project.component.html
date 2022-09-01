@@ -126,8 +126,8 @@
                         <mat-form-field appearance="legacy" [style.width.px]=327>
                             <mat-label>Select Test Data:</mat-label>
                             <mat-select formControlName="bioTestData" #singleSelect>
-                                <mat-option value="DEFAULT">
-                                    MOSIP-DEFAULT
+                                <mat-option value="MOSIP_DEFAULT">
+                                    MOSIP_DEFAULT
                                 </mat-option>
                             </mat-select>
                             <mat-error *ngIf="projectForm.controls['bioTestData'].hasError('required')">
