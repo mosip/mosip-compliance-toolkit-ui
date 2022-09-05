@@ -38,6 +38,7 @@ export const SBI_CONTROLS = [
   'deviceSubType',
 ];
 export const ABIS_CONTROLS = ['abisUrl', 'username', 'password', 'queueName'];
+export const TEST_DATA_CONTROLS= ['name', 'type', 'purpose', 'testDataFileName'];
 
 //SBI methods related constants
 export const BIOMETRIC_DEVICE = 'Biometric Device';

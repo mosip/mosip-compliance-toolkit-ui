@@ -75,13 +75,13 @@ export class BiometricDashboardComponent implements OnInit {
     });
   }
   
-  addProject() {
-    this.router.navigate([`toolkit/project/add`]);
+  addTestData() {
+    this.router.navigate([`toolkit/biometrics/add`]);
   }
 
-  viewProject(project: any) {
+  viewTestData(row: any) {
     this.router.navigate([
-      `toolkit/project/${project.projectType}/${project.id}`,
+      `toolkit/biometrics/${row.id}`,
     ]);
   }
 

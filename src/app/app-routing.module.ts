@@ -26,6 +26,14 @@ const routes: Routes = [
             (m) => m.ProjectModule
           ),
       },
+      {
+        path: 'biometrics',
+        data: { breadcrumb: { label: 'Biometrics', skip: true } },
+        loadChildren: () =>
+          import('./features/test-data/test-data.module').then(
+            (m) => m.TestDataModule
+          ),
+      },
     ],
     canActivateChild: [AuthguardService],
   },
