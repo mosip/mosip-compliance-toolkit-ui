@@ -7,7 +7,7 @@
     </button>
 </div>
 <div class="dashboard-button-second-container" *ngIf="dataLoaded">
-    <button mat-flat-button color="accent" (click)="addProject()" class="dashboard-button">
+    <button mat-flat-button color="accent" (click)="addTestData()" class="dashboard-button">
         <mat-icon>add</mat-icon>
         Add Biometric Data
     </button>
@@ -17,7 +17,7 @@
 </div>
 <mat-menu #appMenu="matMenu">
     <ng-template matMenuContent let-myobject="myobject">
-        <button mat-menu-item (click)="viewProject(myobject)">View</button>
+        <button mat-menu-item (click)="viewTestData(myobject)">View</button>
         <!-- <button mat-menu-item (click)="deleteProject(myobject)">Delete</button> -->
     </ng-template>
 </mat-menu>
@@ -32,7 +32,7 @@
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
             <td mat-cell *matCellDef="let element">
-                <a class="link" (click)="viewProject(element)">{{element.name}}</a>
+                <a class="link" (click)="viewTestData(element)">{{element.name}}</a>
             </td>
         </ng-container>
         <ng-container matColumnDef="type">

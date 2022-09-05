@@ -1,0 +1,106 @@
+<p>
+    <xng-breadcrumb *ngIf="dataLoaded"></xng-breadcrumb>
+</p>
+<div class="spinner" *ngIf="!dataLoaded">
+    <mat-spinner diameter="50"></mat-spinner>
+</div>
+<div class="mat-elevation-z8" *ngIf="dataLoaded">
+    <div class="formContainer">
+        <form [formGroup]="projectForm">
+            <div class="fieldWrapper">
+                <span class="fieldLabel">
+                    <mat-label>Name:
+                        <span class="required-annotation">*</span>
+                    </mat-label>
+                </span>
+                <span class="fieldContainer">
+                    <mat-form-field appearance="legacy" [style.width.px]=327>
+                        <mat-label>Name:</mat-label>
+                        <input matInput formControlName="name" #keyboardRef #input />
+                        <mat-error *ngIf="projectForm.controls['name'].hasError('required')">
+                            Name is required
+                        </mat-error>
+                    </mat-form-field>
+                </span>
+            </div>
+            <div class="fieldWrapper">
+                <span class="fieldLabel">
+                    <mat-label>Project Type:
+                        <span class="required-annotation">*</span>
+                    </mat-label>
+                </span>
+                <span class="fieldContainer">
+                    <div [style.width.px]=327>
+                        <mat-radio-group aria-label="Select an option" formControlName="type" appearance="legacy">
+                            <mat-radio-button value="SDK">SDK</mat-radio-button>
+                            <mat-radio-button value="ABIS" disabled="true">ABIS</mat-radio-button>
+                        </mat-radio-group>
+                        <mat-error *ngIf="projectForm.touched && projectForm.controls['type'].hasError('required')">
+                            Project Type is required
+                        </mat-error>
+                    </div>
+                </span>
+            </div>
+            <div class="fieldWrapper">
+                <span class="fieldLabel">
+                    <mat-label>Purpose:
+                        <span class="required-annotation">*</span>
+                    </mat-label>
+                </span>
+                <span class="fieldContainer">
+                    <mat-form-field appearance="legacy" [style.width.px]=327>
+                        <mat-label>Purpose:</mat-label>
+                        <mat-select formControlName="purpose" #singleSelect>
+                            <mat-option value="Matcher">
+                                Matcher
+                            </mat-option>
+                            <mat-option value="Check Quality">
+                                Check Quality
+                            </mat-option>
+                            <mat-option value="Extract Template">
+                                Extract Template
+                            </mat-option>
+                            <mat-option value="Convert Format">
+                                Convert Format
+                            </mat-option>
+                            <mat-option value="Segment">
+                                Segment
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="projectForm.controls['purpose'].hasError('required')">
+                            Purpose is required
+                        </mat-error>
+                    </mat-form-field>
+                </span>
+            </div>
+            <div class="fieldWrapper">
+                <span class="fieldLabel">
+                    <mat-label>Select Test Data:
+                        <span class="required-annotation">*</span>
+                    </mat-label>
+                </span>
+                <span class="file-upload__button">
+                    <input #fileUpload type="file" id="testdatafile" (click)="fileUpload.value = ''" value=""
+                        (change)="handleFileInput($event)" style="display: none;" />
+                    <input class="browseInput" value="Browse" type="button" (click)="clickOnButton()" />
+                </span>
+            </div>
+            <div class="fieldWrapper">
+                <span class="fieldLabel"></span>
+                <mat-error *ngIf="projectForm.controls['testDataFileName'].hasError('required')">
+                    Test Data is required
+                </mat-error>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="button-container">
+    <button mat-flat-button color="accent" (click)="showDashboard()" class="add-button">
+        <mat-icon>home</mat-icon>
+        Projects Dashboard
+    </button>
+    <button mat-flat-button color="accent" [disabled]="dataSubmitted" (click)="saveProject()" class="add-button">
+        <mat-icon>save</mat-icon>
+        Save
+    </button>
+</div>
