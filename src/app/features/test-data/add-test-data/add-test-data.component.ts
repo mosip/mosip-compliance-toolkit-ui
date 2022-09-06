@@ -150,13 +150,13 @@ export class AddTestDataComponent implements OnInit {
             link.href = window.URL.createObjectURL(blob);
             link.download = 'Sample_Test_Data.zip';
             link.click();
-          } else {
-            Utils.showErrorMessage(
-              null,
-              this.dialog,
-              'Unable to download sample test data ZIP file. Try Again!'
-            );
-          }
+          } 
+        } else {
+          Utils.showErrorMessage(
+            null,
+            this.dialog,
+            'Unable to download sample test data ZIP file. Try Again!'
+          );
         }
       },
       (errors) => {

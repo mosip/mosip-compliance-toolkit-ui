@@ -85,19 +85,17 @@ export class BiometricDashboardComponent implements OnInit {
       (res: any) => {
         if (res) {
           const fileByteArray = res;
-          if (fileByteArray) {
-            var blob = new Blob([fileByteArray], { type: 'application/zip' });
-            var link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.download = row.fileId;
-            link.click();
-          } else {
-            Utils.showErrorMessage(
-              null,
-              this.dialog,
-              'Unable to download ZIP file. Try Again!'
-            );
-          }
+          var blob = new Blob([fileByteArray], { type: 'application/zip' });
+          var link = document.createElement('a');
+          link.href = window.URL.createObjectURL(blob);
+          link.download = row.fileId;
+          link.click();
+        } else {
+          Utils.showErrorMessage(
+            null,
+            this.dialog,
+            'Unable to download ZIP file. Try Again!'
+          );
         }
       },
       (errors) => {
