@@ -17,6 +17,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   imports: [
@@ -37,6 +38,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatDialogModule,
     MatExpansionModule,
     MatCheckboxModule,
+    MatTooltipModule,
   ],
   exports: [
     MatSliderModule,
@@ -56,6 +58,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatDialogModule,
     MatExpansionModule,
     MatCheckboxModule,
+    MatTooltipModule,
   ],
 })
 export class MaterialModule {}

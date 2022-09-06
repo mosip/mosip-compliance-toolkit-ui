@@ -170,8 +170,8 @@ export class DataService {
     return this.httpClient.get(url);
   }
 
-  getBiometricTestData() {
-    let url = `${this.SERVICES_BASE_URL}getBiometricTestData`;
+  getListOfBiometricTestData() {
+    let url = `${this.SERVICES_BASE_URL}getListOfBiometricTestData`;
     return this.httpClient.get(url);
   }
 
@@ -180,13 +180,18 @@ export class DataService {
     return this.httpClient.get(url);
   }
 
-  getDefaultBioTestData() {
-    let url = `${this.SERVICES_BASE_URL}getDefaultBioTestData`;
-    return this.httpClient.get(url);
+  getSampleBioTestDataFile() {
+    let url = `${this.SERVICES_BASE_URL}getSampleBioTestDataFile`;
+    return this.httpClient.get(url, { responseType: 'blob' });
   }
 
   addBiometricTestData(formdata: FormData) {
     let url = `${this.SERVICES_BASE_URL}addBiometricTestData`;
     return this.httpClient.post(url, formdata);
+  }
+
+  getBiometricTestDataFile(fileId: string) {
+    let url = `${this.SERVICES_BASE_URL}getBiometricTestDataFile/${fileId}`;
+    return this.httpClient.get(url, { responseType: 'blob' });
   }
 }

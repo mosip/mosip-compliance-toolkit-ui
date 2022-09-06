@@ -58,10 +58,15 @@
     font-size: smaller;
     width: 100%;
   }
-  .file-upload__button {
+  .file-upload-button {
     display: inline-flex;
     justify-content: flex-start;
-    
+    margin-right: 30px;
+  }
+  
+  .file-download-button {
+    display: inline-flex;
+    justify-content: flex-end;
   }
   .browseInput {
     background: none;
@@ -70,4 +75,8 @@
     border-radius: 2px;
     padding: 0.4rem 1.5rem;
   }
+  
+.custom-class mat-icon {
+  vertical-align: middle;
+}
     

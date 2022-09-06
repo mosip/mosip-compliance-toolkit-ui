@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-} from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/authservice.service';
 import { Router } from '@angular/router';
 import { DataService } from '../../../core/services/data-service';
@@ -27,7 +23,6 @@ export class AddProjectComponent implements OnInit {
   hidePassword = true;
   dataLoaded = true;
   dataSubmitted = false;
-
   constructor(
     public authService: AuthService,
     private dataService: DataService,
@@ -58,19 +53,17 @@ export class AddProjectComponent implements OnInit {
   async getBioTestDataFileNames() {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
-        this.dataService
-          .getBioTestDataFileNames()
-          .subscribe(
-            (response: any) => {
-              //console.log(response);
-              this.bioTestDataFileNames = response[appConstants.RESPONSE];
-              resolve(true);
-            },
-            (errors) => {
-              Utils.showErrorMessage(errors, this.dialog);
-              resolve(false);
-            }
-          )
+        this.dataService.getBioTestDataFileNames().subscribe(
+          (response: any) => {
+            //console.log(response);
+            this.bioTestDataFileNames = response[appConstants.RESPONSE];
+            resolve(true);
+          },
+          (errors) => {
+            Utils.showErrorMessage(errors, this.dialog);
+            resolve(false);
+          }
+        )
       );
     });
   }
