@@ -184,4 +184,9 @@ export class DataService {
     let url = `${this.SERVICES_BASE_URL}getDefaultBioTestData`;
     return this.httpClient.get(url);
   }
+
+  addBiometricTestData(formdata: FormData) {
+    let url = `${this.SERVICES_BASE_URL}addBiometricTestData`;
+    return this.httpClient.post(url, formdata);
+  }
 }
