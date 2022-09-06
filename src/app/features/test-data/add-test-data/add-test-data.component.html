@@ -75,14 +75,23 @@
             </div>
             <div class="fieldWrapper">
                 <span class="fieldLabel">
-                    <mat-label>Select Test Data:
-                        <span class="required-annotation">*</span>
-                    </mat-label>
+                    <div class="custom-class">
+                        <mat-label>Select Test Data:
+                            <span class="required-annotation">*</span>
+                            <mat-icon color="accent" [matTooltip]="tooltip">info</mat-icon>
+                        </mat-label>
+                    </div>
                 </span>
-                <span class="file-upload__button">
-                    <input #fileUpload type="file" id="testdatafile" (click)="fileUpload.value = ''" value=""
-                        (change)="handleFileInput($event)" style="display: none;" />
-                    <input class="browseInput" value="Browse" type="button" (click)="clickOnButton()" />
+                <span class="fieldContainer">
+                    <span class="file-upload-button">
+                        <input #fileUpload type="file" id="testdatafile" (click)="fileUpload.value = ''" value=""
+                            (change)="handleFileInput($event)" style="display: none;" />
+                        <input class="browseInput" value="Browse" type="button" (click)="clickOnButton()" />
+                    </span>
+                    <span class="file-download-button">
+                        <input class="browseInput" value="Download Sample File" type="button"
+                            (click)="getSampleBioTestDataFile()" />
+                    </span>
                 </span>
             </div>
         </form>

@@ -32,6 +32,8 @@ export class AddTestDataComponent implements OnInit {
   allowedFileNameLegth =
     this.appConfigService.getConfig()['allowedFileNameLegth'];
   allowedFileSize = this.appConfigService.getConfig()['allowedFileSize'];
+  tooltip: string =
+  "Using the upload testdata option you can upload your test data for testing. If you don't want to upload test data, then MOSIP_DEFAULT test data will be used. ";
 
   constructor(
     public authService: AuthService,
@@ -137,22 +139,31 @@ export class AddTestDataComponent implements OnInit {
     });
   }
 
-  async getSampleTestDataFile() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getDefaultBioTestData().subscribe(
-          (response: any) => {
-            //console.log(response);
-            //this.bioTestDataFileNames = response[appConstants.RESPONSE];
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
+  getSampleBioTestDataFile() {
+    const subs = this.dataService.getSampleBioTestDataFile().subscribe(
+      (res: any) => {
+        if (res) {
+          const fileByteArray = res;
+          if (fileByteArray) {
+            var blob = new Blob([fileByteArray], { type: 'application/zip' });
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = 'Sample_Test_Data.zip';
+            link.click();
+          } 
+        } else {
+          Utils.showErrorMessage(
+            null,
+            this.dialog,
+            'Unable to download sample test data ZIP file. Try Again!'
+          );
+        }
+      },
+      (errors) => {
+        Utils.showErrorMessage(errors, this.dialog);
+      }
+    );
+    this.subscriptions.push(subs);
   }
 
   async saveTestData(event: any) {

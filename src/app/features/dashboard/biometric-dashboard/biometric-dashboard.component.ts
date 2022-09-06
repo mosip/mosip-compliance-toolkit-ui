@@ -48,7 +48,7 @@ export class BiometricDashboardComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    await this.getBiometricTestData();
+    await this.getListOfBiometricTestData();
     this.dataSource.paginator = this.paginator;
     this.sort.sort({ id: 'crDate', start: 'desc' } as MatSortable);
     this.dataSource.sort = this.sort;
@@ -56,10 +56,10 @@ export class BiometricDashboardComponent implements OnInit {
     this.dataLoaded = true;
   }
 
-  async getBiometricTestData() {
+  async getListOfBiometricTestData() {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
-        this.dataService.getBiometricTestData().subscribe(
+        this.dataService.getListOfBiometricTestData().subscribe(
           async (response: any) => {
             console.log(response);
             let dataArr = response['response'];
@@ -74,19 +74,35 @@ export class BiometricDashboardComponent implements OnInit {
       );
     });
   }
-  
+
   addTestData() {
     this.router.navigate([`toolkit/biometrics/add`]);
   }
 
-  viewTestData(row: any) {
-    this.router.navigate([
-      `toolkit/biometrics/${row.id}`,
-    ]);
-  }
-
-  deleteProject(project: any) {
-    alert('not available');
+  downloadTestDataFile(row: any) {
+    const fileId = row.id;
+    const subs = this.dataService.getBiometricTestDataFile(fileId).subscribe(
+      (res: any) => {
+        if (res) {
+          const fileByteArray = res;
+          var blob = new Blob([fileByteArray], { type: 'application/zip' });
+          var link = document.createElement('a');
+          link.href = window.URL.createObjectURL(blob);
+          link.download = row.fileId;
+          link.click();
+        } else {
+          Utils.showErrorMessage(
+            null,
+            this.dialog,
+            'Unable to download ZIP file. Try Again!'
+          );
+        }
+      },
+      (errors) => {
+        Utils.showErrorMessage(errors, this.dialog);
+      }
+    );
+    this.subscriptions.push(subs);
   }
 
   showProjectsDashboard() {
