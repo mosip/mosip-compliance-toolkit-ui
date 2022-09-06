@@ -10,6 +10,7 @@ export const COLLECTION_TESTCASES_ADD_ID = 'mosip.toolkit.collection.testcase.ad
 export const TEST_RUN_ADD_ID = 'mosip.toolkit.testrun.add';
 export const TEST_RUN_UPDATE_ID = 'mosip.toolkit.testrun.update';
 export const TEST_RUN_DETAILS_ADD_ID = 'mosip.toolkit.testrun.details.add';
+export const BIOMETRICS_TEST_DATA_ADD_ID = 'mosip.toolkit.biometric.testdata.add';
 
 export const VERSION = '1.0';
 
@@ -38,7 +39,7 @@ export const SBI_CONTROLS = [
   'deviceSubType',
 ];
 export const ABIS_CONTROLS = ['abisUrl', 'username', 'password', 'queueName'];
-export const TEST_DATA_CONTROLS= ['name', 'type', 'purpose', 'testDataFileName'];
+export const TEST_DATA_CONTROLS= ['name', 'type', 'purpose'];
 
 //SBI methods related constants
 export const BIOMETRIC_DEVICE = 'Biometric Device';

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/authservice.service';
 import { Router } from '@angular/router';
@@ -15,22 +15,23 @@ import { AppConfigService } from 'src/app/app-config.service';
   styleUrls: ['./add-test-data.component.css'],
 })
 export class AddTestDataComponent implements OnInit {
-  projectForm = new FormGroup({});
+  testDataForm = new FormGroup({});
   @ViewChild('fileUpload')
+  fileInputVariable: ElementRef;
   allControls: string[];
   subscriptions: Subscription[] = [];
   hidePassword = true;
   dataLoaded = true;
-  dataSubmitted = false;
+  allowedFilesExtensions: string = '';
+  fileExtension: string = 'zip';
+  fileName: string = '';
+  fileByteArray: any;
   allowedFileTypes = this.appConfigService
     .getConfig()
     ['allowedFileTypes'].split(',');
-  allowedFileNameLegth = this.appConfigService
-    .getConfig()
-    ['allowedFileNameLegth'].split(',');
-  allowedFileSize = this.appConfigService
-    .getConfig()
-    ['allowedFileSize'].split(',');
+  allowedFileNameLegth =
+    this.appConfigService.getConfig()['allowedFileNameLegth'];
+  allowedFileSize = this.appConfigService.getConfig()['allowedFileSize'];
 
   constructor(
     public authService: AuthService,
@@ -40,15 +41,99 @@ export class AddTestDataComponent implements OnInit {
     private router: Router
   ) {}
 
-  async ngOnInit() {
+  ngOnInit() {
     this.initForm();
+    this.getAllowedFileTypes(this.allowedFileTypes);
   }
 
   initForm() {
     this.allControls = [...appConstants.TEST_DATA_CONTROLS];
     this.allControls.forEach((controlId) => {
-      this.projectForm.addControl(controlId, new FormControl(''));
-      this.projectForm.controls[controlId].setValidators(Validators.required);
+      this.testDataForm.addControl(controlId, new FormControl(''));
+      this.testDataForm.controls[controlId].setValidators(Validators.required);
+    });
+  }
+
+  getAllowedFileTypes(allowedFiles: string[]) {
+    let i = 0;
+    for (let file of allowedFiles) {
+      if (i == 0) {
+        this.allowedFilesExtensions =
+          this.allowedFilesExtensions + file.substring(file.indexOf('/') + 1);
+      } else {
+        this.allowedFilesExtensions =
+          this.allowedFilesExtensions +
+          ',' +
+          file.substring(file.indexOf('/') + 1);
+      }
+      i++;
+    }
+  }
+
+  clickOnButton() {
+    this.allControls.forEach((controlId) => {
+      this.testDataForm.controls[controlId].markAsTouched();
+    });
+    if (this.testDataForm.valid) {
+      const el = document.getElementById('testdatafile');
+      if (el) {
+        el.click();
+      }
+    }
+  }
+
+  handleFileInput(event: any) {
+    this.allControls.forEach((controlId) => {
+      this.testDataForm.controls[controlId].markAsTouched();
+    });
+    if (this.testDataForm.valid) {
+      const extensionRegex = new RegExp(
+        '(?:' + this.allowedFilesExtensions.replace(/,/g, '|') + ')'
+      );
+      const oldFileExtension = this.fileExtension;
+      this.fileExtension = event.target.files[0].name.substring(
+        event.target.files[0].name.indexOf('.') + 1
+      );
+      this.fileExtension = this.fileExtension.toLowerCase();
+      if (!extensionRegex.test(this.fileExtension)) {
+        this.fileExtension = oldFileExtension;
+        Utils.showErrorMessage(
+          null,
+          this.dialog,
+          'File extension is not allowed other than: ' +
+            this.allowedFilesExtensions
+        );
+      } else {
+        if (event.target.files[0].name.length > this.allowedFileNameLegth) {
+          Utils.showErrorMessage(
+            null,
+            this.dialog,
+            'File name is not allowed more than: ' + this.allowedFileNameLegth + " characters"
+          );
+        } else {
+          if (event.target.files[0].size > this.allowedFileSize) {
+            let size = this.allowedFileSize / 1000000;
+            Utils.showErrorMessage(
+              null,
+              this.dialog,
+              'File size is not allowed more than: ' + size + ' MB'
+            );
+          } else {
+            this.getBase64(event.target.files[0]).then((data) => {
+              this.saveTestData(event);
+            });
+          }
+        }
+      }
+    }
+  }
+
+  getBase64(file: Blob) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
     });
   }
 
@@ -70,81 +155,54 @@ export class AddTestDataComponent implements OnInit {
     });
   }
 
-  async saveProject() {
+  async saveTestData(event: any) {
     this.allControls.forEach((controlId) => {
-      this.projectForm.controls[controlId].markAsTouched();
+      this.testDataForm.controls[controlId].markAsTouched();
     });
-    if (this.projectForm.valid) {
-      //Save the project in db
-      console.log('valid');
-      // if (projectType == appConstants.SBI) {
-      //   const projectData: SbiProjectModel = {
-      //     name: this.projectForm.controls['name'].value,
-      //     projectType: this.projectForm.controls['projectType'].value,
-      //     sbiVersion: this.projectForm.controls['sbiSpecVersion'].value,
-      //     purpose: this.projectForm.controls['sbiPurpose'].value,
-      //     deviceType: this.projectForm.controls['deviceType'].value,
-      //     deviceSubType: this.projectForm.controls['deviceSubType'].value,
-      //   };
-      //   let request = {
-      //     id: appConstants.SBI_PROJECT_ADD_ID,
-      //     version: appConstants.VERSION,
-      //     requesttime: new Date().toISOString(),
-      //     request: projectData,
-      //   };
-      //   this.dataLoaded = false;
-      //   this.dataSubmitted = true;
-      //   await this.addSbiProject(request);
-      // }
-      // if (projectType == appConstants.SDK) {
-      //   const projectData: SdkProjectModel = {
-      //     id: '',
-      //     name: this.projectForm.controls['name'].value,
-      //     projectType: this.projectForm.controls['projectType'].value,
-      //     sdkVersion: this.projectForm.controls['sdkSpecVersion'].value,
-      //     purpose: this.projectForm.controls['sdkPurpose'].value,
-      //     url: this.projectForm.controls['sdkUrl'].value,
-      //     bioTestDataFileName: this.projectForm.controls['bioTestData'].value,
-      //   };
-      //   let request = {
-      //     id: appConstants.SDK_PROJECT_ADD_ID,
-      //     version: appConstants.VERSION,
-      //     requesttime: new Date().toISOString(),
-      //     request: projectData,
-      //   };
-      //   this.dataLoaded = false;
-      //   this.dataSubmitted = true;
-      //   await this.addSdkProject(request);
-      // }
+    if (this.testDataForm.valid) {
+      const testData = {
+        name: this.testDataForm.controls['name'].value,
+        type: this.testDataForm.controls['type'].value,
+        purpose: this.testDataForm.controls['purpose'].value,
+      };
+      let request = {
+        id: appConstants.BIOMETRICS_TEST_DATA_ADD_ID,
+        version: appConstants.VERSION,
+        requesttime: new Date().toISOString(),
+        request: testData,
+      };
+      let formData = new FormData();
+      formData.append('biometricMetaData', JSON.stringify(request));
+      formData.append('file', event.target.files.item(0));
+      this.dataLoaded = false;
+      await this.addBiometricTestData(formData);
     }
   }
 
-  async addSbiProject(request: any) {
+  async addBiometricTestData(formData: FormData) {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
-        this.dataService.addSbiProject(request).subscribe(
+        this.dataService.addBiometricTestData(formData).subscribe(
           (response: any) => {
             console.log(response);
             if (response.errors && response.errors.length > 0) {
+              Utils.showErrorMessage(response.errors, this.dialog, "", false);
               this.dataLoaded = true;
-              this.dataSubmitted = false;
               resolve(true);
-              Utils.showErrorMessage(response.errors, this.dialog);
             } else {
               this.dataLoaded = true;
               const dialogRef = Utils.showSuccessMessage(
-                'Project created successfully',
+                'Test data added successfully',
                 this.dialog
               );
               dialogRef.afterClosed().subscribe((res) => {
-                this.showDashboard();
+                this.showBiometricDashboard();
               });
               resolve(true);
             }
           },
           (errors) => {
             this.dataLoaded = true;
-            this.dataSubmitted = false;
             Utils.showErrorMessage(errors, this.dialog);
             resolve(false);
           }
@@ -153,71 +211,8 @@ export class AddTestDataComponent implements OnInit {
     });
   }
 
-  clickOnButton() {
-    const el = document.getElementById('testdatafile');
-    if (el) {
-      el.click();
-    }
-  }
-
-  handleFileInput(event: any) {
-    const extensionRegex = new RegExp(
-      "(?:" + this.allowedFileTypes.replace(/,/g, "|") + ")"
-    );
-    // const oldFileExtension = this.fileExtension;
-    // this.fileExtension = event.target.files[0].name.substring(
-    //   event.target.files[0].name.indexOf(".") + 1
-    // );
-    // this.fileExtension = this.fileExtension.toLowerCase();
-    // let allowedFileUploaded: Boolean = false;
-    // this.disableNavigation = true;
-    // // if (event.target.files[0].type === file) {
-    // if (extensionRegex.test(this.fileExtension)) {
-    //   allowedFileUploaded = true;
-    //   if (
-    //     event.target.files[0].name.length <
-    //     this.config.getConfigByKey(
-    //       appConstants.CONFIG_KEYS
-    //         .preregistration_document_alllowe_file_name_lenght
-    //     )
-    //   ) {
-    //     if (
-    //       event.target.files[0].size <
-    //       this.config.getConfigByKey(
-    //         appConstants.CONFIG_KEYS.preregistration_document_alllowe_file_size
-    //       )
-    //     ) {
-    //       this.getBase64(event.target.files[0]).then((data) => {
-    //         this.fileByteArray = data;
-    //       });
-    //       if (!this.documentType && !this.documentCategory) {
-    //         this.setJsonString(docName, docCode, refNumber);
-    //       }
-    //       this.sendFile(event);
-    //     } else {
-    //       this.displayMessage(
-    //         this.errorlabels.errorLabel,
-    //         this.messagelabels.uploadDocuments.msg1
-    //       );
-    //       this.disableNavigation = false;
-    //     }
-    //   } else {
-    //     this.displayMessage(
-    //       this.errorlabels.errorLabel,
-    //       this.messagelabels.uploadDocuments.msg5
-    //     );
-    //     this.disableNavigation = false;
-    //   }
-    //   this.fileExtension = oldFileExtension;
-    // }
-    // if (!allowedFileUploaded) {
-    //   this.fileExtension = oldFileExtension;
-    //   this.displayMessage(
-    //     this.errorlabels.errorLabel,
-    //     this.messagelabels.uploadDocuments.msg3
-    //   );
-    //   this.disableNavigation = false;
-    // }
+  showBiometricDashboard() {
+    this.router.navigate([`toolkit/dashboard/biometric`]);
   }
 
   showDashboard() {

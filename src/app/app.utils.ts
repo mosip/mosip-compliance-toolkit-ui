@@ -201,15 +201,20 @@ export default class Utils {
   static showErrorMessage(
     errorsList: any,
     dialog: MatDialog,
-    customMsg?: string
+    customMsg?: string,
+    showErrCode?: boolean
   ) {
     const titleOnError = 'Error';
     let message = '';
     if (errorsList && errorsList.length > 0) {
       let error = errorsList[0];
-      message = error.errorCode
-        ? error.errorCode + ' - ' + error.message
-        : error.message;
+      if (!showErrCode) {
+        message = error.message;
+      } else {
+        message = error.errorCode
+          ? error.errorCode + ' - ' + error.message
+          : error.message;
+      }
     }
     if (customMsg) {
       message = customMsg;
