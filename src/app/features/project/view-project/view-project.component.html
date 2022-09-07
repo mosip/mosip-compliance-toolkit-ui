@@ -99,7 +99,7 @@
                             <span class="fieldContainer">
                                 <mat-form-field appearance="legacy" [style.width.px]=327>
                                     <mat-label>Purpose:</mat-label>
-                                    <mat-select formControlName="sdkPurpose" #singleSelect>
+                                    <mat-select formControlName="sdkPurpose" #singleSelect  (selectionChange)="handleSdkPurposeChange()">
                                         <mat-option value="Matcher">
                                             Matcher
                                         </mat-option>

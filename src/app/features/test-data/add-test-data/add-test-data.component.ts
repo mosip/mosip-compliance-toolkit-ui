@@ -134,7 +134,9 @@ export class AddTestDataComponent implements OnInit {
           Utils.showErrorMessage(
             null,
             this.dialog,
-            'File name is not allowed more than: ' + this.allowedFileNameLegth + " characters"
+            'File name is not allowed more than: ' +
+              this.allowedFileNameLegth +
+              ' characters'
           );
         } else {
           if (event.target.files[0].size > this.allowedFileSize) {
@@ -164,30 +166,36 @@ export class AddTestDataComponent implements OnInit {
   }
 
   getSampleBioTestDataFile() {
-    const subs = this.dataService.getSampleBioTestDataFile().subscribe(
-      (res: any) => {
-        if (res) {
-          const fileByteArray = res;
-          if (fileByteArray) {
-            var blob = new Blob([fileByteArray], { type: 'application/zip' });
-            var link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.download = 'Sample_Test_Data.zip';
-            link.click();
-          } 
-        } else {
-          Utils.showErrorMessage(
-            null,
-            this.dialog,
-            'Unable to download sample test data ZIP file. Try Again!'
-          );
+    this.allControls.forEach((controlId) => {
+      this.testDataForm.controls[controlId].markAsTouched();
+    });
+    if (this.testDataForm.valid) {
+      const purpose = this.testDataForm.controls['purpose'].value;
+      const subs = this.dataService.getSampleBioTestDataFile(purpose).subscribe(
+        (res: any) => {
+          if (res) {
+            const fileByteArray = res;
+            if (fileByteArray) {
+              var blob = new Blob([fileByteArray], { type: 'application/zip' });
+              var link = document.createElement('a');
+              link.href = window.URL.createObjectURL(blob);
+              link.download = 'Sample_Test_Data.zip';
+              link.click();
+            }
+          } else {
+            Utils.showErrorMessage(
+              null,
+              this.dialog,
+              'Unable to download sample test data ZIP file. Try Again!'
+            );
+          }
+        },
+        (errors) => {
+          Utils.showErrorMessage(errors, this.dialog);
         }
-      },
-      (errors) => {
-        Utils.showErrorMessage(errors, this.dialog);
-      }
-    );
-    this.subscriptions.push(subs);
+      );
+      this.subscriptions.push(subs);
+    }
   }
 
   async saveTestData(event: any) {
@@ -221,7 +229,7 @@ export class AddTestDataComponent implements OnInit {
           (response: any) => {
             console.log(response);
             if (response.errors && response.errors.length > 0) {
-              Utils.showErrorMessage(response.errors, this.dialog, "", false);
+              Utils.showErrorMessage(response.errors, this.dialog, '', false);
               this.dataLoaded = true;
               resolve(true);
             } else {
