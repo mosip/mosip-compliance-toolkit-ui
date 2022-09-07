@@ -1,5 +1,6 @@
 mat-dialog-content {
     height: 750 px;
+    text-align: justify;
     word-wrap: break-word;
 }
 .mat-dialog-title {
