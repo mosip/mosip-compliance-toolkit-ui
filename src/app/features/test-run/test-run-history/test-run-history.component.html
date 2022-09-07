@@ -6,6 +6,11 @@
 </div>
 <div class="mat-elevation-z8">
     <h2 style="padding: 10px;" *ngIf="dataLoaded">Test Run History</h2>
+    <span *ngIf="this.totalItems !== 0">
+        <mat-paginator [length]="this.totalItems" [pageSize]="this.pageSize" [pageSizeOptions]="this.pageSizeOptions"
+            (page)="showResults($event)">
+        </mat-paginator>
+    </span>
     <div class="table-container">
         <table mat-table [dataSource]="dataSource" class="testcases-table">
             <!--- Note that these columns can be defined in any order.
@@ -57,11 +62,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
     </div>
-    <span *ngIf="this.totalItems !== 0">
-        <mat-paginator [length]="this.totalItems" [pageSize]="this.pageSize" [pageSizeOptions]="this.pageSizeOptions"
-            (page)="showResults($event)">
-        </mat-paginator>
-    </span>
+   
 </div>
 <div class="button-container" *ngIf="dataLoaded">
     <button mat-flat-button color="accent" (click)="backToProject()" class="add-button">

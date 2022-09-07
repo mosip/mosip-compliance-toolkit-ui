@@ -178,13 +178,13 @@ export class DataService {
     return this.httpClient.get(url);
   }
 
-  getBioTestDataFileNames() {
-    let url = `${this.SERVICES_BASE_URL}getBioTestDataFileNames`;
+  getBioTestDataFileNames(purpose: string) {
+    let url = `${this.SERVICES_BASE_URL}getBioTestDataFileNames?purpose=${purpose}`;
     return this.httpClient.get(url);
   }
 
-  getSampleBioTestDataFile() {
-    let url = `${this.SERVICES_BASE_URL}getSampleBioTestDataFile`;
+  getSampleBioTestDataFile(purpose: string) {
+    let url = `${this.SERVICES_BASE_URL}getSampleBioTestDataFile?purpose=${purpose}`;
     return this.httpClient.get(url, { responseType: 'blob' });
   }
 

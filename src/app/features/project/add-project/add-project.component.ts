@@ -32,7 +32,10 @@ export class AddProjectComponent implements OnInit {
 
   async ngOnInit() {
     this.initForm();
-    await this.getBioTestDataFileNames();
+    const projectType = this.projectForm.controls['projectType'].value;
+    if (projectType == appConstants.SDK) {
+      await this.getBioTestDataFileNames(this.projectForm.controls['sdkPurpose'].value);
+    } 
   }
 
   initForm() {
@@ -50,10 +53,10 @@ export class AddProjectComponent implements OnInit {
     });
   }
 
-  async getBioTestDataFileNames() {
+  async getBioTestDataFileNames(purpose: string) {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
-        this.dataService.getBioTestDataFileNames().subscribe(
+        this.dataService.getBioTestDataFileNames(purpose).subscribe(
           (response: any) => {
             //console.log(response);
             this.bioTestDataFileNames = response[appConstants.RESPONSE];
@@ -121,6 +124,10 @@ export class AddProjectComponent implements OnInit {
         this.projectForm.controls[controlId].updateValueAndValidity();
       });
     }
+  }
+
+  async handleSdkPurposeChange() {
+    await this.getBioTestDataFileNames(this.projectForm.controls['sdkPurpose'].value);
   }
 
   async saveProject() {
