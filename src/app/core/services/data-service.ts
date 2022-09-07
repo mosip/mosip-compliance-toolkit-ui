@@ -164,9 +164,12 @@ export class DataService {
   generateRequestForSDK(
     methodName: string,
     testcaseId: string,
-    modalities: string
+    modalities: string,
+    convertSourceFormat: string,
+    convertTargetFormat: string
   ) {
-    let url = `${this.SERVICES_BASE_URL}generateRequestForSDK?methodName=${methodName}&testcaseId=${testcaseId}&modalities=${modalities}`;
+    let url = `${this.SERVICES_BASE_URL}generateRequestForSDK?methodName=${methodName}&testcaseId=${testcaseId}&modalities=${modalities}&convertSourceFormat=${convertSourceFormat}&convertTargetFormat=${convertTargetFormat}`;
+    console.log('url:' + url);
     return this.httpClient.get(url);
   }
 

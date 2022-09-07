@@ -10,5 +10,7 @@ export class OtherAttributesModel {
       public bioCount: any,
       public deviceSubId: any,
       public modalities: any,
+      public convertSourceFormat: any,
+      public convertTargetFormat: any,
     ) {}
   }
