@@ -106,12 +106,15 @@ export class SdkTestCaseService {
   }
 
   generateRequestForSDK(testCase: TestCaseModel): any {
+    console.table(testCase);
     return new Promise((resolve, reject) => {
       this.dataService
         .generateRequestForSDK(
           testCase.methodName,
           testCase.testId,
-          testCase.otherAttributes.modalities.toString()
+          testCase.otherAttributes.modalities.toString(),
+          testCase.otherAttributes.convertSourceFormat ? testCase.otherAttributes.convertSourceFormat.toString() : "",
+          testCase.otherAttributes.convertTargetFormat ? testCase.otherAttributes.convertTargetFormat.toString() : ""
         )
         .subscribe(
           (response: any) => {
