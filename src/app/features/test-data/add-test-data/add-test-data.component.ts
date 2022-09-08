@@ -179,7 +179,7 @@ export class AddTestDataComponent implements OnInit {
               var blob = new Blob([fileByteArray], { type: 'application/zip' });
               var link = document.createElement('a');
               link.href = window.URL.createObjectURL(blob);
-              link.download = 'Sample_Test_Data.zip';
+              link.download = `SDK_Sample_Test_Data_${purpose.replace(' ', '_')}.zip`;
               link.click();
             }
           } else {
