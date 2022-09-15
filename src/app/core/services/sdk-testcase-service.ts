@@ -13,9 +13,9 @@ export class SdkTestCaseService {
     private appConfigService: AppConfigService
   ) {}
 
-  async runTestCase(testCase: TestCaseModel, sdkUrl: string) {
+  async runTestCase(testCase: TestCaseModel, sdkUrl: string, selectedBioTestDataName: string) {
     return new Promise(async (resolve, reject) => {
-      const methodRequest: any = await this.generateRequestForSDK(testCase);
+      const methodRequest: any = await this.generateRequestForSDK(testCase, selectedBioTestDataName);
       if (methodRequest) {
         //now validate the method request against the Schema
         let validationRequest: any = await this.validateRequest(
@@ -105,16 +105,16 @@ export class SdkTestCaseService {
     });
   }
 
-  generateRequestForSDK(testCase: TestCaseModel): any {
-    console.table(testCase);
+  generateRequestForSDK(testCase: TestCaseModel, selectedBioTestDataName: string): any {
     return new Promise((resolve, reject) => {
       this.dataService
         .generateRequestForSDK(
           testCase.methodName,
           testCase.testId,
+          selectedBioTestDataName,
           testCase.otherAttributes.modalities.toString(),
           testCase.otherAttributes.convertSourceFormat ? testCase.otherAttributes.convertSourceFormat.toString() : "",
-          testCase.otherAttributes.convertTargetFormat ? testCase.otherAttributes.convertTargetFormat.toString() : ""
+          testCase.otherAttributes.convertTargetFormat ? testCase.otherAttributes.convertTargetFormat.toString() : "",
         )
         .subscribe(
           (response: any) => {
