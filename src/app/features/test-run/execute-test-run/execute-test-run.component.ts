@@ -452,7 +452,8 @@ export class ExecuteTestRunComponent implements OnInit {
         );
         const res = await this.sdkTestCaseService.runTestCase(
           testCase,
-          this.sdkProjectData.url
+          this.sdkProjectData.url,
+          this.sdkProjectData.bioTestDataFileName
         );
         resolve(res);
       } else {
