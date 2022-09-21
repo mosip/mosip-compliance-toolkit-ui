@@ -77,7 +77,7 @@ export class ViewProjectComponent implements OnInit {
       this.initSdkProjectForm();
       await this.getSdkProjectDetails();
       this.populateSdkProjectForm();
-      await this.getBioTestDataFileNames(this.projectForm.controls['sdkPurpose'].value);
+      await this.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value);
     }
     await this.getCollections();
     this.dataSource.paginator = this.paginator;
@@ -135,10 +135,10 @@ export class ViewProjectComponent implements OnInit {
     });
   }
 
-  async getBioTestDataFileNames(purpose: string) {
+  async getBioTestDataNames(purpose: string) {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
-        this.dataService.getBioTestDataFileNames(purpose).subscribe(
+        this.dataService.getBioTestDataNames(purpose).subscribe(
           (response: any) => {
             //console.log(response);
             this.bioTestDataFileNames = response[appConstants.RESPONSE];
@@ -260,7 +260,7 @@ export class ViewProjectComponent implements OnInit {
   }
 
   async handleSdkPurposeChange() {
-    await this.getBioTestDataFileNames(this.projectForm.controls['sdkPurpose'].value);
+    await this.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value);
   }
   
   addCollection() {

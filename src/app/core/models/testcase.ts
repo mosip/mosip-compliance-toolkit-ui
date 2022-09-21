@@ -9,9 +9,9 @@ export class TestCaseModel {
     public specVersion: string,
     public testDescription: string,
     public isNegativeTestcase: boolean,
-    public methodName: string,
-    public requestSchema: string,
-    public responseSchema: string,
+    public methodName: any,
+    public requestSchema: any,
+    public responseSchema: any,
     public validatorDefs: ValidatorModel[],
     public otherAttributes: OtherAttributesModel
   ) {}
