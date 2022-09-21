@@ -13,14 +13,104 @@ export class SdkTestCaseService {
     private appConfigService: AppConfigService
   ) {}
 
-  async runTestCase(testCase: TestCaseModel, sdkUrl: string, selectedBioTestDataName: string) {
+  async runTestCase(
+    testCase: TestCaseModel,
+    sdkUrl: string,
+    selectedBioTestDataName: string
+  ) {
     return new Promise(async (resolve, reject) => {
-      const methodRequest: any = await this.generateRequestForSDK(testCase, selectedBioTestDataName);
+      let isCombinationTestCase = Array.isArray(testCase.methodName);
+      const methodsArr = testCase.methodName;
+      let methodIndex = 0;
+      let firstResponse: any = null;
+      //only 2 methods are allowed in a testcase
+      for (const method of methodsArr) {
+        console.log('EXECUTING METHOD: ' + method);
+        if (methodIndex == 0) {
+          firstResponse = await this.runTestCaseMethod(
+            testCase,
+            sdkUrl,
+            selectedBioTestDataName,
+            method,
+            methodIndex,
+            null
+          );
+          if (!isCombinationTestCase) {
+            resolve(firstResponse);
+          }
+          methodIndex++;
+        } else {
+          if (
+            firstResponse &&
+            !firstResponse.errors &&
+            firstResponse.methodResponse
+          ) {
+            let firstMethodResponse = JSON.parse(firstResponse.methodResponse);
+            if (
+              firstMethodResponse &&
+              firstMethodResponse.response &&
+              firstMethodResponse.response.response &&
+              firstMethodResponse.response.response.segments
+            ) {
+              let secondMethodResponse = await this.runTestCaseMethod(
+                testCase,
+                sdkUrl,
+                selectedBioTestDataName,
+                method,
+                methodIndex,
+                firstMethodResponse.response.response.segments
+              );
+              resolve(secondMethodResponse);
+            } else {
+              resolve({
+                errors: [
+                  {
+                    errorCode: 'Failure',
+                    message:
+                      'Unable to generate request to SDK service: ' +
+                      method,
+                  },
+                ],
+              });
+            }
+          } else {
+            resolve(firstResponse);
+          }
+        }
+      }
+    });
+  }
+
+  async runTestCaseMethod(
+    testCase: TestCaseModel,
+    sdkUrl: string,
+    selectedBioTestDataName: string,
+    method: string,
+    methodIndex: number,
+    firstMethodResponse: any
+  ) {
+    return new Promise(async (resolve, reject) => {
+      let methodRequest: any = null;
+      if (firstMethodResponse) {
+        methodRequest = await this.generateRequestForSDKFrmBirs(
+          method,
+          testCase,
+          selectedBioTestDataName,
+          firstMethodResponse
+        );
+      } else {
+        methodRequest = await this.generateRequestForSDK(
+          method,
+          testCase,
+          selectedBioTestDataName
+        );
+      }
       if (methodRequest) {
         //now validate the method request against the Schema
         let validationRequest: any = await this.validateRequest(
           testCase,
-          methodRequest
+          methodRequest,
+          methodIndex
         );
         if (
           validationRequest &&
@@ -29,7 +119,7 @@ export class SdkTestCaseService {
             appConstants.SUCCESS
         ) {
           let methodResponse: any = await this.executeMethod(
-            testCase.methodName,
+            method,
             sdkUrl,
             methodRequest
           );
@@ -38,7 +128,9 @@ export class SdkTestCaseService {
             let validationResponse = await this.validateResponse(
               testCase,
               methodRequest,
-              methodResponse
+              methodResponse,
+              method,
+              methodIndex
             );
             let finalResponse = {
               methodResponse: JSON.stringify(methodResponse),
@@ -87,7 +179,7 @@ export class SdkTestCaseService {
 
   async executeMethod(methodName: string, sdkUrl: string, methodRequest: any) {
     return new Promise((resolve, reject) => {
-      if (sdkUrl.lastIndexOf('/') !== (sdkUrl.length - 1)) {
+      if (sdkUrl.lastIndexOf('/') !== sdkUrl.length - 1) {
         sdkUrl += '/';
       }
       const url = sdkUrl + methodName;
@@ -105,16 +197,24 @@ export class SdkTestCaseService {
     });
   }
 
-  generateRequestForSDK(testCase: TestCaseModel, selectedBioTestDataName: string): any {
+  generateRequestForSDK(
+    methodName: string,
+    testCase: TestCaseModel,
+    selectedBioTestDataName: string
+  ): any {
     return new Promise((resolve, reject) => {
       this.dataService
         .generateRequestForSDK(
-          testCase.methodName,
+          methodName,
           testCase.testId,
           selectedBioTestDataName,
           testCase.otherAttributes.modalities.toString(),
-          testCase.otherAttributes.convertSourceFormat ? testCase.otherAttributes.convertSourceFormat.toString() : "",
-          testCase.otherAttributes.convertTargetFormat ? testCase.otherAttributes.convertTargetFormat.toString() : "",
+          testCase.otherAttributes.convertSourceFormat
+            ? testCase.otherAttributes.convertSourceFormat.toString()
+            : '',
+          testCase.otherAttributes.convertTargetFormat
+            ? testCase.otherAttributes.convertTargetFormat.toString()
+            : ''
         )
         .subscribe(
           (response: any) => {
@@ -130,22 +230,62 @@ export class SdkTestCaseService {
     });
   }
 
+  generateRequestForSDKFrmBirs(
+    method: string,
+    testCase: TestCaseModel,
+    selectedBioTestDataName: string,
+    firstMethodResponse: any
+  ): any {
+    console.log(firstMethodResponse);
+    let sdkRequestDto = {
+      methodName: method,
+      testcaseId: testCase.testId,
+      modalities: testCase.otherAttributes.modalities,
+      bioTestDataName: selectedBioTestDataName,
+      birsForProbe: btoa(JSON.stringify(firstMethodResponse)),
+    };
+    let request = {
+      id: appConstants.GENERATE_SDK_REQUEST_ID,
+      version: appConstants.VERSION,
+      requesttime: new Date().toISOString(),
+      request: sdkRequestDto,
+    };
+    console.log(request);
+    return new Promise((resolve, reject) => {
+      this.dataService.generateRequestForSDKFrmBirs(request).subscribe(
+        (response: any) => {
+          if (response.errors && response.errors.length > 0) {
+            resolve(false);
+          }
+          resolve(response[appConstants.RESPONSE]);
+        },
+        (errors) => {
+          resolve(false);
+        }
+      );
+    });
+  }
+
   async validateResponse(
     testCase: TestCaseModel,
     methodRequest: any,
-    methodResponse: any
+    methodResponse: any,
+    method: string,
+    methodIndex: number
   ) {
     return new Promise((resolve, reject) => {
       let validateRequest = {
         testCaseType: testCase.testCaseType,
         testName: testCase.testName,
         testDescription: testCase.testDescription,
-        responseSchema: testCase.responseSchema,
-        isNegativeTestcase: testCase.isNegativeTestcase ? testCase.isNegativeTestcase : false,
+        responseSchema: testCase.responseSchema[methodIndex],
+        isNegativeTestcase: testCase.isNegativeTestcase
+          ? testCase.isNegativeTestcase
+          : false,
         methodResponse: JSON.stringify(methodResponse),
         methodRequest: methodRequest,
-        methodName: testCase.methodName,
-        validatorDefs: testCase.validatorDefs,
+        methodName: method,
+        validatorDefs: testCase.validatorDefs[methodIndex],
       };
       let request = {
         id: appConstants.VALIDATIONS_ADD_ID,
@@ -164,14 +304,18 @@ export class SdkTestCaseService {
     });
   }
 
-  async validateRequest(testCase: TestCaseModel, methodRequest: any) {
+  async validateRequest(
+    testCase: TestCaseModel,
+    methodRequest: any,
+    methodIndex: number
+  ) {
     return new Promise((resolve, reject) => {
       //console.log('validateRequest called');
       let validateRequest = {
         testCaseType: testCase.testCaseType,
         testName: testCase.testName,
         testDescription: testCase.testDescription,
-        requestSchema: testCase.requestSchema,
+        requestSchema: testCase.requestSchema[methodIndex],
         methodRequest: methodRequest,
       };
       //console.log(validateRequest);

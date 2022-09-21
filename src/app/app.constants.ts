@@ -5,6 +5,7 @@ export const SBI_PROJECT_ADD_ID = 'mosip.toolkit.sbi.project.add';
 export const SDK_PROJECT_ADD_ID = 'mosip.toolkit.sdk.project.add';
 export const SDK_PROJECT_UPDATE_ID = 'mosip.toolkit.sdk.project.update';
 export const VALIDATIONS_ADD_ID = 'mosip.toolkit.api.id.validations';
+export const GENERATE_SDK_REQUEST_ID = 'mosip.toolkit.api.id.generate.sdk.request';
 export const COLLECTION_ADD_ID = 'mosip.toolkit.collection.add';
 export const COLLECTION_TESTCASES_ADD_ID = 'mosip.toolkit.collection.testcase.add';
 export const TEST_RUN_ADD_ID = 'mosip.toolkit.testrun.add';

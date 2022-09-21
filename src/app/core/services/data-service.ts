@@ -174,13 +174,19 @@ export class DataService {
     return this.httpClient.get(url);
   }
 
+  generateRequestForSDKFrmBirs(body: any) {
+    let url = `${this.SERVICES_BASE_URL}generateRequestForSDKFrmBirs`;
+    console.log('url:' + url);
+    return this.httpClient.post(url, body);
+  }
+
   getListOfBiometricTestData() {
     let url = `${this.SERVICES_BASE_URL}getListOfBiometricTestData`;
     return this.httpClient.get(url);
   }
 
-  getBioTestDataFileNames(purpose: string) {
-    let url = `${this.SERVICES_BASE_URL}getBioTestDataFileNames?purpose=${purpose}`;
+  getBioTestDataNames(purpose: string) {
+    let url = `${this.SERVICES_BASE_URL}getBioTestDataNames?purpose=${purpose}`;
     return this.httpClient.get(url);
   }
 

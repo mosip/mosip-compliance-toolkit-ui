@@ -47,8 +47,10 @@
             <ng-container matColumnDef="validatorDefs">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Validators </th>
                 <td mat-cell *matCellDef="let element"> 
-                    <span *ngFor="let item of element.validatorDefs" class="cell-list">
-                        {{item.name + ' - ' + item.description}}<br/>
+                    <span *ngFor="let itemArr of element.validatorDefs">
+                        <span *ngFor="let item of itemArr">
+                            <span class="cell-list">{{item.name + ' - ' + item.description}}</span><br />
+                        </span>
                     </span>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
