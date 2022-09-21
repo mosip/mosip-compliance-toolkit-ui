@@ -33,7 +33,7 @@ export class SbiTestCaseService {
         validationRequest[appConstants.RESPONSE].status == appConstants.SUCCESS
       ) {
         let methodResponse: any = await this.executeMethod(
-          testCase.methodName,
+          testCase.methodName[0],
           sbiSelectedPort,
           methodRequest
         );
@@ -156,15 +156,15 @@ export class SbiTestCaseService {
     const selectedSbiDevice: SbiDiscoverResponseModel =
       JSON.parse(sbiSelectedDevice);
     let request = {};
-    if (testCase.methodName == appConstants.SBI_METHOD_DEVICE) {
+    if (testCase.methodName[0] == appConstants.SBI_METHOD_DEVICE) {
       request = {
         type: selectedSbiDevice.digitalIdDecoded.type,
       };
     }
-    if (testCase.methodName == appConstants.SBI_METHOD_DEVICE_INFO) {
+    if (testCase.methodName[0] == appConstants.SBI_METHOD_DEVICE_INFO) {
       //no params
     }
-    if (testCase.methodName == appConstants.SBI_METHOD_CAPTURE) {
+    if (testCase.methodName[0] == appConstants.SBI_METHOD_CAPTURE) {
       request = {
         env: appConstants.DEVELOPER,
         purpose: selectedSbiDevice.purpose,
@@ -187,7 +187,7 @@ export class SbiTestCaseService {
         customOpts: null,
       };
     }
-    if (testCase.methodName == appConstants.SBI_METHOD_RCAPTURE) {
+    if (testCase.methodName[0] == appConstants.SBI_METHOD_RCAPTURE) {
       request = {
         env: appConstants.DEVELOPER,
         purpose: selectedSbiDevice.purpose,
@@ -275,7 +275,7 @@ export class SbiTestCaseService {
   ): any {
     const selectedSbiDevice: SbiDiscoverResponseModel =
       JSON.parse(sbiSelectedDevice);
-    if (testCase.methodName == appConstants.SBI_METHOD_DEVICE) {
+    if (testCase.methodName[0] == appConstants.SBI_METHOD_DEVICE) {
       let decodedDataArr: SbiDiscoverResponseModel[] = [];
       methodResponse.forEach((deviceData: any) => {
         const decodedData = Utils.getDecodedDiscoverDevice(deviceData);
@@ -285,7 +285,7 @@ export class SbiTestCaseService {
       });
       return decodedDataArr;
     }
-    if (testCase.methodName == appConstants.SBI_METHOD_DEVICE_INFO) {
+    if (testCase.methodName[0] == appConstants.SBI_METHOD_DEVICE_INFO) {
       let decodedDataArr: any[] = [];
       methodResponse.forEach((deviceInfoResp: any) => {
         if (deviceInfoResp && deviceInfoResp.deviceInfo == '') {
@@ -322,8 +322,8 @@ export class SbiTestCaseService {
       return decodedDataArr;
     }
     if (
-      testCase.methodName == appConstants.SBI_METHOD_CAPTURE ||
-      testCase.methodName == appConstants.SBI_METHOD_RCAPTURE
+      testCase.methodName[0] == appConstants.SBI_METHOD_CAPTURE ||
+      testCase.methodName[0] == appConstants.SBI_METHOD_RCAPTURE
     ) {
       let decodedDataArr: any[] = [];
       methodResponse.biometrics.forEach((dataResp: any) => {
@@ -373,15 +373,15 @@ export class SbiTestCaseService {
         testCaseType: testCase.testCaseType,
         testName: testCase.testName,
         testDescription: testCase.testDescription,
-        responseSchema: testCase.responseSchema,
+        responseSchema: testCase.responseSchema[0],
         isNegativeTestcase: testCase.isNegativeTestcase ? testCase.isNegativeTestcase : false,
         methodResponse: JSON.stringify(methodResponse),
         methodRequest: JSON.stringify(methodRequest),
-        methodName: testCase.methodName,
+        methodName: testCase.methodName[0],
         extraInfoJson: JSON.stringify({
           certificationType: selectedSbiDevice.certification,
         }),
-        validatorDefs: testCase.validatorDefs,
+        validatorDefs: testCase.validatorDefs[0],
       };
       let request = {
         id: appConstants.VALIDATIONS_ADD_ID,
@@ -406,7 +406,7 @@ export class SbiTestCaseService {
         testCaseType: testCase.testCaseType,
         testName: testCase.testName,
         testDescription: testCase.testDescription,
-        requestSchema: testCase.requestSchema,
+        requestSchema: testCase.requestSchema[0],
         methodRequest: JSON.stringify(methodRequest),
       };
       let request = {

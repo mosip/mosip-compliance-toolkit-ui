@@ -19,7 +19,7 @@ export class SdkTestCaseService {
     selectedBioTestDataName: string
   ) {
     return new Promise(async (resolve, reject) => {
-      let isCombinationTestCase = Array.isArray(testCase.methodName);
+      let isCombinationTestCase = testCase.methodName.length > 1 ? true : false;
       const methodsArr = testCase.methodName;
       let methodIndex = 0;
       let firstResponse: any = null;
@@ -35,6 +35,7 @@ export class SdkTestCaseService {
             methodIndex,
             null
           );
+          console.log('done: ' + method);
           if (!isCombinationTestCase) {
             resolve(firstResponse);
           }
@@ -67,8 +68,7 @@ export class SdkTestCaseService {
                   {
                     errorCode: 'Failure',
                     message:
-                      'Unable to generate request to SDK service: ' +
-                      method,
+                      'Unable to generate request to SDK service: ' + method,
                   },
                 ],
               });
