@@ -281,8 +281,8 @@ export class ExecuteTestRunComponent implements OnInit {
   checkIfToShowInitiateCaptureBtn(testCase: TestCaseModel) {
     if (this.projectType === appConstants.SBI) {
       if (
-        testCase.methodName == appConstants.SBI_METHOD_CAPTURE ||
-        testCase.methodName == appConstants.SBI_METHOD_RCAPTURE
+        testCase.methodName[0] == appConstants.SBI_METHOD_CAPTURE ||
+        testCase.methodName[0] == appConstants.SBI_METHOD_RCAPTURE
       ) {
         this.showInitiateCaptureBtn = true;
       }
@@ -422,8 +422,8 @@ export class ExecuteTestRunComponent implements OnInit {
       if (this.projectType === appConstants.SBI) {
         console.log(testCase);
         if (
-          testCase.methodName == appConstants.SBI_METHOD_CAPTURE ||
-          testCase.methodName == appConstants.SBI_METHOD_RCAPTURE
+          testCase.methodName[0] == appConstants.SBI_METHOD_CAPTURE ||
+          testCase.methodName[0] == appConstants.SBI_METHOD_RCAPTURE
         ) {
           if (this.initiateCapture) {
             this.initiateCapture = false;
