@@ -203,30 +203,35 @@ export class SdkTestCaseService {
     selectedBioTestDataName: string
   ): any {
     return new Promise((resolve, reject) => {
-      this.dataService
-        .generateRequestForSDK(
-          methodName,
-          testCase.testId,
-          selectedBioTestDataName,
-          testCase.otherAttributes.modalities.toString(),
-          testCase.otherAttributes.convertSourceFormat
-            ? testCase.otherAttributes.convertSourceFormat.toString()
-            : '',
-          testCase.otherAttributes.convertTargetFormat
-            ? testCase.otherAttributes.convertTargetFormat.toString()
-            : ''
-        )
-        .subscribe(
-          (response: any) => {
-            if (response.errors && response.errors.length > 0) {
-              resolve(false);
-            }
-            resolve(response[appConstants.RESPONSE]);
-          },
-          (errors) => {
+      let sdkRequestDto = {
+        methodName: methodName,
+        testcaseId: testCase.testId,
+        modalities: testCase.otherAttributes.modalities,
+        bioTestDataName: selectedBioTestDataName,
+        convertSourceFormat: testCase.otherAttributes.convertSourceFormat
+          ? testCase.otherAttributes.convertSourceFormat.toString()
+          : '',
+        convertTargetFormat: testCase.otherAttributes.convertTargetFormat
+          ? testCase.otherAttributes.convertTargetFormat.toString()
+          : '',
+      };
+      let request = {
+        id: appConstants.GENERATE_SDK_REQUEST_ID,
+        version: appConstants.VERSION,
+        requesttime: new Date().toISOString(),
+        request: sdkRequestDto,
+      };
+      this.dataService.generateRequestForSDK(request).subscribe(
+        (response: any) => {
+          if (response.errors && response.errors.length > 0) {
             resolve(false);
           }
-        );
+          resolve(response[appConstants.RESPONSE]);
+        },
+        (errors) => {
+          resolve(false);
+        }
+      );
     });
   }
 

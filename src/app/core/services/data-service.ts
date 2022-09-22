@@ -161,17 +161,10 @@ export class DataService {
     return this.httpClient.post(url, body, { headers: headers });
   }
 
-  generateRequestForSDK(
-    methodName: string,
-    testcaseId: string,
-    selectedBioTestDataName: string,
-    modalities: string,
-    convertSourceFormat: string,
-    convertTargetFormat: string
-  ) {
-    let url = `${this.SERVICES_BASE_URL}generateRequestForSDK?methodName=${methodName}&testcaseId=${testcaseId}&bioTestDataName=${selectedBioTestDataName}&modalities=${modalities}&convertSourceFormat=${convertSourceFormat}&convertTargetFormat=${convertTargetFormat}`;
+  generateRequestForSDK(body: any) {
+    let url = `${this.SERVICES_BASE_URL}generateRequestForSDK`;
     console.log('url:' + url);
-    return this.httpClient.get(url);
+    return this.httpClient.post(url, body);
   }
 
   generateRequestForSDKFrmBirs(body: any) {
