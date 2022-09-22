@@ -243,7 +243,7 @@ export class SdkTestCaseService {
   ): any {
     console.log(firstMethodResponse);
     let sdkRequestDto = {
-      methodName: method,
+      methodName: testCase.methodName.join(','),
       testcaseId: testCase.testId,
       modalities: testCase.otherAttributes.modalities,
       bioTestDataName: selectedBioTestDataName,
