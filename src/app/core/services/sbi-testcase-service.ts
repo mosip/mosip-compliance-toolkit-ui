@@ -176,7 +176,7 @@ export class SbiTestCaseService {
         bio: [
           {
             type: selectedSbiDevice.digitalIdDecoded.type,
-            count: parseInt(testCase.otherAttributes.bioCount),
+            count: testCase.otherAttributes.bioCount,
             requestedScore: testCase.otherAttributes.requestedScore,
             deviceId: selectedSbiDevice.deviceId,
             deviceSubId: testCase.otherAttributes.deviceSubId,
@@ -198,7 +198,7 @@ export class SbiTestCaseService {
         bio: [
           {
             type: selectedSbiDevice.digitalIdDecoded.type,
-            count: parseInt(testCase.otherAttributes.bioCount),
+            count: testCase.otherAttributes.bioCount,
             exception: this.getBioSubType(testCase.otherAttributes.exceptions),
             requestedScore: testCase.otherAttributes.requestedScore,
             deviceId: selectedSbiDevice.deviceId,
