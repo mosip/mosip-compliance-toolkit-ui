@@ -44,6 +44,7 @@ export class ExecuteTestRunComponent implements OnInit {
   dataLoaded = false;
   startTestRunDt: string;
   endTestRunDt: string;
+  progressDone = 0;
   @ViewChild('basicTimer', { static: true }) basicTimer: CdTimerComponent;
   countOfSuccessTestcases = 0;
   countOfFailedTestcases = 0;
@@ -244,6 +245,9 @@ export class ExecuteTestRunComponent implements OnInit {
         console.log(`this.currectTestCaseId: ${this.currectTestCaseId}`);
         this.currectTestCaseName = testCase.testName;
         this.currentTestDescription = testCase.testDescription;
+        if (testCase.testId == 'SBI1003') {
+          this.currentTestDescription = "1. This testcase is to check if Registration Capture for Left Slap from the device is valid or not.<br> 2. Please place your left slap <b>except left ring finger</b> on the device. ";
+        }
         if (!this.initiateCapture) {
           this.checkIfToShowInitiateCaptureBtn(testCase);
         }
@@ -406,10 +410,14 @@ export class ExecuteTestRunComponent implements OnInit {
               resolve(true);
             }
             // console.log(response);
+            this.progressDone = this.progressDone + 100/this.testCasesList.length;
+            
             resolve(true);
           },
           (errors) => {
             this.errorsInSavingTestRun = true;
+            this.progressDone = this.progressDone + 100/this.testCasesList.length;
+            
             resolve(true);
           }
         )
@@ -436,7 +444,7 @@ export class ExecuteTestRunComponent implements OnInit {
           } else {
             //resolve(false);
           }
-        } else {
+        } else {  
           const res = await this.sbiTestCaseService.runTestCase(
             testCase,
             this.sbiSelectedPort ? this.sbiSelectedPort : '',

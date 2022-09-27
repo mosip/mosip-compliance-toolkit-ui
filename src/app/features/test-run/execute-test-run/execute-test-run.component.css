@@ -17,6 +17,10 @@
 mat-dialog-content {
   /* background-color: #ff4081 !important; */
   min-height: 225px;
+  /* align-items: center;
+  width: 100%;
+  display: flex; */
+  font-size: larger;
 }
 .custom-class mat-icon {
   vertical-align: middle;

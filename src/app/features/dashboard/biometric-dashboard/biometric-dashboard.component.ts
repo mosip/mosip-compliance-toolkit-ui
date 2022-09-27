@@ -50,7 +50,9 @@ export class BiometricDashboardComponent implements OnInit {
   async ngOnInit() {
     await this.getListOfBiometricTestData();
     this.dataSource.paginator = this.paginator;
-    this.sort.sort({ id: 'crDate', start: 'desc' } as MatSortable);
+    if (this.sort) {
+      this.sort.sort({ id: 'crDate', start: 'desc' } as MatSortable);
+    }
     this.dataSource.sort = this.sort;
 
     this.dataLoaded = true;
