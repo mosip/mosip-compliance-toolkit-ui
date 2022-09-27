@@ -25,7 +25,7 @@
     <mat-label>Filter</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Search columns" #input>
 </mat-form-field>
-<div class="mat-elevation-z8">
+<div class="mat-elevation-z8" *ngIf="dataLoaded">
     <table mat-table [dataSource]="dataSource" matSort class="dashboard-table">
         <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->

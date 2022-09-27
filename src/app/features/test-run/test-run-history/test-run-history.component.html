@@ -4,14 +4,14 @@
 <div class="spinner" *ngIf="!dataLoaded">
     <mat-spinner diameter="50"></mat-spinner>
 </div>
-<div class="mat-elevation-z8">
-    <h2 style="padding: 10px;" *ngIf="dataLoaded">Test Run History</h2>
+<div class="mat-elevation-z8" *ngIf="dataLoaded">
+    <h2 style="padding: 10px;">Test Run History</h2>
     <span *ngIf="this.totalItems !== 0">
         <mat-paginator [length]="this.totalItems" [pageSize]="this.pageSize" [pageSizeOptions]="this.pageSizeOptions"
             (page)="showResults($event)">
         </mat-paginator>
     </span>
-    <div class="table-container">
+    <div class="table-container" >
         <table mat-table [dataSource]="dataSource" class="testcases-table">
             <!--- Note that these columns can be defined in any order.
               The actual rendered columns are set as a property on the row definition" -->

@@ -4,8 +4,8 @@
 <div class="spinner" *ngIf="!dataLoaded">
     <mat-spinner diameter="50"></mat-spinner>
 </div>
-<div class=" mat-elevation-z8">
-    <div class="formContainer" *ngIf="dataLoaded">
+<div class=" mat-elevation-z8" *ngIf="dataLoaded">
+    <div class="formContainer">
         <form [formGroup]="collectionForm">
             <div class="fieldWrapper">
                 <span class="fieldLabel">
@@ -44,7 +44,7 @@
             </ng-container>
             <ng-container matColumnDef="testDescription">
                 <th mat-header-cell *matHeaderCellDef> Description </th>
-                <td mat-cell *matCellDef="let element"> {{element.testDescription}} </td>
+                <td mat-cell *matCellDef="let element"><div [innerHTML]="element.testDescription"></div> </td>
             </ng-container>
             <ng-container matColumnDef="validatorDefs">
                 <th mat-header-cell *matHeaderCellDef> Validators </th>

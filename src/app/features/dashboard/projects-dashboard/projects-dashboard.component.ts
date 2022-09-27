@@ -51,11 +51,10 @@ export class ProjectsDashboardComponent implements OnInit {
 
   async ngOnInit() {
     await this.getProjects();
+    this.dataLoaded = true;
     this.dataSource.paginator = this.paginator;
     this.sort.sort(({ id: 'lastRunDt', start: 'desc'}) as MatSortable);
     this.dataSource.sort = this.sort;
-
-    this.dataLoaded = true;
   }
 
   async getProjects() {
