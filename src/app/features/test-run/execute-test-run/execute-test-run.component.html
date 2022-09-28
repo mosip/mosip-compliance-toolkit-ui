@@ -39,7 +39,11 @@
                 <span *ngIf="!runComplete">
                     Execution of {{testCasesList.length}} testcases for collection <b>{{collectionName}}</b> has started.
                     <p></p>
-                    <mat-progress-bar color="accent" mode="determinate" [value]="progressDone"></mat-progress-bar>
+                    <div style="position: relative">
+                        <mat-progress-bar color="accent" mode="determinate" [value]="progressDone"></mat-progress-bar>
+                        <span *ngIf="progressDone < 100" style="position: absolute; top: 0.5em;" [ngStyle]="{'left': progressDone + '%'}">&nbsp;{{progressDone | number:'1.0-0'}}%</span>
+                        <p></p>
+                    </div>
                     <p></p><p></p>Current testcase: {{currectTestCaseId}} - {{currectTestCaseName}}
                     <p></p>
                     <div [innerHTML]="currentTestDescription"></div>

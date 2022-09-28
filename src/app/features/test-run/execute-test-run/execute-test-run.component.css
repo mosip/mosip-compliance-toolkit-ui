@@ -41,3 +41,6 @@ mat-dialog-actions {
   cursor: pointer;
   color: #ff4081;
 }
+mat-progress-bar {
+  height: 2em;
+}
