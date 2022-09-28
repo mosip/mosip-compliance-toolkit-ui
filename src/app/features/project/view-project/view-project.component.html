@@ -52,18 +52,18 @@
                     <span *ngIf="projectForm.controls['projectType']?.value == 'SDK'">
                         <div class="fieldWrapper">
                             <span class="fieldLabel">
-                                <mat-label>URL:
+                                <mat-label>Base URL:
                                 </mat-label>
                             </span>
                             <span class="fieldContainer">
                                 <mat-form-field appearance="legacy" [style.width.px]=327>
-                                    <mat-label>URL:</mat-label>
+                                    <mat-label>Base URL:</mat-label>
                                     <input matInput formControlName="sdkUrl" #keyboardRef #input (change)="updateProjectUrl()" />
                                     <mat-error *ngIf="projectForm.controls['sdkUrl'].hasError('required')">
-                                        URL is required
+                                        Base URL is required
                                     </mat-error>
                                     <mat-error *ngIf="projectForm.controls['sdkUrl'].hasError('pattern')">
-                                        URL is invalid
+                                        Base URL is invalid
                                     </mat-error>
                                 </mat-form-field>
                             </span>
@@ -252,18 +252,18 @@
                     <span *ngIf="projectForm.controls['projectType']?.value == 'ABIS'">
                         <div class="fieldWrapper">
                             <span class="fieldLabel">
-                                <mat-label>URL:
+                                <mat-label>Base URL:
                                 </mat-label>
                             </span>
                             <span class="fieldContainer">
                                 <mat-form-field appearance="legacy" [style.width.px]=327>
-                                    <mat-label>URL:</mat-label>
+                                    <mat-label>Base URL:</mat-label>
                                     <input matInput formControlName="abisUrl" #keyboardRef #input />
                                     <mat-error *ngIf="projectForm.controls['abisUrl'].hasError('required')">
-                                        URL is required
+                                        Base URL is required
                                     </mat-error>
                                     <mat-error *ngIf="projectForm.controls['abisUrl'].hasError('pattern')">
-                                        URL is invalid
+                                        Base URL is invalid
                                     </mat-error>
                                 </mat-form-field>
                             </span>

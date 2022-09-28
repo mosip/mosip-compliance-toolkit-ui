@@ -29,7 +29,6 @@ export class TestRunHistoryComponent implements OnInit {
   sdkProjectData: SdkProjectModel;
   dataSource: MatTableDataSource<TestRunHistoryModel>;
   displayedColumns: string[] = [
-    'runId',
     'lastRunTime',
     'runStatus',
     'testCaseCount',
