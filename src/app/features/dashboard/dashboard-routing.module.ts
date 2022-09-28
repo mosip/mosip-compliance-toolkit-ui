@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     path: 'biometric',
     component: BiometricDashboardComponent,
-    data: { breadcrumb: 'Biomteric Data Dashboard' },
+    data: { breadcrumb: 'Biomterics Test Data' },
   },
 ];
 
