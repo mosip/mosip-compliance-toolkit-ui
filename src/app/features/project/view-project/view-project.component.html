@@ -11,8 +11,8 @@
         <button mat-menu-item (click)="viewTestRunsHistory(myobject)">Test Run History</button>
     </ng-template>
 </mat-menu>
-<div class="mat-elevation-z8" *ngIf="dataLoaded">
-    <form [formGroup]="projectForm">
+<div class="mat-elevation-z8">
+    <form [formGroup]="projectForm"  *ngIf="dataLoaded">
         <mat-accordion>
             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [expanded]="panelOpenState">
                 <mat-expansion-panel-header>
@@ -336,6 +336,7 @@
                 </button>
             </span>
         </div>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 50, 100]" aria-label="Select page of users"></mat-paginator>
         <table mat-table [dataSource]="dataSource" matSort class="collections-table">
             <!--- Note that these columns can be defined in any order.
               The actual rendered columns are set as a property on the row definition" -->
@@ -388,7 +389,7 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <mat-paginator [pageSizeOptions]="[5, 10, 25, 50, 100]" aria-label="Select page of users"></mat-paginator>
+       
     </div>
     <div class="button-container">
         <button mat-flat-button color="accent" (click)="showDashboard()" class="add-button">

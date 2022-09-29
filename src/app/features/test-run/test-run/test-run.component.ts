@@ -273,4 +273,5 @@ export class TestRunComponent implements OnInit {
       `toolkit/project/${this.projectType}/${this.projectId}`,
     ]);
   }
+
 }
