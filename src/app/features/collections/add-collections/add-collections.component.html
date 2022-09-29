@@ -81,7 +81,7 @@
         </table>
     </div>
 </div>
-<div class="button-container">
+<div class="button-container" *ngIf="dataLoaded">
     <button mat-flat-button color="accent" (click)="backToProject()" class="add-button">
         Back
     </button>

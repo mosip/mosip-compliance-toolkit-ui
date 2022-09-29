@@ -55,6 +55,9 @@
                                 <mat-expansion-panel-header>
                                     <mat-panel-title>Method Request:</mat-panel-title>
                                 </mat-expansion-panel-header>
+                                <span class="custom-class" style="float: right;">
+                                    <button [cdkCopyToClipboard]="element.methodRequest" mat-button><mat-icon >content_copy</mat-icon></button>
+                                </span>
                                 <div class="json-content">
                                     <code class="prettyprint">{{element.methodRequest}}</code>
                                 </div>
@@ -65,6 +68,9 @@
                                 <mat-expansion-panel-header>
                                     <mat-panel-title>Method Response:</mat-panel-title>
                                 </mat-expansion-panel-header>
+                                <span class="custom-class" style="float: right;">
+                                    <button [cdkCopyToClipboard]="element.methodResponse" mat-button><mat-icon >content_copy</mat-icon></button>
+                                </span>
                                 <div class="json-content">
                                     <code class="prettyprint">{{element.methodResponse}}</code>
                                 </div>
