@@ -108,7 +108,8 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button *ngIf="!scanComplete || (scanComplete && errorsInGettingTestcases) 
-        || (scanComplete && !errorsInGettingTestcases && runComplete)" mat-flat-button color="accent"
+    || (scanComplete && !errorsInGettingTestcases && !runComplete) 
+    || (scanComplete && !errorsInGettingTestcases && runComplete)" mat-flat-button color="accent"
         (click)="close()">Close</button>
     <div class="spacer"
         *ngIf="(scanComplete && !errorsInGettingTestcases && !runComplete && showInitiateCaptureBtn) || (scanComplete && !errorsInGettingTestcases && runComplete && !serviceErrors && !errorsInSavingTestRun)">
@@ -117,28 +118,4 @@
         color="accent" (click)="setInitiateCapture()">Initiate Capture</button>
     <button *ngIf="scanComplete && !errorsInGettingTestcases && runComplete && !serviceErrors && !errorsInSavingTestRun"
         mat-flat-button color="accent" (click)="viewTestRun()">View Test Run</button>
-    <!-- <div *ngIf="scanComplete">
-        <div *ngIf="errorsInGettingTestcases">
-            <button mat-flat-button color="accent" (click)="close()">Close</button>
-        </div>
-        <div *ngIf="!errorsInGettingTestcases">
-            <div *ngIf="!runComplete">
-                <div *ngIf="showInitiateCaptureBtn"  class="custom-class">
-                    <button mat-flat-button color="accent" (click)="close()">Close</button>
-                    <div class="spacer"></div>&nbsp;&nbsp;
-                    <button mat-flat-button color="accent" (click)="setInitiateCapture()">Initiate Capture</button>
-                </div>
-            </div>
-            <div *ngIf="runComplete">
-                <div *ngIf="!serviceErrors && !errorsInSavingTestRun"  class="custom-class">
-                    <button mat-flat-button color="accent" (click)="close()">Close</button>
-                    <div class="spacer"></div>&nbsp;&nbsp;
-                    <button mat-flat-button color="accent" (click)="viewTestRun()">View Test Run</button>                                
-                </div>
-                <div *ngIf="serviceErrors || errorsInSavingTestRun">
-                    <button mat-flat-button color="accent" (click)="close()">Close</button>
-                </div>
-            </div>    
-        </div>
-    </div> -->
 </mat-dialog-actions>
