@@ -1,13 +1,14 @@
 .button-container {
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  width: 95%;
-  position: fixed;
-  bottom: 0px;
-  left: 10px;
-  background-color: white;
-  border-top: 1px solid #ddd;
+  padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    width: 98% !important;
+    z-index: 1;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    background-color: white;
+    border-top: 1px solid #ddd;
 }
 .button-container + .add-button {
   margin-left: 8px;
@@ -19,7 +20,7 @@
   display: flex;
 }
 .table-container {
-  height: 500px;
+  /* height: 500px; */
   overflow: auto;
 }
 .testcases-table {

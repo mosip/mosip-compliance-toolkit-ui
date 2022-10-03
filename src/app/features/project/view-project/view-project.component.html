@@ -12,9 +12,10 @@
     </ng-template>
 </mat-menu>
 <div class="mat-elevation-z8">
-    <form [formGroup]="projectForm"  *ngIf="dataLoaded">
+    <form [formGroup]="projectForm" *ngIf="dataLoaded">
         <mat-accordion>
-            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [expanded]="panelOpenState">
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                [expanded]="panelOpenState">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         Project Name: {{projectForm.controls['name'].value}}
@@ -58,7 +59,8 @@
                             <span class="fieldContainer">
                                 <mat-form-field appearance="legacy" [style.width.px]=327>
                                     <mat-label>Base URL:</mat-label>
-                                    <input matInput formControlName="sdkUrl" #keyboardRef #input (change)="updateProjectUrl()" />
+                                    <input matInput formControlName="sdkUrl" #keyboardRef #input
+                                        (change)="updateProjectUrl()" />
                                     <mat-error *ngIf="projectForm.controls['sdkUrl'].hasError('required')">
                                         Base URL is required
                                     </mat-error>
@@ -99,7 +101,8 @@
                             <span class="fieldContainer">
                                 <mat-form-field appearance="legacy" [style.width.px]=327>
                                     <mat-label>Purpose:</mat-label>
-                                    <mat-select formControlName="sdkPurpose" #singleSelect  (selectionChange)="handleSdkPurposeChange()">
+                                    <mat-select formControlName="sdkPurpose" #singleSelect
+                                        (selectionChange)="handleSdkPurposeChange()">
                                         <mat-option value="Matcher">
                                             Matcher
                                         </mat-option>
@@ -130,7 +133,8 @@
                             <span class="fieldContainer">
                                 <mat-form-field appearance="legacy" [style.width.px]=327>
                                     <mat-label>Select Test Data:</mat-label>
-                                    <mat-select formControlName="bioTestData" #singleSelect (selectionChange)="updateProjectTestData()">
+                                    <mat-select formControlName="bioTestData" #singleSelect
+                                        (selectionChange)="updateProjectTestData()">
                                         <mat-option value="MOSIP_DEFAULT">
                                             MOSIP_DEFAULT
                                         </mat-option>
@@ -389,16 +393,17 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-       
     </div>
-    <div class="button-container">
-        <button mat-flat-button color="accent" (click)="showDashboard()" class="add-button">
-            <mat-icon>home</mat-icon>
-            Dashboard
-        </button>
-        <!--<button mat-flat-button color="accent" (click)="saveProject()" class="add-button">
-            <mat-icon>add</mat-icon>
-            Add Project
-        </button> -->
-    </div>
+</div>
+<p></p>
+        &nbsp;
+<div class="button-container">
+    <button mat-flat-button color="accent" (click)="showDashboard()" class="add-button">
+        <mat-icon>home</mat-icon>
+        Dashboard
+    </button>
+    <!--<button mat-flat-button color="accent" (click)="saveProject()" class="add-button">
+        <mat-icon>add</mat-icon>
+        Add Project
+    </button> -->
 </div>

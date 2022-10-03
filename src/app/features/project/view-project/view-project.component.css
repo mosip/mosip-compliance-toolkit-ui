@@ -42,18 +42,19 @@ mat-expansion-panel-header {
   margin-left: 3px;
 }
 .list-container {
-  padding: 20px;
+  padding: 10px;
   background-color: white;
   /* border-top: 1px solid #ddd; */
 }
 .button-container {
-  padding: 20px;
+  padding: 10px;
   display: flex;
   justify-content: space-between;
-  width: 95%;
+  width: 100% !important;
+  z-index: 1;
   position: fixed;
   bottom: 0px;
-  left: 10px;
+  left: 0px;
   background-color: white;
   border-top: 1px solid #ddd;
 }
@@ -69,7 +70,7 @@ mat-expansion-panel-header {
   width: 100%;
 }
 .collections-header-container {
-  padding-bottom: 16px;
+  /* padding-bottom: 16px; */
   display: flex;
   justify-content: space-between;
   width: 95%;
