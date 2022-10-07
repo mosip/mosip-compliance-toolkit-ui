@@ -2,6 +2,7 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppConfigService } from './app-config.service';
 import { AppRoutingModule } from './app-routing.module';
+import { I18nModule } from './i18n.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from './core/core.module';
@@ -24,7 +25,8 @@ const appInitialization = (appConfig: AppConfigService) => {
     CoreModule,
     MaterialModule,
     FormsModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    I18nModule
   ],
   providers: [
     CookieService,

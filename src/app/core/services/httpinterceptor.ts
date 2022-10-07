@@ -58,7 +58,10 @@ export class AuthInterceptor implements HttpInterceptor {
         setHeaders: { 'X-XSRF-TOKEN': this.cookieService.get('XSRF-TOKEN') },
       });
     }
-
+    if (request.url.includes('i18n')) {
+      isLocalUrl = true;
+    }
+   
     return next.handle(request).pipe(
       tap(
         (event) => {

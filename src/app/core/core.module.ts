@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { MaterialModule } from './material.module';
-
+import { I18nModule } from '../i18n.module';
 import { AuthInterceptor } from './services/httpinterceptor';
 import { AuthService } from './services/authservice.service';
 import { AuthguardService } from './services/authguard.service';
@@ -28,6 +28,7 @@ import { DialogComponent } from './components/dialog/dialog.component';
     MainLayoutComponent,
     HeaderComponent,
     MaterialModule,
+    I18nModule,
     RouterModule,
     DialogComponent
   ],
