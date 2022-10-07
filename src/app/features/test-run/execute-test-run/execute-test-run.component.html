@@ -112,7 +112,9 @@
     || (scanComplete && !errorsInGettingTestcases && runComplete)" mat-flat-button color="accent"
         (click)="close()">Close</button>
     <div class="spacer"
-        *ngIf="(scanComplete && !errorsInGettingTestcases && !runComplete && showInitiateCaptureBtn) || (scanComplete && !errorsInGettingTestcases && runComplete && !serviceErrors && !errorsInSavingTestRun)">
+        *ngIf="(scanComplete && !errorsInGettingTestcases && !runComplete && showInitiateCaptureBtn)
+        || (scanComplete && !errorsInGettingTestcases && !runComplete) 
+        || (scanComplete && !errorsInGettingTestcases && runComplete && !serviceErrors && !errorsInSavingTestRun)">
     </div>
     <button *ngIf="scanComplete && !errorsInGettingTestcases && !runComplete && showInitiateCaptureBtn" mat-flat-button
         color="accent" (click)="setInitiateCapture()">Initiate Capture</button>
