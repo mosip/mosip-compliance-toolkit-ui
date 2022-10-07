@@ -1,4 +1,5 @@
 import { OnInit, Component, ViewChild } from '@angular/core';
+import { TranslateService } from "@ngx-translate/core";
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortable } from '@angular/material/sort';
 import { ActivatedRoute } from '@angular/router';
@@ -9,6 +10,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import * as appConstants from 'src/app/app.constants';
 import Utils from 'src/app/app.utils';
+import { UserProfileService } from 'src/app/core/services/user-profile.service';
 
 export interface ProjectData {
   id: string;
@@ -44,12 +46,23 @@ export class ProjectsDashboardComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private translate: TranslateService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
+    private userProfileService: UserProfileService,
     private dataService: DataService
   ) {}
 
   async ngOnInit() {
+    // try {
+    //   this.translate.use(this.userProfileService.getUserPreferredLanguage());
+    // } catch {
+    //   this.translate.use("eng");
+    // }
+    this.translate.use(this.userProfileService.getUserPreferredLanguage()).subscribe(response => {
+      // this.popupMessages = response;
+      // this.serverError = response.serverError;
+    });
     await this.getProjects();
     this.dataLoaded = true;
     this.dataSource.paginator = this.paginator;
