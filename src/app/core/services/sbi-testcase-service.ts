@@ -169,7 +169,9 @@ export class SbiTestCaseService {
         env: appConstants.DEVELOPER,
         purpose: selectedSbiDevice.purpose,
         specVersion: selectedSbiDevice.specVersion[0],
-        timeout: '10000',
+        timeout: this.appConfigService.getConfig()['sbiTimeout']
+          ? this.appConfigService.getConfig()['sbiTimeout']
+          : 10000,
         captureTime: new Date().toISOString(),
         transactionId: testCase.testId + '-' + new Date().getUTCMilliseconds(),
         domainUri: '', //TODO
@@ -374,7 +376,9 @@ export class SbiTestCaseService {
         testName: testCase.testName,
         testDescription: testCase.testDescription,
         responseSchema: testCase.responseSchema[0],
-        isNegativeTestcase: testCase.isNegativeTestcase ? testCase.isNegativeTestcase : false,
+        isNegativeTestcase: testCase.isNegativeTestcase
+          ? testCase.isNegativeTestcase
+          : false,
         methodResponse: JSON.stringify(methodResponse),
         methodRequest: JSON.stringify(methodRequest),
         methodName: testCase.methodName[0],
