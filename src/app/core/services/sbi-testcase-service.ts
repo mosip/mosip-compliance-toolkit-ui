@@ -169,7 +169,9 @@ export class SbiTestCaseService {
         env: appConstants.DEVELOPER,
         purpose: selectedSbiDevice.purpose,
         specVersion: selectedSbiDevice.specVersion[0],
-        timeout: '10000',
+        timeout: testCase.otherAttributes.timeout
+        ? testCase.otherAttributes.timeout.toString()
+        : '10000',
         captureTime: new Date().toISOString(),
         transactionId: testCase.testId + '-' + new Date().getUTCMilliseconds(),
         domainUri: '', //TODO
@@ -192,7 +194,9 @@ export class SbiTestCaseService {
         env: appConstants.DEVELOPER,
         purpose: selectedSbiDevice.purpose,
         specVersion: selectedSbiDevice.specVersion[0],
-        timeout: '10000',
+        timeout: testCase.otherAttributes.timeout
+        ? testCase.otherAttributes.timeout.toString()
+        : '10000',
         captureTime: new Date().toISOString(),
         transactionId: testCase.testId + '-' + new Date().getUTCMilliseconds(),
         bio: [
