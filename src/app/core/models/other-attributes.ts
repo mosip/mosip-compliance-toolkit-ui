@@ -12,5 +12,6 @@ export class OtherAttributesModel {
       public modalities: any,
       public convertSourceFormat: any,
       public convertTargetFormat: any,
+      public timeout: any,
     ) {}
   }
