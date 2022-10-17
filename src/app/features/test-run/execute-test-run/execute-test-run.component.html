@@ -111,13 +111,16 @@
     || (scanComplete && !errorsInGettingTestcases && !runComplete) 
     || (scanComplete && !errorsInGettingTestcases && runComplete)" mat-flat-button color="accent"
         (click)="close()">Close</button>
-    <div class="spacer"
-        *ngIf="(scanComplete && !errorsInGettingTestcases && !runComplete && showInitiateCaptureBtn)
-        || (scanComplete && !errorsInGettingTestcases && !runComplete) 
-        || (scanComplete && !errorsInGettingTestcases && runComplete && !serviceErrors && !errorsInSavingTestRun)">
-    </div>
+    <div class="spacer" *ngIf="scanComplete"></div>
+    <!-- <button *ngIf="!scanComplete || (scanComplete && !runComplete && showResumeBtn)" mat-flat-button color="accent"
+        (click)="scanDevice()">Select Another Device</button> -->
+    <div class="spacer" *ngIf="scanComplete"></div>    
     <button *ngIf="scanComplete && !errorsInGettingTestcases && !runComplete && showInitiateCaptureBtn" mat-flat-button
         color="accent" (click)="setInitiateCapture()">Initiate Capture</button>
+    <button *ngIf="scanComplete && !errorsInGettingTestcases && !runComplete && showResumeBtn" mat-flat-button
+        color="accent" (click)="setResume()">Resume</button>
+    <button *ngIf="scanComplete && !errorsInGettingTestcases && !runComplete && !showResumeBtn && showResumeAgainBtn" mat-flat-button
+        color="accent" (click)="setResumeAgain()">Resume Next</button>        
     <button *ngIf="scanComplete && !errorsInGettingTestcases && runComplete && !serviceErrors && !errorsInSavingTestRun"
         mat-flat-button color="accent" (click)="viewTestRun()">View Test Run</button>
 </mat-dialog-actions>

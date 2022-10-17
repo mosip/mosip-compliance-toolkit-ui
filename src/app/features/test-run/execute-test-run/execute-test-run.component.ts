@@ -1,5 +1,9 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import * as appConstants from 'src/app/app.constants';
 import { DataService } from '../../../core/services/data-service';
 import { AppConfigService } from '../../../app-config.service';
@@ -12,6 +16,7 @@ import { Router } from '@angular/router';
 import { SbiProjectModel } from 'src/app/core/models/sbi-project';
 import { SbiDiscoverResponseModel } from 'src/app/core/models/sbi-discover';
 import { SdkProjectModel } from 'src/app/core/models/sdk-project';
+import { ScanDeviceComponent } from '../scan-device/scan-device.component';
 
 @Component({
   selector: 'app-execute-test-run',
@@ -38,6 +43,9 @@ export class ExecuteTestRunComponent implements OnInit {
   errorsInSavingTestRun = false;
   initiateCapture = false;
   showInitiateCaptureBtn = false;
+  pauseExecution = false;
+  showResumeBtn = false;
+  showResumeAgainBtn = false;
   errorsSummary: string[];
   testCasesList: any;
   testRunId: string;
@@ -60,6 +68,7 @@ export class ExecuteTestRunComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dataService: DataService,
     private router: Router,
+    private dialog: MatDialog,
     private sbiTestCaseService: SbiTestCaseService,
     private sdkTestCaseService: SdkTestCaseService,
     private appConfigService: AppConfigService
@@ -197,7 +206,7 @@ export class ExecuteTestRunComponent implements OnInit {
               this.errorsInGettingTestcases = true;
               resolve(true);
             }
-            console.log(response);
+            //console.log(response);
             this.testCasesList =
               response[appConstants.RESPONSE][appConstants.TESTCASES];
             resolve(true);
@@ -229,36 +238,51 @@ export class ExecuteTestRunComponent implements OnInit {
     this.basicTimer.stop();
   }
 
-  async runExecuteForLoop(proceedLoop: boolean) {
+  async runExecuteForLoop(startingForLoop: boolean) {
     for (const testCase of this.testCasesList) {
-      let resumeTestRun = false;
+      console.log(`this.currectTestCaseId: ${testCase.testId}`);
+      //dummy data
+      if (testCase.testId == 'SBI1028') {
+        testCase.otherAttributes.resumeBtn = true;
+        testCase.otherAttributes.resumeAgainBtn = true;
+        testCase.testDescription = `Please disconnect the device to test for <b>Not Ready</b> status. <br> Once disconnected please click on <b>Resume</b> button.<br> After testcase execution is done re-connect the device and click on <b>Resume Next</b> button.`;
+      }
+      let proceedTestCase = false;
       if (
-        !proceedLoop &&
+        !startingForLoop &&
         this.currectTestCaseId != '' &&
         this.currectTestCaseId == testCase.testId
       ) {
-        resumeTestRun = true;
+        proceedTestCase = true;
       }
-      if (resumeTestRun || proceedLoop) {
-        proceedLoop = true;
+      if (proceedTestCase || startingForLoop) {
+        if (startingForLoop && testCase.otherAttributes.resumeBtn) {
+          this.showResumeBtn = true;
+        }
+        startingForLoop = true;
         this.currectTestCaseId = testCase.testId;
-        console.log(`this.currectTestCaseId: ${this.currectTestCaseId}`);
         this.currectTestCaseName = testCase.testName;
         this.currentTestDescription = testCase.testDescription;
-        if (testCase.testId == 'SBI1003') {
-          this.currentTestDescription = "1. This testcase is to check if Registration Capture for Left Slap from the device is valid or not.<br> 2. Please place your left slap <b>except left ring finger</b> on the device. ";
-        }
         if (!this.initiateCapture) {
           this.checkIfToShowInitiateCaptureBtn(testCase);
         }
         const res: any = await this.executeCurrentTestCase(testCase);
         if (res) {
-          proceedLoop = this.handleErr(res);
+          startingForLoop = this.handleErr(res);
           this.calculateTestcaseResults(res[appConstants.VALIDATIONS_RESPONSE]);
           //update the test run details in db
           await this.addTestRunDetails(testCase, res);
           //update the testrun in db with execution time
           await this.updateTestRun();
+          //showResumeAgain btn
+          if (
+            testCase.otherAttributes.resumeAgainBtn &&
+            this.testCasesList.length > 1 &&
+            this.getIndexInList() + 1 < this.testCasesList.length
+          ) {
+            this.showResumeAgainBtn = true;
+            await new Promise(async (resolve, reject) => {});
+          }
           this.currectTestCaseId = '';
           this.currectTestCaseName = '';
           this.currentTestDescription = '';
@@ -268,7 +292,7 @@ export class ExecuteTestRunComponent implements OnInit {
   }
 
   handleErr(res: any) {
-    console.log('handleErr');
+    //console.log('handleErr');
     const errors = res[appConstants.ERRORS];
     if (errors && errors.length > 0) {
       this.serviceErrors = true;
@@ -282,6 +306,7 @@ export class ExecuteTestRunComponent implements OnInit {
     }
     return true;
   }
+
   checkIfToShowInitiateCaptureBtn(testCase: TestCaseModel) {
     if (this.projectType === appConstants.SBI) {
       if (
@@ -292,7 +317,6 @@ export class ExecuteTestRunComponent implements OnInit {
       }
     }
   }
-
   async addTestRun() {
     this.startTestRunDt = new Date().toISOString();
     const testRunRequest = {
@@ -410,14 +434,16 @@ export class ExecuteTestRunComponent implements OnInit {
               resolve(true);
             }
             // console.log(response);
-            this.progressDone = this.progressDone + 100/this.testCasesList.length;
-            
+            this.progressDone =
+              this.progressDone + 100 / this.testCasesList.length;
+
             resolve(true);
           },
           (errors) => {
             this.errorsInSavingTestRun = true;
-            this.progressDone = this.progressDone + 100/this.testCasesList.length;
-            
+            this.progressDone =
+              this.progressDone + 100 / this.testCasesList.length;
+
             resolve(true);
           }
         )
@@ -426,9 +452,11 @@ export class ExecuteTestRunComponent implements OnInit {
   }
   async executeCurrentTestCase(testCase: TestCaseModel) {
     return new Promise(async (resolve, reject) => {
-      console.log(`this.projectType ${this.projectType}`);
+      if (this.showResumeBtn) {
+        this.pauseExecution = true;
+      }
+      console.log(`this.pauseExecution : ${this.pauseExecution}`);
       if (this.projectType === appConstants.SBI) {
-        console.log(testCase);
         if (
           testCase.methodName[0] == appConstants.SBI_METHOD_CAPTURE ||
           testCase.methodName[0] == appConstants.SBI_METHOD_RCAPTURE
@@ -442,15 +470,23 @@ export class ExecuteTestRunComponent implements OnInit {
             );
             resolve(res);
           } else {
-            //resolve(false);
+            //no resp to keep the for loop on hold
           }
-        } else {  
-          const res = await this.sbiTestCaseService.runTestCase(
-            testCase,
-            this.sbiSelectedPort ? this.sbiSelectedPort : '',
-            this.sbiSelectedDevice ? this.sbiSelectedDevice : ''
-          );
-          resolve(res);
+        } else {
+          if (this.showResumeBtn) {
+            this.pauseExecution = true;
+          }
+          console.log(`this.pauseExecution : ${this.pauseExecution}`);
+          if (!this.pauseExecution) {
+            const res = await this.sbiTestCaseService.runTestCase(
+              testCase,
+              this.sbiSelectedPort ? this.sbiSelectedPort : '',
+              this.sbiSelectedDevice ? this.sbiSelectedDevice : ''
+            );
+            resolve(res);
+          } else {
+            //no resp to keep the for loop on hold
+          }
         }
       } else if (this.projectType == appConstants.SDK) {
         await this.getSdkProjectDetails();
@@ -500,6 +536,70 @@ export class ExecuteTestRunComponent implements OnInit {
     this.runComplete = true;
     this.basicTimer.stop();
   }
+
+  async setResume() {
+    this.showResumeBtn = false;
+    this.pauseExecution = false;
+    await this.runExecuteForLoop(false);
+    this.runComplete = true;
+    this.basicTimer.stop();
+  }
+
+  getIndexInList() {
+    let testCases = this.testCasesList;
+    for (const testCase of this.testCasesList) {
+      if (
+        this.currectTestCaseId != '' &&
+        this.currectTestCaseId == testCase.testId
+      ) {
+        let ind = testCases.indexOf(testCase);
+        return ind;
+      }
+    }
+    return -1;
+  }
+  async setResumeAgain() {
+    this.showResumeAgainBtn = false;
+    this.pauseExecution = false;
+    let testCases = this.testCasesList;
+    for (const testCase of this.testCasesList) {
+      if (
+        this.currectTestCaseId != '' &&
+        this.currectTestCaseId == testCase.testId
+      ) {
+        let ind = testCases.indexOf(testCase);
+        ind = ind + 1;
+        if (testCases[ind]) this.currectTestCaseId = testCases[ind].testId;
+      }
+    }
+    await this.runExecuteForLoop(false);
+    this.runComplete = true;
+    this.basicTimer.stop();
+  }
+
+  // scanDevice() {
+  //   const body = {
+  //     title: 'Scan Device',
+  //   };
+  //   this.dialog
+  //     .open(ScanDeviceComponent, {
+  //       width: '600px',
+  //       data: body,
+  //     })
+  //     .afterClosed()
+  //     .subscribe(() => {
+  //       this.sbiSelectedPort = localStorage.getItem(
+  //         appConstants.SBI_SELECTED_PORT
+  //       )
+  //         ? localStorage.getItem(appConstants.SBI_SELECTED_PORT)
+  //         : null;
+  //       this.sbiSelectedDevice = localStorage.getItem(
+  //         appConstants.SBI_SELECTED_DEVICE
+  //       )
+  //         ? localStorage.getItem(appConstants.SBI_SELECTED_DEVICE)
+  //         : null;
+  //     });
+  // }
 
   close() {
     this.dialogRef.close('reloadProjectDetails');
