@@ -1,6 +1,7 @@
 export class OtherAttributesModel {
     constructor(
-      public runtimeInput: any,
+      public resumeBtn: boolean,
+      public resumeAgainBtn: boolean,
       public purpose: any,
       public biometricTypes: any,
       public deviceSubTypes: any,
