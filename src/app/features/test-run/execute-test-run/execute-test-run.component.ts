@@ -241,12 +241,6 @@ export class ExecuteTestRunComponent implements OnInit {
   async runExecuteForLoop(startingForLoop: boolean) {
     for (const testCase of this.testCasesList) {
       console.log(`this.currectTestCaseId: ${testCase.testId}`);
-      //dummy data
-      if (testCase.testId == 'SBI1028') {
-        testCase.otherAttributes.resumeBtn = true;
-        testCase.otherAttributes.resumeAgainBtn = true;
-        testCase.testDescription = `Please disconnect the device to test for <b>Not Ready</b> status. <br> Once disconnected please click on <b>Resume</b> button.<br> After testcase execution is done re-connect the device and click on <b>Resume Next</b> button.`;
-      }
       let proceedTestCase = false;
       if (
         !startingForLoop &&
@@ -274,12 +268,9 @@ export class ExecuteTestRunComponent implements OnInit {
           await this.addTestRunDetails(testCase, res);
           //update the testrun in db with execution time
           await this.updateTestRun();
-          //showResumeAgain btn
           if (
-            testCase.otherAttributes.resumeAgainBtn &&
-            this.testCasesList.length > 1 &&
-            this.getIndexInList() + 1 < this.testCasesList.length
-          ) {
+            testCase.otherAttributes.resumeAgainBtn
+          ) {  
             this.showResumeAgainBtn = true;
             await new Promise(async (resolve, reject) => {});
           }
@@ -505,6 +496,7 @@ export class ExecuteTestRunComponent implements OnInit {
       }
     });
   }
+
   calculateTestcaseResults(res: any) {
     let allValidatorsPassed = false;
     if (res && res[appConstants.RESPONSE]) {
@@ -558,21 +550,27 @@ export class ExecuteTestRunComponent implements OnInit {
     }
     return -1;
   }
+
   async setResumeAgain() {
     this.showResumeAgainBtn = false;
     this.pauseExecution = false;
     let testCases = this.testCasesList;
-    for (const testCase of this.testCasesList) {
-      if (
-        this.currectTestCaseId != '' &&
-        this.currectTestCaseId == testCase.testId
-      ) {
-        let ind = testCases.indexOf(testCase);
-        ind = ind + 1;
-        if (testCases[ind]) this.currectTestCaseId = testCases[ind].testId;
+    if (
+      this.testCasesList.length > 1 &&
+      this.getIndexInList() + 1 < this.testCasesList.length
+    ) {
+      for (const testCase of this.testCasesList) {
+        if (
+          this.currectTestCaseId != '' &&
+          this.currectTestCaseId == testCase.testId
+        ) {
+          let ind = testCases.indexOf(testCase);
+          ind = ind + 1;
+          if (testCases[ind]) this.currectTestCaseId = testCases[ind].testId;
+        }
       }
+      await this.runExecuteForLoop(false);
     }
-    await this.runExecuteForLoop(false);
     this.runComplete = true;
     this.basicTimer.stop();
   }

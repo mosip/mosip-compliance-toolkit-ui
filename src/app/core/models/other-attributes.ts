@@ -1,7 +1,5 @@
 export class OtherAttributesModel {
     constructor(
-      public resumeBtn: boolean,
-      public resumeAgainBtn: boolean,
       public purpose: any,
       public biometricTypes: any,
       public deviceSubTypes: any,
@@ -14,5 +12,7 @@ export class OtherAttributesModel {
       public convertSourceFormat: any,
       public convertTargetFormat: any,
       public timeout: any,
+      public resumeBtn: boolean,
+      public resumeAgainBtn: boolean,
     ) {}
   }

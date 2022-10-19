@@ -170,7 +170,8 @@ export class SbiTestCaseService {
         purpose: selectedSbiDevice.purpose,
         specVersion: selectedSbiDevice.specVersion[0],
         timeout: testCase.otherAttributes.timeout
-          ? testCase.otherAttributes.timeout.toString() : this.appConfigService.getConfig()['sbiTimeout']
+          ? testCase.otherAttributes.timeout.toString()
+          : this.appConfigService.getConfig()['sbiTimeout']
           ? this.appConfigService.getConfig()['sbiTimeout'].toString()
           : '10000',
         captureTime: new Date().toISOString(),
@@ -196,7 +197,8 @@ export class SbiTestCaseService {
         purpose: selectedSbiDevice.purpose,
         specVersion: selectedSbiDevice.specVersion[0],
         timeout: testCase.otherAttributes.timeout
-          ? testCase.otherAttributes.timeout.toString() : this.appConfigService.getConfig()['sbiTimeout']
+          ? testCase.otherAttributes.timeout.toString()
+          : this.appConfigService.getConfig()['sbiTimeout']
           ? this.appConfigService.getConfig()['sbiTimeout'].toString()
           : '10000',
         captureTime: new Date().toISOString(),
@@ -294,7 +296,10 @@ export class SbiTestCaseService {
     if (testCase.methodName[0] == appConstants.SBI_METHOD_DEVICE_INFO) {
       let decodedDataArr: any[] = [];
       methodResponse.forEach((deviceInfoResp: any) => {
-        if (deviceInfoResp && deviceInfoResp.deviceInfo == '') {
+        if (deviceInfoResp && !deviceInfoResp.deviceInfo) {
+          decodedDataArr.push(deviceInfoResp);
+        }
+        else if (deviceInfoResp && deviceInfoResp.deviceInfo == '') {
           decodedDataArr.push(deviceInfoResp);
         } else {
           //chk if device is registered
