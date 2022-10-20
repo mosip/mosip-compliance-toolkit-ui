@@ -107,7 +107,7 @@ export class ExecuteTestRunComponent implements OnInit {
         const selectedSbiDevice: SbiDiscoverResponseModel = JSON.parse(
           this.sbiSelectedDevice
         );
-        if (this.sbiProjectData.purpose != selectedSbiDevice.purpose) {
+        if (selectedSbiDevice.purpose != "" && this.sbiProjectData.purpose != selectedSbiDevice.purpose) {
           this.scanComplete = false;
           this.dataLoaded = true;
           this.validationErrMsg =

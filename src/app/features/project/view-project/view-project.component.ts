@@ -3,7 +3,7 @@ import { BreadcrumbService } from 'xng-breadcrumb';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, MatSortable } from '@angular/material/sort';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AuthService } from '../../../core/services/authservice.service';
 import { DataService } from '../../../core/services/data-service';
@@ -81,6 +81,7 @@ export class ViewProjectComponent implements OnInit {
     }
     await this.getCollections();
     this.dataSource.paginator = this.paginator;
+    this.sort.sort(({ id: 'runDtimes', start: 'desc'}) as MatSortable);
     this.dataSource.sort = this.sort;
     this.initBreadCrumb();
     this.dataLoaded = true;
@@ -234,7 +235,7 @@ export class ViewProjectComponent implements OnInit {
             (response: any) => {
               //console.log(response);
               this.dataSource = new MatTableDataSource(
-                response['response']['collections']
+                response[appConstants.RESPONSE]['collections']
               );
               resolve(true);
             },
