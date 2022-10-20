@@ -5,7 +5,7 @@
     <mat-spinner diameter="50"></mat-spinner>
 </div>
 <!-- <h2 *ngIf="dataLoaded">Test Run History</h2>     -->
-<div class="mat-elevation-z8" *ngIf="dataLoaded">
+<div class="mat-elevation-z8">
     <span *ngIf="this.totalItems !== 0">
         <mat-paginator [length]="this.totalItems" [pageSize]="this.pageSize" [pageSizeOptions]="this.pageSizeOptions"
             (page)="showResults($event)">
