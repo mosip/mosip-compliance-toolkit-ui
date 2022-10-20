@@ -282,6 +282,7 @@ export class SdkTestCaseService {
       let validateRequest = {
         testCaseType: testCase.testCaseType,
         testName: testCase.testName,
+        specVersion: testCase.specVersion,
         testDescription: testCase.testDescription,
         responseSchema: testCase.responseSchema[methodIndex],
         isNegativeTestcase: testCase.isNegativeTestcase
@@ -319,6 +320,7 @@ export class SdkTestCaseService {
       let validateRequest = {
         testCaseType: testCase.testCaseType,
         testName: testCase.testName,
+        specVersion: testCase.specVersion,
         testDescription: testCase.testDescription,
         requestSchema: testCase.requestSchema[methodIndex],
         methodRequest: methodRequest,

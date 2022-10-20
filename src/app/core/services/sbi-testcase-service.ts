@@ -378,6 +378,7 @@ export class SbiTestCaseService {
       let validateRequest = {
         testCaseType: testCase.testCaseType,
         testName: testCase.testName,
+        specVersion: testCase.specVersion,
         testDescription: testCase.testDescription,
         responseSchema: testCase.responseSchema[0],
         isNegativeTestcase: testCase.isNegativeTestcase
@@ -413,6 +414,7 @@ export class SbiTestCaseService {
       let validateRequest = {
         testCaseType: testCase.testCaseType,
         testName: testCase.testName,
+        specVersion: testCase.specVersion,
         testDescription: testCase.testDescription,
         requestSchema: testCase.requestSchema[0],
         methodRequest: JSON.stringify(methodRequest),
