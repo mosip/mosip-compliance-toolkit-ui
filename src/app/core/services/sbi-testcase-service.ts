@@ -32,11 +32,13 @@ export class SbiTestCaseService {
         validationRequest[appConstants.RESPONSE] &&
         validationRequest[appConstants.RESPONSE].status == appConstants.SUCCESS
       ) {
+        let startExecutionTime = new Date().toISOString();
         let methodResponse: any = await this.executeMethod(
           testCase.methodName[0],
           sbiSelectedPort,
           methodRequest
         );
+        let endExecutionTime = new Date().toISOString();
         if (methodResponse) {
           const decodedMethodResp = this.createDecodedResponse(
             testCase,
@@ -48,7 +50,9 @@ export class SbiTestCaseService {
             testCase,
             methodRequest,
             decodedMethodResp,
-            sbiSelectedDevice
+            sbiSelectedDevice,
+            startExecutionTime,
+            endExecutionTime
           );
           let finalResponse = {
             methodResponse: JSON.stringify(decodedMethodResp),
@@ -196,11 +200,7 @@ export class SbiTestCaseService {
         env: appConstants.DEVELOPER,
         purpose: selectedSbiDevice.purpose,
         specVersion: selectedSbiDevice.specVersion[0],
-        timeout: testCase.otherAttributes.timeout
-          ? testCase.otherAttributes.timeout.toString()
-          : this.appConfigService.getConfig()['sbiTimeout']
-          ? this.appConfigService.getConfig()['sbiTimeout'].toString()
-          : '10000',
+        timeout: this.getTimeout(testCase),
         captureTime: new Date().toISOString(),
         transactionId: testCase.testId + '-' + new Date().getUTCMilliseconds(),
         bio: [
@@ -223,6 +223,13 @@ export class SbiTestCaseService {
     //return JSON.stringify(request);
   }
 
+  getTimeout(testCase: TestCaseModel){
+    return testCase.otherAttributes.timeout
+          ? testCase.otherAttributes.timeout.toString()
+          : this.appConfigService.getConfig()['sbiTimeout']
+          ? this.appConfigService.getConfig()['sbiTimeout'].toString()
+          : '10000'
+  }
   getBioSubType(segments: Array<string>): Array<string> {
     let bioSubTypes = new Array<string>();
     segments.forEach((segment) => {
@@ -374,7 +381,9 @@ export class SbiTestCaseService {
     testCase: TestCaseModel,
     methodRequest: any,
     methodResponse: any,
-    sbiSelectedDevice: string
+    sbiSelectedDevice: string,
+    startExecutionTime: string,
+    endExecutionTime: string
   ) {
     const selectedSbiDevice: SbiDiscoverResponseModel =
       JSON.parse(sbiSelectedDevice);
@@ -394,6 +403,9 @@ export class SbiTestCaseService {
         methodName: testCase.methodName[0],
         extraInfoJson: JSON.stringify({
           certificationType: selectedSbiDevice.certification,
+          startExecutionTime: startExecutionTime,
+          endExecutionTime: endExecutionTime,
+          timeout: this.getTimeout(testCase)
         }),
         validatorDefs: testCase.validatorDefs[0],
       };
