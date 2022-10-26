@@ -107,7 +107,10 @@ export class ExecuteTestRunComponent implements OnInit {
         const selectedSbiDevice: SbiDiscoverResponseModel = JSON.parse(
           this.sbiSelectedDevice
         );
-        if (selectedSbiDevice.purpose != "" && this.sbiProjectData.purpose != selectedSbiDevice.purpose) {
+        if (
+          selectedSbiDevice.purpose != '' &&
+          this.sbiProjectData.purpose != selectedSbiDevice.purpose
+        ) {
           this.scanComplete = false;
           this.dataLoaded = true;
           this.validationErrMsg =
@@ -232,16 +235,19 @@ export class ExecuteTestRunComponent implements OnInit {
     await this.addTestRun();
     this.testCasesList = testCasesListSorted;
     if (!this.errorsInSavingTestRun) {
-      await this.runExecuteForLoop(true);
+      await this.runExecuteForLoop(true, false);
     }
     this.runComplete = true;
     this.basicTimer.stop();
   }
 
-  async runExecuteForLoop(startingForLoop: boolean) {
+  async runExecuteForLoop(startingForLoop: boolean, fromResumeNext: boolean) {
     for (const testCase of this.testCasesList) {
-      console.log(`this.currectTestCaseId: ${testCase.testId}`);
+      console.log(`testCase.testId: ${testCase.testId}`);
       let proceedTestCase = false;
+      if (startingForLoop && testCase.otherAttributes.resumeBtn) {
+        this.showResumeBtn = true;
+      }
       if (
         !startingForLoop &&
         this.currectTestCaseId != '' &&
@@ -249,10 +255,16 @@ export class ExecuteTestRunComponent implements OnInit {
       ) {
         proceedTestCase = true;
       }
+      console.log(`this.currectTestCaseId: ${this.currectTestCaseId}`);
+      if (
+        fromResumeNext &&
+        this.currectTestCaseId != '' &&
+        testCase.testId == this.currectTestCaseId &&
+        testCase.otherAttributes.resumeBtn
+      ) {
+        this.showResumeBtn = true;
+      }
       if (proceedTestCase || startingForLoop) {
-        if (startingForLoop && testCase.otherAttributes.resumeBtn) {
-          this.showResumeBtn = true;
-        }
         startingForLoop = true;
         this.currectTestCaseId = testCase.testId;
         this.currectTestCaseName = testCase.testName;
@@ -268,9 +280,7 @@ export class ExecuteTestRunComponent implements OnInit {
           await this.addTestRunDetails(testCase, res);
           //update the testrun in db with execution time
           await this.updateTestRun();
-          if (
-            testCase.otherAttributes.resumeAgainBtn
-          ) {  
+          if (testCase.otherAttributes.resumeAgainBtn) {
             this.showResumeAgainBtn = true;
             await new Promise(async (resolve, reject) => {});
           }
@@ -443,10 +453,6 @@ export class ExecuteTestRunComponent implements OnInit {
   }
   async executeCurrentTestCase(testCase: TestCaseModel) {
     return new Promise(async (resolve, reject) => {
-      if (this.showResumeBtn) {
-        this.pauseExecution = true;
-      }
-      console.log(`this.pauseExecution : ${this.pauseExecution}`);
       if (this.projectType === appConstants.SBI) {
         if (
           testCase.methodName[0] == appConstants.SBI_METHOD_CAPTURE ||
@@ -467,7 +473,7 @@ export class ExecuteTestRunComponent implements OnInit {
           if (this.showResumeBtn) {
             this.pauseExecution = true;
           }
-          console.log(`this.pauseExecution : ${this.pauseExecution}`);
+          //console.log(`this.pauseExecution : ${this.pauseExecution}`);
           if (!this.pauseExecution) {
             const res = await this.sbiTestCaseService.runTestCase(
               testCase,
@@ -524,7 +530,7 @@ export class ExecuteTestRunComponent implements OnInit {
   async setInitiateCapture() {
     this.initiateCapture = true;
     this.showInitiateCaptureBtn = false;
-    await this.runExecuteForLoop(false);
+    await this.runExecuteForLoop(false, false);
     this.runComplete = true;
     this.basicTimer.stop();
   }
@@ -532,7 +538,7 @@ export class ExecuteTestRunComponent implements OnInit {
   async setResume() {
     this.showResumeBtn = false;
     this.pauseExecution = false;
-    await this.runExecuteForLoop(false);
+    await this.runExecuteForLoop(false, false);
     this.runComplete = true;
     this.basicTimer.stop();
   }
@@ -552,24 +558,25 @@ export class ExecuteTestRunComponent implements OnInit {
   }
 
   async setResumeAgain() {
+    console.log('setResumeAgain');
     this.showResumeAgainBtn = false;
     this.pauseExecution = false;
     let testCases = this.testCasesList;
+    const currentId = this.currectTestCaseId;
     if (
       this.testCasesList.length > 1 &&
       this.getIndexInList() + 1 < this.testCasesList.length
     ) {
       for (const testCase of this.testCasesList) {
-        if (
-          this.currectTestCaseId != '' &&
-          this.currectTestCaseId == testCase.testId
-        ) {
+        if (currentId != '' && currentId == testCase.testId) {
           let ind = testCases.indexOf(testCase);
+          console.log(ind);
           ind = ind + 1;
           if (testCases[ind]) this.currectTestCaseId = testCases[ind].testId;
+          console.log(this.currectTestCaseId);
         }
       }
-      await this.runExecuteForLoop(false);
+      await this.runExecuteForLoop(false, true);
     }
     this.runComplete = true;
     this.basicTimer.stop();
