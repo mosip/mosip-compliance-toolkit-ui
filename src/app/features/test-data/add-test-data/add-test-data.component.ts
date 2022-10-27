@@ -234,8 +234,12 @@ export class AddTestDataComponent implements OnInit {
               resolve(true);
             } else {
               this.dataLoaded = true;
+              let info  = "";
+              if (response[appConstants.RESPONSE]) {
+                info  = response[appConstants.RESPONSE]["info"];
+              }
               const dialogRef = Utils.showSuccessMessage(
-                'Test data added successfully',
+                'Test data added successfully. ' + info,
                 this.dialog
               );
               dialogRef.afterClosed().subscribe((res) => {
