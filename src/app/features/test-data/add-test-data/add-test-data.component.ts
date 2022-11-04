@@ -179,7 +179,10 @@ export class AddTestDataComponent implements OnInit {
               var blob = new Blob([fileByteArray], { type: 'application/zip' });
               var link = document.createElement('a');
               link.href = window.URL.createObjectURL(blob);
-              link.download = `SDK_Sample_Test_Data_${purpose.replace(' ', '_')}.zip`;
+              link.download = `SDK_Sample_Test_Data_${purpose.replace(
+                ' ',
+                '_'
+              )}.zip`;
               link.click();
             }
           } else {
@@ -234,14 +237,15 @@ export class AddTestDataComponent implements OnInit {
               resolve(true);
             } else {
               this.dataLoaded = true;
-              let info  = "";
+              let info = '';
               if (response[appConstants.RESPONSE]) {
-                info  = response[appConstants.RESPONSE]["info"];
+                info = response[appConstants.RESPONSE]['info'];
               }
-              const dialogRef = Utils.showSuccessMessage(
-                'Test data added successfully. ' + info,
-                this.dialog
-              );
+              let msg = 'Test data added successfully. ';
+              if (info) {
+                msg += info;
+              }
+              const dialogRef = Utils.showSuccessMessage(msg, this.dialog);
               dialogRef.afterClosed().subscribe((res) => {
                 this.showBiometricDashboard();
               });
