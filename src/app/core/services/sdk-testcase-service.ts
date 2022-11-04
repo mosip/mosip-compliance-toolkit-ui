@@ -265,7 +265,13 @@ export class SdkTestCaseService {
           if (response.errors && response.errors.length > 0) {
             resolve(false);
           }
-          resolve(response[appConstants.RESPONSE]);
+          const resp = response[appConstants.RESPONSE];
+          if (resp) {
+            resolve(resp["generatedRequest"]);
+          }
+          else {
+            resolve(false);
+          }
         },
         (errors) => {
           resolve(false);
