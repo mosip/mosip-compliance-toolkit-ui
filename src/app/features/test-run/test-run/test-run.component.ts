@@ -152,6 +152,9 @@ export class TestRunComponent implements OnInit {
                 resultDescription: testRunData
                   ? testRunData.resultDescription
                   : '',
+                testDataSource: testRunData
+                  ? testRunData.testDataSource
+                  : '',
               });
             }
             this.dataSource = new MatTableDataSource(tableData);

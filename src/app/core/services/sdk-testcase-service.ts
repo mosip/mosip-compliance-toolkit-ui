@@ -90,21 +90,23 @@ export class SdkTestCaseService {
     firstMethodResponse: any
   ) {
     return new Promise(async (resolve, reject) => {
-      let methodRequest: any = null;
+      let methodRequestResp: any = null;
       if (firstMethodResponse) {
-        methodRequest = await this.generateRequestForSDKFrmBirs(
+        methodRequestResp = await this.generateRequestForSDKFrmBirs(
           method,
           testCase,
           selectedBioTestDataName,
           firstMethodResponse
         );
       } else {
-        methodRequest = await this.generateRequestForSDK(
+        methodRequestResp = await this.generateRequestForSDK(
           method,
           testCase,
           selectedBioTestDataName
         );
       }
+      let methodRequest: any = methodRequestResp["generatedRequest"];
+      let testDataSource: any = methodRequestResp["testDataSource"];
       if (methodRequest) {
         //now validate the method request against the Schema
         let validationRequest: any = await this.validateRequest(
@@ -136,6 +138,7 @@ export class SdkTestCaseService {
               methodResponse: JSON.stringify(methodResponse),
               methodRequest: methodRequest,
               validationResponse: validationResponse,
+              testDataSource: testDataSource
             };
             resolve(finalResponse);
           } else {
@@ -228,7 +231,7 @@ export class SdkTestCaseService {
           }
           const resp = response[appConstants.RESPONSE];
           if (resp) {
-            resolve(resp["generatedRequest"]);
+            resolve(resp);
           }
         },
         (errors) => {
@@ -267,7 +270,7 @@ export class SdkTestCaseService {
           }
           const resp = response[appConstants.RESPONSE];
           if (resp) {
-            resolve(resp["generatedRequest"]);
+            resolve(resp);
           }
           else {
             resolve(false);

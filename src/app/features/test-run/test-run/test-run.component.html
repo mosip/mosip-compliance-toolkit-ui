@@ -113,6 +113,16 @@
                                 </div>
                             </mat-expansion-panel>
                         </mat-accordion>
+                        <mat-accordion *ngIf="element.testDataSource && element.testDataSource != ''">
+                            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>Testdata Source:</mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="json-content">
+                                    <code class="prettyprint">{{element.testDataSource}}</code>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
                     </div>
                 </td>
             </ng-container>

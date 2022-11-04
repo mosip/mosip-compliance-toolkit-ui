@@ -9,6 +9,7 @@ export class TestRunModel {
     public methodRequest: string,
     public methodResponse: string,
     public resultStatus: string,
-    public resultDescription: string
+    public resultDescription: string,
+    public testDataSource: string
   ) {}
 }
