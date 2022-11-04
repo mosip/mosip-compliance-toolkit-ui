@@ -419,6 +419,7 @@ export class ExecuteTestRunComponent implements OnInit {
       resultDescription: JSON.stringify({
         validationsList: validations,
       }),
+      testDataSource: res.testDataSource ? res.testDataSource : ""
     };
     let request = {
       id: appConstants.TEST_RUN_DETAILS_ADD_ID,
