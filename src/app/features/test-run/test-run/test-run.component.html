@@ -56,7 +56,9 @@
                                     <mat-panel-title>Method Request:</mat-panel-title>
                                 </mat-expansion-panel-header>
                                 <span class="custom-class" style="float: right;">
-                                    <button [cdkCopyToClipboard]="element.methodRequest" mat-button><mat-icon >content_copy</mat-icon></button>
+                                    <button [cdkCopyToClipboard]="element.methodRequest" mat-button>
+                                        <mat-icon>content_copy</mat-icon>
+                                    </button>
                                 </span>
                                 <div class="json-content">
                                     <code class="prettyprint">{{element.methodRequest}}</code>
@@ -69,7 +71,9 @@
                                     <mat-panel-title>Method Response:</mat-panel-title>
                                 </mat-expansion-panel-header>
                                 <span class="custom-class" style="float: right;">
-                                    <button [cdkCopyToClipboard]="element.methodResponse" mat-button><mat-icon >content_copy</mat-icon></button>
+                                    <button [cdkCopyToClipboard]="element.methodResponse" mat-button>
+                                        <mat-icon>content_copy</mat-icon>
+                                    </button>
                                 </span>
                                 <div class="json-content">
                                     <code class="prettyprint">{{element.methodResponse}}</code>
@@ -104,10 +108,12 @@
                                                 </span>&nbsp;
                                                 <b>{{item.validatorName}}</b>&nbsp;({{item.validatorDescription}})
                                             </span>
-                                            <span *ngIf="item.status== 'success'"
-                                                [ngStyle]="{color: 'green'}">{{item.description}}</span>
-                                            <span *ngIf="item.status== 'failure'"
-                                                [ngStyle]="{color: 'red'}">{{item.description}}</span>
+                                            <span *ngIf="item.status== 'success'" [ngStyle]="{color: 'green'}">
+                                                <div [innerHTML]="item.description"></div>
+                                            </span>
+                                            <span *ngIf="item.status== 'failure'" [ngStyle]="{color: 'red'}">
+                                                <div [innerHTML]="item.description"></div>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>

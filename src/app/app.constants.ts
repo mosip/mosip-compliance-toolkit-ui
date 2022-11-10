@@ -52,6 +52,8 @@ export const SBI_METHOD_CAPTURE = 'capture';
 export const SBI_METHOD_CAPTURE_KEY = 'CAPTURE';
 export const SBI_METHOD_RCAPTURE = 'rcapture';
 export const SBI_METHOD_RCAPTURE_KEY = 'RCAPTURE';
+export const SBI_METHOD_STREAM = 'stream';
+export const SBI_METHOD_STREAM_KEY = 'STREAM';
 export const DEVELOPER = 'Developer';
 
 //localStorage keys

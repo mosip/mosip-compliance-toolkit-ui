@@ -18,6 +18,9 @@ import { SbiDiscoverResponseModel } from 'src/app/core/models/sbi-discover';
 import { SdkProjectModel } from 'src/app/core/models/sdk-project';
 import { ScanDeviceComponent } from '../scan-device/scan-device.component';
 
+declare const start_streaming: any;
+declare const stop_streaming: any;
+
 @Component({
   selector: 'app-execute-test-run',
   templateUrl: './execute-test-run.component.html',
@@ -38,11 +41,15 @@ export class ExecuteTestRunComponent implements OnInit {
   currectTestCaseId: string;
   currectTestCaseName: string;
   currentTestDescription: string;
+  currectDeviceSubId: string;
+  currentTestCaseIsRCapture = false;
   errorsInGettingTestcases = false;
   serviceErrors = false;
   errorsInSavingTestRun = false;
   initiateCapture = false;
   showInitiateCaptureBtn = false;
+  showStreamingBtn = false;
+  streamingDone = false;
   pauseExecution = false;
   showResumeBtn = false;
   showResumeAgainBtn = false;
@@ -269,8 +276,16 @@ export class ExecuteTestRunComponent implements OnInit {
         this.currectTestCaseId = testCase.testId;
         this.currectTestCaseName = testCase.testName;
         this.currentTestDescription = testCase.testDescription;
+        this.currentTestCaseIsRCapture =
+          testCase.methodName[0] == appConstants.SBI_METHOD_RCAPTURE
+            ? true
+            : false;
+        this.currectDeviceSubId = testCase.otherAttributes.deviceSubId;
         if (!this.initiateCapture) {
           this.checkIfToShowInitiateCaptureBtn(testCase);
+        }
+        if (!this.streamingDone) {
+          this.checkIfToShowStreamBtn(testCase);
         }
         const res: any = await this.executeCurrentTestCase(testCase);
         if (res) {
@@ -310,14 +325,20 @@ export class ExecuteTestRunComponent implements OnInit {
 
   checkIfToShowInitiateCaptureBtn(testCase: TestCaseModel) {
     if (this.projectType === appConstants.SBI) {
-      if (
-        testCase.methodName[0] == appConstants.SBI_METHOD_CAPTURE ||
-        testCase.methodName[0] == appConstants.SBI_METHOD_RCAPTURE
-      ) {
+      if (testCase.methodName[0] == appConstants.SBI_METHOD_CAPTURE) {
         this.showInitiateCaptureBtn = true;
       }
     }
   }
+
+  checkIfToShowStreamBtn(testCase: TestCaseModel) {
+    if (this.projectType === appConstants.SBI) {
+      if (testCase.methodName[0] == appConstants.SBI_METHOD_RCAPTURE) {
+        this.showStreamingBtn = true;
+      }
+    }
+  }
+
   async addTestRun() {
     this.startTestRunDt = new Date().toISOString();
     const testRunRequest = {
@@ -419,7 +440,7 @@ export class ExecuteTestRunComponent implements OnInit {
       resultDescription: JSON.stringify({
         validationsList: validations,
       }),
-      testDataSource: res.testDataSource ? res.testDataSource : ""
+      testDataSource: res.testDataSource ? res.testDataSource : '',
     };
     let request = {
       id: appConstants.TEST_RUN_DETAILS_ADD_ID,
@@ -466,6 +487,7 @@ export class ExecuteTestRunComponent implements OnInit {
               this.sbiSelectedPort ? this.sbiSelectedPort : '',
               this.sbiSelectedDevice ? this.sbiSelectedDevice : ''
             );
+            this.streamingDone = false;
             resolve(res);
           } else {
             //no resp to keep the for loop on hold
@@ -581,6 +603,36 @@ export class ExecuteTestRunComponent implements OnInit {
     }
     this.runComplete = true;
     this.basicTimer.stop();
+  }
+
+  getStreamImgTagId() {
+    let id = this.currectTestCaseId;
+    return id;
+  }
+
+  startStreaming() {
+    this.showStreamingBtn = false;
+    this.stopStreaming();
+    const selectedSbiDevice: SbiDiscoverResponseModel = JSON.parse(
+      this.sbiSelectedDevice ? this.sbiSelectedDevice : ''
+    );
+    const deviceId = selectedSbiDevice.deviceId;
+    const deviceSubId = this.currectDeviceSubId;
+    const SBI_BASE_URL = this.appConfigService.getConfig()['SBI_BASE_URL'];
+    let methodUrl =
+      SBI_BASE_URL +
+      ':' +
+      this.sbiSelectedPort +
+      '/' +
+      appConstants.SBI_METHOD_STREAM;
+    console.log(methodUrl);
+    start_streaming(methodUrl, deviceId, deviceSubId, this.getStreamImgTagId());
+    this.streamingDone = true;
+    this.showInitiateCaptureBtn = true;
+  }
+
+  stopStreaming() {
+    stop_streaming();
   }
 
   // scanDevice() {
