@@ -47,7 +47,7 @@
                     <p></p><p></p>Current testcase: {{currectTestCaseId}} - {{currectTestCaseName}}
                     <p></p>
                     <div [innerHTML]="currentTestDescription"></div>
-                    <!-- <div *ngIf="!showInitiateCaptureBtn" class="spinner">
+                    <!-- <div *ngIf="!runComplete" class="spinner">
                         <mat-spinner diameter="50"></mat-spinner>
                     </div> -->
                     <div *ngIf="showInitiateCaptureBtn">
@@ -55,7 +55,12 @@
                             from the
                             device..</span>
                     </div>
+                    <p></p>
+                    <div class="centereddiv" *ngIf="currentTestCaseIsRCapture && streamingDone">
+                        <img #stream [id]="getStreamImgTagId()" width="200" height="200" alt="Start Streaming to Display" border="1">
+                    </div>
                 </span>
+
                 <span *ngIf="runComplete">
                     <div *ngIf="serviceErrors">
                         <div class="custom-class">
@@ -117,6 +122,8 @@
     <div class="spacer" *ngIf="scanComplete"></div>    
     <button *ngIf="scanComplete && !errorsInGettingTestcases && !runComplete && showInitiateCaptureBtn" mat-flat-button
         color="accent" (click)="setInitiateCapture()">Initiate Capture</button>
+    <button *ngIf="scanComplete && !errorsInGettingTestcases && !runComplete && !showInitiateCaptureBtn && showStreamingBtn" mat-flat-button
+        color="accent" (click)="startStreaming()">Start Streaming</button>    
     <button *ngIf="scanComplete && !errorsInGettingTestcases && !runComplete && showResumeBtn" mat-flat-button
         color="accent" (click)="setResume()">Resume</button>
     <button *ngIf="scanComplete && !errorsInGettingTestcases && !runComplete && !showResumeBtn && showResumeAgainBtn" mat-flat-button

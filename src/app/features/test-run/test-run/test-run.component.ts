@@ -239,7 +239,7 @@ export class TestRunComponent implements OnInit {
             this.sdkProjectData = response['response'];
             resolve(true);
           },
-          (errors) => {
+          (errors: any) => {
             Utils.showErrorMessage(errors, this.dialog);
             resolve(false);
           }
