@@ -120,9 +120,12 @@ export class SdkTestCaseService {
           validationRequest[appConstants.RESPONSE].status ==
             appConstants.SUCCESS
         ) {
+          if (sdkUrl.lastIndexOf('/') !== sdkUrl.length - 1) {
+            sdkUrl += '/';
+          }
+          const url = sdkUrl + method;
           let methodResponse: any = await this.executeMethod(
-            method,
-            sdkUrl,
+            url,
             methodRequest
           );
           if (methodResponse) {
@@ -138,6 +141,7 @@ export class SdkTestCaseService {
               methodResponse: JSON.stringify(methodResponse),
               methodRequest: methodRequest,
               validationResponse: validationResponse,
+              methodUrl: url,
               testDataSource: testDataSource
             };
             resolve(finalResponse);
@@ -180,13 +184,10 @@ export class SdkTestCaseService {
     });
   }
 
-  async executeMethod(methodName: string, sdkUrl: string, methodRequest: any) {
+  async executeMethod(sdkUrl: string, methodRequest: any) {
     return new Promise((resolve, reject) => {
-      if (sdkUrl.lastIndexOf('/') !== sdkUrl.length - 1) {
-        sdkUrl += '/';
-      }
-      const url = sdkUrl + methodName;
-      this.dataService.callSDKMethod(url, methodRequest).subscribe(
+      
+      this.dataService.callSDKMethod(sdkUrl, methodRequest).subscribe(
         (response) => {
           console.log(response);
           //return response;

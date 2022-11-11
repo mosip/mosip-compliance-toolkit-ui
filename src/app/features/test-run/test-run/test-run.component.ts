@@ -152,9 +152,14 @@ export class TestRunComponent implements OnInit {
                 resultDescription: testRunData
                   ? testRunData.resultDescription
                   : '',
-                testDataSource: testRunData
-                  ? testRunData.testDataSource
-                  : '',
+                testDataSource:
+                  testRunData && testRunData.testDataSource
+                    ? testRunData.testDataSource
+                    : '',
+                methodUrl:
+                  testRunData && testRunData.methodUrl
+                    ? testRunData.methodUrl
+                    : '',
               });
             }
             this.dataSource = new MatTableDataSource(tableData);
@@ -276,5 +281,4 @@ export class TestRunComponent implements OnInit {
       `toolkit/project/${this.projectType}/${this.projectId}`,
     ]);
   }
-
 }

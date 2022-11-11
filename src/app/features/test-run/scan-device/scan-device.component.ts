@@ -25,7 +25,7 @@ export class ScanDeviceComponent implements OnInit {
   subscriptions: Subscription[] = [];
   SBI_PORTS = this.appConfigService.getConfig()['sbiPorts'].split(',');
   previousScanAvailable = false;
-
+  SBI_BASE_URL = this.appConfigService.getConfig()['SBI_BASE_URL'];
   constructor(
     private dialogRef: MatDialogRef<ScanDeviceComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -104,12 +104,12 @@ export class ScanDeviceComponent implements OnInit {
     const requestBody = {
       type: appConstants.BIOMETRIC_DEVICE,
     };
+    let methodUrl = this.SBI_BASE_URL + ':' + sbiPort + '/' + appConstants.SBI_METHOD_DEVICE;
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
         this.dataService
           .callSBIMethod(
-            sbiPort,
-            appConstants.SBI_METHOD_DEVICE,
+            methodUrl,
             appConstants.SBI_METHOD_DEVICE_KEY,
             requestBody
           )

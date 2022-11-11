@@ -119,13 +119,18 @@
                                 </div>
                             </mat-expansion-panel>
                         </mat-accordion>
-                        <mat-accordion *ngIf="element.testDataSource && element.testDataSource != ''">
+                        <mat-accordion *ngIf="element.methodUrl != '' || element.testDataSource != ''">
                             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                                 <mat-expansion-panel-header>
-                                    <mat-panel-title>Testdata Source:</mat-panel-title>
+                                    <mat-panel-title>Other Details:</mat-panel-title>
                                 </mat-expansion-panel-header>
-                                <div class="json-content">
-                                    <code class="prettyprint">{{element.testDataSource}}</code>
+                                <div class="other-details">
+                                    <div *ngIf="element.methodUrl && element.methodUrl != ''">
+                                        <b>Method URL:</b> {{element.methodUrl}}
+                                    </div>
+                                    <div *ngIf="element.testDataSource && element.testDataSource != ''">
+                                        <b>Test Data Source</b>: {{element.testDataSource}}
+                                    </div>
                                 </div>
                             </mat-expansion-panel>
                         </mat-accordion>

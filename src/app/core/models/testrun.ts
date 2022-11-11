@@ -5,6 +5,7 @@ export class TestRunModel {
     public testName: string,
     public testId: string,
     public testDescription: string,
+    public methodUrl: string,
     public methodName: any,
     public methodRequest: string,
     public methodResponse: string,

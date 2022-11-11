@@ -434,6 +434,7 @@ export class ExecuteTestRunComponent implements OnInit {
     const testRunRequest = {
       runId: this.testRunId,
       testcaseId: testCase.testId,
+      methodUrl:  res.methodUrl ? res.methodUrl: '',
       methodRequest: res.methodRequest,
       methodResponse: res.methodResponse,
       resultStatus: resultStatus,

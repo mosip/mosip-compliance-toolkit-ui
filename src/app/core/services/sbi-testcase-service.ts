@@ -14,6 +14,7 @@ export class SbiTestCaseService {
     private dataService: DataService,
     private appConfigService: AppConfigService
   ) {}
+  SBI_BASE_URL = this.appConfigService.getConfig()['SBI_BASE_URL'];
 
   async runTestCase(
     testCase: TestCaseModel,
@@ -33,9 +34,10 @@ export class SbiTestCaseService {
         validationRequest[appConstants.RESPONSE].status == appConstants.SUCCESS
       ) {
         let startExecutionTime = new Date().toISOString();
+        const methodUrl = this.getMethodUrl(sbiSelectedPort,testCase);
         let methodResponse: any = await this.executeMethod(
           testCase.methodName[0],
-          sbiSelectedPort,
+          methodUrl,
           methodRequest
         );
         let endExecutionTime = new Date().toISOString();
@@ -58,6 +60,8 @@ export class SbiTestCaseService {
             methodResponse: JSON.stringify(decodedMethodResp),
             methodRequest: JSON.stringify(methodRequest),
             validationResponse: validationResponse,
+            methodUrl: methodUrl,
+            testDataSource: '',
           };
           resolve(finalResponse);
         } else {
@@ -91,61 +95,66 @@ export class SbiTestCaseService {
 
   async executeMethod(
     methodName: string,
-    sbiSelectedPort: string,
+    methodUrl: string,
     methodRequest: any
   ) {
     if (methodName == appConstants.SBI_METHOD_DEVICE) {
       let methodResponse = await this.callSBIMethod(
-        sbiSelectedPort,
+        methodUrl,
         appConstants.SBI_METHOD_DEVICE_KEY,
-        methodRequest,
-        methodName
+        methodRequest
       );
       //console.log(methodResponse);
       return methodResponse;
     }
     if (methodName == appConstants.SBI_METHOD_DEVICE_INFO) {
       let methodResponse = await this.callSBIMethod(
-        sbiSelectedPort,
+        methodUrl,
         appConstants.SBI_METHOD_DEVICE_INFO_KEY,
-        methodRequest,
-        methodName
+        methodRequest
       );
       //console.log(methodResponse);
       return methodResponse;
     }
     if (methodName == appConstants.SBI_METHOD_CAPTURE) {
       let methodResponse = await this.callSBIMethod(
-        sbiSelectedPort,
+        methodUrl,
         appConstants.SBI_METHOD_CAPTURE_KEY,
-        methodRequest,
-        methodName
+        methodRequest
       );
       return methodResponse;
     }
     if (methodName == appConstants.SBI_METHOD_RCAPTURE) {
       let methodResponse = await this.callSBIMethod(
-        sbiSelectedPort,
+        methodUrl,
         appConstants.SBI_METHOD_RCAPTURE_KEY,
-        methodRequest,
-        appConstants.SBI_METHOD_CAPTURE
+        methodRequest
       );
       return methodResponse;
     }
   }
 
-  callSBIMethod(
-    port: string,
-    methodType: string,
-    requestBody: any,
-    methodName: string
-  ) {
+  getMethodUrl(sbiSelectedPort: string, testCase: TestCaseModel) {
+    let methodUrl =
+      this.SBI_BASE_URL + ':' + sbiSelectedPort + '/' + testCase.methodName[0];
+    if (testCase.methodName[0] == appConstants.SBI_METHOD_RCAPTURE) {
+      methodUrl =
+        this.SBI_BASE_URL +
+        ':' +
+        sbiSelectedPort +
+        '/' +
+        appConstants.SBI_METHOD_CAPTURE;
+    }
+    return methodUrl;
+  }
+
+  callSBIMethod(methodUrl: string, methodType: string, requestBody: any) {
     return new Promise((resolve, reject) => {
       this.dataService
-        .callSBIMethod(port, methodName, methodType, requestBody)
+        .callSBIMethod(methodUrl, methodType, requestBody)
         .subscribe(
           (response) => {
-            //console.log(response);
+            console.log(response);
             //return response;
             resolve(response);
           },
@@ -223,12 +232,12 @@ export class SbiTestCaseService {
     //return JSON.stringify(request);
   }
 
-  getTimeout(testCase: TestCaseModel){
+  getTimeout(testCase: TestCaseModel) {
     return testCase.otherAttributes.timeout
-          ? testCase.otherAttributes.timeout.toString()
-          : this.appConfigService.getConfig()['sbiTimeout']
-          ? this.appConfigService.getConfig()['sbiTimeout'].toString()
-          : '10000'
+      ? testCase.otherAttributes.timeout.toString()
+      : this.appConfigService.getConfig()['sbiTimeout']
+      ? this.appConfigService.getConfig()['sbiTimeout'].toString()
+      : '10000';
   }
   getBioSubType(segments: Array<string>): Array<string> {
     let bioSubTypes = new Array<string>();
@@ -305,8 +314,7 @@ export class SbiTestCaseService {
       methodResponse.forEach((deviceInfoResp: any) => {
         if (deviceInfoResp && !deviceInfoResp.deviceInfo) {
           decodedDataArr.push(deviceInfoResp);
-        }
-        else if (deviceInfoResp && deviceInfoResp.deviceInfo == '') {
+        } else if (deviceInfoResp && deviceInfoResp.deviceInfo == '') {
           decodedDataArr.push(deviceInfoResp);
         } else {
           //chk if device is registered
@@ -405,7 +413,7 @@ export class SbiTestCaseService {
           certificationType: selectedSbiDevice.certification,
           startExecutionTime: startExecutionTime,
           endExecutionTime: endExecutionTime,
-          timeout: this.getTimeout(testCase)
+          timeout: this.getTimeout(testCase),
         }),
         validatorDefs: testCase.validatorDefs[0],
       };

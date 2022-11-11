@@ -57,6 +57,7 @@ mat-expansion-panel {
   width: 1200px;
   flex-direction: column;
 }
+
 .details-container {
   border: 2px solid black;
   padding: 20px;
@@ -76,4 +77,10 @@ mat-expansion-panel {
 mat-panel-title {
   display: flex;
   justify-content: space-between;
+}
+
+.other-details {
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
 }
