@@ -49,7 +49,9 @@ function start_streaming(url, dId, dSubId, tagId) {
       reader1.onload = function () {
         //let data = reader1.result; // data url
         //console.log("data URL >>> " + data);
-        document.getElementById(tagId).src = reader1.result;
+        if (document.getElementById(tagId)) {
+          document.getElementById(tagId).src = reader1.result;
+        }
       };
 
       // calculating fps. This is pretty lame. Should probably implement a floating window function.

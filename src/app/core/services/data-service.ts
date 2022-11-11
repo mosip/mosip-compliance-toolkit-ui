@@ -16,8 +16,7 @@ export class DataService {
   ) {}
 
   SERVICES_BASE_URL = this.appConfigService.getConfig()['SERVICES_BASE_URL'];
-  SBI_BASE_URL = this.appConfigService.getConfig()['SBI_BASE_URL'];
-
+  
   getProjects() {
     let url = `${this.SERVICES_BASE_URL}getProjects`;
     return this.httpClient.get(url);
@@ -137,8 +136,7 @@ export class DataService {
   }
 
   callSBIMethod(
-    port: string,
-    methodName: string,
+    methodUrl: string,
     methodType: string,
     requestBody: any
   ) {
@@ -146,7 +144,7 @@ export class DataService {
       'Content-Type': 'application/json',
       accept: 'application/json',
     });
-    let methodUrl = this.SBI_BASE_URL + ':' + port + '/' + methodName;
+    console.log(methodType);
     return this.httpClient.request(methodType, methodUrl, {
       body: requestBody,
       headers: headers,
