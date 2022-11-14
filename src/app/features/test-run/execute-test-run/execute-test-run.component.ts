@@ -489,6 +489,7 @@ export class ExecuteTestRunComponent implements OnInit {
               this.sbiSelectedDevice ? this.sbiSelectedDevice : ''
             );
             this.streamingDone = false;
+            this.stopStreaming();
             resolve(res);
           } else {
             //no resp to keep the for loop on hold
