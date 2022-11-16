@@ -22,7 +22,6 @@ export interface ProjectData {
   lastRunStatus: string;
   lastRunId: string;
 }
-
 @Component({
   selector: 'app-projects-dashboard',
   templateUrl: './projects-dashboard.component.html',
