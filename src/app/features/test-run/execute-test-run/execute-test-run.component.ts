@@ -521,7 +521,7 @@ export class ExecuteTestRunComponent implements OnInit {
           appConstants.SDK_PROJECT_URL,
           this.sdkProjectData ? this.sdkProjectData.url : ''
         );
-        this.showLoader = true;
+        //this.showLoader = true;
         const res = await this.sdkTestCaseService.runTestCase(
           testCase,
           this.sdkProjectData.url,
