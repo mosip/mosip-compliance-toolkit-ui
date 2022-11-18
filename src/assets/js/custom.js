@@ -12,10 +12,13 @@ const TYPE_JPEG = "image/jpeg";
 let controller = new AbortController();
 
 function stop_streaming() {
-  controller.abort();
-  controller = new AbortController();
+  // controller.abort();
+  // controller = new AbortController();
+  if (reader) {
+      reader.cancel();
+  }
 }
-
+let reader = null;
 function start_streaming(url, dId, dSubId, tagId) {
   interrupt = false;
   var obj = { deviceId: dId, deviceSubId: dSubId };
@@ -37,7 +40,7 @@ function start_streaming(url, dId, dSubId, tagId) {
         throw Error("ReadableStream not yet supported in this browser.");
       }
 
-      const reader = response.body.getReader();
+      reader = response.body.getReader();
 
       let headers = "";
       let contentLength = -1;
@@ -68,6 +71,7 @@ function start_streaming(url, dId, dSubId, tagId) {
           .then(({ done, value }) => {
             if (done) {
               controller.abort();
+              reader.cancel();
               return;
             }
 
