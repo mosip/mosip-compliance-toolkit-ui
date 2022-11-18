@@ -46,6 +46,7 @@ export class ExecuteTestRunComponent implements OnInit {
   errorsInGettingTestcases = false;
   serviceErrors = false;
   errorsInSavingTestRun = false;
+  showLoader = false;
   initiateCapture = false;
   showInitiateCaptureBtn = false;
   showStreamingBtn = false;
@@ -251,6 +252,7 @@ export class ExecuteTestRunComponent implements OnInit {
   async runExecuteForLoop(startingForLoop: boolean, fromResumeNext: boolean) {
     for (const testCase of this.testCasesList) {
       console.log(`testCase.testId: ${testCase.testId}`);
+      this.showLoader = false;
       let proceedTestCase = false;
       if (startingForLoop && testCase.otherAttributes.resumeBtn) {
         this.showResumeBtn = true;
@@ -302,6 +304,7 @@ export class ExecuteTestRunComponent implements OnInit {
           this.currectTestCaseId = '';
           this.currectTestCaseName = '';
           this.currentTestDescription = '';
+          this.showLoader = false;
         }
       }
     }
@@ -483,6 +486,7 @@ export class ExecuteTestRunComponent implements OnInit {
         ) {
           if (this.initiateCapture) {
             this.initiateCapture = false;
+            this.showLoader = true;
             const res = await this.sbiTestCaseService.runTestCase(
               testCase,
               this.sbiSelectedPort ? this.sbiSelectedPort : '',
@@ -500,6 +504,7 @@ export class ExecuteTestRunComponent implements OnInit {
           }
           //console.log(`this.pauseExecution : ${this.pauseExecution}`);
           if (!this.pauseExecution) {
+            this.showLoader = true;
             const res = await this.sbiTestCaseService.runTestCase(
               testCase,
               this.sbiSelectedPort ? this.sbiSelectedPort : '',
@@ -516,6 +521,7 @@ export class ExecuteTestRunComponent implements OnInit {
           appConstants.SDK_PROJECT_URL,
           this.sdkProjectData ? this.sdkProjectData.url : ''
         );
+        this.showLoader = true;
         const res = await this.sdkTestCaseService.runTestCase(
           testCase,
           this.sdkProjectData.url,

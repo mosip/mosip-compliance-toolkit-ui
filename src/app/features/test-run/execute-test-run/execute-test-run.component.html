@@ -46,17 +46,17 @@
                     </div>
                     <p></p><p></p>Current testcase: {{currectTestCaseId}} - {{currectTestCaseName}}
                     <p></p>
-                    <div [innerHTML]="currentTestDescription"></div>
-                    <!-- <div *ngIf="!runComplete" class="spinner">
+                    <div  *ngIf="!showLoader || showResumeAgainBtn" [innerHTML]="currentTestDescription"></div>
+                    <div *ngIf="showLoader && !showResumeAgainBtn" class="spinner">
                         <mat-spinner diameter="50"></mat-spinner>
-                    </div> -->
+                    </div>
                     <div *ngIf="showInitiateCaptureBtn">
                         <p></p><span [ngStyle]="{color: '#fd518c'}">Click on initiate capture button to capture the biometrics
                             from the
                             device..</span>
                     </div>
                     <p></p>
-                    <div class="centereddiv" *ngIf="currentTestCaseIsRCapture && streamingDone">
+                    <div class="centereddiv" *ngIf="currentTestCaseIsRCapture && streamingDone && !showLoader">
                         <img #stream [id]="getStreamImgTagId()" width="200" height="200" alt="Start Streaming to Display" border="1">
                     </div>
                 </span>
