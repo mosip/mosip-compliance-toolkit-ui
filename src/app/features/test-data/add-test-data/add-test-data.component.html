@@ -17,7 +17,7 @@
                     <mat-form-field appearance="legacy" [style.width.px]=327>
                         <mat-label>Name:</mat-label>
                         <input matInput formControlName="name" #keyboardRef #input />
-                        <mat-error *ngIf="testDataForm.controls['name'].hasError('required')">
+                        <mat-error *ngIf="testDataForm.controls['name'].touched && testDataForm.controls['name'].hasError('required')">
                             Name is required
                         </mat-error>
                     </mat-form-field>
@@ -35,7 +35,7 @@
                             <mat-radio-button value="SDK">SDK</mat-radio-button>
                             <mat-radio-button value="ABIS" disabled="true">ABIS</mat-radio-button>
                         </mat-radio-group>
-                        <mat-error *ngIf="testDataForm.touched && testDataForm.controls['type'].hasError('required')">
+                        <mat-error *ngIf="testDataForm.controls['type'].touched && testDataForm.controls['type'].hasError('required')">
                             Project Type is required
                         </mat-error>
                     </div>
@@ -67,7 +67,7 @@
                                 Segment
                             </mat-option> -->
                         </mat-select>
-                        <mat-error *ngIf="testDataForm.controls['purpose'].hasError('required')">
+                        <mat-error *ngIf="testDataForm.controls['purpose'].touched && testDataForm.controls['purpose'].hasError('required')">
                             Purpose is required
                         </mat-error>
                     </mat-form-field>
@@ -86,11 +86,14 @@
                     <span class="file-upload-button">
                         <input #fileUpload type="file" id="testdatafile" (click)="fileUpload.value = ''" value=""
                             (change)="handleFileInput($event)" style="display: none;" />
-                        <input class="browseInput" value="Browse" type="button" (click)="clickOnButton()" />
+                        <button mat-flat-button color="accent" (click)="clickOnButton()">
+                            Browse
+                        </button>
                     </span>
                     <span class="file-download-button">
-                        <input class="browseInput" value="Download Sample File" type="button"
-                            (click)="getSampleBioTestDataFile()" />
+                        <button mat-flat-button color="accent" (click)="getSampleBioTestDataFile()">
+                            Download Sample File
+                        </button>    
                     </span>
                 </span>
             </div>
