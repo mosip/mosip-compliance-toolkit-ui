@@ -12,6 +12,7 @@ export const TEST_RUN_ADD_ID = 'mosip.toolkit.testrun.add';
 export const TEST_RUN_UPDATE_ID = 'mosip.toolkit.testrun.update';
 export const TEST_RUN_DETAILS_ADD_ID = 'mosip.toolkit.testrun.details.add';
 export const BIOMETRICS_TEST_DATA_ADD_ID = 'mosip.toolkit.biometric.testdata.add';
+export const TEST_RUN_DELETE_ID = 'mosip.toolkit.testrun.delete';
 
 export const VERSION = '1.0';
 

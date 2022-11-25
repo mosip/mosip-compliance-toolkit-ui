@@ -108,6 +108,12 @@ export class DataService {
     return this.httpClient.put(url, body);
   }
 
+  deleteTestRun(runId: string) {
+    let url = `${this.SERVICES_BASE_URL}deleteTestRun/${runId}`;
+    return this.httpClient.delete(url);
+  }
+
+
   addTestRunDetails(body: any) {
     let url = `${this.SERVICES_BASE_URL}addTestRunDetails`;
     return this.httpClient.post(url, body);
