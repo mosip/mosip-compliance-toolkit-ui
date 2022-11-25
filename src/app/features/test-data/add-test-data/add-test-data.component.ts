@@ -53,6 +53,7 @@ export class AddTestDataComponent implements OnInit {
       this.testDataForm.addControl(controlId, new FormControl(''));
       this.testDataForm.controls[controlId].setValidators(Validators.required);
     });
+    this.testDataForm.controls['type'].setValue('SDK');
   }
 
   getAllowedFileTypes(allowedFiles: string[]) {
@@ -72,6 +73,8 @@ export class AddTestDataComponent implements OnInit {
   }
 
   clickOnButton() {
+    this.testDataForm.controls['name'].setValidators(Validators.required);
+    this.testDataForm.controls['name'].updateValueAndValidity();
     this.allControls.forEach((controlId) => {
       this.testDataForm.controls[controlId].markAsTouched();
     });
@@ -166,10 +169,14 @@ export class AddTestDataComponent implements OnInit {
   }
 
   getSampleBioTestDataFile() {
-    this.allControls.forEach((controlId) => {
-      this.testDataForm.controls[controlId].markAsTouched();
-    });
-    if (this.testDataForm.valid) {
+    this.testDataForm.controls['purpose'].markAsTouched();
+    this.testDataForm.controls['name'].clearValidators();
+    this.testDataForm.controls['name'].updateValueAndValidity();
+    if (
+      !(
+        this.testDataForm.controls['purpose'].errors?.['required']
+      )
+    ) {
       const purpose = this.testDataForm.controls['purpose'].value;
       const subs = this.dataService.getSampleBioTestDataFile(purpose).subscribe(
         (res: any) => {
@@ -192,13 +199,14 @@ export class AddTestDataComponent implements OnInit {
               'Unable to download sample test data ZIP file. Try Again!'
             );
           }
+
         },
         (errors) => {
           Utils.showErrorMessage(errors, this.dialog);
         }
       );
       this.subscriptions.push(subs);
-    }
+    } 
   }
 
   async saveTestData(event: any) {
