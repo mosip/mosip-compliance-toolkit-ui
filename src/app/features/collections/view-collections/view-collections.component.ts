@@ -172,11 +172,13 @@ export class ViewCollectionsComponent implements OnInit {
             //console.log(response);
             let testcases = response['response']['testcases'];
             //sort the testcases based on the testId
-            testcases.sort(function (a: TestCaseModel, b: TestCaseModel) {
-              if (a.testId > b.testId) return 1;
-              if (a.testId < b.testId) return -1;
-              return 0;
-            });
+            if (testcases && testcases.length > 0) {
+              testcases.sort(function (a: TestCaseModel, b: TestCaseModel) {
+                if (a.testId > b.testId) return 1;
+                if (a.testId < b.testId) return -1;
+                return 0;
+              });
+            }
             this.dataSource = new MatTableDataSource(testcases);
             resolve(true);
           },

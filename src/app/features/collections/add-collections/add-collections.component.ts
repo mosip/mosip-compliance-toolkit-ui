@@ -146,12 +146,14 @@ export class AddCollectionsComponent implements OnInit {
             (response: any) => {
               //console.log(response);
               let testcases = response['response'];
-              //sort the testcases based on the testId
-              testcases.sort(function (a: TestCaseModel, b: TestCaseModel) {
-                if (a.testId > b.testId) return 1;
-                if (a.testId < b.testId) return -1;
-                return 0;
-              });
+              if (testcases && testcases.length > 0) {
+                //sort the testcases based on the testId
+                testcases.sort(function (a: TestCaseModel, b: TestCaseModel) {
+                  if (a.testId > b.testId) return 1;
+                  if (a.testId < b.testId) return -1;
+                  return 0;
+                });
+              }
               this.dataSource = new MatTableDataSource(testcases);
               resolve(true);
             },
@@ -177,11 +179,13 @@ export class AddCollectionsComponent implements OnInit {
               //console.log(response);
               let testcases = response['response'];
               //sort the testcases based on the testId
-              testcases.sort(function (a: TestCaseModel, b: TestCaseModel) {
-                if (a.testId > b.testId) return 1;
-                if (a.testId < b.testId) return -1;
-                return 0;
-              });
+              if (testcases && testcases.length > 0) {
+                testcases.sort(function (a: TestCaseModel, b: TestCaseModel) {
+                  if (a.testId > b.testId) return 1;
+                  if (a.testId < b.testId) return -1;
+                  return 0;
+                });
+              }
               this.dataSource = new MatTableDataSource(testcases);
               resolve(true);
             },

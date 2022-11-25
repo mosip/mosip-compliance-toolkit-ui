@@ -234,11 +234,13 @@ export class ExecuteTestRunComponent implements OnInit {
   async createTestRun() {
     const testCasesListSorted: TestCaseModel[] = this.testCasesList;
     //sort the testcases based on the testId
-    testCasesListSorted.sort(function (a: TestCaseModel, b: TestCaseModel) {
-      if (a.testId > b.testId) return 1;
-      if (a.testId < b.testId) return -1;
-      return 0;
-    });
+    if (testCasesListSorted && testCasesListSorted.length > 0) {
+      testCasesListSorted.sort(function (a: TestCaseModel, b: TestCaseModel) {
+        if (a.testId > b.testId) return 1;
+        if (a.testId < b.testId) return -1;
+        return 0;
+      });
+    }
     //first create a testrun in db
     await this.addTestRun();
     this.testCasesList = testCasesListSorted;
@@ -437,7 +439,7 @@ export class ExecuteTestRunComponent implements OnInit {
     const testRunRequest = {
       runId: this.testRunId,
       testcaseId: testCase.testId,
-      methodUrl:  res.methodUrl ? res.methodUrl: '',
+      methodUrl: res.methodUrl ? res.methodUrl : '',
       methodRequest: res.methodRequest,
       methodResponse: res.methodResponse,
       resultStatus: resultStatus,
