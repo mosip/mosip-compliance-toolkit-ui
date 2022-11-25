@@ -194,6 +194,11 @@ export class TestRunHistoryComponent implements OnInit {
   }
 
   async populateTableData(response: any) {
+    if (response && response['errors'] && response['errors'].length != 0) {
+      if (this.dataSource && this.dataSource.data) {
+        this.dataSource.data = [];
+      }
+    }
     if (response && response['errors'] && response['errors'].length == 0) {
       if (this.dataSource && this.dataSource.data) {
         this.dataSource.data = [];
@@ -206,11 +211,13 @@ export class TestRunHistoryComponent implements OnInit {
       console.log(`this.totalItems: ${this.totalItems}`);
       console.log(`this.pageIndex: ${this.pageIndex}`);
       console.log(`this.pageSize: ${this.pageSize}`);
-      dataArr.sort(function (a: TestRunHistoryModel, b: TestRunHistoryModel) {
-        if (a.lastRunTime < b.lastRunTime) return 1;
-        if (a.lastRunTime > b.lastRunTime) return -1;
-        return 0;
-      });
+      if (dataArr && dataArr.length > 0) {
+        dataArr.sort(function (a: TestRunHistoryModel, b: TestRunHistoryModel) {
+          if (a.lastRunTime < b.lastRunTime) return 1;
+          if (a.lastRunTime > b.lastRunTime) return -1;
+          return 0;
+        });
+      }
       let tableData = [];
       for (let row of dataArr) {
         let runStatus = await this.getTestRunStatus(row.runId);
@@ -237,5 +244,25 @@ export class TestRunHistoryComponent implements OnInit {
     this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}/collection/${this.collectionId}/testrun/${row.runId}`,
     ]);
+  }
+
+  deleteTestRun(row: any) {
+    this.dataLoaded = false;
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.deleteTestRun(row.runId).subscribe(
+          async (response: any) => {
+            this.dataLoaded = true;
+            console.log(response);
+            await this.getTestRunHistory();
+            this.dataLoaded = true;
+          },
+          (errors) => {
+            this.dataLoaded = true;
+            Utils.showErrorMessage(errors, this.dialog);
+          }
+        )
+      );
+    });
   }
 }
