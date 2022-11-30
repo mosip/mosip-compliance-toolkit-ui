@@ -1,10 +1,8 @@
 [![Maven Package upon a push](https://github.com/mosip/mosip-compliance-toolkit-ui/actions/workflows/push_trigger.yml/badge.svg?branch=0.0.9-B1)](https://github.com/mosip/mosip-compliance-toolkit-ui/actions/workflows/push_trigger.yml)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?branch=0.0.9-B1&project=mosip_mosip-compliance-toolkit-ui&metric=alert_status)](https://sonarcloud.io/dashboard?branch=0.0.9-B1&id=mosip_mosip-compliance-toolkit-ui)
-
 
 # Compliance-Toolkit Portal
 
-This repository contains UI code for Compliance-Toolkit portal. Refer [here](https://docs.mosip.io/1.2.0/modules) for details about the functions that a resident can perform via this portal.
+This repository contains the UI code for MOSIP compliance toolkit. For an overview refer [here](https://docs.mosip.io/1.2.0/modules). 
 
 ## Build &amp; Deployment Guide
 
