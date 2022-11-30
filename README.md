@@ -68,19 +68,22 @@ The code is written in Angular JS.
 ### Pre-requisites
 1. Set the kube config file of the Mosip cluster having dependent services.
 1. Below are the dependent services required for compliance toolkit service.
-    * Clamav
-    * Keycloak
-    * keycloak-init
-    * Postgres with required compliance DB and test data
-    * Minio
-    * Config-server 
-    * Artifactory-server
-    * Audit-manager service
-    * Auth manager service
-    * Key manager service
-    * Notifier service
-    * Partner manager service
-    * Complaince service and compliance-toolkit service.
+    | Chart | Chart version |
+    |---|---|
+    |[Clamav](https://github.com/mosip/mosip-infra/tree/v1.2.0.1-B1/deployment/v3/external/antivirus/clamav) | 2.4.1 |
+    |[Keycloak](https://github.com/mosip/mosip-infra/tree/v1.2.0.1-B1/deployment/v3/external/iam) | 7.1.18 |
+    |[Keycloak-init](https://github.com/mosip/mosip-infra/tree/v1.2.0.1-B1/deployment/v3/external/iam) | 12.0.1-beta |
+    |[Postgres](https://github.com/mosip/mosip-infra/tree/v1.2.0.1-B1/deployment/v3/external/postgres) | 10.16.2 |
+    |[Postgres Init](https://github.com/mosip/mosip-infra/tree/v1.2.0.1-B1/deployment/v3/external/postgres) | 12.0.1-beta |
+    |[Minio](https://github.com/mosip/mosip-infra/tree/v1.2.0.1-B1/deployment/v3/external/object-store) | 10.1.6 |
+    |[Config-server](https://github.com/mosip/mosip-infra/tree/v1.2.0.1-B1/deployment/v3/mosip/config-server) | 12.0.1-beta |
+    |[Artifactory server](https://github.com/mosip/mosip-infra/tree/v1.2.0.1-B1/deployment/v3/mosip/artifactory) | 12.0.1-beta |
+    |[Auditmanager service](https://github.com/mosip/mosip-infra/blob/v1.2.0.1-B1/deployment/v3/mosip/kernel/install.sh) | 12.0.1-beta |
+    |[Authmanager service](https://github.com/mosip/mosip-infra/blob/v1.2.0.1-B1/deployment/v3/mosip/kernel/install.sh) | 12.0.1-beta |
+    |[Keymanager service](https://github.com/mosip/mosip-infra/blob/v1.2.0.1-B1/deployment/v3/mosip/kernel/install.sh) | 12.0.1-beta |
+    |[Notifier service](https://github.com/mosip/mosip-infra/blob/v1.2.0.1-B1/deployment/v3/mosip/kernel/install.sh) | 12.0.1-beta |
+    |[Partner manager service](https://github.com/mosip/mosip-infra/blob/v1.2.0.1-B1/deployment/v3/mosip/pms/install.sh) | 12.0.1-beta |
+    |[Complaince service](https://github.com/mosip/mosip-compliance-toolkit/blob/v0.9/README.md) | 0.9.0 |
 ### Install
 Install `kubectl` and `helm` utilities. Then run:
 ```
