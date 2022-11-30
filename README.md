@@ -63,3 +63,37 @@ The code is written in Angular JS.
   ```
   - Now start the server by typing <code>ng serve --proxy-config proxy.conf.json</code>
   - Open the browser, load the app with <code>https://localhost:4200</code>
+
+## Installing in k8s cluster using helm
+### Pre-requisites
+1. Set the kube config file of the Mosip cluster having dependent services.
+1. Below are the dependent services required for compliance toolkit service.
+    * Clamav
+    * Keycloak
+    * keycloak-init
+    * Postgres with required compliance DB and test data
+    * Minio
+    * Config-server 
+    * Artifactory-server
+    * Audit-manager service
+    * Auth manager service
+    * Key manager service
+    * Notifier service
+    * Partner manager service
+    * Complaince service and compliance-toolkit service.
+### Install
+Install `kubectl` and `helm` utilities. Then run:
+```
+cd helm
+./install.sh [cluster-kubeconfig-file]
+```
+### Restart
+```
+cd helm
+./restart.sh [cluster-kubeconfig-file]
+```
+### Delete
+```
+cd helm
+./delete.sh [cluster-kubeconfig-file]
+```
