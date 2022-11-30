@@ -2,7 +2,7 @@
 
 # Compliance-Toolkit Portal
 
-This repository contains the UI code for MOSIP compliance toolkit. For an overview refer [here](https://docs.mosip.io/1.2.0/modules). 
+This repository contains the UI code for MOSIP compliance toolkit. For an overview refer [here](https://docs.mosip.io/1.2.0/modules/compliance-tool-kit). 
 
 ## Build &amp; Deployment Guide
 
