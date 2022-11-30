@@ -67,7 +67,7 @@ The code is written in Angular JS.
 ## Installing in k8s cluster using helm
 ### Pre-requisites
 1. Set the kube config file of the Mosip cluster having dependent services.
-1. Below are the dependent services required for compliance toolkit service.
+1. Below are the dependent services required for compliance toolkit service:
     | Chart | Chart version |
     |---|---|
     |[Clamav](https://github.com/mosip/mosip-infra/tree/v1.2.0.1-B1/deployment/v3/external/antivirus/clamav) | 2.4.1 |
@@ -85,7 +85,7 @@ The code is written in Angular JS.
     |[Partner manager service](https://github.com/mosip/mosip-infra/blob/v1.2.0.1-B1/deployment/v3/mosip/pms/install.sh) | 12.0.1-beta |
     |[Complaince service](https://github.com/mosip/mosip-compliance-toolkit/blob/v0.9/README.md) | 0.9.0 |
 ### Install
-Install `kubectl` and `helm` utilities. Then run:
+Install `kubectl` and `helm` utilities, then run:
 ```
 cd helm
 ./install.sh [cluster-kubeconfig-file]
