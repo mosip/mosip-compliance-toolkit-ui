@@ -333,6 +333,12 @@
                 Add Collection
             </button>
             <span align="end" *ngIf="projectForm.controls['projectType']?.value == 'SBI'">
+                <button *ngIf="projectForm.controls['sbiPurpose']?.value == 'Auth'" mat-flat-button color="accent"
+                    (click)="downloadEncryptionKey()" title="Click to download encryption key for Auth devices">
+                    <mat-icon>save</mat-icon>
+                    Encryption Key
+                </button>
+                &nbsp;&nbsp;&nbsp;
                 <button mat-flat-button color="accent" (click)="scanDevice()">
                     <mat-icon *ngIf="isScanComplete">check_circle</mat-icon>
                     <mat-icon *ngIf="!isScanComplete">radio_button_unchecked</mat-icon>
@@ -396,7 +402,7 @@
     </div>
 </div>
 <p></p>
-        &nbsp;
+&nbsp;
 <div class="button-container">
     <button mat-flat-button color="accent" (click)="showDashboard()" class="add-button">
         <mat-icon>home</mat-icon>
