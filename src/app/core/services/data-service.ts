@@ -201,4 +201,9 @@ export class DataService {
     let url = `${this.SERVICES_BASE_URL}getBiometricTestDataFile/${fileId}`;
     return this.httpClient.get(url, { responseType: 'blob' });
   }
+
+  getEncryptionKey() {
+    let url = `${this.SERVICES_BASE_URL}getEncryptionKey`;
+    return this.httpClient.get(url);
+  }
 }

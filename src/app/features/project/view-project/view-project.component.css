@@ -3,10 +3,7 @@ mat-expansion-panel-header {
   color: black;
 }
 .formContainer {
-  /* width: 100%; */
   background-color: white;
-  padding: 5px;
-  padding-left: 10px;
 }
 .rowContainer {
   display: flex;
@@ -42,7 +39,7 @@ mat-expansion-panel-header {
   margin-left: 3px;
 }
 .list-container {
-  padding: 10px;
+  padding: 8px;
   background-color: white;
   /* border-top: 1px solid #ddd; */
 }
@@ -73,7 +70,7 @@ mat-expansion-panel-header {
   /* padding-bottom: 16px; */
   display: flex;
   justify-content: space-between;
-  width: 95%;
+  width: 100%;
 }
 .collections-button + .collections-button {
   margin-left: 8px;
