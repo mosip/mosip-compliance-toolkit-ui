@@ -19,7 +19,8 @@ export class SbiTestCaseService {
   async runTestCase(
     testCase: TestCaseModel,
     sbiSelectedPort: string,
-    sbiSelectedDevice: string
+    sbiSelectedDevice: string,
+    beforeKeyRotationResp: any
   ) {
     return new Promise(async (resolve, reject) => {
       const methodRequest = this.createRequest(testCase, sbiSelectedDevice);
@@ -34,7 +35,7 @@ export class SbiTestCaseService {
         validationRequest[appConstants.RESPONSE].status == appConstants.SUCCESS
       ) {
         let startExecutionTime = new Date().toISOString();
-        const methodUrl = this.getMethodUrl(sbiSelectedPort,testCase);
+        const methodUrl = this.getMethodUrl(sbiSelectedPort, testCase);
         let methodResponse: any = await this.executeMethod(
           testCase.methodName[0],
           methodUrl,
@@ -47,15 +48,32 @@ export class SbiTestCaseService {
             methodResponse,
             sbiSelectedDevice
           );
+          let performValidations = true;
+          if (
+            testCase.otherAttributes.keyRotationTestCase &&
+            !beforeKeyRotationResp
+          ) {
+            performValidations = false;
+          }
+          if (
+            testCase.otherAttributes.keyRotationTestCase &&
+            beforeKeyRotationResp
+          ) {
+            performValidations = true;
+          }
           //now validate the method response against all the validators
-          let validationResponse = await this.validateResponse(
-            testCase,
-            methodRequest,
-            decodedMethodResp,
-            sbiSelectedDevice,
-            startExecutionTime,
-            endExecutionTime
-          );
+          let validationResponse: any = {};
+          if (performValidations) {
+            validationResponse = await this.validateResponse(
+              testCase,
+              methodRequest,
+              decodedMethodResp,
+              sbiSelectedDevice,
+              startExecutionTime,
+              endExecutionTime,
+              beforeKeyRotationResp
+            );
+          }
           let finalResponse = {
             methodResponse: JSON.stringify(decodedMethodResp),
             methodRequest: JSON.stringify(methodRequest),
@@ -391,7 +409,8 @@ export class SbiTestCaseService {
     methodResponse: any,
     sbiSelectedDevice: string,
     startExecutionTime: string,
-    endExecutionTime: string
+    endExecutionTime: string,
+    beforeKeyRotationResp: any
   ) {
     const selectedSbiDevice: SbiDiscoverResponseModel =
       JSON.parse(sbiSelectedDevice);
@@ -414,6 +433,9 @@ export class SbiTestCaseService {
           startExecutionTime: startExecutionTime,
           endExecutionTime: endExecutionTime,
           timeout: this.getTimeout(testCase),
+          beforeKeyRotationResp: beforeKeyRotationResp
+            ? beforeKeyRotationResp
+            : null,
         }),
         validatorDefs: testCase.validatorDefs[0],
       };

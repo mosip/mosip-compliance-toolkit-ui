@@ -14,5 +14,6 @@ export class OtherAttributesModel {
       public timeout: any,
       public resumeBtn: boolean,
       public resumeAgainBtn: boolean,
+      public keyRotationTestCase: boolean
     ) {}
   }

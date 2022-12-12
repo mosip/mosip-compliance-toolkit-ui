@@ -46,7 +46,7 @@
                     </div>
                     <p></p><p></p>Current testcase: {{currectTestCaseId}} - {{currectTestCaseName}}
                     <p></p>
-                    <div  *ngIf="!showLoader || showResumeAgainBtn" [innerHTML]="currentTestDescription"></div>
+                    <div  *ngIf="!showLoader || showResumeAgainBtn || showContinueBtn" [innerHTML]="currentTestDescription"></div>
                     <div *ngIf="showLoader && !showResumeAgainBtn" class="spinner">
                         <mat-spinner diameter="50"></mat-spinner>
                     </div>
@@ -128,6 +128,8 @@
         color="accent" (click)="setResume()">Resume</button>
     <button *ngIf="scanComplete && !errorsInGettingTestcases && !runComplete && !showResumeBtn && showResumeAgainBtn" mat-flat-button
         color="accent" (click)="setResumeAgain()">Resume Next</button>        
+    <button *ngIf="scanComplete && !errorsInGettingTestcases && !runComplete && showContinueBtn" mat-flat-button
+        color="accent" (click)="setContinue()">Continue</button>            
     <button *ngIf="scanComplete && !errorsInGettingTestcases && runComplete && !serviceErrors && !errorsInSavingTestRun"
         mat-flat-button color="accent" (click)="viewTestRun()">View Test Run</button>
 </mat-dialog-actions>

@@ -54,6 +54,8 @@ export class ExecuteTestRunComponent implements OnInit {
   pauseExecution = false;
   showResumeBtn = false;
   showResumeAgainBtn = false;
+  showContinueBtn = false;
+  beforeKeyRotationResp: any = null;
   errorsSummary: string[];
   testCasesList: any;
   testRunId: string;
@@ -70,6 +72,16 @@ export class ExecuteTestRunComponent implements OnInit {
   sbiSelectedDevice = localStorage.getItem(appConstants.SBI_SELECTED_DEVICE)
     ? localStorage.getItem(appConstants.SBI_SELECTED_DEVICE)
     : null;
+  keyRotationIterations = this.appConfigService.getConfig()[
+    appConstants.SBI_KEY_ROTATION_ITERATIONS
+  ]
+    ? parseInt(
+        this.appConfigService.getConfig()[
+          appConstants.SBI_KEY_ROTATION_ITERATIONS
+        ]
+      )
+    : 0;
+  currentKeyRotationIndex = 0;
 
   constructor(
     private dialogRef: MatDialogRef<ExecuteTestRunComponent>,
@@ -294,6 +306,15 @@ export class ExecuteTestRunComponent implements OnInit {
         const res: any = await this.executeCurrentTestCase(testCase);
         if (res) {
           startingForLoop = this.handleErr(res);
+          //handle key rotation flow
+          console.log(`this.currentKeyRotationIndex: ${this.currentKeyRotationIndex}`);
+          console.log(`this.keyRotationIterations: ${this.keyRotationIterations}`);
+          if (this.currentKeyRotationIndex < this.keyRotationIterations) {
+            this.handleKeyRotationFlow(startingForLoop, testCase, res);
+            if (this.showContinueBtn) {
+              await new Promise(async (resolve, reject) => {});
+            }
+          }
           this.calculateTestcaseResults(res[appConstants.VALIDATIONS_RESPONSE]);
           //update the test run details in db
           await this.addTestRunDetails(testCase, res);
@@ -309,6 +330,25 @@ export class ExecuteTestRunComponent implements OnInit {
           this.showLoader = false;
         }
       }
+    }
+  }
+
+  handleKeyRotationFlow(
+    startingForLoop: boolean,
+    testCase: TestCaseModel,
+    res: any
+  ) {
+    if (
+      startingForLoop &&
+      this.projectType === appConstants.SBI &&
+      testCase.otherAttributes.keyRotationTestCase
+    ) {
+      console.log('key rotation');
+      this.beforeKeyRotationResp = JSON.parse(res.methodResponse);
+      console.log(this.beforeKeyRotationResp);
+      this.showContinueBtn = true;
+      this.showLoader = false;
+      this.currentKeyRotationIndex++;
     }
   }
 
@@ -492,7 +532,8 @@ export class ExecuteTestRunComponent implements OnInit {
             const res = await this.sbiTestCaseService.runTestCase(
               testCase,
               this.sbiSelectedPort ? this.sbiSelectedPort : '',
-              this.sbiSelectedDevice ? this.sbiSelectedDevice : ''
+              this.sbiSelectedDevice ? this.sbiSelectedDevice : '',
+              null
             );
             this.streamingDone = false;
             this.stopStreaming();
@@ -504,14 +545,23 @@ export class ExecuteTestRunComponent implements OnInit {
           if (this.showResumeBtn) {
             this.pauseExecution = true;
           }
-          //console.log(`this.pauseExecution : ${this.pauseExecution}`);
           if (!this.pauseExecution) {
             this.showLoader = true;
+            let beforeKeyRotationDeviceResp = null;
+            if (
+              testCase.otherAttributes.keyRotationTestCase &&
+              this.beforeKeyRotationResp
+            ) {
+              console.log('key rotation');
+              beforeKeyRotationDeviceResp = this.beforeKeyRotationResp;
+            }
             const res = await this.sbiTestCaseService.runTestCase(
               testCase,
               this.sbiSelectedPort ? this.sbiSelectedPort : '',
-              this.sbiSelectedDevice ? this.sbiSelectedDevice : ''
+              this.sbiSelectedDevice ? this.sbiSelectedDevice : '',
+              beforeKeyRotationDeviceResp
             );
+            this.beforeKeyRotationResp = null;
             resolve(res);
           } else {
             //no resp to keep the for loop on hold
@@ -643,6 +693,16 @@ export class ExecuteTestRunComponent implements OnInit {
 
   stopStreaming() {
     stop_streaming();
+  }
+
+  async setContinue() {
+    this.showContinueBtn = false;
+    await this.runExecuteForLoop(false, false);
+    this.runComplete = true;
+    this.basicTimer.stop();
+    if (this.currentKeyRotationIndex <= this.keyRotationIterations) {
+
+    }  
   }
 
   // scanDevice() {
