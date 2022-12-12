@@ -276,9 +276,9 @@ export class ExecuteTestRunComponent implements OnInit {
         this.currectTestCaseId != '' &&
         this.currectTestCaseId == testCase.testId
       ) {
+        console.log(`this.currectTestCaseId: ${this.currectTestCaseId}`);
         proceedTestCase = true;
       }
-      console.log(`this.currectTestCaseId: ${this.currectTestCaseId}`);
       if (
         fromResumeNext &&
         this.currectTestCaseId != '' &&
@@ -307,8 +307,6 @@ export class ExecuteTestRunComponent implements OnInit {
         if (res) {
           startingForLoop = this.handleErr(res);
           //handle key rotation flow
-          console.log(`this.currentKeyRotationIndex: ${this.currentKeyRotationIndex}`);
-          console.log(`this.keyRotationIterations: ${this.keyRotationIterations}`);
           if (this.currentKeyRotationIndex < this.keyRotationIterations) {
             this.handleKeyRotationFlow(startingForLoop, testCase, res);
             if (this.showContinueBtn) {
@@ -343,9 +341,7 @@ export class ExecuteTestRunComponent implements OnInit {
       this.projectType === appConstants.SBI &&
       testCase.otherAttributes.keyRotationTestCase
     ) {
-      console.log('key rotation');
       this.beforeKeyRotationResp = JSON.parse(res.methodResponse);
-      console.log(this.beforeKeyRotationResp);
       this.showContinueBtn = true;
       this.showLoader = false;
       this.currentKeyRotationIndex++;
@@ -552,7 +548,6 @@ export class ExecuteTestRunComponent implements OnInit {
               testCase.otherAttributes.keyRotationTestCase &&
               this.beforeKeyRotationResp
             ) {
-              console.log('key rotation');
               beforeKeyRotationDeviceResp = this.beforeKeyRotationResp;
             }
             const res = await this.sbiTestCaseService.runTestCase(
@@ -700,9 +695,6 @@ export class ExecuteTestRunComponent implements OnInit {
     await this.runExecuteForLoop(false, false);
     this.runComplete = true;
     this.basicTimer.stop();
-    if (this.currentKeyRotationIndex <= this.keyRotationIterations) {
-
-    }  
   }
 
   // scanDevice() {
