@@ -68,11 +68,11 @@ export default class Utils {
     try {
       let deviceInfoDecoded: any;
       if (deviceInfoResp.deviceInfo) {
-        deviceInfoDecoded = Utils.parseJwt(deviceInfoResp.deviceInfo);
+        deviceInfoDecoded = Utils.parsePayload(deviceInfoResp.deviceInfo);
       }
       let digitalIdDecoded: any;
       if (deviceInfoDecoded && deviceInfoDecoded.digitalId) {
-        digitalIdDecoded = Utils.parseJwt(deviceInfoDecoded.digitalId);
+        digitalIdDecoded = Utils.parsePayload(deviceInfoDecoded.digitalId);
       }
       deviceInfoDecoded = {
         ...deviceInfoDecoded,
@@ -122,11 +122,11 @@ export default class Utils {
     try {
       let dataDecoded: any;
       if (dataResp.data) {
-        dataDecoded = Utils.parseJwt(dataResp.data);
+        dataDecoded = Utils.parsePayload(dataResp.data);
       }
       let digitalIdDecoded: any;
       if (dataDecoded && dataDecoded.digitalId) {
-        digitalIdDecoded = Utils.parseJwt(dataDecoded.digitalId);
+        digitalIdDecoded = Utils.parsePayload(dataDecoded.digitalId);
       }
       dataDecoded = {
         ...dataDecoded,
@@ -176,7 +176,7 @@ export default class Utils {
     }
   }
 
-  static parseJwt(token: string) {
+  static parsePayload(token: string) {
     try {
       return JSON.parse(atob(token.split('.')[1]));
     } catch (e) {
