@@ -341,10 +341,30 @@ export class ExecuteTestRunComponent implements OnInit {
       this.projectType === appConstants.SBI &&
       testCase.otherAttributes.keyRotationTestCase
     ) {
-      this.beforeKeyRotationResp = JSON.parse(res.methodResponse);
-      this.showContinueBtn = true;
-      this.showLoader = false;
-      this.currentKeyRotationIndex++;
+      let testcaseFailed = false;
+      if (
+        res &&
+        res[appConstants.VALIDATIONS_RESPONSE] &&
+        res[appConstants.VALIDATIONS_RESPONSE][appConstants.RESPONSE]
+      ) {
+        const validationsList =
+          res[appConstants.VALIDATIONS_RESPONSE][appConstants.RESPONSE][
+            appConstants.VALIDATIONS_LIST
+          ];
+        if (validationsList && validationsList.length > 0) {
+          validationsList.forEach((validationitem: any) => {
+            if (validationitem.status == appConstants.FAILURE) {
+              testcaseFailed = true;
+            }
+          });
+        }
+      }
+      if (!testcaseFailed) {
+        this.beforeKeyRotationResp = JSON.parse(res.methodResponse);
+        this.showContinueBtn = true;
+        this.showLoader = false;
+        this.currentKeyRotationIndex++;
+      }
     }
   }
 
