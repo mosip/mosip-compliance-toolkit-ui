@@ -378,18 +378,12 @@ export class ViewProjectComponent implements OnInit {
   }
 
   downloadEncryptionKey() {
-    Utils.showErrorMessage(
-      null,
-      this.dialog,
-      'TODO'
-    );   
-    /*
       const subs = this.dataService.getEncryptionKey().subscribe(
         (res: any) => {
           if (res) {
-            const obj = res;
+            let obj = res[appConstants.RESPONSE];
             if (obj) {
-              var blob = new Blob([JSON.stringify(obj, null, 2)], { type: 'application/json' });
+              var blob = new Blob([obj], { type: 'application/json' });
               var link = document.createElement('a');
               link.href = window.URL.createObjectURL(blob);
               link.download = `key.cer`;
@@ -408,7 +402,6 @@ export class ViewProjectComponent implements OnInit {
         }
       );
       this.subscriptions.push(subs);
-    */
   }
 
   async updateSdkProject(request: any, attributeName: string) {
