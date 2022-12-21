@@ -8,6 +8,9 @@ fi
 
 NS=compliance-toolkit
 
+echo Updating Helm Dependencies
+helm dependency update
+
 echo Create $NS namespace
 kubectl create ns $NS
 
