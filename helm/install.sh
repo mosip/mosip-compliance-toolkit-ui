@@ -11,6 +11,9 @@ NS=compliance-toolkit
 echo Create $NS namespace
 kubectl create ns $NS
 
+echo Updating Helm Dependencies
+helm dependency update
+
 echo Istio label
 kubectl label ns $NS istio-injection=disabled --overwrite
 helm repo update
