@@ -436,6 +436,7 @@ export class SbiTestCaseService {
           beforeKeyRotationResp: beforeKeyRotationResp
             ? beforeKeyRotationResp
             : null,
+          modality: testCase.otherAttributes.biometricTypes[0],
         }),
         validatorDefs: testCase.validatorDefs[0],
       };
