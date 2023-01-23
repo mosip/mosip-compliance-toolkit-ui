@@ -14,21 +14,21 @@ export class AuthService {
   ) {}
 
   isAuthenticated(): Observable<boolean> {
-    return this.http
-      .get(
-        `${
-          this.appService.getConfig().SERVICES_BASE_URL
-        }authorize/admin/validateToken`,
-        { observe: 'response' }
-      )
-      .pipe(
-        map((res) => res.status === 200),
-        catchError((error) => {
-          console.log(error);
-          return of(false);
-        })
-      );
-    //return of(false);
+    // return this.http
+    //   .get(
+    //     `${
+    //       this.appService.getConfig().SERVICES_BASE_URL
+    //     }authorize/admin/validateToken`,
+    //     { observe: 'response' }
+    //   )
+    //   .pipe(
+    //     map((res) => res.status === 401),
+    //     catchError((error) => {
+    //       console.log(error);
+    //       return of(true);
+    //     })
+    //   );
+    return of(true);
   }
 
   isLanguagesSet() {

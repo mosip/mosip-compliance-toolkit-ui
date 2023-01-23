@@ -6,7 +6,8 @@ import { AppConfigService } from '../../../app-config.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { SbiDiscoverResponseModel } from 'src/app/core/models/sbi-discover';
-import Utils from "src/app/app.utils";
+import Utils from 'src/app/app.utils';
+import { CapacitorIntent } from 'capacitor-intent';
 
 @Component({
   selector: 'app-scan-device',
@@ -31,9 +32,9 @@ export class ScanDeviceComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dataService: DataService,
     private appConfigService: AppConfigService
-  ) {  
-    dialogRef.disableClose = true;  
-  }  
+  ) {
+    dialogRef.disableClose = true;
+  }
 
   async ngOnInit() {
     this.scanForm.addControl(
@@ -101,10 +102,54 @@ export class ScanDeviceComponent implements OnInit {
   }
 
   async scanDevices(sbiPort: string) {
+    const DISCOVERY_INTENT_ACTION = 'io.sbi.device';
+    const D_INFO_INTENT_ACTION = '.Info';
+    const R_CAPTURE_INTENT_ACTION = '.rCapture';
+    const SBI_INTENT_REQUEST_KEY = 'input';
+    const SBI_INTENT_RESPONSE_KEY = 'response';
+const RESULT_OK = 1;
+    // let discoverRequest = {
+    //   type: 'Biometric Device',
+    //   specVersion: '1.0'
+    // };
+
+    // let resultCodeResp = await CapacitorIntent.startActivity({
+    //   action: DISCOVERY_INTENT_ACTION,
+    //   extraKey: SBI_INTENT_REQUEST_KEY,
+    //   extraValue: JSON.stringify(discoverRequest),
+    // });
+    // console.log(resultCodeResp);
+
+    let discoverRequest1 = {
+      type: 'Face'
+    };
+
+    let resultCodeResp1 = await CapacitorIntent.startActivity({
+      action: DISCOVERY_INTENT_ACTION,
+      extraKey: SBI_INTENT_REQUEST_KEY,
+      extraValue: JSON.stringify(discoverRequest1),
+    });
+    console.log(resultCodeResp1);
+  //   let resultCode = 0;
+  //   if(resultCodeResp != null) {
+  //     resultCode = Number.parseInt(resultCodeResp);
+  //   }
+  //   console.log(resultCodeResp);
+  //   if (resultCode == RESULT_OK) {
+  //     switch (resultCode) {
+  //         case 1:
+  //             //parseDiscoverResponse(data.getExtras());
+  //             break;
+  //     }
+  // }
+  }
+
+  async scanDevicesWeb(sbiPort: string) {
     const requestBody = {
       type: appConstants.BIOMETRIC_DEVICE,
     };
-    let methodUrl = this.SBI_BASE_URL + ':' + sbiPort + '/' + appConstants.SBI_METHOD_DEVICE;
+    let methodUrl =
+      this.SBI_BASE_URL + ':' + sbiPort + '/' + appConstants.SBI_METHOD_DEVICE;
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
         this.dataService
@@ -120,7 +165,8 @@ export class ScanDeviceComponent implements OnInit {
                 let data = response;
                 let decodedDataArr: SbiDiscoverResponseModel[] = [];
                 data.forEach((deviceData: any) => {
-                  const decodedData = Utils.getDecodedDiscoverDevice(deviceData);
+                  const decodedData =
+                    Utils.getDecodedDiscoverDevice(deviceData);
                   if (decodedData != null) {
                     decodedDataArr.push(decodedData);
                   }
@@ -159,7 +205,7 @@ export class ScanDeviceComponent implements OnInit {
       this.devicesData = [];
     }
   }
-  
+
   public save() {
     this.scanForm.controls['ports'].markAsTouched();
     this.scanForm.controls['devices'].markAsTouched();
