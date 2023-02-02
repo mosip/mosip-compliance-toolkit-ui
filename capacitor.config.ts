@@ -6,7 +6,7 @@ const config: CapacitorConfig = {
   webDir: 'dist/mosip-compliance-toolkit-ui',
   bundledWebRuntime: false,
   // server: {
-  //   url: 'http://192.168.1.6:4200',
+  //   url: 'http://192.168.1.10:4200',
   //   cleartext: true
   // },
 };

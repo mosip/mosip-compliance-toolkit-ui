@@ -11,7 +11,9 @@ export class SbiDiscoverResponseModel {
         public certification: any, 
         public specVersion: any, 
         public callbackId: any, 
-        public serviceVersion: any
+        public serviceVersion: any,
+        public firmware?: any,
+        public env?: any
   ) { }
 }
 

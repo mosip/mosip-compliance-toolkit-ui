@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 import { CdTimerComponent } from 'angular-cd-timer';
 import { SbiTestCaseService } from '../../../core/services/sbi-testcase-service';
 import { SdkTestCaseService } from '../../../core/services/sdk-testcase-service';
+import { SbiTestCaseAndroidService } from '../../../core/services/sbi-testcase-android-service';
 import { TestCaseModel } from 'src/app/core/models/testcase';
 import { Router } from '@angular/router';
 import { SbiProjectModel } from 'src/app/core/models/sbi-project';
@@ -76,12 +77,13 @@ export class ExecuteTestRunComponent implements OnInit {
     appConstants.SBI_KEY_ROTATION_ITERATIONS
   ]
     ? parseInt(
-        this.appConfigService.getConfig()[
-          appConstants.SBI_KEY_ROTATION_ITERATIONS
-        ]
-      )
+      this.appConfigService.getConfig()[
+      appConstants.SBI_KEY_ROTATION_ITERATIONS
+      ]
+    )
     : 0;
   currentKeyRotationIndex = 0;
+  isAndroidAppMode = true;
 
   constructor(
     private dialogRef: MatDialogRef<ExecuteTestRunComponent>,
@@ -91,6 +93,7 @@ export class ExecuteTestRunComponent implements OnInit {
     private dialog: MatDialog,
     private sbiTestCaseService: SbiTestCaseService,
     private sdkTestCaseService: SdkTestCaseService,
+    private sbiTestCaseAndroidService: SbiTestCaseAndroidService,
     private appConfigService: AppConfigService
   ) {
     dialogRef.disableClose = true;
@@ -117,9 +120,11 @@ export class ExecuteTestRunComponent implements OnInit {
   async performValidations(): Promise<boolean> {
     if (this.projectType === appConstants.SBI) {
       this.validationErrMsg = '';
+      console.log(this.sbiSelectedDevice);
       if (!(this.sbiSelectedPort && this.sbiSelectedDevice)) {
         this.scanComplete = false;
         this.dataLoaded = true;
+        console.log(this.sbiSelectedPort);
         return false;
       }
       if (this.sbiSelectedPort && this.sbiSelectedDevice) {
@@ -127,6 +132,9 @@ export class ExecuteTestRunComponent implements OnInit {
         const selectedSbiDevice: SbiDiscoverResponseModel = JSON.parse(
           this.sbiSelectedDevice
         );
+        console.log('purpose');
+        console.log(selectedSbiDevice.purpose);
+        console.log(this.sbiProjectData.purpose);
         if (
           selectedSbiDevice.purpose != '' &&
           this.sbiProjectData.purpose != selectedSbiDevice.purpose
@@ -137,6 +145,9 @@ export class ExecuteTestRunComponent implements OnInit {
             'Please select appropriate device, while scanning, to execute testcases for this project. \n The purpose of the selected device is not matching the project.';
           return false;
         }
+        console.log('device type');
+        console.log(selectedSbiDevice.digitalIdDecoded.type);
+        console.log(this.sbiProjectData.deviceType);
         if (
           this.sbiProjectData.deviceType !=
           selectedSbiDevice.digitalIdDecoded.type
@@ -147,6 +158,9 @@ export class ExecuteTestRunComponent implements OnInit {
             'Please select appropriate device, while scanning, to execute testcases for this project. \n The device type of the selected device is not matching the project.';
           return false;
         }
+        console.log('device deviceSubType');
+        console.log(selectedSbiDevice.digitalIdDecoded.deviceSubType);
+        console.log(this.sbiProjectData.deviceSubType);
         if (
           this.sbiProjectData.deviceSubType !=
           selectedSbiDevice.digitalIdDecoded.deviceSubType
@@ -310,7 +324,7 @@ export class ExecuteTestRunComponent implements OnInit {
           if (this.currentKeyRotationIndex < this.keyRotationIterations) {
             this.handleKeyRotationFlow(startingForLoop, testCase, res);
             if (this.showContinueBtn) {
-              await new Promise(async (resolve, reject) => {});
+              await new Promise(async (resolve, reject) => { });
             }
           }
           this.calculateTestcaseResults(res[appConstants.VALIDATIONS_RESPONSE]);
@@ -320,7 +334,7 @@ export class ExecuteTestRunComponent implements OnInit {
           await this.updateTestRun();
           if (testCase.otherAttributes.resumeAgainBtn) {
             this.showResumeAgainBtn = true;
-            await new Promise(async (resolve, reject) => {});
+            await new Promise(async (resolve, reject) => { });
           }
           this.currectTestCaseId = '';
           this.currectTestCaseName = '';
@@ -349,7 +363,7 @@ export class ExecuteTestRunComponent implements OnInit {
       ) {
         const validationsList =
           res[appConstants.VALIDATIONS_RESPONSE][appConstants.RESPONSE][
-            appConstants.VALIDATIONS_LIST
+          appConstants.VALIDATIONS_LIST
           ];
         if (validationsList && validationsList.length > 0) {
           validationsList.forEach((validationitem: any) => {
@@ -476,7 +490,7 @@ export class ExecuteTestRunComponent implements OnInit {
     ) {
       const validationsList =
         res[appConstants.VALIDATIONS_RESPONSE][appConstants.RESPONSE][
-          appConstants.VALIDATIONS_LIST
+        appConstants.VALIDATIONS_LIST
         ];
       if (validationsList && validationsList.length > 0) {
         validationsList.forEach((validationitem: any) => {
@@ -545,12 +559,22 @@ export class ExecuteTestRunComponent implements OnInit {
           if (this.initiateCapture) {
             this.initiateCapture = false;
             this.showLoader = true;
-            const res = await this.sbiTestCaseService.runTestCase(
-              testCase,
-              this.sbiSelectedPort ? this.sbiSelectedPort : '',
-              this.sbiSelectedDevice ? this.sbiSelectedDevice : '',
-              null
-            );
+            let res: any;
+            if (!this.isAndroidAppMode) {
+              res = await this.sbiTestCaseService.runTestCase(
+                testCase,
+                this.sbiSelectedPort ? this.sbiSelectedPort : '',
+                this.sbiSelectedDevice ? this.sbiSelectedDevice : '',
+                null
+              );
+            } else {
+              res = await this.sbiTestCaseAndroidService.runTestCase(
+                testCase,
+                this.sbiSelectedPort ? this.sbiSelectedPort : '',
+                this.sbiSelectedDevice ? this.sbiSelectedDevice : '',
+                null
+              );
+            }
             this.streamingDone = false;
             this.stopStreaming();
             resolve(res);
@@ -570,12 +594,22 @@ export class ExecuteTestRunComponent implements OnInit {
             ) {
               beforeKeyRotationDeviceResp = this.beforeKeyRotationResp;
             }
-            const res = await this.sbiTestCaseService.runTestCase(
-              testCase,
-              this.sbiSelectedPort ? this.sbiSelectedPort : '',
-              this.sbiSelectedDevice ? this.sbiSelectedDevice : '',
-              beforeKeyRotationDeviceResp
-            );
+            let res: any;
+            if (!this.isAndroidAppMode) {
+              res = await this.sbiTestCaseService.runTestCase(
+                testCase,
+                this.sbiSelectedPort ? this.sbiSelectedPort : '',
+                this.sbiSelectedDevice ? this.sbiSelectedDevice : '',
+                beforeKeyRotationDeviceResp
+              );
+            } else {
+              res = await this.sbiTestCaseAndroidService.runTestCase(
+                testCase,
+                this.sbiSelectedPort ? this.sbiSelectedPort : '',
+                this.sbiSelectedDevice ? this.sbiSelectedDevice : '',
+                beforeKeyRotationDeviceResp
+              );
+            }
             this.beforeKeyRotationResp = null;
             resolve(res);
           } else {

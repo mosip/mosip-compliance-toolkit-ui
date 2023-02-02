@@ -7,6 +7,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { SbiDiscoverResponseModel } from 'src/app/core/models/sbi-discover';
 import Utils from 'src/app/app.utils';
+import { Toast } from '@capacitor/toast';
 import { CapacitorIntent } from 'capacitor-intent';
 
 @Component({
@@ -27,6 +28,7 @@ export class ScanDeviceComponent implements OnInit {
   SBI_PORTS = this.appConfigService.getConfig()['sbiPorts'].split(',');
   previousScanAvailable = false;
   SBI_BASE_URL = this.appConfigService.getConfig()['SBI_BASE_URL'];
+  isAndroidAppMode = true;
   constructor(
     private dialogRef: MatDialogRef<ScanDeviceComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -45,7 +47,7 @@ export class ScanDeviceComponent implements OnInit {
       'devices',
       new FormControl('', [Validators.required])
     );
-    this.input = this.data;
+    this.input = this.data; 
     const scannedData = localStorage.getItem(appConstants.SBI_SCAN_DATA);
     if (scannedData != null) {
       try {
@@ -89,8 +91,12 @@ export class ScanDeviceComponent implements OnInit {
   async startScan() {
     this.scanComplete = false;
     this.resetPreviousScan();
-    for (const sbiPort of this.SBI_PORTS) {
-      await this.scanDevices(sbiPort);
+    if (!this.isAndroidAppMode) {
+      for (const sbiPort of this.SBI_PORTS) {
+        await this.scanDevicesWeb(sbiPort);
+      }
+    } else {
+      await this.scanDevicesAndroid(this.input["sbiDeviceType"]);
     }
     if (this.portsData.length > 0) {
       localStorage.setItem(
@@ -101,47 +107,95 @@ export class ScanDeviceComponent implements OnInit {
     this.scanComplete = true;
   }
 
-  async scanDevices(sbiPort: string) {
+  async scanDevicesAndroid(sbiModality: string) {
+    this.scanComplete = false;
+    console.log("in scanDevicesAndroid method");
     const DISCOVERY_INTENT_ACTION = 'io.sbi.device';
     const D_INFO_INTENT_ACTION = '.Info';
     const R_CAPTURE_INTENT_ACTION = '.rCapture';
     const SBI_INTENT_REQUEST_KEY = 'input';
     const SBI_INTENT_RESPONSE_KEY = 'response';
-const RESULT_OK = 1;
-    // let discoverRequest = {
-    //   type: 'Biometric Device',
-    //   specVersion: '1.0'
-    // };
+    const RESULT_OK = 'success';
+    const MODALITY = sbiModality;
+    const SBI_DISCOVER = "SBI_DISCOVER";
+    const SBI_INFO = "SBI_INFO";
+    const SBI_R_CAPTURE = "SBI_R_CAPTURE";
 
-    // let resultCodeResp = await CapacitorIntent.startActivity({
-    //   action: DISCOVERY_INTENT_ACTION,
-    //   extraKey: SBI_INTENT_REQUEST_KEY,
-    //   extraValue: JSON.stringify(discoverRequest),
-    // });
-    // console.log(resultCodeResp);
+    console.log("calling mock sbi");
+    return new Promise((resolve, reject) => {
+      Toast.show({
+        text: 'Searching for SBI devices for : ' + sbiModality,
+      });
+      CapacitorIntent.startActivity({
+        methodType: SBI_DISCOVER,
+        action: DISCOVERY_INTENT_ACTION,
+        extraKey: SBI_INTENT_REQUEST_KEY,
+        extraValue: MODALITY
+      }).then((result: any) => {
+        console.log("result recvd");
+        console.log(result);
+        const status = result["status"];
+        if (status == RESULT_OK) {
+          const resp = result["response"];
+          let discoverResp = JSON.parse(resp);
+          let callbackId = discoverResp["callbackId"];
+          console.log(callbackId);
+          this.portsData.push(callbackId);
+          const decodedData =
+            Utils.getDecodedDiscoverDevice(discoverResp);
+          console.log(decodedData);
+          let decodedDataArr: SbiDiscoverResponseModel[] = [];
+          if (decodedData != null) {
+            decodedDataArr.push(decodedData);
+          }
+          this.portDevicesData.set(
+            callbackId,
+            JSON.stringify(decodedDataArr)
+          );
+          resolve(true);
+        }
+        // localStorage.setItem(appConstants.SBI_SCAN_COMPLETE, 'true');
+        // localStorage.setItem(
+        //   appConstants.SBI_SELECTED_DEVICE,
+        //   JSON.stringify(decodedData)
+        // );
+        // localStorage.setItem(
+        //   appConstants.SBI_SELECTED_PORT,
+        //   this.callbackId
+        // );
+        // this.scanComplete = true;
 
-    let discoverRequest1 = {
-      type: 'Face'
-    };
-
-    let resultCodeResp1 = await CapacitorIntent.startActivity({
-      action: DISCOVERY_INTENT_ACTION,
-      extraKey: SBI_INTENT_REQUEST_KEY,
-      extraValue: JSON.stringify(discoverRequest1),
+        // Toast.show({
+        //   text: "Initiating Device info request : " + this.callbackId,
+        // });
+        // CapacitorIntent.startActivity({
+        //   methodType: SBI_INFO,
+        //   action: this.callbackId + D_INFO_INTENT_ACTION
+        // }).then((deviceInfoResult: any) => {
+        //   console.log("result recvd");
+        //   console.log(deviceInfoResult);
+        //   const resp = deviceInfoResult["response"];
+        //   let deviceInfoResp = JSON.parse(resp);
+        //   const decodedData =
+        //     Utils.getDecodedDeviceInfo(deviceInfoResp);
+        //   console.log(decodedData);
+        //   this.portDevicesData.set(
+        //     this.callbackId,
+        //     JSON.stringify(decodedData)
+        //   );
+        //   this.scanComplete = true;
+        //   resolve(true);
+        // });
+      })
+        .catch(async (err) => {
+          console.log("error recvd");
+          console.error(err);
+          await Toast.show({
+            text: 'Unable to find any SBI devices!',
+          });
+          resolve(true);
+        })
     });
-    console.log(resultCodeResp1);
-  //   let resultCode = 0;
-  //   if(resultCodeResp != null) {
-  //     resultCode = Number.parseInt(resultCodeResp);
-  //   }
-  //   console.log(resultCodeResp);
-  //   if (resultCode == RESULT_OK) {
-  //     switch (resultCode) {
-  //         case 1:
-  //             //parseDiscoverResponse(data.getExtras());
-  //             break;
-  //     }
-  // }
   }
 
   async scanDevicesWeb(sbiPort: string) {
@@ -189,7 +243,11 @@ const RESULT_OK = 1;
 
   getDeviceLabel(field: any) {
     if (field) {
-      return `Device Id: ${field.deviceId}, Purpose: ${field.purpose}, Device Type: ${field.digitalIdDecoded.type}, Device Sub Type: ${field.digitalIdDecoded.deviceSubType}`;
+      if (!this.isAndroidAppMode) {
+        return `Device Id: ${field.deviceId}, Purpose: ${field.purpose}, Device Type: ${field.digitalIdDecoded.type}, Device Sub Type: ${field.digitalIdDecoded.deviceSubType}`;
+      } else {
+        return `Purpose: ${field.purpose}, Device Type: ${field.digitalIdDecoded.type}, Device Sub Type: ${field.digitalIdDecoded.deviceSubType}`;
+      }
     } else {
       return '';
     }

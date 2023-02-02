@@ -43,7 +43,7 @@ export class ProjectsDashboardComponent implements OnInit {
   subscriptions: Subscription[] = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-
+  isAndroidAppMode = true;
   constructor(
     private router: Router,
     private translate: TranslateService,
@@ -126,6 +126,12 @@ export class ProjectsDashboardComponent implements OnInit {
   }
 
   viewProject(project: any) {
+    if (this.isAndroidAppMode) {
+      localStorage.removeItem(appConstants.SBI_SELECTED_PORT);
+      localStorage.removeItem(appConstants.SBI_SELECTED_DEVICE);
+      localStorage.removeItem(appConstants.SBI_SCAN_DATA);
+      localStorage.removeItem(appConstants.SBI_SCAN_COMPLETE);
+    }
     this.router.navigate([
       `toolkit/project/${project.projectType}/${project.id}`,
     ]);
