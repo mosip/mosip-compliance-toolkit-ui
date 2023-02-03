@@ -47,7 +47,7 @@ export class ScanDeviceComponent implements OnInit {
       'devices',
       new FormControl('', [Validators.required])
     );
-    this.input = this.data; 
+    this.input = this.data;
     const scannedData = localStorage.getItem(appConstants.SBI_SCAN_DATA);
     if (scannedData != null) {
       try {
@@ -107,38 +107,25 @@ export class ScanDeviceComponent implements OnInit {
     this.scanComplete = true;
   }
 
-  async scanDevicesAndroid(sbiModality: string) {
+  async scanDevicesAndroid(sbiDeviceType: string) {
     this.scanComplete = false;
     console.log("in scanDevicesAndroid method");
-    const DISCOVERY_INTENT_ACTION = 'io.sbi.device';
-    const D_INFO_INTENT_ACTION = '.Info';
-    const R_CAPTURE_INTENT_ACTION = '.rCapture';
-    const SBI_INTENT_REQUEST_KEY = 'input';
-    const SBI_INTENT_RESPONSE_KEY = 'response';
-    const RESULT_OK = 'success';
-    const MODALITY = sbiModality;
-    const SBI_DISCOVER = "SBI_DISCOVER";
-    const SBI_INFO = "SBI_INFO";
-    const SBI_R_CAPTURE = "SBI_R_CAPTURE";
-
     console.log("calling mock sbi");
     return new Promise((resolve, reject) => {
       Toast.show({
-        text: 'Searching for SBI devices for : ' + sbiModality,
+        text: 'Searching for SBI devices for : ' + sbiDeviceType,
       });
       CapacitorIntent.startActivity({
-        methodType: SBI_DISCOVER,
-        action: DISCOVERY_INTENT_ACTION,
-        extraKey: SBI_INTENT_REQUEST_KEY,
-        extraValue: MODALITY
-      }).then((result: any) => {
-        console.log("result recvd");
-        console.log(result);
-        const status = result["status"];
-        if (status == RESULT_OK) {
-          const resp = result["response"];
-          let discoverResp = JSON.parse(resp);
-          let callbackId = discoverResp["callbackId"];
+        methodType: appConstants.SBI_METHOD_DEVICE,
+        action: appConstants.DISCOVERY_INTENT_ACTION,
+        extraKey: appConstants.SBI_INTENT_REQUEST_KEY,
+        extraValue: sbiDeviceType
+      }).then((discoverResult: any) => {
+        console.log(discoverResult);
+        const discoverStatus = discoverResult[appConstants.STATUS];
+        if (discoverStatus == appConstants.RESULT_OK) {
+          const discoverResp = JSON.parse(discoverResult[appConstants.RESPONSE]);
+          const callbackId = discoverResp[appConstants.CALLBACK_ID];
           console.log(callbackId);
           this.portsData.push(callbackId);
           const decodedData =
@@ -154,38 +141,6 @@ export class ScanDeviceComponent implements OnInit {
           );
           resolve(true);
         }
-        // localStorage.setItem(appConstants.SBI_SCAN_COMPLETE, 'true');
-        // localStorage.setItem(
-        //   appConstants.SBI_SELECTED_DEVICE,
-        //   JSON.stringify(decodedData)
-        // );
-        // localStorage.setItem(
-        //   appConstants.SBI_SELECTED_PORT,
-        //   this.callbackId
-        // );
-        // this.scanComplete = true;
-
-        // Toast.show({
-        //   text: "Initiating Device info request : " + this.callbackId,
-        // });
-        // CapacitorIntent.startActivity({
-        //   methodType: SBI_INFO,
-        //   action: this.callbackId + D_INFO_INTENT_ACTION
-        // }).then((deviceInfoResult: any) => {
-        //   console.log("result recvd");
-        //   console.log(deviceInfoResult);
-        //   const resp = deviceInfoResult["response"];
-        //   let deviceInfoResp = JSON.parse(resp);
-        //   const decodedData =
-        //     Utils.getDecodedDeviceInfo(deviceInfoResp);
-        //   console.log(decodedData);
-        //   this.portDevicesData.set(
-        //     this.callbackId,
-        //     JSON.stringify(decodedData)
-        //   );
-        //   this.scanComplete = true;
-        //   resolve(true);
-        // });
       })
         .catch(async (err) => {
           console.log("error recvd");

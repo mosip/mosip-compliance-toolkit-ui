@@ -301,6 +301,7 @@ export class ViewProjectComponent implements OnInit {
       collectionId: row.collectionId,
       projectType: this.projectType,
       projectId: this.projectId,
+      sbiDeviceType: this.projectFormData && this.projectFormData.deviceType ? this.projectFormData.deviceType : ""
     };
     this.dialog
       .open(ExecuteTestRunComponent, {

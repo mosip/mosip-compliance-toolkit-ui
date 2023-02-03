@@ -18,6 +18,7 @@ export class SbiTestCaseAndroidService {
 
   async runTestCase(
     testCase: TestCaseModel,
+    sbiDeviceType: string,
     sbiSelectedPort: string,
     sbiSelectedDevice: string,
     beforeKeyRotationResp: any
@@ -26,7 +27,8 @@ export class SbiTestCaseAndroidService {
       const methodRequest = this.createRequest(testCase, sbiSelectedDevice);
       let startExecutionTime = new Date().toISOString();
       let methodResponse: any = await this.executeMethod(
-        testCase.methodName[0],
+        testCase,
+        sbiDeviceType,
         methodRequest
       );
       let endExecutionTime = new Date().toISOString();
@@ -84,14 +86,19 @@ export class SbiTestCaseAndroidService {
   }
 
   async executeMethod(
-    methodName: string,
+    testCase: TestCaseModel,
+    sbiDeviceType: string,
     methodRequest: string
   ) {
+    const methodName = testCase.methodName[0];
+
     if (methodName == appConstants.SBI_METHOD_DEVICE) {
-      let methodResponse = await this.callSBIMethodAndroid(appConstants.SBI_METHOD_DEVICE);
+      let methodResponse = await this.callSBIMethodAndroid(appConstants.SBI_METHOD_DEVICE, sbiDeviceType);
       return methodResponse;
     }
     if (methodName == appConstants.SBI_METHOD_DEVICE_INFO) {
+      let methodResponse = await this.callSBIMethodAndroid(appConstants.SBI_METHOD_DEVICE_INFO, sbiDeviceType);
+      return methodResponse;
     }
     if (methodName == appConstants.SBI_METHOD_CAPTURE) {
     }
@@ -99,51 +106,45 @@ export class SbiTestCaseAndroidService {
     }
   }
 
-  async callSBIMethodAndroid(testcaseMethodName: string) {
+  async callSBIMethodAndroid(testcaseMethodName: string, sbiDeviceType: string) {
     console.log("in callSBIMethodAndroid method");
-    const DISCOVERY_INTENT_ACTION = 'io.sbi.device';
-    const D_INFO_INTENT_ACTION = '.Info';
-    const R_CAPTURE_INTENT_ACTION = '.rCapture';
-    const SBI_INTENT_REQUEST_KEY = 'input';
-    const SBI_INTENT_RESPONSE_KEY = 'response';
-    const RESULT_OK = 'success';
-    const MODALITY = 'Face';
-    const SBI_DISCOVER = "SBI_DISCOVER";
-    const SBI_INFO = "SBI_INFO";
-    const SBI_R_CAPTURE = "SBI_R_CAPTURE";
-
-    console.log("calling mock sbi");
-    return new Promise((resolve, reject) => {
+   return new Promise((resolve, reject) => {
       CapacitorIntent.startActivity({
-        methodType: SBI_DISCOVER,
-        action: DISCOVERY_INTENT_ACTION,
-        extraKey: SBI_INTENT_REQUEST_KEY,
-        extraValue: MODALITY
-      }).then((result: any) => {
-        console.log("result recvd");
-        console.log(result);
-        const status = result["status"];
-        if (status == RESULT_OK) {
-          const resp = result["response"];
-          let discoverResp = JSON.parse(resp);
-          let callbackId = discoverResp["callbackId"];
-          resolve(discoverResp);
-          /*
-          CapacitorIntent.startActivity({
-            methodType: SBI_INFO,
-            action: callbackId + D_INFO_INTENT_ACTION
-          }).then((result: any) => {
-            console.log("result recvd");
-            console.log(result);
-            resolve(true);
-          });*/
+        methodType: appConstants.SBI_METHOD_DEVICE,
+        action: appConstants.DISCOVERY_INTENT_ACTION,
+        extraKey: appConstants.SBI_INTENT_REQUEST_KEY,
+        extraValue: sbiDeviceType
+      }).then((discoverResult: any) => {
+        console.log("discover result recvd");
+        console.log(discoverResult);
+        const discoverStatus = discoverResult[appConstants.STATUS];
+        if (discoverStatus == appConstants.RESULT_OK) {
+          const discoverResp = JSON.parse(discoverResult[appConstants.RESPONSE]);
+          const callbackId = discoverResp[appConstants.CALLBACK_ID];
+          if (testcaseMethodName == appConstants.SBI_METHOD_DEVICE) {
+            resolve(discoverResp);
+          }
+          if (testcaseMethodName == appConstants.SBI_METHOD_DEVICE_INFO) {
+            CapacitorIntent.startActivity({
+              methodType: appConstants.SBI_METHOD_DEVICE_INFO,
+              action: callbackId + appConstants.D_INFO_INTENT_ACTION
+            }).then((deviceInfoResult: any) => {
+              console.log("device info result recvd");
+              console.log(deviceInfoResult);
+              const deviceInfoStatus = deviceInfoResult[appConstants.STATUS];
+              if (deviceInfoStatus == appConstants.RESULT_OK) {
+                let deviceInfoResp = JSON.parse(deviceInfoResult[appConstants.RESPONSE]);
+                resolve(deviceInfoResp);
+              } else {
+                resolve(false);
+              }
+            });
+          }
+        } else {
+          resolve(false);
         }
-
       })
         .catch(async (err) => {
-          console.log("error recvd");
-          console.error(err);
-
           resolve(false);
         })
     });
@@ -287,47 +288,46 @@ export class SbiTestCaseAndroidService {
     if (testCase.methodName[0] == appConstants.SBI_METHOD_DEVICE) {
       let decodedDataArr: SbiDiscoverResponseModel[] = [];
       const decodedData = Utils.getDecodedDiscoverDevice(methodResponse);
-        if (decodedData != null) {
-          decodedDataArr.push(decodedData);
-        }
+      if (decodedData != null) {
+        decodedDataArr.push(decodedData);
+      }
       return decodedDataArr;
     }
     if (testCase.methodName[0] == appConstants.SBI_METHOD_DEVICE_INFO) {
       let decodedDataArr: any[] = [];
-      methodResponse.forEach((deviceInfoResp: any) => {
-        if (deviceInfoResp && !deviceInfoResp.deviceInfo) {
-          decodedDataArr.push(deviceInfoResp);
-        } else if (deviceInfoResp && deviceInfoResp.deviceInfo == '') {
-          decodedDataArr.push(deviceInfoResp);
+      const deviceInfoResp = methodResponse;
+      if (deviceInfoResp && !deviceInfoResp.deviceInfo) {
+        decodedDataArr.push(deviceInfoResp);
+      } else if (deviceInfoResp && deviceInfoResp.deviceInfo == '') {
+        decodedDataArr.push(deviceInfoResp);
+      } else {
+        //chk if device is registered
+        let arr = deviceInfoResp.deviceInfo.split('.');
+        if (arr.length >= 3) {
+          //this is registered device
+          const decodedData: any = Utils.getDecodedDeviceInfo(deviceInfoResp);
+          if (
+            Utils.chkDeviceTypeSubTypeForDeviceInfo(
+              decodedData,
+              selectedSbiDevice
+            )
+          ) {
+            decodedDataArr.push(decodedData);
+          }
         } else {
-          //chk if device is registered
-          let arr = deviceInfoResp.deviceInfo.split('.');
-          if (arr.length >= 3) {
-            //this is registered device
-            const decodedData: any = Utils.getDecodedDeviceInfo(deviceInfoResp);
-            if (
-              Utils.chkDeviceTypeSubTypeForDeviceInfo(
-                decodedData,
-                selectedSbiDevice
-              )
-            ) {
-              decodedDataArr.push(decodedData);
-            }
-          } else {
-            //this is unregistered device
-            const decodedData: any =
-              Utils.getDecodedUnregistetedDeviceInfo(deviceInfoResp);
-            if (
-              Utils.chkDeviceTypeSubTypeForDeviceInfo(
-                decodedData,
-                selectedSbiDevice
-              )
-            ) {
-              decodedDataArr.push(decodedData);
-            }
+          //this is unregistered device
+          const decodedData: any =
+            Utils.getDecodedUnregistetedDeviceInfo(deviceInfoResp);
+          if (
+            Utils.chkDeviceTypeSubTypeForDeviceInfo(
+              decodedData,
+              selectedSbiDevice
+            )
+          ) {
+            decodedDataArr.push(decodedData);
           }
         }
-      });
+      }
       return decodedDataArr;
     }
     if (

@@ -64,6 +64,7 @@ export class ExecuteTestRunComponent implements OnInit {
   startTestRunDt: string;
   endTestRunDt: string;
   progressDone = 0;
+  sbiDeviceType: string;
   @ViewChild('basicTimer', { static: true }) basicTimer: CdTimerComponent;
   countOfSuccessTestcases = 0;
   countOfFailedTestcases = 0;
@@ -104,6 +105,7 @@ export class ExecuteTestRunComponent implements OnInit {
     this.collectionId = this.input.collectionId;
     this.projectType = this.input.projectType;
     this.projectId = this.input.projectId;
+    this.sbiDeviceType = this.input.sbiDeviceType;
     this.basicTimer.start();
     localStorage.removeItem(appConstants.SDK_PROJECT_URL);
     if (await this.performValidations()) {
@@ -570,6 +572,7 @@ export class ExecuteTestRunComponent implements OnInit {
             } else {
               res = await this.sbiTestCaseAndroidService.runTestCase(
                 testCase,
+                this.sbiDeviceType,
                 this.sbiSelectedPort ? this.sbiSelectedPort : '',
                 this.sbiSelectedDevice ? this.sbiSelectedDevice : '',
                 null
@@ -605,6 +608,7 @@ export class ExecuteTestRunComponent implements OnInit {
             } else {
               res = await this.sbiTestCaseAndroidService.runTestCase(
                 testCase,
+                this.sbiDeviceType,
                 this.sbiSelectedPort ? this.sbiSelectedPort : '',
                 this.sbiSelectedDevice ? this.sbiSelectedDevice : '',
                 beforeKeyRotationDeviceResp
