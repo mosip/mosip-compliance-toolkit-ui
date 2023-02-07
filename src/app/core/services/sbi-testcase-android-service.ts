@@ -110,10 +110,10 @@ export class SbiTestCaseAndroidService {
     console.log("in callSBIMethodAndroid method");
    return new Promise((resolve, reject) => {
       CapacitorIntent.startActivity({
-        methodType: appConstants.SBI_METHOD_DEVICE,
+        //methodType: appConstants.SBI_METHOD_DEVICE,
         action: appConstants.DISCOVERY_INTENT_ACTION,
-        extraKey: appConstants.SBI_INTENT_REQUEST_KEY,
-        extraValue: sbiDeviceType
+        //extraKey: appConstants.SBI_INTENT_REQUEST_KEY,
+        //extraValue: sbiDeviceType
       }).then((discoverResult: any) => {
         console.log("discover result recvd");
         console.log(discoverResult);
@@ -126,7 +126,7 @@ export class SbiTestCaseAndroidService {
           }
           if (testcaseMethodName == appConstants.SBI_METHOD_DEVICE_INFO) {
             CapacitorIntent.startActivity({
-              methodType: appConstants.SBI_METHOD_DEVICE_INFO,
+              //methodType: appConstants.SBI_METHOD_DEVICE_INFO,
               action: callbackId + appConstants.D_INFO_INTENT_ACTION
             }).then((deviceInfoResult: any) => {
               console.log("device info result recvd");

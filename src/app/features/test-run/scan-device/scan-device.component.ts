@@ -117,10 +117,10 @@ export class ScanDeviceComponent implements OnInit {
         text: 'Searching for SBI devices for : ' + sbiDeviceType,
       });
       CapacitorIntent.startActivity({
-        methodType: appConstants.SBI_METHOD_DEVICE,
+        //methodType: appConstants.SBI_METHOD_DEVICE,
         action: appConstants.DISCOVERY_INTENT_ACTION,
-        extraKey: appConstants.SBI_INTENT_REQUEST_KEY,
-        extraValue: sbiDeviceType
+        //extraKey: appConstants.SBI_INTENT_REQUEST_KEY,
+        //extraValue: sbiDeviceType
       }).then((discoverResult: any) => {
         console.log(discoverResult);
         const discoverStatus = discoverResult[appConstants.STATUS];
