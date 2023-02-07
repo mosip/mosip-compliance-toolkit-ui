@@ -9,6 +9,7 @@ import { SbiDiscoverResponseModel } from 'src/app/core/models/sbi-discover';
 import Utils from 'src/app/app.utils';
 import { Toast } from '@capacitor/toast';
 import { CapacitorIntent } from 'capacitor-intent';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-scan-device',
@@ -28,7 +29,7 @@ export class ScanDeviceComponent implements OnInit {
   SBI_PORTS = this.appConfigService.getConfig()['sbiPorts'].split(',');
   previousScanAvailable = false;
   SBI_BASE_URL = this.appConfigService.getConfig()['SBI_BASE_URL'];
-  isAndroidAppMode = true;
+  isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
   constructor(
     private dialogRef: MatDialogRef<ScanDeviceComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,

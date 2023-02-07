@@ -14,6 +14,7 @@ import { ScanDeviceComponent } from '../../test-run/scan-device/scan-device.comp
 import { ExecuteTestRunComponent } from '../../test-run/execute-test-run/execute-test-run.component';
 import Utils from 'src/app/app.utils';
 import { SdkProjectModel } from 'src/app/core/models/sdk-project';
+import { environment } from 'src/environments/environment';
 
 export interface CollectionsData {
   collectionId: string;
@@ -43,7 +44,7 @@ export class ViewProjectComponent implements OnInit {
     'actions',
     'actionsMore',
   ];
-  isAndroidAppMode = true;
+  isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
   isScanComplete =
     localStorage.getItem(appConstants.SBI_SCAN_COMPLETE) == 'true'
       ? true

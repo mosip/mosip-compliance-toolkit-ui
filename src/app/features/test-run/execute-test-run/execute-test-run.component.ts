@@ -18,6 +18,7 @@ import { SbiProjectModel } from 'src/app/core/models/sbi-project';
 import { SbiDiscoverResponseModel } from 'src/app/core/models/sbi-discover';
 import { SdkProjectModel } from 'src/app/core/models/sdk-project';
 import { ScanDeviceComponent } from '../scan-device/scan-device.component';
+import { environment } from 'src/environments/environment';
 
 declare const start_streaming: any;
 declare const stop_streaming: any;
@@ -84,7 +85,7 @@ export class ExecuteTestRunComponent implements OnInit {
     )
     : 0;
   currentKeyRotationIndex = 0;
-  isAndroidAppMode = true;
+  isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
 
   constructor(
     private dialogRef: MatDialogRef<ExecuteTestRunComponent>,

@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import * as appConstants from 'src/app/app.constants';
 import Utils from 'src/app/app.utils';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
+import { environment } from 'src/environments/environment';
 
 export interface ProjectData {
   id: string;
@@ -43,7 +44,7 @@ export class ProjectsDashboardComponent implements OnInit {
   subscriptions: Subscription[] = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  isAndroidAppMode = true;
+  isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
   constructor(
     private router: Router,
     private translate: TranslateService,
