@@ -54,13 +54,12 @@ export class AuthInterceptor implements HttpInterceptor {
         isLocalUrl = true;
       }
     }
-    const harcodedToken = "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJubEpTaUExM2tPUWhZQ0JxMEVKSkRlWnFTOGsybDB3MExUbmQ1WFBCZ20wIn0.eyJleHAiOjE2NzU3ODY5MzgsImlhdCI6MTY3NTc1MDkzOCwiYXV0aF90aW1lIjoxNjc1NzUwOTM4LCJqdGkiOiIzNzA0MWU3ZC1hYzkyLTRmZjktYjBiMS01YmQxMGU2YzY0NmYiLCJpc3MiOiJodHRwczovL2lhbS5kZXYubW9zaXAubmV0L2F1dGgvcmVhbG1zL21vc2lwIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6ImMwMzE1MjM5LTg3ZDMtNDE4ZS05N2Q1LWJjN2E2OWY1Yjk5YSIsInR5cCI6IkJlYXJlciIsImF6cCI6Im1vc2lwLXRvb2xraXQtY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6ImI0YmI1Mjc4LTY1YmMtNDk2OC05ZDZjLTc2MjM5YjQ0NTFjMiIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJQQVJUTkVSX0FETUlOIiwidW1hX2F1dGhvcml6YXRpb24iLCJHTE9CQUxfQURNSU4iLCJkZWZhdWx0LXJvbGVzLW1vc2lwIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwic2lkIjoiYjRiYjUyNzgtNjViYy00OTY4LTlkNmMtNzYyMzliNDQ1MWMyIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJuYW1lIjoiTWF5dXJhIERlc2htdWtoIiwicHJlZmVycmVkX3VzZXJuYW1lIjoibWF5dXJhZCIsImdpdmVuX25hbWUiOiJNYXl1cmEiLCJsb2NhbGUiOiJlbmciLCJmYW1pbHlfbmFtZSI6IkRlc2htdWtoIiwiZW1haWwiOiJtYXl1cmEuZGVzaG11a2hAZ21haWwuY29tIn0.IRbCw_K_wkU2prIrto2BVLbarqY5rVSPVBP-f4QgeJJgzIAlYlBrMv1zd_nXEhqTNvwhYaplXBwzgJ80Vlh4-uFvG9V2cPuus0WLgNqIk8--nDdw2mz50QSOAfAAEc9yRTb_OpTJq_uxQbJsxzgz7geMprip0NNu7bEex-EAonZNuLYBif1OMS1epG5UJ07h-xHr06jzie-vRlzb1noTTM3xwxe--ckllTF7CnSUS-fcKJsBWGJyOD7_y1HX6BOZk0FGNBjfUxRzvM6Mm6khEguz5p6r5yYEeps94tVVJP6R7gXjDehpKtE99D4YOjnjKfZNbrz5ZR_1U4ODP0y7KA";
+    const harcodedToken = "";
     if (!isLocalUrl) {
       if (!isAndroidAppMode) {
+        request = request.clone({ withCredentials: true });
         request = request.clone({
-          setHeaders: {
-            'X-XSRF-TOKEN': this.cookieService.get('XSRF-TOKEN')
-          }
+          setHeaders: { 'X-XSRF-TOKEN': this.cookieService.get('XSRF-TOKEN') },
         });
       } else {
         request = request.clone({
@@ -113,7 +112,6 @@ export class AuthInterceptor implements HttpInterceptor {
             if (!isLocalUrl) {
               this.showHomePage();
             }
-            this.router.navigate([`toolkit/dashboard`]);
             //TODO alert ERROR
           }
         }

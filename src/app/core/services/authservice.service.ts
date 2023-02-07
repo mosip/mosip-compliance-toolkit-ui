@@ -18,18 +18,19 @@ export class AuthService {
     const isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
     if (!isAndroidAppMode) {
       return this.http
-        .get(
-          `${this.appService.getConfig().SERVICES_BASE_URL
-          }authorize/admin/validateToken`,
-          { observe: 'response' }
-        )
-        .pipe(
-          map((res) => res.status === 401),
-          catchError((error) => {
-            console.log(error);
-            return of(true);
-          })
-        );
+      .get(
+        `${
+          this.appService.getConfig().SERVICES_BASE_URL
+        }authorize/admin/validateToken`,
+        { observe: 'response' }
+      )
+      .pipe(
+        map((res) => res.status === 200),
+        catchError((error) => {
+          console.log(error);
+          return of(false);
+        })
+      );
     } else {
       return of(true);
     }
