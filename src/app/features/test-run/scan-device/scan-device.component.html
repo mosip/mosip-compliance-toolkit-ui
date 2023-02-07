@@ -3,12 +3,18 @@
     <span *ngIf="!scanComplete">Scanning for devices..</span>
     <span *ngIf="scanComplete && !previousScanAvailable && portsData.length > 0">
         <div class="custom-class">
-            <mat-icon [ngStyle]="{color: 'green'}">check_circle</mat-icon> Scanning complete. Select port and device.
+            <mat-icon [ngStyle]="{color: 'green'}">check_circle</mat-icon>
+            <span *ngIf="!isAndroidAppMode">
+                Scanning complete. Select port and device.
+            </span>
+            <span *ngIf="isAndroidAppMode">
+                Scanning complete. Select device.
+            </span>
         </div>
     </span>
     <span *ngIf="scanComplete && portsData.length <= 0">
         <div class="custom-class">
-            <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon>  Scanning failed. Connect your device and
+            <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon> Scanning failed. Connect your device and
             scan again.
         </div>
     </span>
@@ -25,7 +31,9 @@
         <form [formGroup]="scanForm" *ngIf="scanComplete && portsData.length > 0">
             <div class="formContainer">
                 <mat-form-field appearance="legacy" [style.width.px]=500>
-                    <mat-label>Available Ports:</mat-label>
+                    <mat-label>
+                        <span *ngIf="!isAndroidAppMode">Available Ports:</span>
+                        <span *ngIf="isAndroidAppMode">Available App Intent:</span></mat-label>
                     <mat-select formControlName="ports" #singleSelect (selectionChange)="showDevices()">
                         <ng-container *ngFor="let dropdown of portsData">
                             <mat-option [value]="dropdown">

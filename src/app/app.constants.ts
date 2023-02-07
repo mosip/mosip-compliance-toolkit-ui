@@ -63,3 +63,13 @@ export const SBI_SCAN_DATA = 'sbiScanData';
 export const SBI_SELECTED_DEVICE = 'sbiSelectedDevice';
 export const SBI_SELECTED_PORT = 'sbiSelectedPort';
 export const SDK_PROJECT_URL = 'sdkProjectUrl';
+
+//android app
+export const DISCOVERY_INTENT_ACTION = 'io.sbi.device';
+export const D_INFO_INTENT_ACTION = '.Info';
+export const R_CAPTURE_INTENT_ACTION = '.rCapture';
+export const SBI_INTENT_REQUEST_KEY = 'input';
+export const SBI_INTENT_RESPONSE_KEY = 'response';
+export const RESULT_OK = 'success';
+export const STATUS = 'status';
+export const CALLBACK_ID = 'callbackId';

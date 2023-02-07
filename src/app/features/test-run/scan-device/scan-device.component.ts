@@ -6,7 +6,10 @@ import { AppConfigService } from '../../../app-config.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { SbiDiscoverResponseModel } from 'src/app/core/models/sbi-discover';
-import Utils from "src/app/app.utils";
+import Utils from 'src/app/app.utils';
+import { Toast } from '@capacitor/toast';
+import { CapacitorIntent } from 'capacitor-intent';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-scan-device',
@@ -26,14 +29,15 @@ export class ScanDeviceComponent implements OnInit {
   SBI_PORTS = this.appConfigService.getConfig()['sbiPorts'].split(',');
   previousScanAvailable = false;
   SBI_BASE_URL = this.appConfigService.getConfig()['SBI_BASE_URL'];
+  isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
   constructor(
     private dialogRef: MatDialogRef<ScanDeviceComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dataService: DataService,
     private appConfigService: AppConfigService
-  ) {  
-    dialogRef.disableClose = true;  
-  }  
+  ) {
+    dialogRef.disableClose = true;
+  }
 
   async ngOnInit() {
     this.scanForm.addControl(
@@ -88,8 +92,12 @@ export class ScanDeviceComponent implements OnInit {
   async startScan() {
     this.scanComplete = false;
     this.resetPreviousScan();
-    for (const sbiPort of this.SBI_PORTS) {
-      await this.scanDevices(sbiPort);
+    if (!this.isAndroidAppMode) {
+      for (const sbiPort of this.SBI_PORTS) {
+        await this.scanDevicesWeb(sbiPort);
+      }
+    } else {
+      await this.scanDevicesAndroid(this.input["sbiDeviceType"]);
     }
     if (this.portsData.length > 0) {
       localStorage.setItem(
@@ -100,11 +108,58 @@ export class ScanDeviceComponent implements OnInit {
     this.scanComplete = true;
   }
 
-  async scanDevices(sbiPort: string) {
+  async scanDevicesAndroid(sbiDeviceType: string) {
+    this.scanComplete = false;
+    console.log("in scanDevicesAndroid method");
+    console.log("calling mock sbi");
+    return new Promise((resolve, reject) => {
+      Toast.show({
+        text: 'Searching for SBI devices for : ' + sbiDeviceType,
+      });
+      CapacitorIntent.startActivity({
+        methodType: appConstants.SBI_METHOD_DEVICE,
+        action: appConstants.DISCOVERY_INTENT_ACTION,
+        extraKey: appConstants.SBI_INTENT_REQUEST_KEY,
+        extraValue: sbiDeviceType
+      }).then((discoverResult: any) => {
+        console.log(discoverResult);
+        const discoverStatus = discoverResult[appConstants.STATUS];
+        if (discoverStatus == appConstants.RESULT_OK) {
+          const discoverResp = JSON.parse(discoverResult[appConstants.RESPONSE]);
+          const callbackId = discoverResp[appConstants.CALLBACK_ID];
+          console.log(callbackId);
+          this.portsData.push(callbackId);
+          const decodedData =
+            Utils.getDecodedDiscoverDevice(discoverResp);
+          console.log(decodedData);
+          let decodedDataArr: SbiDiscoverResponseModel[] = [];
+          if (decodedData != null) {
+            decodedDataArr.push(decodedData);
+          }
+          this.portDevicesData.set(
+            callbackId,
+            JSON.stringify(decodedDataArr)
+          );
+          resolve(true);
+        }
+      })
+        .catch(async (err) => {
+          console.log("error recvd");
+          console.error(err);
+          await Toast.show({
+            text: 'Unable to find any SBI devices!',
+          });
+          resolve(true);
+        })
+    });
+  }
+
+  async scanDevicesWeb(sbiPort: string) {
     const requestBody = {
       type: appConstants.BIOMETRIC_DEVICE,
     };
-    let methodUrl = this.SBI_BASE_URL + ':' + sbiPort + '/' + appConstants.SBI_METHOD_DEVICE;
+    let methodUrl =
+      this.SBI_BASE_URL + ':' + sbiPort + '/' + appConstants.SBI_METHOD_DEVICE;
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
         this.dataService
@@ -120,7 +175,8 @@ export class ScanDeviceComponent implements OnInit {
                 let data = response;
                 let decodedDataArr: SbiDiscoverResponseModel[] = [];
                 data.forEach((deviceData: any) => {
-                  const decodedData = Utils.getDecodedDiscoverDevice(deviceData);
+                  const decodedData =
+                    Utils.getDecodedDiscoverDevice(deviceData);
                   if (decodedData != null) {
                     decodedDataArr.push(decodedData);
                   }
@@ -143,7 +199,11 @@ export class ScanDeviceComponent implements OnInit {
 
   getDeviceLabel(field: any) {
     if (field) {
-      return `Device Id: ${field.deviceId}, Purpose: ${field.purpose}, Device Type: ${field.digitalIdDecoded.type}, Device Sub Type: ${field.digitalIdDecoded.deviceSubType}`;
+      if (!this.isAndroidAppMode) {
+        return `Device Id: ${field.deviceId}, Purpose: ${field.purpose}, Device Type: ${field.digitalIdDecoded.type}, Device Sub Type: ${field.digitalIdDecoded.deviceSubType}`;
+      } else {
+        return `Purpose: ${field.purpose}, Device Type: ${field.digitalIdDecoded.type}, Device Sub Type: ${field.digitalIdDecoded.deviceSubType}`;
+      }
     } else {
       return '';
     }
@@ -159,7 +219,7 @@ export class ScanDeviceComponent implements OnInit {
       this.devicesData = [];
     }
   }
-  
+
   public save() {
     this.scanForm.controls['ports'].markAsTouched();
     this.scanForm.controls['devices'].markAsTouched();

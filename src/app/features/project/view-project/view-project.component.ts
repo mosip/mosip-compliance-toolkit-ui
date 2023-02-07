@@ -14,6 +14,7 @@ import { ScanDeviceComponent } from '../../test-run/scan-device/scan-device.comp
 import { ExecuteTestRunComponent } from '../../test-run/execute-test-run/execute-test-run.component';
 import Utils from 'src/app/app.utils';
 import { SdkProjectModel } from 'src/app/core/models/sdk-project';
+import { environment } from 'src/environments/environment';
 
 export interface CollectionsData {
   collectionId: string;
@@ -43,6 +44,7 @@ export class ViewProjectComponent implements OnInit {
     'actions',
     'actionsMore',
   ];
+  isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
   isScanComplete =
     localStorage.getItem(appConstants.SBI_SCAN_COMPLETE) == 'true'
       ? true
@@ -64,7 +66,7 @@ export class ViewProjectComponent implements OnInit {
     private dialog: MatDialog,
     private breadcrumbService: BreadcrumbService,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) { }
 
   async ngOnInit() {
     await this.initProjectIdAndType();
@@ -81,7 +83,7 @@ export class ViewProjectComponent implements OnInit {
     }
     await this.getCollections();
     this.dataSource.paginator = this.paginator;
-    this.sort.sort(({ id: 'runDtimes', start: 'desc'}) as MatSortable);
+    this.sort.sort(({ id: 'runDtimes', start: 'desc' }) as MatSortable);
     this.dataSource.sort = this.sort;
     this.initBreadCrumb();
     this.dataLoaded = true;
@@ -263,7 +265,7 @@ export class ViewProjectComponent implements OnInit {
   async handleSdkPurposeChange() {
     await this.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value);
   }
-  
+
   addCollection() {
     this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}/collection/add`,
@@ -279,6 +281,7 @@ export class ViewProjectComponent implements OnInit {
   scanDevice() {
     const body = {
       title: 'Scan Device',
+      sbiDeviceType: this.projectFormData && this.projectFormData.deviceType ? this.projectFormData.deviceType : ""
     };
     this.dialog
       .open(ScanDeviceComponent, {
@@ -288,10 +291,10 @@ export class ViewProjectComponent implements OnInit {
       .afterClosed()
       .subscribe(
         () =>
-          (this.isScanComplete =
-            localStorage.getItem(appConstants.SBI_SCAN_COMPLETE) == 'true'
-              ? true
-              : false)
+        (this.isScanComplete =
+          localStorage.getItem(appConstants.SBI_SCAN_COMPLETE) == 'true'
+            ? true
+            : false)
       );
   }
   async runCollection(row: any) {
@@ -299,6 +302,7 @@ export class ViewProjectComponent implements OnInit {
       collectionId: row.collectionId,
       projectType: this.projectType,
       projectId: this.projectId,
+      sbiDeviceType: this.projectFormData && this.projectFormData.deviceType ? this.projectFormData.deviceType : ""
     };
     this.dialog
       .open(ExecuteTestRunComponent, {
@@ -378,30 +382,30 @@ export class ViewProjectComponent implements OnInit {
   }
 
   downloadEncryptionKey() {
-      const subs = this.dataService.getEncryptionKey().subscribe(
-        (res: any) => {
-          if (res) {
-            let obj = res[appConstants.RESPONSE];
-            if (obj) {
-              var blob = new Blob([obj], { type: 'application/json' });
-              var link = document.createElement('a');
-              link.href = window.URL.createObjectURL(blob);
-              link.download = `key.cer`;
-              link.click();
-            }
-          } else {
-            Utils.showErrorMessage(
-              null,
-              this.dialog,
-              'Unable to get encryption key. Try Again!'
-            );
+    const subs = this.dataService.getEncryptionKey().subscribe(
+      (res: any) => {
+        if (res) {
+          let obj = res[appConstants.RESPONSE];
+          if (obj) {
+            var blob = new Blob([obj], { type: 'application/json' });
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = `key.cer`;
+            link.click();
           }
-        },
-        (errors) => {
-          Utils.showErrorMessage(errors, this.dialog);
+        } else {
+          Utils.showErrorMessage(
+            null,
+            this.dialog,
+            'Unable to get encryption key. Try Again!'
+          );
         }
-      );
-      this.subscriptions.push(subs);
+      },
+      (errors) => {
+        Utils.showErrorMessage(errors, this.dialog);
+      }
+    );
+    this.subscriptions.push(subs);
   }
 
   async updateSdkProject(request: any, attributeName: string) {
