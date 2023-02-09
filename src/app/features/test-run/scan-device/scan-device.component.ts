@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
 import { SbiDiscoverResponseModel } from 'src/app/core/models/sbi-discover';
 import Utils from 'src/app/app.utils';
 import { Toast } from '@capacitor/toast';
-import { CapacitorIntent } from 'capacitor-intent';
+import { MosipCapacitorIntent } from 'mosip-capacitor-intent';
 import { environment } from '../../../../environments/environment';
 
 @Component({
@@ -116,11 +116,11 @@ export class ScanDeviceComponent implements OnInit {
       Toast.show({
         text: 'Searching for SBI devices for : ' + sbiDeviceType,
       });
-      CapacitorIntent.startActivity({
-        //methodType: appConstants.SBI_METHOD_DEVICE,
+      MosipCapacitorIntent.startActivity({
+        methodType: appConstants.SBI_METHOD_DEVICE,
         action: appConstants.DISCOVERY_INTENT_ACTION,
-        //extraKey: appConstants.SBI_INTENT_REQUEST_KEY,
-        //extraValue: sbiDeviceType
+        extraKey: appConstants.SBI_INTENT_REQUEST_KEY,
+        extraValue: sbiDeviceType
       }).then((discoverResult: any) => {
         console.log(discoverResult);
         const discoverStatus = discoverResult[appConstants.STATUS];
