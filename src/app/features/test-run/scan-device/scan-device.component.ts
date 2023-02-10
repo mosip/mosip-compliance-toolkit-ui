@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
 import { SbiDiscoverResponseModel } from 'src/app/core/models/sbi-discover';
 import Utils from 'src/app/app.utils';
 import { Toast } from '@capacitor/toast';
-import { MosipCapacitorIntent } from 'mosip-capacitor-intent';
+import { MosipSbiCapacitor } from 'mosip-sbi-capacitor';
 import { environment } from '../../../../environments/environment';
 
 @Component({
@@ -116,7 +116,7 @@ export class ScanDeviceComponent implements OnInit {
       Toast.show({
         text: 'Searching for SBI devices for : ' + sbiDeviceType,
       });
-      MosipCapacitorIntent.startActivity({
+      MosipSbiCapacitor.startActivity({
         methodType: appConstants.SBI_METHOD_DEVICE,
         action: appConstants.DISCOVERY_INTENT_ACTION,
         extraKey: appConstants.SBI_INTENT_REQUEST_KEY,

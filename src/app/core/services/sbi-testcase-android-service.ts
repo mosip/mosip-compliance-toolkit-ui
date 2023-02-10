@@ -5,7 +5,7 @@ import { DataService } from './data-service';
 import * as appConstants from 'src/app/app.constants';
 import { SbiDiscoverResponseModel } from '../models/sbi-discover';
 import Utils from 'src/app/app.utils';
-import { MosipCapacitorIntent } from 'mosip-capacitor-intent';
+import { MosipSbiCapacitor } from 'mosip-sbi-capacitor';
 
 @Injectable({
   providedIn: 'root',
@@ -109,7 +109,7 @@ export class SbiTestCaseAndroidService {
   async callSBIMethodAndroid(testcaseMethodName: string, sbiDeviceType: string) {
     console.log("in callSBIMethodAndroid method");
    return new Promise((resolve, reject) => {
-    MosipCapacitorIntent.startActivity({
+    MosipSbiCapacitor.startActivity({
         methodType: appConstants.SBI_METHOD_DEVICE,
         action: appConstants.DISCOVERY_INTENT_ACTION,
         extraKey: appConstants.SBI_INTENT_REQUEST_KEY,
@@ -125,7 +125,7 @@ export class SbiTestCaseAndroidService {
             resolve(discoverResp);
           }
           if (testcaseMethodName == appConstants.SBI_METHOD_DEVICE_INFO) {
-            MosipCapacitorIntent.startActivity({
+            MosipSbiCapacitor.startActivity({
               methodType: appConstants.SBI_METHOD_DEVICE_INFO,
               action: callbackId + appConstants.D_INFO_INTENT_ACTION
             }).then((deviceInfoResult: any) => {
