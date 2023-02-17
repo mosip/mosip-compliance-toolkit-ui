@@ -206,7 +206,7 @@ export class SbiTestCaseService {
           ? this.appConfigService.getConfig()['sbiTimeout'].toString()
           : '10000',
         captureTime: new Date().toISOString(),
-        transactionId: testCase.testId + '-' + new Date().getUTCMilliseconds(),
+        transactionId: this.getTransactionId(testCase),
         domainUri: '', //TODO
         bio: [
           {
@@ -229,7 +229,7 @@ export class SbiTestCaseService {
         specVersion: selectedSbiDevice.specVersion[0],
         timeout: this.getTimeout(testCase),
         captureTime: new Date().toISOString(),
-        transactionId: testCase.testId + '-' + new Date().getUTCMilliseconds(),
+        transactionId: this.getTransactionId(testCase),
         bio: [
           {
             type: selectedSbiDevice.digitalIdDecoded.type,
@@ -249,7 +249,12 @@ export class SbiTestCaseService {
     return request;
     //return JSON.stringify(request);
   }
-
+  getTransactionId(testCase: TestCaseModel){
+    //console.log("getTransactionId" +testCase.otherAttributes.transactionId);
+    return testCase.otherAttributes.transactionId
+      ? testCase.otherAttributes.transactionId.toString()
+      : testCase.testId + '-' + new Date().getUTCMilliseconds();
+  }
   getTimeout(testCase: TestCaseModel) {
     return testCase.otherAttributes.timeout
       ? testCase.otherAttributes.timeout.toString()
