@@ -222,7 +222,7 @@ export class SbiTestCaseService {
         customOpts: null,
       };
     }
-    if (testCase.methodName[0] == appConstants.SBI_METHOD_RCAPTURE) {
+    if ((testCase.methodName[0] == appConstants.SBI_METHOD_RCAPTURE) && (testCase.otherAttributes.xxxenv == null)) {
       request = {
         env: appConstants.DEVELOPER,
         purpose: selectedSbiDevice.purpose,
@@ -244,7 +244,29 @@ export class SbiTestCaseService {
         ],
         customOpts: null,
       };
-    }
+    } else {
+      request = {
+        xxxenv: testCase.otherAttributes.xxxenv,
+        purpose: selectedSbiDevice.purpose,
+        specVersion: selectedSbiDevice.specVersion[0],
+        timeout: this.getTimeout(testCase),
+        captureTime: new Date().toISOString(),
+        transactionId: this.getTransactionId(testCase),
+        bio: [
+          {
+            type: selectedSbiDevice.digitalIdDecoded.type,
+            count: testCase.otherAttributes.bioCount,
+            exception: this.getBioSubType(testCase.otherAttributes.exceptions),
+            requestedScore: testCase.otherAttributes.requestedScore,
+            deviceId: selectedSbiDevice.deviceId,
+            deviceSubId: testCase.otherAttributes.deviceSubId,
+            previousHash: '',
+            bioSubType: this.getBioSubType(testCase.otherAttributes.segments),
+          },
+        ],
+        customOpts: null,
+      };
+    } 
     //console.log(JSON.stringify(request));
     return request;
     //return JSON.stringify(request);
