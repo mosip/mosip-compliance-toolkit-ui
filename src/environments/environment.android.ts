@@ -8,7 +8,8 @@ export const environment = {
   IAM_URL: "https://iam.dev.mosip.net/auth",
   IAM_REALM: "mosip",
   IAM_CLIENT_ID: "mosip-toolkit-android-client",
-  redirectUri: 'android://mosip-compliance-toolkit-ui'
+  redirectUri: 'android://mosip-compliance-toolkit-ui',
+  SERVICES_BASE_URL: 'http://192.168.1.7:8080/'
 };
 
 /*

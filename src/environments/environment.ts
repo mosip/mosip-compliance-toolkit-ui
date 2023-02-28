@@ -8,7 +8,8 @@ export const environment = {
   IAM_URL: "",
   IAM_REALM: "",
   IAM_CLIENT_ID: "",
-  redirectUri: ''
+  redirectUri: '',
+  SERVICES_BASE_URL: ''
 };
 
 /*
