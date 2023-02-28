@@ -6,6 +6,9 @@ import { DataService } from '../../services/data-service';
 import { LogoutService } from '../../services/logout.service';
 import { AuthService } from '../../services/authservice.service';
 import { Router } from "@angular/router";
+import { MatDialog } from '@angular/material/dialog';
+import Utils from 'src/app/app.utils';
+import { environment } from 'src/environments/environment';
 // import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 // import { MatDialog } from '@angular/material';
 
@@ -36,11 +39,22 @@ export class HeaderComponent implements OnInit {
     private logoutService: LogoutService,
     private dataService: DataService,
     private router: Router,
+    private dialog: MatDialog,
   ) {
     this.appVersion = appConfigService.getConfig()['version'];
   }
   onItem() {
     this.logoutService.logout();
+    const isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
+    if (isAndroidAppMode) {
+      const dialogRef = Utils.showSuccessMessage(
+        'You have been logged out.',
+        this.dialog
+      );
+      dialogRef.afterClosed().subscribe((res) => {
+        window.location.reload();
+      });
+    }
   }
   ngOnInit() {
     if (this.userProfileService.getDisplayUserName()) {

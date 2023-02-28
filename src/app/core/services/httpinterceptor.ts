@@ -10,13 +10,13 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { LoginRedirectService } from './loginredirect.service';
-import { Router } from '@angular/router';
 import { AppConfigService } from 'src/app/app-config.service';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import jwt_decode from 'jwt-decode';
 import { CookieService } from 'ngx-cookie-service';
 import * as appConstants from 'src/app/app.constants';
 import { environment } from 'src/environments/environment';
+import { AndroidKeycloakService } from './android-keycloak';
 
 @Injectable({
   providedIn: 'root',
@@ -24,18 +24,24 @@ import { environment } from 'src/environments/environment';
 export class AuthInterceptor implements HttpInterceptor {
   errorMessages: any;
   decoded: any;
-  showHomePage() {
+
+  showHomePage(isAndroidAppMode: boolean) {
     sessionStorage.clear();
     localStorage.clear();
     this.cookieService.deleteAll();
-    this.redirectService.redirect(window.location.href);
+    if (!isAndroidAppMode) {
+      this.redirectService.redirect(window.location.href);
+    } else {
+      this.androidKeycloakService.getInstance().login();
+    }
   }
+
   constructor(
     private redirectService: LoginRedirectService,
-    private router: Router,
     private appConfigService: AppConfigService,
     private cookieService: CookieService,
-    private userProfileService: UserProfileService
+    private userProfileService: UserProfileService,
+    private androidKeycloakService: AndroidKeycloakService
   ) { }
   // function which will be called for all http calls
   intercept(
@@ -54,18 +60,22 @@ export class AuthInterceptor implements HttpInterceptor {
         isLocalUrl = true;
       }
     }
-    const harcodedToken = "";
     if (!isLocalUrl) {
       if (!isAndroidAppMode) {
+        //for web application
         request = request.clone({ withCredentials: true });
         request = request.clone({
           setHeaders: { 'X-XSRF-TOKEN': this.cookieService.get('XSRF-TOKEN') },
         });
       } else {
+        //for android app
+        const accessToken = localStorage.getItem(appConstants.ACCESS_TOKEN);
+        console.log("getting accessToken from localStorage");
+        console.log(accessToken);
         request = request.clone({
           setHeaders: {
             'X-XSRF-TOKEN': this.cookieService.get('XSRF-TOKEN'),
-            'Authorization': 'Authorization=' + harcodedToken
+            'Authorization': 'Authorization=' + accessToken
           }
         });
       }
@@ -79,20 +89,15 @@ export class AuthInterceptor implements HttpInterceptor {
           if (event instanceof HttpResponse) {
             if (event.url && event.url.split('/').includes('validateToken')) {
               if (event.body.response) {
-                if (!isAndroidAppMode) {
-                  this.decoded = jwt_decode(event.body.response.token);
-                  this.userProfileService.setDisplayUserName(
-                    this.decoded['name']
-                  );
-                  this.userProfileService.setUsername(event.body.response.userId);
-                  this.userProfileService.setRoles(event.body.response.role);
-                  this.userProfileService.setUserPreferredLanguage(
-                    this.decoded['locale']
-                  );
-                } else {
-                  const token = harcodedToken;
-                  this.decoded = jwt_decode(token);
-                }
+                this.decoded = jwt_decode(event.body.response.token);
+                this.userProfileService.setDisplayUserName(
+                  this.decoded['name']
+                );
+                this.userProfileService.setUsername(event.body.response.userId);
+                this.userProfileService.setRoles(event.body.response.role);
+                this.userProfileService.setUserPreferredLanguage(
+                  this.decoded['locale']
+                );
               }
               if (
                 event.body.errors !== null &&
@@ -102,7 +107,7 @@ export class AuthInterceptor implements HttpInterceptor {
                   event.body.errors[0]['errorCode'] ===
                   appConstants.AUTH_ERROR_CODE[1])
               ) {
-                this.showHomePage();
+                this.showHomePage(isAndroidAppMode);
               }
             }
           }
@@ -110,9 +115,8 @@ export class AuthInterceptor implements HttpInterceptor {
         (err) => {
           if (err instanceof HttpErrorResponse) {
             if (!isLocalUrl) {
-              this.showHomePage();
+              this.showHomePage(isAndroidAppMode);
             }
-            //TODO alert ERROR
           }
         }
       )

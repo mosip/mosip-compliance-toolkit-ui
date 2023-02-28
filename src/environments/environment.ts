@@ -4,7 +4,12 @@
 
 export const environment = {
   production: false,
-  isAndroidAppMode: 'no'
+  isAndroidAppMode: 'no',
+  IAM_URL: "",
+  IAM_REALM: "",
+  IAM_CLIENT_ID: "",
+  redirectUri: '',
+  SERVICES_BASE_URL: ''
 };
 
 /*
