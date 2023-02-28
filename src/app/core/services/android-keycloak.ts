@@ -11,7 +11,12 @@ export class AndroidKeycloakService {
   private androidKeycloak: Keycloak.KeycloakInstance;
 
   constructor(
-  ) { this.setUp(); }
+  ) {
+    const isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
+    if (isAndroidAppMode) {
+      this.setUp();
+    }
+  }
 
   public setUp() {
     console.log("creating androidKeycloak instance");
