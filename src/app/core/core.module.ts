@@ -14,6 +14,7 @@ import { SdkTestCaseService } from './services/sdk-testcase-service';
 
 import { LoginRedirectService } from './services/loginredirect.service';
 import { DataService } from './services/data-service';
+import { AndroidKeycloakService } from './services/android-keycloak';
 
 import { MainLayoutComponent } from './components/main-layout/main-layout.component';
 import { HomeComponent } from './components/home/home.component';
@@ -34,6 +35,7 @@ import { DialogComponent } from './components/dialog/dialog.component';
   ],
   providers: [
     DataService,
+    AndroidKeycloakService,
     AuthService,
     LoginRedirectService,
     AuthguardService,

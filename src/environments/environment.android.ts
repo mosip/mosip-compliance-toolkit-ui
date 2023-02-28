@@ -4,7 +4,11 @@
 
 export const environment = {
   production: true,
-  isAndroidAppMode: 'yes'
+  isAndroidAppMode: 'yes',
+  IAM_URL: "https://iam.dev.mosip.net/auth",
+  IAM_REALM: "mosip",
+  IAM_CLIENT_ID: "mosip-toolkit-android-client",
+  redirectUri: 'android://mosip-compliance-toolkit-ui'
 };
 
 /*

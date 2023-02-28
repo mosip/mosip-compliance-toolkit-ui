@@ -73,3 +73,4 @@ export const SBI_INTENT_RESPONSE_KEY = 'response';
 export const RESULT_OK = 'success';
 export const STATUS = 'status';
 export const CALLBACK_ID = 'callbackId';
+export const ACCESS_TOKEN = 'accessToken';

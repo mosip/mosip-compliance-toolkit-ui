@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">mosip-compliance-toolkit-ui</string>
+    <string name="title_activity_main">mosip-compliance-toolkit-ui</string>
+    <string name="package_name">io.mosip.compliance.toolkit</string>
+    <string name="custom_url_scheme">io.mosip.compliance.toolkit</string>
+</resources>

@@ -4,19 +4,15 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { AppConfigService } from 'src/app/app-config.service';
-import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private router: Router,
     private http: HttpClient,
     private appService: AppConfigService
   ) { }
 
   isAuthenticated(): Observable<boolean> {
-    const isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
-    if (!isAndroidAppMode) {
       return this.http
       .get(
         `${
@@ -31,9 +27,6 @@ export class AuthService {
           return of(false);
         })
       );
-    } else {
-      return of(true);
-    }
   }
 
   isLanguagesSet() {
