@@ -15,6 +15,7 @@ export class OtherAttributesModel {
       public resumeBtn: boolean,
       public resumeAgainBtn: boolean,
       public keyRotationTestCase: boolean,
-      public transactionId: any
+      public transactionId: any,
+      public invalidAttributeName: any
     ) {}
   }
