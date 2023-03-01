@@ -186,7 +186,7 @@ export class SbiTestCaseService {
   createRequest(testCase: TestCaseModel, sbiSelectedDevice: string): any {
     const selectedSbiDevice: SbiDiscoverResponseModel =
       JSON.parse(sbiSelectedDevice);
-    let request = {};
+    let request: any = {};
     if (testCase.methodName[0] == appConstants.SBI_METHOD_DEVICE) {
       request = {
         type: selectedSbiDevice.digitalIdDecoded.type,
@@ -244,12 +244,31 @@ export class SbiTestCaseService {
         ],
         customOpts: null,
       };
+      if (testCase.otherAttributes.invalidAttributeName) {
+        let newRequest: any = {};
+        var keys = Object.keys(request);
+        for (const key of keys) {
+          const keyName = key.toString();
+          if (testCase.otherAttributes.invalidAttributeName == keyName) {
+            if (request[keyName]) {
+              const invalidKeyName = keyName + 'XXX';
+              newRequest = {
+                ...newRequest,
+                [invalidKeyName]: request[keyName],
+              };
+            }
+          } else {
+            newRequest = { ...newRequest, [keyName]: request[keyName] };
+          }
+        }
+        request = newRequest;
+      }
     }
     //console.log(JSON.stringify(request));
     return request;
     //return JSON.stringify(request);
   }
-  getTransactionId(testCase: TestCaseModel){
+  getTransactionId(testCase: TestCaseModel) {
     //console.log("getTransactionId" +testCase.otherAttributes.transactionId);
     return testCase.otherAttributes.transactionId
       ? testCase.otherAttributes.transactionId.toString()
