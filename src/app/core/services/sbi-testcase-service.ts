@@ -250,15 +250,37 @@ export class SbiTestCaseService {
         for (const key of keys) {
           const keyName = key.toString();
           if (testCase.otherAttributes.invalidAttributeName == keyName) {
-            if (request[keyName]) {
-              const invalidKeyName = keyName + 'XXX';
-              newRequest = {
-                ...newRequest,
-                [invalidKeyName]: request[keyName],
-              };
-            }
+            const invalidKeyName = keyName + 'XXX';
+            newRequest = {
+              ...newRequest,
+              [invalidKeyName]: request[keyName],
+            };
           } else {
-            newRequest = { ...newRequest, [keyName]: request[keyName] };
+            if (keyName == 'bio') {
+              let bioRequest: any = {};
+              const bioObject = request.bio[0];
+              var bioKeys = Object.keys(bioObject);
+              for (const bioKey of bioKeys) {
+                const bioKeyName = bioKey.toString();
+                if (
+                  testCase.otherAttributes.invalidAttributeName == bioKeyName
+                ) {
+                  const invalidBioKeyName = bioKeyName + 'XXX';
+                  bioRequest = {
+                    ...bioRequest,
+                    [invalidBioKeyName]: bioObject[bioKeyName],
+                  };
+                } else {
+                  bioRequest = {
+                    ...bioRequest,
+                    [bioKeyName]: bioObject[bioKeyName],
+                  };
+                }
+              }
+              newRequest = { ...newRequest, [keyName]: [bioRequest] };
+            } else {
+              newRequest = { ...newRequest, [keyName]: request[keyName] };
+            }
           }
         }
         request = newRequest;
