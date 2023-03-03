@@ -22,9 +22,7 @@ export class LogoutService {
     if (isAndroidAppMode) {
       return new Promise(async (resolve, reject) => {
         await this.androidKeycloakService.getInstance().logout();
-        sessionStorage.clear();
-        localStorage.clear();
-        this.cookieService.deleteAll();
+        this.androidKeycloakService.getInstance().clearToken();
         await CapacitorCookies.deleteCookie({
           url: encodeURI(environment.SERVICES_BASE_URL),
           key: appConstants.AUTHORIZATION
