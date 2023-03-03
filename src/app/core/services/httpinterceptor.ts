@@ -17,6 +17,7 @@ import { CookieService } from 'ngx-cookie-service';
 import * as appConstants from 'src/app/app.constants';
 import { environment } from 'src/environments/environment';
 import { AndroidKeycloakService } from './android-keycloak';
+import { CapacitorCookies } from '@capacitor/core';
 
 @Injectable({
   providedIn: 'root',
@@ -70,14 +71,14 @@ export class AuthInterceptor implements HttpInterceptor {
       } else {
         //for android app
         const accessToken = localStorage.getItem(appConstants.ACCESS_TOKEN);
-        console.log("getting accessToken from localStorage");
-        console.log(accessToken);
-        request = request.clone({
-          setHeaders: {
-            'X-XSRF-TOKEN': this.cookieService.get('XSRF-TOKEN'),
-            'Authorization': 'Authorization=' + accessToken
-          }
-        });
+        if (accessToken) {
+          CapacitorCookies.setCookie({
+            url:  environment.SERVICES_BASE_URL,
+            key: 'Authorization',
+            value: accessToken ? accessToken:'',
+          });
+        }
+        request = request.clone({ withCredentials: true });
       }
     }
     if (request.url.includes('i18n')) {
