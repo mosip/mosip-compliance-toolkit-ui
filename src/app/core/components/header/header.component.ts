@@ -9,8 +9,7 @@ import { Router } from "@angular/router";
 import { MatDialog } from '@angular/material/dialog';
 import Utils from 'src/app/app.utils';
 import { environment } from 'src/environments/environment';
-// import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
-// import { MatDialog } from '@angular/material';
+import { App } from '@capacitor/app';
 
 @Component({
   selector: 'app-header',
@@ -43,8 +42,8 @@ export class HeaderComponent implements OnInit {
   ) {
     this.appVersion = appConfigService.getConfig()['version'];
   }
-  onItem() {
-    this.logoutService.logout();
+  async onItem() {
+    await this.logoutService.logout();
     const isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
     if (isAndroidAppMode) {
       const dialogRef = Utils.showSuccessMessage(
@@ -52,7 +51,7 @@ export class HeaderComponent implements OnInit {
         this.dialog
       );
       dialogRef.afterClosed().subscribe((res) => {
-        window.location.reload();
+        App.exitApp();
       });
     }
   }
