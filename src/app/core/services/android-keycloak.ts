@@ -36,36 +36,6 @@ export class AndroidKeycloakService {
         window.location.reload();
       }
     };
-    this.androidKeycloak.onAuthRefreshSuccess = () => {
-      // save tokens to device storage
-      console.log('onAuthRefreshSuccess');
-      const accessToken = this.androidKeycloak.token;
-      console.log(accessToken);
-      if (accessToken) {
-        localStorage.setItem(appConstants.ACCESS_TOKEN, accessToken);
-       // window.location.reload();
-      }
-    };
-    this.androidKeycloak.onAuthError = async () => {
-      // save tokens to device storage
-      console.log('onAuthError');
-      localStorage.removeItem(appConstants.ACCESS_TOKEN);
-      await CapacitorCookies.deleteCookie({
-        url: encodeURI(environment.SERVICES_BASE_URL),
-        key: appConstants.AUTHORIZATION
-      });
-      this.androidKeycloak.login();
-    };
-    this.androidKeycloak.onAuthRefreshError = async () => {
-      // save tokens to device storage
-      console.log('onAuthRefreshError');
-      localStorage.removeItem(appConstants.ACCESS_TOKEN);
-      await CapacitorCookies.deleteCookie({
-        url: encodeURI(environment.SERVICES_BASE_URL),
-        key: appConstants.AUTHORIZATION
-      });
-      this.androidKeycloak.login();
-    };
     this.androidKeycloak.init({
       adapter: 'capacitor-native',
       responseMode: 'query',

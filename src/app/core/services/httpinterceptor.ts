@@ -33,7 +33,6 @@ export class AuthInterceptor implements HttpInterceptor {
     if (!isAndroidAppMode) {
       this.redirectService.redirect(window.location.href);
     } else {
-      localStorage.removeItem(appConstants.ACCESS_TOKEN);
       await CapacitorCookies.deleteCookie({
         url: encodeURI(environment.SERVICES_BASE_URL),
         key: appConstants.AUTHORIZATION

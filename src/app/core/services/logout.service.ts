@@ -20,16 +20,17 @@ export class LogoutService {
   async logout() {
     const isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
     if (isAndroidAppMode) {
-      await this.androidKeycloakService.getInstance().logout();
-      sessionStorage.clear();
-      localStorage.clear();
-      this.cookieService.deleteAll();
-      localStorage.removeItem(appConstants.ACCESS_TOKEN);
-      await CapacitorCookies.deleteCookie({
-        url: encodeURI(environment.SERVICES_BASE_URL),
-        key: appConstants.AUTHORIZATION
+      return new Promise(async (resolve, reject) => {
+        await this.androidKeycloakService.getInstance().logout();
+        sessionStorage.clear();
+        localStorage.clear();
+        this.cookieService.deleteAll();
+        await CapacitorCookies.deleteCookie({
+          url: encodeURI(environment.SERVICES_BASE_URL),
+          key: appConstants.AUTHORIZATION
+        });
+        resolve(true);
       });
-     
     } else {
       window.location.href = `${this.appService.getConfig().SERVICES_BASE_URL}${this.appService.getConfig().logout}?redirecturi=` + btoa(window.location.href);
     }
