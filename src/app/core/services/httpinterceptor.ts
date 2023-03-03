@@ -26,17 +26,33 @@ export class AuthInterceptor implements HttpInterceptor {
   errorMessages: any;
   decoded: any;
 
-  showHomePage(isAndroidAppMode: boolean) {
+  showHomePage = async (isAndroidAppMode: boolean) => {
     sessionStorage.clear();
     localStorage.clear();
     this.cookieService.deleteAll();
     if (!isAndroidAppMode) {
       this.redirectService.redirect(window.location.href);
     } else {
-      this.androidKeycloakService.getInstance().login();
+      localStorage.removeItem(appConstants.ACCESS_TOKEN);
+      await CapacitorCookies.deleteCookie({
+        url: encodeURI(environment.SERVICES_BASE_URL),
+        key: appConstants.AUTHORIZATION
+      });
+     await this.androidKeycloakService.getInstance().login();
     }
   }
 
+  addCookieForAndroid = async() =>{
+    const accessToken = localStorage.getItem(appConstants.ACCESS_TOKEN);
+    if (accessToken) {
+      await CapacitorCookies.setCookie({
+        url: encodeURI(environment.SERVICES_BASE_URL),
+        key: appConstants.AUTHORIZATION,
+        value: accessToken ? accessToken : '',
+      });
+      console.log("cookie set for android");
+    }
+  }
   constructor(
     private redirectService: LoginRedirectService,
     private appConfigService: AppConfigService,
@@ -70,14 +86,7 @@ export class AuthInterceptor implements HttpInterceptor {
         });
       } else {
         //for android app
-        const accessToken = localStorage.getItem(appConstants.ACCESS_TOKEN);
-        if (accessToken) {
-          CapacitorCookies.setCookie({
-            url:  environment.SERVICES_BASE_URL,
-            key: 'Authorization',
-            value: accessToken ? accessToken:'',
-          });
-        }
+        this.addCookieForAndroid();
         request = request.clone({ withCredentials: true });
       }
     }

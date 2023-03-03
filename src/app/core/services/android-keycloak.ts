@@ -2,6 +2,7 @@ import * as Keycloak from 'src/app/lib/keycloak';
 import * as appConstants from 'src/app/app.constants';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { CapacitorCookies } from '@capacitor/core';
 
 @Injectable({
   providedIn: 'root',
@@ -27,14 +28,43 @@ export class AndroidKeycloakService {
     });
     this.androidKeycloak.onAuthSuccess = () => {
       // save tokens to device storage
-      console.log('saving accessToken in localStorage');
+      console.log('onAuthSuccess');
       const accessToken = this.androidKeycloak.token;
       console.log(accessToken);
       if (accessToken) {
-        localStorage.removeItem(appConstants.ACCESS_TOKEN);
         localStorage.setItem(appConstants.ACCESS_TOKEN, accessToken);
         window.location.reload();
       }
+    };
+    this.androidKeycloak.onAuthRefreshSuccess = () => {
+      // save tokens to device storage
+      console.log('onAuthRefreshSuccess');
+      const accessToken = this.androidKeycloak.token;
+      console.log(accessToken);
+      if (accessToken) {
+        localStorage.setItem(appConstants.ACCESS_TOKEN, accessToken);
+       // window.location.reload();
+      }
+    };
+    this.androidKeycloak.onAuthError = async () => {
+      // save tokens to device storage
+      console.log('onAuthError');
+      localStorage.removeItem(appConstants.ACCESS_TOKEN);
+      await CapacitorCookies.deleteCookie({
+        url: encodeURI(environment.SERVICES_BASE_URL),
+        key: appConstants.AUTHORIZATION
+      });
+      this.androidKeycloak.login();
+    };
+    this.androidKeycloak.onAuthRefreshError = async () => {
+      // save tokens to device storage
+      console.log('onAuthRefreshError');
+      localStorage.removeItem(appConstants.ACCESS_TOKEN);
+      await CapacitorCookies.deleteCookie({
+        url: encodeURI(environment.SERVICES_BASE_URL),
+        key: appConstants.AUTHORIZATION
+      });
+      this.androidKeycloak.login();
     };
     this.androidKeycloak.init({
       adapter: 'capacitor-native',
