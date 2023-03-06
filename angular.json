@@ -15,13 +15,16 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@nrwl/angular:webpack-browser",
           "options": {
             "outputPath": "dist/mosip-compliance-toolkit-ui",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
+            "customWebpackConfig": {
+              "path": "src/app/webpack.config.js"
+            },
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -30,7 +33,9 @@
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
-            "scripts": [ "src/assets/js/custom.js" ]
+            "scripts": [
+              "src/assets/js/custom.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -58,8 +63,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "1mb",
+                  "maximumError": "1.5mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -95,7 +100,7 @@
             "development": {
               "browserTarget": "mosip-compliance-toolkit-ui:build:development"
             }
-          },
+          },    
           "defaultConfiguration": "development"
         },
         "extract-i18n": {

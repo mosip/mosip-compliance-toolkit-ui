@@ -1,15 +1,15 @@
 // This file can be replaced during build by using the `fileReplacements` array.
-// `ng build` replaces `environment.ts` with `environment.prod.ts`.
+// `ng build -c=android` replaces `environment.ts` with `environment.android.ts`.
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
   production: true,
   isAndroidAppMode: 'yes',
-  IAM_URL: "https://iam.dev.mosip.net/auth",
-  IAM_REALM: "mosip",
-  IAM_CLIENT_ID: "mosip-toolkit-android-client",
+  IAM_URL: process.env['NX_APP_IAM_URL'] || '',
+  IAM_REALM: process.env['NX_APP_IAM_REALM'] || '',
+  IAM_CLIENT_ID: process.env['NX_APP_IAM_CLIENT_ID'] || '',
   redirectUri: 'android://mosip-compliance-toolkit-ui',
-  SERVICES_BASE_URL: 'https://api-internal.dev.mosip.net/v1/toolkit/'
+  SERVICES_BASE_URL: process.env['NX_APP_SERVICES_BASE_URL'] || ''
 };
 
 /*
