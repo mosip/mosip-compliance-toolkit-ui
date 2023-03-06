@@ -16,7 +16,7 @@ export class AppConfigService {
     const isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
     if (isAndroidAppMode) {
       this.appConfig["SERVICES_BASE_URL"] = environment.SERVICES_BASE_URL;
-      //console.log("updated SERVICES_BASE_URL: " + this.appConfig["SERVICES_BASE_URL"]);
+      console.log("updated SERVICES_BASE_URL: " + this.appConfig["SERVICES_BASE_URL"]);
     }
     //console.log(this.appConfig.SERVICES_BASE_URL + "configs");
     this.http.get(this.appConfig.SERVICES_BASE_URL + "configs").subscribe(
