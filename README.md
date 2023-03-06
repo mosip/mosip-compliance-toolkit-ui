@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 [![Maven Package upon a push](https://github.com/mosip/mosip-compliance-toolkit-ui/actions/workflows/push_trigger.yml/badge.svg?branch=develop)](https://github.com/mosip/mosip-compliance-toolkit-ui/actions/workflows/push_trigger.yml)
 
 # Compliance-Toolkit Portal
@@ -101,7 +100,6 @@ cd helm
 cd helm
 ./delete.sh [cluster-kubeconfig-file]
 ```
-=======
 [![Maven Package upon a push](https://github.com/mosip/mosip-compliance-toolkit-ui/actions/workflows/push_trigger.yml/badge.svg?branch=master)](https://github.com/mosip/mosip-compliance-toolkit-ui/actions/workflows/push_trigger.yml)
 
 
