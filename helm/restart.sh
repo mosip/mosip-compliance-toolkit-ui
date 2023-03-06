@@ -2,7 +2,6 @@
 # Restart the mosip-compliance-toolkit-ui services
 ## Usage: ./restart.sh [kubeconfig]
 
-
 if [ $# -ge 1 ] ; then
   export KUBECONFIG=$1
 fi
