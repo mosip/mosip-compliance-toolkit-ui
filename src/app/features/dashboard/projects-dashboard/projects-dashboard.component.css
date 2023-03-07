@@ -93,7 +93,7 @@
     overflow-x:auto;
   }
   .dashboard-table{
-    width: 680px;
+    width: 800px;
   }
   .outerdiv{
     width: 100%;
@@ -120,52 +120,54 @@
   }
   .projecttype{
     width: 40px;
-    padding-left: 20px;
+    padding-left: 30px;
   }
   .collectionheader{
-    width: 2px;
+    width: 80px;
     padding-left: 0px;
   }
   .collectioncount{
-    width: 40px;
-    padding-left: 0px;
-    text-align: center;
+    width: 80px;
+    padding-left: 20px;
+    
   }
   .crDateHeader{
-    padding-left:20px;
+    padding-left:5px;
     width: 60px;
   }
   .crDateCell{
     font-family: 'Times New Roman', Times, serif;
     width: 60px;
-    padding-left:20px;
+    padding-left:5px;
   }
   .lastRunDt{
     width:60px;
-    padding-left:40px;
+    padding-left:50px;
 
   }
   .lastRunDt1{
     font-family: 'Times New Roman', Times, serif;
     width: 60px;
-  padding-left:40px;
+  padding-left:50px;
 
   }
   .lastRunStatus{
-    padding-left: 40px;
+    padding-left: 60px;
     width: 100px;
     
   }
   .lastRunStatus1{
-    padding-left: 40px;
+    padding-left: 60px;
     width: 100px;
     
   }
   .moreiconheader{
-    padding-left: 20px;
+    width: 20px;
+    padding-left: 0px;
   }
   .moreiconcell{
-    padding-left: 20px;
+    width: 20px;
+    padding-left: 0px;
   }
 }
 @media screen and (max-width: 376px){

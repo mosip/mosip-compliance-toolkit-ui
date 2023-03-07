@@ -27,38 +27,37 @@
     <input matInput (keyup)="applyFilter($event)" placeholder="Search columns" #input>
 </mat-form-field>
 <div class="mat-elevation-z8" >
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 50, 100]" aria-label="Select page of users"></mat-paginator>
     <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 50, 100]" aria-label="Select page of users"></mat-paginator>
     <div class="table-scroll">
     <table mat-table [dataSource]="dataSource" matSort class="dashboard-table">
         <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-            <td mat-cell *matCellDef="let element">
-                <a class="link" (click)="viewProject(element)" *ngIf="element.projectType == 'SBI' || element.projectType == 'SDK'">{{element.name}}</a>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="nameHeader"> Name </th>
+            <td mat-cell *matCellDef="let element" class="nameCell">
+                <a style="width:70px; display: inline-block; overflow-wrap: break-word;" class="link" (click)="viewProject(element)" *ngIf="element.projectType == 'SBI' || element.projectType == 'SDK'">{{element.name}}</a>
                 <span *ngIf="element.projectType !== 'SBI' && element.projectType !== 'SDK'">{{element.name}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="projectType">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Project Type </th>
-            <td mat-cell *matCellDef="let element"> {{element.projectType}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="projectheader"> Project Type </th>
+            <td mat-cell *matCellDef="let element" class="projecttype"> {{element.projectType}} </td>
         </ng-container>
-        <ng-container matColumnDef="collectionsCount">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Collections </th>
-            <td mat-cell *matCellDef="let element"> {{element.collectionsCount}} </td>
+        <ng-container matColumnDef="collectionsCount" >
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="collectionheader"> Collections </th>
+            <td mat-cell *matCellDef="let element" class="collectioncount"> {{element.collectionsCount}} </td>
         </ng-container>
         <ng-container matColumnDef="crDate">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Creation Date </th>
-            <td mat-cell *matCellDef="let element"> {{element.crDate | date: 'short' }} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="crDateHeader"> Creation Date </th>
+            <td mat-cell *matCellDef="let element" class="crDateCell"> {{element.crDate | date: 'short' }} </td>
         </ng-container>
         <ng-container matColumnDef="lastRunDt">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Run Date </th>
-            <td mat-cell *matCellDef="let element"> {{element.lastRunDt | date: 'short'}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="lastRunDt"> Last Run Date </th>
+            <td mat-cell *matCellDef="let element" class="lastRunDt1"> {{element.lastRunDt | date: 'short'}} </td>
         </ng-container>
-        <ng-container matColumnDef="lastRunStatus">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Run Status </th>
-            <td mat-cell *matCellDef="let element">
+        <ng-container matColumnDef="lastRunStatus" >
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="lastRunStatus"> Last Run Status </th>
+            <td mat-cell *matCellDef="let element" class="lastRunStatus1">
                 <span class="custom-class" *ngIf="element.lastRunId && element.lastRunStatus == true">
                     <mat-icon [ngStyle]="{color: 'green'}">check_circle</mat-icon>
                     Success
@@ -70,8 +69,6 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="actions" stickyEnd>
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
-            <td mat-cell *matCellDef="let element">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="moreiconheader"> </th>
             <td mat-cell *matCellDef="let element" class="moreiconcell">
                 <button mat-icon-button [matMenuTriggerFor]="appMenu" [matMenuTriggerData]="{myobject: element}">
