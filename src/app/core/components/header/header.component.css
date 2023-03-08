@@ -2,8 +2,7 @@
   color: #ffffff;
   top: 0px;
   left: 0px;
-  /* width: 1920px; */
-  width: 100%;
+  width: 1920px;
   height: 50px;
   background: #0b6a82 0% 0% no-repeat padding-box;
   box-shadow: 0px 2px 6px #0000000a;
@@ -137,4 +136,7 @@
   height: 35px !important;
   font-size: smaller;
   font-family: "Roboto", sans-serif;
+
 }
+
+
