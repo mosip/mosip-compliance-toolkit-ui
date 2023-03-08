@@ -41,11 +41,12 @@ jobs:
       
     - name: Build Android app
       run: ng build -c=android
+
+    - name: Change to Android directory
+      run: cd android/app
       
     - name: Sync Capacitor project
-      run: |
-        cd android/app
-        npx cap sync
+      run: npx cap sync
       
     - name: Build APK
       run: ./gradlew build
