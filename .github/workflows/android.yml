@@ -42,15 +42,20 @@ jobs:
     - name: Build Android app
       run: ng build -c=android
 
-    - name: Change to Android directory
+    - name: Change to app directory
       run: cd android/app
       
     - name: Sync Capacitor project
       run: npx cap sync
       
+    - name: Change to android directory
+      run: cd ../../android  
+      
     - name: Build APK
       run: ./gradlew build
-      working-directory: ./android/app
+
+    - name: Change to root directory
+      run: cd ../
       
     - name: Upload APK
       uses: actions/upload-artifact@v2
