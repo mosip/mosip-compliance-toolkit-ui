@@ -24,11 +24,55 @@
     margin-top: 18vw;
     display: flex;
   }
-  
   .link {
     cursor: pointer;
     color: #ff4081;
   }
   .custom-class mat-icon {
     vertical-align: middle;
+  }
+  @media screen and (max-width: 426px){
+    .table-scroll{
+      overflow-x:auto;
+    }
+    .outerdiv{
+      width: 100%;
+    }
+    .nameheader{
+      padding-left: 20px;
+    }
+    .namecell{
+     padding-left: 20px; 
+     width: 80px;
+    }
+    .typeheader{
+      padding-left: 20px;
+    }
+    .typecell{
+     padding-left: 20px; 
+    }
+    .purposeheader{
+      padding-left: 20px;
+    }
+    .purposecell{
+      padding-left: 20px;
+    }
+    .fileheader{
+     padding-left: 20px; 
+    }
+    .filecell{
+     padding-left: 20px; 
+    }
+    .crdateheader{
+     padding-left: 20px; 
+    }
+    .crdatecell{
+     padding-left: 20px; 
+    }
+    .actionsheader{
+     padding-left: 20px; 
+    }
+    .actionscell{
+     padding-left: 20px; 
+    }
   }
