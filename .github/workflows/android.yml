@@ -50,6 +50,7 @@ jobs:
       
     - name: Build APK
       run: |
+        cd ../
         chmod +x ./gradlew
         ./gradlew build
 
