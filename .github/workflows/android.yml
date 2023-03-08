@@ -13,6 +13,7 @@ on:
         description: 'The URL for the IAM server'
         required: true
         default: 'https://iam.dev.mosip.net/auth'
+        
 
 jobs:
   build:
@@ -49,11 +50,10 @@ jobs:
       run: npx cap sync
       
     - name: Build APK
+      working-directory: android
       run: |
-        cd ../
         chmod +x ./gradlew
         ./gradlew build
-
     - name: Change to root directory
       run: cd ../
       
