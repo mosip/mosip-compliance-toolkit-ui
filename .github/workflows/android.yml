@@ -1,0 +1,45 @@
+name: Android Build Workflow
+on:
+  push:
+    branches:
+      - develop
+  workflow_dispatch:
+    inputs:
+      services_base_url:
+        description: 'The base URL for app services'
+        required: true
+        default: 'https://api-internal.dev.mosip.net/v1/toolkit/'
+      iam_url:
+        description: 'The URL for the IAM server'
+        required: true
+        default: 'https://iam.dev.mosip.net/auth'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set environment variables
+      run: |
+        echo "Setting environment variables..."
+        echo "NX_APP_SERVICES_BASE_URL=${{ github.event.inputs.services_base_url }}" >> $GITHUB_ENV
+        echo "NX_APP_IAM_URL=${{ github.event.inputs.iam_url }}" >> $GITHUB_ENV
+        echo "NX_APP_IAM_REALM=mosip" >> $GITHUB_ENV
+        echo "NX_APP_IAM_CLIENT_ID=mosip-toolkit-android-client" >> $GITHUB_ENV
+    - name: Install NPM packages
+      run: npm install
+    - name: Build Android app
+      run: ng build -c=android
+    - name: Sync build
+      run: npx cap sync
+      working-directory: ./android/app
+    - name: Build APK
+      run: ./gradlew build
+      working-directory: ./android/app
+    - name: Upload APK
+      uses: actions/upload-artifact@v2
+      with:
+        name: CTK-Android
+        path: ./android/app/build/outputs/apk/debug/app-debug.apk
