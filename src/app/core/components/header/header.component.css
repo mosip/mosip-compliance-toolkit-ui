@@ -67,7 +67,7 @@
   border-color: #ffffff;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 425px) {
   .mosip-logo {
     flex: 1;
   }
@@ -137,12 +137,4 @@
   height: 35px !important;
   font-size: smaller;
   font-family: "Roboto", sans-serif;
-}
-@media screen and (max-width: 426px){
-  .header-toolbar{
-    width:100%;
-  }
-  .mosip-text{
-    width: 100%;
-  }
 }
