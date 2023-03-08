@@ -48,9 +48,6 @@ jobs:
     - name: Sync Capacitor project
       run: npx cap sync
       
-    - name: Change to android directory
-      run: cd ../../android  
-      
     - name: Build APK
       run: ./gradlew build
 
