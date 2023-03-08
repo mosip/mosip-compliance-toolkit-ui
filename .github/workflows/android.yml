@@ -20,6 +20,10 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+      
+    - uses: actions/setup-node@v1
+      with:
+        version: 14
 
     - name: Set environment variables
       run: |
@@ -29,7 +33,7 @@ jobs:
         echo "NX_APP_IAM_REALM=mosip" >> $GITHUB_ENV
         echo "NX_APP_IAM_CLIENT_ID=mosip-toolkit-android-client" >> $GITHUB_ENV
     - name: Install NPM packages
-      run: npm install
+      run: npm install --ignore-scripts
     - name: Build Android app
       run: ng build -c=android
     - name: Sync build
