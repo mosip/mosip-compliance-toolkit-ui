@@ -32,3 +32,86 @@
 .custom-class mat-icon {
   vertical-align: middle;
 }
+
+
+
+@media screen and (max-width: 600px){
+  .table-scroll{
+    overflow-x:auto;
+  }
+  .dashboard-table{
+    width: 800px;
+  }
+  .outerdiv{
+    width: 100%;
+  }
+  .mat-elevation-z8{
+    width: 100%;
+    margin-left: -2px;  
+  }
+  .nameHeader{
+    width: 80px;
+  }
+  .nameCell{
+    width: 80px;
+  }
+  .projectheader{
+    width: 60px;
+    padding-left: 20px;
+  }
+  .projecttype{
+    width: 40px;
+    padding-left: 30px;
+  }
+  .collectionheader{
+    width: 80px;
+    padding-left: 0px;
+  }
+  .collectioncount{
+    width: 80px;
+    padding-left: 20px;
+  }
+  .crDateHeader{
+    padding-left:5px;
+    width: 60px;
+  }
+  .crDateCell{
+    font-family: 'Times New Roman', Times, serif;
+    width: 60px;
+    padding-left:5px;
+  }
+  .lastRunDt{
+    width:60px;
+    padding-left:50px;
+  }
+  .lastRunDt1{
+    font-family: 'Times New Roman', Times, serif;
+    width: 60px;
+  padding-left:50px;
+  }
+  .lastRunStatus{
+    padding-left: 60px;
+    width: 100px;  
+  }
+  .lastRunStatus1{
+    padding-left: 60px;
+    width: 100px;  
+  }
+  .moreiconheader{
+    width: 20px;
+    padding-left: 0px;
+  }
+  .moreiconcell{
+    width: 20px;
+    padding-left: 0px;
+  }
+}
+@media screen and (max-width: 321px){
+  .dashboard-button-first-container {
+    /* padding-bottom: 16px; */
+    float: right;
+    margin-right: -160px;
+  }
+}
+
+
