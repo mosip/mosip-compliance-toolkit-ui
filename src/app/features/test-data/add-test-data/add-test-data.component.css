@@ -79,4 +79,53 @@
 .custom-class mat-icon {
   vertical-align: middle;
 }
+
+@media screen and (max-width: 600px) {
+  .mat-elevation-z8{
+    width: 100%;
+    height: 320px;
+  }
+  .formContainer{
+    width: 200px;
+  }
+   .fieldLabel{
+    width: 120px;
+    margin-left: 20px;
+    margin-top: 30px;
+   }
+  .fieldContainer{
+    margin-top: 30px;
+    margin-left: 80px;
+    margin-bottom: 20px;
+  }
+  .namefield{
+    width: 200px;
+    margin-left: -4px;
+  }
+  .projectTypeOptions{
+    width: 200px;
+  }
+  .purposefield{
+    margin-left: -20px;
+    width: 200px;
+  }
+  .custom-class{
+    margin-top: 60px;
+    width: 100px;
+  }
+  .file-upload-button{
+    margin-top: 60px;
+    width: 200px;
+    margin-left: -50px;
+    margin-bottom: -60px;
+  }
+  .file-download-button{
+    margin-top: 20px;
+    margin-left: -50px;
+  }
+  .fileuploadbtn{
+    width: 170px;
+  }
+}
+
     

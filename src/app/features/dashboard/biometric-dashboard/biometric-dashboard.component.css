@@ -31,7 +31,7 @@
   .custom-class mat-icon {
     vertical-align: middle;
   }
-  @media screen and (max-width: 426px){
+  @media screen and (max-width: 600px){
     .table-scroll{
       overflow-x:auto;
     }

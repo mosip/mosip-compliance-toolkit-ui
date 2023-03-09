@@ -14,7 +14,7 @@
                     </mat-label>
                 </span>
                 <span class="fieldContainer">
-                    <mat-form-field appearance="legacy" [style.width.px]=327>
+                    <mat-form-field appearance="legacy" class="collectionNameField">
                         <mat-label>Collection Name:</mat-label>
                         <input matInput formControlName="name" #keyboardRef #input />
                         <mat-error *ngIf="collectionForm.controls['name'].hasError('required')">
@@ -34,21 +34,21 @@
             <!--- Note that these columns can be defined in any order.
               The actual rendered columns are set as a property on the row definition" -->
             <ng-container matColumnDef="testId">
-                <th mat-header-cell *matHeaderCellDef> ID </th>
-                <td mat-cell *matCellDef="let element">
+                <th mat-header-cell *matHeaderCellDef class="idHeader"> ID </th>
+                <td mat-cell *matCellDef="let element" class="idCell">
                     {{element.testId}} </td>
             </ng-container>
             <ng-container matColumnDef="testName">
-                <th mat-header-cell *matHeaderCellDef> Name </th>
-                <td mat-cell *matCellDef="let element"> {{element.testName}} </td>
+                <th mat-header-cell *matHeaderCellDef class="nameHeader"> Name </th>
+                <td mat-cell *matCellDef="let element" class="nameCell"> {{element.testName}} </td>
             </ng-container>
             <ng-container matColumnDef="testDescription">
-                <th mat-header-cell *matHeaderCellDef> Description </th>
-                <td mat-cell *matCellDef="let element"><div [innerHTML]="element.testDescription"></div> </td>
+                <th mat-header-cell *matHeaderCellDef class="descHeader"> Description </th>
+                <td mat-cell *matCellDef="let element" class="descCell"><div [innerHTML]="element.testDescription"></div> </td>
             </ng-container>
             <ng-container matColumnDef="validatorDefs">
-                <th mat-header-cell *matHeaderCellDef> Validators </th>
-                <td mat-cell *matCellDef="let element">
+                <th mat-header-cell *matHeaderCellDef class="validatorsHeader"> Validators </th>
+                <td mat-cell *matCellDef="let element" class="validatorsCell">
                     <span *ngFor="let itemArr of element.validatorDefs">
                         <span *ngFor="let item of itemArr">
                             <span class="cell-list">{{item.name + ' - ' + item.description}}</span><br />

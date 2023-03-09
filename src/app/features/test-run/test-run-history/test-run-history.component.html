@@ -17,12 +17,12 @@
               The actual rendered columns are set as a property on the row definition" -->
             <!-- Test Order Sequence Column -->
             <ng-container matColumnDef="lastRunTime">
-                <th mat-header-cell *matHeaderCellDef> Run Date </th>
-                <td mat-cell *matCellDef="let element"> {{element.lastRunTime | date: 'short'}} </td>
+                <th mat-header-cell *matHeaderCellDef class="runDateHeader"> Run Date </th>
+                <td mat-cell *matCellDef="let element" class="runDateCell"> {{element.lastRunTime | date: 'short'}} </td>
             </ng-container>
             <ng-container matColumnDef="runStatus">
-                <th mat-header-cell *matHeaderCellDef> Run Status </th>
-                <td mat-cell *matCellDef="let element">
+                <th mat-header-cell *matHeaderCellDef class="runStatusHeader"> Run Status </th>
+                <td mat-cell *matCellDef="let element" class="runStatusCell">
                     <span class="custom-class" *ngIf="element.runStatus == true">
                         <mat-icon [ngStyle]="{color: 'green'}">check_circle</mat-icon>
                         Success
@@ -34,25 +34,25 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="testCaseCount">
-                <th mat-header-cell *matHeaderCellDef> Total Test Cases </th>
-                <td mat-cell *matCellDef="let element"> {{element.testCaseCount}} </td>
+                <th mat-header-cell *matHeaderCellDef class="totaltestcaseHeader"> Total Test Cases </th>
+                <td mat-cell *matCellDef="let element" class="totaltestcaseCell"> {{element.testCaseCount}} </td>
             </ng-container>
             <ng-container matColumnDef="passCaseCount">
-                <th mat-header-cell *matHeaderCellDef> Pass Cases </th>
-                <td mat-cell *matCellDef="let element" [ngStyle]="{color: 'green'}"> {{element.passCaseCount}} </td>
+                <th mat-header-cell *matHeaderCellDef class="passcasesHeader"> Pass Cases </th>
+                <td mat-cell *matCellDef="let element" [ngStyle]="{color: 'green'}" class="passcasesCell"> {{element.passCaseCount}} </td>
             </ng-container>
             <ng-container matColumnDef="failCaseCount">
-                <th mat-header-cell *matHeaderCellDef> Fail Cases </th>
-                <td mat-cell *matCellDef="let element" [ngStyle]="{color: 'red'}"> {{element.failCaseCount}} </td>
+                <th mat-header-cell *matHeaderCellDef class="failcasesHeader"> Fail Cases </th>
+                <td mat-cell *matCellDef="let element" [ngStyle]="{color: 'red'}" class="failcasesCell"> {{element.failCaseCount}} </td>
             </ng-container>
             <ng-container matColumnDef="actions">
-                <th mat-header-cell *matHeaderCellDef> Details </th>
-                <td mat-cell *matCellDef="let row">
-                    <button mat-flat-button color="accent" (click)="viewTestRun(row)">
+                <th mat-header-cell *matHeaderCellDef class="detailsHeader"> Details </th>
+                <td mat-cell *matCellDef="let row" class="detailsCell">
+                    <button mat-flat-button color="accent" (click)="viewTestRun(row)" class="viewtestrunbutton">
                         View
                     </button>
                     &nbsp; &nbsp;
-                    <button mat-flat-button color="accent" (click)="deleteTestRun(row)">
+                    <button mat-flat-button color="accent" (click)="deleteTestRun(row)" class="deletetestrunbutton">
                         Delete
                     </button>
                 </td>

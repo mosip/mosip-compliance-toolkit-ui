@@ -89,3 +89,80 @@ mat-expansion-panel-header {
   cursor: pointer;
   color: #ff4081;
 }
+@media screen and (max-width: 600px) {
+  
+  .tablediv{
+    overflow-x: auto;
+  }
+  .collections-table{
+    width: 800px;
+  }
+  .collections-button{
+    position: absolute;
+    width: 355px;
+    height: 40px;
+    float: left;
+    margin-right: 20px;
+  }
+  .encryptionkeyButton{
+    margin-right:-11px;
+    height: 40px;
+    width: 173px;
+    position:relative;
+  }
+  .scandeviceButton{
+    width: 173px;
+    position:relative;
+    margin-right: 2px;
+    height: 40px;
+  }
+  .buttonspan{
+    margin-top: 45px;
+    width: 100%;
+    float: left;
+  }
+  .nameHeader{
+    width: 20px;
+  }
+  .nameCell{
+    width:40px; 
+  }
+  a{
+    width:70px; display: inline-block; overflow-wrap: break-word;
+  }
+  .testCaseHeader{
+    padding-left: 40px;
+  }
+  .testCaseCell{
+    padding-left: 60px;
+  }
+  .crDateHeader{
+    padding-left: 20px;
+    width: 90px;
+  }
+  .crDateCell{
+    padding-left: 160px;
+    width: 90px;
+  }
+  .lastRunHeader{
+    padding-left: 60px;
+    width: 120px;
+  }
+  .lastRunCell{
+    padding-left: 60px;
+    width: 120px;
+  }
+  .runHeader{
+    padding-left: 80px;
+  }
+  .runCell{
+    padding-left: 60px;
+  }
+  .actionsHeader{
+    padding-left: 20px;
+  }
+  .actionsCell{
+    padding-left: 20px;
+  }
+  }
+

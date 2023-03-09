@@ -56,3 +56,67 @@
   .custom-class mat-icon {
     vertical-align: middle;
   }
+
+  @media screen and (max-width:600px) {
+    .table-container{
+      overflow-x: auto;
+    }
+    .testcases-table{
+      width: 800px;
+    }
+    .runDateCell{
+      padding-left: 40px;
+      width: 80px;
+    }
+    .runDateHeader{
+      padding-left: 40px;
+      width: 80px;
+    }
+    .runStatusHeader{
+      padding-left: 40px;
+      width: 80px;
+    }
+    .runStatusCell{
+      padding-left: 40px;
+      width: 80px;
+    }
+    .totaltestcaseHeader{
+      padding-left: 40px;
+      width: 80px;
+    }
+    .totaltestcaseCell{
+      padding-left: 40px;
+      width: 80px;
+    }
+    .passcasesHeader{
+      padding-left: 40px;
+      width: 80px;
+    }
+    .passcasesCell{
+      padding-left: 40px;
+      width: 80px;
+    }
+    .failcasesHeader{
+      padding-left: 40px;
+      width: 80px;
+    }
+    .failcasesCell{
+      padding-left: 40px;
+      width: 80px;
+    }
+    .detailsHeader{
+      padding-left: 40px;
+      width: 80px;
+    }
+    .detailsCell{
+      padding-left: 40px;
+      width: 80px;
+    }
+    .viewtestrunbutton{
+      margin-top:5px;
+    }
+    .deletetestrunbutton{
+      margin-top:5px;
+      margin-bottom: 5px;
+    }
+  }
