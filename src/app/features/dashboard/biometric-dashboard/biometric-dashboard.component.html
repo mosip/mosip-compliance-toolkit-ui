@@ -1,3 +1,4 @@
+<div class="outerdiv">
 <p>
     <xng-breadcrumb></xng-breadcrumb>
 </p>
@@ -28,34 +29,35 @@
 
 <div class="mat-elevation-z8" >
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 50, 100]" aria-label="Select page of users"></mat-paginator>
+    <div class="table-scroll">
     <table mat-table [dataSource]="dataSource" matSort class="dashboard-table" *ngIf="dataLoaded">
         <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="nameheader"> Name </th>
+            <td mat-cell *matCellDef="let element" class="namecell">
                 <a class="link" (click)="downloadTestDataFile(element)">{{element.name}}</a>
             </td>
         </ng-container>
         <ng-container matColumnDef="type">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
-            <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="typeheader"> Type </th>
+            <td mat-cell *matCellDef="let element" class="typecell"> {{element.type}} </td>
         </ng-container>
         <ng-container matColumnDef="purpose">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Purpose </th>
-            <td mat-cell *matCellDef="let element"> {{element.purpose}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="purposeheader"> Purpose </th>
+            <td mat-cell *matCellDef="let element" class="purposecell"> {{element.purpose}} </td>
         </ng-container>
         <ng-container matColumnDef="fileId">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> File Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.fileId}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="fileheader"> File Name </th>
+            <td mat-cell *matCellDef="let element" class="filecell"> {{element.fileId}} </td>
         </ng-container>
         <ng-container matColumnDef="crDate">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Creation Date </th>
-            <td mat-cell *matCellDef="let element"> {{element.crDate | date: 'short' }} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="crdateheader"> Creation Date </th>
+            <td mat-cell *matCellDef="let element" class="crdatecell"> {{element.crDate | date: 'short' }} </td>
         </ng-container>
         <ng-container matColumnDef="actions" stickyEnd>
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="actionsheader"> </th>
+            <td mat-cell *matCellDef="let element" class="actionscell">
                 <button mat-icon-button [matMenuTriggerFor]="appMenu" [matMenuTriggerData]="{myobject: element}">
                     <mat-icon>more_vert</mat-icon>
                 </button>
@@ -70,5 +72,6 @@
             </td>
         </tr>
     </table>
-  
+</div>
+</div>
 </div>
