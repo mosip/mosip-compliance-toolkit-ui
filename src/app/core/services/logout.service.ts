@@ -4,8 +4,8 @@ import { AppConfigService } from 'src/app/app-config.service';
 import { AndroidKeycloakService } from './android-keycloak';
 import { environment } from 'src/environments/environment';
 import * as appConstants from 'src/app/app.constants';
-import { CapacitorCookies } from '@capacitor/core';
 import { CookieService } from 'ngx-cookie-service';
+import { Preferences } from '@capacitor/preferences';
 
 @Injectable({
   providedIn: 'root',
@@ -23,10 +23,7 @@ export class LogoutService {
       return new Promise(async (resolve, reject) => {
         await this.androidKeycloakService.getInstance().logout();
         this.androidKeycloakService.getInstance().clearToken();
-        await CapacitorCookies.deleteCookie({
-          url: encodeURI(environment.SERVICES_BASE_URL),
-          key: appConstants.AUTHORIZATION
-        });
+        await Preferences.remove({ key: appConstants.ACCESS_TOKEN });
         resolve(true);
       });
     } else {

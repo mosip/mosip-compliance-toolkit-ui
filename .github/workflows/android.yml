@@ -8,7 +8,7 @@ on:
       services_base_url:
         description: 'The base URL for app services'
         required: true
-        default: 'https://api-internal.dev.mosip.net/v1/toolkit/'
+        default: 'https://api-internal.dev.mosip.net/v1/toolkit/android/'
       iam_url:
         description: 'The URL for the IAM server'
         required: true
