@@ -58,3 +58,30 @@
   font-size: smaller;
   width: 100%;
 }
+@media screen and (max-width: 770px) {
+  .fieldLabel{
+    width: 80px;
+  }
+  .projectTypeBt{
+    padding-left: 14px;
+  }
+  .fieldContainerBox{
+    width: 250px;
+  }
+  .button-container{
+    width: 700px;
+  }
+}
+@media screen and (max-width: 426px) {
+  .button-container{
+    width: 350px;
+  }
+}
+@media screen and (max-width: 378px) {
+  .button-container{
+    width: 300px;
+  }
+  .fieldContainerBox{
+    width: 240px;
+  }
+}

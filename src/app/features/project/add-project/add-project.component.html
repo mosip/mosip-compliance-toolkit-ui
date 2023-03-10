@@ -14,7 +14,7 @@
                     </mat-label>
                 </span>
                 <span class="fieldContainer">
-                    <mat-form-field appearance="legacy" [style.width.px]=327>
+                    <mat-form-field appearance="legacy" class="fieldContainerBox">
                         <mat-label>Project Name:</mat-label>
                         <input matInput formControlName="name" #keyboardRef #input />
                         <mat-error *ngIf="projectForm.controls['name'].hasError('required')">
@@ -30,7 +30,7 @@
                     </mat-label>
                 </span>
                 <span class="fieldContainer">
-                    <div [style.width.px]=327>
+                    <div class="fieldContainerBox">
                         <mat-radio-group aria-label="Select an option" formControlName="projectType" appearance="legacy"
                             (change)="handleProjectTypeChange()">
                             <mat-radio-button value="SBI">SBI</mat-radio-button>
@@ -52,7 +52,7 @@
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
-                        <mat-form-field appearance="legacy" [style.width.px]=327>
+                        <mat-form-field appearance="legacy" class="fieldContainerBox">
                             <mat-label>Base URL:</mat-label>
                             <input matInput formControlName="sdkUrl" #keyboardRef #input />
                             <mat-error *ngIf="projectForm.controls['sdkUrl'].hasError('required')">
@@ -71,7 +71,7 @@
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
-                        <mat-form-field appearance="legacy" [style.width.px]=327>
+                        <mat-form-field appearance="legacy" class="fieldContainerBox">
                             <mat-label>Spec Version:</mat-label>
                             <mat-select formControlName="sdkSpecVersion" #singleSelect>
                                 <mat-option value="0.9.0">
@@ -91,7 +91,7 @@
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
-                        <mat-form-field appearance="legacy" [style.width.px]=327>
+                        <mat-form-field appearance="legacy" class="fieldContainerBox">
                             <mat-label>Purpose:</mat-label>
                             <mat-select formControlName="sdkPurpose" #singleSelect (selectionChange)="handleSdkPurposeChange()">
                                 <mat-option value="Matcher">
@@ -123,7 +123,7 @@
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
-                        <mat-form-field appearance="legacy" [style.width.px]=327>
+                        <mat-form-field appearance="legacy" class="fieldContainerBox">
                             <mat-label>Select Test Data:</mat-label>
                             <mat-select formControlName="bioTestData" #singleSelect>
                                 <mat-option value="MOSIP_DEFAULT">
@@ -150,7 +150,7 @@
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
-                        <mat-form-field appearance="legacy" [style.width.px]=327>
+                        <mat-form-field appearance="legacy" class="fieldContainerBox">
                             <mat-label>Spec Version:</mat-label>
                             <mat-select formControlName="sbiSpecVersion" #singleSelect>
                                 <mat-option value="0.9.5">
@@ -173,7 +173,7 @@
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
-                        <mat-form-field appearance="legacy" [style.width.px]=327>
+                        <mat-form-field appearance="legacy" class="fieldContainerBox">
                             <mat-label>Purpose:</mat-label>
                             <mat-select formControlName="sbiPurpose" #singleSelect
                                 (selectionChange)="handleSbiPurposeChange()">
@@ -197,7 +197,7 @@
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
-                        <mat-form-field appearance="legacy" [style.width.px]=327>
+                        <mat-form-field appearance="legacy" class="fieldContainerBox">
                             <mat-label>Device Type:</mat-label>
                             <mat-select formControlName="deviceType" #singleSelect>
                                 <mat-option value="Finger">
@@ -223,7 +223,7 @@
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
-                        <mat-form-field appearance="legacy" [style.width.px]=327>
+                        <mat-form-field appearance="legacy" class="fieldContainerBox">
                             <mat-label>Device Sub Type:</mat-label>
                             <mat-select formControlName="deviceSubType" #singleSelect>
                                 <mat-option value="Slap" *ngIf="projectForm.controls['deviceType'].value == 'Finger'">
@@ -268,7 +268,7 @@
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
-                        <mat-form-field appearance="legacy" [style.width.px]=327>
+                        <mat-form-field appearance="legacy" class="fieldContainerBox">
                             <mat-label>Base URL:</mat-label>
                             <input matInput formControlName="abisUrl" #keyboardRef #input />
                             <mat-error *ngIf="projectForm.controls['abisUrl'].hasError('required')">
@@ -287,7 +287,7 @@
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
-                        <mat-form-field appearance="legacy" [style.width.px]=327>
+                        <mat-form-field appearance="legacy" class="fieldContainerBox">
                             <mat-label>Username:</mat-label>
                             <input matInput formControlName="username" #keyboardRef #input />
                             <mat-error *ngIf="projectForm.controls['username'].hasError('required')">
@@ -303,7 +303,7 @@
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
-                        <mat-form-field appearance="legacy" [style.width.px]=327>
+                        <mat-form-field appearance="legacy" class="fieldContainerBox">
                             <mat-label>Password:</mat-label>
                             <input matInput placeholder="Password" [type]="hidePassword ? 'password' : 'text'"
                                 formControlName="password">
@@ -322,7 +322,7 @@
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
-                        <mat-form-field appearance="legacy" [style.width.px]=327>
+                        <mat-form-field appearance="legacy" class="fieldContainerBox">
                             <mat-label>Queue Name:</mat-label>
                             <input matInput formControlName="queueName" #keyboardRef #input />
                             <mat-error *ngIf="projectForm.controls['queueName'].hasError('required')">
