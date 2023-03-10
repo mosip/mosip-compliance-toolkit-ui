@@ -114,9 +114,11 @@
     }
     .viewtestrunbutton{
       margin-top:5px;
+      width: 70px;
     }
     .deletetestrunbutton{
       margin-top:5px;
       margin-bottom: 5px;
+      width: 70px;
     }
   }
