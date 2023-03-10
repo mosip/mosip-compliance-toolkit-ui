@@ -118,6 +118,10 @@ mat-expansion-panel-header {
     margin-right: 2px;
     height: 40px;
   }
+  .scandeviceButtonREG{
+    margin-top: 50px;
+    width: 355px;
+  }
   .buttonspan{
     margin-top: 45px;
     width: 100%;
