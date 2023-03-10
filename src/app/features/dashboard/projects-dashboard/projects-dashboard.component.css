@@ -55,6 +55,9 @@
   .nameCell{
     width: 80px;
   }
+  a{
+    width:70px; display: inline-block; overflow-wrap: break-word;
+  }
   .projectheader{
     width: 60px;
     padding-left: 20px;

@@ -72,3 +72,33 @@
   font-size: smaller;
   word-wrap: break-word;
 }
+@media screen and (max-width:426px) {
+  .collectionNameField{
+    margin-left: 40px;
+    width: 200px;
+  }
+  .idHeader{
+    padding-left: 30px;
+  }
+  .idCell{
+    padding-left: 30px;
+  }
+  .nameHeader{
+    padding-left: 30px;
+  }
+  .nameCell{
+    padding-left: 30px;
+  }
+  .descHeader{
+    padding-left: 30px;
+  }
+  .descCell{
+    padding-left: 30px;
+  }
+  .validatorsHeader{
+    padding-left: 30px;
+  }
+  .validatorsCell{
+    padding-left: 30px;
+  }
+}
