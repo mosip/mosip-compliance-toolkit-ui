@@ -28,6 +28,9 @@ mat-expansion-panel-header {
   width: 80%;
   align-items: center;
 }
+.fieldContainerBox{
+  width: 300px;
+}
 .spacer {
   flex: 0.1;
 }
@@ -90,7 +93,6 @@ mat-expansion-panel-header {
   color: #ff4081;
 }
 @media screen and (max-width: 600px) {
-  
   .tablediv{
     overflow-x: auto;
   }
@@ -164,5 +166,9 @@ mat-expansion-panel-header {
   .actionsCell{
     padding-left: 20px;
   }
+}
+@media screen and (max-width: 450px) {
+  .fieldContainerBox{
+    width: 250px;
   }
-
+}
