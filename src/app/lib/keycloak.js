@@ -1681,10 +1681,10 @@
                 loginIframe.enable = false;
 
                 return {
-                    login: function(options) {
+                    login: async function(options) {
                         var promise = createPromise();
                         var loginUrl = kc.createLoginUrl(options);
-                        const addUrlListener = window.Capacitor.Plugins.App.addListener('appUrlOpen', (data) => {
+                        const addUrlListener = await window.Capacitor.Plugins.App.addListener('appUrlOpen', (data) => {
                             var oauth = parseCallback(data.url);
                             processCallback(oauth, promise);
                             addUrlListener.remove();
@@ -1694,10 +1694,10 @@
                         return promise.promise;
                     },
 
-                    logout: function(options) {
+                    logout: async function(options) {
                         var promise = createPromise();
                         var logoutUrl = kc.createLogoutUrl(options);
-                        const addUrlListener = window.Capacitor.Plugins.App.addListener('appUrlOpen', (data) => {
+                        const addUrlListener = await window.Capacitor.Plugins.App.addListener('appUrlOpen', (data) => {
                             kc.clearToken();
                             promise.setSuccess();
                             addUrlListener.remove();
@@ -1707,10 +1707,10 @@
                         return promise.promise;
                     },
 
-                    register : function(options) {
+                    register : async function(options) {
                         var promise = createPromise();
                         var registerUrl = kc.createRegisterUrl(options);
-                        window.Capacitor.Plugins.App.addListener('appUrlOpen', (data) => {
+                        await window.Capacitor.Plugins.App.addListener('appUrlOpen', (data) => {
                             var oauth = parseCallback(data.url);
                             processCallback(oauth, promise);
                         });
