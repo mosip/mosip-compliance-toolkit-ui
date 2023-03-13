@@ -77,7 +77,7 @@ export class AuthInterceptor implements HttpInterceptor {
       } else {
         //for android app
         const accessToken = await Preferences.get({ key: appConstants.ACCESS_TOKEN });
-        const authToken = accessToken && accessToken.value ? accessToken.value : '';
+        const authToken = accessToken.value ? accessToken.value : '';
         request = request.clone({
           setHeaders: { [appConstants.AUTHORIZATION]: authToken },
         });
