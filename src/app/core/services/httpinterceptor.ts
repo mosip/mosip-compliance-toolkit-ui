@@ -8,7 +8,7 @@ import {
   HttpResponse,
   HttpErrorResponse,
 } from '@angular/common/http';
-import { from, lastValueFrom, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { LoginRedirectService } from './loginredirect.service';
 import { AppConfigService } from 'src/app/app-config.service';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
@@ -17,7 +17,7 @@ import { CookieService } from 'ngx-cookie-service';
 import * as appConstants from 'src/app/app.constants';
 import { environment } from 'src/environments/environment';
 import { AndroidKeycloakService } from './android-keycloak';
-import { Preferences } from '@capacitor/preferences';
+import { CapacitorCookies } from '@capacitor/core';
 
 @Injectable({
   providedIn: 'root',
@@ -27,17 +27,31 @@ export class AuthInterceptor implements HttpInterceptor {
   decoded: any;
 
   showHomePage = async (isAndroidAppMode: boolean) => {
+    sessionStorage.clear();
+    localStorage.clear();
+    this.cookieService.deleteAll();
     if (!isAndroidAppMode) {
-      sessionStorage.clear();
-      localStorage.clear();
-      this.cookieService.deleteAll();
       this.redirectService.redirect(window.location.href);
     } else {
-      await Preferences.remove({ key: appConstants.ACCESS_TOKEN });
-      await this.androidKeycloakService.getInstance().login();
+      await CapacitorCookies.deleteCookie({
+        url: encodeURI(environment.SERVICES_BASE_URL),
+        key: appConstants.AUTHORIZATION
+      });
+     await this.androidKeycloakService.getInstance().login();
     }
   }
 
+  addCookieForAndroid = async() =>{
+    const accessToken = localStorage.getItem(appConstants.ACCESS_TOKEN);
+    if (accessToken) {
+      await CapacitorCookies.setCookie({
+        url: encodeURI(environment.SERVICES_BASE_URL),
+        key: appConstants.AUTHORIZATION,
+        value: accessToken ? accessToken : '',
+      });
+      console.log("cookie set for android");
+    }
+  }
   constructor(
     private redirectService: LoginRedirectService,
     private appConfigService: AppConfigService,
@@ -50,11 +64,6 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    // convert promise to observable using 'from' operator
-    return from(this.handle(request, next));
-  }
-
-  async handle(request: HttpRequest<any>, next: HttpHandler) {
     const isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
     let isLocalUrl = false;
     if (this.appConfigService.getConfig() && !isAndroidAppMode) {
@@ -76,19 +85,16 @@ export class AuthInterceptor implements HttpInterceptor {
         });
       } else {
         //for android app
-        const accessToken = await Preferences.get({ key: appConstants.ACCESS_TOKEN });
-        const authToken = accessToken.value ? accessToken.value : '';
-        request = request.clone({
-          setHeaders: { [appConstants.AUTHORIZATION]: authToken },
-        });
+        this.addCookieForAndroid();
+        request = request.clone({ withCredentials: true });
       }
     }
-    if (request.url.includes('i18n') && !isAndroidAppMode) {
+    if (request.url.includes('i18n')) {
       isLocalUrl = true;
     }
-    return lastValueFrom(next.handle(request).pipe(
+    return next.handle(request).pipe(
       tap(
-        async (event) => {
+        (event) => {
           if (event instanceof HttpResponse) {
             if (event.url && event.url.split('/').includes('validateToken')) {
               if (event.body.response) {
@@ -110,22 +116,19 @@ export class AuthInterceptor implements HttpInterceptor {
                   event.body.errors[0]['errorCode'] ===
                   appConstants.AUTH_ERROR_CODE[1])
               ) {
-                await this.showHomePage(isAndroidAppMode);
+                this.showHomePage(isAndroidAppMode);
               }
             }
           }
         },
-        async (err) => {
+        (err) => {
           if (err instanceof HttpErrorResponse) {
             if (!isLocalUrl) {
-              console.log("token is invalid");
-              await this.showHomePage(isAndroidAppMode);
+              this.showHomePage(isAndroidAppMode);
             }
           }
         }
       )
-    ));
+    );
   }
 }
-
-

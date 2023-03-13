@@ -2,7 +2,7 @@ import * as Keycloak from 'src/app/lib/keycloak';
 import * as appConstants from 'src/app/app.constants';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Preferences } from '@capacitor/preferences';
+import { CapacitorCookies } from '@capacitor/core';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +10,7 @@ import { Preferences } from '@capacitor/preferences';
 export class AndroidKeycloakService {
 
   private androidKeycloak: Keycloak.KeycloakInstance;
+
   constructor(
   ) {
     const isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
@@ -25,16 +26,13 @@ export class AndroidKeycloakService {
       realm: environment.IAM_REALM,
       url: environment.IAM_URL,
     });
-    this.androidKeycloak.onAuthSuccess = async () => {
+    this.androidKeycloak.onAuthSuccess = () => {
       // save tokens to device storage
       console.log('onAuthSuccess');
       const accessToken = this.androidKeycloak.token;
       console.log(accessToken);
       if (accessToken) {
-        await Preferences.set({
-          key: appConstants.ACCESS_TOKEN,
-          value: accessToken,
-        });
+        localStorage.setItem(appConstants.ACCESS_TOKEN, accessToken);
         window.location.reload();
       }
     };
