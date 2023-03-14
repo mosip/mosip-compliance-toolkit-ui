@@ -92,7 +92,39 @@ mat-expansion-panel-header {
   cursor: pointer;
   color: #ff4081;
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 1440px) {
+  .encryptionkeyButton{
+    margin-left: 900px;
+  }
+  .scandeviceButtonREG{
+    margin-left: 1080px;
+  }
+}
+@media screen and (max-width: 1366px) {
+  .encryptionkeyButton{
+    margin-left: 700px;
+  }
+  .scandeviceButtonREG{
+    margin-left: 900px;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .encryptionkeyButton{
+    margin-left: 500px;
+  }
+  .scandeviceButtonREG{
+    margin-left: 680px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .encryptionkeyButton{
+    margin-left: 250px;
+  }
+  .scandeviceButtonREG{
+    margin-left: 420px;
+  }
+}
+@media only screen and (max-width: 426px) {
   .tablediv{
     overflow-x: auto;
   }
@@ -100,32 +132,53 @@ mat-expansion-panel-header {
     width: 800px;
   }
   .collections-button{
-    position: absolute;
-    width: 355px;
-    height: 40px;
+    position: relative;
+    margin-left: 10px;
+    width: 160px;
     float: left;
-    margin-right: 20px;
   }
   .encryptionkeyButton{
-    margin-right:-11px;
-    height: 40px;
-    width: 173px;
-    position:relative;
+    width: 160px;
+    margin-top: -40px;
+    margin-left: -160px;
+    position: absolute;
   }
   .scandeviceButton{
-    width: 173px;
-    position:relative;
-    margin-right: 2px;
+    width: 160px;
+    margin-top: -40px;
+    position: absolute;
+  }
+  .collectionicon{
+    margin-left: -20px;
+  }
+  .encrypticon{
+    margin-left: -17px;
+  }
+  .scandeviceicon{
+    margin-left: -20px;
+  }
+  .scandeviceicon2{
+    margin-left: -14px;
+  }
+  .collections-button2{
+    position: absolute;
+    width: 170px;
     height: 40px;
+    float: left;
   }
   .scandeviceButtonREG{
-    margin-top: 50px;
-    width: 355px;
+    position: relative;
+    margin-left: 180px;
+    width: 170px;
+    height: 40px;
   }
   .buttonspan{
     margin-top: 45px;
     width: 100%;
     float: left;
+  }
+  .collections-header-container{
+    width: 100%;
   }
   .nameHeader{
     width: 20px;
@@ -171,8 +224,108 @@ mat-expansion-panel-header {
     padding-left: 20px;
   }
 }
-@media screen and (max-width: 450px) {
-  .fieldContainerBox{
-    width: 250px;
+@media screen and (min-width: 450px) and (max-width: 480px) {
+  .tablediv{
+    overflow-x: auto;
   }
+  .collections-table{
+    width: 800px;
+  }
+  .collections-button{
+    position: relative;
+    margin-left: 10px;
+    width: 190px;
+    float: left;
+  }
+  .encryptionkeyButton{
+    width: 190px;
+    margin-top: -40px;
+    margin-left: -190px;
+    position: absolute;
+  }
+  .scandeviceButton{
+    margin-left: 10px;
+    width: 190px;
+    margin-top: -40px;
+    position: absolute;
+  }
+  .collectionicon{
+    margin-left: -20px;
+  }
+  .encrypticon{
+    margin-left: -17px;
+  }
+  .scandeviceicon{
+    margin-left: -20px;
+  }
+  .scandeviceicon2{
+    margin-left: -14px;
+  }
+  .collections-button2{
+    position: absolute;
+    margin-left: 10px;
+    width: 190px;
+    height: 40px;
+    float: left;
+  }
+  .scandeviceButtonREG{
+    position: relative;
+    margin-left: 210px;
+    width: 190px;
+    height: 40px;
+  }
+  .buttonspan{
+    margin-top: 45px;
+    width: 100%;
+    float: left;
+  }
+  .collections-header-container{
+    width: 100%;
+  }
+  .nameHeader{
+    width: 20px;
+  }
+  .nameCell{
+    width:40px; 
+  }
+  a{
+    width:70px; display: inline-block; overflow-wrap: break-word;
+  }
+  .testCaseHeader{
+    padding-left: 40px;
+  }
+  .testCaseCell{
+    padding-left: 60px;
+  }
+  .crDateHeader{
+    padding-left: 20px;
+    width: 90px;
+  }
+  .crDateCell{
+    padding-left: 160px;
+    width: 90px;
+  }
+  .lastRunHeader{
+    padding-left: 60px;
+    width: 120px;
+  }
+  .lastRunCell{
+    padding-left: 60px;
+    width: 120px;
+  }
+  .runHeader{
+    padding-left: 80px;
+  }
+  .runCell{
+    padding-left: 60px;
+  }
+  .actionsHeader{
+    padding-left: 20px;
+  }
+  .actionsCell{
+    padding-left: 20px;
+  }
+  
 }
+
+

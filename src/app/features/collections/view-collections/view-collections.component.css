@@ -45,8 +45,7 @@
   display: flex;
 }
 .testcases-table {
-  width: 100%;
-  
+  width: 100%;  
 }
 .table-container {
   /* height: 400px; */
@@ -58,7 +57,6 @@
   font-size: smaller;
   word-wrap: break-word;
 }
-
 .mat-column-testId {
   flex: none;
   width: 100px;
