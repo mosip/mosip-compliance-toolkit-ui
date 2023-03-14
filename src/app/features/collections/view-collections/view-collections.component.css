@@ -61,3 +61,16 @@
   flex: none;
   width: 100px;
 }
+@media screen and (max-width: 480px) {
+  .table-container{
+    overflow-x: auto;
+  }
+  .testcases-table{
+    width: 800px;
+  }
+  .formfield{
+    margin-top: 6px;
+    margin-left: 40px;
+    width: 200px;
+  }
+}
