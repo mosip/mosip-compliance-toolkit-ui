@@ -76,3 +76,15 @@
      padding-left: 20px; 
     }
   }
+  @media screen and (max-width:360px) {
+    .dashboard-button{
+      width: 200px;
+      margin-top: 50px;
+      margin-right: 60px;
+    }
+    .dashboard-button2{
+      width: 200px;
+      position: absolute;
+      margin-left: 60px;
+    }
+  }
