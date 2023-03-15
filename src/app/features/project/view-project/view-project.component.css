@@ -224,7 +224,7 @@ mat-expansion-panel-header {
     padding-left: 20px;
   }
 }
-@media screen and (max-width: 360px) {
+@media screen and (max-width: 320px) {
   .tablediv{
     overflow-x: auto;
   }
@@ -233,26 +233,27 @@ mat-expansion-panel-header {
   }
   .collections-button{
     position: relative;
-    margin-left: 10px;
-    width: 140px;
+    margin-left: 0px;
+    width: 130px;
     float: left;
   }
   .encryptionkeyButton{
-    width: 140px;
+    width: 130px;
     margin-top: -40px;
-    margin-left: -140px;
+    margin-left: -130px;
     position: absolute;
   }
   .scandeviceButton{
-    width: 140px;
+    width: 130px;
+    margin-left: -5px;
     margin-top: -40px;
     position: absolute;
   }
   .collectionicon{
-    margin-left: -20px;
+    margin-left: -15px;
   }
   .encrypticon{
-    margin-left: -17px;
+    margin-left: -12px;
   }
   .scandeviceicon{
     margin-left: -20px;
@@ -262,15 +263,15 @@ mat-expansion-panel-header {
   }
   .collections-button2{
     position: absolute;
-    margin-left: 10px;
-    width: 140px;
+    margin-left: 0px;
+    width: 130px;
     height: 40px;
     float: left;
   }
   .scandeviceButtonREG{
     position: relative;
-    margin-left: 160px;
-    width: 140px;
+    margin-left: 135px;
+    width: 130px;
     height: 40px;
   }
   .buttonspan{

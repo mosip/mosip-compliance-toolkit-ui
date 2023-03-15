@@ -138,5 +138,13 @@
   font-family: "Roboto", sans-serif;
 
 }
+@media screen and (max-width: 321px) {
+  .outerdiv{
+    overflow: hidden;
+  }
+  .profile{
+    margin-right: -30px;
+  }
+}
 
 

@@ -115,6 +115,18 @@
     float: right;
     margin-right: -160px;
   }
+  .dashboard-button2{
+    width: 160px;
+    margin-left: 60px;
+  }
+  .dashboard-button{
+    width: 160px;
+    margin-top: 40px;
+    margin-left: -380px;
+  }
+  .filter{
+    margin-top: 40px;
+  }
 }
 
 
