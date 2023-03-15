@@ -101,4 +101,15 @@
   .validatorsCell{
     padding-left: 30px;
   }
+  .add-button{
+    margin-right: 10px;
+  }
+}
+@media screen and (max-width:320px) {
+  .collectionNameField{
+    width: 120px;
+  }
+  .add-button{
+    margin-right: 10px;
+  }
 }

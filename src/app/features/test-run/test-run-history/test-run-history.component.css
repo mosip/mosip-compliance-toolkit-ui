@@ -82,30 +82,33 @@
     }
     .totaltestcaseHeader{
       padding-left: 40px;
-      width: 80px;
+      width: 90px;
     }
     .totaltestcaseCell{
+      text-align: center;
       padding-left: 40px;
       width: 80px;
     }
     .passcasesHeader{
-      padding-left: 40px;
+      padding-left: 50px;
       width: 80px;
     }
     .passcasesCell{
+      text-align: center;
       padding-left: 40px;
       width: 80px;
     }
     .failcasesHeader{
-      padding-left: 40px;
+      padding-left: 50px;
       width: 80px;
     }
     .failcasesCell{
+      text-align: center;
       padding-left: 40px;
       width: 80px;
     }
     .detailsHeader{
-      padding-left: 40px;
+      padding-left: 50px;
       width: 80px;
     }
     .detailsCell{
