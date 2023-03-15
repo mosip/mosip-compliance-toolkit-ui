@@ -8,7 +8,7 @@
     </button>
 </div>
 <div class="dashboard-button-second-container" *ngIf="dataLoaded">
-    <button mat-flat-button color="accent" (click)="addProject()" class="dashboard-button">
+    <button mat-flat-button color="accent" (click)="addProject()" class="dashboard-button2">
         <mat-icon>add</mat-icon>
         {{ "add_project" | translate }}
     </button>
@@ -22,7 +22,7 @@
         <!-- <button mat-menu-item (click)="deleteProject(myobject)">Delete</button> -->
     </ng-template>
 </mat-menu>
-<mat-form-field appearance="legacy" *ngIf="dataLoaded">
+<mat-form-field appearance="legacy" *ngIf="dataLoaded" class="filter">
     <mat-label>Filter</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Search columns" #input>
 </mat-form-field>

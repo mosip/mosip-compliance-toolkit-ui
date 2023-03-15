@@ -45,8 +45,7 @@
   display: flex;
 }
 .testcases-table {
-  width: 100%;
-  
+  width: 100%;  
 }
 .table-container {
   /* height: 400px; */
@@ -58,8 +57,25 @@
   font-size: smaller;
   word-wrap: break-word;
 }
-
 .mat-column-testId {
   flex: none;
   width: 100px;
+}
+@media screen and (max-width: 480px) {
+  .table-container{
+    overflow-x: auto;
+  }
+  .testcases-table{
+    width: 800px;
+  }
+  .formfield{
+    margin-top: 6px;
+    margin-left: 40px;
+    width: 200px;
+  }
+}
+@media screen and (max-width: 320px) {
+  .formfield{
+    width: 150px;
+  }
 }
