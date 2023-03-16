@@ -45,7 +45,7 @@ export const TEST_DATA_CONTROLS= ['name', 'type', 'purpose'];
 export const SBI_KEY_ROTATION_ITERATIONS = 'keyRotationIterations';
 //SBI methods related constants
 export const BIOMETRIC_DEVICE = 'Biometric Device';
-export const SBI_METHOD_DEVICE = 'device';
+export const SBI_METHOD_DISCOVER = 'device';
 export const SBI_METHOD_DEVICE_KEY = 'MOSIPDISC';
 export const SBI_METHOD_DEVICE_INFO = 'info';
 export const SBI_METHOD_DEVICE_INFO_KEY = 'MOSIPDINFO';

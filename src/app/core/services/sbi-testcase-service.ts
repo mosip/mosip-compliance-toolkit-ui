@@ -116,7 +116,7 @@ export class SbiTestCaseService {
     methodUrl: string,
     methodRequest: any
   ) {
-    if (methodName == appConstants.SBI_METHOD_DEVICE) {
+    if (methodName == appConstants.SBI_METHOD_DISCOVER) {
       let methodResponse = await this.callSBIMethod(
         methodUrl,
         appConstants.SBI_METHOD_DEVICE_KEY,
@@ -187,7 +187,7 @@ export class SbiTestCaseService {
     const selectedSbiDevice: SbiDiscoverResponseModel =
       JSON.parse(sbiSelectedDevice);
     let request: any = {};
-    if (testCase.methodName[0] == appConstants.SBI_METHOD_DEVICE) {
+    if (testCase.methodName[0] == appConstants.SBI_METHOD_DISCOVER) {
       request = {
         type: selectedSbiDevice.digitalIdDecoded.type,
       };
@@ -369,7 +369,7 @@ export class SbiTestCaseService {
   ): any {
     const selectedSbiDevice: SbiDiscoverResponseModel =
       JSON.parse(sbiSelectedDevice);
-    if (testCase.methodName[0] == appConstants.SBI_METHOD_DEVICE) {
+    if (testCase.methodName[0] == appConstants.SBI_METHOD_DISCOVER) {
       let decodedDataArr: SbiDiscoverResponseModel[] = [];
       methodResponse.forEach((deviceData: any) => {
         const decodedData = Utils.getDecodedDiscoverDevice(deviceData);

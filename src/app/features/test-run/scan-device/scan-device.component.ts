@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
 import { SbiDiscoverResponseModel } from 'src/app/core/models/sbi-discover';
 import Utils from 'src/app/app.utils';
 import { Toast } from '@capacitor/toast';
-import { MosipSbiCapacitor } from 'mosip-sbi-capacitor';
+import { MosipSbiCapacitorPlugin } from 'mosip-sbi-capacitor-plugin';
 import { environment } from '../../../../environments/environment';
 
 @Component({
@@ -116,11 +116,11 @@ export class ScanDeviceComponent implements OnInit {
       Toast.show({
         text: 'Searching for SBI devices for : ' + sbiDeviceType,
       });
-      MosipSbiCapacitor.startActivity({
-        methodType: appConstants.SBI_METHOD_DEVICE,
+      MosipSbiCapacitorPlugin.startActivity({
+        methodType: appConstants.SBI_METHOD_DISCOVER,
         action: appConstants.DISCOVERY_INTENT_ACTION,
-        extraKey: appConstants.SBI_INTENT_REQUEST_KEY,
-        extraValue: sbiDeviceType
+        requestKey: appConstants.SBI_INTENT_REQUEST_KEY,
+        requestValue: sbiDeviceType
       }).then((discoverResult: any) => {
         console.log(discoverResult);
         const discoverStatus = discoverResult[appConstants.STATUS];
@@ -159,7 +159,7 @@ export class ScanDeviceComponent implements OnInit {
       type: appConstants.BIOMETRIC_DEVICE,
     };
     let methodUrl =
-      this.SBI_BASE_URL + ':' + sbiPort + '/' + appConstants.SBI_METHOD_DEVICE;
+      this.SBI_BASE_URL + ':' + sbiPort + '/' + appConstants.SBI_METHOD_DISCOVER;
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
         this.dataService

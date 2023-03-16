@@ -11,5 +11,5 @@ project(':capacitor-browser').projectDir = new File('../node_modules/@capacitor/
 include ':capacitor-toast'
 project(':capacitor-toast').projectDir = new File('../node_modules/@capacitor/toast/android')
 
-include ':mosip-sbi-capacitor'
-project(':mosip-sbi-capacitor').projectDir = new File('../node_modules/mosip-sbi-capacitor/android')
+include ':mosip-sbi-capacitor-plugin'
+project(':mosip-sbi-capacitor-plugin').projectDir = new File('../node_modules/mosip-sbi-capacitor-plugin/android')
