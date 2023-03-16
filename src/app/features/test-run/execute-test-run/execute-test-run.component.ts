@@ -411,12 +411,8 @@ export class ExecuteTestRunComponent implements OnInit {
 
   checkIfToShowStreamBtn(testCase: TestCaseModel) {
     if (this.projectType === appConstants.SBI) {
-      if (testCase.methodName[0] == appConstants.SBI_METHOD_RCAPTURE && !this.isAndroidAppMode) {
+      if (testCase.methodName[0] == appConstants.SBI_METHOD_RCAPTURE) {
         this.showStreamingBtn = true;
-      }
-      if (testCase.methodName[0] == appConstants.SBI_METHOD_RCAPTURE && this.isAndroidAppMode) {
-        this.streamingDone = true;
-        this.showInitiateCaptureBtn = true;
       }
     }
   }
@@ -583,10 +579,8 @@ export class ExecuteTestRunComponent implements OnInit {
                 null
               );
             }
-            if (!this.isAndroidAppMode) {
-              this.streamingDone = false;
-              this.stopStreaming();
-            }
+            this.streamingDone = false;
+            this.stopStreaming();
             resolve(res);
           } else {
             //no resp to keep the for loop on hold
@@ -738,9 +732,8 @@ export class ExecuteTestRunComponent implements OnInit {
     );
     const deviceId = selectedSbiDevice.deviceId;
     const deviceSubId = this.currectDeviceSubId;
-    let methodUrl = "";
     const SBI_BASE_URL = this.appConfigService.getConfig()['SBI_BASE_URL'];
-    methodUrl =
+    let methodUrl =
       SBI_BASE_URL +
       ':' +
       this.sbiSelectedPort +

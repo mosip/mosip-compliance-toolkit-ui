@@ -37,7 +37,6 @@
     background-color: white;
     border-top: 1px solid #ddd;
   }
-  
   .button-container + .add-button {
     margin-left: 8px;
   }
@@ -62,8 +61,7 @@
     display: inline-flex;
     justify-content: flex-start;
     margin-right: 30px;
-  }
-  
+  } 
   .file-download-button {
     display: inline-flex;
     justify-content: flex-end;
@@ -75,11 +73,9 @@
     border-radius: 2px;
     padding: 0.4rem 1.5rem;
   }
-  
-.custom-class mat-icon {
+  .custom-class mat-icon {
   vertical-align: middle;
 }
-
 @media screen and (max-width: 600px) {
   .mat-elevation-z8{
     width: 100%;
@@ -126,6 +122,9 @@
   .fileuploadbtn{
     width: 170px;
   }
+}
+@media screen and (max-width:320px) {
+  
 }
 
     
