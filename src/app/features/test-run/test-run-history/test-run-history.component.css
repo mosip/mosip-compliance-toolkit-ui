@@ -4,10 +4,6 @@
     background-color: white;
     padding: 10px;
   }
-  .mat-header-cell {
-    background-color: rgba(119, 136, 153, 0.26);
-    color: black;
-  }
   .fieldWrapper {
     display: flex;
     flex: 1;
@@ -127,9 +123,5 @@
       margin-top:5px;
       margin-bottom: 5px;
       width: 70px;
-    }
-    .scrollCell{
-      /* background-color:gray; */
-      background-color: darkgray;
     }
   }
