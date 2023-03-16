@@ -4,6 +4,14 @@
   background-color: white;
   padding: 10px;
 }
+/* .mat-header-row{
+  background-color: rgba(119, 136, 153, 0.26);
+  color: black;
+} */
+.mat-header-cell {
+  background-color: rgba(119, 136, 153, 0.26);
+  color: black;
+}
 .selectMsg {
   color: #fd518c;
   padding: 5px;
@@ -103,6 +111,10 @@
   }
   .add-button{
     margin-right: 10px;
+  }
+  .scrollCell{
+    /* background-color:gray; */
+    background-color: darkgray;
   }
 }
 @media screen and (max-width:320px) {
