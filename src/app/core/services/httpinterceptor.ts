@@ -37,11 +37,11 @@ export class AuthInterceptor implements HttpInterceptor {
         url: encodeURI(environment.SERVICES_BASE_URL),
         key: appConstants.AUTHORIZATION
       });
-     await this.androidKeycloakService.getInstance().login();
+      await this.androidKeycloakService.getInstance().login();
     }
   }
 
-  addCookieForAndroid = async() =>{
+  addCookieForAndroid = async () => {
     const accessToken = localStorage.getItem(appConstants.ACCESS_TOKEN);
     if (accessToken) {
       await CapacitorCookies.setCookie({
@@ -49,7 +49,7 @@ export class AuthInterceptor implements HttpInterceptor {
         key: appConstants.AUTHORIZATION,
         value: accessToken ? accessToken : '',
       });
-      console.log("cookie set for android");
+      //console.log("cookie set for android");
     }
   }
   constructor(
@@ -84,9 +84,17 @@ export class AuthInterceptor implements HttpInterceptor {
           setHeaders: { 'X-XSRF-TOKEN': this.cookieService.get('XSRF-TOKEN') },
         });
       } else {
-        //for android app
+        //for android 9,10,11 the Capacitor Cookies will set
+        //the cookie header with token and 'withCredentials' work
         this.addCookieForAndroid();
         request = request.clone({ withCredentials: true });
+        //for android 12+, the Capacitor Cookies and 'withCredentials' do not work
+        //hence setting token as a new header 'accessToken'
+        //this should be mapped to cookie header in nginx conf
+        let accessToken = localStorage.getItem(appConstants.ACCESS_TOKEN);
+        request = request.clone({
+          setHeaders: { 'accessToken': accessToken ? accessToken: ""},
+        });
       }
     }
     if (request.url.includes('i18n')) {
