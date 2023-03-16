@@ -28,7 +28,7 @@ mat-expansion-panel-header {
   width: 80%;
   align-items: center;
 }
-.fieldContainerBox{
+.fieldContainerBox {
   width: 300px;
 }
 .spacer {
@@ -93,239 +93,273 @@ mat-expansion-panel-header {
   color: #ff4081;
 }
 @media screen and (max-width: 1440px) {
-  .encryptionkeyButton{
+  .encryptionkeyButton {
     margin-left: 900px;
   }
-  .scandeviceButtonREG{
+  .scandeviceButtonREG {
     margin-left: 1080px;
   }
 }
 @media screen and (max-width: 1366px) {
-  .encryptionkeyButton{
+  .encryptionkeyButton {
     margin-left: 700px;
   }
-  .scandeviceButtonREG{
+  .scandeviceButtonREG {
     margin-left: 900px;
   }
 }
 @media screen and (max-width: 1024px) {
-  .encryptionkeyButton{
+  .encryptionkeyButton {
     margin-left: 500px;
   }
-  .scandeviceButtonREG{
+  .scandeviceButtonREG {
     margin-left: 680px;
   }
 }
 @media screen and (max-width: 768px) {
-  .encryptionkeyButton{
+  .encryptionkeyButton {
     margin-left: 250px;
   }
-  .scandeviceButtonREG{
+  .scandeviceButtonREG {
     margin-left: 420px;
   }
 }
 @media only screen and (max-width: 426px) {
-  .tablediv{
+  .fieldWrapper {
+    width: 340px;
+  }
+  .fieldLabel {
+    width: 80px;
+  }
+  .fieldContainerBox {
+    width: 240px;
+  }
+  .projectTypeBt {
+    width: 240px;
+  }
+  .tablediv {
     overflow-x: auto;
   }
-  .collections-table{
+  .collections-table {
     width: 800px;
   }
-  .collections-button{
+  .collections-button {
     position: relative;
     margin-left: 10px;
     width: 160px;
     float: left;
   }
-  .encryptionkeyButton{
+  .encryptionkeyButton {
     width: 160px;
     margin-top: -40px;
     margin-left: -160px;
     position: absolute;
   }
-  .scandeviceButton{
+  .scandeviceButton {
     width: 160px;
     margin-top: -40px;
     position: absolute;
   }
-  .collectionicon{
+  .collectionicon {
     margin-left: -20px;
   }
-  .encrypticon{
+  .encrypticon {
     margin-left: -17px;
   }
-  .scandeviceicon{
+  .scandeviceicon {
     margin-left: -20px;
   }
-  .scandeviceicon2{
+  .scandeviceicon2 {
     margin-left: -14px;
   }
-  .collections-button2{
+  .collections-button2 {
     position: absolute;
     width: 170px;
     height: 40px;
     float: left;
   }
-  .scandeviceButtonREG{
+  .scandeviceButtonREG {
     position: relative;
     margin-left: 180px;
     width: 170px;
     height: 40px;
   }
-  .buttonspan{
+  .buttonspan {
     margin-top: 45px;
     width: 100%;
     float: left;
   }
-  .collections-header-container{
+  .collections-header-container {
     width: 100%;
   }
-  .nameHeader{
+  .nameHeader {
     width: 20px;
   }
-  .nameCell{
-    width:40px; 
+  .nameCell {
+    width: 40px;
   }
-  a{
-    width:70px; display: inline-block; overflow-wrap: break-word;
+  a {
+    width: 70px;
+    display: inline-block;
+    overflow-wrap: break-word;
   }
-  .testCaseHeader{
+  .testCaseHeader {
     padding-left: 40px;
   }
-  .testCaseCell{
+  .testCaseCell {
     padding-left: 60px;
   }
-  .crDateHeader{
+  .crDateHeader {
     padding-left: 20px;
     width: 90px;
   }
-  .crDateCell{
+  .crDateCell {
     padding-left: 160px;
     width: 90px;
   }
-  .lastRunHeader{
+  .lastRunHeader {
     padding-left: 60px;
     width: 120px;
   }
-  .lastRunCell{
+  .lastRunCell {
     padding-left: 60px;
     width: 120px;
   }
-  .runHeader{
+  .runHeader {
     padding-left: 80px;
   }
-  .runCell{
+  .runCell {
     padding-left: 60px;
   }
-  .actionsHeader{
+  .actionsHeader {
     padding-left: 20px;
   }
-  .actionsCell{
+  .actionsCell {
     padding-left: 20px;
   }
 }
+@media screen and (max-width: 378px) {
+  .fieldWrapper {
+    width: 330px;
+    padding-left: -5px;
+  }
+  .fieldLabel {
+    width: 60px;
+  }
+}
 @media screen and (max-width: 320px) {
-  .tablediv{
+  .fieldWrapper {
+    width: 250px;
+    display: block;
+    padding-bottom: 20px;
+  }
+  .fieldContainerBox {
+    width: 232px;
+  }
+  .projectTypeBt {
+    width: 232px;
+    padding-top: 20px;
+  }
+  .tablediv {
     overflow-x: auto;
   }
-  .collections-table{
+  .collections-table {
     width: 800px;
   }
-  .collections-button{
+  .collections-button {
     position: relative;
     margin-left: 0px;
     width: 130px;
     float: left;
   }
-  .encryptionkeyButton{
+  .encryptionkeyButton {
     width: 130px;
     margin-top: -40px;
     margin-left: -130px;
     position: absolute;
   }
-  .scandeviceButton{
+  .scandeviceButton {
     width: 130px;
     margin-left: -5px;
     margin-top: -40px;
     position: absolute;
   }
-  .collectionicon{
+  .collectionicon {
     margin-left: -15px;
   }
-  .encrypticon{
+  .encrypticon {
     margin-left: -12px;
   }
-  .scandeviceicon{
+  .scandeviceicon {
     margin-left: -20px;
   }
-  .scandeviceicon2{
+  .scandeviceicon2 {
     margin-left: -14px;
   }
-  .collections-button2{
+  .collections-button2 {
     position: absolute;
     margin-left: 0px;
     width: 130px;
     height: 40px;
     float: left;
   }
-  .scandeviceButtonREG{
+  .scandeviceButtonREG {
     position: relative;
     margin-left: 135px;
     width: 130px;
     height: 40px;
   }
-  .buttonspan{
+  .buttonspan {
     margin-top: 45px;
     width: 100%;
     float: left;
   }
-  .collections-header-container{
+  .collections-header-container {
     width: 100%;
   }
-  .nameHeader{
+  .nameHeader {
     width: 20px;
   }
-  .nameCell{
-    width:40px; 
+  .nameCell {
+    width: 40px;
   }
-  a{
-    width:70px; display: inline-block; overflow-wrap: break-word;
+  a {
+    width: 70px;
+    display: inline-block;
+    overflow-wrap: break-word;
   }
-  .testCaseHeader{
+  .testCaseHeader {
     padding-left: 40px;
   }
-  .testCaseCell{
+  .testCaseCell {
     padding-left: 60px;
   }
-  .crDateHeader{
+  .crDateHeader {
     padding-left: 20px;
     width: 90px;
   }
-  .crDateCell{
+  .crDateCell {
     padding-left: 160px;
     width: 90px;
   }
-  .lastRunHeader{
+  .lastRunHeader {
     padding-left: 60px;
     width: 120px;
   }
-  .lastRunCell{
+  .lastRunCell {
     padding-left: 60px;
     width: 120px;
   }
-  .runHeader{
+  .runHeader {
     padding-left: 80px;
   }
-  .runCell{
+  .runCell {
     padding-left: 60px;
   }
-  .actionsHeader{
+  .actionsHeader {
     padding-left: 20px;
   }
-  .actionsCell{
+  .actionsCell {
     padding-left: 20px;
   }
-  
 }
-
-

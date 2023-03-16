@@ -10,6 +10,9 @@
   padding: 5px;
   padding-left: 10px;
 }
+.formContainerBox {
+  width: 500px;
+}
 .spinner {
   flex-direction: column;
   align-items: center;
@@ -28,4 +31,91 @@ mat-dialog-actions {
 }
 .custom-class mat-icon {
   vertical-align: middle;
+}
+@media screen and (max-width: 480px) {
+  .formContainerBox {
+    width: 300px;
+  }
+}
+@media screen and (max-width: 426px) {
+  .formContainerBox {
+    width: 280px;
+  }
+}
+@media screen and (max-width: 412px) {
+  .formContainerBox {
+    margin-left: -5px;
+  }
+  .scanAgainBt {
+    margin-left: -75px;
+  }
+  .closeBt {
+    margin-left: -10px;
+    margin-bottom: -2px;
+  }
+  .saveBt {
+    margin-right: -10px;
+    position: fixed;
+  }
+}
+@media screen and (max-width: 426px) {
+  .scanAgainBt {
+    margin-left: -69px;
+  }
+  .closeBt {
+    margin-left: -15px;
+  }
+  .saveBt {
+    margin-right: -15px;
+    position: fixed;
+  }
+}
+@media screen and (max-width: 375px) {
+  .formContainerBox {
+    width: 250px;
+  }
+  .scanAgainBt {
+    width: 110px;
+    text-align: center;
+    padding: 2px;
+    margin-left: -52px;
+  }
+  .closeBt {
+    width: 60px;
+    text-align: center;
+    padding: 2px;
+    margin-left: -10px;
+  }
+  .saveBt {
+    width: 60px;
+    text-align: center;
+    padding: 2px;
+    margin-right: -10px;
+    position: fixed;
+  }
+}
+@media screen and (max-width: 320px) {
+  .formContainerBox {
+    width: 200px;
+    margin-left: -5px;
+  }
+  .scanAgainBt {
+    width: 102px;
+    text-align: center;
+    padding: 2px;
+    margin-left: -45px;
+  }
+  .closeBt {
+    width: 40px;
+    text-align: center;
+    padding: 2px;
+    margin-left: -20px;
+  }
+  .saveBt {
+    width: 40px;
+    text-align: center;
+    padding: 2px;
+    margin-right: -20px;
+    position: fixed;
+  }
 }

@@ -1,131 +1,195 @@
 .formContainer {
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    padding: 10px;
-  }
-  .fieldWrapper {
-    display: flex;
-    flex: 1;
-    justify-content: first baseline;
-    align-items: center;
-    padding: 5px;
-    height: 50px;
-  }
-  .fieldLabel {
-    flex: 0.2;
-  }
-  .fieldContainer {
-    flex: 0.3;
-    align-items: center;
-  }
-  .mat-radio-button ~ .mat-radio-button {
-    margin-left: 35px;
-  }
-  .required-annotation {
-    color: red;
-    margin-left: 3px;
-  }
-  .button-container {
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    width: 95%;
-    position: fixed;
-    bottom: 0px;
-    left: 10px;
-    background-color: white;
-    border-top: 1px solid #ddd;
-  }
-  
-  .button-container + .add-button {
-    margin-left: 8px;
-  }
-  ::ng-deep.mat-select-value {
-    padding: 5px !important;
-  }
-  .spinner {
-    flex-direction: column;
-    align-items: center;
-    margin-top: 18vw;
-    display: flex;
-  }
-  .cell-list {
-    padding: 10px;
-    font-size: smaller;
-  }
-  .testcases-table {
-    font-size: smaller;
-    width: 100%;
-  }
-  .file-upload-button {
-    display: inline-flex;
-    justify-content: flex-start;
-    margin-right: 30px;
-  }
-  
-  .file-download-button {
-    display: inline-flex;
-    justify-content: flex-end;
-  }
-  .browseInput {
-    background: none;
-    border: 1px solid rgba(253, 81, 140, 1);
-    color: rgba(253, 81, 140, 1);
-    border-radius: 2px;
-    padding: 0.4rem 1.5rem;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 10px;
+}
+.fieldWrapper {
+  display: flex;
+  flex: 1;
+  justify-content: first baseline;
+  align-items: center;
+  padding: 5px;
+  height: 50px;
+}
+.fieldLabel {
+  flex: 0.2;
+}
+.fieldContainer {
+  flex: 0.3;
+  align-items: center;
+}
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 35px;
+}
+.required-annotation {
+  color: red;
+  margin-left: 3px;
+}
+.button-container {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  width: 95%;
+  position: fixed;
+  bottom: 0px;
+  left: 10px;
+  background-color: white;
+  border-top: 1px solid #ddd;
+}
+
+.button-container + .add-button {
+  margin-left: 8px;
+}
+::ng-deep.mat-select-value {
+  padding: 5px !important;
+}
+.spinner {
+  flex-direction: column;
+  align-items: center;
+  margin-top: 18vw;
+  display: flex;
+}
+.cell-list {
+  padding: 10px;
+  font-size: smaller;
+}
+.testcases-table {
+  font-size: smaller;
+  width: 100%;
+}
+.file-upload-button {
+  display: inline-flex;
+  justify-content: flex-start;
+  margin-right: 30px;
+}
+
+.file-download-button {
+  display: inline-flex;
+  justify-content: flex-end;
+}
+.browseInput {
+  background: none;
+  border: 1px solid rgba(253, 81, 140, 1);
+  color: rgba(253, 81, 140, 1);
+  border-radius: 2px;
+  padding: 0.4rem 1.5rem;
+}
+
 .custom-class mat-icon {
   vertical-align: middle;
 }
-
-@media screen and (max-width: 600px) {
-  .mat-elevation-z8{
+@media screen and (max-width: 1440px) {
+  .namefield {
+    width: 300px;
+    margin-left: -4px;
+  }
+  .projectTypeOptions {
+    width: 300px;
+  }
+  .purposefield {
+    margin-left: -5px;
+    width: 300px;
+  }
+}
+@media screen and (max-width: 800px) {
+  .mat-elevation-z8 {
     width: 100%;
     height: 320px;
   }
-  .formContainer{
+  .formContainer {
     width: 200px;
   }
-   .fieldLabel{
+  .fieldLabel {
     width: 120px;
     margin-left: 20px;
     margin-top: 30px;
-   }
-  .fieldContainer{
+  }
+  .fieldContainer {
     margin-top: 30px;
     margin-left: 80px;
     margin-bottom: 20px;
   }
-  .namefield{
+  .namefield {
     width: 200px;
     margin-left: -4px;
   }
-  .projectTypeOptions{
+  .projectTypeOptions {
     width: 200px;
   }
-  .purposefield{
+  .purposefield {
     margin-left: -20px;
     width: 200px;
   }
-  .custom-class{
+  .custom-class {
     margin-top: 60px;
     width: 100px;
   }
-  .file-upload-button{
+  .file-upload-button {
     margin-top: 60px;
     width: 200px;
     margin-left: -50px;
     margin-bottom: -60px;
   }
-  .file-download-button{
+  .file-download-button {
     margin-top: 20px;
     margin-left: -50px;
   }
-  .fileuploadbtn{
+  .fileuploadbtn {
     width: 170px;
   }
+  .button-container {
+    width: 700px;
+  }
 }
-
-    
+@media screen and (max-width: 378px) {
+  .formContainer {
+    width: auto;
+  }
+  .fieldLabel {
+    width: 80px;
+    margin-left: 20px;
+    margin-top: 30px;
+  }
+  .fieldContainer {
+    margin-top: 30px;
+    margin-left: 50px;
+    margin-bottom: 20px;
+  }
+  .file-upload-button {
+    margin-left: -30px;
+  }
+  .file-download-button {
+    margin-left: -30px;
+  }
+  .button-container {
+    width: 320px;
+  }
+}
+@media screen and (max-width: 320px) {
+  .fieldLabel {
+    width: 50px;
+    margin-left: -10px;
+  }
+  .namefield {
+    width: 170px;
+  }
+  .projectTypeOptions {
+    width: 170px;
+  }
+  .purposefield {
+    width: 170px;
+    padding-left: 5px;
+  }
+  .file-upload-button {
+    margin-top: 60px;
+    margin-left: -10px;
+  }
+  .file-download-button {
+    margin-left: -10px;
+    margin-top: 20px;
+  }
+  .button-container {
+    width: 280px;
+  }
+}

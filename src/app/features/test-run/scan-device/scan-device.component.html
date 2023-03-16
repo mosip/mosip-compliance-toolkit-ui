@@ -30,7 +30,7 @@
     <div *ngIf="scanComplete">
         <form [formGroup]="scanForm" *ngIf="scanComplete && portsData.length > 0">
             <div class="formContainer">
-                <mat-form-field appearance="legacy" [style.width.px]=500>
+                <mat-form-field appearance="legacy" class="formContainerBox">
                     <mat-label>
                         <span *ngIf="!isAndroidAppMode">Available Ports:</span>
                         <span *ngIf="isAndroidAppMode">Available App Intent:</span></mat-label>
@@ -46,7 +46,7 @@
                     </mat-error>
                 </mat-form-field>
                 <p></p>
-                <mat-form-field appearance="legacy" [style.width.px]=500>
+                <mat-form-field appearance="legacy" class="formContainerBox">
                     <mat-label>Device:</mat-label>
                     <mat-select formControlName="devices" #singleSelect>
                         <ng-container *ngFor="let dropdown of devicesData">
@@ -66,15 +66,15 @@
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end" *ngIf="scanComplete">
-    <button mat-flat-button color="accent" (click)="close()">Close</button>
+    <button mat-flat-button color="accent" (click)="close()" class="closeBt">Close</button>
     <span class="spacer" *ngIf="(portsData.length <= 0 || previousScanAvailable)"></span>
     <button mat-flat-button color="accent" (click)="startScan()"
-        *ngIf="(portsData.length <= 0 || previousScanAvailable)">
+        *ngIf="(portsData.length <= 0 || previousScanAvailable)" class="scanAgainBt">
         <mat-icon>cached</mat-icon>
         Scan Again
     </button>
     <span class="spacer" *ngIf="portsData.length > 0"></span>
-    <button mat-flat-button color="accent" (click)="save()" *ngIf="portsData.length > 0">
+    <button mat-flat-button color="accent" (click)="save()" *ngIf="portsData.length > 0" class="saveBt">
         <mat-icon>save</mat-icon>
         Save
     </button>
