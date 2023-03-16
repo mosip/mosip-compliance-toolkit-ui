@@ -61,6 +61,10 @@
   flex: none;
   width: 100px;
 }
+.mat-header-cell {
+  background-color: rgba(119, 136, 153, 0.26);
+  color: black;
+}
 @media screen and (max-width: 480px) {
   .table-container{
     overflow-x: auto;
@@ -72,6 +76,10 @@
     margin-top: 6px;
     margin-left: 40px;
     width: 200px;
+  }
+  .scrollCell{
+    /* background-color:gray; */
+    background-color: darkgray;
   }
 }
 @media screen and (max-width: 320px) {

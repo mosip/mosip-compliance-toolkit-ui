@@ -5,6 +5,10 @@ mat-expansion-panel-header {
 .formContainer {
   background-color: white;
 }
+.mat-header-cell{
+  background-color: rgba(119, 136, 153, 0.26);
+  color: black;
+}
 .rowContainer {
   display: flex;
   flex-direction: row;
@@ -212,16 +216,131 @@ mat-expansion-panel-header {
     width: 120px;
   }
   .runHeader{
-    padding-left: 80px;
+    padding-left: 10px;
+    width: 10px;
   }
   .runCell{
-    padding-left: 60px;
+    padding-left: 0px;
+    width: 10px;
   }
   .actionsHeader{
+    padding-left: 0px;
+    width: 10px
+  }
+  .actionsCell{
+    padding-left: 0px;
+    width: 10px
+  }
+}
+@media screen and (max-width: 360px) {
+  .tablediv{
+    overflow-x: auto;
+  }
+  .collections-table{
+    width: 800px;
+  }
+  .collections-button{
+    position: relative;
+    margin-left: 0px;
+    width: 140px;
+    float: left;
+  }
+  .encryptionkeyButton{
+    width: 140px;
+    margin-top: -40px;
+    margin-left: -140px;
+    position: absolute;
+  }
+  .scandeviceButton{
+    width: 140px;
+    margin-left: -5px;
+    margin-top: -40px;
+    position: absolute;
+  }
+  .collectionicon{
+    margin-left: -15px;
+  }
+  .encrypticon{
+    margin-left: -12px;
+  }
+  .scandeviceicon{
+    margin-left: -20px;
+  }
+  .scandeviceicon2{
+    margin-left: -14px;
+  }
+  .collections-button2{
+    position: absolute;
+    margin-left: 0px;
+    width: 140px;
+    height: 40px;
+    float: left;
+  }
+  .scandeviceButtonREG{
+    position: relative;
+    margin-left: 145px;
+    width: 140px;
+    height: 40px;
+  }
+  .buttonspan{
+    margin-top: 45px;
+    width: 100%;
+    float: left;
+  }
+  .collections-header-container{
+    width: 100%;
+  }
+  .nameHeader{
+    width: 20px;
+  }
+  .nameCell{
+    width:40px; 
+  }
+  a{
+    width:70px; display: inline-block; overflow-wrap: break-word;
+  }
+  .testCaseHeader{
+    padding-left: 140px;
+  }
+  .testCaseCell{
+    padding-left: 160px;
+  }
+  .crDateHeader{
     padding-left: 20px;
+    width: 90px;
+  }
+  .crDateCell{
+    padding-left: 160px;
+    width: 90px;
+  }
+  .lastRunHeader{
+    padding-left: 60px;
+    width: 120px;
+  }
+  .lastRunCell{
+    padding-left: 60px;
+    width: 120px;
+  }
+  .runHeader{
+    opacity: 100%;
+    padding-left: 20px;
+    width: 20px;
+  }
+  .runCell{
+    padding-left: 0px;
+    width: 20px;
+  }
+  .actionsHeader{
+    opacity: 100%;
+    padding-left: 20px;
+    width: 10px;
   }
   .actionsCell{
     padding-left: 20px;
+    width: 10px;
+  }
+  .options{
+    margin-left: -20px;
   }
 }
 @media screen and (max-width: 320px) {
@@ -292,10 +411,10 @@ mat-expansion-panel-header {
     width:70px; display: inline-block; overflow-wrap: break-word;
   }
   .testCaseHeader{
-    padding-left: 40px;
+    padding-left: 140px;
   }
   .testCaseCell{
-    padding-left: 60px;
+    padding-left: 160px;
   }
   .crDateHeader{
     padding-left: 20px;
@@ -314,18 +433,27 @@ mat-expansion-panel-header {
     width: 120px;
   }
   .runHeader{
-    padding-left: 80px;
+    opacity: 100%;
+    padding-left: 20px;
+    width: 20px;
   }
   .runCell{
-    padding-left: 60px;
+    padding-left: 0px;
+    width: 20px;
   }
   .actionsHeader{
+    opacity: 100%;
     padding-left: 20px;
+    width: 10px;
   }
   .actionsCell{
     padding-left: 20px;
+    width: 10px;
   }
-  
+  .options{
+    margin-left: -20px;
+  }
 }
+
 
 
