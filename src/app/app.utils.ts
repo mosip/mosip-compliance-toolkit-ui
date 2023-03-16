@@ -141,8 +141,6 @@ export default class Utils {
         data: dataResp.data,
         dataDecoded: dataDecoded,
       };
-      //console.log('getDecodedDataInfo');
-      //console.log(dataDecodedFull);
       return dataDecodedFull;
     } catch (error) {
       console.log(error);

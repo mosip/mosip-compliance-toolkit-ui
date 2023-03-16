@@ -4,7 +4,7 @@ const config: CapacitorConfig = {
   appId: 'io.mosip.compliance.toolkit',
   appName: 'mosip-compliance-toolkit-ui',
   webDir: 'dist/mosip-compliance-toolkit-ui',
-  bundledWebRuntime: false,
+  bundledWebRuntime: true,
   plugins: {
     CapacitorCookies: {
       enabled: true,

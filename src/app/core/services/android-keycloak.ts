@@ -20,7 +20,7 @@ export class AndroidKeycloakService {
   }
 
   public setUp() {
-    console.log("creating androidKeycloak instance");
+    //console.log("creating androidKeycloak instance");
     this.androidKeycloak = Keycloak({
       clientId: environment.IAM_CLIENT_ID,
       realm: environment.IAM_REALM,
@@ -28,9 +28,9 @@ export class AndroidKeycloakService {
     });
     this.androidKeycloak.onAuthSuccess = () => {
       // save tokens to device storage
-      console.log('onAuthSuccess');
+      //console.log('onAuthSuccess');
       const accessToken = this.androidKeycloak.token;
-      console.log(accessToken);
+      //console.log(accessToken);
       if (accessToken) {
         localStorage.setItem(appConstants.ACCESS_TOKEN, accessToken);
         window.location.reload();
