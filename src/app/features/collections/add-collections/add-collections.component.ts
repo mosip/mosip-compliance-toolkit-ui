@@ -35,7 +35,6 @@ export class AddCollectionsComponent implements OnInit {
     'testName',
     'testDescription',
     'validatorDefs',
-    'scrollIcon'
   ];
   dataSubmitted = false;
 

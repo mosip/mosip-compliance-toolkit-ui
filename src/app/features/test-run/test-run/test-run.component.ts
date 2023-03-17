@@ -50,7 +50,7 @@ export class TestRunComponent implements OnInit {
   sdkProjectData: SdkProjectModel;
   testcasesList: any;
   dataSource: MatTableDataSource<TestRunModel>;
-  displayedColumns: string[] = ['testId', 'testName', 'resultStatus', 'scrollIcon'];
+  displayedColumns: string[] = ['testId', 'testName', 'resultStatus'];
   columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
   expandedElement: TestRunModel | null;
   dataSubmitted = false;
