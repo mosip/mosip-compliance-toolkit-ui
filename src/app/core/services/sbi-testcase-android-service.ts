@@ -103,6 +103,8 @@ export class SbiTestCaseAndroidService {
       return methodResponse;
     }
     if (methodName == appConstants.SBI_METHOD_CAPTURE) {
+      let methodResponse = await this.callSBIMethodAndroid(appConstants.SBI_METHOD_CAPTURE, sbiDeviceType, callbackId, methodRequestStr);
+      return methodResponse;
     }
     if (methodName == appConstants.SBI_METHOD_RCAPTURE) {
       let methodResponse = await this.callSBIMethodAndroid(appConstants.SBI_METHOD_RCAPTURE, sbiDeviceType, callbackId, methodRequestStr);
@@ -149,6 +151,7 @@ export class SbiTestCaseAndroidService {
               requestKey: appConstants.SBI_INTENT_REQUEST_KEY,
               requestValue: methodRequestStr
             }).then((rCaptureResult: any) => {
+              console.log("r capture result recvd");
               const rCaptureStatus = rCaptureResult[appConstants.STATUS];
               if (rCaptureStatus == appConstants.RESULT_OK) {
                 const rCaptureResp = JSON.parse(rCaptureResult[appConstants.RESPONSE]);
@@ -158,7 +161,23 @@ export class SbiTestCaseAndroidService {
               }
             });
           }
-
+          if (testcaseMethodName == appConstants.SBI_METHOD_CAPTURE) {
+            MosipSbiCapacitorPlugin.startActivity({
+              methodType: appConstants.SBI_METHOD_CAPTURE,
+              action: callbackId + appConstants.CAPTURE_INTENT_ACTION,
+              requestKey: appConstants.SBI_INTENT_REQUEST_KEY,
+              requestValue: methodRequestStr
+            }).then((captureResult: any) => {
+              console.log("capture result recvd");
+              const captureStatus = captureResult[appConstants.STATUS];
+              if (captureStatus == appConstants.RESULT_OK) {
+                const captureResp = JSON.parse(captureResult[appConstants.RESPONSE]);
+                resolve(captureResp);
+              } else {
+                resolve(false);
+              }
+            });
+          }
         } else {
           resolve(false);
         }
@@ -192,7 +211,7 @@ export class SbiTestCaseAndroidService {
             : '10000',
         captureTime: new Date().toISOString(),
         transactionId: testCase.testId + '-' + new Date().getUTCMilliseconds(),
-        domainUri: '', //TODO
+        //domainUri: '', //TODO
         bio: [
           {
             type: selectedSbiDevice.digitalIdDecoded.type,
