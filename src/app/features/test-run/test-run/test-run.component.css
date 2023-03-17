@@ -10,6 +10,11 @@
     background-color: white;
     border-top: 1px solid #ddd;
 }
+.mat-header-cell {
+  background-color: rgba(119, 136, 153, 0.26);
+  color: black;
+}
+
 .button-container + .add-button {
   margin-left: 8px;
 }
@@ -83,4 +88,12 @@ mat-panel-title {
   display: flex;
   overflow: hidden;
   flex-direction: column;
+}
+@media screen and (max-width: 600px) {
+  .expandHeader{
+    width: 50px;
+  }
+  .expandCell{
+    width: 50px;
+  }
 }
