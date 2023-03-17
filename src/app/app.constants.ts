@@ -68,6 +68,7 @@ export const SDK_PROJECT_URL = 'sdkProjectUrl';
 export const DISCOVERY_INTENT_ACTION = 'io.sbi.device';
 export const D_INFO_INTENT_ACTION = '.Info';
 export const R_CAPTURE_INTENT_ACTION = '.rCapture';
+export const CAPTURE_INTENT_ACTION = '.Capture';
 export const SBI_INTENT_REQUEST_KEY = 'input';
 export const SBI_INTENT_RESPONSE_KEY = 'response';
 export const RESULT_OK = 'success';
