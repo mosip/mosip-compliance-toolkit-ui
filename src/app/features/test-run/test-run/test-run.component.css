@@ -90,8 +90,10 @@ mat-panel-title {
   flex-direction: column;
 }
 @media screen and (max-width: 600px) {
-  .scrollCell{
-    /* background-color:gray; */
-    background-color: darkgray;
+  .expandHeader{
+    width: 60px;
+  }
+  .expandCell{
+    width: 60px;
   }
 }

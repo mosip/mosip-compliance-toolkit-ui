@@ -34,8 +34,7 @@ export class TestRunHistoryComponent implements OnInit {
     'testCaseCount',
     'passCaseCount',
     'failCaseCount',
-    'actions',
-    'scrollIcon'
+    'actions'
   ];
   // MatPaginator Inputs
   totalItems = 0;

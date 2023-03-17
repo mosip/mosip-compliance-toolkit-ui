@@ -112,10 +112,7 @@
   .add-button{
     margin-right: 10px;
   }
-  .scrollCell{
-    /* background-color:gray; */
-    background-color: darkgray;
-  }
+  
 }
 @media screen and (max-width:320px) {
   .collectionNameField{

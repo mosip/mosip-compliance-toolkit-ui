@@ -35,9 +35,9 @@
                     </span>
                 </td>
             </ng-container>
-            <ng-container matColumnDef="expand">
-                <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
-                <td mat-cell *matCellDef="let element">
+            <ng-container matColumnDef="expand" stickyEnd>
+                <th mat-header-cell *matHeaderCellDef aria-label="row actions" class="expandHeader">&nbsp;</th>
+                <td mat-cell *matCellDef="let element" class="expandCell">
                     <button mat-icon-button aria-label="expand row"
                         (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
                         <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
@@ -143,7 +143,7 @@
                 (click)="expandedElement = expandedElement === row ? null : row">
             <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="expanded-row"></tr>
             <ng-container matColumnDef="scrollIcon" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef style="padding-left: 20px;" class="scrollCell"></th>
+                <th mat-header-cell *matHeaderCellDef style="padding-left: 20px;"></th>
                     <td mat-cell *matCellDef>
                     </td>
             </ng-container>
