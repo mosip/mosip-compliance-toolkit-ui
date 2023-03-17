@@ -142,11 +142,6 @@
                 [class.table-expanded-row]="expandedElement === row"
                 (click)="expandedElement = expandedElement === row ? null : row">
             <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="expanded-row"></tr>
-            <ng-container matColumnDef="scrollIcon" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef style="padding-left: 20px;" class="scrollCell"></th>
-                    <td mat-cell *matCellDef>
-                    </td>
-            </ng-container>
         </table>
     </div>
 </div>
