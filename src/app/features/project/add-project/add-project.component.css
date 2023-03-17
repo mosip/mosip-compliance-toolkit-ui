@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   background-color: white;
-  padding: 10px;
+  padding: 5px;
 }
 .fieldWrapper {
   display: flex;
@@ -11,6 +11,7 @@
   align-items: center;
   padding: 5px;
   height: 50px;
+  width: 340px;
 }
 .fieldLabel {
   flex: 0.2;
@@ -58,30 +59,67 @@
   font-size: smaller;
   width: 100%;
 }
+@media screen and (max-width: 1440px) {
+  .fieldContainerBox {
+    width: 250px;
+    padding-left: 10px;
+  }
+  .projectTypeBt {
+    width: 250px;
+    padding-left: 10px;
+  }
+}
 @media screen and (max-width: 770px) {
-  .fieldLabel{
+  .button-container {
+    width: 700px;
+  }
+}
+@media screen and (max-width: 480px) {
+  .fieldLabel {
     width: 80px;
   }
-  .projectTypeBt{
-    padding-left: 14px;
+  .fieldContainerBox {
+    width: 240px;
   }
-  .fieldContainerBox{
-    width: 250px;
+  .projectTypeBt {
+    width: 240px;
   }
-  .button-container{
-    width: 700px;
+  .button-container {
+    width: 420px;
   }
 }
 @media screen and (max-width: 426px) {
   .button-container{
-    width: 350px;
+    width: 360px;
   }
 }
 @media screen and (max-width: 378px) {
   .button-container{
-    width: 300px;
+    width: 320px;
   }
-  .fieldContainerBox{
-    width: 240px;
+}
+@media screen and (max-width: 325px) {
+  .formContainer {
+    width: 270px;
+    height: 450px;
+    overflow-x: auto;
+  }
+  .fieldWrapper {
+    width: 250px;
+    display: block;
+    padding-bottom: 20px;
+  }
+  .fieldLabel {
+    width: 20px;
+  }
+  .fieldContainerBox {
+    width: 232px;
+  }
+  .projectTypeBt {
+    width: 232px;
+    padding-top: 20px;
+  }
+  .button-container {
+    width: 270px;
   }
 }

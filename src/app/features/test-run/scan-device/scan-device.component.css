@@ -10,6 +10,9 @@
   padding: 5px;
   padding-left: 10px;
 }
+.formContainerBox {
+  width: 500px;
+}
 .spinner {
   flex-direction: column;
   align-items: center;
@@ -28,4 +31,108 @@ mat-dialog-actions {
 }
 .custom-class mat-icon {
   vertical-align: middle;
+}
+@media screen and (max-width: 480px) {
+  .formContainerBox {
+    width: 300px;
+  }
+}
+@media screen and (max-width: 426px) {
+  .formContainerBox {
+    width: 280px;
+  }
+}
+@media screen and (max-width: 412px) {
+  .formContainerBox {
+    margin-left: -5px;
+  }
+  .scanAgainBt {
+    width: 110px;
+    text-align: center;
+    padding: 2px;
+    margin-left: -80px;
+  }
+  .closeBt {
+    margin-left: -10px;
+    margin-bottom: 0px;
+  }
+  .saveBt {
+    margin-right: -10px;
+    position: fixed;
+  }
+}
+@media screen and (max-width: 426px) {
+  .scanAgainBt {
+    margin-left: -82px;
+  }
+  .closeBt {
+    margin-left: -5px;
+  }
+  .saveBt {
+    margin-right: -5px;
+    position: fixed;
+  }
+}
+@media screen and (max-width: 375px) {
+  .formContainerBox {
+    width: 250px;
+  }
+  .scanAgainBt {
+    width: 110px;
+    text-align: center;
+    padding: 2px;
+    margin-left: -57px;
+  }
+  .closeBt {
+    width: 60px;
+    text-align: center;
+    padding: 2px;
+    margin-left: -5px;
+  }
+  .saveBt {
+    width: 60px;
+    text-align: center;
+    padding: 2px;
+    margin-right: -5px;
+    position: fixed;
+  }
+}
+@media screen and (max-width: 320px) {
+  .formContainerBox {
+    width: 200px;
+    margin-left: -5px;
+  }
+  .scanAgainBt {
+    width: 90px;
+    font-size: small;
+    text-align: center;
+    padding: 2px;
+    margin-left: -50px;
+  }
+  .scanicon{
+    font-size: medium;
+    margin-bottom: -5px;
+    margin-right: -5px;
+    margin-left: -5px;
+  }
+  .closeBt {
+    width: 40px;
+    font-size: small;
+    text-align: center;
+    padding: 2px;
+    margin-left: -15px;
+  }
+  .saveBt {
+    width: 40px;
+    font-size: small;
+    text-align: center;
+    padding: 2px;
+    margin-right: -15px;
+    position: fixed;
+  }
+  .saveicon{
+    font-size: medium;
+    margin-bottom: -5px;
+    margin-right: -5px;
+  }
 }
