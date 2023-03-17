@@ -34,7 +34,8 @@ export class ViewCollectionsComponent implements OnInit {
     'testId',
     'testName',
     'testDescription',
-    'validatorDefs'
+    'validatorDefs',
+    'scrollIcon'
   ];
   dataSubmitted = false;
   @ViewChild(MatSort) sort: MatSort;
