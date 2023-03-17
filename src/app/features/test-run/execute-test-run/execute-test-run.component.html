@@ -56,7 +56,7 @@
                             device..</span>
                     </div>
                     <p></p>
-                    <div class="centereddiv" *ngIf="currentTestCaseIsRCapture && streamingDone && !showLoader">
+                    <div class="centereddiv" *ngIf="currentTestCaseIsRCapture && streamingDone && !showLoader && !isAndroidAppMode">
                         <img #stream [id]="getStreamImgTagId()" width="200" height="200" alt="Start Streaming to Display" border="1">
                     </div>
                 </span>
