@@ -125,6 +125,18 @@ mat-expansion-panel-header {
   }
 }
 @media only screen and (max-width: 426px) {
+  .fieldWrapper {
+    width: 340px;
+  }
+  .fieldLabel {
+    width: 80px;
+  }
+  .fieldContainerBox {
+    width: 240px;
+  }
+  .projectTypeBt {
+    width: 240px;
+  }
   .tablediv{
     overflow-x: auto;
   }
@@ -224,7 +236,28 @@ mat-expansion-panel-header {
     padding-left: 20px;
   }
 }
+@media screen and (max-width: 378px) {
+  .fieldWrapper {
+    width: 330px;
+    padding-left: -5px;
+  }
+  .fieldLabel {
+    width: 60px;
+  }
+}
 @media screen and (max-width: 320px) {
+  .fieldWrapper {
+    width: 250px;
+    display: block;
+    padding-bottom: 20px;
+  }
+  .fieldContainerBox {
+    width: 232px;
+  }
+  .projectTypeBt {
+    width: 232px;
+    padding-top: 20px;
+  }
   .tablediv{
     overflow-x: auto;
   }
