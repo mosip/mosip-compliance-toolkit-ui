@@ -40,7 +40,7 @@
                             </mat-label>
                         </span>
                         <span class="fieldContainer">
-                            <div class="projectTypeBt">
+                            <div class="fieldContainerBox">
                                 <mat-radio-group aria-label="Select an option" formControlName="projectType"
                                     appearance="legacy">
                                     <mat-radio-button value="SBI">SBI</mat-radio-button>
@@ -348,16 +348,17 @@
                 </button>
             </span>
         </div>
-        <div *ngIf="projectForm.controls['sbiPurpose']?.value == 'Registration'">
+        <div *ngIf="projectForm.controls['sbiPurpose']?.value !== 'Auth'">
             <button mat-flat-button color="accent" (click)="addCollection()" class="collections-button2">
                 <mat-icon class="collectionicon">add</mat-icon>
                 Add Collection
             </button>
+            <div *ngIf="projectForm.controls['projectType']?.value !== 'SDK'">
             <button mat-flat-button color="accent" (click)="scanDevice()" class="scandeviceButtonREG" >
                 <mat-icon *ngIf="isScanComplete">check_circle</mat-icon>
                 <mat-icon *ngIf="!isScanComplete">radio_button_unchecked</mat-icon>
                 Scan Device
-            </button>
+            </button></div>
         </div>
         </div>
         <mat-paginator [pageSizeOptions]="[5, 10, 25, 50, 100]" aria-label="Select page of users"></mat-paginator>

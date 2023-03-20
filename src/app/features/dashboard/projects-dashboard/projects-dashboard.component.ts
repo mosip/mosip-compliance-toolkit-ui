@@ -78,19 +78,37 @@ export class ProjectsDashboardComponent implements OnInit {
           async (response: any) => {
             console.log(response);
             let dataArr = response['response']['projects'];
+            let dataArr2 = dataArr.filter((x: { projectType: string; }) => x.projectType !== 'SDK');
             let tableData = [];
-            for (let row of dataArr) {
-              if (row.lastRunId) {
-                let runStatus = await this.getTestRunStatus(row.lastRunId);
-                tableData.push({
-                  ...row,
-                  lastRunStatus: runStatus,
-                });
-              } else {
-                tableData.push({
-                  ...row,
-                  lastRunStatus: '',
-                });
+            if(this.isAndroidAppMode){
+              for (let row of dataArr2) {
+                if (row.lastRunId) {
+                  let runStatus = await this.getTestRunStatus(row.lastRunId);
+                  tableData.push({
+                    ...row,
+                    lastRunStatus: runStatus,
+                  });
+                } else {
+                  tableData.push({
+                    ...row,
+                    lastRunStatus: '',
+                  });
+                }
+              }
+            }else{
+              for (let row of dataArr) {
+                if (row.lastRunId) {
+                  let runStatus = await this.getTestRunStatus(row.lastRunId);
+                  tableData.push({
+                    ...row,
+                    lastRunStatus: runStatus,
+                  });
+                } else {
+                  tableData.push({
+                    ...row,
+                    lastRunStatus: '',
+                  });
+                }
               }
             }
             this.dataSource = new MatTableDataSource(tableData);
