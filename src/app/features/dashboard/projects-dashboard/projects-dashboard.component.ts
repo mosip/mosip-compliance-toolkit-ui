@@ -70,16 +70,15 @@ export class ProjectsDashboardComponent implements OnInit {
     this.sort.sort(({ id: 'lastRunDt', start: 'desc'}) as MatSortable);
     this.dataSource.sort = this.sort;
   }
-  type:string;
+  // type:string;
   async getProjects() {
     return new Promise((resolve, reject) => {
+      let type=null;
       if(this.isAndroidAppMode){
-        this.type='SBI'
-      }else{
-        this.type='';
+        type=appConstants.SBI;
       }
       this.subscriptions.push(
-        this.dataService.getProjects(this.type).subscribe(
+        this.dataService.getProjects(type).subscribe(
           async (response: any) => {
             console.log(response);
             let dataArr = response['response']['projects'];

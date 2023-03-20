@@ -328,7 +328,7 @@
     </form>
     <div class="list-container">
         <div class="collections-header-container">
-            <div *ngIf="projectForm.controls['sbiPurpose']?.value == 'Auth'">
+            <div>
                 <button mat-flat-button color="accent" (click)="addCollection()" class="collections-button">
                     <mat-icon class="collectionicon">add</mat-icon>
                     Add Collection
@@ -341,14 +341,15 @@
                     Encryption Key
                 </button>
                 &nbsp;&nbsp;&nbsp;
-                <button mat-flat-button color="accent" (click)="scanDevice()" class="scandeviceButton">
+                <button *ngIf="projectForm.controls['projectType']?.value !== 'SDK' || projectForm.controls['sbiPurpose']?.value == 'Auth'"
+                 mat-flat-button color="accent" (click)="scanDevice()" class="scandeviceButton">
                     <mat-icon *ngIf="isScanComplete" class="scandeviceicon">check_circle</mat-icon>
                     <mat-icon *ngIf="!isScanComplete" class="scandeviceicon2">radio_button_unchecked</mat-icon>
                     Scan Device
                 </button>
             </span>
         </div>
-        <div *ngIf="projectForm.controls['sbiPurpose']?.value !== 'Auth'">
+        <!-- <div *ngIf="projectForm.controls['sbiPurpose']?.value !== 'Auth'">
             <button mat-flat-button color="accent" (click)="addCollection()" class="collections-button2">
                 <mat-icon class="collectionicon">add</mat-icon>
                 Add Collection
@@ -359,7 +360,7 @@
                 <mat-icon *ngIf="!isScanComplete">radio_button_unchecked</mat-icon>
                 Scan Device
             </button></div>
-        </div>
+        </div> -->
         </div>
         <mat-paginator [pageSizeOptions]="[5, 10, 25, 50, 100]" aria-label="Select page of users"></mat-paginator>
         <div class="tablediv">
