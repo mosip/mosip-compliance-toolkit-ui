@@ -100,47 +100,23 @@ mat-expansion-panel-header {
   .encryptionkeyButton{
     margin-left: 900px;
   }
-  .scandeviceButtonREG{
-    margin-left: 1080px;
-  }
 }
 @media screen and (max-width: 1366px) {
   .encryptionkeyButton{
     margin-left: 700px;
-  }
-  .scandeviceButtonREG{
-    margin-left: 900px;
   }
 }
 @media screen and (max-width: 1024px) {
   .encryptionkeyButton{
     margin-left: 500px;
   }
-  .scandeviceButtonREG{
-    margin-left: 680px;
-  }
 }
 @media screen and (max-width: 768px) {
   .encryptionkeyButton{
     margin-left: 250px;
   }
-  .scandeviceButtonREG{
-    margin-left: 420px;
-  }
 }
 @media only screen and (max-width: 426px) {
-  .fieldWrapper {
-    width: 340px;
-  }
-  .fieldLabel {
-    width: 80px;
-  }
-  .fieldContainerBox {
-    width: 240px;
-  }
-  .projectTypeBt {
-    width: 240px;
-  }
   .tablediv{
     overflow-x: auto;
   }
@@ -156,12 +132,13 @@ mat-expansion-panel-header {
   .encryptionkeyButton{
     width: 160px;
     margin-top: -40px;
-    margin-left: -160px;
+    margin-left: 10px;
     position: absolute;
   }
   .scandeviceButton{
     width: 160px;
     margin-top: -40px;
+    margin-left: -170px;
     position: absolute;
   }
   .collectionicon{
@@ -244,15 +221,6 @@ mat-expansion-panel-header {
     width: 10px
   }
 }
-@media screen and (max-width: 378px) {
-  .fieldWrapper {
-    width: 330px;
-    padding-left: -5px;
-  }
-  .fieldLabel {
-    width: 60px;
-  }
-}
 @media screen and (max-width: 360px) {
   .tablediv{
     overflow-x: auto;
@@ -275,7 +243,7 @@ mat-expansion-panel-header {
   .scandeviceButton{
     width: 140px;
     margin-left: -5px;
-    margin-top: -40px;
+    margin-top: -80px;
     position: absolute;
   }
   .collectionicon{
@@ -365,18 +333,6 @@ mat-expansion-panel-header {
   }
 }
 @media screen and (max-width: 320px) {
-  .fieldWrapper {
-    width: 250px;
-    display: block;
-    padding-bottom: 20px;
-  }
-  .fieldContainerBox {
-    width: 232px;
-  }
-  .projectTypeBt {
-    width: 232px;
-    padding-top: 20px;
-  }
   .tablediv{
     overflow-x: auto;
   }
@@ -398,7 +354,7 @@ mat-expansion-panel-header {
   .scandeviceButton{
     width: 130px;
     margin-left: -5px;
-    margin-top: -40px;
+    margin-top: -80px;
     position: absolute;
   }
   .collectionicon{
