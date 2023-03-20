@@ -70,7 +70,6 @@ export class ProjectsDashboardComponent implements OnInit {
     this.sort.sort(({ id: 'lastRunDt', start: 'desc'}) as MatSortable);
     this.dataSource.sort = this.sort;
   }
-  // type:string;
   async getProjects() {
     return new Promise((resolve, reject) => {
       let type=null;
