@@ -18,11 +18,19 @@ export class DataService {
 
   SERVICES_BASE_URL = this.appConfigService.getConfig()['SERVICES_BASE_URL'];
   
-  getProjects() {
-    let url = `${this.SERVICES_BASE_URL}getProjects`;
+  getProjects(type:String | '') {
+    if(type !== ''){
+    let url = `${this.SERVICES_BASE_URL}getProjects?type=`+type;
+    return this.httpClient.get(url);
+  }else{
+      let url = `${this.SERVICES_BASE_URL}getProjects`;
+      return this.httpClient.get(url);
+    }
+  }
+  getSbiProjects(type: String) {
+    let url = `${this.SERVICES_BASE_URL}getProjects?type=`+type;
     return this.httpClient.get(url);
   }
-
   addSbiProject(body: any) {
     let url = `${this.SERVICES_BASE_URL}addSbiProject`;
     return this.httpClient.post(url, body);
