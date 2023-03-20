@@ -41,27 +41,6 @@ mat-dialog-actions {
   .formContainerBox {
     width: 280px;
   }
-}
-@media screen and (max-width: 412px) {
-  .formContainerBox {
-    margin-left: -5px;
-  }
-  .scanAgainBt {
-    width: 110px;
-    text-align: center;
-    padding: 2px;
-    margin-left: -80px;
-  }
-  .closeBt {
-    margin-left: -10px;
-    margin-bottom: 0px;
-  }
-  .saveBt {
-    margin-right: -10px;
-    position: fixed;
-  }
-}
-@media screen and (max-width: 426px) {
   .scanAgainBt {
     margin-left: -82px;
   }
@@ -72,6 +51,35 @@ mat-dialog-actions {
     margin-right: -5px;
     position: fixed;
   }
+  .selectdevice{
+    width: 280px;
+  }
+  .deviceoptions{
+    display: inline-block;
+    overflow-x: auto;
+  }
+}
+@media screen and (max-width: 412px) {
+  .formContainerBox {
+    margin-left: -5px;
+  }
+  .scanAgainBt {
+    width: 110px;
+    text-align: center;
+    height: 35px;
+    margin-left: -80px;
+  }
+  .scanicon{
+    margin-left: -10px;
+  }
+  .closeBt {
+    margin-left: -10px;
+    margin-bottom: 0px;
+  }
+  .saveBt {
+    margin-right: -10px;
+    position: fixed;
+  }
 }
 @media screen and (max-width: 375px) {
   .formContainerBox {
@@ -79,6 +87,7 @@ mat-dialog-actions {
   }
   .scanAgainBt {
     width: 110px;
+    height: auto;
     text-align: center;
     padding: 2px;
     margin-left: -57px;
@@ -96,6 +105,13 @@ mat-dialog-actions {
     margin-right: -5px;
     position: fixed;
   }
+  .selectdevice{
+    width: 250px;
+  }
+  .deviceoptions{
+    display: inline-block;
+    overflow-x: auto;
+  }
 }
 @media screen and (max-width: 320px) {
   .formContainerBox {
@@ -104,6 +120,7 @@ mat-dialog-actions {
   }
   .scanAgainBt {
     width: 90px;
+    height: auto;
     font-size: small;
     text-align: center;
     padding: 2px;
@@ -134,5 +151,12 @@ mat-dialog-actions {
     font-size: medium;
     margin-bottom: -5px;
     margin-right: -5px;
+  }
+  .selectdevice{
+    width: 200px;
+  }
+  .deviceoptions{
+    display: inline-block;
+    overflow-x: auto;
   }
 }

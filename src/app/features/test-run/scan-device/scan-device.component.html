@@ -48,9 +48,9 @@
                 <p></p>
                 <mat-form-field appearance="legacy" class="formContainerBox">
                     <mat-label>Device:</mat-label>
-                    <mat-select formControlName="devices" #singleSelect>
+                    <mat-select formControlName="devices" #singleSelect class="selectdevice">
                         <ng-container *ngFor="let dropdown of devicesData">
-                            <mat-option value="{{myjson.stringify(dropdown)}}" title="{{getDeviceLabel(dropdown)}}">
+                            <mat-option value="{{myjson.stringify(dropdown)}}" title="{{getDeviceLabel(dropdown)}}" class="deviceoptions">
                                 {{getDeviceLabel(dropdown)}}
                             </mat-option>
                         </ng-container>
