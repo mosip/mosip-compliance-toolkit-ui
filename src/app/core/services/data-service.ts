@@ -26,10 +26,6 @@ export class DataService {
     let url = `${this.SERVICES_BASE_URL}getProjects`;
     return this.httpClient.get(url);
   }
-  getSbiProjects(type: String) {
-    let url = `${this.SERVICES_BASE_URL}getProjects?type=`+type;
-    return this.httpClient.get(url);
-  }
   addSbiProject(body: any) {
     let url = `${this.SERVICES_BASE_URL}addSbiProject`;
     return this.httpClient.post(url, body);
