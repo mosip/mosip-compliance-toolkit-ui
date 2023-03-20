@@ -2,7 +2,7 @@
 <p>
     <xng-breadcrumb></xng-breadcrumb>
 </p>
-<div class="dashboard-button-first-container"  *ngIf="dataLoaded">
+<div class="dashboard-button-first-container"  *ngIf="dataLoaded && !isAndroidAppMode">
     <button mat-flat-button color="accent" (click)="showBiometricDashboard()" class="dashboard-button">
         Biometric Data >>
     </button>

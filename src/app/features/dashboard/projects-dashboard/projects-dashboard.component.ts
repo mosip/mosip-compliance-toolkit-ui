@@ -72,9 +72,13 @@ export class ProjectsDashboardComponent implements OnInit {
   }
 
   async getProjects() {
+    let projectType = "";
+    if (this.isAndroidAppMode) {
+      projectType = appConstants.SBI;
+    }
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
-        this.dataService.getProjects().subscribe(
+        this.dataService.getProjects(projectType).subscribe(
           async (response: any) => {
             console.log(response);
             let dataArr = response['response']['projects'];
