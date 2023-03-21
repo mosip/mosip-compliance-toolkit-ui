@@ -32,9 +32,39 @@
 .custom-class mat-icon {
   vertical-align: middle;
 }
-
-
-
+@media screen and (max-width: 604px) {
+  .table-scroll{
+    overflow-x:auto;
+  }
+  .dashboard-table{
+    width: 100%;
+  }
+  a{
+    width:70px; display: inline-block; overflow-wrap: break-word;
+  }
+  .projecttype{
+    padding-left: 20px;
+  }
+  .collectioncount{
+    padding-left: 30px;
+  }
+  .crDateCell{
+    width: 40px;
+  }
+  .lastRunDt{
+    padding-left: 10px;
+  }
+  .lastRunDt1{
+    width: 60px;
+    padding-left: 10px;
+  }
+  .lastRunStatus{
+    padding-left: 10px;
+  }
+  .lastRunStatus1{
+    padding-left: 10px;
+  }
+}
 @media screen and (max-width: 600px){
   .table-scroll{
     overflow-x:auto;
