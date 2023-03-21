@@ -121,7 +121,7 @@ mat-expansion-panel-header {
     margin-left: 990px;
   }
 }
-@media screen and (min-width:1275px) and (max-width: 1366px) {
+@media screen and (min-width:1275px) and (max-width: 1380px) {
   .encryptionkeyButton{
     margin-left: 380px;
   }
@@ -137,6 +137,17 @@ mat-expansion-panel-header {
     margin-left: 340px;
   }
   .scandeviceButton{
+    margin-left: 340px;
+  }
+  .scandeviceButtonREG{
+    margin-left: 850px;
+  }
+}
+@media screen and (max-width: 2000px) {
+  .scandeviceButton{
+    margin-left: 340px;
+  }
+  .encryptionkeyButton{
     margin-left: 340px;
   }
   .scandeviceButtonREG{
