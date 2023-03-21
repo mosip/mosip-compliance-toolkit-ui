@@ -60,7 +60,128 @@
   .custom-class mat-icon {
     vertical-align: middle;
   }
-
+  @media screen and (max-width: 800px) {
+    .testcases-table{
+      width: 100%;
+    }
+    .table-container{
+      overflow-x: auto;
+    }
+    .runDateHeader{
+      padding-left:20px;
+      width: 100px;
+    }
+    .runStatusHeader{
+      padding-left:20px;
+      width: 100px;
+    }
+    .totaltestcaseHeader{
+      padding-left:20px;
+      width: 100px;
+    }
+    .passcasesHeader{
+      padding-left:20px;
+      width: 100px;
+    }
+    .failcasesHeader{
+      padding-left:20px;
+      width: 100px;
+    }
+    .detailsHeader{
+      padding-left:30px;
+      width: 100px;
+    }
+    .runDateCell{
+      padding-left:20px;
+      width: 100px;
+    }
+    .runStatusCell{
+      padding-left:20px;
+      width: 100px;
+    }
+    .totaltestcaseCell{
+      padding-left:50px;
+      width: 100px;
+    }
+    .passcasesCell{
+      padding-left:50px;
+      width: 100px;
+    }
+    .failcasesCell{
+      padding-left:50px;
+      width: 100px;
+    }
+    .detailsCell{
+      padding-left:20px;
+      width: 100px;
+    }
+    .viewtestrunbutton{
+      width: 70px;
+      margin-bottom: 4px;
+      margin-top: 4px;
+    }
+  }
+  @media screen and (max-width: 604px) {
+    .testcases-table{
+      width: 100%;
+    }
+    .table-container{
+      overflow-x: auto;
+    }
+    .runDateHeader{
+      padding-left:10px;
+      width: 80px;
+    }
+    .runStatusHeader{
+      padding-left:10px;
+      width: 80px;
+    }
+    .totaltestcaseHeader{
+      padding-left:10px;
+      width: 80px;
+    }
+    .passcasesHeader{
+      padding-left:10px;
+      width: 80px;
+    }
+    .failcasesHeader{
+      padding-left:10px;
+      width: 80px;
+    }
+    .detailsHeader{
+      padding-left:10px;
+      width: 80px;
+    }
+    .runDateCell{
+      padding-left:10px;
+      width: 80px;
+    }
+    .runStatusCell{
+      padding-left:10px;
+      width: 80px;
+    }
+    .totaltestcaseCell{
+      padding-left:10px;
+      width: 80px;
+    }
+    .passcasesCell{
+      padding-left:10px;
+      width: 80px;
+    }
+    .failcasesCell{
+      padding-left:10px;
+      width: 80px;
+    }
+    .detailsCell{
+      padding-left:10px;
+      width: 100px;
+    }
+    .viewtestrunbutton{
+      width: 70px;
+      margin-bottom: 4px;
+      margin-top: 4px;
+    }
+  }
   @media screen and (max-width:600px) {
     .table-container{
       overflow-x: auto;

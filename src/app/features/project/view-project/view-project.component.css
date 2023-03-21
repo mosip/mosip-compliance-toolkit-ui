@@ -96,24 +96,93 @@ mat-expansion-panel-header {
   cursor: pointer;
   color: #ff4081;
 }
+@media screen and (max-width: 2048px) {
+  .encryptionkeyButton{
+    margin-left: 800px;
+  }
+  .scandeviceButton{
+    margin-left: 732px;
+  }
+  .scandeviceButtonREG{
+    margin-left: 1700px;
+  }
+}
 @media screen and (max-width: 1440px) {
   .encryptionkeyButton{
     margin-left: 900px;
   }
 }
-@media screen and (max-width: 1366px) {
+@media screen and (min-width:1280px) and (max-width: 1366px) {
   .encryptionkeyButton{
-    margin-left: 700px;
+    margin-left: 380px;
+  }
+  .scandeviceButton{
+    margin-left: 380px;
+  }
+  .scandeviceButtonREG{
+    margin-left: 930px;
   }
 }
-@media screen and (max-width: 1024px) {
+@media screen and (min-width: 1200px) and (max-width: 1279px) {
   .encryptionkeyButton{
-    margin-left: 500px;
+    margin-left: 340px;
+  }
+  .scandeviceButton{
+    margin-left: 340px;
+  }
+  .scandeviceButtonREG{
+    margin-left: 850px;
   }
 }
-@media screen and (max-width: 768px) {
+@media screen and (min-width: 1024px) and (max-width: 1068px) {
   .encryptionkeyButton{
     margin-left: 250px;
+  }
+  .scandeviceButton{
+    margin-left: 250px;
+  }
+}
+@media screen and (min-width: 763px) and (max-width: 801px) {
+  .collections-button{
+    width: 150px;
+  }
+  .scandeviceButton{
+    margin-left: 120px;
+    width: 150px;
+  }
+  .encryptionkeyButton{
+    width: 150px;
+    margin-left: 120px;
+  }
+  .scandeviceButtonREG{
+    margin-left: 420px;
+  }
+}
+@media screen and (min-width: 685px) and (max-width: 763px) {
+  .collections-button{
+    width: 150px;
+  }
+  .scandeviceButton{
+    margin-left: 60px;
+    width: 150px;
+  }
+  .encryptionkeyButton{
+    width: 150px;
+    margin-left: 100px;
+  }
+  .scandeviceButtonREG{
+    margin-left: 340px;
+  }
+}
+@media screen and (min-width: 603px) and (max-width: 684px) {
+  .encryptionkeyButton{
+    margin-left: 45px;
+  }
+  .scandeviceButton{
+    margin-left: 45px;
+  }
+  .scandeviceButtonREG{
+    margin-left: 260px;
   }
 }
 @media only screen and (max-width: 426px) {

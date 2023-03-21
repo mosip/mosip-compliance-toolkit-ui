@@ -89,6 +89,22 @@ mat-panel-title {
   overflow: hidden;
   flex-direction: column;
 }
+@media screen and (max-width: 800px) {
+  .testcases-table{
+    width: 100%;
+  }
+  .table-container{
+    overflow-x: auto;
+  }
+}
+@media screen and (max-width: 604px) {
+  .testcases-table{
+    width: 100%;
+  }
+  .table-container{
+    overflow-x: auto;
+  }
+}
 @media screen and (max-width: 600px) {
   .expandHeader{
     width: 50px;
