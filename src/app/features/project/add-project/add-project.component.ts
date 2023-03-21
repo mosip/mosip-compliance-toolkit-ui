@@ -9,6 +9,7 @@ import { SbiProjectModel } from 'src/app/core/models/sbi-project';
 import { MatDialog } from '@angular/material/dialog';
 import Utils from 'src/app/app.utils';
 import { SdkProjectModel } from 'src/app/core/models/sdk-project';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-project',
@@ -18,6 +19,7 @@ import { SdkProjectModel } from 'src/app/core/models/sdk-project';
 export class AddProjectComponent implements OnInit {
   projectForm = new FormGroup({});
   allControls: string[];
+  isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
   subscriptions: Subscription[] = [];
   bioTestDataFileNames: string[] = [];
   hidePassword = true;
