@@ -26,17 +26,17 @@ export class SbiTestCaseAndroidService {
     return new Promise(async (resolve, reject) => {
       const methodRequest = this.createRequest(testCase, sbiSelectedDevice);
       let startExecutionTime = new Date().toISOString();
-      let methodResponse: any = await this.executeMethod(
+      let executeResponse: any = await this.executeMethod(
         testCase,
         sbiDeviceType,
         callbackId,
         JSON.stringify(methodRequest)
       );
       let endExecutionTime = new Date().toISOString();
-      if (methodResponse) {
+      if (executeResponse) {
         const decodedMethodResp = this.createDecodedResponse(
           testCase.methodName[0],
-          methodResponse,
+          executeResponse.methodResponse,
           sbiSelectedDevice
         );
         let performValidations = true;
@@ -69,7 +69,7 @@ export class SbiTestCaseAndroidService {
           methodResponse: JSON.stringify(decodedMethodResp),
           methodRequest: JSON.stringify(methodRequest),
           validationResponse: validationResponse,
-          methodUrl: '',
+          methodUrl: executeResponse.methodUrl,
           testDataSource: '',
         };
         resolve(finalResponse);
@@ -95,20 +95,20 @@ export class SbiTestCaseAndroidService {
     const methodName = testCase.methodName[0];
 
     if (methodName == appConstants.SBI_METHOD_DISCOVER) {
-      let methodResponse = await this.callSBIMethodAndroid(appConstants.SBI_METHOD_DISCOVER, sbiDeviceType, callbackId, methodRequestStr);
-      return methodResponse;
+      let executeResponse = await this.callSBIMethodAndroid(appConstants.SBI_METHOD_DISCOVER, sbiDeviceType, callbackId, methodRequestStr);
+      return executeResponse;
     }
     if (methodName == appConstants.SBI_METHOD_DEVICE_INFO) {
-      let methodResponse = await this.callSBIMethodAndroid(appConstants.SBI_METHOD_DEVICE_INFO, sbiDeviceType, callbackId, methodRequestStr);
-      return methodResponse;
+      let executeResponse = await this.callSBIMethodAndroid(appConstants.SBI_METHOD_DEVICE_INFO, sbiDeviceType, callbackId, methodRequestStr);
+      return executeResponse;
     }
     if (methodName == appConstants.SBI_METHOD_CAPTURE) {
-      let methodResponse = await this.callSBIMethodAndroid(appConstants.SBI_METHOD_CAPTURE, sbiDeviceType, callbackId, methodRequestStr);
-      return methodResponse;
+      let executeResponse = await this.callSBIMethodAndroid(appConstants.SBI_METHOD_CAPTURE, sbiDeviceType, callbackId, methodRequestStr);
+      return executeResponse;
     }
     if (methodName == appConstants.SBI_METHOD_RCAPTURE) {
-      let methodResponse = await this.callSBIMethodAndroid(appConstants.SBI_METHOD_RCAPTURE, sbiDeviceType, callbackId, methodRequestStr);
-      return methodResponse;
+      let executeResponse = await this.callSBIMethodAndroid(appConstants.SBI_METHOD_RCAPTURE, sbiDeviceType, callbackId, methodRequestStr);
+      return executeResponse;
     }
   }
 
@@ -127,7 +127,10 @@ export class SbiTestCaseAndroidService {
         if (discoverStatus == appConstants.RESULT_OK) {
           const discoverResp = JSON.parse(discoverResult[appConstants.RESPONSE]);
           if (testcaseMethodName == appConstants.SBI_METHOD_DISCOVER) {
-            resolve(discoverResp);
+            resolve({
+              methodResponse: discoverResp,
+              methodUrl: appConstants.DISCOVERY_INTENT_ACTION
+            });
           }
           if (testcaseMethodName == appConstants.SBI_METHOD_DEVICE_INFO) {
             MosipSbiCapacitorPlugin.startActivity({
@@ -138,7 +141,10 @@ export class SbiTestCaseAndroidService {
               const deviceInfoStatus = deviceInfoResult[appConstants.STATUS];
               if (deviceInfoStatus == appConstants.RESULT_OK) {
                 const deviceInfoResp = JSON.parse(deviceInfoResult[appConstants.RESPONSE]);
-                resolve(deviceInfoResp);
+                resolve({
+                  methodResponse: deviceInfoResp,
+                  methodUrl: callbackId + appConstants.D_INFO_INTENT_ACTION
+                });
               } else {
                 resolve(false);
               }
@@ -155,7 +161,10 @@ export class SbiTestCaseAndroidService {
               const rCaptureStatus = rCaptureResult[appConstants.STATUS];
               if (rCaptureStatus == appConstants.RESULT_OK) {
                 const rCaptureResp = JSON.parse(rCaptureResult[appConstants.RESPONSE]);
-                resolve(rCaptureResp);
+                resolve({
+                  methodResponse: rCaptureResp,
+                  methodUrl: callbackId + appConstants.R_CAPTURE_INTENT_ACTION
+                });
               } else {
                 resolve(false);
               }
@@ -172,7 +181,10 @@ export class SbiTestCaseAndroidService {
               const captureStatus = captureResult[appConstants.STATUS];
               if (captureStatus == appConstants.RESULT_OK) {
                 const captureResp = JSON.parse(captureResult[appConstants.RESPONSE]);
-                resolve(captureResp);
+                resolve({
+                  methodResponse: captureResp,
+                  methodUrl: callbackId + appConstants.CAPTURE_INTENT_ACTION
+                });
               } else {
                 resolve(false);
               }
@@ -331,7 +343,7 @@ export class SbiTestCaseAndroidService {
     if (testcaseMethodName == appConstants.SBI_METHOD_DEVICE_INFO) {
       let decodedDataArr: any[] = [];
       methodResponse.forEach((deviceInfoResp: any) => {
-        
+
         if (deviceInfoResp && !deviceInfoResp.deviceInfo) {
           decodedDataArr.push(deviceInfoResp);
         } else if (deviceInfoResp && deviceInfoResp.deviceInfo == '') {

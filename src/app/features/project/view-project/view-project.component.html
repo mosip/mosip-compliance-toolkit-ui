@@ -334,13 +334,14 @@
                     Add Collection
                 </button>
             </div>
-            <div *ngIf="projectForm.controls['sbiPurpose']?.value == 'Auth'">
+            <div *ngIf="projectForm.controls['projectType']?.value == 'SBI'">
                 <button mat-flat-button color="accent" (click)="addCollection()" class="collections-button">
                     <mat-icon class="collectionicon">add</mat-icon>
                     Add Collection
                 </button>
                 <span align="end" class="buttonspan">
-                    <button mat-flat-button color="accent" (click)="downloadEncryptionKey()"
+                    <button mat-flat-button  *ngIf="projectForm.controls['sbiPurpose']?.value == 'Auth'" 
+                        color="accent" (click)="downloadEncryptionKey()"
                         title="Click to download encryption key for Auth devices" class="encryptionkeyButton">
                         <mat-icon class="encrypticon">save</mat-icon>
                         Encryption Key
@@ -353,74 +354,65 @@
                     </button>
                 </span>
             </div>
-        <div *ngIf="projectForm.controls['sbiPurpose']?.value == 'Registration'">
-            <button mat-flat-button color="accent" (click)="addCollection()" class="collections-button2">
-                <mat-icon class="collectionicon">add</mat-icon>
-                Add Collection
-            </button>
-            <button mat-flat-button color="accent" (click)="scanDevice()" class="scandeviceButtonREG" >
-                <mat-icon *ngIf="isScanComplete">check_circle</mat-icon>
-                <mat-icon *ngIf="!isScanComplete">radio_button_unchecked</mat-icon>
-                Scan Device
-            </button>
-        </div>
         </div>
         <mat-paginator [pageSizeOptions]="[5, 10, 25, 50, 100]" aria-label="Select page of users"></mat-paginator>
         <div class="tablediv">
-        <table mat-table [dataSource]="dataSource" matSort class="collections-table">
-            <!--- Note that these columns can be defined in any order.
+            <table mat-table [dataSource]="dataSource" matSort class="collections-table">
+                <!--- Note that these columns can be defined in any order.
               The actual rendered columns are set as a property on the row definition" -->
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="nameHeader"> Name </th>
-                <td mat-cell *matCellDef="let element" class="nameCell">
-                    <a class="link" (click)="viewCollection(element)"
-                        *ngIf="element.testCaseCount > 0">{{element.name}}</a>
-                    <span *ngIf="element.testCaseCount <= 0">{{element.name}}</span>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="testCaseCount">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="testCaseHeader"> Testcases </th>
-                <td mat-cell *matCellDef="let element" class="testCaseCell"> {{element.testCaseCount}} </td>
-            </ng-container>
-            <ng-container matColumnDef="crDtimes">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="crDateHeader"> Creation Date </th>
-                <td mat-cell *matCellDef="let element" class="csDateCell"> {{element.crDtimes | date: 'short' }} </td>
-            </ng-container>
-            <ng-container matColumnDef="runDtimes">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="lastRunHeader"> Last Run Date </th>
-                <td mat-cell *matCellDef="let element" class="lastRunCell"> {{element.runDtimes | date: 'short'}} </td>
-            </ng-container>
-            <ng-container matColumnDef="actions" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef class="runHeader"> Run </th>
-                <td mat-cell *matCellDef="let row" class="runCell">
-                    <button mat-flat-button color="accent" (click)="runCollection(row)" *ngIf="projectType == 'SBI'"
-                        [disabled]="!isScanComplete || row.testCaseCount == 0"
-                        title="{{!isScanComplete ? 'You cannot run till you scan device first.' : row.testCaseCount == 0 ? 'Add testcases first':'Click to run the collection'}}">
-                        Run
-                    </button>
-                    <button mat-flat-button color="accent" (click)="runCollection(row)" *ngIf="projectType == 'SDK'"
-                        [disabled]="row.testCaseCount == 0"
-                        title="{{row.testCaseCount == 0 ? 'Add testcases first':'Click to run the collection'}}">
-                        Run
-                    </button>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="actionsMore" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef class="actionsHeader">
-                </th>
-                <td mat-cell *matCellDef="let element" class="actionsCell">
-                    <span *ngIf="element.runId">
-                        <button mat-icon-button [matMenuTriggerFor]="appMenu"
-                            [matMenuTriggerData]="{myobject: element}" class="options">
-                            <mat-icon>more_vert</mat-icon>
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="nameHeader"> Name </th>
+                    <td mat-cell *matCellDef="let element" class="nameCell">
+                        <a class="link" (click)="viewCollection(element)"
+                            *ngIf="element.testCaseCount > 0">{{element.name}}</a>
+                        <span *ngIf="element.testCaseCount <= 0">{{element.name}}</span>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="testCaseCount">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="testCaseHeader"> Testcases </th>
+                    <td mat-cell *matCellDef="let element" class="testCaseCell"> {{element.testCaseCount}} </td>
+                </ng-container>
+                <ng-container matColumnDef="crDtimes">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="crDateHeader"> Creation Date </th>
+                    <td mat-cell *matCellDef="let element" class="csDateCell"> {{element.crDtimes | date: 'short' }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="runDtimes">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="lastRunHeader"> Last Run Date </th>
+                    <td mat-cell *matCellDef="let element" class="lastRunCell"> {{element.runDtimes | date: 'short'}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="actions" stickyEnd>
+                    <th mat-header-cell *matHeaderCellDef class="runHeader"> Run </th>
+                    <td mat-cell *matCellDef="let row" class="runCell">
+                        <button mat-flat-button color="accent" (click)="runCollection(row)" *ngIf="projectType == 'SBI'"
+                            [disabled]="!isScanComplete || row.testCaseCount == 0"
+                            title="{{!isScanComplete ? 'You cannot run till you scan device first.' : row.testCaseCount == 0 ? 'Add testcases first':'Click to run the collection'}}">
+                            Run
                         </button>
-                    </span>
-                </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-    </div>
+                        <button mat-flat-button color="accent" (click)="runCollection(row)" *ngIf="projectType == 'SDK'"
+                            [disabled]="row.testCaseCount == 0"
+                            title="{{row.testCaseCount == 0 ? 'Add testcases first':'Click to run the collection'}}">
+                            Run
+                        </button>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="actionsMore" stickyEnd>
+                    <th mat-header-cell *matHeaderCellDef class="actionsHeader">
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="actionsCell">
+                        <span *ngIf="element.runId">
+                            <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                                [matMenuTriggerData]="{myobject: element}" class="options">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                        </span>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
     </div>
 </div>
 <p></p>
