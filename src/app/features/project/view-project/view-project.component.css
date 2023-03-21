@@ -203,6 +203,35 @@ mat-expansion-panel-header {
     padding-left: 10px;
   }
 }
+@media screen and (max-width: 600px) {
+  .encryptionkeyButton{
+    margin-left: 55px;
+  }
+  a{
+    width: 60px; display: inline-block; overflow-wrap: break-word;
+  }
+  .scandeviceButton{
+    margin-left: 30px;
+  }
+  .scandeviceButtonREG{
+    margin-left: 250px;
+  }
+  .testCaseCell{
+    padding-left: 20px;
+  }
+  .crDateHeader{
+    padding-left: 15px;
+  }
+  .lastRunHeader{
+    padding-left: 10px;
+  }
+  .runHeader{
+    padding-left: 30px;
+  }
+  .runCell{
+    padding-left: 10px;
+  }
+}
 @media only screen and (max-width: 426px) {
   .fieldWrapper {
     width: 340px;
