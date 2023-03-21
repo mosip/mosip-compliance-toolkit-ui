@@ -141,6 +141,9 @@ mat-expansion-panel-header {
   .scandeviceButton{
     margin-left: 250px;
   }
+  .scandeviceButton-android{
+    margin-left: 680px;
+  }
 }
 @media screen and (max-width: 960px) {
   .encryptionkeyButton{
@@ -150,6 +153,9 @@ mat-expansion-panel-header {
     margin-left: 190px;
   }
   .scandeviceButtonREG{
+    margin-left: 610px;
+  }
+  .scandeviceButton-android{
     margin-left: 610px;
   }
 }
@@ -168,6 +174,9 @@ mat-expansion-panel-header {
   .scandeviceButtonREG{
     margin-left: 420px;
   }
+  .scandeviceButton-android{
+    margin-left: 420px;
+  }
 }
 @media screen and (min-width: 685px) and (max-width: 763px) {
   .collections-button{
@@ -184,6 +193,9 @@ mat-expansion-panel-header {
   .scandeviceButtonREG{
     margin-left: 340px;
   }
+  .scandeviceButton-android{
+    margin-left: 340px;
+  }
 }
 @media screen and (min-width: 603px) and (max-width: 684px) {
   .encryptionkeyButton{
@@ -194,6 +206,9 @@ mat-expansion-panel-header {
   }
   .scandeviceButton{
     margin-left: 45px;
+  }
+  .scandeviceButton-android{
+    margin-left: 250px;
   }
   .scandeviceButtonREG{
     margin-left: 260px;
@@ -242,6 +257,9 @@ mat-expansion-panel-header {
   .runCell{
     padding-left: 10px;
   }
+  .scandeviceButton-android{
+    margin-left: 250px;
+  }
 }
 @media only screen and (max-width: 426px) {
   .fieldWrapper {
@@ -265,7 +283,7 @@ mat-expansion-panel-header {
   .collections-button{
     position: relative;
     margin-left: 10px;
-    width: 160px;
+    width: 140px;
     float: left;
   }
   .encryptionkeyButton{
@@ -279,6 +297,9 @@ mat-expansion-panel-header {
     margin-top: -40px;
     margin-left: -170px;
     position: absolute;
+  }
+  .scandeviceButton-android{
+    margin-left: 80px;
   }
   .collectionicon{
     margin-left: -20px;
@@ -368,6 +389,12 @@ mat-expansion-panel-header {
   .fieldLabel {
     width: 60px;
   }
+  .collections-button{
+    width: 120px;
+  }
+  .scandeviceButton-android{
+    margin-left: 60px;
+  }
 }
 @media screen and (max-width: 360px) {
   .tablediv{
@@ -393,6 +420,9 @@ mat-expansion-panel-header {
     margin-left: -5px;
     margin-top: -80px;
     position: absolute;
+  }
+  .scandeviceButton-android{
+    margin-left: 30px;
   }
   .collectionicon{
     margin-left: -15px;
@@ -516,6 +546,9 @@ mat-expansion-panel-header {
     margin-left: -5px;
     margin-top: -80px;
     position: absolute;
+  }
+  .scandeviceButton-android{
+    margin-left: 10px;
   }
   .collectionicon{
     margin-left: -15px;

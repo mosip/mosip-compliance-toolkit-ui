@@ -339,7 +339,8 @@
                     <mat-icon class="collectionicon">add</mat-icon>
                     Add Collection
                 </button>
-                <span align="end" class="buttonspan">
+                <span align="end" class="buttonspan" 
+                *ngIf="!isAndroidAppMode">
                     <button mat-flat-button color="accent" (click)="downloadEncryptionKey()"
                         title="Click to download encryption key for Auth devices" class="encryptionkeyButton">
                         <mat-icon class="encrypticon">save</mat-icon>
@@ -352,6 +353,12 @@
                         Scan Device
                     </button>
                 </span>
+                <button mat-flat-button color="accent" (click)="scanDevice()" class="scandeviceButton-android"
+                *ngIf="isAndroidAppMode">
+                    <mat-icon *ngIf="isScanComplete" class="scandeviceicon">check_circle</mat-icon>
+                    <mat-icon *ngIf="!isScanComplete" class="scandeviceicon2">radio_button_unchecked</mat-icon>
+                    Scan Device
+                </button>
             </div>
         <div *ngIf="projectForm.controls['sbiPurpose']?.value == 'Registration'">
             <button mat-flat-button color="accent" (click)="addCollection()" class="collections-button2">
