@@ -60,6 +60,26 @@
   .custom-class mat-icon {
     vertical-align: middle;
   }
+  @media screen and (max-width: 960px) {
+    .detailsHeader{
+      padding-left: 95px;
+    }
+    .detailsCell{
+      padding-left: 45px;
+    }
+    .totaltestcaseCell{
+      padding-left: 40px;
+    }
+    .passcasesCell{
+      padding-left: 40px;
+    }
+    .failcasesHeader{
+      padding-left: 20px;
+    }
+    .failcasesCell{
+      padding-left: 40px;
+    }
+  }
   @media screen and (max-width: 800px) {
     .testcases-table{
       width: 100%;
