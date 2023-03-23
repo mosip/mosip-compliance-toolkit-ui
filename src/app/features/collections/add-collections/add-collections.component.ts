@@ -154,10 +154,9 @@ export class AddCollectionsComponent implements OnInit {
                 for (let testcase of testcases) {
                   if (!this.isAndroidAppMode) {
                     testcaseArr.push(testcase);
-                  } else {
-                    if (!testcase.inactiveForAndroid) {
-                      testcaseArr.push(testcase);
-                    }
+                  } else if (this.isAndroidAppMode && (!testcase.inactiveForAndroid 
+                    || (testcase.inactiveForAndroid && testcase.inactiveForAndroid != "yes"))){
+                    testcaseArr.push(testcase);
                   }
                 }
                 //sort the testcases based on the testId
