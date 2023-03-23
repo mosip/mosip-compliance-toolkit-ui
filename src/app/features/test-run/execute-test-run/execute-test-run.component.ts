@@ -79,10 +79,10 @@ export class ExecuteTestRunComponent implements OnInit {
     appConstants.SBI_KEY_ROTATION_ITERATIONS
   ]
     ? parseInt(
-      this.appConfigService.getConfig()[
-      appConstants.SBI_KEY_ROTATION_ITERATIONS
-      ]
-    )
+        this.appConfigService.getConfig()[
+          appConstants.SBI_KEY_ROTATION_ITERATIONS
+        ]
+      )
     : 0;
   currentKeyRotationIndex = 0;
   isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
@@ -308,7 +308,7 @@ export class ExecuteTestRunComponent implements OnInit {
         startingForLoop = true;
         this.currectTestCaseId = testCase.testId;
         this.currectTestCaseName = testCase.testName;
-        this.currentTestDescription = testCase.testDescription;
+        this.currentTestDescription = this.getTestDescription(testCase);
         this.currentTestCaseIsRCapture =
           testCase.methodName[0] == appConstants.SBI_METHOD_RCAPTURE
             ? true
@@ -327,7 +327,7 @@ export class ExecuteTestRunComponent implements OnInit {
           if (this.currentKeyRotationIndex < this.keyRotationIterations) {
             this.handleKeyRotationFlow(startingForLoop, testCase, res);
             if (this.showContinueBtn) {
-              await new Promise(async (resolve, reject) => { });
+              await new Promise(async (resolve, reject) => {});
             }
           }
           this.calculateTestcaseResults(res[appConstants.VALIDATIONS_RESPONSE]);
@@ -337,7 +337,7 @@ export class ExecuteTestRunComponent implements OnInit {
           await this.updateTestRun();
           if (testCase.otherAttributes.resumeAgainBtn) {
             this.showResumeAgainBtn = true;
-            await new Promise(async (resolve, reject) => { });
+            await new Promise(async (resolve, reject) => {});
           }
           this.currectTestCaseId = '';
           this.currectTestCaseName = '';
@@ -347,7 +347,15 @@ export class ExecuteTestRunComponent implements OnInit {
       }
     }
   }
-
+  getTestDescription(testcase: TestCaseModel) {
+    if (!this.isAndroidAppMode) {
+      return testcase.testDescription;
+    } else {
+      return testcase.androidTestDescription
+        ? testcase.androidTestDescription
+        : testcase.testDescription;
+    }
+  }
   handleKeyRotationFlow(
     startingForLoop: boolean,
     testCase: TestCaseModel,
@@ -366,7 +374,7 @@ export class ExecuteTestRunComponent implements OnInit {
       ) {
         const validationsList =
           res[appConstants.VALIDATIONS_RESPONSE][appConstants.RESPONSE][
-          appConstants.VALIDATIONS_LIST
+            appConstants.VALIDATIONS_LIST
           ];
         if (validationsList && validationsList.length > 0) {
           validationsList.forEach((validationitem: any) => {
@@ -411,10 +419,16 @@ export class ExecuteTestRunComponent implements OnInit {
 
   checkIfToShowStreamBtn(testCase: TestCaseModel) {
     if (this.projectType === appConstants.SBI) {
-      if (testCase.methodName[0] == appConstants.SBI_METHOD_RCAPTURE && !this.isAndroidAppMode) {
+      if (
+        testCase.methodName[0] == appConstants.SBI_METHOD_RCAPTURE &&
+        !this.isAndroidAppMode
+      ) {
         this.showStreamingBtn = true;
       }
-      if (testCase.methodName[0] == appConstants.SBI_METHOD_RCAPTURE && this.isAndroidAppMode) {
+      if (
+        testCase.methodName[0] == appConstants.SBI_METHOD_RCAPTURE &&
+        this.isAndroidAppMode
+      ) {
         this.streamingDone = true;
         this.showInitiateCaptureBtn = true;
       }
@@ -497,7 +511,7 @@ export class ExecuteTestRunComponent implements OnInit {
     ) {
       const validationsList =
         res[appConstants.VALIDATIONS_RESPONSE][appConstants.RESPONSE][
-        appConstants.VALIDATIONS_LIST
+          appConstants.VALIDATIONS_LIST
         ];
       if (validationsList && validationsList.length > 0) {
         validationsList.forEach((validationitem: any) => {
@@ -738,7 +752,7 @@ export class ExecuteTestRunComponent implements OnInit {
     );
     const deviceId = selectedSbiDevice.deviceId;
     const deviceSubId = this.currectDeviceSubId;
-    let methodUrl = "";
+    let methodUrl = '';
     const SBI_BASE_URL = this.appConfigService.getConfig()['SBI_BASE_URL'];
     methodUrl =
       SBI_BASE_URL +

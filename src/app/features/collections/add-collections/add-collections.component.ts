@@ -13,6 +13,7 @@ import { TestCaseModel } from 'src/app/core/models/testcase';
 import { SelectionModel } from '@angular/cdk/collections';
 import Utils from 'src/app/app.utils';
 import { SdkProjectModel } from 'src/app/core/models/sdk-project';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-add-collections',
@@ -35,8 +36,9 @@ export class AddCollectionsComponent implements OnInit {
     'testName',
     'testDescription',
     'validatorDefs',
-    'scrollIcon'
+    'scrollIcon',
   ];
+  isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
   dataSubmitted = false;
 
   constructor(
@@ -147,15 +149,26 @@ export class AddCollectionsComponent implements OnInit {
             (response: any) => {
               //console.log(response);
               let testcases = response['response'];
+              let testcaseArr = [];
               if (testcases && testcases.length > 0) {
+                for (let testcase of testcases) {
+                  if (!this.isAndroidAppMode) {
+                    testcaseArr.push(testcase);
+                  } else {
+                    if (!testcase.inactiveForAndroid) {
+                      testcaseArr.push(testcase);
+                    }
+                  }
+                }
                 //sort the testcases based on the testId
-                testcases.sort(function (a: TestCaseModel, b: TestCaseModel) {
+                testcaseArr.sort(function (a: TestCaseModel, b: TestCaseModel) {
                   if (a.testId > b.testId) return 1;
                   if (a.testId < b.testId) return -1;
                   return 0;
                 });
+                //console.log(testcaseArr);
               }
-              this.dataSource = new MatTableDataSource(testcases);
+              this.dataSource = new MatTableDataSource(testcaseArr);
               resolve(true);
             },
             (errors) => {
