@@ -10,7 +10,7 @@ export class TestCaseModel {
     public testDescription: string,
     public androidTestDescription: string,
     public isNegativeTestcase: boolean,
-    public inactiveForAndroid: boolean,
+    public inactiveForAndroid: string,
     public methodName: any,
     public requestSchema: any,
     public responseSchema: any,
