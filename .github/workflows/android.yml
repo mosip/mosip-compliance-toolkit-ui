@@ -1,0 +1,64 @@
+name: Android Build Workflow
+on:
+  push:
+    branches:
+      - develop
+  workflow_dispatch:
+    inputs:
+      services_base_url:
+        description: 'The base URL for app services'
+        required: true
+        default: 'https://api-internal.dev.mosip.net/v1/toolkit/'
+      iam_url:
+        description: 'The URL for the IAM server'
+        required: true
+        default: 'https://iam.dev.mosip.net/auth'
+        
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - uses: actions/setup-node@v1
+      with:
+        version: 14
+        
+    - name: Install Angular CLI
+      run: npm install -g @angular/cli
+
+    - name: Set environment variables
+      run: |
+        echo "Setting environment variables..."
+        echo "NX_APP_SERVICES_BASE_URL=${{ github.event.inputs.services_base_url }}" >> $GITHUB_ENV
+        echo "NX_APP_IAM_URL=${{ github.event.inputs.iam_url }}" >> $GITHUB_ENV
+        echo "NX_APP_IAM_REALM=mosip" >> $GITHUB_ENV
+        echo "NX_APP_IAM_CLIENT_ID=mosip-toolkit-android-client" >> $GITHUB_ENV
+        
+    - name: Install NPM packages
+      run: npm install --ignore-scripts
+      
+    - name: Build Android app
+      run: ng build -c=android
+
+    - name: Change to app directory
+      run: cd android/app
+      
+    - name: Sync Capacitor project
+      run: npx cap sync
+      
+    - name: Build APK
+      working-directory: android
+      run: |
+        chmod +x ./gradlew
+        ./gradlew build
+    - name: Change to root directory
+      run: cd ../
+      
+    - name: Upload APK
+      uses: actions/upload-artifact@v2
+      with:
+        name: CTK-Android
+        path: ./android/app/build/outputs/apk/debug/app-debug.apk
