@@ -112,9 +112,16 @@ export class AuthInterceptor implements HttpInterceptor {
                 );
                 this.userProfileService.setUsername(event.body.response.userId);
                 this.userProfileService.setRoles(event.body.response.role);
-                this.userProfileService.setUserPreferredLanguage(
-                  this.decoded['locale']
-                );
+                const langCode = this.decoded['locale'];
+                this.userProfileService.setUserPreferredLanguage(langCode);
+                const rtlLanguages = this.appConfigService.getConfig()['rtlLanguages'] 
+                  ? this.appConfigService.getConfig()['rtlLanguages'].split(',') 
+                  : [];
+                let isRtl = false;
+                if (rtlLanguages.includes(langCode)) {
+                  isRtl = true;
+                }
+                this.userProfileService.setTextDir(isRtl);
               }
               if (
                 event.body.errors !== null &&

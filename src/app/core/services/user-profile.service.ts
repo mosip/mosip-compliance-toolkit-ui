@@ -9,6 +9,7 @@ export class UserProfileService {
   private zone = '';
   private displayUserName = '';
   private userPreferredLanguage = '';
+  private textDir = false;
 
   constructor() {}
 
@@ -60,5 +61,13 @@ export class UserProfileService {
     } else {
       return 'eng';
     }
+  }
+
+  setTextDir(textDir: boolean) {
+    this.textDir = textDir;
+  }
+
+  getTextDir(): boolean {
+    return this.textDir;
   }
 }
