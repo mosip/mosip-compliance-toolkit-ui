@@ -59,7 +59,7 @@
   font-size: smaller;
   width: 100%;
 }
-@media screen and (max-width: 1440px) {
+@media screen and (max-width: 2560px) {
   .fieldContainerBox {
     width: 250px;
     padding-left: 10px;
