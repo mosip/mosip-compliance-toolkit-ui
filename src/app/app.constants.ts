@@ -40,7 +40,7 @@ export const SBI_CONTROLS = [
   'deviceType',
   'deviceSubType',
 ];
-export const ABIS_CONTROLS = ['abisUrl', 'username', 'password', 'queueName'];
+export const ABIS_CONTROLS = ['abisUrl', 'username', 'password', 'outboundQueueName','inboundQueueName', 'abisSpecVersion', 'abisPurpose','abisBioTestData'];
 export const TEST_DATA_CONTROLS= ['name', 'type', 'purpose'];
 export const SBI_KEY_ROTATION_ITERATIONS = 'keyRotationIterations';
 //SBI methods related constants

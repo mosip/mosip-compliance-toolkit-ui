@@ -35,8 +35,7 @@
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="nameHeader"> Name </th>
             <td mat-cell *matCellDef="let element" class="nameCell">
-                <a class="link" (click)="viewProject(element)" *ngIf="element.projectType == 'SBI' || element.projectType == 'SDK'">{{element.name}}</a>
-                <span *ngIf="element.projectType !== 'SBI' && element.projectType !== 'SDK'">{{element.name}}</span>
+                <a class="link" (click)="viewProject(element)">{{element.name}}</a>
             </td>
         </ng-container>
         <ng-container matColumnDef="projectType">

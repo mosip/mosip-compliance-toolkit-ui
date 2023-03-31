@@ -10,14 +10,14 @@
   justify-content: first baseline;
   align-items: center;
   padding: 5px;
-  height: 50px;
-  width: 340px;
+  /* height: 50px;
+  width: 340px; */
 }
 .fieldLabel {
-  flex: 0.2;
+  width: 20%;
 }
 .fieldContainer {
-  flex: 0.3;
+  width: 80%;
   align-items: center;
 }
 .mat-radio-button ~ .mat-radio-button {

@@ -14,6 +14,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import Utils from 'src/app/app.utils';
 import { SdkProjectModel } from 'src/app/core/models/sdk-project';
 import { environment } from 'src/environments/environment';
+import { AbisProjectModel } from 'src/app/core/models/abis-project';
 
 @Component({
   selector: 'app-add-collections',
@@ -28,6 +29,7 @@ export class AddCollectionsComponent implements OnInit {
   dataLoaded = false;
   sbiProjectData: SbiProjectModel;
   sdkProjectData: SdkProjectModel;
+  abisProjectData: AbisProjectModel;
   dataSource: MatTableDataSource<TestCaseModel>;
   selection = new SelectionModel<TestCaseModel>(true, []);
   displayedColumns: string[] = [
@@ -48,7 +50,7 @@ export class AddCollectionsComponent implements OnInit {
     private dataService: DataService,
     private dialog: MatDialog,
     private router: Router
-  ) {}
+  ) { }
 
   async ngOnInit() {
     this.initForm();
@@ -61,6 +63,11 @@ export class AddCollectionsComponent implements OnInit {
     if (this.projectType == appConstants.SDK) {
       await this.getSdkProjectDetails();
       await this.getSdkTestcases();
+      this.initBreadCrumb();
+    }
+    if (this.projectType == appConstants.ABIS) {
+      await this.getAbisProjectDetails();
+      await this.getAbisTestcases();
       this.initBreadCrumb();
     }
     this.dataLoaded = true;
@@ -77,6 +84,12 @@ export class AddCollectionsComponent implements OnInit {
       this.breadcrumbService.set(
         '@projectBreadCrumb',
         `${this.projectType} Project - ${this.sdkProjectData.name}`
+      );
+    }
+    if (this.abisProjectData) {
+      this.breadcrumbService.set(
+        '@projectBreadCrumb',
+        `${this.projectType} Project - ${this.abisProjectData.name}`
       );
     }
     this.breadcrumbService.set('@collectionBreadCrumb', `Add`);
@@ -135,6 +148,24 @@ export class AddCollectionsComponent implements OnInit {
     });
   }
 
+  async getAbisProjectDetails() {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.getAbisProject(this.projectId).subscribe(
+          (response: any) => {
+            //console.log(response);
+            this.abisProjectData = response['response'];
+            resolve(true);
+          },
+          (errors) => {
+            Utils.showErrorMessage(errors, this.dialog);
+            resolve(false);
+          }
+        )
+      );
+    });
+  }
+
   async getSbiTestcases() {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
@@ -148,26 +179,7 @@ export class AddCollectionsComponent implements OnInit {
           .subscribe(
             (response: any) => {
               //console.log(response);
-              let testcases = response['response'];
-              let testcaseArr = [];
-              if (testcases && testcases.length > 0) {
-                for (let testcase of testcases) {
-                  if (!this.isAndroidAppMode) {
-                    testcaseArr.push(testcase);
-                  } else if (this.isAndroidAppMode && (!testcase.inactiveForAndroid 
-                    || (testcase.inactiveForAndroid && testcase.inactiveForAndroid != "yes"))){
-                    testcaseArr.push(testcase);
-                  }
-                }
-                //sort the testcases based on the testId
-                testcaseArr.sort(function (a: TestCaseModel, b: TestCaseModel) {
-                  if (a.testId > b.testId) return 1;
-                  if (a.testId < b.testId) return -1;
-                  return 0;
-                });
-                //console.log(testcaseArr);
-              }
-              this.dataSource = new MatTableDataSource(testcaseArr);
+              this.processTestcasesResp(response);
               resolve(true);
             },
             (errors) => {
@@ -190,16 +202,7 @@ export class AddCollectionsComponent implements OnInit {
           .subscribe(
             (response: any) => {
               //console.log(response);
-              let testcases = response['response'];
-              //sort the testcases based on the testId
-              if (testcases && testcases.length > 0) {
-                testcases.sort(function (a: TestCaseModel, b: TestCaseModel) {
-                  if (a.testId > b.testId) return 1;
-                  if (a.testId < b.testId) return -1;
-                  return 0;
-                });
-              }
-              this.dataSource = new MatTableDataSource(testcases);
+              this.processTestcasesResp(response);
               resolve(true);
             },
             (errors: any) => {
@@ -211,6 +214,51 @@ export class AddCollectionsComponent implements OnInit {
     });
   }
 
+  async getAbisTestcases() {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService
+          .getAbisTestCases(
+            this.abisProjectData.abisVersion,
+            this.abisProjectData.purpose
+          )
+          .subscribe(
+            (response: any) => {
+              //console.log(response);
+              this.processTestcasesResp(response);
+              resolve(true);
+            },
+            (errors: any) => {
+              Utils.showErrorMessage(errors, this.dialog);
+              resolve(false);
+            }
+          )
+      );
+    });
+  }
+
+  processTestcasesResp(response: any) {
+    let testcases = response['response'];
+    let testcaseArr = [];
+    if (testcases && testcases.length > 0) {
+      for (let testcase of testcases) {
+        if (!this.isAndroidAppMode) {
+          testcaseArr.push(testcase);
+        } else if (this.isAndroidAppMode && (!testcase.inactiveForAndroid
+          || (testcase.inactiveForAndroid && testcase.inactiveForAndroid != "yes"))) {
+          testcaseArr.push(testcase);
+        }
+      }
+      //sort the testcases based on the testId
+      testcaseArr.sort(function (a: TestCaseModel, b: TestCaseModel) {
+        if (a.testId > b.testId) return 1;
+        if (a.testId < b.testId) return -1;
+        return 0;
+      });
+      //console.log(testcaseArr);
+    }
+    this.dataSource = new MatTableDataSource(testcaseArr);
+  }
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     if (this.dataSource) {
@@ -236,9 +284,8 @@ export class AddCollectionsComponent implements OnInit {
     if (!row) {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
-      row.testId + 1
-    }`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.testId + 1
+      }`;
   }
 
   backToProject() {

@@ -37,6 +37,9 @@ export class AddProjectComponent implements OnInit {
     const projectType = this.projectForm.controls['projectType'].value;
     if (projectType == appConstants.SDK) {
       await this.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value);
+    }
+    if (projectType == appConstants.ABIS) {
+      await this.getBioTestDataNames(this.projectForm.controls['abisPurpose'].value);
     } 
   }
 
@@ -130,6 +133,10 @@ export class AddProjectComponent implements OnInit {
 
   async handleSdkPurposeChange() {
     await this.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value);
+  }
+
+  async handleAbisPurposeChange() {
+    await this.getBioTestDataNames(this.projectForm.controls['abisPurpose'].value);
   }
 
   async saveProject() {

@@ -81,6 +81,12 @@ export class ViewProjectComponent implements OnInit {
       this.populateSdkProjectForm();
       await this.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value);
     }
+    if (this.projectType == appConstants.ABIS) {
+      this.initAbisProjectForm();
+      await this.getAbisProjectDetails();
+      this.populateAbisProjectForm();
+      await this.getBioTestDataNames(this.projectForm.controls['abisPurpose'].value);
+    }
     await this.getCollections();
     this.dataSource.paginator = this.paginator;
     this.sort.sort(({ id: 'runDtimes', start: 'desc' }) as MatSortable);
@@ -133,6 +139,23 @@ export class ViewProjectComponent implements OnInit {
           value: '',
           disabled:
             controlId == 'sdkUrl' || controlId == 'bioTestData' ? false : true,
+        })
+      );
+    });
+  }
+
+  initAbisProjectForm() {
+    this.allControls = [
+      ...appConstants.COMMON_CONTROLS,
+      ...appConstants.ABIS_CONTROLS,
+    ];
+    this.allControls.forEach((controlId) => {
+      this.projectForm.addControl(
+        controlId,
+        new FormControl({
+          value: '',
+          disabled:
+            controlId == 'abisUrl' || controlId == 'abisBioTestData' ? false : true,
         })
       );
     });
@@ -192,6 +215,24 @@ export class ViewProjectComponent implements OnInit {
     });
   }
 
+  async getAbisProjectDetails() {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.getAbisProject(this.projectId).subscribe(
+          (response: any) => {
+            //console.log(response);
+            this.projectFormData = response['response'];
+            resolve(true);
+          },
+          (errors) => {
+            Utils.showErrorMessage(errors, this.dialog);
+            resolve(false);
+          }
+        )
+      );
+    });
+  }
+
   populateSbiProjectForm() {
     if (this.projectFormData) {
       this.projectForm.controls['name'].setValue(this.projectFormData.name);
@@ -223,6 +264,27 @@ export class ViewProjectComponent implements OnInit {
         this.projectFormData.purpose
       );
       this.projectForm.controls['bioTestData'].setValue(
+        this.projectFormData.bioTestDataFileName
+      );
+    }
+  }
+
+  populateAbisProjectForm() {
+    if (this.projectFormData) {
+      this.projectForm.controls['name'].setValue(this.projectFormData.name);
+      this.projectForm.controls['projectType'].setValue(appConstants.ABIS);
+      this.projectForm.controls['abisUrl'].setValue(this.projectFormData.url);
+      this.projectForm.controls['inboundQueueName'].setValue(this.projectFormData.inboundQueueName);
+      this.projectForm.controls['outboundQueueName'].setValue(this.projectFormData.outboundQueueName);
+      this.projectForm.controls['username'].setValue(this.projectFormData.username);
+      this.projectForm.controls['password'].setValue(this.projectFormData.password);
+      this.projectForm.controls['abisSpecVersion'].setValue(
+        this.projectFormData.abisVersion
+      );
+      this.projectForm.controls['abisPurpose'].setValue(
+        this.projectFormData.purpose
+      );
+      this.projectForm.controls['abisBioTestData'].setValue(
         this.projectFormData.bioTestDataFileName
       );
     }
@@ -266,6 +328,10 @@ export class ViewProjectComponent implements OnInit {
     await this.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value);
   }
 
+  async handleAbisPurposeChange() {
+    await this.getBioTestDataNames(this.projectForm.controls['abisPurpose'].value);
+  }
+  
   addCollection() {
     this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}/collection/add`,
