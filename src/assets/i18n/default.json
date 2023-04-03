@@ -1,3 +1,19 @@
 {
-    "add_project": "Add Project"
+    "languages": {
+        "eng": {
+          "name": "English",
+          "nativeName": "English",
+          "locale": "en_GB"
+        },
+        "ara": {
+          "name": "Arabic",
+          "nativeName": "العَرَبِيَّة‎",
+          "locale": "ar_SA"
+        },
+        "fra": {
+          "name": "French",
+          "nativeName": "français",
+          "locale": "fr_CH"
+        }
+    }
 }

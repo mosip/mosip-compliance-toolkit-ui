@@ -31,6 +31,7 @@ export class HeaderComponent implements OnInit {
       },
     ],
   };
+  textDir = this.userProfileService.getTextDir();
   constructor(
     public authService: AuthService,
     private appConfigService: AppConfigService,

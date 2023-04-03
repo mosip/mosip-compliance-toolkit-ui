@@ -40,6 +40,7 @@ export class ProjectsDashboardComponent implements OnInit {
     'lastRunStatus',
     'actions',
   ];
+  textDir = this.userProfileService.getTextDir();
   dataLoaded = false;
   subscriptions: Subscription[] = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;

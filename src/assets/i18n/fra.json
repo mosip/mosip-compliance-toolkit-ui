@@ -1,3 +1,17 @@
 {
-    "add_project": "Ajouter un projet"
+    "projectDashboard":{
+        "add_project": "Ajouter un projet",
+        "biometric_data":"Données biométriques",
+        "view":"Voir",
+        "filter":"Filtre",
+        "name":"Nom",
+        "projectType":"Type de projet",
+        "collections":"Collections",
+        "creationDate":"Date de création",
+        "lastRundate":"Date de la dernière exécution",
+        "lastRunStatus":"État de la dernière exécution",
+        "success":"Succès",
+        "failure":"Échec",
+        "project_row":"Il n'y a pas de projets disponibles."
+    }
 }
