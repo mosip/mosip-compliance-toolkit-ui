@@ -13,5 +13,17 @@
     "success": "نجاح",
     "failure": "فشل",
     "project_row": "لا توجد مشاريع متاحة."
+  },
+  "biometricDashboard":{
+      "project_dashboard":"لوحة تحكم المشاريع",
+      "add_biometric":"أضف البيانات البيومترية",
+      "download_zip":"تنزيل Zip",
+      "filter":"منقي",
+      "name":"اسم",
+      "type":"يكتب",
+      "purpose":"غاية",
+      "filename":"اسم الملف",
+      "creationDate":"تاريخ الإنشاء",
+      "biometric_record":"لا توجد سجلات متاحة."
   }
 }

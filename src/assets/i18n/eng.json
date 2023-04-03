@@ -13,5 +13,17 @@
     "success": "Success",
     "failure": "Failure",
     "project_row": "There are no projects available."
+  },
+  "biometricDashboard":{
+      "project_dashboard":"Projects Dashboard",
+      "add_biometric":"Add Biometric Data",
+      "download_zip":"Download Zip",
+      "filter":"Filter",
+      "name":"Name",
+      "type":"Type",
+      "purpose":"Purpose",
+      "filename":"File Name",
+      "creationDate":"Creation Date",
+      "biometric_record":"There are no records available."
   }
 }
