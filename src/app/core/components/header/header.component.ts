@@ -31,6 +31,7 @@ export class HeaderComponent implements OnInit {
       },
     ],
   };
+  textDirection: any = this.userProfileService.getTextDirection();
   constructor(
     public authService: AuthService,
     private appConfigService: AppConfigService,

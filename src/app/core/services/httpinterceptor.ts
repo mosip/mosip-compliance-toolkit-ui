@@ -121,7 +121,11 @@ export class AuthInterceptor implements HttpInterceptor {
                 if (rtlLanguages.includes(langCode)) {
                   isRtl = true;
                 }
-                this.userProfileService.setTextDir(isRtl);
+                if (isRtl) {
+                  this.userProfileService.setTextDirection('rtl');
+                } else {
+                  this.userProfileService.setTextDirection('ltr');
+                }
               }
               if (
                 event.body.errors !== null &&

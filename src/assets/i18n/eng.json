@@ -1,3 +1,17 @@
 {
-    "add_project": "Add Project"
+  "projectDashboard": {
+    "add_project": "Add Project",
+    "biometric_data": "Biometric Data",
+    "view": "View",
+    "filter": "Filter",
+    "name": "Name",
+    "projectType": "Project Type",
+    "collections": "Collections",
+    "creationDate": "Creation Date",
+    "lastRundate": "Last Run Date",
+    "lastRunStatus": "Last Run Status",
+    "success": "Success",
+    "failure": "Failure",
+    "project_row": "There are no projects available."
+  }
 }
