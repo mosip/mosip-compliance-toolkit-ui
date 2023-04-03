@@ -45,6 +45,7 @@ export class ProjectsDashboardComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
+  textDirection: any = this.userProfileService.isRtlLanguage() == true ? 'rtl' : 'ltr';
   constructor(
     private router: Router,
     private translate: TranslateService,

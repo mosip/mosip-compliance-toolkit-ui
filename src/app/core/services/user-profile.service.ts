@@ -9,7 +9,7 @@ export class UserProfileService {
   private zone = '';
   private displayUserName = '';
   private userPreferredLanguage = '';
-  private textDir = false;
+  private rtlLanguage = false;
 
   constructor() {}
 
@@ -63,11 +63,11 @@ export class UserProfileService {
     }
   }
 
-  setTextDir(textDir: boolean) {
-    this.textDir = textDir;
+  setRtlLanguage(rtlLanguage: boolean) {
+    this.rtlLanguage = rtlLanguage;
   }
 
-  getTextDir(): boolean {
-    return this.textDir;
+  isRtlLanguage(): boolean {
+    return this.rtlLanguage;
   }
 }
