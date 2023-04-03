@@ -1,0 +1,17 @@
+{
+  "projectDashboard": {
+    "add_project": "أضف مشروع",
+    "biometric_data": "البيانات البيومترية",
+    "view": "منظر",
+    "filter": "منقي",
+    "name": "اسم",
+    "projectType": "نوع المشروع",
+    "collections": "المجموعات",
+    "creationDate": "تاريخ الإنشاء",
+    "lastRundate": "تاريخ آخر تشغيل",
+    "lastRunStatus": "آخر حالة تشغيل",
+    "success": "نجاح",
+    "failure": "فشل",
+    "project_row": "لا توجد مشاريع متاحة."
+  }
+}
