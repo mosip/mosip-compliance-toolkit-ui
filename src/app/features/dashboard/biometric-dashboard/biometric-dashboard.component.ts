@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import * as appConstants from 'src/app/app.constants';
 import Utils from 'src/app/app.utils';
+import { UserProfileService } from 'src/app/core/services/user-profile.service';
 
 export interface BiometricsData {
   id: string;
@@ -39,12 +40,15 @@ export class BiometricDashboardComponent implements OnInit {
   subscriptions: Subscription[] = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  textDirection: any = this.userProfileService.getTextDirection();
+  buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : {'float': 'right'};
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    private dataService: DataService
+    private dataService: DataService,
+    private userProfileService: UserProfileService
   ) {}
 
   async ngOnInit() {
