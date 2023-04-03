@@ -49,6 +49,11 @@ export class DataService {
     //return this.httpClient.get('./assets/sdkproject.json');
   }
 
+  getAbisProject(projectId: string) {
+    let url = `${this.SERVICES_BASE_URL}getAbisProject/${projectId}`;
+    return this.httpClient.get(url);
+  }
+
   updateSdkProject(body: any) {
     let url = `${this.SERVICES_BASE_URL}updateSdkProject`;
     return this.httpClient.put(url, body);
@@ -91,6 +96,11 @@ export class DataService {
 
   getSdkTestCases(specVersion: string, sdkPurpose: string) {
     let url = `${this.SERVICES_BASE_URL}getSdkTestCases?specVersion=${specVersion}&sdkPurpose=${sdkPurpose}`;
+    return this.httpClient.get(url);
+  }
+
+  getAbisTestCases(abisSpecVersion: string, abisPurpose: string) {
+    let url = `${this.SERVICES_BASE_URL}getAbisTestCases?abisSpecVersion=${abisSpecVersion}&abisPurpose=${abisPurpose}`;
     return this.httpClient.get(url);
   }
 

@@ -308,15 +308,100 @@
                         </div>
                         <div class="fieldWrapper">
                             <span class="fieldLabel">
-                                <mat-label>Queue Name:
+                                <mat-label>Outbound Queue Name:
+                                    <span class="required-annotation">*</span>
                                 </mat-label>
                             </span>
                             <span class="fieldContainer">
                                 <mat-form-field appearance="legacy" class="fieldContainerBox">
-                                    <mat-label>Queue Name:</mat-label>
-                                    <input matInput formControlName="queueName" #keyboardRef #input />
-                                    <mat-error *ngIf="projectForm.controls['queueName'].hasError('required')">
-                                        Queue Name is required
+                                    <mat-label>Outbound Queue Name:</mat-label>
+                                    <input matInput formControlName="outboundQueueName" #keyboardRef #input />
+                                    <mat-error *ngIf="projectForm.controls['outboundQueueName'].hasError('required')">
+                                        Outbound Queue Name is required
+                                    </mat-error>
+                                </mat-form-field>
+                            </span>
+                        </div>
+                        <div class="fieldWrapper">
+                            <span class="fieldLabel">
+                                <mat-label>Inbound Queue Name:
+                                    <span class="required-annotation">*</span>
+                                </mat-label>
+                            </span>
+                            <span class="fieldContainer">
+                                <mat-form-field appearance="legacy" class="fieldContainerBox">
+                                    <mat-label>Inbound Queue Name:</mat-label>
+                                    <input matInput formControlName="inboundQueueName" #keyboardRef #input />
+                                    <mat-error *ngIf="projectForm.controls['inboundQueueName'].hasError('required')">
+                                        Inbound Queue Name is required
+                                    </mat-error>
+                                </mat-form-field>
+                            </span>
+                        </div>
+                        <div class="fieldWrapper">
+                            <span class="fieldLabel">
+                                <mat-label>Spec Version:
+                                    <span class="required-annotation">*</span>
+                                </mat-label>
+                            </span>
+                            <span class="fieldContainer">
+                                <mat-form-field appearance="legacy" class="fieldContainerBox">
+                                    <mat-label>Spec Version:</mat-label>
+                                    <mat-select formControlName="abisSpecVersion" #singleSelect>
+                                        <mat-option value="0.9.0">
+                                            0.9.0
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="projectForm.controls['abisSpecVersion'].hasError('required')">
+                                        Spec Version is required
+                                    </mat-error>
+                                </mat-form-field>
+                            </span>
+                        </div>
+                        <div class="fieldWrapper">
+                            <span class="fieldLabel">
+                                <mat-label>Purpose:
+                                    <span class="required-annotation">*</span>
+                                </mat-label>
+                            </span>
+                            <span class="fieldContainer">
+                                <mat-form-field appearance="legacy" class="fieldContainerBox">
+                                    <mat-label>Purpose:</mat-label>
+                                    <mat-select formControlName="abisPurpose" #singleSelect  (selectionChange)="handleAbisPurposeChange()">
+                                        <mat-option value="Insert">
+                                            Insert
+                                        </mat-option>
+                                        <mat-option value="Identify">
+                                            Identify
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="projectForm.controls['abisPurpose'].hasError('required')">
+                                        Purpose is required
+                                    </mat-error>
+                                </mat-form-field>
+                            </span>
+                        </div>
+                        <div class="fieldWrapper">
+                            <span class="fieldLabel">
+                                <mat-label>Select Test Data:
+                                    <span class="required-annotation">*</span>
+                                </mat-label>
+                            </span>
+                            <span class="fieldContainer">
+                                <mat-form-field appearance="legacy" class="fieldContainerBox">
+                                    <mat-label>Select Test Data:</mat-label>
+                                    <mat-select formControlName="abisBioTestData" #singleSelect>
+                                        <mat-option value="MOSIP_DEFAULT">
+                                            MOSIP_DEFAULT
+                                        </mat-option>
+                                        <span *ngFor="let item of bioTestDataFileNames">
+                                            <mat-option [value]="item">
+                                                {{item}}
+                                            </mat-option>
+                                        </span>
+                                    </mat-select>
+                                    <mat-error *ngIf="projectForm.controls['abisBioTestData'].hasError('required')">
+                                        Test Data is required
                                     </mat-error>
                                 </mat-form-field>
                             </span>
@@ -329,6 +414,12 @@
     <div class="list-container">
         <div class="collections-header-container">
             <div *ngIf="projectForm.controls['projectType']?.value == 'SDK'">
+                <button mat-flat-button color="accent" (click)="addCollection()" class="collections-button">
+                    <mat-icon class="collectionicon">add</mat-icon>
+                    Add Collection
+                </button>
+            </div>
+            <div *ngIf="projectForm.controls['projectType']?.value == 'ABIS'">
                 <button mat-flat-button color="accent" (click)="addCollection()" class="collections-button">
                     <mat-icon class="collectionicon">add</mat-icon>
                     Add Collection
