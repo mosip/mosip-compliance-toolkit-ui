@@ -10,6 +10,8 @@ import { MatDialog } from '@angular/material/dialog';
 import Utils from 'src/app/app.utils';
 import { SdkProjectModel } from 'src/app/core/models/sdk-project';
 import { environment } from 'src/environments/environment';
+import { TranslateService } from '@ngx-translate/core';
+import { UserProfileService } from 'src/app/core/services/user-profile.service';
 
 @Component({
   selector: 'app-project',
@@ -20,6 +22,7 @@ export class AddProjectComponent implements OnInit {
   projectForm = new FormGroup({});
   allControls: string[];
   isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
+  textDirection: any = this.userProfileService.getTextDirection();
   subscriptions: Subscription[] = [];
   bioTestDataFileNames: string[] = [];
   hidePassword = true;
@@ -29,7 +32,9 @@ export class AddProjectComponent implements OnInit {
     public authService: AuthService,
     private dataService: DataService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private translate:TranslateService,
+    private userProfileService: UserProfileService
   ) {}
 
   async ngOnInit() {
@@ -41,6 +46,11 @@ export class AddProjectComponent implements OnInit {
     if (projectType == appConstants.ABIS) {
       await this.getBioTestDataNames(this.projectForm.controls['abisPurpose'].value);
     } 
+    try {
+      this.translate.use(this.userProfileService.getUserPreferredLanguage());
+    } catch {
+      this.translate.use("eng");
+    }
   }
 
   initForm() {

@@ -7,6 +7,7 @@ import { BreadcrumbModule, BreadcrumbService  } from 'xng-breadcrumb';
 import { MaterialModule } from '../../core/material.module';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ViewProjectComponent } from './view-project/view-project.component';
+import { I18nModule } from 'src/app/i18n.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ViewProjectComponent } from './view-project/view-project.component';
     BreadcrumbModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    I18nModule
   ],
   providers: [BreadcrumbService]
 })
