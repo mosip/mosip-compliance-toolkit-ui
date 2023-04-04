@@ -1,3 +1,4 @@
+<div [dir]="textDirection">
 <p>
     <xng-breadcrumb *ngIf="dataLoaded"></xng-breadcrumb>
 </p>
@@ -9,23 +10,23 @@
         <form [formGroup]="projectForm">
             <div class="fieldWrapper">
                 <span class="fieldLabel">
-                    <mat-label>Project Name:
+                    <mat-label>{{ "addProject.Project Name:" | translate }}
                         <span class="required-annotation">*</span>
                     </mat-label>
                 </span>
                 <span class="fieldContainer">
                     <mat-form-field appearance="legacy" class="fieldContainerBox">
-                        <mat-label>Project Name:</mat-label>
+                        <mat-label>{{ "addProject.Project Name:" | translate }}</mat-label>
                         <input matInput formControlName="name" #keyboardRef #input />
                         <mat-error *ngIf="projectForm.controls['name'].hasError('required')">
-                            Project Name is required
+                            {{"addProject.Project Name is required"|translate}}
                         </mat-error>
                     </mat-form-field>
                 </span>
             </div>
             <div class="fieldWrapper">
                 <span class="fieldLabel">
-                    <mat-label>Project Type:
+                    <mat-label>{{ "addProject.Project Type:" | translate }}
                         <span class="required-annotation">*</span>
                     </mat-label>
                 </span>
@@ -46,7 +47,7 @@
                         </mat-radio-group>
                         <mat-error
                             *ngIf="projectForm.touched && projectForm.controls['projectType'].hasError('required')">
-                            Project Type is required
+                            {{"addProject.Project Type is required"|translate}}
                         </mat-error>
                     </div>
                 </span>
@@ -54,39 +55,39 @@
             <div *ngIf="projectForm.controls['projectType']?.value == 'SDK'">
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
-                        <mat-label>Base URL:
+                        <mat-label>{{"addProject.Base URL:" | translate }}
                             <span class="required-annotation">*</span>
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
                         <mat-form-field appearance="legacy" class="fieldContainerBox">
-                            <mat-label>Base URL:</mat-label>
+                            <mat-label>{{"addProject.Base URL:" | translate }}</mat-label>
                             <input matInput formControlName="sdkUrl" #keyboardRef #input />
                             <mat-error *ngIf="projectForm.controls['sdkUrl'].hasError('required')">
-                                Base URL is required
+                                {{"addProject.Base URL is required" | translate}}
                             </mat-error>
                             <mat-error *ngIf="projectForm.controls['sdkUrl'].hasError('pattern')">
-                                Base URL is invalid
+                                {{"addProject.Base URL is invalid" | translate}}
                             </mat-error>
                         </mat-form-field>
                     </span>
                 </div>
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
-                        <mat-label>Spec Version:
+                        <mat-label>{{ "addProject.Spec Version:" | translate }}
                             <span class="required-annotation">*</span>
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
                         <mat-form-field appearance="legacy" class="fieldContainerBox">
-                            <mat-label>Spec Version:</mat-label>
+                            <mat-label>{{ "addProject.Spec Version:" | translate }}</mat-label>
                             <mat-select formControlName="sdkSpecVersion" #singleSelect>
                                 <mat-option value="0.9.0">
                                     0.9.0
                                 </mat-option>
                             </mat-select>
                             <mat-error *ngIf="projectForm.controls['sdkSpecVersion'].hasError('required')">
-                                Spec Version is required
+                                {{"addProject.Spec Version is required"|translate}}
                             </mat-error>
                         </mat-form-field>
                     </span>
@@ -99,39 +100,39 @@
                     </span>
                     <span class="fieldContainer">
                         <mat-form-field appearance="legacy" class="fieldContainerBox">
-                            <mat-label>Purpose:</mat-label>
+                            <mat-label>{{"addProject.Purpose:" | translate }}</mat-label>
                             <mat-select formControlName="sdkPurpose" #singleSelect (selectionChange)="handleSdkPurposeChange()">
                                 <mat-option value="Matcher">
-                                    Matcher
+                                    {{"Matcher"|translate}}
                                 </mat-option>
                                 <mat-option value="Check Quality">
-                                    Check Quality
+                                    {{"Check Quality"|translate}}
                                 </mat-option>
                                 <mat-option value="Extract Template">
-                                    Extract Template
+                                    {{"Extract Template"|translate}}
                                 </mat-option>
                                 <mat-option value="Convert Format">
-                                    Convert Format
+                                    {{"Convert Format"|translate}}
                                 </mat-option>
                                 <!-- <mat-option value="Segment">
                                     Segment
                                 </mat-option> -->
                             </mat-select>
                             <mat-error *ngIf="projectForm.controls['sdkPurpose'].hasError('required')">
-                                Purpose is required
+                                {{"addProject.Purpose is required"|translate}}
                             </mat-error>
                         </mat-form-field>
                     </span>
                 </div>
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
-                        <mat-label>Select Test Data:
+                        <mat-label>{{"addProject.Select Test Data:" | translate}}
                             <span class="required-annotation">*</span>
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
                         <mat-form-field appearance="legacy" class="fieldContainerBox">
-                            <mat-label>Select Test Data:</mat-label>
+                            <mat-label>{{"addProject.Select Test Data:" | translate}}</mat-label>
                             <mat-select formControlName="bioTestData" #singleSelect>
                                 <mat-option value="MOSIP_DEFAULT">
                                     MOSIP_DEFAULT
@@ -143,7 +144,7 @@
                                 </span>
                             </mat-select>
                             <mat-error *ngIf="projectForm.controls['bioTestData'].hasError('required')">
-                                Test Data is required
+                                {{"addProject.Test data is required" | translate}}
                             </mat-error>
                         </mat-form-field>
                     </span>
@@ -152,13 +153,13 @@
             <div *ngIf="projectForm.controls['projectType']?.value == 'SBI'">
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
-                        <mat-label>Spec Version:
+                        <mat-label>{{ "addProject.Spec Version:" | translate }}
                             <span class="required-annotation">*</span>
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
                         <mat-form-field appearance="legacy" class="fieldContainerBox">
-                            <mat-label>Spec Version:</mat-label>
+                            <mat-label>{{ "addProject.Spec Version:" | translate }}</mat-label>
                             <mat-select formControlName="sbiSpecVersion" #singleSelect>
                                 <mat-option value="0.9.5">
                                     0.9.5
@@ -168,20 +169,20 @@
                                 </mat-option>
                             </mat-select>
                             <mat-error *ngIf="projectForm.controls['sbiSpecVersion'].hasError('required')">
-                                Spec Version is required
+                                {{"addProject.Spec Version is required"|translate}}
                             </mat-error>
                         </mat-form-field>
                     </span>
                 </div>
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
-                        <mat-label>Purpose:
+                        <mat-label>{{"addProject.Purpose:" | translate }}
                             <span class="required-annotation">*</span>
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
                         <mat-form-field appearance="legacy" class="fieldContainerBox">
-                            <mat-label>Purpose:</mat-label>
+                            <mat-label>{{"addProject.Purpose:" | translate }}</mat-label>
                             <mat-select formControlName="sbiPurpose" #singleSelect
                                 (selectionChange)="handleSbiPurposeChange()">
                                 <mat-option value="Registration">
@@ -192,20 +193,20 @@
                                 </mat-option>
                             </mat-select>
                             <mat-error *ngIf="projectForm.controls['sbiPurpose'].hasError('required')">
-                                Purpose is required
+                                {{"addProject.Purpose is required"|translate}}
                             </mat-error>
                         </mat-form-field>
                     </span>
                 </div>
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
-                        <mat-label>Device Type:
+                        <mat-label>{{"addProject.Device Type:"|translate}}
                             <span class="required-annotation">*</span>
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
                         <mat-form-field appearance="legacy" class="fieldContainerBox">
-                            <mat-label>Device Type:</mat-label>
+                            <mat-label>{{"addProject.Device Type:"|translate}}</mat-label>
                             <mat-select formControlName="deviceType" #singleSelect>
                                 <mat-option value="Finger">
                                     Finger
@@ -218,20 +219,20 @@
                                 </mat-option>
                             </mat-select>
                             <mat-error *ngIf="projectForm.controls['deviceType'].hasError('required')">
-                                Device Type is required
+                                {{"addProject.Device Type is required"|translate}}
                             </mat-error>
                         </mat-form-field>
                     </span>
                 </div>
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
-                        <mat-label>Device Sub Type:
+                        <mat-label>{{"addProject.Device Sub Type:"|translate}}
                             <span class="required-annotation">*</span>
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
                         <mat-form-field appearance="legacy" class="fieldContainerBox">
-                            <mat-label>Device Sub Type:</mat-label>
+                            <mat-label>{{"addProject.Device Sub Type:"|translate}}</mat-label>
                             <mat-select formControlName="deviceSubType" #singleSelect>
                                 <mat-option value="Slap" *ngIf="projectForm.controls['deviceType'].value == 'Finger'">
                                     Slap
@@ -258,10 +259,10 @@
                                 </mat-option>
                             </mat-select>
                             <mat-error *ngIf="projectForm.controls['deviceSubType'].hasError('required')">
-                                Device Sub Type is required
+                                {{"addProject.Device Sub Type is required"|translate}}
                             </mat-error>
                             <mat-error *ngIf="projectForm.controls['deviceSubType'].hasError('invalid')">
-                                Device Sub Type is invalid
+                                {{"addProject.Device Sub Type is invalid"|translate}}
                             </mat-error>
                         </mat-form-field>
                     </span>
@@ -270,116 +271,116 @@
             <div *ngIf="projectForm.controls['projectType']?.value == 'ABIS'">
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
-                        <mat-label>Base URL:</mat-label>
+                        <mat-label>{{"addProject.Base URL:" | translate }}</mat-label>
                     </span>
                     <span class="fieldContainer">
                         <mat-form-field appearance="legacy" class="fieldContainerBox">
-                            <mat-label>Base URL:</mat-label>
+                            <mat-label>{{"addProject.Base URL:" | translate }}</mat-label>
                             <input matInput formControlName="abisUrl" #keyboardRef #input />
                             <mat-error *ngIf="projectForm.controls['abisUrl'].hasError('required')">
-                                Base URL is required
+                                {{"addProject.Base URL is required" | translate}}
                             </mat-error>
                             <mat-error *ngIf="projectForm.controls['abisUrl'].hasError('pattern')">
-                                Base URL is invalid
+                                {{"addProject.Base URL is invalid" | translate}}
                             </mat-error>
                         </mat-form-field>
                     </span>
                 </div>
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
-                        <mat-label>Username:
+                        <mat-label>{{"addProject.Username:"|translate}}
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
                         <mat-form-field appearance="legacy" class="fieldContainerBox">
-                            <mat-label>Username:</mat-label>
+                            <mat-label>{{"addProject.Username:"|translate}}</mat-label>
                             <input matInput formControlName="username" #keyboardRef #input />
                             <mat-error *ngIf="projectForm.controls['username'].hasError('required')">
-                                Username is required
+                                {{"addProject.Username is required"|translate}}
                             </mat-error>
                         </mat-form-field>
                     </span>
                 </div>
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
-                        <mat-label>Password:
+                        <mat-label>{{"addProject.Password:"|translate}}
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
                         <mat-form-field appearance="legacy" class="fieldContainerBox">
-                            <mat-label>Password:</mat-label>
+                            <mat-label>{{"addProject.Password:"|translate}}</mat-label>
                             <input matInput placeholder="Password" [type]="hidePassword ? 'password' : 'text'"
                                 formControlName="password">
                             <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ?
                                 'visibility_off'
                                 : 'visibility'}}</mat-icon>
                             <mat-error *ngIf="projectForm.controls['password'].hasError('required')">
-                                Password is required
+                                {{"addProject.Password is required"|translate}}
                             </mat-error>
                         </mat-form-field>
                     </span>
                 </div>
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
-                        <mat-label>Outbound Queue Name:
+                        <mat-label>{{"addProject.Outbound Queue Name:"|translate}}
                             <span class="required-annotation">*</span>
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
                         <mat-form-field appearance="legacy" class="fieldContainerBox">
-                            <mat-label>Outbound Queue Name:</mat-label>
+                            <mat-label>{{"addProject.Outbound Queue Name:"|translate}}</mat-label>
                             <input matInput formControlName="outboundQueueName" #keyboardRef #input />
                             <mat-error *ngIf="projectForm.controls['outboundQueueName'].hasError('required')">
-                                Outbound Queue Name is required
+                                {{"addProject.Outbound Queue Name is required"|translate}}
                             </mat-error>
                         </mat-form-field>
                     </span>
                 </div>
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
-                        <mat-label>Inbound Queue Name:
+                        <mat-label>{{"addProject.Inbound Queue Name:"|translate}}
                             <span class="required-annotation">*</span>
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
                         <mat-form-field appearance="legacy" class="fieldContainerBox">
-                            <mat-label>Inbound Queue Name:</mat-label>
+                            <mat-label>{{"addProject.Inbound Queue Name:"|translate}}</mat-label>
                             <input matInput formControlName="inboundQueueName" #keyboardRef #input />
                             <mat-error *ngIf="projectForm.controls['inboundQueueName'].hasError('required')">
-                                Inbound Queue Name is required
+                                {{"addProject.Inbound Queue Name is required"|translate}}
                             </mat-error>
                         </mat-form-field>
                     </span>
                 </div>
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
-                        <mat-label>Spec Version:
+                        <mat-label>{{ "addProject.Spec Version:" | translate }}
                             <span class="required-annotation">*</span>
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
                         <mat-form-field appearance="legacy" class="fieldContainerBox">
-                            <mat-label>Spec Version:</mat-label>
+                            <mat-label>{{ "addProject.Spec Version:" | translate }}</mat-label>
                             <mat-select formControlName="abisSpecVersion" #singleSelect>
                                 <mat-option value="0.9.0">
                                     0.9.0
                                 </mat-option>
                             </mat-select>
                             <mat-error *ngIf="projectForm.controls['abisSpecVersion'].hasError('required')">
-                                Spec Version is required
+                                {{"addProject.Spec Version is required"|translate}}
                             </mat-error>
                         </mat-form-field>
                     </span>
                 </div>
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
-                        <mat-label>Purpose:
+                        <mat-label>{{"addProject.Purpose:" | translate }}
                             <span class="required-annotation">*</span>
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
                         <mat-form-field appearance="legacy" class="fieldContainerBox">
-                            <mat-label>Purpose:</mat-label>
+                            <mat-label>{{"addProject.Purpose:" | translate }}</mat-label>
                             <mat-select formControlName="abisPurpose" #singleSelect  (selectionChange)="handleAbisPurposeChange()">
                                 <mat-option value="Insert">
                                     Insert
@@ -389,20 +390,20 @@
                                 </mat-option>
                             </mat-select>
                             <mat-error *ngIf="projectForm.controls['abisPurpose'].hasError('required')">
-                                Purpose is required
+                                {{"addProject.Purpose is required"|translate}}
                             </mat-error>
                         </mat-form-field>
                     </span>
                 </div>
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
-                        <mat-label>Select Test Data:
+                        <mat-label>{{"addProject.Select Test Data:" | translate}}
                             <span class="required-annotation">*</span>
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
                         <mat-form-field appearance="legacy" class="fieldContainerBox">
-                            <mat-label>Select Test Data:</mat-label>
+                            <mat-label>{{"addProject.Select Test Data:" | translate}}</mat-label>
                             <mat-select formControlName="abisBioTestData" #singleSelect>
                                 <mat-option value="MOSIP_DEFAULT">
                                     MOSIP_DEFAULT
@@ -414,7 +415,7 @@
                                 </span>
                             </mat-select>
                             <mat-error *ngIf="projectForm.controls['abisBioTestData'].hasError('required')">
-                                Test Data is required
+                                {{"addProject.Test data is required" | translate}}
                             </mat-error>
                         </mat-form-field>
                     </span>
@@ -427,10 +428,11 @@
 <div class="button-container">
     <button mat-flat-button color="accent" (click)="showDashboard()" class="add-button">
         <mat-icon>home</mat-icon>
-        Dashboard
+        {{"addProject.Dashboard"|translate}}
     </button>
     <button mat-flat-button color="accent" [disabled]="dataSubmitted" (click)="saveProject()" class="add-button">
         <mat-icon>save</mat-icon>
-        Save Project
+        {{"addProject.Save Project"|translate}}
     </button>
+</div>
 </div>
