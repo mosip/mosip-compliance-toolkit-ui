@@ -57,15 +57,7 @@ export class ProjectsDashboardComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    // try {
-    //   this.translate.use(this.userProfileService.getUserPreferredLanguage());
-    // } catch {
-    //   this.translate.use("eng");
-    // }
-    this.translate.use(this.userProfileService.getUserPreferredLanguage()).subscribe(response => {
-      // this.popupMessages = response;
-      // this.serverError = response.serverError;
-    });
+    this.translate.use(this.userProfileService.getUserPreferredLanguage());
     await this.getProjects();
     this.dataLoaded = true;
     this.dataSource.paginator = this.paginator;

@@ -33,8 +33,8 @@ export class AddProjectComponent implements OnInit {
     private dataService: DataService,
     private dialog: MatDialog,
     private router: Router,
-    private translate:TranslateService,
-    private userProfileService: UserProfileService
+    private userProfileService: UserProfileService,
+    private translate:TranslateService
   ) {}
 
   async ngOnInit() {
@@ -46,11 +46,7 @@ export class AddProjectComponent implements OnInit {
     if (projectType == appConstants.ABIS) {
       await this.getBioTestDataNames(this.projectForm.controls['abisPurpose'].value);
     } 
-    try {
-      this.translate.use(this.userProfileService.getUserPreferredLanguage());
-    } catch {
-      this.translate.use("eng");
-    }
+    this.translate.use(this.userProfileService.getUserPreferredLanguage());
   }
 
   initForm() {
