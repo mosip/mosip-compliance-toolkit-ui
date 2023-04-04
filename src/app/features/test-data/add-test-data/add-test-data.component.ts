@@ -9,6 +9,8 @@ import { MatDialog } from '@angular/material/dialog';
 import Utils from 'src/app/app.utils';
 import { AppConfigService } from 'src/app/app-config.service';
 import { DialogComponent } from 'src/app/core/components/dialog/dialog.component';
+import { TranslateService } from '@ngx-translate/core';
+import { UserProfileService } from 'src/app/core/services/user-profile.service';
 
 @Component({
   selector: 'app-add-test-data',
@@ -27,6 +29,8 @@ export class AddTestDataComponent implements OnInit {
   fileExtension: string = 'zip';
   fileName: string = '';
   fileByteArray: any;
+  textDirection: any = this.userProfileService.getTextDirection();
+  buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : 'null';
   allowedFileTypes = this.appConfigService
     .getConfig()
     ['allowedFileTypes'].split(',');
@@ -39,10 +43,13 @@ export class AddTestDataComponent implements OnInit {
     private appConfigService: AppConfigService,
     private dataService: DataService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService,
+    private userProfileService: UserProfileService
   ) {}
 
   ngOnInit() {
+    this.translate.use(this.userProfileService.getUserPreferredLanguage());
     this.initForm();
     this.getAllowedFileTypes(this.allowedFileTypes);
   }

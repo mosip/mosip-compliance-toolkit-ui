@@ -1,3 +1,4 @@
+<div [dir]="textDirection">
 <p>
     <xng-breadcrumb *ngIf="dataLoaded"></xng-breadcrumb>
 </p>
@@ -9,23 +10,23 @@
         <form [formGroup]="testDataForm">
             <div class="fieldWrapper" >
                 <span class="fieldLabel">
-                    <mat-label>Name:
+                    <mat-label>{{"addTestData.Name:"|translate}}
                         <span class="required-annotation">*</span>
                     </mat-label>
                 </span>
                 <span class="fieldContainer">
                     <mat-form-field appearance="legacy" class="namefield">
-                        <mat-label>Name:</mat-label>
+                        <mat-label>{{"addTestData.Name:"|translate}}</mat-label>
                         <input matInput formControlName="name" #keyboardRef #input />
                         <mat-error *ngIf="testDataForm.controls['name'].touched && testDataForm.controls['name'].hasError('required')">
-                            Name is required
+                            {{"addTestData.Name is required"|translate}}
                         </mat-error>
                     </mat-form-field>
                 </span>
             </div>
             <div class="fieldWrapper">
                 <span class="fieldLabel">
-                    <mat-label>Project Type:
+                    <mat-label>{{"addTestData.Project Type:"|translate}}
                         <span class="required-annotation">*</span>
                     </mat-label>
                 </span>
@@ -33,23 +34,23 @@
                     <div class="projectTypeOptions">
                         <mat-radio-group aria-label="Select an option" formControlName="type" appearance="legacy">
                             <mat-radio-button value="SDK">SDK</mat-radio-button>
-                            <mat-radio-button value="ABIS" disabled="true">ABIS</mat-radio-button>
+                            <mat-radio-button value="ABIS" disabled="true" [ngStyle]="buttonPosition">ABIS</mat-radio-button>
                         </mat-radio-group>
                         <mat-error *ngIf="testDataForm.controls['type'].touched && testDataForm.controls['type'].hasError('required')">
-                            Project Type is required
+                            {{"addTestData.Project Type is required"|translate}}
                         </mat-error>
                     </div>
                 </span>
             </div>
             <div class="fieldWrapper">
                 <span class="fieldLabel">
-                    <mat-label>Purpose:
+                    <mat-label>{{"addTestData.Purpose:"|translate}}
                         <span class="required-annotation">*</span>
                     </mat-label>
                 </span>
                 <span class="fieldContainer">
                     <mat-form-field appearance="legacy" class="purposefield">
-                        <mat-label>Purpose:</mat-label>
+                        <mat-label>{{"addTestData.Purpose:"|translate}}</mat-label>
                         <mat-select formControlName="purpose" #singleSelect>
                             <mat-option value="Matcher">
                                 Matcher
@@ -68,7 +69,7 @@
                             </mat-option> -->
                         </mat-select>
                         <mat-error *ngIf="testDataForm.controls['purpose'].touched && testDataForm.controls['purpose'].hasError('required')">
-                            Purpose is required
+                            {{"addTestData.Purpose is required"|translate}}
                         </mat-error>
                     </mat-form-field>
                 </span>
@@ -76,23 +77,23 @@
             <div class="fieldWrapper">
                 <span class="fieldLabel">
                     <div class="custom-class">
-                        <mat-label>Select Test Data:
+                        <mat-label>{{"addTestData.Select Test Data:"|translate}}
                             <span class="required-annotation">*</span>
                             <mat-icon color="accent" (click)="showToolTip()">info</mat-icon>
                         </mat-label>
                     </div>
                 </span>
                 <span class="fieldContainer">
-                    <span class="file-upload-button">
+                    <span class="file-upload-button" >
                         <input #fileUpload type="file" id="testdatafile" (click)="fileUpload.value = ''" value=""
                             (change)="handleFileInput($event)" style="display: none;" />
                         <button mat-flat-button color="accent" (click)="clickOnButton()" class="fileuploadbtn">
-                            Browse
+                            {{"addTestData.Browse"|translate}}
                         </button>
                     </span>
-                    <span class="file-download-button">
+                    <span class="file-download-button" [ngStyle]="buttonPosition">
                         <button mat-flat-button color="accent" (click)="getSampleBioTestDataFile()" class="downloadbutton">
-                           <div class="buttondiv">Download Sample File</div>
+                           <div class="buttondiv">{{"addTestData.Download Sample File"|translate}}</div>
                         </button>    
                     </span>
                 </span>
@@ -104,4 +105,5 @@
     <button mat-flat-button color="accent" (click)="showBiometricDashboard()" class="add-button">
         Back
     </button>
+</div>
 </div>

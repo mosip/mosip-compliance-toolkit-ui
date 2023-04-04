@@ -61,6 +61,7 @@
     display: inline-flex;
     justify-content: flex-start;
     margin-right: 30px;
+    margin-bottom: 2px;
   } 
   .file-download-button {
     display: inline-flex;
