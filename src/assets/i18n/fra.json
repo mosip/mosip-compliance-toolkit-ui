@@ -99,5 +99,18 @@
     "Inbound Queue Name:": "Nom de la file d'attente entrante",
     "View Last Test Run": "Afficher le dernier test exécuté",
     "Test Run History": "Historique des tests"
+  },
+  "testRunHistory":{
+    "Run Date": "Date d'exécution",
+    "Run Status": "État d'exécution",
+    "Total Test Cases": "Total des cas de test",
+    "Pass Cases": "Cas de réussite",
+    "Fail Cases": "Cas d'échec",
+    "Details": "Détails",
+    "Failure": "Échec",
+    "Success": "Succès",
+    "View": "Voir",
+    "Delete": "Supprimer",
+    "Back": "Retour"
   }
 }

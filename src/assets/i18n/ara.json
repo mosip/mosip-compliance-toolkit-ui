@@ -96,5 +96,18 @@
   "Inbound Queue Name:": "اسم قائمة الانتظار الواردة",
   "View Last Test Run": "عرض آخر اختبار تشغيل",
   "Test Run History": "سجل تشغيل الاختبار"
+},
+"testRunHistory":{
+  "Run Date": "تشغيل التاريخ",
+  "Run Status": "تشغيل الحالة",
+  "Total Test Cases": "إجمالي حالات الاختبار",
+  "Pass Cases": "تمرير الحالات",
+  "Fail Cases": "حالات الفشل",
+  "Details": "تفاصيل",
+  "Failure": "فشل",
+  "Success": "نجاح",
+  "View": "منظر",
+  "Delete": "يمسح",
+  "Back": "يعود"
 }
 }
