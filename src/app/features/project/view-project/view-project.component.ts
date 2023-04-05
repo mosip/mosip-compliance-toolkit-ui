@@ -15,6 +15,8 @@ import { ExecuteTestRunComponent } from '../../test-run/execute-test-run/execute
 import Utils from 'src/app/app.utils';
 import { SdkProjectModel } from 'src/app/core/models/sdk-project';
 import { environment } from 'src/environments/environment';
+import { TranslateService } from '@ngx-translate/core';
+import { UserProfileService } from 'src/app/core/services/user-profile.service';
 
 export interface CollectionsData {
   collectionId: string;
@@ -45,6 +47,8 @@ export class ViewProjectComponent implements OnInit {
     'actionsMore',
   ];
   isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
+  textDirection: any = this.userProfileService.getTextDirection();
+  buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : 'null';
   isScanComplete =
     localStorage.getItem(appConstants.SBI_SCAN_COMPLETE) == 'true'
       ? true
@@ -65,10 +69,13 @@ export class ViewProjectComponent implements OnInit {
     private router: Router,
     private dialog: MatDialog,
     private breadcrumbService: BreadcrumbService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private userProfileService: UserProfileService,
+    private translate:TranslateService
   ) { }
 
   async ngOnInit() {
+    this.translate.use(this.userProfileService.getUserPreferredLanguage());
     await this.initProjectIdAndType();
     if (this.projectType == appConstants.SBI) {
       this.initSbiProjectForm();

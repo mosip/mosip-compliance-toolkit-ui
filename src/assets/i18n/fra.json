@@ -62,5 +62,42 @@
     "Outbound Queue Name is required": "Le nom de la file d'attente sortante est requis",
     "Inbound Queue Name:": "Nom de la file d'attente entrante",
     "Inbound Queue Name is required": "Le nom de la file d'attente entrante est requis"
-}
+},
+  "addTestData":{
+    "Name:": "Nom",
+    "Project Type:": "Type de projet:",
+    "Purpose:":"But",
+    "Select Test Data:": "Sélectionnez les données de test:",
+    "Browse": "parcourir",
+    "Download Sample File": "Télécharger un exemple de fichier",
+    "Name is required": "Le nom est requis",
+    "Project Type is required": "Le type de projet est requis",
+    "Purpose is required": "Le but est requis",
+    "Back": "retour"
+  },
+  "viewProject":{
+    "Name": "Nom",
+    "Project Type:": "Type de project:",
+    "Spec Version:": "Version de spécification:",
+    "Purpose:": "But:",
+    "Device Type:": "Type d'appareil:",
+    "Device Sub Type:": "Sous-type de périphérique:",
+    "Project Name:": "nom du projet:",
+    "Add Collection": "ajouter une collection",
+    "Encryption Key": "Clé de cryptage",
+    "Scan Device": "Analyser l'appareil",
+    "Testcases": "Cas de test",
+    "Creation Date": "Date de création",
+    "Last Run Date": "Date de la dernière exécution",
+    "Run": "Courir",
+    "Dashboard": "Tableau de bord",
+    "Base URL:": "URL de base:",
+    "Select Test Data:": "Sélectionnez les données de test:",
+    "Username:": "Nom d'utilisateur:",
+    "Password:": "Mot de passe",
+    "Outbound Queue Name:": "Nom de la file d'attente sortante",
+    "Inbound Queue Name:": "Nom de la file d'attente entrante",
+    "View Last Test Run": "Afficher le dernier test exécuté",
+    "Test Run History": "Historique des tests"
+  }
 }

@@ -58,5 +58,41 @@
     "Outbound Queue Name is required": "Outbound Queue Name is required",
     "Inbound Queue Name:": "Inbound Queue Name:",
     "Inbound Queue Name is required": "Inbound Queue Name is required"
+},
+"addTestData":{
+  "Name:": "Name:",
+  "Project Type:": "Project Type:",
+  "Purpose:":"Purpose:",
+  "Select Test Data:": "Select Test Data:",
+  "Browse": "Browse",
+  "Download Sample File": "Download Sample File",
+  "Name is required": "Name is required",
+  "Project Type is required": "Project Type is required",
+  "Purpose is required": "Purpose is required"
+},
+"viewProject":{
+  "Name": "Name",
+  "Project Type:": "Project Type:",
+  "Spec Version:": "Spec Version:",
+  "Purpose:": "Purpose:",
+  "Device Type:": "Device Type:",
+  "Device Sub Type:": "Device Sub Type:",
+  "Project Name:": "Project Name:",
+  "Add Collection": "Add Collection",
+  "Encryption Key": "Encryption Key",
+  "Scan Device": "Scan Device",
+  "Testcases": "Testcases",
+  "Creation Date": "Creation Date",
+  "Last Run Date": "Last Run Date",
+  "Run": "Run",
+  "Dashboard": "Dashboard",
+  "Base URL:": "Base URL:",
+  "Select Test Data:": "Select Test Data:",
+  "Username:": "Username:",
+  "Password:": "Password:",
+  "Outbound Queue Name:": "Outbound Queue Name:",
+  "Inbound Queue Name:": "Inbound Queue Name:",
+  "View Last Test Run": "View Last Test Run",
+  "Test Run History": "Test Run History"
 }
 }

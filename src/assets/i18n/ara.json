@@ -59,5 +59,42 @@
     "Outbound Queue Name is required": "اسم قائمة الانتظار الصادرة مطلوب",
     "Inbound Queue Name:": "اسم قائمة الانتظار الواردة",
     "Inbound Queue Name is required": "اسم قائمة الانتظار الوارد مطلوب"
+},
+"addTestData":{
+  "Name:": "اسم",
+  "Project Type:": "نوع المشروع",
+  "Purpose:":"غاية",
+  "Select Test Data:": "حدد بيانات الاختبار",
+  "Browse": "تصفح",
+  "Download Sample File": "تنزيل نموذج ملف",
+  "Name is required": "مطلوب اسم",
+  "Project Type is required": "نوع المشروع مطلوب",
+  "Purpose is required": "الغرض مطلوب",
+  "Back": "يعود"
+},
+"viewProject":{
+  "Name": "اسم",
+  "Project Type:": "نوع المشروع",
+  "Spec Version:": "إصدار المواصفات",
+  "Purpose:": "غاية",
+  "Device Type:": "نوع الجهاز",
+  "Device Sub Type:": "نوع الجهاز الفرعي",
+  "Project Name:": "اسم المشروع",
+  "Add Collection": "أضف المجموعة",
+  "Encryption Key": "مفتاح التشفير",
+  "Scan Device": "جهاز فحص",
+  "Testcases": "حالات تجريبية",
+  "Creation Date": "تاريخ الإنشاء",
+  "Last Run Date": "تاريخ آخر تشغيل",
+  "Run": "يجري",
+  "Dashboard": "لوحة القيادة",
+  "Base URL:": "عنوان URL الأساسي",
+  "Select Test Data:": "حدد بيانات الاختبار",
+  "Username:": "اسم المستخدم",
+  "Password:": "كلمة المرور",
+  "Outbound Queue Name:": "اسم قائمة الانتظار الصادرة",
+  "Inbound Queue Name:": "اسم قائمة الانتظار الواردة",
+  "View Last Test Run": "عرض آخر اختبار تشغيل",
+  "Test Run History": "سجل تشغيل الاختبار"
 }
 }
