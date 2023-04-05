@@ -25,6 +25,7 @@ export interface CollectionsData {
   crDtimes: Date;
   runDtimes: Date;
   runId: string;
+  isValidateEnabled: false
 }
 @Component({
   selector: 'app-view-project',
@@ -44,7 +45,7 @@ export class ViewProjectComponent implements OnInit {
     'crDtimes',
     'runDtimes',
     'actions',
-    'actionsMore',
+    'actionsMore'
   ];
   isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
   textDirection: any = this.userProfileService.getTextDirection();
@@ -388,6 +389,10 @@ export class ViewProjectComponent implements OnInit {
           window.location.reload();
         }
       });
+  }
+
+  fetchResultsFromAbisQueue() {
+
   }
 
   viewTestRun(row: any) {

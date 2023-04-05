@@ -19,6 +19,8 @@ import { SbiDiscoverResponseModel } from 'src/app/core/models/sbi-discover';
 import { SdkProjectModel } from 'src/app/core/models/sdk-project';
 import { ScanDeviceComponent } from '../scan-device/scan-device.component';
 import { environment } from 'src/environments/environment';
+import { AbisTestCaseService } from 'src/app/core/services/abis-testcase-service';
+import { AbisProjectModel } from 'src/app/core/models/abis-project';
 
 declare const start_streaming: any;
 declare const stop_streaming: any;
@@ -35,6 +37,7 @@ export class ExecuteTestRunComponent implements OnInit {
   projectId: string;
   sbiProjectData: SbiProjectModel;
   sdkProjectData: SdkProjectModel;
+  abisProjectData: AbisProjectModel;
   collectionName: string;
   subscriptions: Subscription[] = [];
   scanComplete = true;
@@ -96,6 +99,7 @@ export class ExecuteTestRunComponent implements OnInit {
     private sbiTestCaseService: SbiTestCaseService,
     private sdkTestCaseService: SdkTestCaseService,
     private sbiTestCaseAndroidService: SbiTestCaseAndroidService,
+    private abisTestCaseService: AbisTestCaseService,
     private appConfigService: AppConfigService
   ) {
     dialogRef.disableClose = true;
@@ -135,9 +139,6 @@ export class ExecuteTestRunComponent implements OnInit {
         const selectedSbiDevice: SbiDiscoverResponseModel = JSON.parse(
           this.sbiSelectedDevice
         );
-        console.log('purpose');
-        console.log(selectedSbiDevice.purpose);
-        console.log(this.sbiProjectData.purpose);
         if (
           selectedSbiDevice.purpose != '' &&
           this.sbiProjectData.purpose != selectedSbiDevice.purpose
@@ -148,9 +149,6 @@ export class ExecuteTestRunComponent implements OnInit {
             'Please select appropriate device, while scanning, to execute testcases for this project. \n The purpose of the selected device is not matching the project.';
           return false;
         }
-        console.log('device type');
-        console.log(selectedSbiDevice.digitalIdDecoded.type);
-        console.log(this.sbiProjectData.deviceType);
         if (
           this.sbiProjectData.deviceType !=
           selectedSbiDevice.digitalIdDecoded.type
@@ -161,9 +159,6 @@ export class ExecuteTestRunComponent implements OnInit {
             'Please select appropriate device, while scanning, to execute testcases for this project. \n The device type of the selected device is not matching the project.';
           return false;
         }
-        console.log('device deviceSubType');
-        console.log(selectedSbiDevice.digitalIdDecoded.deviceSubType);
-        console.log(this.sbiProjectData.deviceSubType);
         if (
           this.sbiProjectData.deviceSubType !=
           selectedSbiDevice.digitalIdDecoded.deviceSubType
@@ -204,6 +199,24 @@ export class ExecuteTestRunComponent implements OnInit {
           (response: any) => {
             //console.log(response);
             this.sdkProjectData = response['response'];
+            resolve(true);
+          },
+          (errors) => {
+            this.errorsInGettingTestcases = true;
+            resolve(true);
+          }
+        )
+      );
+    });
+  }
+
+  async getAbisProjectDetails() {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.getAbisProject(this.projectId).subscribe(
+          (response: any) => {
+            //console.log(response);
+            this.abisProjectData = response['response'];
             resolve(true);
           },
           (errors) => {
@@ -317,6 +330,7 @@ export class ExecuteTestRunComponent implements OnInit {
         if (!this.initiateCapture) {
           this.checkIfToShowInitiateCaptureBtn(testCase);
         }
+        console.log(`this.streamingDone: ${this.streamingDone}`);
         if (!this.streamingDone) {
           this.checkIfToShowStreamBtn(testCase);
         }
@@ -652,6 +666,14 @@ export class ExecuteTestRunComponent implements OnInit {
           testCase,
           this.sdkProjectData.url,
           this.sdkProjectData.bioTestDataFileName
+        );
+        resolve(res);
+      } else if (this.projectType == appConstants.ABIS) {
+        await this.getAbisProjectDetails();
+        const res = await this.abisTestCaseService.runTestCase(
+          testCase,
+          this.abisProjectData,
+          this.testRunId
         );
         resolve(res);
       } else {

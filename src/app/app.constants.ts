@@ -13,6 +13,11 @@ export const TEST_RUN_UPDATE_ID = 'mosip.toolkit.testrun.update';
 export const TEST_RUN_DETAILS_ADD_ID = 'mosip.toolkit.testrun.details.add';
 export const BIOMETRICS_TEST_DATA_ADD_ID = 'mosip.toolkit.biometric.testdata.add';
 export const TEST_RUN_DELETE_ID = 'mosip.toolkit.testrun.delete';
+export const DATASHARE_ID = 'mosip.toolkit.abis.datashare.url';
+export const ABIS_SEND_TO_QUEUE = 'mosip.toolkit.abis.send';
+export const ABIS_READ_FROM_QUEUE = 'mosip.toolkit.abis.read';
+export const ABIS_INSERT = "mosip.abis.insert";
+export const ABIS_INSERT_VERSION = "1.1";
 
 export const VERSION = '1.0';
 
@@ -56,6 +61,8 @@ export const SBI_METHOD_RCAPTURE_KEY = 'RCAPTURE';
 export const SBI_METHOD_STREAM = 'stream';
 export const SBI_METHOD_STREAM_KEY = 'STREAM';
 export const DEVELOPER = 'Developer';
+export const ABIS_METHOD_INSERT = 'insert';
+export const ABIS_METHOS_IDENTIFY = 'identify';
 
 //localStorage keys
 export const SBI_SCAN_COMPLETE = 'sbiScanComplete';
