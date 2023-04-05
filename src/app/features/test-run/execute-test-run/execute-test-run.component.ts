@@ -611,8 +611,8 @@ export class ExecuteTestRunComponent implements OnInit {
                 null
               );
             }
+            this.streamingDone = false;
             if (!this.isAndroidAppMode) {
-              this.streamingDone = false;
               this.stopStreaming();
             }
             resolve(res);
