@@ -94,5 +94,18 @@
   "Inbound Queue Name:": "Inbound Queue Name:",
   "View Last Test Run": "View Last Test Run",
   "Test Run History": "Test Run History"
+},
+"testRunHistory":{
+  "Run Date": "Run Date",
+  "Run Status": "Run Status",
+  "Total Test Cases": "Total Test Cases",
+  "Pass Cases": "Pass Cases",
+  "Fail Cases": "Fail Cases",
+  "Details": "Details",
+  "Failure": "Failure",
+  "Success": "Success",
+  "View": "View",
+  "Delete": "Delete",
+  "Back": "Back"
 }
 }

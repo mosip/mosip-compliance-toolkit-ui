@@ -11,6 +11,7 @@ import { ExecuteTestRunComponent } from './execute-test-run/execute-test-run.com
 import { ScanDeviceComponent } from './scan-device/scan-device.component';
 import { TestRunComponent } from './test-run/test-run.component';
 import { TestRunHistoryComponent } from './test-run-history/test-run-history.component';
+import { I18nModule } from 'src/app/i18n.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { TestRunHistoryComponent } from './test-run-history/test-run-history.com
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    CdTimerModule
+    CdTimerModule,
+    I18nModule
   ],
   providers: [BreadcrumbService]
 })
