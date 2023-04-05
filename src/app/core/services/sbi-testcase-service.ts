@@ -200,11 +200,7 @@ export class SbiTestCaseService {
         env: appConstants.DEVELOPER,
         purpose: selectedSbiDevice.purpose,
         specVersion: selectedSbiDevice.specVersion[0],
-        timeout: testCase.otherAttributes.timeout
-          ? testCase.otherAttributes.timeout.toString()
-          : this.appConfigService.getConfig()['sbiTimeout']
-          ? this.appConfigService.getConfig()['sbiTimeout'].toString()
-          : '10000',
+        timeout: this.getTimeout(testCase),
         captureTime: new Date().toISOString(),
         transactionId: this.getTransactionId(testCase),
         domainUri: '', //TODO

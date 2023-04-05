@@ -222,4 +222,15 @@ export class DataService {
     let url = `${this.SERVICES_BASE_URL}getEncryptionKey`;
     return this.httpClient.get(url);
   }
+
+  getDataShareUrl(body: any) {
+    let url = `${this.SERVICES_BASE_URL}getDataShareUrl`;
+    console.log('url:' + url);
+    return this.httpClient.post(url, body);
+  }
+  
+  sendToQueue(body: any) {
+    let url = `${this.SERVICES_BASE_URL}sendToQueue`;
+    return this.httpClient.post(url, body);
+  }
 }
