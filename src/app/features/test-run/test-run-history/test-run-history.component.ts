@@ -12,6 +12,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import Utils from 'src/app/app.utils';
 import { TestRunHistoryModel } from 'src/app/core/models/testrunhistory';
 import { SdkProjectModel } from 'src/app/core/models/sdk-project';
+import { TranslateService } from '@ngx-translate/core';
+import { UserProfileService } from 'src/app/core/services/user-profile.service';
 
 @Component({
   selector: 'app-test-run-history',
@@ -28,6 +30,8 @@ export class TestRunHistoryComponent implements OnInit {
   sbiProjectData: SbiProjectModel;
   sdkProjectData: SdkProjectModel;
   dataSource: MatTableDataSource<TestRunHistoryModel>;
+  textDirection: any = this.userProfileService.getTextDirection();
+  buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : 'null';
   displayedColumns: string[] = [
     'lastRunTime',
     'runStatus',
@@ -51,10 +55,13 @@ export class TestRunHistoryComponent implements OnInit {
     private breadcrumbService: BreadcrumbService,
     private dataService: DataService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService,
+    private userProfileService: UserProfileService
   ) {}
 
   async ngOnInit() {
+    this.translate.use(this.userProfileService.getUserPreferredLanguage());
     await this.initAllParams();
     await this.getCollection();
     if (this.projectType == appConstants.SBI) {
