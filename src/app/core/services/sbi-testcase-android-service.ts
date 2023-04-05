@@ -32,6 +32,8 @@ export class SbiTestCaseAndroidService {
         callbackId,
         JSON.stringify(methodRequest)
       );
+      console.log('executeResponse');
+      console.log(executeResponse);
       let endExecutionTime = new Date().toISOString();
       if (executeResponse) {
         const decodedMethodResp = this.createDecodedResponse(
@@ -204,7 +206,7 @@ export class SbiTestCaseAndroidService {
   createRequest(testCase: TestCaseModel, sbiSelectedDevice: string): any {
     const selectedSbiDevice: SbiDiscoverResponseModel =
       JSON.parse(sbiSelectedDevice);
-    let request = {};
+      let request: any = {};
     if (testCase.methodName[0] == appConstants.SBI_METHOD_DISCOVER) {
       //will be taken from "sbiDeviceType"
     }
@@ -216,11 +218,7 @@ export class SbiTestCaseAndroidService {
         env: appConstants.DEVELOPER,
         purpose: selectedSbiDevice.purpose,
         specVersion: selectedSbiDevice.specVersion[0],
-        timeout: testCase.otherAttributes.timeout
-          ? testCase.otherAttributes.timeout.toString()
-          : this.appConfigService.getConfig()['sbiTimeout']
-            ? this.appConfigService.getConfig()['sbiTimeout'].toString()
-            : '10000',
+        timeout: this.getTimeout(testCase),
         captureTime: new Date().toISOString(),
         transactionId: testCase.testId + '-' + new Date().getUTCMilliseconds(),
         //domainUri: '', //TODO
@@ -260,6 +258,53 @@ export class SbiTestCaseAndroidService {
         ],
         //customOpts: null,
       };
+      if (testCase.otherAttributes.invalidRequestAttribute) {
+        let newRequest: any = {};
+        let invalidKey = testCase.otherAttributes.invalidRequestAttribute;
+        if (
+          invalidKey.includes('[') &&
+          invalidKey.includes(']') &&
+          invalidKey.includes('.')
+        ) {
+          newRequest = request;
+          let splitArr = invalidKey.split('[');
+          if (splitArr.length > 0) {
+            let firstPart = splitArr[0];
+            let nestedObj = request[firstPart][0];
+            let secondSplitArr = invalidKey.split('.');
+            let newNestedRequest = changeKeyName(nestedObj, secondSplitArr[1]);
+            newRequest[firstPart] = [newNestedRequest];
+          }
+        } else if (invalidKey.includes('.')) {
+          newRequest = request;
+          let splitArr = invalidKey.split('.');
+          if (splitArr.length > 0) {
+            let nestedObj = request[splitArr[0]];
+            let newNestedRequest = changeKeyName(nestedObj, splitArr[1]);
+            newRequest[splitArr[0]] = newNestedRequest;
+          }
+        } else {
+          newRequest = changeKeyName(request, invalidKey);
+        }
+
+        function changeKeyName(request: any, invalidKeyName: any) {
+          let newRequest: any = {};
+          var keys = Object.keys(request);
+          for (const key of keys) {
+            const keyName = key.toString();
+            console.log(keyName);
+            if (invalidKeyName === keyName) {
+              const invalidKeyName = keyName + 'XXX';
+              newRequest[invalidKeyName] = request[keyName];
+            } else {
+              const val = request[keyName];
+              newRequest[keyName] = val;
+            }
+          }
+          return newRequest;
+        }
+        request = newRequest;
+      }
     }
     //console.log(JSON.stringify(request));
     return request;
