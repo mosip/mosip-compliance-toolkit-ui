@@ -15,6 +15,8 @@ import Utils from 'src/app/app.utils';
 import { SdkProjectModel } from 'src/app/core/models/sdk-project';
 import { environment } from 'src/environments/environment';
 import { AbisProjectModel } from 'src/app/core/models/abis-project';
+import { UserProfileService } from 'src/app/core/services/user-profile.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-collections',
@@ -42,17 +44,21 @@ export class AddCollectionsComponent implements OnInit {
   ];
   isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
   dataSubmitted = false;
+  textDirection: any = this.userProfileService.getTextDirection();
 
   constructor(
     public authService: AuthService,
     private activatedRoute: ActivatedRoute,
     private breadcrumbService: BreadcrumbService,
     private dataService: DataService,
+    private userProfileService: UserProfileService,
+    private translate: TranslateService,
     private dialog: MatDialog,
     private router: Router
   ) { }
 
   async ngOnInit() {
+    this.translate.use(this.userProfileService.getUserPreferredLanguage());
     this.initForm();
     await this.initProjectIdAndType();
     if (this.projectType == appConstants.SBI) {
@@ -242,6 +248,19 @@ export class AddCollectionsComponent implements OnInit {
     let testcaseArr = [];
     if (testcases && testcases.length > 0) {
       for (let testcase of testcases) {
+        let id = testcase.testId;
+        let languageJson: any = {};
+        const langCode = this.userProfileService.getUserPreferredLanguage();
+        this.dataService
+          .getI18NLanguageFiles(langCode)
+          .subscribe((response) => {
+            languageJson = response;
+            if (languageJson.testcases != null && languageJson.testcases[id] != null){
+              testcase.testName = languageJson.testcases[id]['testName'];
+              testcase.testDescription = languageJson.testcases[id]['testDescription'];
+              testcase.validatorDefs = languageJson.testcases[id]['validatorDefs'];
+            }
+          });
         if (!this.isAndroidAppMode) {
           testcaseArr.push(testcase);
         } else if (this.isAndroidAppMode && (!testcase.inactiveForAndroid
