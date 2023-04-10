@@ -62,7 +62,7 @@
     "Outbound Queue Name is required": "Le nom de la file d'attente sortante est requis",
     "Inbound Queue Name:": "Nom de la file d'attente entrante",
     "Inbound Queue Name is required": "Le nom de la file d'attente entrante est requis"
-},
+  },
   "addTestData":{
     "Name:": "Nom",
     "Project Type:": "Type de projet:",
