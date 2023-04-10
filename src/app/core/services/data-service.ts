@@ -233,4 +233,8 @@ export class DataService {
     let url = `${this.SERVICES_BASE_URL}sendToQueue`;
     return this.httpClient.post(url, body);
   }
+
+  getI18NLanguageFiles(langCode: string) {
+    return this.httpClient.get(`./assets/i18n/${langCode}.json`);
+  }
 }
