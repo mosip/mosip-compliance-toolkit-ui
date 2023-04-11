@@ -125,6 +125,15 @@
     "back":"Dos",
     "saveCollection":"Enregistrer la collection"
   },
+  "viewCollection": {
+    "collectionName":"Nom de la collection:",
+    "selectMsg":"Sélectionnez les cas de test à ajouter à la collection :",
+    "id":"identifiant",
+    "name":"Nom",
+    "description":"Description",
+    "validators":"Validateurs",
+    "back":"Dos"
+  },
   "testcases": {
     "SBI1000": {
       "testName": "Découvrir l'appareil",

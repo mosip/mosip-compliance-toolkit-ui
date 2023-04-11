@@ -125,6 +125,15 @@
     "back":"Back",
     "saveCollection":"Save Collection"
   },
+  "viewCollection": {
+    "collectionName":"Collection Name:",
+    "selectMsg":"Select the testcases to add to the collection :",
+    "id":"ID",
+    "name":"Name",
+    "description":"Description",
+    "validators":"Validators",
+    "back":"Back"
+  },
   "testcases": {
     "SBI1000": {
       "testName": "Discover device",
