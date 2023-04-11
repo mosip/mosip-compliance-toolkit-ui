@@ -458,11 +458,11 @@
                 </button>
             </div>
         <div *ngIf="projectForm.controls['sbiPurpose']?.value == 'Registration'">
-            <button mat-flat-button color="accent" (click)="addCollection()" class="collections-button2">
+            <button mat-flat-button color="accent" (click)="addCollection()" class="collections-button2" [ngStyle]="buttonPosition">
                 <mat-icon class="collectionicon">add</mat-icon>
                 {{"viewProject.addCollection"|translate}}
             </button>
-            <button mat-flat-button color="accent" (click)="scanDevice()" class="scandeviceButtonREG" >
+            <button mat-flat-button color="accent" (click)="scanDevice()" class="scandeviceButtonREG">
                 <mat-icon *ngIf="isScanComplete">check_circle</mat-icon>
                 <mat-icon *ngIf="!isScanComplete">radio_button_unchecked</mat-icon>
                 {{"viewProject.scanDevice"|translate}}
