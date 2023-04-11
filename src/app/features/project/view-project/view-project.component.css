@@ -120,6 +120,9 @@ mat-expansion-panel-header {
   .scandeviceButtonREG{
     margin-left: 990px;
   }
+  .add-button{
+    margin-right: 20px;
+  }
 }
 @media screen and (min-width:1275px) and (max-width: 1380px) {
   .encryptionkeyButton{
