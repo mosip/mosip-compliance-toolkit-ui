@@ -24,7 +24,7 @@ const appInitialization = (appConfig: AppConfigService) => {
     BrowserAnimationsModule,
     CoreModule,
     MaterialModule,
-    FormsModule, 
+    FormsModule,
     ReactiveFormsModule,
     I18nModule
   ],
@@ -36,8 +36,8 @@ const appInitialization = (appConfig: AppConfigService) => {
       useFactory: appInitialization,
       multi: true,
       deps: [AppConfigService],
-    },
+    }
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

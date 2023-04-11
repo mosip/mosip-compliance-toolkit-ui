@@ -425,11 +425,6 @@
                     <mat-icon class="collectionicon">add</mat-icon>
                     {{"viewProject.addCollection"|translate}}
                 </button>
-                <span style="margin-left:800px">
-                    <button mat-flat-button color="accent" (click)="fetchResultsFromAbisQueue()">
-                        Fetch Response From Queue
-                    </button>
-                </span>
             </div>
             <div *ngIf="projectForm.controls['sbiPurpose']?.value == 'Auth'">
                 <button mat-flat-button color="accent" (click)="addCollection()" class="collections-button" [ngStyle]="buttonPosition">
@@ -510,12 +505,7 @@
                     <button mat-flat-button color="accent" (click)="runCollection(row)" *ngIf="projectType == 'ABIS'"
                         [disabled]="row.testCaseCount == 0"
                         title="{{row.testCaseCount == 0 ? 'Add testcases first':'Click to run the collection'}}">
-                        Send To Queue
-                    </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button mat-flat-button color="accent" (click)="runCollection(row)" *ngIf="projectType == 'ABIS'"
-                        [disabled]="!row.isValidateEnabled"
-                        title="{{row.isValidateEnabled ? 'Validate the response': 'Validate results option is available when response is fetched from the queue'}}">
-                        Validate Results
+                        {{"viewProject.run"|translate}}
                     </button>
                 </td>
             </ng-container>

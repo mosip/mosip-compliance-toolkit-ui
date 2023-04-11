@@ -1,33 +1,38 @@
 import { Injectable } from '@angular/core';
-import { AppConfigService } from '../../app-config.service';
 import { TestCaseModel } from '../models/testcase';
 import { DataService } from './data-service';
 import * as appConstants from 'src/app/app.constants';
 import { AbisProjectModel } from '../models/abis-project';
+import { ActiveMqService } from './activemq-service';
+import { RxStompService } from './rx-stomp.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AbisTestCaseService {
+  rxStompService: RxStompService;
   constructor(
     private dataService: DataService,
-    private appConfigService: AppConfigService
+    private activeMqService: ActiveMqService
   ) { }
 
-  async runTestCase(
+  async sendRequestToQueue(
     testCase: TestCaseModel,
     abisProjectData: AbisProjectModel,
     runId: string
   ) {
     return new Promise(async (resolve, reject) => {
+      if (!this.rxStompService) {
+        this.rxStompService = this.activeMqService.setUpConfig(abisProjectData);
+      }
       let dataShareResp: any = null;
       dataShareResp = await this.getDataShareUrl(
         testCase,
         abisProjectData.bioTestDataFileName
       );
-      let testDataSource: any = dataShareResp["testDataSource"];
       if (dataShareResp) {
-        let methodRequest: string = this.createRequest(testCase, dataShareResp["url"], runId);
+        let methodRequest: any = this.createRequest(testCase, dataShareResp["url"], runId);
+        methodRequest = JSON.stringify(methodRequest);
         //now validate the method request against the Schema
         let validationRequest: any = await this.validateRequest(
           testCase,
@@ -36,42 +41,17 @@ export class AbisTestCaseService {
         if (
           validationRequest &&
           validationRequest[appConstants.RESPONSE] &&
-          validationRequest[appConstants.RESPONSE].status ==
+          validationRequest[appConstants.RESPONSE].status !=
           appConstants.SUCCESS
         ) {
           //SEND THE REQUEST JSON TO ABIS QUEUE
-          let methodResponse: any = await this.sendRequestToAbisQueue(
-            testCase,
-            abisProjectData,
-            methodRequest
-          );
-          if (methodResponse) {
-            //now validate the method response against all the validators
-            // let validationResponse = await this.validateResponse(
-            //   testCase,
-            //   methodRequest,
-            //   methodResponse,
-            //   method,
-            //   methodIndex
-            // );
-            let finalResponse = {
-              methodResponse: JSON.stringify(methodResponse),
-              methodRequest: JSON.stringify(methodRequest),
-              validationResponse: {},
-              methodUrl: abisProjectData.url,
-              testDataSource: testDataSource
-            };
-            resolve(finalResponse);
-          } else {
-            resolve({
-              errors: [
-                {
-                  errorCode: 'Connection Failure',
-                  message: 'Unable to send request to ABIS queue',
-                },
-              ],
-            });
-          }
+          console.log(methodRequest);
+          let sendRequestResp: any = await this.activeMqService.sendToQueue(this.rxStompService, abisProjectData, methodRequest);
+          resolve({
+            ...sendRequestResp,
+            methodRequest: methodRequest,
+            testDataSource: dataShareResp.testDataSource
+          });
         } else {
           let validationResponse = {
             response: {
@@ -81,7 +61,7 @@ export class AbisTestCaseService {
           };
           let finalResponse = {
             methodResponse: 'Method not invoked since request is invalid.',
-            methodRequest: JSON.stringify(methodRequest),
+            methodRequest: methodRequest,
             validationResponse: validationResponse,
           };
           resolve(finalResponse);
@@ -101,44 +81,46 @@ export class AbisTestCaseService {
     });
   }
 
-  async sendRequestToAbisQueue(testCase: TestCaseModel, abisProjectData: AbisProjectModel, methodRequest: string) {
-    return new Promise((resolve, reject) => {
-      let queueRequest = {
-        "id": appConstants.ABIS_SEND_TO_QUEUE,
-        "version": appConstants.VERSION,
-        "requesttime": new Date().toISOString(),
-        "metadata": {},
-        "request": {
-          "methodName": testCase.methodName[0],
-          "requestJson": JSON.stringify(methodRequest)
-        }
-      };
-      this.dataService.sendToQueue(queueRequest).subscribe(
-        (response: any) => {
-          console.log(response);
-          //return response;
-          if (response.errors && response.errors.length > 0) {
-            resolve({
-              "status": "Request not inserted in queue"
-            });
-          }
-          const resp = response[appConstants.RESPONSE];
-          console.log(resp);
-          if (resp) {
-            resolve({
-              "status": "Request inserted in queue"
-            });
-          } else {
-            resolve({
-              "status": "Request not inserted in queue"
-            });
-          }
-        },
-        (error) => {
-          console.log(error);
-          resolve(false);
-        }
-      );
+  async fetchResponseFromQueue(
+    testCase: TestCaseModel,
+    abisProjectData: AbisProjectModel,
+    runId: string,
+    methodRequest: any,
+    testDataSource: string
+  ) {
+    return new Promise(async (resolve, reject) => {
+      if (!this.rxStompService) {
+        this.rxStompService = this.activeMqService.setUpConfig(abisProjectData);
+      }
+      //FETCH THE RESPONSE JSON TO ABIS QUEUE
+      let methodResponse: any = await this.activeMqService.readFromQueue(this.rxStompService, abisProjectData, methodRequest);
+      if (methodResponse) {
+        // now validate the method response against all the validators
+        let validationResponse = await this.validateResponse(
+          testCase,
+          methodRequest,
+          methodResponse,
+          testCase.methodName[0],
+          0
+        );
+        let finalResponse = {
+          methodResponse: methodResponse,
+          methodRequest: methodRequest,
+          validationResponse: validationResponse,
+          methodUrl: abisProjectData.url,
+          testDataSource: testDataSource
+        };
+        resolve(finalResponse);
+      } else {
+        resolve({
+          errors: [
+            {
+              errorCode: 'Connection Failure',
+              message: 'Unable to send request to ABIS queue',
+            },
+          ],
+        });
+      }
     });
   }
 
@@ -166,7 +148,6 @@ export class AbisTestCaseService {
             resolve(false);
           }
           const resp = response[appConstants.RESPONSE];
-          console.log(resp);
           if (resp) {
             const dataShareResponseDto = resp['dataShareResponseDto'];
             if (dataShareResponseDto) {
@@ -193,12 +174,6 @@ export class AbisTestCaseService {
 
   createRequest(testCase: TestCaseModel, dataShareUrl: string, runId: string): any {
     let request: any = {};
-    let urlKey = "";
-    let arr = dataShareUrl.split("/");
-    if (arr.length > 0) {
-      urlKey = arr[arr.length-1];
-      console.log(urlKey);
-    }
     if (testCase.methodName[0] == appConstants.ABIS_METHOD_INSERT) {
       request = {
         "id": appConstants.ABIS_INSERT,
@@ -206,12 +181,11 @@ export class AbisTestCaseService {
         "requestId": runId + "_" + testCase.testId,
         "requesttime": new Date().toISOString(),
         "referenceId": runId + "_" + testCase.testId,
-        "referenceURL": urlKey
+        "referenceURL": dataShareUrl
       };
     }
     if (testCase.methodName[0] == appConstants.ABIS_METHOS_IDENTIFY) {
     }
-    console.log(request);
     return request;
   }
 
@@ -232,7 +206,7 @@ export class AbisTestCaseService {
         isNegativeTestcase: testCase.isNegativeTestcase
           ? testCase.isNegativeTestcase
           : false,
-        methodResponse: JSON.stringify(methodResponse),
+        methodResponse: methodResponse,
         methodRequest: methodRequest,
         methodName: method,
         validatorDefs: testCase.validatorDefs[methodIndex],
@@ -259,7 +233,6 @@ export class AbisTestCaseService {
     methodRequest: any
   ) {
     return new Promise((resolve, reject) => {
-      //console.log('validateRequest called');
       let validateRequest = {
         testCaseType: testCase.testCaseType,
         testName: testCase.testName,
@@ -268,7 +241,6 @@ export class AbisTestCaseService {
         requestSchema: testCase.requestSchema[0],
         methodRequest: JSON.stringify(methodRequest),
       };
-      //console.log(validateRequest);
       let request = {
         id: appConstants.VALIDATIONS_ADD_ID,
         version: appConstants.VERSION,
@@ -277,7 +249,6 @@ export class AbisTestCaseService {
       };
       this.dataService.validateRequest(request).subscribe(
         (response) => {
-          //console.log(response);
           resolve(response);
         },
         (errors) => {

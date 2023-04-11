@@ -20,6 +20,8 @@ import { MainLayoutComponent } from './components/main-layout/main-layout.compon
 import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './components/header/header.component';
 import { DialogComponent } from './components/dialog/dialog.component';
+import { AbisTestCaseService } from './services/abis-testcase-service';
+import { ActiveMqService } from './services/activemq-service';
 
 @NgModule({
   imports: [CommonModule, MaterialModule, RouterModule, HttpClientModule],
@@ -42,6 +44,8 @@ import { DialogComponent } from './components/dialog/dialog.component';
     CanDeactivateGuardService,
     SbiTestCaseService,
     SdkTestCaseService,
+    AbisTestCaseService,
+    ActiveMqService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

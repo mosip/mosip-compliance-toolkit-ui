@@ -47,6 +47,15 @@
                     <p></p><p></p>Current testcase: {{currectTestCaseId}} - {{currectTestCaseName}}
                     <p></p>
                     <div  *ngIf="!showLoader || showResumeAgainBtn || showContinueBtn" [innerHTML]="currentTestDescription"></div>
+                    <div *ngIf="abisRequestSent">
+                        <p></p><span [ngStyle]="{color: '#fd518c'}">Request has been sent to the queue. Waiting for response from queue.
+                            If it's taking too long you can come back again after sometime.
+                        </span>
+                    </div>
+                    <div *ngIf="abisRequestSendFailure">
+                        <p></p><span [ngStyle]="{color: '#fd518c'}">Unable to send request to the ABIS queue. Check the URL, username and other attributes and try again.
+                        </span>
+                    </div>
                     <div *ngIf="showLoader && !showResumeAgainBtn" class="spinner">
                         <mat-spinner diameter="50"></mat-spinner>
                     </div>

@@ -21,6 +21,7 @@ import { ScanDeviceComponent } from '../scan-device/scan-device.component';
 import { environment } from 'src/environments/environment';
 import { AbisTestCaseService } from 'src/app/core/services/abis-testcase-service';
 import { AbisProjectModel } from 'src/app/core/models/abis-project';
+import { RxStompService } from 'src/app/core/services/rx-stomp.service';
 
 declare const start_streaming: any;
 declare const stop_streaming: any;
@@ -89,6 +90,9 @@ export class ExecuteTestRunComponent implements OnInit {
     : 0;
   currentKeyRotationIndex = 0;
   isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
+  abisRequestSent = false;
+  abisRequestSendFailure = false;
+  private topicSubscription: Subscription;
 
   constructor(
     private dialogRef: MatDialogRef<ExecuteTestRunComponent>,
@@ -100,7 +104,8 @@ export class ExecuteTestRunComponent implements OnInit {
     private sdkTestCaseService: SdkTestCaseService,
     private sbiTestCaseAndroidService: SbiTestCaseAndroidService,
     private abisTestCaseService: AbisTestCaseService,
-    private appConfigService: AppConfigService
+    private appConfigService: AppConfigService,
+    private rxStompService: RxStompService,
   ) {
     dialogRef.disableClose = true;
   }
@@ -670,12 +675,33 @@ export class ExecuteTestRunComponent implements OnInit {
         resolve(res);
       } else if (this.projectType == appConstants.ABIS) {
         await this.getAbisProjectDetails();
-        const res = await this.abisTestCaseService.runTestCase(
+        this.abisRequestSent = false;
+        this.abisRequestSendFailure = false;
+        this.showLoader = true;
+        const req: any = await this.abisTestCaseService.sendRequestToQueue(
           testCase,
           this.abisProjectData,
           this.testRunId
         );
-        resolve(res);
+        if (req && req["status"] && req["status"] === "success") {
+          this.abisRequestSent = true;
+          //now fetch the response from queue
+          const res: any = await this.abisTestCaseService.fetchResponseFromQueue(
+            testCase,
+            this.abisProjectData,
+            this.testRunId,
+            req.methodRequest,
+            req.testDataSource
+          );
+          console.log(res);
+          resolve(res);
+        } else {
+          this.abisRequestSent = false;
+          this.abisRequestSendFailure = true;
+          this.showLoader = false;
+          resolve(true);
+        }
+        
       } else {
         resolve(true);
       }
@@ -835,5 +861,8 @@ export class ExecuteTestRunComponent implements OnInit {
     this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}/collection/${this.collectionId}/testrun/${this.testRunId}`,
     ]);
+  }
+  ngOnDestroy() {
+    
   }
 }
