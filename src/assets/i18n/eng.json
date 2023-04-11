@@ -29,8 +29,8 @@
   "addProject":{
     "biometricData": "Biometric Data",
     "projectName": "Project Name:",
-    "projectType:": "Project Type:",
-    "specVersion:": "Spec Version:",
+    "projectType": "Project Type:",
+    "specVersion": "Spec Version:",
     "baseUrl": "Base URL:",
     "purpose": "Purpose:",
     "selectTestData": "Select Test Data:",
