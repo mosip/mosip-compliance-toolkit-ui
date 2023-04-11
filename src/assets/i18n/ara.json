@@ -125,6 +125,15 @@
     "back":"خلف",
     "saveCollection":"حفظ المجموعة"
   },
+  "viewCollection": {
+    "collectionName":"اسم المجموعة:",
+    "selectMsg":"حدد حالات الاختبار لإضافتها إلى المجموعة:",
+    "id":"بطاقة تعريف",
+    "name":"اسم",
+    "description":"وصف",
+    "validators":"المدققون",
+    "back":"خلف"
+  },
   "testcases": {
     "SBI1000": {
       "testName": "اكتشف الجهاز",
