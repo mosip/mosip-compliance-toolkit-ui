@@ -1,30 +1,30 @@
 {
   "projectDashboard": {
-    "add_project": "Add Project",
-    "biometric_data": "Biometric Data",
+    "addProject": "Add Project",
+    "biometricData": "Biometric Data",
     "view": "View",
     "filter": "Filter",
     "name": "Name",
     "projectType": "Project Type",
     "collections": "Collections",
     "creationDate": "Creation Date",
-    "lastRundate": "Last Run Date",
+    "lastRunDate": "Last Run Date",
     "lastRunStatus": "Last Run Status",
     "success": "Success",
     "failure": "Failure",
-    "project_row": "There are no projects available."
+    "projectRow": "There are no projects available."
   },
   "biometricDashboard":{
-    "project_dashboard":"Projects Dashboard",
-    "add_biometric":"Add Biometric Data",
-    "download_zip":"Download Zip",
+    "projectDashboard":"Projects Dashboard",
+    "addBiometric":"Add Biometric Data",
+    "downloadZip":"Download Zip",
     "filter":"Filter",
     "name":"Name",
     "type":"Type",
     "purpose":"Purpose",
-    "filename":"File Name",
+    "fileName":"File Name",
     "creationDate":"Creation Date",
-    "biometric_record":"There are no records available."
+    "biometricRecord":"There are no records available."
   },
   "addProject":{
     "biometricData": "Biometric Data",

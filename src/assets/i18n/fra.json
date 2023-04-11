@@ -1,30 +1,30 @@
 {
   "projectDashboard": {
-    "add_project": "Ajouter un projet",
-    "biometric_data": "Données biométriques",
+    "addProject": "Ajouter un projet",
+    "biometricData": "Données biométriques",
     "view": "Voir",
     "filter": "Filtre",
     "name": "Nom",
     "projectType": "Type de projet",
     "collections": "Collections",
     "creationDate": "Date de création",
-    "lastRundate": "Date de la dernière exécution",
+    "lastRunDate": "Date de la dernière exécution",
     "lastRunStatus": "État de la dernière exécution",
     "success": "Succès",
     "failure": "Échec",
-    "project_row": "Il n'y a pas de projets disponibles."
+    "projectRow": "Il n'y a pas de projets disponibles."
   },
   "biometricDashboard":{
-    "project_dashboard":"Tableau de bord des projets",
-    "add_biometric":"Ajouter des données biométriques",
-    "download_zip":"Télécharger le zip",
+    "projectDashboard":"Tableau de bord des projets",
+    "addBiometric":"Ajouter des données biométriques",
+    "downloadZip":"Télécharger le zip",
     "filter":"Filtre",
     "name":"Nom",
     "type":"Taper",
     "purpose":"But",
-    "filename":"Nom de fichier",
+    "fileName":"Nom de fichier",
     "creationDate":"Date de création",
-    "biometric_record":"Il n'y a pas d'enregistrements disponibles."
+    "biometricRecord":"Il n'y a pas d'enregistrements disponibles."
   },
   "addProject":{
     "biometricData": "Données biométriques",
