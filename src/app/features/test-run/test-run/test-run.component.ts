@@ -271,8 +271,8 @@ export class TestRunComponent implements OnInit {
       let list = jsonData['validationsList'];
       let list2 = list;
       for( let listItem of list2){
-        if(listItem.descriptionCode != null){
-          let descriptionKey=listItem.descriptionCode;
+        if(listItem.descriptionKey != null){
+          let descriptionKey=listItem.descriptionKey;
           if(this.langJson.validations==null || this.langJson.validations[descriptionKey]==null){
             return list;
           }else{
