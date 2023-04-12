@@ -57,7 +57,7 @@ export class TestRunComponent implements OnInit {
   dataSubmitted = false;
   panelOpenState = false;
   runDetails: any;
-  langJson:any={};
+  langJson: any = {};
 
   constructor(
     public authService: AuthService,
@@ -82,10 +82,10 @@ export class TestRunComponent implements OnInit {
     await this.getTestRun();
     this.initBreadCrumb();
     this.dataLoaded = true;
-    const langCode=this.userProfileService.getUserPreferredLanguage();
+    const langCode = this.userProfileService.getUserPreferredLanguage();
     this.dataService.getI18NLanguageFiles(langCode).subscribe(
-      (response)=>{
-        this.langJson=response;
+      (response) => {
+        this.langJson = response;
         console.log(this.langJson);
       }
     )
@@ -270,13 +270,13 @@ export class TestRunComponent implements OnInit {
       let jsonData = JSON.parse(row.resultDescription);
       let list = jsonData['validationsList'];
       let list2 = list;
-      for( let listItem of list2){
-        if(listItem.descriptionKey != null){
-          let descriptionKey=listItem.descriptionKey;
-          if(this.langJson.validations==null || this.langJson.validations[descriptionKey]==null){
+      for (let listItem of list2) {
+        if (listItem.descriptionKey != null) {
+          let descriptionKey = listItem.descriptionKey;
+          if (this.langJson.validations == null || this.langJson.validations[descriptionKey] == null) {
             return list;
-          }else{
-            listItem.description=this.langJson.validations[descriptionKey];
+          } else {
+            listItem.description = this.langJson.validations[descriptionKey];
           }
         }
       }
