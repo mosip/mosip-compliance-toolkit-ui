@@ -134,6 +134,28 @@
 		"validators": "Validators",
 		"back": "Back"
 	},
+	"scanDevice": {
+		"title": "Scan Device",
+		"scan": "Scanning for devices..",
+		"selectPortAndDevice": "Scanning complete. Select port and device.",
+		"selectDevice": "Scanning complete. Select device.",
+		"scanFail": "Scanning failed. Connect your device and scan again.",
+		"alreadyScan": "Scanning already complete.",
+		"availablePorts": "Available Ports:",
+		"availableAppIntent": "Available App Intent:",
+		"portIsRequired": "Port is required",
+		"device": "Device:",
+		"deviceIsRequired": "Device is required",
+		"close": "Close",
+		"scanAgain": "Scan Again",
+		"save": "Save"
+	},
+	"deviceLabel": {
+		"deviceId": "Device Id",
+		"purpose": "Purpose",
+		"deviceType": "Device Type",
+		"deviceSubType": "Device Sub Type"
+	},
 	"testcases": {
 		"SBI1000": {
 			"testName": "Discover device",

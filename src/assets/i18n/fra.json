@@ -134,6 +134,28 @@
 		"validators": "Validateurs",
 		"back": "Dos"
 	},
+	"scanDevice": {
+		"title": "Analyser l'appareil",
+		"scan": "Recherche d'appareils..",
+		"selectPortAndDevice": "Numérisation terminée. Sélectionnez le port et l'appareil.",
+		"selectDevice": "Numérisation terminée. Choisir un appareil.",
+		"scanFail": "La numérisation a échoué. Connectez votre appareil et numérisez à nouveau.",
+		"alreadyScan": "Numérisation déjà terminée.",
+		"availablePorts": "Ports disponibles :",
+		"availableAppIntent": "Intention d'application disponible :",
+		"portIsRequired": "Le port est requis",
+		"device": "Appareil:",
+		"deviceIsRequired": "L'appareil est requis",
+		"close": "Fermer",
+		"scanAgain": "Numériser à nouveau",
+		"save": "Sauvegarder"
+	},
+	"deviceLabel": {
+		"deviceId": "Reference de l'appareil",
+		"purpose": "But",
+		"deviceType": "Type d'appareil",
+		"deviceSubType": "Sous-type de périphérique"
+	},
 	"testcases": {
 		"SBI1000": {
 			"testName": "Découvrir l'appareil",

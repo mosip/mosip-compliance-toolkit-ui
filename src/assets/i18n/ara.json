@@ -134,6 +134,28 @@
 		"validators": "المدققون",
 		"back": "خلف"
 	},
+	"scanDevice": {
+		"title": "جهاز فحص",
+		"scan": "جارٍ البحث عن أجهزة ..",
+		"selectPortAndDevice": "اكتمل المسح. حدد المنفذ والجهاز.",
+		"selectDevice": "اكتمل المسح. اختر جهاز.",
+		"scanFail": "فشل المسح. قم بتوصيل جهازك والمسح الضوئي مرة أخرى.",
+		"alreadyScan": "اكتمل المسح بالفعل.",
+		"availablePorts": "الموانئ المتاحة:",
+		"availableAppIntent": "الغرض من التطبيق المتاح:",
+		"portIsRequired": "المنفذ مطلوب",
+		"device": "جهاز:",
+		"deviceIsRequired": "الجهاز مطلوب",
+		"close": "يغلق",
+		"scanAgain": "امسح مجددا",
+		"save": "يحفظ"
+	},
+	"deviceLabel": {
+		"deviceId": "معرف الجهاز",
+		"purpose": "غاية",
+		"deviceType": "نوع الجهاز",
+		"deviceSubType": "نوع الجهاز الفرعي"
+	},
 	"testcases": {
 		"SBI1000": {
 			"testName": "اكتشف الجهاز",
@@ -3283,5 +3305,4 @@
 	"validatorMessages": {
 		"SCHEMA_VALIDATOR_001": "يتحقق من الاستجابة للسمات المطلوبة والقيم الصحيحة"
 	}
-	
 }
