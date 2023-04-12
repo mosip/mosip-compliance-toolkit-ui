@@ -3281,7 +3281,8 @@
 		}
 	},
 	"validatorMessages": {
-		"SCHEMA_VALIDATOR_001": "يتحقق من الاستجابة للسمات المطلوبة والقيم الصحيحة"
+		"SCHEMA_VALIDATOR_001": "يتحقق من الاستجابة للسمات المطلوبة والقيم الصحيحة",
+    "RESPONSE_MISMATCH_VALIDATOR_001":"تطابق bioCount والشرائح والاستثناءات استجابة للطلب"
 	}
 	
 }

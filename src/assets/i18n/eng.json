@@ -3281,6 +3281,7 @@
 		}
 	},
 	"validatorMessages": {
-		"SCHEMA_VALIDATOR_001": "JSON is as expected. All mandatory values are available and they all have valid expected values."
+		"SCHEMA_VALIDATOR_001": "JSON is as expected. All mandatory values are available and they all have valid expected values.",
+    "RESPONSE_MISMATCH_VALIDATOR_001":"The bioCount, segments and exceptions in response match the request."
 	}
 }

@@ -3281,6 +3281,7 @@
 		}
 	},
 	"validatorMessages": {
-		"SCHEMA_VALIDATOR_001": "Valide la réponse pour les attributs obligatoires et les valeurs correctes"
+		"SCHEMA_VALIDATOR_001": "Valide la réponse pour les attributs obligatoires et les valeurs correctes",
+    "RESPONSE_MISMATCH_VALIDATOR_001": "Le bioCount, les segments et les exceptions en réponse correspondent à la demande."
 	}
 }
