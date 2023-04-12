@@ -109,10 +109,10 @@
                                                 <b>{{item.validatorName}}</b>&nbsp;({{item.validatorDescription}})
                                             </span>
                                             <span *ngIf="item.status== 'success'" [ngStyle]="{color: 'green'}">
-                                                <div [innerHTML]="item.description"></div>
+                                                <div [innerHTML]="getValidatorMessage(item)"></div>
                                             </span>
                                             <span *ngIf="item.status== 'failure'" [ngStyle]="{color: 'red'}">
-                                                <div [innerHTML]="item.description"></div>
+                                                <div [innerHTML]="getValidatorMessage(item)"></div>
                                             </span>
                                         </div>
                                     </div>

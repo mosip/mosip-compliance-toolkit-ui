@@ -57,7 +57,8 @@ export class TestRunComponent implements OnInit {
   dataSubmitted = false;
   panelOpenState = false;
   runDetails: any;
-  langJson: any = {};
+  resourceBundleJson: any = {};
+  langCode = this.userProfileService.getUserPreferredLanguage();
 
   constructor(
     public authService: AuthService,
@@ -67,7 +68,7 @@ export class TestRunComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router,
     private userProfileService: UserProfileService
-  ) {}
+  ) { }
 
   async ngOnInit() {
     await this.initAllParams();
@@ -81,14 +82,13 @@ export class TestRunComponent implements OnInit {
     await this.getTestcasesForCollection();
     await this.getTestRun();
     this.initBreadCrumb();
-    this.dataLoaded = true;
-    const langCode = this.userProfileService.getUserPreferredLanguage();
-    this.dataService.getI18NLanguageFiles(langCode).subscribe(
+    //load the current lang resource bundle  
+    this.dataService.getI18NLanguageFiles(this.langCode).subscribe(
       (response) => {
-        this.langJson = response;
-        console.log(this.langJson);
+        this.resourceBundleJson = response;
       }
     )
+    this.dataLoaded = true;
   }
 
   initAllParams() {
@@ -269,18 +269,7 @@ export class TestRunComponent implements OnInit {
     if (row.resultDescription != '') {
       let jsonData = JSON.parse(row.resultDescription);
       let list = jsonData['validationsList'];
-      let list2 = list;
-      for (let listItem of list2) {
-        if (listItem.descriptionKey != null) {
-          let descriptionKey = listItem.descriptionKey;
-          if (this.langJson.validations == null || this.langJson.validations[descriptionKey] == null) {
-            return list;
-          } else {
-            listItem.description = this.langJson.validations[descriptionKey];
-          }
-        }
-      }
-      return list2;
+      return list;
     } else {
       let data = [];
       for (const testcase of this.testcasesList) {
@@ -296,6 +285,22 @@ export class TestRunComponent implements OnInit {
         }
       }
       return data;
+    }
+  }
+
+  getValidatorMessage(item: any) {
+    console.log(item.descriptionKey);
+    if (item && item.description && item.descriptionKey && this.resourceBundleJson && this.resourceBundleJson["validatorMessages"]) {
+      const validatorMessages = this.resourceBundleJson["validatorMessages"];
+      const translatedMsg = validatorMessages[item.descriptionKey];
+      if (translatedMsg) {
+        return translatedMsg;
+      }
+    }
+    if (item) {
+      return item.description;
+    } else {
+      return "";
     }
   }
 
