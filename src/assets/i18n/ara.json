@@ -128,6 +128,15 @@
   "validations": {
     "SCHEMA_VALIDATOR_001":"يتحقق من الاستجابة للسمات المطلوبة والقيم الصحيحة",
     "SCHEMA_VALIDATOR_002":"فشل عمليات التحقق من المخطط."
+    },
+  "viewCollection": {
+    "collectionName":"اسم المجموعة:",
+    "selectMsg":"حدد حالات الاختبار لإضافتها إلى المجموعة:",
+    "id":"بطاقة تعريف",
+    "name":"اسم",
+    "description":"وصف",
+    "validators":"المدققون",
+    "back":"خلف"
   },
   "testcases": {
     "SBI1000": {

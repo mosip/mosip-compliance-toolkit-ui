@@ -1,6 +1,8 @@
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from './core/components/dialog/dialog.component';
 import { SbiDiscoverResponseModel } from './core/models/sbi-discover';
+import { UserProfileService } from './core/services/user-profile.service';
+import { DataService } from './core/services/data-service';
 
 export default class Utils {
   static getCurrentDate() {
@@ -230,5 +232,24 @@ export default class Utils {
       data: body,
     });
     return dialogRef;
+  }
+
+  static translateTestcase(
+    testcase: any,
+    userProfileService: UserProfileService,
+    dataService: DataService
+  ) {
+    let langCode = userProfileService.getUserPreferredLanguage();
+    let languageJson: any = {};
+    dataService.getI18NLanguageFiles(langCode).subscribe((response) => {
+      languageJson = response;
+      if (languageJson.testcases != null && languageJson.testcases[testcase.testId] != null) {
+        testcase.testName = languageJson.testcases[testcase.testId]['testName'];
+        testcase.testDescription = languageJson.testcases[testcase.testId]['testDescription'];
+        testcase.validatorDefs = languageJson.testcases[testcase.testId]['validatorDefs'];
+      }
+    });
+    //console.log(testcase);
+    return testcase;
   }
 }
