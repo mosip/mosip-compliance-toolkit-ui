@@ -128,6 +128,15 @@
   "validations": {
     "SCHEMA_VALIDATOR_001":"JSON is as expected. All mandatory values are available and they all have valid expected values.",
     "SCHEMA_VALIDATOR_002":"Schema validations failed."
+    },
+  "viewCollection": {
+    "collectionName":"Collection Name:",
+    "selectMsg":"Select the testcases to add to the collection :",
+    "id":"ID",
+    "name":"Name",
+    "description":"Description",
+    "validators":"Validators",
+    "back":"Back"
   },
   "testcases": {
     "SBI1000": {

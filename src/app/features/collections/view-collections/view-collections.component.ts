@@ -13,6 +13,8 @@ import { MatSort } from '@angular/material/sort';
 import { TestCaseModel } from 'src/app/core/models/testcase';
 import Utils from 'src/app/app.utils';
 import { SdkProjectModel } from 'src/app/core/models/sdk-project';
+import { UserProfileService } from 'src/app/core/services/user-profile.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-viewcollections',
@@ -39,17 +41,21 @@ export class ViewCollectionsComponent implements OnInit {
   ];
   dataSubmitted = false;
   @ViewChild(MatSort) sort: MatSort;
+  textDirection: any = this.userProfileService.getTextDirection();
 
   constructor(
     public authService: AuthService,
     private activatedRoute: ActivatedRoute,
     private breadcrumbService: BreadcrumbService,
     private dataService: DataService,
+    private userProfileService: UserProfileService,
+    private translate: TranslateService,
     private dialog: MatDialog,
     private router: Router
   ) {}
 
   async ngOnInit() {
+    this.translate.use(this.userProfileService.getUserPreferredLanguage());
     this.initForm();
     await this.initAllParams();
     await this.getCollection();
@@ -172,15 +178,20 @@ export class ViewCollectionsComponent implements OnInit {
           (response: any) => {
             //console.log(response);
             let testcases = response['response']['testcases'];
+            let testcaseArr = [];
+            for (let testcase of testcases) {
+              testcaseArr.push(Utils.translateTestcase(testcase,this.userProfileService,this.dataService));
+            }
+            //console.log(testcaseArr);
             //sort the testcases based on the testId
-            if (testcases && testcases.length > 0) {
-              testcases.sort(function (a: TestCaseModel, b: TestCaseModel) {
+            if (testcaseArr && testcaseArr.length > 0) {
+              testcaseArr.sort(function (a: TestCaseModel, b: TestCaseModel) {
                 if (a.testId > b.testId) return 1;
                 if (a.testId < b.testId) return -1;
                 return 0;
               });
             }
-            this.dataSource = new MatTableDataSource(testcases);
+            this.dataSource = new MatTableDataSource(testcaseArr);
             resolve(true);
           },
           (errors) => {

@@ -248,24 +248,11 @@ export class AddCollectionsComponent implements OnInit {
     let testcaseArr = [];
     if (testcases && testcases.length > 0) {
       for (let testcase of testcases) {
-        let id = testcase.testId;
-        let languageJson: any = {};
-        const langCode = this.userProfileService.getUserPreferredLanguage();
-        this.dataService
-          .getI18NLanguageFiles(langCode)
-          .subscribe((response) => {
-            languageJson = response;
-            if (languageJson.testcases != null && languageJson.testcases[id] != null){
-              testcase.testName = languageJson.testcases[id]['testName'];
-              testcase.testDescription = languageJson.testcases[id]['testDescription'];
-              testcase.validatorDefs = languageJson.testcases[id]['validatorDefs'];
-            }
-          });
         if (!this.isAndroidAppMode) {
-          testcaseArr.push(testcase);
+          testcaseArr.push(Utils.translateTestcase(testcase,this.userProfileService,this.dataService));
         } else if (this.isAndroidAppMode && (!testcase.inactiveForAndroid
           || (testcase.inactiveForAndroid && testcase.inactiveForAndroid != "yes"))) {
-          testcaseArr.push(testcase);
+          testcaseArr.push(Utils.translateTestcase(testcase,this.userProfileService,this.dataService));
         }
       }
       //sort the testcases based on the testId

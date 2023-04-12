@@ -128,6 +128,15 @@
   "validations": {
     "SCHEMA_VALIDATOR_001":"Valide la réponse pour les attributs obligatoires et les valeurs correctes",
     "SCHEMA_VALIDATOR_002":"Les validations de schéma ont échoué"
+    },
+  "viewCollection": {
+    "collectionName":"Nom de la collection:",
+    "selectMsg":"Sélectionnez les cas de test à ajouter à la collection :",
+    "id":"identifiant",
+    "name":"Nom",
+    "description":"Description",
+    "validators":"Validateurs",
+    "back":"Dos"
   },
   "testcases": {
     "SBI1000": {
