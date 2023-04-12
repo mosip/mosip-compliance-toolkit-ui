@@ -125,6 +125,10 @@
     "back":"Dos",
     "saveCollection":"Enregistrer la collection"
   },
+  "validations": {
+    "SCHEMA_VALIDATOR_001":"Valide la réponse pour les attributs obligatoires et les valeurs correctes",
+    "SCHEMA_VALIDATOR_002":"Les validations de schéma ont échoué"
+  },
   "testcases": {
     "SBI1000": {
       "testName": "Découvrir l'appareil",

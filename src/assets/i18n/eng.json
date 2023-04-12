@@ -125,6 +125,10 @@
     "back":"Back",
     "saveCollection":"Save Collection"
   },
+  "validations": {
+    "SCHEMA_VALIDATOR_001":"JSON is as expected. All mandatory values are available and they all have valid expected values.",
+    "SCHEMA_VALIDATOR_002":"Schema validations failed."
+  },
   "testcases": {
     "SBI1000": {
       "testName": "Discover device",

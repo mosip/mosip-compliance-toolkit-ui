@@ -21,6 +21,7 @@ import {
 import * as moment from 'moment';
 import { SdkProjectModel } from 'src/app/core/models/sdk-project';
 import { TestCaseModel } from 'src/app/core/models/testcase';
+import { UserProfileService } from 'src/app/core/services/user-profile.service';
 
 @Component({
   selector: 'app-test-run',
@@ -56,6 +57,7 @@ export class TestRunComponent implements OnInit {
   dataSubmitted = false;
   panelOpenState = false;
   runDetails: any;
+  langJson:any={};
 
   constructor(
     public authService: AuthService,
@@ -63,7 +65,8 @@ export class TestRunComponent implements OnInit {
     private breadcrumbService: BreadcrumbService,
     private dataService: DataService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private userProfileService: UserProfileService
   ) {}
 
   async ngOnInit() {
@@ -79,6 +82,13 @@ export class TestRunComponent implements OnInit {
     await this.getTestRun();
     this.initBreadCrumb();
     this.dataLoaded = true;
+    const langCode=this.userProfileService.getUserPreferredLanguage();
+    this.dataService.getI18NLanguageFiles(langCode).subscribe(
+      (response)=>{
+        this.langJson=response;
+        console.log(this.langJson);
+      }
+    )
   }
 
   initAllParams() {
@@ -259,6 +269,14 @@ export class TestRunComponent implements OnInit {
     if (row.resultDescription != '') {
       let jsonData = JSON.parse(row.resultDescription);
       let list = jsonData['validationsList'];
+      for( let listItem of list){
+        if(listItem.descriptionCode != null){
+          let descriptionKey=listItem.descriptionCode;
+          if(this.langJson.validations[descriptionKey]!=null){
+            listItem.description=this.langJson.validations[descriptionKey];
+          }
+        }
+      }
       return list;
     } else {
       let data = [];
