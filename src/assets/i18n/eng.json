@@ -3286,6 +3286,8 @@
     "RESPONSE_MISMATCH_VALIDATOR_002": "ResponseMismatchValidator failure, with Message, mismatch request biocount = {} not valid {}",
     "RESPONSE_MISMATCH_VALIDATOR_003": "ResponseMismatchValidator failure, with Message, mismatch request purpose = {} not valid {}",
     "RESPONSE_MISMATCH_VALIDATOR_004": "ResponseMismatchValidator failure, with Message, invalid Response BioSubType for Response Type ",
-    "RESPONSE_MISMATCH_VALIDATOR_005": "ResponseMismatchValidator failure, with Message, exception biosubtype = {} not valid"
+    "RESPONSE_MISMATCH_VALIDATOR_005": "ResponseMismatchValidator failure, with Message, exception biosubtype = {} not valid",
+    "TRANSACTIONID_VALIDATOR_001": "Transaction Id validation is successful",
+    "TRANSACTIONID_VALIDATOR_002": "Transaction Id validation failed."
   }
 }
