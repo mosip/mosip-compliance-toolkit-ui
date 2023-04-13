@@ -3285,8 +3285,8 @@
     "RESPONSE_MISMATCH_VALIDATOR_001": "Le bioCount, les segments et les exceptions en réponse correspondent à la requête.",
     "RESPONSE_MISMATCH_VALIDATOR_002": "ResponseMismatchValidator a échoué en raison d'une incompatibilité de biocompte. En requête, bioCount = {} et en réponse, bioCount = {}",
     "RESPONSE_MISMATCH_VALIDATOR_003": "ResponseMismatchValidator a échoué en raison d'une incompatibilité d'objectif. En requête, purpose = {} et en réponse, purpose = {}",
-    "RESPONSE_MISMATCH_VALIDATOR_004": "Échec de ResponseMismatchValidator, en raison d'un biosous-type de réponse non valide pour le type de réponse ",
-    "RESPONSE_MISMATCH_VALIDATOR_005": "Échec de ResponseMismatchValidator, en raison de l'exception biosubtype = {} non valide",
+    "RESPONSE_MISMATCH_VALIDATOR_004": "Échec de ResponseMismatchValidator en raison d'un biosous-type de réponse non valide.",
+    "RESPONSE_MISMATCH_VALIDATOR_005": "ResponseMismatchValidator a échoué en raison d'une exception, biosubtype = {} n'est pas valide",
     "TRANSACTIONID_VALIDATOR_001": "La validation de l'identifiant de transaction a réussi",
     "TRANSACTIONID_VALIDATOR_002": "La validation de l'ID de transaction a échoué."
   }

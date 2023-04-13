@@ -3285,8 +3285,8 @@
     "RESPONSE_MISMATCH_VALIDATOR_001": "The bioCount, segments and exceptions in response match the request.",
     "RESPONSE_MISMATCH_VALIDATOR_002": "ResponseMismatchValidator failed due to biocount mismatch. In request, bioCount = {} and in response, bioCount = {}",
     "RESPONSE_MISMATCH_VALIDATOR_003": "ResponseMismatchValidator failed due to purpose mismatch. In request, purpose = {} and in response, purpose = {}",
-    "RESPONSE_MISMATCH_VALIDATOR_004": "ResponseMismatchValidator failed, due to invalid Response BioSubType for Response Type ",
-    "RESPONSE_MISMATCH_VALIDATOR_005": "ResponseMismatchValidator failed, due to exception biosubtype = {} not valid",
+    "RESPONSE_MISMATCH_VALIDATOR_004": "ResponseMismatchValidator failed, due to invalid Response BioSubType.",
+    "RESPONSE_MISMATCH_VALIDATOR_005": "ResponseMismatchValidator failed due to exception, biosubtype = {} is not valid",
     "TRANSACTIONID_VALIDATOR_001": "Transaction Id validation is successful",
     "TRANSACTIONID_VALIDATOR_002": "Transaction Id validation failed."
   }

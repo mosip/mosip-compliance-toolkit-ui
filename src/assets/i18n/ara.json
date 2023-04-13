@@ -3285,8 +3285,8 @@
     "RESPONSE_MISMATCH_VALIDATOR_001": "تطابق bioCount والشرائح والاستثناءات استجابة للطلب",
     "RESPONSE_MISMATCH_VALIDATOR_002": "فشل ResponseMismatchValidator بسبب عدم تطابق العد الحيوي. في الطلب ، bioCount = {} واستجابة لذلك ، bioCount = {}",
     "RESPONSE_MISMATCH_VALIDATOR_003": "فشل ResponseMismatchValidator بسبب عدم تطابق الغرض. في الطلب ، الغرض = {} واستجابة لذلك الغرض = {}",
-    "RESPONSE_MISMATCH_VALIDATOR_004": "فشل ResponseMismatchValidator ، بسبب استجابة BioSubType غير صالحة لنوع الاستجابة ",
-    "RESPONSE_MISMATCH_VALIDATOR_005": "فشل ResponseMismatchValidator ، بسبب الاستثناء biosubtype = {} غير صالح",
+    "RESPONSE_MISMATCH_VALIDATOR_004": "فشل ResponseMismatchValidator ، بسبب استجابة BioSubType غير صالحة.",
+    "RESPONSE_MISMATCH_VALIDATOR_005": "فشل ResponseMismatchValidator بسبب استثناء ، biosubtype = {} غير صالح",
     "TRANSACTIONID_VALIDATOR_001": "تم التحقق من صحة معرّف المعاملة بنجاح",
     "TRANSACTIONID_VALIDATOR_002": "فشل التحقق من صحة معرّف المعاملة."
   }
