@@ -310,7 +310,7 @@ export class TestRunComponent implements OnInit {
         let translatedMsgArray = translatedMsg.split('{}');
         const matches: RegExpMatchArray | null = translatedMsg.match(/\{\}/g);
         const count: number = matches ? matches.length : 0;
-        if(count != values.length){
+        if (count != values.length) {
           return item.description;
         }
         if (translatedMsgArray.length > 0) {
