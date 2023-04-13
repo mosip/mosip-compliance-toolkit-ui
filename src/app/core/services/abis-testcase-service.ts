@@ -239,7 +239,7 @@ export class AbisTestCaseService {
         specVersion: testCase.specVersion,
         testDescription: testCase.testDescription,
         requestSchema: testCase.requestSchema[0],
-        methodRequest: JSON.stringify(methodRequest),
+        methodRequest: methodRequest,
       };
       let request = {
         id: appConstants.VALIDATIONS_ADD_ID,
