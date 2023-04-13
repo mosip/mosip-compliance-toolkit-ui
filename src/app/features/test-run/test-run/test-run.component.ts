@@ -292,7 +292,7 @@ export class TestRunComponent implements OnInit {
     let translatedMsg: string;
     const validatorMessages = this.resourceBundleJson["validatorMessages"];
     const descriptionKey = item.descriptionKey;
-    const COLON_SEPARATOR = ':';
+    const COLON_SEPARATOR = ':', COMMA_SEPARATOR = ',', JSON_PLACEHOLDER = '{}';
     if (item && item.description && descriptionKey && this.resourceBundleJson &&
       validatorMessages) {
       //check if the descriptionKey is having any rutime attributes
@@ -305,14 +305,14 @@ export class TestRunComponent implements OnInit {
         let descriptionKeyArr = descriptionKey.split(COLON_SEPARATOR);
         const descriptionKeyName = descriptionKeyArr[0];
         const attributesArr = descriptionKeyArr[1];
-        const values = attributesArr.split(',');
+        const values = attributesArr.split(COMMA_SEPARATOR);
         translatedMsg = validatorMessages[descriptionKeyName];
-        let translatedMsgArray = translatedMsg.split('{}');
         const matches: RegExpMatchArray | null = translatedMsg.match(/\{\}/g);
         const count: number = matches ? matches.length : 0;
         if (count != values.length) {
-          return item.description;
+          return translatedMsg;
         }
+        let translatedMsgArray = translatedMsg.split(JSON_PLACEHOLDER);
         if (translatedMsgArray.length > 0) {
           let newTranslatedMsg = "";
           translatedMsgArray.forEach((element, index) => {
