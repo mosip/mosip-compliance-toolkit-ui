@@ -290,9 +290,26 @@ export class TestRunComponent implements OnInit {
 
   getValidatorMessage(item: any) {
     console.log(item.descriptionKey);
-    if (item && item.description && item.descriptionKey && this.resourceBundleJson && this.resourceBundleJson["validatorMessages"]) {
-      const validatorMessages = this.resourceBundleJson["validatorMessages"];
-      const translatedMsg = validatorMessages[item.descriptionKey];
+    let validatorMessages = [];
+    let translatedMsg: any;
+    if (item && item.description && item.descriptionKey && this.resourceBundleJson &&
+      this.resourceBundleJson["validatorMessages"]) {
+      if (item.descriptionKey.indexOf(':') == -1) {
+        validatorMessages = this.resourceBundleJson["validatorMessages"];
+        translatedMsg = validatorMessages[item.descriptionKey];
+      } else {
+        let descKeyArray = item.descriptionKey.split(':');
+        const descKey = descKeyArray[0];
+        const values = descKeyArray[1].split(',');
+        validatorMessages = this.resourceBundleJson["validatorMessages"];
+        translatedMsg = validatorMessages[descKey];
+        let translatedMsgArray = translatedMsg.split('{}');
+        var newTranslatedMsg = "";
+        for (let i = 0; i < translatedMsgArray.length - 1; i++) {
+          newTranslatedMsg = newTranslatedMsg + translatedMsgArray[i] + values[i];
+        }
+        return (newTranslatedMsg);
+      }
       if (translatedMsg) {
         return translatedMsg;
       }
