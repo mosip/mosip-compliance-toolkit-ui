@@ -305,8 +305,12 @@ export class TestRunComponent implements OnInit {
         translatedMsg = validatorMessages[descKey];
         let translatedMsgArray = translatedMsg.split('{}');
         var newTranslatedMsg = "";
-        for (let i = 0; i < translatedMsgArray.length - 1; i++) {
+        for (let i = 0; i < translatedMsgArray.length ; i++) {
+          if(values[i]){
           newTranslatedMsg = newTranslatedMsg + translatedMsgArray[i] + values[i];
+        }else{
+          newTranslatedMsg = newTranslatedMsg + translatedMsgArray[i];
+        }
         }
         return (newTranslatedMsg);
       }
