@@ -1,26 +1,26 @@
+<div [dir]="textDirection">
 <h2 mat-dialog-title class="mat-dialog-title" *ngIf="input.title">{{ input.title }}</h2>
 <mat-dialog-content style="white-space: pre-line;">
-    <span *ngIf="!scanComplete">Scanning for devices..</span>
+    <span *ngIf="!scanComplete">{{ "scanDevice.scan" | translate }}</span>
     <span *ngIf="scanComplete && !previousScanAvailable && portsData.length > 0">
         <div class="custom-class">
             <mat-icon [ngStyle]="{color: 'green'}">check_circle</mat-icon>
             <span *ngIf="!isAndroidAppMode">
-                Scanning complete. Select port and device.
+                {{ "scanDevice.selectPortAndDevice" | translate }}
             </span>
             <span *ngIf="isAndroidAppMode">
-                Scanning complete. Select device.
+                {{ "scanDevice.selectDevice" | translate }}
             </span>
         </div>
     </span>
     <span *ngIf="scanComplete && portsData.length <= 0">
         <div class="custom-class">
-            <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon> Scanning failed. Connect your device and
-            scan again.
+            <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon> {{ "scanDevice.scanFail" | translate }}
         </div>
     </span>
     <span *ngIf="scanComplete && previousScanAvailable">
         <div class="custom-class">
-            <mat-icon [ngStyle]="{color: 'green'}">check_circle</mat-icon> Scanning already complete.
+            <mat-icon [ngStyle]="{color: 'green'}">check_circle</mat-icon> {{ "scanDevice.alreadyScan" | translate }}
         </div>
     </span>
     <div class="spinner" *ngIf="!scanComplete">
@@ -32,8 +32,8 @@
             <div class="formContainer">
                 <mat-form-field appearance="legacy" class="formContainerBox">
                     <mat-label>
-                        <span *ngIf="!isAndroidAppMode">Available Ports:</span>
-                        <span *ngIf="isAndroidAppMode">Available App Intent:</span></mat-label>
+                        <span *ngIf="!isAndroidAppMode">{{ "scanDevice.availablePorts" | translate }}</span>
+                        <span *ngIf="isAndroidAppMode">{{ "scanDevice.availableAppIntent" | translate }}</span></mat-label>
                     <mat-select formControlName="ports" #singleSelect (selectionChange)="showDevices()">
                         <ng-container *ngFor="let dropdown of portsData">
                             <mat-option [value]="dropdown">
@@ -42,12 +42,12 @@
                         </ng-container>
                     </mat-select>
                     <mat-error *ngIf="scanForm.controls['ports'].hasError('required')">
-                        Port is required
+                        {{ "scanDevice.portIsRequired" | translate }}
                     </mat-error>
                 </mat-form-field>
                 <p></p>
                 <mat-form-field appearance="legacy" class="formContainerBox">
-                    <mat-label>Device:</mat-label>
+                    <mat-label>{{ "scanDevice.device" | translate }}</mat-label>
                     <mat-select formControlName="devices" #singleSelect class="selectdevice">
                         <ng-container *ngFor="let dropdown of devicesData">
                             <mat-option value="{{myjson.stringify(dropdown)}}" title="{{getDeviceLabel(dropdown)}}" class="deviceoptions">
@@ -56,7 +56,7 @@
                         </ng-container>
                     </mat-select>
                     <mat-error *ngIf="scanForm.controls['devices'].hasError('required')">
-                        Device is required
+                        {{ "scanDevice.deviceIsRequired" | translate }}
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -66,16 +66,17 @@
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end" *ngIf="scanComplete">
-    <button mat-flat-button color="accent" (click)="close()" class="closeBt">Close</button>
+    <button mat-flat-button color="accent" (click)="close()" class="closeBt">{{ "scanDevice.close" | translate }}</button>
     <span class="spacer" *ngIf="(portsData.length <= 0 || previousScanAvailable)"></span>
     <button mat-flat-button color="accent" (click)="startScan()"
         *ngIf="(portsData.length <= 0 || previousScanAvailable)" class="scanAgainBt">
         <mat-icon class="scanicon">cached</mat-icon>
-        Scan Again
+        {{ "scanDevice.scanAgain" | translate }}
     </button>
     <span class="spacer" *ngIf="portsData.length > 0"></span>
     <button mat-flat-button color="accent" (click)="save()" *ngIf="portsData.length > 0" class="saveBt">
         <mat-icon class="saveicon">save</mat-icon>
-        Save
+        {{ "scanDevice.save" | translate }}
     </button>
 </mat-dialog-actions>
+</div>
