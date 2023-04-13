@@ -3286,6 +3286,8 @@
     "RESPONSE_MISMATCH_VALIDATOR_002": "Échec de ResponseMismatchValidator, avec message, biocount de demande de non-concordance = {} pas valide {}",
     "RESPONSE_MISMATCH_VALIDATOR_003": "Échec de ResponseMismatchValidator, avec message, objet de la demande de non-concordance = {} pas valide {}",
     "RESPONSE_MISMATCH_VALIDATOR_004": "Échec de ResponseMismatchValidator, avec message, biosous-type de réponse non valide pour le type de réponse ",
-    "RESPONSE_MISMATCH_VALIDATOR_005": "Échec de ResponseMismatchValidator, avec message, sous-type biologique d'exception = {} pas valide"
+    "RESPONSE_MISMATCH_VALIDATOR_005": "Échec de ResponseMismatchValidator, avec message, sous-type biologique d'exception = {} pas valide",
+    "TRANSACTIONID_VALIDATOR_001": "La validation de l'identifiant de transaction a réussi",
+    "TRANSACTIONID_VALIDATOR_002": "La validation de l'ID de transaction a échoué."
   }
 }
