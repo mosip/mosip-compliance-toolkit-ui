@@ -41,9 +41,10 @@ export class AbisTestCaseService {
         if (
           validationRequest &&
           validationRequest[appConstants.RESPONSE] &&
-          validationRequest[appConstants.RESPONSE].status !=
+          validationRequest[appConstants.RESPONSE].status ==
           appConstants.SUCCESS
         ) {
+          console.log("request validation done");
           //SEND THE REQUEST JSON TO ABIS QUEUE
           console.log(methodRequest);
           let sendRequestResp: any = await this.activeMqService.sendToQueue(this.rxStompService, abisProjectData, methodRequest);
