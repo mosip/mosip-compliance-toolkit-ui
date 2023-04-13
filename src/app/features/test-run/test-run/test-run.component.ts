@@ -308,6 +308,11 @@ export class TestRunComponent implements OnInit {
         const values = attributesArr.split(',');
         translatedMsg = validatorMessages[descriptionKeyName];
         let translatedMsgArray = translatedMsg.split('{}');
+        const matches: RegExpMatchArray | null = translatedMsg.match(/\{\}/g);
+        const count: number = matches ? matches.length : 0;
+        if(count != values.length){
+          return item.description;
+        }
         if (translatedMsgArray.length > 0) {
           let newTranslatedMsg = "";
           translatedMsgArray.forEach((element, index) => {
