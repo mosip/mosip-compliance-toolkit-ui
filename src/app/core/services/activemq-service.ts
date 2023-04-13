@@ -16,7 +16,7 @@ export class ActiveMqService {
     let ctkRxStompConfig = {
       // Which server?
       //brokerURL: `ws://${abisProjectData.url}/ws`,
-      brokerURL: `${abisProjectData.url}`,
+      brokerURL: abisProjectData.url,
       // Headers
       // Typical keys: login, passcode, host
       connectHeaders: {
