@@ -289,29 +289,38 @@ export class TestRunComponent implements OnInit {
   }
 
   getValidatorMessage(item: any) {
-    console.log(item.descriptionKey);
-    let validatorMessages = [];
-    let translatedMsg: any;
-    if (item && item.description && item.descriptionKey && this.resourceBundleJson &&
-      this.resourceBundleJson["validatorMessages"]) {
-      if (item.descriptionKey.indexOf(':') == -1) {
-        validatorMessages = this.resourceBundleJson["validatorMessages"];
-        translatedMsg = validatorMessages[item.descriptionKey];
-      } else {
-        let descKeyArray = item.descriptionKey.split(':');
-        const descKey = descKeyArray[0];
-        const values = descKeyArray[1].split(',');
-        validatorMessages = this.resourceBundleJson["validatorMessages"];
-        translatedMsg = validatorMessages[descKey];
-        let translatedMsgArray = translatedMsg.split('{}');
-        var newTranslatedMsg = "";
-        for (let i = 0; i < translatedMsgArray.length - 1; i++) {
-          newTranslatedMsg = newTranslatedMsg + translatedMsgArray[i] + values[i];
-        }
-        return (newTranslatedMsg);
-      }
-      if (translatedMsg) {
+    let translatedMsg: string;
+    const validatorMessages = this.resourceBundleJson["validatorMessages"];
+    const descriptionKey = item.descriptionKey;
+    const COLON_SEPARATOR = ':';
+    if (item && item.description && descriptionKey && this.resourceBundleJson &&
+      validatorMessages) {
+      //check if the descriptionKey is having any rutime attributes
+      //eg: descriptionKey="SCHEMA_VALIDATOR_001:name,size"
+      if (descriptionKey.indexOf(COLON_SEPARATOR) == -1) {
+        translatedMsg = validatorMessages[descriptionKey];
         return translatedMsg;
+      } else {
+        //create an arr of attributes
+        let descriptionKeyArr = descriptionKey.split(COLON_SEPARATOR);
+        const descriptionKeyName = descriptionKeyArr[0];
+        const attributesArr = descriptionKeyArr[1];
+        const values = attributesArr.split(',');
+        translatedMsg = validatorMessages[descriptionKeyName];
+        let translatedMsgArray = translatedMsg.split('{}');
+        if (translatedMsgArray.length > 0) {
+          let newTranslatedMsg = "";
+          translatedMsgArray.forEach((element, index) => {
+            if (values.length > index) {
+              newTranslatedMsg = newTranslatedMsg + element + values[index];
+            } else {
+              newTranslatedMsg = newTranslatedMsg + element;
+            }
+          });
+          return newTranslatedMsg;
+        } else {
+          return translatedMsg;
+        }
       }
     }
     if (item) {
