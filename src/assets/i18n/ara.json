@@ -3282,7 +3282,11 @@
 	},
 	"validatorMessages": {
 		"SCHEMA_VALIDATOR_001": "يتحقق من الاستجابة للسمات المطلوبة والقيم الصحيحة",
-    "RESPONSE_MISMATCH_VALIDATOR_001":"تطابق bioCount والشرائح والاستثناءات استجابة للطلب"
+    "RESPONSE_MISMATCH_VALIDATOR_001":"تطابق bioCount والشرائح والاستثناءات استجابة للطلب",
+    "RESPONSE_MISMATCH_VALIDATOR_002":"ResponseMismatchValidator فشل ، مع رسالة ، عدم تطابق طلب biocount = {} غير صالح {}",
+    "RESPONSE_MISMATCH_VALIDATOR_003":"ResponseMismatchValidator فشل ، مع رسالة ، غرض طلب عدم التطابق = {} not valid {}",
+    "RESPONSE_MISMATCH_VALIDATOR_004":"فشل ResponseMismatchValidator ، مع الرسالة ، نوع BioSubType غير صالح للاستجابة لنوع الاستجابة ",
+    "RESPONSE_MISMATCH_VALIDATOR_005":"فشل ResponseMismatchValidator ، مع الرسالة ، النوع الحيوي الاستثناء = {} not valid"
 	}
 	
 }
