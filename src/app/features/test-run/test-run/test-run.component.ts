@@ -138,43 +138,83 @@ export class TestRunComponent implements OnInit {
             this.runDetails = response['response'];
             let list: any[] = response['response']['testRunDetailsList'];
             let tableData = [];
-            this.testcasesList;
-            for (const testCase of this.testcasesList) {
-              let testRunData = null;
+            for (let testCase of this.testcasesList) {
+              let testRunData: { methodName: any; methodRequest: any; methodResponse: any; resultStatus: any; resultDescription: any; testDataSource: any; methodUrl: any; } | null = null;
               for (const testRun of list) {
                 if (testRun.testcaseId == testCase.testId) {
                   testRunData = testRun;
                 }
               }
-              tableData.push({
-                testCaseType: testCase.testCaseType,
-                testName: testCase.testName,
-                testId: testCase.testId,
-                testDescription: testCase.testDescription,
-                methodName: testRunData
-                  ? testRunData.methodName
-                  : testCase.methodName,
-                methodRequest: testRunData
-                  ? testRunData.methodRequest
-                  : 'No data available',
-                methodResponse: testRunData
-                  ? testRunData.methodResponse
-                  : 'No data available',
-                resultStatus: testRunData
-                  ? testRunData.resultStatus
-                  : 'failure',
-                resultDescription: testRunData
-                  ? testRunData.resultDescription
-                  : '',
-                testDataSource:
-                  testRunData && testRunData.testDataSource
-                    ? testRunData.testDataSource
+              if (this.userProfileService.getUserPreferredLanguage()) {
+                let langCode = this.userProfileService.getUserPreferredLanguage();
+                let languageJson: any = {};
+                this.dataService.getI18NLanguageFiles(langCode).subscribe((response) => {
+                  languageJson = response;
+                  if (languageJson.testcases != null && languageJson.testcases[testCase.testId] != null) {
+                    testCase.testName = languageJson.testcases[testCase.testId]['testName'];
+                    tableData.push({
+                      testCaseType: testCase.testCaseType,
+                      testName: testCase.testName,
+                      testId: testCase.testId,
+                      testDescription: testCase.testDescription,
+                      methodName: testRunData
+                        ? testRunData.methodName
+                        : testCase.methodName,
+                      methodRequest: testRunData
+                        ? testRunData.methodRequest
+                        : 'No data available',
+                      methodResponse: testRunData
+                        ? testRunData.methodResponse
+                        : 'No data available',
+                      resultStatus: testRunData
+                        ? testRunData.resultStatus
+                        : 'failure',
+                      resultDescription: testRunData
+                        ? testRunData.resultDescription
+                        : '',
+                      testDataSource:
+                        testRunData && testRunData.testDataSource
+                          ? testRunData.testDataSource
+                          : '',
+                      methodUrl:
+                        testRunData && testRunData.methodUrl
+                          ? testRunData.methodUrl
+                          : '',
+                    });
+                  }
+                });
+              }
+              else {
+                tableData.push({
+                  testCaseType: testCase.testCaseType,
+                  testName: testCase.testName,
+                  testId: testCase.testId,
+                  testDescription: testCase.testDescription,
+                  methodName: testRunData
+                    ? testRunData.methodName
+                    : testCase.methodName,
+                  methodRequest: testRunData
+                    ? testRunData.methodRequest
+                    : 'No data available',
+                  methodResponse: testRunData
+                    ? testRunData.methodResponse
+                    : 'No data available',
+                  resultStatus: testRunData
+                    ? testRunData.resultStatus
+                    : 'failure',
+                  resultDescription: testRunData
+                    ? testRunData.resultDescription
                     : '',
-                methodUrl:
-                  testRunData && testRunData.methodUrl
-                    ? testRunData.methodUrl
-                    : '',
-              });
+                  testDataSource:
+                    testRunData && testRunData.testDataSource
+                      ? testRunData.testDataSource
+                      : '',
+                  methodUrl:
+                    testRunData && testRunData.methodUrl
+                      ? testRunData.methodUrl
+                      : '',
+                });
+              }
             }
             this.dataSource = new MatTableDataSource(tableData);
             resolve(true);
