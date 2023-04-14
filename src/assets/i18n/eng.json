@@ -3288,6 +3288,13 @@
     "RESPONSE_MISMATCH_VALIDATOR_004": "ResponseMismatchValidator failed, due to invalid Response BioSubType.",
     "RESPONSE_MISMATCH_VALIDATOR_005": "ResponseMismatchValidator failed due to exception, biosubtype = {} is not valid",
     "TRANSACTIONID_VALIDATOR_001": "Transaction Id validation is successful",
-    "TRANSACTIONID_VALIDATOR_002": "Transaction Id validation failed."
+    "TRANSACTIONID_VALIDATOR_002": "Transaction Id validation failed.",
+    "KEY_ROTATION_VALIDATOR_001": "Key Rotation validations are successful.",
+    "KEY_ROTATION_VALIDATOR_002": "Device Info before key rotation is not available",
+    "KEY_ROTATION_VALIDATOR_003": "Device Info after key rotation is not available",
+    "KEY_ROTATION_VALIDATOR_004": "Signature validation failed for the Device Info after key rotation due to {}",
+    "KEY_ROTATION_VALIDATOR_005": "Make, model or serialNo of the device info is not matching. ",
+    "KEY_ROTATION_VALIDATOR_006": "Both device keys are same. Rotate the device key and try again!",
+    "KEY_ROTATION_VALIDATOR_007": "Second device key must be created after the first device key"
   }
 }
