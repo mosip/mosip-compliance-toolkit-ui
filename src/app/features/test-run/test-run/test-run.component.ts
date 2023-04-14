@@ -139,43 +139,43 @@ export class TestRunComponent implements OnInit {
             let list: any[] = response['response']['testRunDetailsList'];
             let tableData = [];
             this.testcasesList;
-            for (let testCase of this.testcasesList) {
+            for (const testCase of this.testcasesList) {
               let testRunData = null;
               for (const testRun of list) {
                 if (testRun.testcaseId == testCase.testId) {
                   testRunData = testRun;
                 }
               }
-                tableData.push({
-                  testCaseType: testCase.testCaseType,
-                  testName: testCase.testName,
-                  testId: testCase.testId,
-                  testDescription: testCase.testDescription,
-                  methodName: testRunData
-                    ? testRunData.methodName
-                    : testCase.methodName,
-                  methodRequest: testRunData
-                    ? testRunData.methodRequest
-                    : 'No data available',
-                  methodResponse: testRunData
-                    ? testRunData.methodResponse
-                    : 'No data available',
-                  resultStatus: testRunData
-                    ? testRunData.resultStatus
-                    : 'failure',
-                  resultDescription: testRunData
-                    ? testRunData.resultDescription
+              tableData.push({
+                testCaseType: testCase.testCaseType,
+                testName: testCase.testName,
+                testId: testCase.testId,
+                testDescription: testCase.testDescription,
+                methodName: testRunData
+                  ? testRunData.methodName
+                  : testCase.methodName,
+                methodRequest: testRunData
+                  ? testRunData.methodRequest
+                  : 'No data available',
+                methodResponse: testRunData
+                  ? testRunData.methodResponse
+                  : 'No data available',
+                resultStatus: testRunData
+                  ? testRunData.resultStatus
+                  : 'failure',
+                resultDescription: testRunData
+                  ? testRunData.resultDescription
+                  : '',
+                testDataSource:
+                  testRunData && testRunData.testDataSource
+                    ? testRunData.testDataSource
                     : '',
-                  testDataSource:
-                    testRunData && testRunData.testDataSource
-                      ? testRunData.testDataSource
-                      : '',
-                  methodUrl:
-                    testRunData && testRunData.methodUrl
-                      ? testRunData.methodUrl
-                      : '',
-                });
-              }
+                methodUrl:
+                  testRunData && testRunData.methodUrl
+                    ? testRunData.methodUrl
+                    : '',
+              });
+            }
             this.dataSource = new MatTableDataSource(tableData);
             resolve(true);
           },
