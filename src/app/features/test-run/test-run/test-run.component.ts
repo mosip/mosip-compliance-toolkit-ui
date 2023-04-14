@@ -138,8 +138,9 @@ export class TestRunComponent implements OnInit {
             this.runDetails = response['response'];
             let list: any[] = response['response']['testRunDetailsList'];
             let tableData = [];
+            this.testcasesList;
             for (let testCase of this.testcasesList) {
-              let testRunData: { methodName: any; methodRequest: any; methodResponse: any; resultStatus: any; resultDescription: any; testDataSource: any; methodUrl: any; } | null = null;
+              let testRunData = null;
               for (const testRun of list) {
                 if (testRun.testcaseId == testCase.testId) {
                   testRunData = testRun;
