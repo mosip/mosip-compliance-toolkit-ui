@@ -225,8 +225,7 @@ export class DataService {
 
   getDataShareUrl(body: any) {
     let url = `${this.SERVICES_BASE_URL}getDataShareUrl`;
-    console.log('url:' + url);
-    return this.httpClient.post(url, body);
+     return this.httpClient.post(url, body);
   }
   
   sendToQueue(body: any) {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { AppConfigService } from '../../app-config.service';
+import * as appConstants from 'src/app/app.constants';
 import { RxStompService } from './rx-stomp.service';
 import { AbisProjectModel } from '../models/abis-project';
 import { rxStompServiceFactory } from './rx-stomp-service-factory';
@@ -52,17 +52,17 @@ export class ActiveMqService {
         if (rxStompService.connected()) {
           rxStompService.publish({ destination: `${abisProjectData.outboundQueueName}`, body: message });
           resolve({
-            "status": "success"
+            "status": appConstants.SUCCESS
           })
         } else {
           resolve({
-            "status": "failure"
+            "status": appConstants.FAILURE
           })
         }
       } catch (e) {
         console.log(e);
         resolve({
-          "status": "failure"
+          "status": appConstants.FAILURE
         })
       }
     });
@@ -70,27 +70,16 @@ export class ActiveMqService {
 
   readFromQueue(rxStompService: RxStompService, abisProjectData: AbisProjectModel, message: string) {
     return new Promise((resolve, reject) => {
-      try {
-        console.log(`abisProjectData: ${abisProjectData}`);
-        if (rxStompService.connected()) {
-          rxStompService
-            .watch('abis-to-mosip')
-            .subscribe((message: Message) => {
-              console.log(message.body);
-              //this.receivedMessages.push(message.body);
-              resolve( message.body);
-            });
-        } else {
-          resolve({
-            "status": "failure"
-          })
-        }
-      } catch (e) {
-        console.log(e);
-        resolve({
-          "status": "failure"
-        })
-      }
+      rxStompService
+        .watch(abisProjectData.inboundQueueName)
+        .subscribe((message: Message) => {
+          const resp = message.body;
+          console.log(resp);
+          console.log("waiting");
+          return resolve(resp);
+          //this.receivedMessages.push(message.body);
+          resolve(resp);
+        });
     });
   }
 
