@@ -85,7 +85,6 @@ export class AbisTestCaseService {
   async fetchResponseFromQueue(
     testCase: TestCaseModel,
     abisProjectData: AbisProjectModel,
-    runId: string,
     methodRequest: any,
     testDataSource: string
   ) {
@@ -95,6 +94,7 @@ export class AbisTestCaseService {
       }
       //FETCH THE RESPONSE JSON TO ABIS QUEUE
       let methodResponse: any = await this.activeMqService.readFromQueue(this.rxStompService, abisProjectData, methodRequest);
+      console.log("waiting");
       if (methodResponse) {
         // now validate the method response against all the validators
         let validationResponse = await this.validateResponse(
