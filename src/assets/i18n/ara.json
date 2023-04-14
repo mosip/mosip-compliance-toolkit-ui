@@ -113,6 +113,21 @@
 		"delete": "يمسح",
 		"back": "يعود"
 	},
+  "viewTestRun":{
+    "testRunDetailsAreNotAvailable": "تفاصيل اختبار التشغيل غير متوفرة",
+    "id" : "بطاقة تعريف",
+    "name":"اسم",
+    "status":"حالة",
+    "success":"نجاح",
+    "failure":"فشل",
+    "methodRequest":"طلب طريقة:",
+    "methodResponse":"طريقة الاستجابة:",
+    "resultStatus":"حالة النتيجة:",
+    "otherDetails":"تفاصيل أخرى:",
+    "methodUrl":"طريقة URL",
+    "testDataSource":"مصدر بيانات الاختبار",
+    "back":"يعود"
+  },
 	"addCollections": {
 		"collectionName": "اسم المجموعة:",
 		"collectionNameRequired": "اسم المجموعة مطلوب",

@@ -22,6 +22,7 @@ import * as moment from 'moment';
 import { SdkProjectModel } from 'src/app/core/models/sdk-project';
 import { TestCaseModel } from 'src/app/core/models/testcase';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-test-run',
@@ -57,6 +58,7 @@ export class TestRunComponent implements OnInit {
   dataSubmitted = false;
   panelOpenState = false;
   runDetails: any;
+  textDirection: any = this.userProfileService.getTextDirection();
   resourceBundleJson: any = {};
   langCode = this.userProfileService.getUserPreferredLanguage();
 
@@ -67,10 +69,12 @@ export class TestRunComponent implements OnInit {
     private dataService: DataService,
     private dialog: MatDialog,
     private router: Router,
-    private userProfileService: UserProfileService
+    private userProfileService: UserProfileService,
+    private translate: TranslateService
   ) { }
 
   async ngOnInit() {
+    this.translate.use(this.userProfileService.getUserPreferredLanguage());
     await this.initAllParams();
     await this.getCollection();
     if (this.projectType == appConstants.SBI) {
@@ -217,6 +221,13 @@ export class TestRunComponent implements OnInit {
               });
             }
             this.testcasesList = testcases;
+            if (this.userProfileService.getUserPreferredLanguage()) {
+              let testcasesListTranslated = [];
+              for (let testcase of this.testcasesList) {
+                testcasesListTranslated.push(Utils.translateTestcase(testcase, this.userProfileService, this.dataService));
+              }
+              this.testcasesList = testcasesListTranslated;
+            }
             resolve(true);
           },
           (errors) => {

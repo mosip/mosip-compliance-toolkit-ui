@@ -113,6 +113,21 @@
 		"delete": "Supprimer",
 		"back": "Retour"
 	},
+  "viewTestRun":{
+    "testRunDetailsAreNotAvailable": "Les détails de l'exécution du test ne sont pas disponibles",
+    "id" : "Identifiant",
+    "name":"Nom",
+    "status":"Statut",
+    "success":"Succès",
+    "failure":"Échec",
+    "methodRequest":"Demande de méthode:",
+    "methodResponse":"Méthode Réponse:",
+    "resultStatus":"État du résultat:",
+    "otherDetails":"Autres détails:",
+    "methodUrl":"URL de la méthode",
+    "testDataSource":"Tester la source de données",
+    "back":"retour"
+  },
 	"addCollections": {
 		"collectionName": "Nom de la collection:",
 		"collectionNameRequired": "Le nom de la collection est requis",

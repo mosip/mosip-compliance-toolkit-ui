@@ -113,6 +113,21 @@
 		"delete": "Delete",
 		"back": "Back"
 	},
+  "viewTestRun":{
+    "testRunDetailsAreNotAvailable": "Test Run Details are not available",
+    "id" : "Id",
+    "name":"Name",
+    "status":"Status",
+    "success":"Success",
+    "failure":"Failure",
+    "methodRequest":"Method Request:",
+    "methodResponse":"Method Response:",
+    "resultStatus":"Result Status:",
+    "otherDetails":"Other Details:",
+    "methodUrl":"Method URL",
+    "testDataSource":"Test Data Source",
+    "back":"Back"
+  },
 	"addCollections": {
 		"collectionName": "Collection Name:",
 		"collectionNameRequired": "Collection Name is required",
