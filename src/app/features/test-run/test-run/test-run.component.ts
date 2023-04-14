@@ -220,12 +220,12 @@ export class TestRunComponent implements OnInit {
               });
             }
             this.testcasesList = testcases;
-            if(this.userProfileService.getUserPreferredLanguage()){
+            if (this.userProfileService.getUserPreferredLanguage()) {
               let testcasesListTranslated = [];
-              for(let testcase of this.testcasesList){
-                testcasesListTranslated.push(Utils.translateTestcase(testcase,this.userProfileService,this.dataService));
+              for (let testcase of this.testcasesList) {
+                testcasesListTranslated.push(Utils.translateTestcase(testcase, this.userProfileService, this.dataService));
               }
-              this.testcasesList=testcasesListTranslated;
+              this.testcasesList = testcasesListTranslated;
             }
             resolve(true);
           },
