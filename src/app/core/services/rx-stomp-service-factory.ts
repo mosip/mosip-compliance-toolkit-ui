@@ -4,6 +4,6 @@ export function rxStompServiceFactory(ctkRxStompConfig: any) {
   const rxStomp = new RxStompService();
   rxStomp.configure(ctkRxStompConfig);
   rxStomp.activate();
-  console.log("RX STOMP ACTIVATED");
+  console.log("Connected to ActiveMQ");
   return rxStomp;
 }

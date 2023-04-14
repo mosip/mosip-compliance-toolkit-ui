@@ -38,7 +38,7 @@ export class ActiveMqService {
       // It can be quite verbose, not recommended in production
       // Skip this key to stop logging to console
       debug: (msg: string): void => {
-        console.log(new Date(), msg);
+       // console.log(new Date(), msg);
       },
     }
     const rxStomp = rxStompServiceFactory(ctkRxStompConfig);
@@ -48,39 +48,44 @@ export class ActiveMqService {
   sendToQueue(rxStompService: RxStompService, abisProjectData: AbisProjectModel, message: string) {
     return new Promise((resolve, reject) => {
       try {
-        console.log(`abisProjectData: ${abisProjectData}`);
         if (rxStompService.connected()) {
           rxStompService.publish({ destination: `${abisProjectData.outboundQueueName}`, body: message });
           resolve({
-            "status": appConstants.SUCCESS
+            [appConstants.STATUS]: appConstants.SUCCESS
           })
         } else {
           resolve({
-            "status": appConstants.FAILURE
+            [appConstants.STATUS]: appConstants.FAILURE
           })
         }
       } catch (e) {
         console.log(e);
         resolve({
-          "status": appConstants.FAILURE
+          [appConstants.STATUS]: appConstants.FAILURE
         })
       }
     });
   }
 
-  readFromQueue(rxStompService: RxStompService, abisProjectData: AbisProjectModel, message: string) {
+  readFromQueue(rxStompService: RxStompService, abisProjectData: AbisProjectModel, request: string) {
     return new Promise((resolve, reject) => {
+      const requestObj = JSON.parse(request);
+      const sentRequesId = requestObj[appConstants.REQUEST_ID];
+      console.log(`sentRequesId: ${sentRequesId}`);
       rxStompService
         .watch(abisProjectData.inboundQueueName)
-        .subscribe((message: Message) => {
+        .forEach((message: Message) => {
           const resp = message.body;
-          console.log(resp);
-          console.log("waiting");
-          return resolve(resp);
-          //this.receivedMessages.push(message.body);
-          resolve(resp);
+          const respObj = JSON.parse(resp);
+          const recvdRequesId = respObj[appConstants.REQUEST_ID];
+          console.log(`recvdRequesId: ${recvdRequesId}`);
+          if (sentRequesId == recvdRequesId) {
+            resolve(resp);
+          }
         });
+      //this.receivedMessages.push(message.body);
     });
+
   }
 
 } 
