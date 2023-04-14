@@ -10,7 +10,7 @@ import { RxStompService } from './rx-stomp.service';
   providedIn: 'root',
 })
 export class AbisTestCaseService {
-  rxStompService: RxStompService;
+  //rxStompService: RxStompService;
   constructor(
     private dataService: DataService,
     private activeMqService: ActiveMqService
@@ -22,9 +22,8 @@ export class AbisTestCaseService {
     runId: string
   ) {
     return new Promise(async (resolve, reject) => {
-      if (!this.rxStompService) {
-        this.rxStompService = this.activeMqService.setUpConfig(abisProjectData);
-      }
+      const rxStompService = this.activeMqService.setUpConfig(abisProjectData);
+  
       let dataShareResp: any = null;
       dataShareResp = await this.getDataShareUrl(
         testCase,
@@ -44,10 +43,9 @@ export class AbisTestCaseService {
           validationRequest[appConstants.RESPONSE].status ==
           appConstants.SUCCESS
         ) {
-          console.log("request validation done");
+          console.log("request sent to ABIS");
           //SEND THE REQUEST JSON TO ABIS QUEUE
-          console.log(methodRequest);
-          let sendRequestResp: any = await this.activeMqService.sendToQueue(this.rxStompService, abisProjectData, methodRequest);
+          let sendRequestResp: any = await this.activeMqService.sendToQueue(rxStompService, abisProjectData, methodRequest);
           resolve({
             ...sendRequestResp,
             methodRequest: methodRequest,
@@ -65,9 +63,11 @@ export class AbisTestCaseService {
             methodRequest: methodRequest,
             validationResponse: validationResponse,
           };
+          rxStompService.deactivate();
           resolve(finalResponse);
         }
       } else {
+        rxStompService.deactivate();
         resolve({
           errors: [
             {
@@ -89,13 +89,9 @@ export class AbisTestCaseService {
     testDataSource: string
   ) {
     return new Promise(async (resolve, reject) => {
-      if (!this.rxStompService) {
-        this.rxStompService = this.activeMqService.setUpConfig(abisProjectData);
-      }
+       const rxStompService = this.activeMqService.setUpConfig(abisProjectData);
       //FETCH THE RESPONSE JSON TO ABIS QUEUE
-      let methodResponse: any = await this.activeMqService.readFromQueue(this.rxStompService, abisProjectData, methodRequest);
-      console.log("waiting");
-      if (methodResponse) {
+      this.activeMqService.readFromQueue(rxStompService, abisProjectData, methodRequest).then(async methodResponse => {
         // now validate the method response against all the validators
         let validationResponse = await this.validateResponse(
           testCase,
@@ -111,17 +107,21 @@ export class AbisTestCaseService {
           methodUrl: abisProjectData.url,
           testDataSource: testDataSource
         };
+        rxStompService.deactivate();
         resolve(finalResponse);
-      } else {
-        resolve({
-          errors: [
-            {
-              errorCode: 'Connection Failure',
-              message: 'Unable to send request to ABIS queue',
-            },
-          ],
+      })
+        .catch(e => {
+          rxStompService.deactivate();
+          resolve({
+            errors: [
+              {
+                errorCode: 'Connection Failure',
+                message: 'Unable to send request to ABIS queue',
+              },
+            ],
+          });
         });
-      }
+
     });
   }
 
