@@ -145,46 +145,6 @@ export class TestRunComponent implements OnInit {
                   testRunData = testRun;
                 }
               }
-              if (this.userProfileService.getUserPreferredLanguage()) {
-                let langCode = this.userProfileService.getUserPreferredLanguage();
-                let languageJson: any = {};
-                this.dataService.getI18NLanguageFiles(langCode).subscribe((response) => {
-                  languageJson = response;
-                  if (languageJson.testcases != null && languageJson.testcases[testCase.testId] != null) {
-                    testCase.testName = languageJson.testcases[testCase.testId]['testName'];
-                    tableData.push({
-                      testCaseType: testCase.testCaseType,
-                      testName: testCase.testName,
-                      testId: testCase.testId,
-                      testDescription: testCase.testDescription,
-                      methodName: testRunData
-                        ? testRunData.methodName
-                        : testCase.methodName,
-                      methodRequest: testRunData
-                        ? testRunData.methodRequest
-                        : 'No data available',
-                      methodResponse: testRunData
-                        ? testRunData.methodResponse
-                        : 'No data available',
-                      resultStatus: testRunData
-                        ? testRunData.resultStatus
-                        : 'failure',
-                      resultDescription: testRunData
-                        ? testRunData.resultDescription
-                        : '',
-                      testDataSource:
-                        testRunData && testRunData.testDataSource
-                          ? testRunData.testDataSource
-                          : '',
-                      methodUrl:
-                        testRunData && testRunData.methodUrl
-                          ? testRunData.methodUrl
-                          : '',
-                    });
-                  }
-                });
-              }
-              else {
                 tableData.push({
                   testCaseType: testCase.testCaseType,
                   testName: testCase.testName,
@@ -215,7 +175,6 @@ export class TestRunComponent implements OnInit {
                       : '',
                 });
               }
-            }
             this.dataSource = new MatTableDataSource(tableData);
             resolve(true);
           },
@@ -261,6 +220,13 @@ export class TestRunComponent implements OnInit {
               });
             }
             this.testcasesList = testcases;
+            if(this.userProfileService.getUserPreferredLanguage()){
+              let testcasesListTranslated = [];
+              for(let testcase of this.testcasesList){
+                testcasesListTranslated.push(Utils.translateTestcase(testcase,this.userProfileService,this.dataService));
+              }
+              this.testcasesList=testcasesListTranslated;
+            }
             resolve(true);
           },
           (errors) => {
