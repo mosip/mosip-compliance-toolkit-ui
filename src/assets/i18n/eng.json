@@ -113,21 +113,21 @@
 		"delete": "Delete",
 		"back": "Back"
 	},
-  "viewTestRun":{
-    "testRunDetailsAreNotAvailable": "Test Run Details are not available",
-    "id" : "Id",
-    "name":"Name",
-    "status":"Status",
-    "success":"Success",
-    "failure":"Failure",
-    "methodRequest":"Method Request:",
-    "methodResponse":"Method Response:",
-    "resultStatus":"Result Status:",
-    "otherDetails":"Other Details:",
-    "methodUrl":"Method URL",
-    "testDataSource":"Test Data Source",
-    "back":"Back"
-  },
+	"viewTestRun": {
+		"testRunDetailsAreNotAvailable": "Test Run Details are not available",
+		"id": "Id",
+		"name": "Name",
+		"status": "Status",
+		"success": "Success",
+		"failure": "Failure",
+		"methodRequest": "Method Request:",
+		"methodResponse": "Method Response:",
+		"resultStatus": "Result Status:",
+		"otherDetails": "Other Details:",
+		"methodUrl": "Method URL",
+		"testDataSource": "Test Data Source",
+		"back": "Back"
+	},
 	"addCollections": {
 		"collectionName": "Collection Name:",
 		"collectionNameRequired": "Collection Name is required",
@@ -148,6 +148,28 @@
 		"description": "Description",
 		"validators": "Validators",
 		"back": "Back"
+	},
+	"scanDevice": {
+		"title": "Scan Device",
+		"scan": "Scanning for devices..",
+		"selectPortAndDevice": "Scanning complete. Select port and device.",
+		"selectDevice": "Scanning complete. Select device.",
+		"scanFail": "Scanning failed. Connect your device and scan again.",
+		"alreadyScan": "Scanning already complete.",
+		"availablePorts": "Available Ports:",
+		"availableAppIntent": "Available App Intent:",
+		"portIsRequired": "Port is required",
+		"device": "Device:",
+		"deviceIsRequired": "Device is required",
+		"close": "Close",
+		"scanAgain": "Scan Again",
+		"save": "Save"
+	},
+	"deviceLabel": {
+		"deviceId": "Device Id",
+		"purpose": "Purpose",
+		"deviceType": "Device Type",
+		"deviceSubType": "Device Sub Type"
 	},
 	"testcases": {
 		"SBI1000": {
@@ -3296,22 +3318,22 @@
 		}
 	},
 	"validatorMessages": {
-    "SCHEMA_VALIDATOR_001": "JSON is as expected. All mandatory values are available and they all have valid expected values.",
-    "RESPONSE_MISMATCH_VALIDATOR_001": "The bioCount, segments and exceptions in response match the request.",
-    "RESPONSE_MISMATCH_VALIDATOR_002": "ResponseMismatchValidator failed due to biocount mismatch. In request, bioCount = {} and in response, bioCount = {}",
-    "RESPONSE_MISMATCH_VALIDATOR_003": "ResponseMismatchValidator failed due to purpose mismatch. In request, purpose = {} and in response, purpose = {}",
-    "RESPONSE_MISMATCH_VALIDATOR_004": "ResponseMismatchValidator failed, due to invalid Response BioSubType.",
-    "RESPONSE_MISMATCH_VALIDATOR_005": "ResponseMismatchValidator failed due to exception, biosubtype = {} is not valid",
-    "TRANSACTIONID_VALIDATOR_001": "Transaction Id validation is successful",
-    "TRANSACTIONID_VALIDATOR_002": "Transaction Id validation failed.",
-    "KEY_ROTATION_VALIDATOR_001": "Key Rotation validations are successful.",
-    "KEY_ROTATION_VALIDATOR_002": "Device Info before key rotation is not available",
-    "KEY_ROTATION_VALIDATOR_003": "Device Info after key rotation is not available",
-    "KEY_ROTATION_VALIDATOR_004": "Signature validation failed for device information after key rotation because the device is not registered",
-    "KEY_ROTATION_VALIDATOR_005": "Make, model or serialNo of the device info is not matching. ",
-    "KEY_ROTATION_VALIDATOR_006": "Both device keys are same. Rotate the device key and try again!",
-    "KEY_ROTATION_VALIDATOR_007": "Second device key must be created after the first device key",
-    "TIMEOUT_VALIDATOR_001": "Timeout validation is successful",
-    "TIMEOUT_VALIDATOR_002": "Timeout validation failed. Timeout given: {} ms. Response received in: {} ms"
-  }
+		"SCHEMA_VALIDATOR_001": "JSON is as expected. All mandatory values are available and they all have valid expected values.",
+		"RESPONSE_MISMATCH_VALIDATOR_001": "The bioCount, segments and exceptions in response match the request.",
+		"RESPONSE_MISMATCH_VALIDATOR_002": "ResponseMismatchValidator failed due to biocount mismatch. In request, bioCount = {} and in response, bioCount = {}",
+		"RESPONSE_MISMATCH_VALIDATOR_003": "ResponseMismatchValidator failed due to purpose mismatch. In request, purpose = {} and in response, purpose = {}",
+		"RESPONSE_MISMATCH_VALIDATOR_004": "ResponseMismatchValidator failed, due to invalid Response BioSubType.",
+		"RESPONSE_MISMATCH_VALIDATOR_005": "ResponseMismatchValidator failed due to exception, biosubtype = {} is not valid",
+		"TRANSACTIONID_VALIDATOR_001": "Transaction Id validation is successful",
+		"TRANSACTIONID_VALIDATOR_002": "Transaction Id validation failed.",
+		"KEY_ROTATION_VALIDATOR_001": "Key Rotation validations are successful.",
+		"KEY_ROTATION_VALIDATOR_002": "Device Info before key rotation is not available",
+		"KEY_ROTATION_VALIDATOR_003": "Device Info after key rotation is not available",
+		"KEY_ROTATION_VALIDATOR_004": "Signature validation failed for device information after key rotation because the device is not registered",
+		"KEY_ROTATION_VALIDATOR_005": "Make, model or serialNo of the device info is not matching. ",
+		"KEY_ROTATION_VALIDATOR_006": "Both device keys are same. Rotate the device key and try again!",
+		"KEY_ROTATION_VALIDATOR_007": "Second device key must be created after the first device key",
+		"TIMEOUT_VALIDATOR_001": "Timeout validation is successful",
+		"TIMEOUT_VALIDATOR_002": "Timeout validation failed. Timeout given: {} ms. Response received in: {} ms"
+	}
 }
