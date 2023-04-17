@@ -3312,6 +3312,10 @@
     "KEY_ROTATION_VALIDATOR_006": "Les deux clés de l'appareil sont identiques. Faites tourner la clé de l'appareil et réessayez !",
     "KEY_ROTATION_VALIDATOR_007": "La deuxième clé d'appareil doit être créée après la première clé d'appareil",
     "TIMEOUT_VALIDATOR_001": "La validation du délai d'attente est réussie",
-    "TIMEOUT_VALIDATOR_002": "La validation du délai d'attente a échoué. Délai d'attente donné : {} ms. Réponse reçue en : {} ms"
+    "TIMEOUT_VALIDATOR_002": "La validation du délai d'attente a échoué. Délai d'attente donné : {} ms. Réponse reçue en : {} ms",
+    "BIOMETRICS_QUALITY_CHECK_001": "Les validations BiometricsQualityCheckValidator sont réussies. ",
+    "BIOMETRICS_QUALITY_CHECK_002": "Les validations BiometricsQualityCheckValidator échouent. ",
+    "TIMECHECK_VALIDATOR_001": "Time Check validation is Successful",
+    "TIMECHECK_VALIDATOR_002": "Time Check validation failed. Timestamp interval given: {} Response received in: {}"
   }
 }

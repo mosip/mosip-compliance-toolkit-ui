@@ -306,6 +306,18 @@ export class TestRunComponent implements OnInit {
     const COLON_SEPARATOR = ':', COMMA_SEPARATOR = ',', JSON_PLACEHOLDER = '{}';
     if (item && item.description && descriptionKey && this.resourceBundleJson &&
       validatorMessages) {
+      if (item.description.includes("<br>")) {
+        let descriptionKeyArr = descriptionKey.split("<br>");
+        console.log(descriptionKeyArr)
+        const descriptionKeyName = descriptionKeyArr[0].split(COLON_SEPARATOR)[0];
+        translatedMsg = validatorMessages[descriptionKeyName];
+        descriptionKeyArr.forEach((element: any, index: number) => {
+          if (index > 0) {
+            translatedMsg = translatedMsg + "<br>" + element;
+          }
+        });
+        return (translatedMsg);
+      }
       //check if the descriptionKey is having any rutime attributes
       //eg: descriptionKey="SCHEMA_VALIDATOR_001:name,size"
       if (descriptionKey.indexOf(COLON_SEPARATOR) == -1) {
