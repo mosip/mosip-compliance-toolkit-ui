@@ -307,11 +307,9 @@ export class TestRunComponent implements OnInit {
     if (item && item.description && descriptionKey && this.resourceBundleJson &&
       validatorMessages) {
       if (item.description.includes("<br>")) {
-        let descriptionKeyArr = descriptionKey.split("<br>");
-        console.log(descriptionKeyArr)
-        const descriptionKeyName = descriptionKeyArr[0].split(COLON_SEPARATOR)[0];
-        translatedMsg = validatorMessages[descriptionKeyName];
-        descriptionKeyArr.forEach((element: any, index: number) => {
+        let descriptionArr = item.description.split("<br>");
+        translatedMsg = validatorMessages[descriptionKey];
+        descriptionArr.forEach((element: any, index: number) => {
           if (index > 0) {
             translatedMsg = translatedMsg + "<br>" + element;
           }
