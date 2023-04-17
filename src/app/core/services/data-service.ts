@@ -233,7 +233,4 @@ export class DataService {
     return this.httpClient.post(url, body);
   }
 
-  getI18NLanguageFiles(langCode: string) {
-    return this.httpClient.get(`./assets/i18n/${langCode}.json`);
-  }
 }

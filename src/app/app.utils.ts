@@ -236,20 +236,14 @@ export default class Utils {
 
   static translateTestcase(
     testcase: any,
-    userProfileService: UserProfileService,
-    dataService: DataService
+    resourceBundle: any
   ) {
-    let langCode = userProfileService.getUserPreferredLanguage();
-    let languageJson: any = {};
-    dataService.getI18NLanguageFiles(langCode).subscribe((response) => {
-      languageJson = response;
-      if (languageJson.testcases != null && languageJson.testcases[testcase.testId] != null) {
-        testcase.testName = languageJson.testcases[testcase.testId]['testName'];
-        testcase.testDescription = languageJson.testcases[testcase.testId]['testDescription'];
-        testcase.validatorDefs = languageJson.testcases[testcase.testId]['validatorDefs'];
-      }
-    });
-    //console.log(testcase);
+    if (resourceBundle && resourceBundle.testcases != null && resourceBundle.testcases[testcase.testId] != null) {
+      testcase.testName = resourceBundle.testcases[testcase.testId]['testName'];
+      testcase.testDescription = resourceBundle.testcases[testcase.testId]['testDescription'];
+      testcase.validatorDefs = resourceBundle.testcases[testcase.testId]['validatorDefs'];
+    }
+    console.log(testcase.testName);
     return testcase;
   }
 }

@@ -59,7 +59,7 @@ export class TestRunComponent implements OnInit {
   panelOpenState = false;
   runDetails: any;
   textDirection: any = this.userProfileService.getTextDirection();
-  resourceBundleJson: any = {};
+  resourceBundleJson: any = this.userProfileService.getResourceBundle();
   langCode = this.userProfileService.getUserPreferredLanguage();
 
   constructor(
@@ -86,12 +86,6 @@ export class TestRunComponent implements OnInit {
     await this.getTestcasesForCollection();
     await this.getTestRun();
     this.initBreadCrumb();
-    //load the current lang resource bundle  
-    this.dataService.getI18NLanguageFiles(this.langCode).subscribe(
-      (response) => {
-        this.resourceBundleJson = response;
-      }
-    )
     this.dataLoaded = true;
   }
 
@@ -224,7 +218,7 @@ export class TestRunComponent implements OnInit {
             if (this.userProfileService.getUserPreferredLanguage()) {
               let testcasesListTranslated = [];
               for (let testcase of this.testcasesList) {
-                testcasesListTranslated.push(Utils.translateTestcase(testcase, this.userProfileService, this.dataService));
+                testcasesListTranslated.push(Utils.translateTestcase(testcase, this.userProfileService.getResourceBundle()));
               }
               this.testcasesList = testcasesListTranslated;
             }
