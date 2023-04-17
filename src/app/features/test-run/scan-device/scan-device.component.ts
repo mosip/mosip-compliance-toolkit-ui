@@ -10,6 +10,8 @@ import Utils from 'src/app/app.utils';
 import { Toast } from '@capacitor/toast';
 import { MosipSbiCapacitorPlugin } from 'mosip-sbi-capacitor-plugin';
 import { environment } from '../../../../environments/environment';
+import { UserProfileService } from 'src/app/core/services/user-profile.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-scan-device',
@@ -30,16 +32,24 @@ export class ScanDeviceComponent implements OnInit {
   previousScanAvailable = false;
   SBI_BASE_URL = this.appConfigService.getConfig()['SBI_BASE_URL'];
   isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
+  textDirection: any = this.userProfileService.getTextDirection();
+  resourceBundleJson: any = this.userProfileService.getResourceBundle();
+  langCode = this.userProfileService.getUserPreferredLanguage();
+
   constructor(
     private dialogRef: MatDialogRef<ScanDeviceComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dataService: DataService,
+    private userProfileService: UserProfileService,
+    private translate: TranslateService,
     private appConfigService: AppConfigService
   ) {
     dialogRef.disableClose = true;
   }
 
   async ngOnInit() {
+    this.translate.use(this.userProfileService.getUserPreferredLanguage());
+    this.data.title = this.resourceBundleJson['scanDevice']['title'];
     this.scanForm.addControl(
       'ports',
       new FormControl('', [Validators.required])
@@ -199,10 +209,12 @@ export class ScanDeviceComponent implements OnInit {
 
   getDeviceLabel(field: any) {
     if (field) {
+      let deviceLabel = this.resourceBundleJson['deviceLabel'];
+      //console.log(this.resourceBundleJson);
       if (!this.isAndroidAppMode) {
-        return `Device Id: ${field.deviceId}, Purpose: ${field.purpose}, Device Type: ${field.digitalIdDecoded.type}, Device Sub Type: ${field.digitalIdDecoded.deviceSubType}`;
+        return `${deviceLabel.deviceId}: ${field.deviceId}, ${deviceLabel.purpose}: ${field.purpose}, ${deviceLabel.deviceType}: ${field.digitalIdDecoded.type}, ${deviceLabel.deviceSubType}: ${field.digitalIdDecoded.deviceSubType}`;
       } else {
-        return `Purpose: ${field.purpose}, Device Type: ${field.digitalIdDecoded.type}, Device Sub Type: ${field.digitalIdDecoded.deviceSubType}`;
+        return `${deviceLabel.purpose}: ${field.purpose}, ${deviceLabel.deviceType}: ${field.digitalIdDecoded.type}, ${deviceLabel.deviceSubType}: ${field.digitalIdDecoded.deviceSubType}`;
       }
     } else {
       return '';
