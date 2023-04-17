@@ -3312,8 +3312,6 @@
     "KEY_ROTATION_VALIDATOR_006": "Both device keys are same. Rotate the device key and try again!",
     "KEY_ROTATION_VALIDATOR_007": "Second device key must be created after the first device key",
     "TIMEOUT_VALIDATOR_001": "Timeout validation is successful",
-    "TIMEOUT_VALIDATOR_002": "Timeout validation failed. Timeout given: {} ms. Response received in: {} ms",
-    "BIOMETRICS_QUALITY_CHECK_001": "BiometricsQualityCheckValidator validations are successful. {}",
-    "BIOMETRICS_QUALITY_CHECK_002": "BiometricsQualityCheckValidator validations are not successful. {}"
+    "TIMEOUT_VALIDATOR_002": "Timeout validation failed. Timeout given: {} ms. Response received in: {} ms"
   }
 }
