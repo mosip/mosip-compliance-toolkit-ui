@@ -329,14 +329,13 @@ export class TestRunComponent implements OnInit {
           let newTranslatedMsg = "";
           translatedMsgArray.forEach((element, index) => {
             if (argumentsArr.length > index) {
+              // check if the argument is actually a key in resource bundle, 
+              // eg: descriptionKey="SCHEMA_VALIDATOR_001:SCHEMA_VALIDATOR_002,SCHEMA_VALIDATOR_003"
               const arg = argumentsArr[index];
               const translatedArg = validatorMessages[arg];
-              // check if arguments in descrptionKey is a key in resource bundle
               if (translatedArg) {
-                // if argument is a key resource bundle then append the value from resource bundle
                 newTranslatedMsg = newTranslatedMsg + element + translatedArg;
               } else {
-                // if argument is not a key in resource bundle then append the received argument as value
                 newTranslatedMsg = newTranslatedMsg + element + argumentsArr[index];
               }
             } else {
