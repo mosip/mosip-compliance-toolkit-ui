@@ -225,8 +225,7 @@ export class DataService {
 
   getDataShareUrl(body: any) {
     let url = `${this.SERVICES_BASE_URL}getDataShareUrl`;
-    console.log('url:' + url);
-    return this.httpClient.post(url, body);
+     return this.httpClient.post(url, body);
   }
   
   sendToQueue(body: any) {
@@ -234,7 +233,4 @@ export class DataService {
     return this.httpClient.post(url, body);
   }
 
-  getI18NLanguageFiles(langCode: string) {
-    return this.httpClient.get(`./assets/i18n/${langCode}.json`);
-  }
 }
