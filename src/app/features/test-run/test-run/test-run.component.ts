@@ -310,19 +310,28 @@ export class TestRunComponent implements OnInit {
         let descriptionKeyArr = descriptionKey.split(COLON_SEPARATOR);
         const descriptionKeyName = descriptionKeyArr[0];
         const attributesArr = descriptionKeyArr[1];
-        const values = attributesArr.split(COMMA_SEPARATOR);
+        const argumentsArr = attributesArr.split(COMMA_SEPARATOR);
         translatedMsg = validatorMessages[descriptionKeyName];
         const matches: RegExpMatchArray | null = translatedMsg.match(/\{\}/g);
         const count: number = matches ? matches.length : 0;
-        if (count != values.length) {
+        // match no of palceholders in JSON value to no of arguments
+        if (count != argumentsArr.length) {
           return translatedMsg;
         }
         let translatedMsgArray = translatedMsg.split(JSON_PLACEHOLDER);
         if (translatedMsgArray.length > 0) {
           let newTranslatedMsg = "";
           translatedMsgArray.forEach((element, index) => {
-            if (values.length > index) {
-              newTranslatedMsg = newTranslatedMsg + element + values[index];
+            if (argumentsArr.length > index) {
+              // check if the argument is actually a key in resource bundle, 
+              // eg: descriptionKey="SCHEMA_VALIDATOR_001:SCHEMA_VALIDATOR_002,SCHEMA_VALIDATOR_003"
+              const arg = argumentsArr[index];
+              const translatedArg = validatorMessages[arg];
+              if (translatedArg) {
+                newTranslatedMsg = newTranslatedMsg + element + translatedArg;
+              } else {
+                newTranslatedMsg = newTranslatedMsg + element + arg;
+              }
             } else {
               newTranslatedMsg = newTranslatedMsg + element;
             }
