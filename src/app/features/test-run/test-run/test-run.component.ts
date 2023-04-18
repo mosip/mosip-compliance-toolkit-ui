@@ -303,9 +303,12 @@ export class TestRunComponent implements OnInit {
     let translatedMsg: string;
     const validatorMessages = this.resourceBundleJson["validatorMessages"];
     const descriptionKey = item.descriptionKey;
-    const COLON_SEPARATOR = ':', COMMA_SEPARATOR = ',', JSON_PLACEHOLDER = '{}';
+    const COLON_SEPARATOR = ':', COMMA_SEPARATOR = ',', JSON_PLACEHOLDER = '{}', LINE_BREAK = '<br>';
     if (item && item.description && descriptionKey && this.resourceBundleJson &&
       validatorMessages) {
+        if (item.description.includes("<br>")) {
+          return this.translateQualityCheckValidator(item.description, descriptionKey);
+      }
       //check if the descriptionKey is having any rutime attributes
       //eg: descriptionKey="SCHEMA_VALIDATOR_001:name,size"
       if (descriptionKey.indexOf(COLON_SEPARATOR) == -1) {
@@ -353,6 +356,69 @@ export class TestRunComponent implements OnInit {
     } else {
       return "";
     }
+  }
+
+  translateQualityCheckValidator(itemDescription: any, descriptionKey: string) {
+    const validatorMessages = this.resourceBundleJson["validatorMessages"];
+    let descriptionArr = itemDescription.split("<br>");
+    let index = descriptionKey.indexOf(":")
+    let descriptionKeyArr = descriptionKey.split(":");
+    let primaryKey: any;
+    let secondaryKeysArr: string[] = [];
+    let countSubAttributes: number = 0;
+    let subArgumentsArr: any[] = [];
+    descriptionKeyArr.forEach((element: string, index: number) => {
+      if (index == 0) {
+        primaryKey = element;
+      } else {
+        secondaryKeysArr.push(element);
+      }
+    });
+    let translatedString = '';
+    descriptionArr.forEach((element: any) => {
+      if (element.indexOf(':') == -1) {
+        if (validatorMessages[primaryKey]) {
+          translatedString = translatedString + validatorMessages[primaryKey];
+        } else {
+          translatedString = translatedString + element;
+        }
+      } else {
+        let subMsgArr = element.split(':');
+        secondaryKeysArr.forEach((element1: string, index: number) => {
+          if (index == 0 || (index % 2) == 0) {
+            if (validatorMessages[element1]) {
+              translatedString = translatedString + "<br>" + subMsgArr[0] + ":" + validatorMessages[element1];
+            } else {
+              translatedString = translatedString + "<br>" + subMsgArr[0] + ":" + subMsgArr[1];
+            }
+          } else {
+            countSubAttributes = countSubAttributes + 1;
+            subArgumentsArr.push(element1);
+          }
+        });
+      }
+    });
+    const matches: RegExpMatchArray | null = translatedString.match(/\{\}/g);
+    const count: number = matches ? matches.length : 0;
+    if (count != countSubAttributes) {
+      return translatedString;
+    }
+    let translatedMsgArray = translatedString.split('{}');
+    if (translatedMsgArray.length > 0) {
+      let newTranslatedMsg = "";
+      translatedMsgArray.forEach((element, index) => {
+        console.log(element)
+        if (subArgumentsArr.length > index) {
+          // check if the argument is actually a key in resource bundle, 
+          // eg: descriptionKey="SCHEMA_VALIDATOR_001:SCHEMA_VALIDATOR_002,SCHEMA_VALIDATOR_003"
+          newTranslatedMsg = newTranslatedMsg + element + subArgumentsArr[index];
+        } else {
+          newTranslatedMsg = newTranslatedMsg + element;
+        }
+      });
+      return (newTranslatedMsg);
+    }
+    return translatedString
   }
 
   backToProject() {
