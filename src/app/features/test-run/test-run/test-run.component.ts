@@ -360,13 +360,18 @@ export class TestRunComponent implements OnInit {
 
   translateQualityCheckValidator(itemDescription: any, descriptionKey: string) {
     const validatorMessages = this.resourceBundleJson["validatorMessages"];
-    let descriptionArr = itemDescription.split("<br>");
-    let index = descriptionKey.indexOf(":")
-    let descriptionKeyArr = descriptionKey.split(":");
+    const COLON_SEPARATOR = ':', JSON_PLACEHOLDER = '{}', LINE_BREAK = '<br>';
+    // split description into array based on line break
+    // eg desc: 'BiometricsQualityCheckValidator validations are successful.<br>Mock SDK: Positive Quality Check for 
+    // finger is successful<br>Mock SDK Dev Env: Positive Quality Check for finger is successful'
+    let descriptionArr = itemDescription.split(LINE_BREAK);
+    let descriptionKeyArr = descriptionKey.split(COLON_SEPARATOR);
     let primaryKey: any;
     let secondaryKeysArr: string[] = [];
     let countSubAttributes: number = 0;
     let subArgumentsArr: any[] = [];
+    // separte primary and secoandary keys in description key 
+    // eg desc key: 'BIOMETRICS_QUALITY_CHECK_001:QUALITY_CHECK_004:finger'
     descriptionKeyArr.forEach((element: string, index: number) => {
       if (index == 0) {
         primaryKey = element;
@@ -376,20 +381,22 @@ export class TestRunComponent implements OnInit {
     });
     let translatedString = '';
     descriptionArr.forEach((element: any) => {
-      if (element.indexOf(':') == -1) {
+      // translate primary message in description
+      if (element.indexOf(COLON_SEPARATOR) == -1) {
         if (validatorMessages[primaryKey]) {
           translatedString = translatedString + validatorMessages[primaryKey];
         } else {
           translatedString = translatedString + element;
         }
       } else {
+        // translate secondary message in description and annotate to primary message
         let subMsgArr = element.split(':');
         secondaryKeysArr.forEach((element1: string, index: number) => {
           if (index == 0 || (index % 2) == 0) {
             if (validatorMessages[element1]) {
-              translatedString = translatedString + "<br>" + subMsgArr[0] + ":" + validatorMessages[element1];
+              translatedString = translatedString + LINE_BREAK + subMsgArr[0] + COLON_SEPARATOR + validatorMessages[element1];
             } else {
-              translatedString = translatedString + "<br>" + subMsgArr[0] + ":" + subMsgArr[1];
+              translatedString = translatedString + LINE_BREAK + subMsgArr[0] + COLON_SEPARATOR + subMsgArr[1];
             }
           } else {
             countSubAttributes = countSubAttributes + 1;
@@ -398,19 +405,18 @@ export class TestRunComponent implements OnInit {
         });
       }
     });
+    // finds placeholders in secondary messages of description and replaces with attributes such as finger etc. 
     const matches: RegExpMatchArray | null = translatedString.match(/\{\}/g);
     const count: number = matches ? matches.length : 0;
     if (count != countSubAttributes) {
       return translatedString;
     }
-    let translatedMsgArray = translatedString.split('{}');
+    let translatedMsgArray = translatedString.split(JSON_PLACEHOLDER);
     if (translatedMsgArray.length > 0) {
       let newTranslatedMsg = "";
       translatedMsgArray.forEach((element, index) => {
         console.log(element)
         if (subArgumentsArr.length > index) {
-          // check if the argument is actually a key in resource bundle, 
-          // eg: descriptionKey="SCHEMA_VALIDATOR_001:SCHEMA_VALIDATOR_002,SCHEMA_VALIDATOR_003"
           newTranslatedMsg = newTranslatedMsg + element + subArgumentsArr[index];
         } else {
           newTranslatedMsg = newTranslatedMsg + element;
