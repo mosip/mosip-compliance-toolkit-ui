@@ -316,23 +316,23 @@ export class TestRunComponent implements OnInit {
         let descriptionKeyArr = descriptionKey.split(COLON_SEPARATOR);
         const descriptionKeyName = descriptionKeyArr[0];
         const attributesArr = descriptionKeyArr[1];
-        const values = attributesArr.split(COMMA_SEPARATOR);
+        const argumentsArr = attributesArr.split(COMMA_SEPARATOR);
         translatedMsg = validatorMessages[descriptionKeyName];
         const matches: RegExpMatchArray | null = translatedMsg.match(/\{\}/g);
         const count: number = matches ? matches.length : 0;
-        if (count != values.length) {
+        if (count != argumentsArr.length) {
           return translatedMsg;
         }
         let translatedMsgArray = translatedMsg.split(JSON_PLACEHOLDER);
         if (translatedMsgArray.length > 0) {
           let newTranslatedMsg = "";
           translatedMsgArray.forEach((element, index) => {
-            if (values.length > index) {
-              const appendedMsg = values[index];
-              if (validatorMessages[appendedMsg]) {
-                newTranslatedMsg = newTranslatedMsg + element + validatorMessages[appendedMsg];
+            if (argumentsArr.length > index) {
+              const stringArgs = validatorMessages[argumentsArr[index]];
+              if (stringArgs) {
+                newTranslatedMsg = newTranslatedMsg + element + stringArgs;
               } else {
-                newTranslatedMsg = newTranslatedMsg + element + values[index];
+                newTranslatedMsg = newTranslatedMsg + element + argumentsArr[index];
               }
             } else {
               newTranslatedMsg = newTranslatedMsg + element;
