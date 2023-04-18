@@ -336,7 +336,7 @@ export class TestRunComponent implements OnInit {
               if (translatedArg) {
                 newTranslatedMsg = newTranslatedMsg + element + translatedArg;
               } else {
-                newTranslatedMsg = newTranslatedMsg + element + argumentsArr[index];
+                newTranslatedMsg = newTranslatedMsg + element + arg;
               }
             } else {
               newTranslatedMsg = newTranslatedMsg + element;
