@@ -306,7 +306,7 @@ export class TestRunComponent implements OnInit {
     const COLON_SEPARATOR = ':', COMMA_SEPARATOR = ',', JSON_PLACEHOLDER = '{}', LINE_BREAK = '<br>';
     if (item && item.description && descriptionKey && this.resourceBundleJson &&
       validatorMessages) {
-        if (item.description.includes("<br>")) {
+        if (item.description.includes(LINE_BREAK)) {
           return this.translateQualityCheckValidator(item.description, descriptionKey);
       }
       //check if the descriptionKey is having any rutime attributes
