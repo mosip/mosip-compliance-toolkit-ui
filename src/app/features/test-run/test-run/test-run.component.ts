@@ -328,8 +328,9 @@ export class TestRunComponent implements OnInit {
           let newTranslatedMsg = "";
           translatedMsgArray.forEach((element, index) => {
             if (values.length > index) {
-              if(validatorMessages[values[index]]){
-              newTranslatedMsg = newTranslatedMsg + element + validatorMessages[values[index]];    
+              const appendedMsg = values[index];
+              if(validatorMessages[appendedMsg]){
+              newTranslatedMsg = newTranslatedMsg + element + validatorMessages[appendedMsg];    
               }else{
               newTranslatedMsg = newTranslatedMsg + element + values[index];
               }
