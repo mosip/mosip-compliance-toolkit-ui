@@ -3313,6 +3313,8 @@
     "KEY_ROTATION_VALIDATOR_007": "La deuxième clé d'appareil doit être créée après la première clé d'appareil",
     "KEY_ROTATION_VALIDATOR_008": "L'appareil n'est pas enregistré.",
     "TIMEOUT_VALIDATOR_001": "La validation du délai d'attente est réussie",
-    "TIMEOUT_VALIDATOR_002": "La validation du délai d'attente a échoué. Délai d'attente donné : {} ms. Réponse reçue en : {} ms"
+    "TIMEOUT_VALIDATOR_002": "La validation du délai d'attente a échoué. Délai d'attente donné : {} ms. Réponse reçue en : {} ms",
+    "QUALITY_CHECK_004": "Le contrôle de qualité positif pour {} a réussi",
+    "BIOMETRICS_QUALITY_CHECK_001": "Les validations BiometricsQualityCheckValidator sont réussies."
   }
 }
