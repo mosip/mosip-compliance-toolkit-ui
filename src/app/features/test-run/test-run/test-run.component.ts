@@ -320,6 +320,7 @@ export class TestRunComponent implements OnInit {
         translatedMsg = validatorMessages[descriptionKeyName];
         const matches: RegExpMatchArray | null = translatedMsg.match(/\{\}/g);
         const count: number = matches ? matches.length : 0;
+        // match no of palceholders in JSON value to no of arguments
         if (count != argumentsArr.length) {
           return translatedMsg;
         }
@@ -328,10 +329,14 @@ export class TestRunComponent implements OnInit {
           let newTranslatedMsg = "";
           translatedMsgArray.forEach((element, index) => {
             if (argumentsArr.length > index) {
-              const stringArgs = validatorMessages[argumentsArr[index]];
-              if (stringArgs) {
-                newTranslatedMsg = newTranslatedMsg + element + stringArgs;
+              const arg = argumentsArr[index];
+              const translatedArg = validatorMessages[arg];
+              // check if arguments in descrptionKey is a key in resource bundle
+              if (translatedArg) {
+                // if argument is a key resource bundle then append the value from resource bundle
+                newTranslatedMsg = newTranslatedMsg + element + translatedArg;
               } else {
+                // if argument is not a key in resource bundle then append the received argument as value
                 newTranslatedMsg = newTranslatedMsg + element + argumentsArr[index];
               }
             } else {
