@@ -32,13 +32,13 @@ export class ActiveMqService {
       // Wait in milliseconds before attempting auto reconnect
       // Set to 0 to disable
       // Typical value 500 (500 milli seconds)
-      reconnectDelay: 0,
+      reconnectDelay: 500,
 
       // Will log diagnostics on console
       // It can be quite verbose, not recommended in production
       // Skip this key to stop logging to console
       debug: (msg: string): void => {
-       // console.log(new Date(), msg);
+        console.log(msg);
       },
     }
     const rxStomp = rxStompServiceFactory(ctkRxStompConfig);
@@ -74,7 +74,7 @@ export class ActiveMqService {
       console.log(`sentRequesId: ${sentRequesId}`);
       rxStompService
         .watch(abisProjectData.inboundQueueName)
-        .forEach((message: Message) => {
+        .subscribe((message: Message) => {
           const resp = message.body;
           const respObj = JSON.parse(resp);
           const recvdRequesId = respObj[appConstants.REQUEST_ID];
