@@ -221,7 +221,7 @@ export class SbiTestCaseAndroidService {
         timeout: this.getTimeout(testCase),
         captureTime: new Date().toISOString(),
         transactionId: testCase.testId + '-' + new Date().getUTCMilliseconds(),
-        //domainUri: '', //TODO
+        domainUri: '', //TODO
         bio: [
           {
             type: selectedSbiDevice.digitalIdDecoded.type,

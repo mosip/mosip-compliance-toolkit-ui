@@ -93,7 +93,7 @@ export class AuthInterceptor implements HttpInterceptor {
         //this should be mapped to cookie header in nginx conf
         let accessToken = localStorage.getItem(appConstants.ACCESS_TOKEN);
         request = request.clone({
-          setHeaders: { 'accessToken': accessToken ? accessToken: ""},
+          setHeaders: { 'accessToken': accessToken ? accessToken : "" },
         });
       }
     }
@@ -112,10 +112,12 @@ export class AuthInterceptor implements HttpInterceptor {
                 );
                 this.userProfileService.setUsername(event.body.response.userId);
                 this.userProfileService.setRoles(event.body.response.role);
+                //Set all attributes required for selected language
                 const langCode = this.decoded['locale'];
                 this.userProfileService.setUserPreferredLanguage(langCode);
-                const rtlLanguages = this.appConfigService.getConfig()['rtlLanguages'] 
-                  ? this.appConfigService.getConfig()['rtlLanguages'].split(',') 
+                //Set if language is RTL or LTR
+                const rtlLanguages = this.appConfigService.getConfig()['rtlLanguages']
+                  ? this.appConfigService.getConfig()['rtlLanguages'].split(',')
                   : [];
                 let isRtl = false;
                 if (rtlLanguages.includes(langCode)) {

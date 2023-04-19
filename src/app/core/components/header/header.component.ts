@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import Utils from 'src/app/app.utils';
 import { environment } from 'src/environments/environment';
 import { App } from '@capacitor/app';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-header',
@@ -35,6 +36,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     public authService: AuthService,
     private appConfigService: AppConfigService,
+    private httpClient: HttpClient,
     private userProfileService: UserProfileService,
     private logoutService: LogoutService,
     private dataService: DataService,
@@ -62,6 +64,12 @@ export class HeaderComponent implements OnInit {
     } else {
       this.userName = this.userProfileService.getUsername();
     }
+    this.httpClient.get(`./assets/i18n/${this.userProfileService.getUserPreferredLanguage()}.json`).subscribe(
+      (response: any) => {
+        this.userProfileService.setResourceBundle(response);
+        console.log(response);
+      }
+    )
   }
   onLogoClick() {
     if (this.authService.isAuthenticated()) {

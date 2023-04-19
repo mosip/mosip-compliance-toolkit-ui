@@ -180,7 +180,7 @@ export class ViewCollectionsComponent implements OnInit {
             let testcases = response['response']['testcases'];
             let testcaseArr = [];
             for (let testcase of testcases) {
-              testcaseArr.push(Utils.translateTestcase(testcase,this.userProfileService,this.dataService));
+              testcaseArr.push(Utils.translateTestcase(testcase,this.userProfileService.getResourceBundle()));
             }
             //console.log(testcaseArr);
             //sort the testcases based on the testId
