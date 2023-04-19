@@ -3314,7 +3314,13 @@
     "KEY_ROTATION_VALIDATOR_008": "L'appareil n'est pas enregistré.",
     "TIMEOUT_VALIDATOR_001": "La validation du délai d'attente est réussie",
     "TIMEOUT_VALIDATOR_002": "La validation du délai d'attente a échoué. Délai d'attente donné : {} ms. Réponse reçue en : {} ms",
-    "QUALITY_CHECK_004": "Le contrôle de qualité positif pour {} a réussi",
-    "BIOMETRICS_QUALITY_CHECK_001": "Les validations BiometricsQualityCheckValidator sont réussies."
+    "SIGNATURE_VALIDATOR_002": "La réponse est vide",
+    "SIGNATURE_VALIDATOR_003": "Échec de la validation de l'ID numérique non signé",
+    "SIGNATURE_VALIDATOR_004": "La validation de l'ID numérique non signé a réussi",
+    "SIGNATURE_VALIDATOR_005": "L'appareil n'est pas enregistré",
+    "SIGNATURE_VALIDATOR_006": "L'appareil est enregistré, il ne peut donc pas être non signé",
+    "SIGNATURE_VALIDATOR_007": "Informations sur l'appareil La valeur décodée est nulle",
+    "SIGNATURE_VALIDATOR_008": "Échec de la validation de la confiance pour [ {} ] >> PartnerType[ {} ] et CertificateData[ {} ]",
+    "SIGNATURE_VALIDATOR_009": "La validation de la racine de confiance est réussie"
   }
 }
