@@ -3431,6 +3431,8 @@
     "SIGNATURE_VALIDATOR_008": "فشل التحقق من الثقة لـ [{}] >> PartnerType [{}] و CertificateData [{}]",
     "SIGNATURE_VALIDATOR_009": "تم التحقق من صحة جذر الثقة بنجاح",
     "JWT_SIGNATURE_001": "تم التحقق من صحة توقيع JWT بنجاح",
-    "JWT_SIGNATURE_002": "فشل التحقق من صحة توقيع JWT"
+    "JWT_SIGNATURE_002": "فشل التحقق من صحة توقيع JWT",
+		"EXTRACT_TEMPLATE_VALIDATOR_001": "تم التحقق من صحة قالب الاستخراج بنجاح",
+		"EXTRACT_TEMPLATE_VALIDATOR_002": "فشل استخراج رمز حالة القالب ، تم استلامه: {}"
 	}
 }

@@ -3430,6 +3430,8 @@
     "SIGNATURE_VALIDATOR_008": "Échec de la validation de la confiance pour [ {} ] >> PartnerType[ {} ] et CertificateData[ {} ]",
     "SIGNATURE_VALIDATOR_009": "La validation de la racine de confiance est réussie",
     "JWT_SIGNATURE_001": "La validation de la signature JWT a réussi",
-    "JWT_SIGNATURE_002": "La validation de la signature JWT a échoué"
+    "JWT_SIGNATURE_002": "La validation de la signature JWT a échoué",
+		"EXTRACT_TEMPLATE_VALIDATOR_001": "La validation du modèle d'extraction est réussie",
+		"EXTRACT_TEMPLATE_VALIDATOR_002": "Échec de l'extraction du code d'état du modèle, reçu : {}"
 	}
 }
