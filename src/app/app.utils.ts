@@ -238,12 +238,14 @@ export default class Utils {
     testcase: any,
     resourceBundle: any
   ) {
-    if (resourceBundle && resourceBundle.testcases != null && resourceBundle.testcases[testcase.testId] != null) {
+    if (resourceBundle && resourceBundle.testcases && resourceBundle.testcases[testcase.testId]) {
       testcase.testName = resourceBundle.testcases[testcase.testId]['testName'];
       testcase.testDescription = resourceBundle.testcases[testcase.testId]['testDescription'];
       testcase.validatorDefs = resourceBundle.testcases[testcase.testId]['validatorDefs'];
+      if (testcase.androidTestDescription) {
+        testcase.androidTestDescription = resourceBundle.testcases[testcase.testId]['androidTestDescription'];
+      }
     }
-    console.log(testcase.testName);
     return testcase;
   }
 }
