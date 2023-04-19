@@ -3323,6 +3323,8 @@
     "SIGNATURE_VALIDATOR_008": "Échec de la validation de la confiance pour [ {} ] >> PartnerType[ {} ] et CertificateData[ {} ]",
     "SIGNATURE_VALIDATOR_009": "La validation de la racine de confiance est réussie",
     "JWT_SIGNATURE_001": "La validation de la signature JWT a réussi",
-    "JWT_SIGNATURE_002": "La validation de la signature JWT a échoué"
+    "JWT_SIGNATURE_002": "La validation de la signature JWT a échoué",
+    "TIMECHECK_VALIDATOR_001": "La validation de la vérification de l'heure a échoué. Intervalle d'horodatage donné : {} m. Réponse reçue dans : {} m",
+    "TIMECHECK_VALIDATOR_002": "La validation du contrôle horaire est réussie"
   }
 }
