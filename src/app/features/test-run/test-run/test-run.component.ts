@@ -303,12 +303,9 @@ export class TestRunComponent implements OnInit {
     let translatedMsg: string;
     const validatorMessages = this.resourceBundleJson["validatorMessages"];
     const descriptionKey = item.descriptionKey;
-    const COLON_SEPARATOR = ':', COMMA_SEPARATOR = ',', JSON_PLACEHOLDER = '{}', LINE_BREAK = '<br>';
+    const COLON_SEPARATOR = ':', COMMA_SEPARATOR = ',', JSON_PLACEHOLDER = '{}';
     if (item && item.description && descriptionKey && this.resourceBundleJson &&
       validatorMessages) {
-        if (item.description.includes(LINE_BREAK)) {
-          return this.translateQualityCheckValidator(item.description, descriptionKey);
-      }
       //check if the descriptionKey is having any rutime attributes
       //eg: descriptionKey="SCHEMA_VALIDATOR_001:name,size"
       if (descriptionKey.indexOf(COLON_SEPARATOR) == -1) {
@@ -356,75 +353,6 @@ export class TestRunComponent implements OnInit {
     } else {
       return "";
     }
-  }
-
-  translateQualityCheckValidator(itemDescription: any, descriptionKey: string) {
-    const validatorMessages = this.resourceBundleJson["validatorMessages"];
-    const COLON_SEPARATOR = ':', JSON_PLACEHOLDER = '{}', LINE_BREAK = '<br>';
-    // split description into array based on line break
-    // eg desc: 'BiometricsQualityCheckValidator validations are successful.<br>Mock SDK: Positive Quality Check for 
-    // finger is successful<br>Mock SDK Dev Env: Positive Quality Check for finger is successful'
-    let descriptionArr = itemDescription.split(LINE_BREAK);
-    let descriptionKeyArr = descriptionKey.split(COLON_SEPARATOR);
-    let primaryKey: any;
-    let secondaryKeysArr: string[] = [];
-    let countSubAttributes: number = 0;
-    let subArgumentsArr: any[] = [];
-    // separte primary and secoandary keys in description key 
-    // eg desc key: 'BIOMETRICS_QUALITY_CHECK_001:QUALITY_CHECK_004:finger'
-    descriptionKeyArr.forEach((element: string, index: number) => {
-      if (index == 0) {
-        primaryKey = element;
-      } else {
-        secondaryKeysArr.push(element);
-      }
-    });
-    let translatedString = '';
-    descriptionArr.forEach((element: any) => {
-      // translate primary message in description
-      if (element.indexOf(COLON_SEPARATOR) == -1) {
-        if (validatorMessages[primaryKey]) {
-          translatedString = translatedString + validatorMessages[primaryKey];
-        } else {
-          translatedString = translatedString + element;
-        }
-      } else {
-        // translate secondary message in description and annotate to primary message
-        let subMsgArr = element.split(':');
-        secondaryKeysArr.forEach((element1: string, index: number) => {
-          if (index == 0 || (index % 2) == 0) {
-            if (validatorMessages[element1]) {
-              translatedString = translatedString + LINE_BREAK + subMsgArr[0] + COLON_SEPARATOR + validatorMessages[element1];
-            } else {
-              translatedString = translatedString + LINE_BREAK + subMsgArr[0] + COLON_SEPARATOR + subMsgArr[1];
-            }
-          } else {
-            countSubAttributes = countSubAttributes + 1;
-            subArgumentsArr.push(element1);
-          }
-        });
-      }
-    });
-    // finds placeholders in secondary messages of description and replaces with attributes such as finger etc. 
-    const matches: RegExpMatchArray | null = translatedString.match(/\{\}/g);
-    const count: number = matches ? matches.length : 0;
-    if (count != countSubAttributes) {
-      return translatedString;
-    }
-    let translatedMsgArray = translatedString.split(JSON_PLACEHOLDER);
-    if (translatedMsgArray.length > 0) {
-      let newTranslatedMsg = "";
-      translatedMsgArray.forEach((element, index) => {
-        console.log(element)
-        if (subArgumentsArr.length > index) {
-          newTranslatedMsg = newTranslatedMsg + element + subArgumentsArr[index];
-        } else {
-          newTranslatedMsg = newTranslatedMsg + element;
-        }
-      });
-      return (newTranslatedMsg);
-    }
-    return translatedString
   }
 
   backToProject() {
