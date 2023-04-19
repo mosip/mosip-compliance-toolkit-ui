@@ -3421,6 +3421,17 @@
     "KEY_ROTATION_VALIDATOR_007": "Second device key must be created after the first device key",
     "KEY_ROTATION_VALIDATOR_008": "Device is not registered.",
     "TIMEOUT_VALIDATOR_001": "Timeout validation is successful",
-    "TIMEOUT_VALIDATOR_002": "Timeout validation failed. Timeout given: {} ms. Response received in: {} ms"
+    "TIMEOUT_VALIDATOR_002": "Timeout validation failed. Timeout given: {} ms. Response received in: {} ms",
+    "SIGNATURE_VALIDATOR_001": "Method not supported",
+    "SIGNATURE_VALIDATOR_002": "Response is empty",
+    "SIGNATURE_VALIDATOR_003": "Unsigned Digital ID validation failed",
+    "SIGNATURE_VALIDATOR_004": "Unsigned Digital ID validation is successful",
+    "SIGNATURE_VALIDATOR_005": "Device is not registered",
+    "SIGNATURE_VALIDATOR_006": "Device is registered, so can not be unsigned",
+    "SIGNATURE_VALIDATOR_007": "Device info Decoded value is null",
+    "SIGNATURE_VALIDATOR_008": "Trust Validation Failed for [ {} ] >> PartnerType[ {} ] and CertificateData[ {} ]",
+    "SIGNATURE_VALIDATOR_009": "Trust Root Validation is Successful",
+    "JWT_SIGNATURE_001": "JWT Signature validation is successful",
+    "JWT_SIGNATURE_002": "JWT Signature validation failed"
   }
 }
