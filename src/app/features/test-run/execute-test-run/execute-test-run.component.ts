@@ -22,6 +22,8 @@ import { environment } from 'src/environments/environment';
 import { AbisTestCaseService } from 'src/app/core/services/abis-testcase-service';
 import { AbisProjectModel } from 'src/app/core/models/abis-project';
 import { RxStompService } from 'src/app/core/services/rx-stomp.service';
+import { UserProfileService } from 'src/app/core/services/user-profile.service';
+import { TranslateService } from '@ngx-translate/core';
 
 declare const start_streaming: any;
 declare const stop_streaming: any;
@@ -93,11 +95,15 @@ export class ExecuteTestRunComponent implements OnInit {
   abisRequestSent = false;
   abisRequestSendFailure = false;
   private topicSubscription: Subscription;
+  textDirection: any = this.userProfileService.getTextDirection();
+  resourceBundleJson: any = this.userProfileService.getResourceBundle();
 
   constructor(
     private dialogRef: MatDialogRef<ExecuteTestRunComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dataService: DataService,
+    private userProfileService: UserProfileService,
+    private translate: TranslateService,
     private router: Router,
     private dialog: MatDialog,
     private sbiTestCaseService: SbiTestCaseService,
@@ -111,6 +117,7 @@ export class ExecuteTestRunComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.translate.use(this.userProfileService.getUserPreferredLanguage());
     this.input = this.data;
     this.collectionId = this.input.collectionId;
     this.projectType = this.input.projectType;
@@ -150,8 +157,7 @@ export class ExecuteTestRunComponent implements OnInit {
         ) {
           this.scanComplete = false;
           this.dataLoaded = true;
-          this.validationErrMsg =
-            'Please select appropriate device, while scanning, to execute testcases for this project. \n The purpose of the selected device is not matching the project.';
+          this.validationErrMsg = this.resourceBundleJson['executeTestRun']['validationErrMsgForPurpose'];
           return false;
         }
         if (
@@ -160,8 +166,7 @@ export class ExecuteTestRunComponent implements OnInit {
         ) {
           this.scanComplete = false;
           this.dataLoaded = true;
-          this.validationErrMsg =
-            'Please select appropriate device, while scanning, to execute testcases for this project. \n The device type of the selected device is not matching the project.';
+          this.validationErrMsg = this.resourceBundleJson['executeTestRun']['validationErrMsgForDeviceType'];
           return false;
         }
         if (
@@ -170,8 +175,7 @@ export class ExecuteTestRunComponent implements OnInit {
         ) {
           this.scanComplete = false;
           this.dataLoaded = true;
-          this.validationErrMsg =
-            'Please select appropriate device, while scanning, to execute testcases for this project. \n The device sub type of the selected device is not matching the project.';
+          this.validationErrMsg = this.resourceBundleJson['executeTestRun']['validationErrMsgForDeviceSubType'];
           return false;
         }
       }
@@ -325,8 +329,13 @@ export class ExecuteTestRunComponent implements OnInit {
       if (proceedTestCase || startingForLoop) {
         startingForLoop = true;
         this.currectTestCaseId = testCase.testId;
-        this.currectTestCaseName = testCase.testName;
-        this.currentTestDescription = this.getTestDescription(testCase);
+        const testCaseInResourceBundle = this.resourceBundleJson.testcases[testCase.testId];
+        this.currectTestCaseName = testCaseInResourceBundle 
+          ? testCaseInResourceBundle.testName 
+          :  testCase.testName ;
+        this.currentTestDescription = testCaseInResourceBundle 
+          ? this.getTestDescription(testCaseInResourceBundle) 
+          : this.getTestDescription(testCase);
         this.currentTestCaseIsRCapture =
           testCase.methodName[0] == appConstants.SBI_METHOD_RCAPTURE
             ? true
@@ -860,5 +869,12 @@ export class ExecuteTestRunComponent implements OnInit {
   }
   ngOnDestroy() {
     
+  }
+
+  getExecuteSuccessMsg(): any {
+    const executeTestRunInResourceBundle = this.resourceBundleJson.executeTestRun;
+    return this.testCasesList.length > 1
+      ? `${executeTestRunInResourceBundle['total']} ${this.testCasesList.length} ${executeTestRunInResourceBundle['testcases']} `
+      : `${executeTestRunInResourceBundle['total']} ${this.testCasesList.length} ${executeTestRunInResourceBundle['testcase']} `
   }
 }

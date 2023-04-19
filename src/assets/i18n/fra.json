@@ -171,6 +171,38 @@
 		"deviceType": "Type d'appareil",
 		"deviceSubType": "Sous-type de périphérique"
 	},
+	"executeTestRun": {
+		"title": "Exécution du test de fonctionnement",
+		"noDeviceSelected": "Aucun appareil sélectionné. Veuillez d'abord analyser l'appareil.",
+		"validationErrMsgForPurpose": "Veuillez sélectionner le périphérique approprié, lors de la numérisation, pour exécuter des cas de test pour ce projet. \n L'objectif de l'appareil sélectionné ne correspond pas au projet.",
+		"validationErrMsgForDeviceType": "Veuillez sélectionner le périphérique approprié, lors de la numérisation, pour exécuter des cas de test pour ce projet. \n Le type d'appareil de l'appareil sélectionné ne correspond pas au projet.",
+		"validationErrMsgForDeviceSubType": "Veuillez sélectionner le périphérique approprié, lors de la numérisation, pour exécuter des cas de test pour ce projet. \n Le sous-type d'appareil de l'appareil sélectionné ne correspond pas au projet.",
+		"fetchTestcases": "Récupération des cas de test pour la collection..",
+		"unableToGetTestcases": "Impossible d'obtenir des cas de test pour la collection.",
+		"execution": "Exécution de",
+		"testcasesForCollection": "cas de test pour la collecte",
+		"hasStarted": "a commencé.",
+		"currentTestcase": "Cas de test actuel :",
+		"abisRequestSent": "La demande a été envoyée à la file d'attente. En attente de réponse de la file d'attente. Si cela prend trop de temps, vous pouvez revenir après un certain temps.",
+		"abisRequestSentFail": "Impossible d'envoyer la demande à la file d'attente ABIS. Vérifiez l'URL, le nom d'utilisateur et les autres attributs, puis réessayez.",
+		"initiateCaptureMsg": "Cliquez sur le bouton Lancer la capture pour capturer les données biométriques de l'appareil.",
+		"serviceError": "Des erreurs se sont produites lors du traitement du service.",
+		"errorInSaveTestRun": "Impossible d'enregistrer/de mettre à jour les détails de l'exécution du test. Veuillez réessayer.",
+		"total": "Totale",
+		"testcases": "cas de test ont exécuté avec succès. Résultat global pour les cas de test :",
+		"testcase": "cas de test a exécuté avec succès. Résultat global pour les cas de test :",
+		"successTestcase": "ont réussi.",
+		"failureTestcase": "ont échoué.",
+		"detailMsg": "Pour un rapport détaillé",
+		"clickHere": "Cliquez ici",
+		"close": "Fermer",
+		"initiateCapture": "Lancer la capture",
+		"startStreaming": "Démarrer la diffusion",
+		"resume": "Reprendre",
+		"resumeNext": "Reprendre Suivant",
+		"continue": "Continuer",
+		"viewTestRun": "Afficher le test"
+	},
 	"testcases": {
 		"SBI1000": {
 			"testName": "Découvrir l'appareil",
@@ -206,7 +238,8 @@
 		},
 		"SBI1002": {
 			"testName": "Capture d'enregistrement - Claque Gauche",
-			"testDescription": "Test pour valider l'interface RCapture pour claque gauche Empreintes<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 3. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider l'interface RCapture pour claque gauche Empreintes<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 3. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider l'interface RCapture pour claque gauche Empreintes<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture.  <br> 2. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -226,7 +259,8 @@
 		},
 		"SBI1003": {
 			"testName": "Capture d'enregistrement - Claque Gauche - Une exception",
-			"testDescription": "Test pour valider l'interface RCapture pour les empreintes digitales claque gauche avec un doigt manquant<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre claque gauche sur l'appareil à l'exception de l'annulaire gauche jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider l'interface RCapture pour les empreintes digitales claque gauche avec un doigt manquant<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre claque gauche sur l'appareil à l'exception de l'annulaire gauche jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider l'interface RCapture pour les empreintes digitales claque gauche avec un doigt manquant<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre claque gauche sur l'appareil à l'exception de l'annulaire gauche jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -246,7 +280,8 @@
 		},
 		"SBI1004": {
 			"testName": "Capture d'enregistrement - Claque Droit",
-			"testDescription": "Test pour valider l'interface RCapture pour les empreintes digitales Claque Droite<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre claque droite sur l'appareil jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider l'interface RCapture pour les empreintes digitales Claque Droite<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre claque droite sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider l'interface RCapture pour les empreintes digitales Claque Droite<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre claque droite sur l'appareil jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -266,7 +301,8 @@
 		},
 		"SBI1005": {
 			"testName": "Capture d'enregistrement - Claque Droit - Deux exceptions",
-			"testDescription": "Test pour valider l'interface RCapture pour les empreintes digitales Droite Claquement avec deux doigts manquants<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre gifle droite sur l'appareil à l'exception de l'index droit et du majeur jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider l'interface RCapture pour les empreintes digitales Droite Claquement avec deux doigts manquants<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre gifle droite sur l'appareil à l'exception de l'index droit et du majeur jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider l'interface RCapture pour les empreintes digitales Droite Claquement avec deux doigts manquants<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre gifle droite sur l'appareil à l'exception de l'index droit et du majeur jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -286,7 +322,8 @@
 		},
 		"SBI1006": {
 			"testName": "Capture d'enregistrement - Deux pouces",
-			"testDescription": "Test pour valider l'interface RCapture pour Deux pouces<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez vos deux pouces sur l'appareil jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider l'interface RCapture pour Deux pouces<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez vos deux pouces sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider l'interface RCapture pour Deux pouces<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez vos deux pouces sur l'appareil jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -306,7 +343,8 @@
 		},
 		"SBI1007": {
 			"testName": "Capture d'enregistrement - Deux pouces - Une exception",
-			"testDescription": "Test pour valider l'interface RCapture pour Deux pouces avec un pouce manquant<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez uniquement le pouce droit sur l'appareil jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider l'interface RCapture pour Deux pouces avec un pouce manquant<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez uniquement le pouce droit sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider l'interface RCapture pour Deux pouces avec un pouce manquant<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez uniquement le pouce droit sur l'appareil jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -326,7 +364,8 @@
 		},
 		"SBI1008": {
 			"testName": "Capture d'enregistrement - Deux pouces - Les deux exceptions",
-			"testDescription": "Test pour valider l'interface RCapture pour Deux pouces lorsque les deux pouces sont manquants<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. N'appuyez sur aucun doigt ou pouce sur l'appareil tant que la capture n'est pas terminée",
+			"testDescription": "Test pour valider l'interface RCapture pour Deux pouces lorsque les deux pouces sont manquants<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. N'appuyez sur aucun doigt ou pouce sur l'appareil tant que la capture n'est pas terminée",
+			"androidTestDescription": "Test pour valider l'interface RCapture pour Deux pouces lorsque les deux pouces sont manquants<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. N'appuyez sur aucun doigt ou pouce sur l'appareil tant que la capture n'est pas terminée",
 			"validatorDefs": [
 				[
 					{
@@ -338,7 +377,8 @@
 		},
 		"SBI1009": {
 			"testName": "Capture d'enregistrement - Double Iris",
-			"testDescription": "Test pour valider l'interface RCapture pour Deux Iris<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez vos deux iris sur l'appareil jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider l'interface RCapture pour Deux Iris<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez vos deux iris sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider l'interface RCapture pour Deux Iris<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez vos deux iris sur l'appareil jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -358,7 +398,8 @@
 		},
 		"SBI1010": {
 			"testName": "Capture d'enregistrement - Double Iris - Une exception",
-			"testDescription": "Test pour valider l'interface RCapture pour l'iris avec un iris manquant<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez uniquement l'iris droit sur l'appareil jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider l'interface RCapture pour l'iris avec un iris manquant<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez uniquement l'iris droit sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider l'interface RCapture pour l'iris avec un iris manquant<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez uniquement l'iris droit sur l'appareil jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -378,7 +419,8 @@
 		},
 		"SBI1011": {
 			"testName": "Capture d'enregistrement - Double Iris - Les deux exceptions",
-			"testDescription": "Test pour valider l'interface RCapture pour l'iris lorsque les deux iris sont manquants<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Ne placez aucun iris sur l'appareil pendant la capture",
+			"testDescription": "Test pour valider l'interface RCapture pour l'iris lorsque les deux iris sont manquants<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Ne placez aucun iris sur l'appareil pendant la capture",
+			"androidTestDescription": "Test pour valider l'interface RCapture pour l'iris lorsque les deux iris sont manquants<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Ne placez aucun iris sur l'appareil pendant la capture",
 			"validatorDefs": [
 				[
 					{
@@ -390,7 +432,8 @@
 		},
 		"SBI1012": {
 			"testName": "Capture d'enregistrement - Visage",
-			"testDescription": "Test pour valider l'interface RCapture pour le visage<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider l'interface RCapture pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider l'interface RCapture pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -410,7 +453,8 @@
 		},
 		"SBI1013": {
 			"testName": "Capture d'inscription - Exception Photo",
-			"testDescription": "Test pour valider l'interface RCapture pour la photo d'exception<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Levez les mains pendant la capture",
+			"testDescription": "Test pour valider l'interface RCapture pour la photo d'exception<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Levez les mains pendant la capture",
+			"androidTestDescription": "Test pour valider l'interface RCapture pour la photo d'exception<br><br>Pas:<br><br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Levez les mains pendant la capture",
 			"validatorDefs": [
 				[
 					{
@@ -426,7 +470,7 @@
 		},
 		"SBI1014": {
 			"testName": "Capture d'authentification - Visage",
-			"testDescription": "Test pour valider la méthode Capture pour le visage<br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider la méthode Capture pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -450,7 +494,7 @@
 		},
 		"SBI1015": {
 			"testName": "Capture d'authentification - Iris unique - Iris inconnu",
-			"testDescription": "Test pour valider la méthode Capture pour un seul iris<br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez l'un de vos iris devant le scanner d'iris",
+			"testDescription": "Test pour valider la méthode Capture pour un seul iris<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez l'un de vos iris devant le scanner d'iris",
 			"validatorDefs": [
 				[
 					{
@@ -474,7 +518,7 @@
 		},
 		"SBI1016": {
 			"testName": "Capture d'authentification - Iris unique - Iris gauche",
-			"testDescription": "Test pour valider la méthode Capture pour l'iris gauche<br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre iris gauche devant le scanner d'iris",
+			"testDescription": "Test pour valider la méthode Capture pour l'iris gauche<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre iris gauche devant le scanner d'iris",
 			"validatorDefs": [
 				[
 					{
@@ -498,7 +542,7 @@
 		},
 		"SBI1017": {
 			"testName": "Capture d'authentification - Iris unique - Iris droit",
-			"testDescription": "Test pour valider la méthode Capture pour l'iris droit<br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre iris droit devant le scanner d'iris",
+			"testDescription": "Test pour valider la méthode Capture pour l'iris droit<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre iris droit devant le scanner d'iris",
 			"validatorDefs": [
 				[
 					{
@@ -522,7 +566,7 @@
 		},
 		"SBI1018": {
 			"testName": "Capture d'authentification - Doigt inconnu",
-			"testDescription": "Test pour valider la méthode Capture pour un doigt<br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez un doigt sur le lecteur d'empreintes digitales unique",
+			"testDescription": "Test pour valider la méthode Capture pour un doigt<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez un doigt sur le lecteur d'empreintes digitales unique",
 			"validatorDefs": [
 				[
 					{
@@ -546,7 +590,7 @@
 		},
 		"SBI1019": {
 			"testName": "Capture d'authentification - Deux doigts inconnus",
-			"testDescription": "Test pour valider la méthode Capture pour deux doigts<br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez deux doigts, un par un, sur le lecteur d'empreintes digitales",
+			"testDescription": "Test pour valider la méthode Capture pour deux doigts<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez deux doigts, un par un, sur le lecteur d'empreintes digitales",
 			"validatorDefs": [
 				[
 					{
@@ -570,7 +614,7 @@
 		},
 		"SBI1020": {
 			"testName": "Capture d'authentification - Doigt d'index gauche",
-			"testDescription": "Test pour valider la méthode Capture pour l'index gauche<br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre index gauche sur le lecteur d'empreintes digitales",
+			"testDescription": "Test pour valider la méthode Capture pour l'index gauche<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre index gauche sur le lecteur d'empreintes digitales",
 			"validatorDefs": [
 				[
 					{
@@ -594,7 +638,7 @@
 		},
 		"SBI1021": {
 			"testName": "Capture d'authentification - Deux doigts",
-			"testDescription": "Test pour valider la méthode Capture pour deux doigts<br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez deux doigts, un par un, sur le lecteur d'empreintes digitales",
+			"testDescription": "Test pour valider la méthode Capture pour deux doigts<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez deux doigts, un par un, sur le lecteur d'empreintes digitales",
 			"validatorDefs": [
 				[
 					{
@@ -618,7 +662,7 @@
 		},
 		"SBI1022": {
 			"testName": "Capture d'enregistrement - Rotation des clés - Claque Gauche",
-			"testDescription": "Tester la rotation des clés de l'appareil<br>Pas:<br>1. Les informations actuelles sur la clé de l'appareil ont été enregistrées.<br>2. Tournez la clé de l'appareil dans le SBI et cliquez sur <b>Continuer</b> bouton,<br> 3. <i>Répéter l'étape 2</i> autant de fois que configuré dans la configuration du projet.",
+			"testDescription": "Tester la rotation des clés de l'appareil<br><br>Pas:<br>1. Les informations actuelles sur la clé de l'appareil ont été enregistrées.<br>2. Tournez la clé de l'appareil dans le SBI et cliquez sur <b>Continuer</b> bouton,<br> 3. <i>Répéter l'étape 2</i> autant de fois que configuré dans la configuration du projet.",
 			"validatorDefs": [
 				[
 					{
@@ -630,7 +674,7 @@
 		},
 		"SBI1023": {
 			"testName": "Capture d'authentification - Iris unique - Iris gauche - Rotation des clés",
-			"testDescription": "Tester la rotation des clés de l'appareil<br>Pas:<br>1. Les informations actuelles sur la clé de l'appareil ont été enregistrées.<br>2. Tournez la clé de l'appareil dans le SBI et cliquez sur <b>Continuer</b> bouton,<br> 3. <i>Répéter l'étape 2</i> autant de fois que configuré dans la configuration du projet.",
+			"testDescription": "Tester la rotation des clés de l'appareil<br><br>Pas:<br>1. Les informations actuelles sur la clé de l'appareil ont été enregistrées.<br>2. Tournez la clé de l'appareil dans le SBI et cliquez sur <b>Continuer</b> bouton,<br> 3. <i>Répéter l'étape 2</i> autant de fois que configuré dans la configuration du projet.",
 			"validatorDefs": [
 				[
 					{
@@ -642,7 +686,7 @@
 		},
 		"SBI1024": {
 			"testName": "Capture d'authentification - Rotation des clés - Doigt d'index gauche",
-			"testDescription": "Tester la rotation des clés de l'appareil<br>Pas:<br>1. Les informations actuelles sur la clé de l'appareil ont été enregistrées.<br>2. Tournez la clé de l'appareil dans le SBI et cliquez sur <b>Continuer</b> bouton,<br> 3. <i>Répéter l'étape 2</i> autant de fois que configuré dans la configuration du projet.",
+			"testDescription": "Tester la rotation des clés de l'appareil<br><br>Pas:<br>1. Les informations actuelles sur la clé de l'appareil ont été enregistrées.<br>2. Tournez la clé de l'appareil dans le SBI et cliquez sur <b>Continuer</b> bouton,<br> 3. <i>Répéter l'étape 2</i> autant de fois que configuré dans la configuration du projet.",
 			"validatorDefs": [
 				[
 					{
@@ -654,7 +698,7 @@
 		},
 		"SBI1025": {
 			"testName": "Capture d'authentification - Visage - Rotation des clés",
-			"testDescription": "Tester la rotation des clés de l'appareil<br>Pas:<br>1. Les informations actuelles sur la clé de l'appareil ont été enregistrées.<br>2. Tournez la clé de l'appareil dans le SBI et cliquez sur <b>Continuer</b> bouton,<br> 3. <i>Répéter l'étape 2</i> autant de fois que configuré dans la configuration du projet.",
+			"testDescription": "Tester la rotation des clés de l'appareil<br><br>Pas:<br>1. Les informations actuelles sur la clé de l'appareil ont été enregistrées.<br>2. Tournez la clé de l'appareil dans le SBI et cliquez sur <b>Continuer</b> bouton,<br> 3. <i>Répéter l'étape 2</i> autant de fois que configuré dans la configuration du projet.",
 			"validatorDefs": [
 				[
 					{
@@ -666,7 +710,7 @@
 		},
 		"SBI1026": {
 			"testName": "Vérifier l'état de l'appareil - Prêt",
-			"testDescription": "Tester pour valider l'interface Device Info pour un appareil qui est à l'état Prêt<br>Pas:<br>1. Assurez-vous que l'appareil placé est à l'état Prêt",
+			"testDescription": "Tester pour valider l'interface Device Info pour un appareil qui est à l'état Prêt<br><br>Pas:<br>1. Assurez-vous que l'appareil placé est à l'état Prêt",
 			"validatorDefs": [
 				[
 					{
@@ -682,7 +726,7 @@
 		},
 		"SBI1027": {
 			"testName": "Vérifier l'état de l'appareil - Occupé",
-			"testDescription": "Test pour valider si l'appareil est en état Occupé<br>Pas:<br>1. Assurez-vous que l'appareil est en <b>occupée</b> État<br>2. Cliquer sur <b>Reprendre</b> bouton<br>3. Une fois l'exécution du test terminée, rendre l'état de l'appareil comme <b>prête</b> et cliquez sur <b>Reprendre Suivant</b> bouton",
+			"testDescription": "Test pour valider si l'appareil est en état Occupé<br><br>Pas:<br>1. Assurez-vous que l'appareil est en <b>occupée</b> État<br>2. Cliquer sur <b>Reprendre</b> bouton<br>3. Une fois l'exécution du test terminée, rendre l'état de l'appareil comme <b>prête</b> et cliquez sur <b>Reprendre Suivant</b> bouton",
 			"validatorDefs": [
 				[
 					{
@@ -694,7 +738,7 @@
 		},
 		"SBI1028": {
 			"testName": "Vérifier l'état de l'appareil - Pas prêt",
-			"testDescription": "Test pour valider si l'appareil est en état Non prêt<br>Pas:<br>1. <b>Déconnecter</b> le dispositif<br>2. Cliquer sur <b>Reprendre</b> bouton<br>3. Une fois l'exécution du test terminée, <b>se reconnecter</b> l'appareil et cliquez sur <b>Reprendre Suivant</b> bouton",
+			"testDescription": "Test pour valider si l'appareil est en état Non prêt<br><br>Pas:<br>1. <b>Déconnecter</b> le dispositif<br>2. Cliquer sur <b>Reprendre</b> bouton<br>3. Une fois l'exécution du test terminée, <b>se reconnecter</b> l'appareil et cliquez sur <b>Reprendre Suivant</b> bouton",
 			"validatorDefs": [
 				[
 					{
@@ -706,7 +750,7 @@
 		},
 		"SBI1029": {
 			"testName": "Vérifier l'état de l'appareil - Non enregistré",
-			"testDescription": "Test pour valider si l'appareil est dans l'état Non enregistré<br>Pas:<br>1. <b>Se désinscrire</b> le dispositif <br>2. Cliquer sur <b>Reprendre</b> bouton<br>3. Une fois l'exécution du test terminée, <b>enregistrer</b> l'appareil et cliquez sur <b>Reprendre Suivant</b> bouton",
+			"testDescription": "Test pour valider si l'appareil est dans l'état Non enregistré<br><br>Pas:<br>1. <b>Se désinscrire</b> le dispositif <br>2. Cliquer sur <b>Reprendre</b> bouton<br>3. Une fois l'exécution du test terminée, <b>enregistrer</b> l'appareil et cliquez sur <b>Reprendre Suivant</b> bouton",
 			"validatorDefs": [
 				[
 					{
@@ -718,7 +762,7 @@
 		},
 		"SBI1030": {
 			"testName": "Capture d'authentification - Empreinte digitale - Incompatibilité de nombre de bio",
-			"testDescription": "Test pour valider la non-concordance du nombre de bio pour le dispositif d'authentification par empreinte digitale<br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre doigt sur l'appareil jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider la non-concordance du nombre de bio pour le dispositif d'authentification par empreinte digitale<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre doigt sur l'appareil jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -730,7 +774,7 @@
 		},
 		"SBI1031": {
 			"testName": "Capture d'authentification - Iris - Incompatibilité de comptage bio",
-			"testDescription": "Test pour valider la non-concordance du comptage biologique pour le dispositif d'authentification de l'iris<br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre iris sur l'appareil jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider la non-concordance du comptage biologique pour le dispositif d'authentification de l'iris<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre iris sur l'appareil jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -742,7 +786,7 @@
 		},
 		"SBI1032": {
 			"testName": "Capture d'authentification - Visage - Incompatibilité de comptage bio",
-			"testDescription": "Test pour valider la non-concordance du comptage biologique pour le visage<br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider la non-concordance du comptage biologique pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -754,7 +798,8 @@
 		},
 		"SBI1033": {
 			"testName": "Capture d'enregistrement - Claque Gauche - Incompatibilité de comptage bio",
-			"testDescription": "Test pour valider l'incompatibilité de comptage bio pour l'enregistrement claque gauche<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre gifle gauche et manquez un ou deux doigts sur le scanner de gifle jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider l'incompatibilité de comptage bio pour l'enregistrement claque gauche<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre gifle gauche et manquez un ou deux doigts sur le scanner de gifle jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider l'incompatibilité de comptage bio pour l'enregistrement claque gauche<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre gifle gauche et manquez un ou deux doigts sur le scanner de gifle jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -766,7 +811,8 @@
 		},
 		"SBI1034": {
 			"testName": "Capture d'enregistrement - Claque Droit - Incompatibilité de comptage bio",
-			"testDescription": "Test pour valider la non-concordance du nombre de bio pour l'enregistrement du bon claquement<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre claque droite et manquez un ou deux doigts sur le scanner de claque jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider la non-concordance du nombre de bio pour l'enregistrement du bon claquement<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre claque droite et manquez un ou deux doigts sur le scanner de claque jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider la non-concordance du nombre de bio pour l'enregistrement du bon claquement<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre claque droite et manquez un ou deux doigts sur le scanner de claque jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -778,7 +824,8 @@
 		},
 		"SBI1035": {
 			"testName": "Capture d'enregistrement - Deux pouces - Incompatibilité de comptage bio",
-			"testDescription": "Test pour valider la non-concordance du nombre de bio pour les vignettes d'enregistrement<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre pouce sur le scanner claque jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider la non-concordance du nombre de bio pour les vignettes d'enregistrement<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre pouce sur le scanner claque jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider la non-concordance du nombre de bio pour les vignettes d'enregistrement<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre pouce sur le scanner claque jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -790,7 +837,8 @@
 		},
 		"SBI1036": {
 			"testName": "Capture d'enregistrement - Iris gauche - Incompatibilité de comptage bio",
-			"testDescription": "Test pour valider la non-concordance du comptage biologique pour l'enregistrement de l'iris gauche<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre iris gauche sur l'appareil jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider la non-concordance du comptage biologique pour l'enregistrement de l'iris gauche<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre iris gauche sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider la non-concordance du comptage biologique pour l'enregistrement de l'iris gauche<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre iris gauche sur l'appareil jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -802,7 +850,8 @@
 		},
 		"SBI1037": {
 			"testName": "Capture d'enregistrement - Iris droit - Incompatibilité de comptage bio",
-			"testDescription": "Test pour valider la non-concordance du comptage biologique pour l'enregistrement de l'iris droit<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre iris droit sur l'appareil jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider la non-concordance du comptage biologique pour l'enregistrement de l'iris droit<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre iris droit sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider la non-concordance du comptage biologique pour l'enregistrement de l'iris droit<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre iris droit sur l'appareil jusqu'à ce que la capture soit terminéePlace your right iris on the device until the capture completes",
 			"validatorDefs": [
 				[
 					{
@@ -814,7 +863,8 @@
 		},
 		"SBI1038": {
 			"testName": "Capture d'enregistrement - Les deux iris - Non-concordance du nombre de bio",
-			"testDescription": "Test pour valider la non-concordance du comptage biologique pour l'enregistrement des deux iris<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez vos deux iris sur l'appareil jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider la non-concordance du comptage biologique pour l'enregistrement des deux iris<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez vos deux iris sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider la non-concordance du comptage biologique pour l'enregistrement des deux iris<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez vos deux iris sur l'appareil jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -826,7 +876,8 @@
 		},
 		"SBI1039": {
 			"testName": "Capture d'enregistrement - Visage - Incompatibilité de comptage bio",
-			"testDescription": "Test pour valider la non-concordance du nombre de bio pour le visage d'enregistrement<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider la non-concordance du nombre de bio pour le visage d'enregistrement<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider la non-concordance du nombre de bio pour le visage d'enregistrement<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -838,7 +889,8 @@
 		},
 		"SBI1040": {
 			"testName": "Capture d'enregistrement - Visage - Délai d'attente",
-			"testDescription": "Test pour valider le temps libre du visage<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Ne placez pas votre visage devant la caméra et attendez que la capture expire",
+			"testDescription": "Test pour valider le temps libre du visage<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Ne placez pas votre visage devant la caméra et attendez que la capture expire",
+			"androidTestDescription": "Test pour valider le temps libre du visage<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Ne placez pas votre visage devant la caméra et attendez que la capture expire",
 			"validatorDefs": [
 				[
 					{
@@ -854,7 +906,8 @@
 		},
 		"SBI1041": {
 			"testName": "Capture d'enregistrement - Double Iris - Délai d'attente",
-			"testDescription": "Test pour valider le délai d'expiration de l'iris<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Ne placez pas votre iris sur le scanner d'iris et attendez que la capture expire",
+			"testDescription": "Test pour valider le délai d'expiration de l'iris<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Ne placez pas votre iris sur le scanner d'iris et attendez que la capture expire",
+			"androidTestDescription": "Test pour valider le délai d'expiration de l'iris<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Ne placez pas votre iris sur le scanner d'iris et attendez que la capture expire",
 			"validatorDefs": [
 				[
 					{
@@ -870,7 +923,8 @@
 		},
 		"SBI1042": {
 			"testName": "Capture d'enregistrement - Claque Gauche - Délai d'attente",
-			"testDescription": "Test pour valider le délai d'expiration de du claque gauche<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Ne placez pas vos doigts sur le scanner claque et attendez que la capture expire",
+			"testDescription": "Test pour valider le délai d'expiration de du claque gauche<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Ne placez pas vos doigts sur le scanner claque et attendez que la capture expire",
+			"androidTestDescription": "Test pour valider le délai d'expiration de du claque gauche<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Ne placez pas vos doigts sur le scanner claque et attendez que la capture expire",
 			"validatorDefs": [
 				[
 					{
@@ -886,7 +940,8 @@
 		},
 		"SBI1043": {
 			"testName": "Capture d'enregistrement - Claque Droit - Délai d'expiration",
-			"testDescription": "Test pour valider le délai d'expiration de du bon claque<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Ne placez pas vos doigts sur le scanner claque et attendez que la capture expire",
+			"testDescription": "Test pour valider le délai d'expiration de du bon claque<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Ne placez pas vos doigts sur le scanner claque et attendez que la capture expire",
+			"androidTestDescription": "Test pour valider le délai d'expiration de du bon claque<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Ne placez pas vos doigts sur le scanner claque et attendez que la capture expire",
 			"validatorDefs": [
 				[
 					{
@@ -902,7 +957,8 @@
 		},
 		"SBI1044": {
 			"testName": "Capture d'enregistrement - Deux pouces - Délai d'expiration",
-			"testDescription": "Test pour valider le délai d'expiration de du pouce<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Ne placez pas vos doigts sur le scanner claque et attendez que la capture expire",
+			"testDescription": "Test pour valider le délai d'expiration de du pouce<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Ne placez pas vos doigts sur le scanner claque et attendez que la capture expire",
+			"androidTestDescription": "Test pour valider le délai d'expiration de du pouce<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Ne placez pas vos doigts sur le scanner claque et attendez que la capture expire",
 			"validatorDefs": [
 				[
 					{
@@ -918,7 +974,8 @@
 		},
 		"SBI1045": {
 			"testName": "Capture d'enregistrement - Photo d'exception - Délai d'expiration",
-			"testDescription": "Test pour valider le délai d'expiration de la photo d'exception<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Ne placez pas votre visage devant la caméra et attendez que la capture expire",
+			"testDescription": "Test pour valider le délai d'expiration de la photo d'exception<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Ne placez pas votre visage devant la caméra et attendez que la capture expire",
+			"androidTestDescription": "Test pour valider le délai d'expiration de la photo d'exception<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Ne placez pas votre visage devant la caméra et attendez que la capture expire",
 			"validatorDefs": [
 				[
 					{
@@ -934,7 +991,7 @@
 		},
 		"SBI1046": {
 			"testName": "Capture d'authentification - Visage - Délai d'expiration",
-			"testDescription": "Test pour valider le délai d'expiration de du visage<br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Ne placez pas votre visage devant la caméra et attendez que la capture expire",
+			"testDescription": "Test pour valider le délai d'expiration de du visage<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Ne placez pas votre visage devant la caméra et attendez que la capture expire",
 			"validatorDefs": [
 				[
 					{
@@ -950,7 +1007,7 @@
 		},
 		"SBI1047": {
 			"testName": "Capture d'authentification - Iris unique - Iris inconnu - Délai d'expiration",
-			"testDescription": "Test pour valider le délai d'expiration de l'iris<br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Ne placez pas vos yeux sur le scanner d'iris et attendez que la capture expire",
+			"testDescription": "Test pour valider le délai d'expiration de l'iris<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Ne placez pas vos yeux sur le scanner d'iris et attendez que la capture expire",
 			"validatorDefs": [
 				[
 					{
@@ -966,7 +1023,7 @@
 		},
 		"SBI1048": {
 			"testName": "Capture d'authentification - Doigt inconnu - Délai d'expiration",
-			"testDescription": "Test pour valider le délai d'expiration de du doigt<br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Ne placez pas votre doigt sur le lecteur d'empreintes et attendez que la capture expire",
+			"testDescription": "Test pour valider le délai d'expiration de du doigt<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Ne placez pas votre doigt sur le lecteur d'empreintes et attendez que la capture expire",
 			"validatorDefs": [
 				[
 					{
@@ -982,7 +1039,8 @@
 		},
 		"SBI1049": {
 			"testName": "Capture d'enregistrement - Visage - Capture de force",
-			"testDescription": "Forcer la validation de la capture pour la demande de capture d'enregistrement pour le visage<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre visage devant la caméra et attendez la capture",
+			"testDescription": "Forcer la validation de la capture pour la demande de capture d'enregistrement pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre visage devant la caméra et attendez la capture",
+			"androidTestDescription": "Forcer la validation de la capture pour la demande de capture d'enregistrement pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre visage devant la caméra et attendez la capture",
 			"validatorDefs": [
 				[
 					{
@@ -1002,7 +1060,8 @@
 		},
 		"SBI1050": {
 			"testName": "Capture d'enregistrement - Double Iris - Capture de force",
-			"testDescription": "Forcer la validation de la capture pour la demande de capture d'enregistrement pour le double iris<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre iris devant la caméra et attendez la capture",
+			"testDescription": "Forcer la validation de la capture pour la demande de capture d'enregistrement pour le double iris<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre iris devant la caméra et attendez la capture",
+			"androidTestDescription": "Forcer la validation de la capture pour la demande de capture d'enregistrement pour le double iris<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre iris devant la caméra et attendez la capture",
 			"validatorDefs": [
 				[
 					{
@@ -1022,7 +1081,8 @@
 		},
 		"SBI1051": {
 			"testName": "Capture d'enregistrement - Claque Gauche - Capture de force",
-			"testDescription": "Forcer la validation de la capture pour la demande de capture d'enregistrement pour claque gauche<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre claque gauche sur l'appareil et attendez la capture",
+			"testDescription": "Forcer la validation de la capture pour la demande de capture d'enregistrement pour claque gauche<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre claque gauche sur l'appareil et attendez la capture",
+			"androidTestDescription": "Forcer la validation de la capture pour la demande de capture d'enregistrement pour claque gauche<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre claque gauche sur l'appareil et attendez la capture",
 			"validatorDefs": [
 				[
 					{
@@ -1042,7 +1102,8 @@
 		},
 		"SBI1052": {
 			"testName": "Capture d'enregistrement - Claque Droit - Capture de force",
-			"testDescription": "Forcer la validation de la capture pour la demande de capture d'enregistrement pour claque droite<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre claque droite sur l'appareil et attendez la capture",
+			"testDescription": "Forcer la validation de la capture pour la demande de capture d'enregistrement pour claque droite<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre claque droite sur l'appareil et attendez la capture",
+			"androidTestDescription": "Forcer la validation de la capture pour la demande de capture d'enregistrement pour claque droite<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre claque droite sur l'appareil et attendez la capture",
 			"validatorDefs": [
 				[
 					{
@@ -1062,7 +1123,8 @@
 		},
 		"SBI1053": {
 			"testName": "Capture d'enregistrement - Deux pouces - Capture de force",
-			"testDescription": "Forcer la validation de la capture pour la demande de capture d'inscription pour Deux pouces<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez vos deux pouces sur l'appareil et attendez la capture",
+			"testDescription": "Forcer la validation de la capture pour la demande de capture d'inscription pour Deux pouces<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez vos deux pouces sur l'appareil et attendez la capture",
+			"androidTestDescription": "Forcer la validation de la capture pour la demande de capture d'inscription pour Deux pouces<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez vos deux pouces sur l'appareil et attendez la capture",
 			"validatorDefs": [
 				[
 					{
@@ -1202,7 +1264,7 @@
 		},
 		"SBI1060": {
 			"testName": "Capture d'enregistrement - Rotation des clés - Visage",
-			"testDescription": "Tester la rotation des clés de l'appareil<br>Pas:<br>1. Les informations actuelles sur la clé de l'appareil ont été enregistrées.<br>2. Tournez la clé de l'appareil dans le SBI et cliquez sur <b>Continuer</b> bouton,<br> 3. <i>Répéter l'étape 2</i> autant de fois que configuré dans la configuration du projet.",
+			"testDescription": "Tester la rotation des clés de l'appareil<br><br>Pas:<br>1. Les informations actuelles sur la clé de l'appareil ont été enregistrées.<br>2. Tournez la clé de l'appareil dans le SBI et cliquez sur <b>Continuer</b> bouton,<br> 3. <i>Répéter l'étape 2</i> autant de fois que configuré dans la configuration du projet.",
 			"validatorDefs": [
 				[
 					{
@@ -1214,7 +1276,7 @@
 		},
 		"SBI1061": {
 			"testName": "Capture d'enregistrement - Rotation des clés - Double Iris",
-			"testDescription": "Tester la rotation des clés de l'appareil<br>Pas:<br>1. Les informations actuelles sur la clé de l'appareil ont été enregistrées.<br>2. Tournez la clé de l'appareil dans le SBI et cliquez sur <b>Continuer</b> bouton,<br> 3. <i>Répéter l'étape 2</i> autant de fois que configuré dans la configuration du projet.",
+			"testDescription": "Tester la rotation des clés de l'appareil<br><br>Pas:<br>1. Les informations actuelles sur la clé de l'appareil ont été enregistrées.<br>2. Tournez la clé de l'appareil dans le SBI et cliquez sur <b>Continuer</b> bouton,<br> 3. <i>Répéter l'étape 2</i> autant de fois que configuré dans la configuration du projet.",
 			"validatorDefs": [
 				[
 					{
@@ -1226,7 +1288,8 @@
 		},
 		"SBI1062": {
 			"testName": "Capture d'enregistrement - Claque Gauche - Validations de la norme ISO",
-			"testDescription": "Test pour valider l'interface RCapture pour empreintes digitales claque gauche<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 3. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider l'interface RCapture pour empreintes digitales claque gauche<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 3. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider l'interface RCapture pour empreintes digitales claque gauche<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture.  <br> 2. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -1250,7 +1313,8 @@
 		},
 		"SBI1063": {
 			"testName": "Capture d'enregistrement - Claque Droit - Validations de la norme ISO",
-			"testDescription": "Test pour valider l'interface RCapture pour les empreintes digitales Claque Droite<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Placez votre claque droite sur l'appareil jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider l'interface RCapture pour les empreintes digitales Claque Droite<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Placez votre claque droite sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider l'interface RCapture pour les empreintes digitales Claque Droite<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre claque droite sur l'appareil jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -1274,7 +1338,8 @@
 		},
 		"SBI1064": {
 			"testName": "Capture d'enregistrement - Double Iris - Validations de la norme ISO",
-			"testDescription": "Test pour valider l'interface RCapture pour Deux Iris<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Placez vos deux iris sur l'appareil jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider l'interface RCapture pour Deux Iris<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Placez vos deux iris sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider l'interface RCapture pour Deux Iris<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez vos deux iris sur l'appareil jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -1298,7 +1363,8 @@
 		},
 		"SBI1065": {
 			"testName": "Capture d'enregistrement - Visage - Validations de la norme ISO",
-			"testDescription": "Test pour valider l'interface RCapture pour le visage<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider l'interface RCapture pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider l'interface RCapture pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -1322,7 +1388,7 @@
 		},
 		"SBI1066": {
 			"testName": "Capture d'authentification - Visage - Validations de la norme ISO",
-			"testDescription": "Test pour valider l'interface Capture pour le visage<br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider l'interface Capture pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -1346,7 +1412,7 @@
 		},
 		"SBI1067": {
 			"testName": "Capture d'authentification - Iris unique - Iris gauche - Validations de la norme ISO",
-			"testDescription": "Test pour valider l'interface Capture pour l'iris gauche<br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre iris gauche devant le scanner d'iris",
+			"testDescription": "Test pour valider l'interface Capture pour l'iris gauche<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre iris gauche devant le scanner d'iris",
 			"validatorDefs": [
 				[
 					{
@@ -1370,7 +1436,7 @@
 		},
 		"SBI1068": {
 			"testName": "Capture d'authentification - Iris unique - Iris droit - Validations de la norme ISO",
-			"testDescription": "Test pour valider l'interface Capture pour l'iris droit<br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre iris droit devant le scanner d'iris",
+			"testDescription": "Test pour valider l'interface Capture pour l'iris droit<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre iris droit devant le scanner d'iris",
 			"validatorDefs": [
 				[
 					{
@@ -1394,7 +1460,7 @@
 		},
 		"SBI1069": {
 			"testName": "Capture d'authentification - Doigt inconnu - Validations de la norme ISO",
-			"testDescription": "Test pour valider l'interface Capture pour un doigt<br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez un doigt sur le lecteur d'empreintes digitales unique",
+			"testDescription": "Test pour valider l'interface Capture pour un doigt<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez un doigt sur le lecteur d'empreintes digitales unique",
 			"validatorDefs": [
 				[
 					{
@@ -1418,7 +1484,8 @@
 		},
 		"SBI1070": {
 			"testName": "Test de streaming avec capture d'enregistrement - Claque Gauche",
-			"testDescription": "Test de streaming pour valider l'interface RCapture pour les empreintes digitales claque gauche<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 3. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test de streaming pour valider l'interface RCapture pour les empreintes digitales claque gauche<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 3. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test de streaming pour valider l'interface RCapture pour les empreintes digitales claque gauche<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture.  <br> 2. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -1438,7 +1505,8 @@
 		},
 		"SBI1071": {
 			"testName": "Test de streaming avec capture d'enregistrement - Claque Droit",
-			"testDescription": "Test de streaming pour valider l'interface RCapture pour les empreintes digitales Claque Droite<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 3. Placez votre claque droite sur l'appareil jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test de streaming pour valider l'interface RCapture pour les empreintes digitales Claque Droite<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 3. Placez votre claque droite sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test de streaming pour valider l'interface RCapture pour les empreintes digitales Claque Droite<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture.  <br> 2. Placez votre claque droite sur l'appareil jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -1458,7 +1526,8 @@
 		},
 		"SBI1072": {
 			"testName": "Test de streaming avec capture d'enregistrement - Deux pouces",
-			"testDescription": "Test de streaming pour valider l'interface RCapture pour Deux pouces<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 3. Placez vos deux pouces sur l'appareil jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test de streaming pour valider l'interface RCapture pour Deux pouces<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 3. Placez vos deux pouces sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test de streaming pour valider l'interface RCapture pour Deux pouces<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture.  <br> 2. Placez vos deux pouces sur l'appareil jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -1478,7 +1547,8 @@
 		},
 		"SBI1073": {
 			"testName": "Test de streaming avec capture d'enregistrement - Double Iris",
-			"testDescription": "Test de streaming pour valider l'interface RCapture pour Deux Iris<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 3. Placez vos deux iris sur l'appareil jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test de streaming pour valider l'interface RCapture pour Deux Iris<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 3. Placez vos deux iris sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test de streaming pour valider l'interface RCapture pour Deux Iris<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 2. Placez vos deux iris sur l'appareil jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -1498,7 +1568,8 @@
 		},
 		"SBI1074": {
 			"testName": "Test de streaming avec capture d'enregistrement - Visage",
-			"testDescription": "Test de streaming pour valider l'interface RCapture pour le visage<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 3. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test de streaming pour valider l'interface RCapture pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 3. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test de streaming pour valider l'interface RCapture pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 2. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -1518,7 +1589,8 @@
 		},
 		"SBI1075": {
 			"testName": "Vérification de la qualité biométrique pour la capture d'enregistrement - Claque Gauche",
-			"testDescription": "Test de contrôle de qualité pour valider les données biométriques capturées par l'interface RCapture pour les empreintes digitales de gifle gauche<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 3. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test de contrôle de qualité pour valider les données biométriques capturées par l'interface RCapture pour les empreintes digitales de gifle gauche<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 3. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test de contrôle de qualité pour valider les données biométriques capturées par l'interface RCapture pour les empreintes digitales de gifle gauche<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 2. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -1542,7 +1614,8 @@
 		},
 		"SBI1076": {
 			"testName": "Vérification de la qualité biométrique pour la capture d'enregistrement - Claque Droit",
-			"testDescription": "Test de contrôle de qualité pour valider les données biométriques capturées par l'interface RCapture pour les empreintes digitales à droite<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Placez votre claque droite sur l'appareil jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test de contrôle de qualité pour valider les données biométriques capturées par l'interface RCapture pour les empreintes digitales à droite<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Placez votre claque droite sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test de contrôle de qualité pour valider les données biométriques capturées par l'interface RCapture pour les empreintes digitales à droite<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre claque droite sur l'appareil jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -1566,7 +1639,8 @@
 		},
 		"SBI1077": {
 			"testName": "Vérification de la qualité biométrique pour la capture d'enregistrement - Double Iris",
-			"testDescription": "Test de contrôle de qualité pour valider les données biométriques capturées par l'interface RCapture pour les deux iris<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Placez vos deux iris sur l'appareil jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test de contrôle de qualité pour valider les données biométriques capturées par l'interface RCapture pour les deux iris<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Placez vos deux iris sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test de contrôle de qualité pour valider les données biométriques capturées par l'interface RCapture pour les deux iris<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez vos deux iris sur l'appareil jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -1590,7 +1664,8 @@
 		},
 		"SBI1078": {
 			"testName": "Vérification de la qualité biométrique pour la capture d'enregistrement - Visage",
-			"testDescription": "Test de contrôle de qualité pour valider les données biométriques capturées par l'interface RCapture pour le visage<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test de contrôle de qualité pour valider les données biométriques capturées par l'interface RCapture pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test de contrôle de qualité pour valider les données biométriques capturées par l'interface RCapture pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -1614,7 +1689,7 @@
 		},
 		"SBI1079": {
 			"testName": "Vérification de la qualité biométrique pour la capture d'authentification - Visage",
-			"testDescription": "Test de contrôle de qualité pour valider les données biométriques capturées par l'interface de capture pour le visage<br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test de contrôle de qualité pour valider les données biométriques capturées par l'interface de capture pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -1638,7 +1713,7 @@
 		},
 		"SBI1080": {
 			"testName": "Vérification de la qualité biométrique pour la capture d'authentification - Iris unique - Iris gauche",
-			"testDescription": "Test de contrôle qualité pour valider les données biométriques capturées par l'interface Capture pour l'iris gauche<br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre iris droit devant le scanner d'iris",
+			"testDescription": "Test de contrôle qualité pour valider les données biométriques capturées par l'interface Capture pour l'iris gauche<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre iris droit devant le scanner d'iris",
 			"validatorDefs": [
 				[
 					{
@@ -1662,7 +1737,7 @@
 		},
 		"SBI1081": {
 			"testName": "Vérification de la qualité biométrique pour la capture d'authentification - Iris unique - Iris droit",
-			"testDescription": "Test de contrôle qualité pour valider les données biométriques capturées par l'interface Capture pour l'iris droit<br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre iris droit devant le scanner d'iris",
+			"testDescription": "Test de contrôle qualité pour valider les données biométriques capturées par l'interface Capture pour l'iris droit<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre iris droit devant le scanner d'iris",
 			"validatorDefs": [
 				[
 					{
@@ -1686,7 +1761,7 @@
 		},
 		"SBI1082": {
 			"testName": "Vérification de la qualité biométrique pour la capture d'authentification - Doigt inconnu",
-			"testDescription": "Test de contrôle qualité pour valider les données biométriques capturées par l'interface Capture pour un doigt<br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez un doigt sur le lecteur d'empreintes digitales unique",
+			"testDescription": "Test de contrôle qualité pour valider les données biométriques capturées par l'interface Capture pour un doigt<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez un doigt sur le lecteur d'empreintes digitales unique",
 			"validatorDefs": [
 				[
 					{
@@ -1710,7 +1785,8 @@
 		},
 		"SBI1083": {
 			"testName": "Vérification de l'heure pour la capture d'enregistrement - Claque Gauche",
-			"testDescription": "Test pour valider l'horodatage capturé par l'interface RCapture pour les empreintes digitales de gifle gauche<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 3. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider l'horodatage capturé par l'interface RCapture pour les empreintes digitales de gifle gauche<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 3. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider l'horodatage capturé par l'interface RCapture pour les empreintes digitales de gifle gauche<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture.  <br> 2. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -1734,7 +1810,8 @@
 		},
 		"SBI1084": {
 			"testName": "Vérification de l'heure pour la capture d'enregistrement - Claque Droit",
-			"testDescription": "Test pour valider l'horodatage capturé par l'interface RCapture pour les empreintes digitales de claque droite<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Placez votre claque droite sur l'appareil jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider l'horodatage capturé par l'interface RCapture pour les empreintes digitales de claque droite<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Placez votre claque droite sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider l'horodatage capturé par l'interface RCapture pour les empreintes digitales de claque droite<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre claque droite sur l'appareil jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -1758,7 +1835,8 @@
 		},
 		"SBI1085": {
 			"testName": "Vérification de l'heure pour la capture d'enregistrement - Double Iris",
-			"testDescription": "Test pour valider l'horodatage capturé par l'interface RCapture pour les deux iris<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Placez vos deux iris sur l'appareil jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider l'horodatage capturé par l'interface RCapture pour les deux iris<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Placez vos deux iris sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider l'horodatage capturé par l'interface RCapture pour les deux iris<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez vos deux iris sur l'appareil jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -1782,7 +1860,8 @@
 		},
 		"SBI1086": {
 			"testName": "Vérification de l'heure pour la capture d'enregistrement - Visage",
-			"testDescription": "Test pour valider l'horodatage capturé par l'interface RCapture pour le visage<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider l'horodatage capturé par l'interface RCapture pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider l'horodatage capturé par l'interface RCapture pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -1806,7 +1885,7 @@
 		},
 		"SBI1087": {
 			"testName": "Vérification de l'heure pour la capture d'authentification - Visage",
-			"testDescription": "Test pour valider l'horodatage capturé par l'interface Capture pour le visage<br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider l'horodatage capturé par l'interface Capture pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -1830,7 +1909,7 @@
 		},
 		"SBI1088": {
 			"testName": "Vérification de l'heure pour la capture d'authentification - Iris unique - Iris gauche",
-			"testDescription": "Test pour valider l'horodatage capturé par l'interface Capture pour l'iris gauche<br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre iris droit devant le scanner d'iris",
+			"testDescription": "Test pour valider l'horodatage capturé par l'interface Capture pour l'iris gauche<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre iris droit devant le scanner d'iris",
 			"validatorDefs": [
 				[
 					{
@@ -1854,7 +1933,7 @@
 		},
 		"SBI1089": {
 			"testName": "Vérification de l'heure pour la capture d'authentification - Iris unique - Iris droit",
-			"testDescription": "Test pour valider l'horodatage capturé par l'interface Capture pour l'iris droit<br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre iris droit devant le scanner d'iris",
+			"testDescription": "Test pour valider l'horodatage capturé par l'interface Capture pour l'iris droit<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre iris droit devant le scanner d'iris",
 			"validatorDefs": [
 				[
 					{
@@ -1878,7 +1957,7 @@
 		},
 		"SBI1090": {
 			"testName": "Vérification de l'heure pour la capture d'authentification - Doigt inconnu",
-			"testDescription": "Test pour valider l'horodatage capturé par l'interface Capture pour un doigt<br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez un doigt sur le lecteur d'empreintes digitales unique",
+			"testDescription": "Test pour valider l'horodatage capturé par l'interface Capture pour un doigt<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez un doigt sur le lecteur d'empreintes digitales unique",
 			"validatorDefs": [
 				[
 					{
@@ -1902,7 +1981,7 @@
 		},
 		"SBI1091": {
 			"testName": "Capture d'authentification - Visage - ID de transaction non valide",
-			"testDescription": "Test pour valider transactionId de la méthode Capture pour le visage<br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider transactionId de la méthode Capture pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -1922,7 +2001,7 @@
 		},
 		"SBI1092": {
 			"testName": "Capture d'authentification - Iris unique - Iris gauche - ID de transaction non valide",
-			"testDescription": "Test pour valider transactionId de la méthode Capture pour l'iris gauche<br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre iris droit devant le scanner d'iris",
+			"testDescription": "Test pour valider transactionId de la méthode Capture pour l'iris gauche<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre iris droit devant le scanner d'iris",
 			"validatorDefs": [
 				[
 					{
@@ -1942,7 +2021,7 @@
 		},
 		"SBI1093": {
 			"testName": "Capture d'authentification - Doigt inconnu - ID de transaction non valide",
-			"testDescription": "Test pour valider transactionId de la méthode Capture pour un doigt<br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez un doigt sur le lecteur d'empreintes digitales unique",
+			"testDescription": "Test pour valider transactionId de la méthode Capture pour un doigt<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez un doigt sur le lecteur d'empreintes digitales unique",
 			"validatorDefs": [
 				[
 					{
@@ -1962,7 +2041,8 @@
 		},
 		"SBI1094": {
 			"testName": "Capture d'enregistrement - Claque Gauche - Requête Json non valide (mauvais nom d'attribut envXXX)",
-			"testDescription": "Test pour valider la demande non valide json dans la méthode RCapture pour les empreintes digitales  Claque gauche<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture.  <br> 3. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider la demande non valide json dans la méthode RCapture pour les empreintes digitales  Claque gauche<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture.  <br> 3. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider la demande non valide json dans la méthode RCapture pour les empreintes digitales  Claque gauche<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 2. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -1974,7 +2054,8 @@
 		},
 		"SBI1095": {
 			"testName": "Capture d'enregistrement - Claque Droit - Invalid Request Json (mauvais nom d'attribut timeoutXXX)",
-			"testDescription": "Test pour valider la demande non valide json dans la méthode RCapture pour les empreintes digitales Claque Droit<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Placez votre claque droite sur l'appareil jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider la demande non valide json dans la méthode RCapture pour les empreintes digitales Claque Droit<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Placez votre claque droite sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider la demande non valide json dans la méthode RCapture pour les empreintes digitales Claque Droit<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre claque droite sur l'appareil jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -1986,7 +2067,8 @@
 		},
 		"SBI1096": {
 			"testName": "Capture d'inscription - Deux pouces - Requête Json non valide (mauvais nom d'attribut specVersionXXX)",
-			"testDescription": "Test pour valider la demande non valide json dans la méthode RCapture pour Deux pouces<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Placez vos deux pouces sur l'appareil jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider la demande non valide json dans la méthode RCapture pour Deux pouces<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Placez vos deux pouces sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider la demande non valide json dans la méthode RCapture pour Deux pouces<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez vos deux pouces sur l'appareil jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -1998,7 +2080,8 @@
 		},
 		"SBI1097": {
 			"testName": "Capture d'enregistrement - Double Iris - Requête Json non valide (mauvais nom d'attribut purposeXXX)",
-			"testDescription": "Test pour valider la demande non valide json dans la méthode RCapture pour Deux Iris<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Placez vos deux iris sur l'appareil jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider la demande non valide json dans la méthode RCapture pour Deux Iris<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Placez vos deux iris sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider la demande non valide json dans la méthode RCapture pour Deux Iris<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez vos deux iris sur l'appareil jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -2010,7 +2093,8 @@
 		},
 		"SBI1098": {
 			"testName": "Capture d'inscription - Visage - Requête Json non valide (mauvais nom d'attribut bioXXX)",
-			"testDescription": "Test pour valider la demande non valide json dans la méthode RCapture pour le visage<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider la demande non valide json dans la méthode RCapture pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider la demande non valide json dans la méthode RCapture pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -2022,7 +2106,8 @@
 		},
 		"SBI1099": {
 			"testName": "Capture d'enregistrement - Double Iris - Une exception - Requête Json non valide (mauvais nom d'attribut countXXX)",
-			"testDescription": "Test pour valider la demande non valide json dans la méthode RCapture pour l'iris avec un iris manquant<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Placez uniquement l'iris droit sur l'appareil jusqu'à ce que la capture soit terminée",
+			"testDescription": "Test pour valider la demande non valide json dans la méthode RCapture pour l'iris avec un iris manquant<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Placez uniquement l'iris droit sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider la demande non valide json dans la méthode RCapture pour l'iris avec un iris manquant<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez uniquement l'iris droit sur l'appareil jusqu'à ce que la capture soit terminée",
 			"validatorDefs": [
 				[
 					{
@@ -2034,7 +2119,8 @@
 		},
 		"SBI1100": {
 			"testName": "Capture d'enregistrement - Photo d'exception - Requête Json non valide (mauvais nom d'attribut deviceSubIdXXX)",
-			"testDescription": "Testez pour valider la demande non valide json dans la méthode RCapture pour la photo d'exception<br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Levez les mains pendant la capture",
+			"testDescription": "Testez pour valider la demande non valide json dans la méthode RCapture pour la photo d'exception<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Levez les mains pendant la capture",
+			"androidTestDescription": "Testez pour valider la demande non valide json dans la méthode RCapture pour la photo d'exception<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Levez les mains pendant la capture",
 			"validatorDefs": [
 				[
 					{

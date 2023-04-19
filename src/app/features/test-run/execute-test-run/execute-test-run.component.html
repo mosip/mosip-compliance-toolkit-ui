@@ -1,6 +1,7 @@
+<div [dir]="textDirection">
 <h2 mat-dialog-title class="mat-dialog-title">
     <div class="custom-class">
-        Executing Test Run
+        {{ "executeTestRun.title" | translate }}
         <span class="spacer"></span>
         <mat-icon [ngStyle]="{color: '#fd518c'}">timelapse</mat-icon>
         <cd-timer #basicTimer format="hms"></cd-timer>
@@ -10,8 +11,7 @@
     <span *ngIf="!scanComplete  && validationErrMsg == ''">
         <span class="custom-class" [ngStyle]="{color: 'red'}">
             <p>
-                <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon>No device selected. Please scan device
-                first.
+                <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon>{{ "executeTestRun.noDeviceSelected" | translate }}
             </p>
         </span>
     </span>
@@ -24,7 +24,7 @@
     </span>
     <span *ngIf="scanComplete">
         <span *ngIf="!dataLoaded">
-            <span *ngIf="!errorsInGettingTestcases">Fetching testcases for the collection..</span>
+            <span *ngIf="!errorsInGettingTestcases">{{ "executeTestRun.fetchTestcases" | translate }}</span>
             <div class="spinner">
                 <mat-spinner diameter="50"></mat-spinner>
             </div>
@@ -32,37 +32,34 @@
         <span *ngIf="dataLoaded">
             <span *ngIf="errorsInGettingTestcases" class="custom-class">
                 <p>
-                    <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon>Unable to get testcases for the collection.
+                    <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon>{{ "executeTestRun.unableToGetTestcases" | translate }}
                 </p>
             </span>
             <span *ngIf="!errorsInGettingTestcases">
                 <span *ngIf="!runComplete">
-                    Execution of {{testCasesList.length}} testcases for collection <b>{{collectionName}}</b> has started.
+                    {{ "executeTestRun.execution" | translate }} {{testCasesList.length}} {{ "executeTestRun.testcasesForCollection" | translate }} <b>{{collectionName}}</b> {{ "executeTestRun.hasStarted" | translate }}
                     <p></p>
                     <div style="position: relative">
                         <mat-progress-bar color="accent" mode="determinate" [value]="progressDone"></mat-progress-bar>
                         <span *ngIf="progressDone < 100" style="position: absolute; top: 0.5em;" [ngStyle]="{'left': progressDone + '%'}">&nbsp;{{progressDone | number:'1.0-0'}}%</span>
                         <p></p>
                     </div>
-                    <p></p><p></p>Current testcase: {{currectTestCaseId}} - {{currectTestCaseName}}
+                    <p></p><p></p>{{ "executeTestRun.currentTestcase" | translate }} {{currectTestCaseId}} - {{currectTestCaseName}}
                     <p></p>
                     <div  *ngIf="!showLoader || showResumeAgainBtn || showContinueBtn" [innerHTML]="currentTestDescription"></div>
                     <div *ngIf="abisRequestSent">
-                        <p></p><span [ngStyle]="{color: '#fd518c'}">Request has been sent to the queue. Waiting for response from queue.
-                            If it's taking too long you can come back again after sometime.
+                        <p></p><span [ngStyle]="{color: '#fd518c'}">{{ "executeTestRun.abisRequestSent" | translate }}
                         </span>
                     </div>
                     <div *ngIf="abisRequestSendFailure">
-                        <p></p><span [ngStyle]="{color: '#fd518c'}">Unable to send request to the ABIS queue. Check the URL, username and other attributes and try again.
+                        <p></p><span [ngStyle]="{color: '#fd518c'}">{{ "executeTestRun.abisRequestSentFail" | translate }}
                         </span>
                     </div>
                     <div *ngIf="showLoader && !showResumeAgainBtn" class="spinner">
                         <mat-spinner diameter="50"></mat-spinner>
                     </div>
                     <div *ngIf="showInitiateCaptureBtn">
-                        <p></p><span [ngStyle]="{color: '#fd518c'}">Click on initiate capture button to capture the biometrics
-                            from the
-                            device..</span>
+                        <p></p><span [ngStyle]="{color: '#fd518c'}">{{ "executeTestRun.initiateCaptureMsg" | translate }}</span>
                     </div>
                     <p></p>
                     <div class="centereddiv" *ngIf="currentTestCaseIsRCapture && streamingDone && !showLoader && !isAndroidAppMode">
@@ -75,7 +72,7 @@
                         <div class="custom-class">
                             <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon>
                             <span [ngStyle]="{color: 'red'}">
-                                There were errors while processing the service.
+                                {{ "executeTestRun.serviceError" | translate }}
                             </span>
                             <span class="spacer"></span>
                         </div>
@@ -89,30 +86,26 @@
                         <div class="custom-class">
                             <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon>
                             <span [ngStyle]="{color: 'red'}">
-                                Unable to save / update test run details. Please try again.
+                                {{ "executeTestRun.errorInSaveTestRun" | translate }}
                             </span>
                             <span class="spacer"></span>
                         </div>
                     </div>
                     <div *ngIf="!serviceErrors && !errorsInSavingTestRun">
-                        <p>Total {{testCasesList.length > 1 ? testCasesList.length + ' testcases have' :
-                            testCasesList.length + ' testcase has'}} executed successfully.
-                            Overall result for testcases:</p>
+                        <p>{{getExecuteSuccessMsg()}}</p>
                         <div class="custom-class">
                             <p>
                                 <mat-icon [ngStyle]="{color: 'green'}">check_circle</mat-icon>
-                                {{countOfSuccessTestcases}} have
-                                passed.
+                                {{countOfSuccessTestcases}} {{ "executeTestRun.successTestcase" | translate }}
                             </p>
                         </div>
                         <div class="custom-class">
                             <p>
-                                <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon> {{countOfFailedTestcases}} have
-                                failed.
+                                <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon> {{countOfFailedTestcases}} {{ "executeTestRun.failureTestcase" | translate }}
                             </p>
                         </div>
                         <p>
-                            For a detailed report <a class="link" (click)="viewTestRun()">click here</a>.
+                            {{ "executeTestRun.detailMsg" | translate }} <a class="link" (click)="viewTestRun()">{{ "executeTestRun.clickHere" | translate }}</a>.
                         </p>
                     </div>
                 </span>
@@ -124,21 +117,22 @@
     <button *ngIf="!scanComplete || (scanComplete && errorsInGettingTestcases) 
     || (scanComplete && !errorsInGettingTestcases && !runComplete) 
     || (scanComplete && !errorsInGettingTestcases && runComplete)" mat-flat-button color="accent"
-        (click)="close()">Close</button>
+        (click)="close()">{{ "executeTestRun.close" | translate }}</button>
     <div class="spacer" *ngIf="scanComplete"></div>
     <!-- <button *ngIf="!scanComplete || (scanComplete && !runComplete && showResumeBtn)" mat-flat-button color="accent"
         (click)="scanDevice()">Select Another Device</button> -->
     <div class="spacer" *ngIf="scanComplete"></div>    
     <button *ngIf="scanComplete && !errorsInGettingTestcases && !runComplete && showInitiateCaptureBtn" mat-flat-button
-        color="accent" (click)="setInitiateCapture()">Initiate Capture</button>
+        color="accent" (click)="setInitiateCapture()">{{ "executeTestRun.initiateCapture" | translate }}</button>
     <button *ngIf="scanComplete && !errorsInGettingTestcases && !runComplete && !showInitiateCaptureBtn && showStreamingBtn" mat-flat-button
-        color="accent" (click)="startStreaming()">Start Streaming</button>    
+        color="accent" (click)="startStreaming()">{{ "executeTestRun.startStreaming" | translate }}</button>    
     <button *ngIf="scanComplete && !errorsInGettingTestcases && !runComplete && showResumeBtn" mat-flat-button
-        color="accent" (click)="setResume()">Resume</button>
+        color="accent" (click)="setResume()">{{ "executeTestRun.resume" | translate }}</button>
     <button *ngIf="scanComplete && !errorsInGettingTestcases && !runComplete && !showResumeBtn && showResumeAgainBtn" mat-flat-button
-        color="accent" (click)="setResumeAgain()">Resume Next</button>        
+        color="accent" (click)="setResumeAgain()">{{ "executeTestRun.resumeNext" | translate }}</button>        
     <button *ngIf="scanComplete && !errorsInGettingTestcases && !runComplete && showContinueBtn" mat-flat-button
-        color="accent" (click)="setContinue()">Continue</button>            
+        color="accent" (click)="setContinue()">{{ "executeTestRun.continue" | translate }}</button>            
     <button *ngIf="scanComplete && !errorsInGettingTestcases && runComplete && !serviceErrors && !errorsInSavingTestRun"
-        mat-flat-button color="accent" (click)="viewTestRun()">View Test Run</button>
+        mat-flat-button color="accent" (click)="viewTestRun()">{{ "executeTestRun.viewTestRun" | translate }}</button>
 </mat-dialog-actions>
+</div>
