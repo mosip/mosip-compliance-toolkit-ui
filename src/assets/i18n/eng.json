@@ -3322,6 +3322,8 @@
     "SIGNATURE_VALIDATOR_006": "Device is registered, so can not be unsigned",
     "SIGNATURE_VALIDATOR_007": "Device info Decoded value is null",
     "SIGNATURE_VALIDATOR_008": "Trust Validation Failed for [ {} ] >> PartnerType[ {} ] and CertificateData[ {} ]",
-    "SIGNATURE_VALIDATOR_009": "Trust Root Validation is Successful"
+    "SIGNATURE_VALIDATOR_009": "Trust Root Validation is Successful",
+    "JWT_SIGNATURE_001": "JWT Signature validation is successful",
+    "JWT_SIGNATURE_002": "JWT Signature validation failed"
   }
 }

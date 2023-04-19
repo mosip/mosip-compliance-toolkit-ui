@@ -3321,6 +3321,8 @@
     "SIGNATURE_VALIDATOR_006": "L'appareil est enregistré, il ne peut donc pas être non signé",
     "SIGNATURE_VALIDATOR_007": "Informations sur l'appareil La valeur décodée est nulle",
     "SIGNATURE_VALIDATOR_008": "Échec de la validation de la confiance pour [ {} ] >> PartnerType[ {} ] et CertificateData[ {} ]",
-    "SIGNATURE_VALIDATOR_009": "La validation de la racine de confiance est réussie"
+    "SIGNATURE_VALIDATOR_009": "La validation de la racine de confiance est réussie",
+    "JWT_SIGNATURE_001": "La validation de la signature JWT a réussi",
+    "JWT_SIGNATURE_002": "La validation de la signature JWT a échoué"
   }
 }
