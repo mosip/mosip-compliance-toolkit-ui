@@ -249,10 +249,10 @@ export class AddCollectionsComponent implements OnInit {
     if (testcases && testcases.length > 0) {
       for (let testcase of testcases) {
         if (!this.isAndroidAppMode) {
-          testcaseArr.push(Utils.translateTestcase(testcase,this.userProfileService,this.dataService));
+          testcaseArr.push(Utils.translateTestcase(testcase,this.userProfileService.getResourceBundle()));
         } else if (this.isAndroidAppMode && (!testcase.inactiveForAndroid
           || (testcase.inactiveForAndroid && testcase.inactiveForAndroid != "yes"))) {
-          testcaseArr.push(Utils.translateTestcase(testcase,this.userProfileService,this.dataService));
+          testcaseArr.push(Utils.translateTestcase(testcase,this.userProfileService.getResourceBundle()));
         }
       }
       //sort the testcases based on the testId

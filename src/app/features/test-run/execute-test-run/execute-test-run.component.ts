@@ -335,7 +335,6 @@ export class ExecuteTestRunComponent implements OnInit {
         if (!this.initiateCapture) {
           this.checkIfToShowInitiateCaptureBtn(testCase);
         }
-        console.log(`this.streamingDone: ${this.streamingDone}`);
         if (!this.streamingDone) {
           this.checkIfToShowStreamBtn(testCase);
         }
@@ -678,30 +677,27 @@ export class ExecuteTestRunComponent implements OnInit {
         this.abisRequestSent = false;
         this.abisRequestSendFailure = false;
         this.showLoader = true;
-        const req: any = await this.abisTestCaseService.sendRequestToQueue(
+        const abisReq: any = await this.abisTestCaseService.sendRequestToQueue(
           testCase,
           this.abisProjectData,
           this.testRunId
         );
-        if (req && req["status"] && req["status"] === "success") {
+        if (abisReq && abisReq[appConstants.STATUS] && abisReq[appConstants.STATUS] == appConstants.SUCCESS) {
           this.abisRequestSent = true;
-          //now fetch the response from queue
-          const res: any = await this.abisTestCaseService.fetchResponseFromQueue(
+         //now fetch the response from queue
+          const abisResp: any = await this.abisTestCaseService.fetchResponseFromQueue(
             testCase,
             this.abisProjectData,
-            this.testRunId,
-            req.methodRequest,
-            req.testDataSource
+            abisReq.methodRequest,
+            abisReq.testDataSource
           );
-          console.log(res);
-          resolve(res);
+          resolve(abisResp);
         } else {
           this.abisRequestSent = false;
           this.abisRequestSendFailure = true;
           this.showLoader = false;
           resolve(true);
         }
-        
       } else {
         resolve(true);
       }
