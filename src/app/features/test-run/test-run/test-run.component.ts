@@ -297,7 +297,7 @@ export class TestRunComponent implements OnInit {
     let translatedMsg: string;
     const validatorMessages = this.resourceBundleJson["validatorMessages"];
     const descriptionKey = item.descriptionKey;
-    const COLON_SEPARATOR = ':', COMMA_SEPARATOR = ',', JSON_PLACEHOLDER = '{}';
+    const COLON_SEPARATOR = '::', COMMA_SEPARATOR = ',', JSON_PLACEHOLDER = '{}';
     if (item && item.description && descriptionKey && this.resourceBundleJson &&
       validatorMessages) {
       //check if the descriptionKey is having any rutime attributes
