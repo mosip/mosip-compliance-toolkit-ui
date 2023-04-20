@@ -3458,6 +3458,12 @@
 		"CONVERT_INVALID_DATA_VALIDATOR_001": "For invalid data, expected status code received: {}",
 		"CONVERT_INVALID_DATA_VALIDATOR_002": "For invalid data, unexpected status code received: {}",
 		"CONVERT_NO_INPUT_DATA_VALIDATOR_001": "For invalid data, expected status code received: {}",
-		"CONVERT_NO_INPUT_DATA_VALIDATOR_002": "For invalid data, unexpected status code received: {}"
+		"CONVERT_NO_INPUT_DATA_VALIDATOR_002": "For invalid data, unexpected status code received: {}",
+		"SEGMENT_VALIDATOR_001": "Segment validation is successful",
+		"SEGMENT_VALIDATOR_002": "Segment status code failed, received: {}",
+		"SEGMENT_INVALID_DATA_VALIDATOR_001": "For invalid data, expected status code received: {}",
+		"SEGMENT_INVALID_DATA_VALIDATOR_002": "For invalid data, unexpected status code received: {}",
+		"SEGMENT_NO_INPUT_DATA_VALIDATOR_001": "For invalid data, expected status code received: {}",
+		"SEGMENT_NO_INPUT_DATA_VALIDATOR_002": "For invalid data, unexpected status code received: {}"
 	}
 }
