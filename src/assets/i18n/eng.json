@@ -3444,6 +3444,13 @@
 	"MATCH_INVALID_DATA_VALIDATOR_001": "For invalid data, expected status code received: {}",
 	"MATCH_INVALID_DATA_VALIDATOR_002": "For invalid data, unexpected status code received: {}",
 	"MATCH_NO_DATA_VALIDATOR_001": "No data for Match, expected status code received: {}",
-	"MATCH_NO_DATA_VALIDATOR_002": "No data for Match, unexpected status code received: {}"
+	"MATCH_NO_DATA_VALIDATOR_002": "No data for Match, unexpected status code received: {}",
+		"QUALITY_CHECK_001": "Quality Check failed, invalid modality: {}",
+		"QUALITY_CHECK_002": "Positive Quality Check for is successful",
+		"QUALITY_CHECK_003": "Quality Check status code failed, received: {}",
+		"QUALITY_CHECK_004": "Positive Quality Check for {} is successful",
+		"QUALITY_CHECK_005": "Positive Quality Check for {} failed. Score is below the threshold value. Score received: {}",
+		"QUALITY_CHECK_006": "Negative Quality Check for {} is successful",
+		"QUALITY_CHECK_007": "Negative Quality Check for {} failed. Score is above the threshold value. Score received: {}"
   }
 }

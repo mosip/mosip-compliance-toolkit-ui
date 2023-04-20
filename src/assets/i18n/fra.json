@@ -3443,6 +3443,13 @@
 	"MATCH_INVALID_DATA_VALIDATOR_001": "Pour les données non valides, code d'état attendu reçu : {}",
 	"MATCH_INVALID_DATA_VALIDATOR_002": "Pour les données non valides, code d'état inattendu reçu : {}",
 	"MATCH_NO_DATA_VALIDATOR_001": "Aucune donnée pour Match, code d'état attendu reçu : {}",
-	"MATCH_NO_DATA_VALIDATOR_002": "Aucune donnée pour Match, code d'état inattendu reçu : {}"
+	"MATCH_NO_DATA_VALIDATOR_002": "Aucune donnée pour Match, code d'état inattendu reçu : {}",
+		"QUALITY_CHECK_001": "Échec du contrôle qualité, modalité non valide : {}",
+		"QUALITY_CHECK_002": "Le contrôle de qualité positif pour est réussi",
+		"QUALITY_CHECK_003": "Échec du code d'état du contrôle qualité, reçu : {}",
+		"QUALITY_CHECK_004": "Le contrôle de qualité positif pour {} a réussi",
+		"QUALITY_CHECK_005": "Le contrôle de qualité positif pour {} a échoué. Le score est inférieur à la valeur seuil. Note reçue : {}",
+		"QUALITY_CHECK_006": "Le contrôle qualité négatif pour {} a réussi",
+		"QUALITY_CHECK_007": "Échec du contrôle qualité négatif pour {}. Le score est supérieur à la valeur seuil. Note reçue : {}"
 	}
 }
