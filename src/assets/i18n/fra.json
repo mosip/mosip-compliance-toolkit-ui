@@ -3435,6 +3435,8 @@
     "TIMECHECK_VALIDATOR_001": "La validation de la vérification de l'heure a échoué. Intervalle d'horodatage donné : {} m. Réponse reçue dans : {} m",
     "TIMECHECK_VALIDATOR_002": "La validation du contrôle horaire est réussie",
 	"EXTRACT_TEMPLATE_VALIDATOR_001": "La validation du modèle d'extraction est réussie",
-	"EXTRACT_TEMPLATE_VALIDATOR_002": "Échec de l'extraction du code d'état du modèle, reçu : {}"
+	"EXTRACT_TEMPLATE_VALIDATOR_002": "Échec de l'extraction du code d'état du modèle, reçu : {}",
+	"EXTRACT_TEMPLATE_NO_INPUT_DATA_VALIDATOR_001": "Pour les données non valides, code d'état attendu reçu : {}",
+	"EXTRACT_TEMPLATE_NO_INPUT_DATA_VALIDATOR_002": "Pour les données non valides, code d'état inattendu reçu : {}"
 	}
 }

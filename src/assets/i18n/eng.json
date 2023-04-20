@@ -3436,6 +3436,8 @@
     "TIMECHECK_VALIDATOR_001": "Time Check validation failed. Timestamp interval given: {} m. Response received in: {} m",
     "TIMECHECK_VALIDATOR_002": "Time Check validation is Successful",
 	"EXTRACT_TEMPLATE_VALIDATOR_001": "Extract Template validation is successful",
-	"EXTRACT_TEMPLATE_VALIDATOR_002": "Extract Template status code failed, received: {}"
+	"EXTRACT_TEMPLATE_VALIDATOR_002": "Extract Template status code failed, received: {}",
+	"EXTRACT_TEMPLATE_NO_INPUT_DATA_VALIDATOR_001": "For invalid data, expected status code received: {}",
+	"EXTRACT_TEMPLATE_NO_INPUT_DATA_VALIDATOR_002": "For invalid data, unexpected status code received: {}"
   }
 }
