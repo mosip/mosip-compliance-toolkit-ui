@@ -3432,6 +3432,8 @@
     "SIGNATURE_VALIDATOR_008": "Trust Validation Failed for [ {} ] >> PartnerType[ {} ] and CertificateData[ {} ]",
     "SIGNATURE_VALIDATOR_009": "Trust Root Validation is Successful",
     "JWT_SIGNATURE_001": "JWT Signature validation is successful",
-    "JWT_SIGNATURE_002": "JWT Signature validation failed"
+    "JWT_SIGNATURE_002": "JWT Signature validation failed",
+    "TIMECHECK_VALIDATOR_001": "Time Check validation failed. Timestamp interval given: {} m. Response received in: {} m",
+    "TIMECHECK_VALIDATOR_002": "Time Check validation is Successful"
   }
 }

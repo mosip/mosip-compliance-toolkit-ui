@@ -3419,6 +3419,7 @@
 		"KEY_ROTATION_VALIDATOR_005": "La marque, le modèle ou le numéro de série des informations sur l'appareil ne correspondent pas.",
 		"KEY_ROTATION_VALIDATOR_006": "Les deux clés de l'appareil sont identiques. Faites tourner la clé de l'appareil et réessayez !",
 		"KEY_ROTATION_VALIDATOR_007": "La deuxième clé d'appareil doit être créée après la première clé d'appareil",
+    "KEY_ROTATION_VALIDATOR_008": "L'appareil n'est pas enregistré.",
 		"TIMEOUT_VALIDATOR_001": "La validation du délai d'attente est réussie",
 		"TIMEOUT_VALIDATOR_002": "La validation du délai d'attente a échoué. Délai d'attente donné : {} ms. Réponse reçue en : {} ms",
     "SIGNATURE_VALIDATOR_002": "La réponse est vide",
@@ -3430,6 +3431,8 @@
     "SIGNATURE_VALIDATOR_008": "Échec de la validation de la confiance pour [ {} ] >> PartnerType[ {} ] et CertificateData[ {} ]",
     "SIGNATURE_VALIDATOR_009": "La validation de la racine de confiance est réussie",
     "JWT_SIGNATURE_001": "La validation de la signature JWT a réussi",
-    "JWT_SIGNATURE_002": "La validation de la signature JWT a échoué"
+    "JWT_SIGNATURE_002": "La validation de la signature JWT a échoué",
+    "TIMECHECK_VALIDATOR_001": "La validation de la vérification de l'heure a échoué. Intervalle d'horodatage donné : {} m. Réponse reçue dans : {} m",
+    "TIMECHECK_VALIDATOR_002": "La validation du contrôle horaire est réussie"
 	}
 }
