@@ -3437,6 +3437,12 @@
 	"EXTRACT_TEMPLATE_VALIDATOR_001": "La validation du modèle d'extraction est réussie",
 	"EXTRACT_TEMPLATE_VALIDATOR_002": "Échec de l'extraction du code d'état du modèle, reçu : {}",
 	"EXTRACT_TEMPLATE_NO_INPUT_DATA_VALIDATOR_001": "Pour les données non valides, code d'état attendu reçu : {}",
-	"EXTRACT_TEMPLATE_NO_INPUT_DATA_VALIDATOR_002": "Pour les données non valides, code d'état inattendu reçu : {}"
+	"EXTRACT_TEMPLATE_NO_INPUT_DATA_VALIDATOR_002": "Pour les données non valides, code d'état inattendu reçu : {}",
+	"EXTRACT_TEMPLATE_INVALID_DATA_VALIDATOR_001": "Pour les données non valides, code d'état attendu reçu : {}",
+	"EXTRACT_TEMPLATE_INVALID_DATA_VALIDATOR_002": "Pour les données non valides, code d'état inattendu reçu : {}",
+	"MATCH_INVALID_DATA_VALIDATOR_001": "Pour les données non valides, code d'état attendu reçu : {}",
+	"MATCH_INVALID_DATA_VALIDATOR_002": "Pour les données non valides, code d'état inattendu reçu : {}",
+	"MATCH_NO_DATA_VALIDATOR_001": "Aucune donnée pour Match, code d'état attendu reçu : {}",
+	"MATCH_NO_DATA_VALIDATOR_002": "Aucune donnée pour Match, code d'état inattendu reçu : {}"
 	}
 }
