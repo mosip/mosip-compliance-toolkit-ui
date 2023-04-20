@@ -3457,6 +3457,12 @@
 		"CONVERT_INVALID_DATA_VALIDATOR_001": "Pour les données non valides, code d'état attendu reçu : {}",
 		"CONVERT_INVALID_DATA_VALIDATOR_002": "Pour les données non valides, code d'état inattendu reçu : {}",
 		"CONVERT_NO_INPUT_DATA_VALIDATOR_001": "Pour les données non valides, code d'état attendu reçu : {}",
-		"CONVERT_NO_INPUT_DATA_VALIDATOR_002": "Pour les données non valides, code d'état inattendu reçu : {}"
+		"CONVERT_NO_INPUT_DATA_VALIDATOR_002": "Pour les données non valides, code d'état inattendu reçu : {}",
+		"SEGMENT_VALIDATOR_001": "La validation du segment est réussie",
+		"SEGMENT_VALIDATOR_002": "Échec du code d'état du segment, reçu : {}",
+		"SEGMENT_INVALID_DATA_VALIDATOR_001": "Pour les données non valides, code d'état attendu reçu : {}",
+		"SEGMENT_INVALID_DATA_VALIDATOR_002": "Pour les données non valides, code d'état inattendu reçu : {}",
+		"SEGMENT_NO_INPUT_DATA_VALIDATOR_001": "Pour les données non valides, code d'état attendu reçu : {}",
+		"SEGMENT_NO_INPUT_DATA_VALIDATOR_002": "Pour les données non valides, code d'état inattendu reçu : {}"
 	}
 }
