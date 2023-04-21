@@ -84,3 +84,4 @@ export const CALLBACK_ID = 'callbackId';
 export const ACCESS_TOKEN = 'accessToken';
 export const AUTHORIZATION = 'Authorization';
 export const REQUEST_ID = 'requestId';
+export const BLANK_STRING = "";

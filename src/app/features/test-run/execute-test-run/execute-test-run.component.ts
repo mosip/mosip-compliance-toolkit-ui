@@ -22,6 +22,8 @@ import { environment } from 'src/environments/environment';
 import { AbisTestCaseService } from 'src/app/core/services/abis-testcase-service';
 import { AbisProjectModel } from 'src/app/core/models/abis-project';
 import { RxStompService } from 'src/app/core/services/rx-stomp.service';
+import { ActiveMqService } from 'src/app/core/services/activemq-service';
+import { Message } from '@stomp/stompjs';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -85,16 +87,17 @@ export class ExecuteTestRunComponent implements OnInit {
     appConstants.SBI_KEY_ROTATION_ITERATIONS
   ]
     ? parseInt(
-        this.appConfigService.getConfig()[
-          appConstants.SBI_KEY_ROTATION_ITERATIONS
-        ]
-      )
+      this.appConfigService.getConfig()[
+      appConstants.SBI_KEY_ROTATION_ITERATIONS
+      ]
+    )
     : 0;
   currentKeyRotationIndex = 0;
   isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
-  abisRequestSent = false;
   abisRequestSendFailure = false;
-  private topicSubscription: Subscription;
+  abisSentMessage: string = appConstants.BLANK_STRING;
+  abisSentDataSource: string = appConstants.BLANK_STRING;
+  abisRecvdMessage: string = appConstants.BLANK_STRING;
   textDirection: any = this.userProfileService.getTextDirection();
   resourceBundleJson: any = {};
 
@@ -112,6 +115,7 @@ export class ExecuteTestRunComponent implements OnInit {
     private abisTestCaseService: AbisTestCaseService,
     private appConfigService: AppConfigService,
     private rxStompService: RxStompService,
+    private activeMqService: ActiveMqService
   ) {
     dialogRef.disableClose = true;
   }
@@ -144,11 +148,9 @@ export class ExecuteTestRunComponent implements OnInit {
   async performValidations(): Promise<boolean> {
     if (this.projectType === appConstants.SBI) {
       this.validationErrMsg = '';
-      console.log(this.sbiSelectedDevice);
       if (!(this.sbiSelectedPort && this.sbiSelectedDevice)) {
         this.scanComplete = false;
         this.dataLoaded = true;
-        console.log(this.sbiSelectedPort);
         return false;
       }
       if (this.sbiSelectedPort && this.sbiSelectedDevice) {
@@ -309,7 +311,6 @@ export class ExecuteTestRunComponent implements OnInit {
 
   async runExecuteForLoop(startingForLoop: boolean, fromResumeNext: boolean) {
     for (const testCase of this.testCasesList) {
-      console.log(`testCase.testId: ${testCase.testId}`);
       this.showLoader = false;
       let proceedTestCase = false;
       if (startingForLoop && testCase.otherAttributes.resumeBtn) {
@@ -320,7 +321,6 @@ export class ExecuteTestRunComponent implements OnInit {
         this.currectTestCaseId != '' &&
         this.currectTestCaseId == testCase.testId
       ) {
-        console.log(`this.currectTestCaseId: ${this.currectTestCaseId}`);
         proceedTestCase = true;
       }
       if (
@@ -334,12 +334,13 @@ export class ExecuteTestRunComponent implements OnInit {
       if (proceedTestCase || startingForLoop) {
         startingForLoop = true;
         this.currectTestCaseId = testCase.testId;
+        console.log(`this.currectTestCaseId: ${this.currectTestCaseId}`);
         const testCaseInResourceBundle = this.resourceBundleJson.testcases[testCase.testId];
-        this.currectTestCaseName = testCaseInResourceBundle 
-          ? testCaseInResourceBundle.testName 
-          :  testCase.testName ;
-        this.currentTestDescription = testCaseInResourceBundle 
-          ? this.getTestDescription(testCaseInResourceBundle) 
+        this.currectTestCaseName = testCaseInResourceBundle
+          ? testCaseInResourceBundle.testName
+          : testCase.testName;
+        this.currentTestDescription = testCaseInResourceBundle
+          ? this.getTestDescription(testCaseInResourceBundle)
           : this.getTestDescription(testCase);
         this.currentTestCaseIsRCapture =
           testCase.methodName[0] == appConstants.SBI_METHOD_RCAPTURE
@@ -359,7 +360,7 @@ export class ExecuteTestRunComponent implements OnInit {
           if (this.currentKeyRotationIndex < this.keyRotationIterations) {
             this.handleKeyRotationFlow(startingForLoop, testCase, res);
             if (this.showContinueBtn) {
-              await new Promise(async (resolve, reject) => {});
+              await new Promise(async (resolve, reject) => { });
             }
           }
           this.calculateTestcaseResults(res[appConstants.VALIDATIONS_RESPONSE]);
@@ -369,12 +370,20 @@ export class ExecuteTestRunComponent implements OnInit {
           await this.updateTestRun();
           if (testCase.otherAttributes.resumeAgainBtn) {
             this.showResumeAgainBtn = true;
-            await new Promise(async (resolve, reject) => {});
+            await new Promise(async (resolve, reject) => { });
+          }
+          //reset all attributes for next testcase
+          if (this.projectType == appConstants.ABIS) {
+            this.abisRequestSendFailure = false;
+            this.abisSentMessage = appConstants.BLANK_STRING;
+            this.abisSentDataSource = appConstants.BLANK_STRING;
+            this.abisRecvdMessage = appConstants.BLANK_STRING;
           }
           this.currectTestCaseId = '';
           this.currectTestCaseName = '';
           this.currentTestDescription = '';
           this.showLoader = false;
+          
         }
       }
     }
@@ -406,7 +415,7 @@ export class ExecuteTestRunComponent implements OnInit {
       ) {
         const validationsList =
           res[appConstants.VALIDATIONS_RESPONSE][appConstants.RESPONSE][
-            appConstants.VALIDATIONS_LIST
+          appConstants.VALIDATIONS_LIST
           ];
         if (validationsList && validationsList.length > 0) {
           validationsList.forEach((validationitem: any) => {
@@ -543,7 +552,7 @@ export class ExecuteTestRunComponent implements OnInit {
     ) {
       const validationsList =
         res[appConstants.VALIDATIONS_RESPONSE][appConstants.RESPONSE][
-          appConstants.VALIDATIONS_LIST
+        appConstants.VALIDATIONS_LIST
         ];
       if (validationsList && validationsList.length > 0) {
         validationsList.forEach((validationitem: any) => {
@@ -674,12 +683,13 @@ export class ExecuteTestRunComponent implements OnInit {
           }
         }
       } else if (this.projectType == appConstants.SDK) {
-        await this.getSdkProjectDetails();
+        if (!this.sdkProjectData)
+          await this.getSdkProjectDetails();
         localStorage.setItem(
           appConstants.SDK_PROJECT_URL,
           this.sdkProjectData ? this.sdkProjectData.url : ''
         );
-        //this.showLoader = true;
+        this.showLoader = true;
         const res = await this.sdkTestCaseService.runTestCase(
           testCase,
           this.sdkProjectData.url,
@@ -687,30 +697,36 @@ export class ExecuteTestRunComponent implements OnInit {
         );
         resolve(res);
       } else if (this.projectType == appConstants.ABIS) {
-        await this.getAbisProjectDetails();
-        this.abisRequestSent = false;
-        this.abisRequestSendFailure = false;
-        this.showLoader = true;
-        const abisReq: any = await this.abisTestCaseService.sendRequestToQueue(
-          testCase,
-          this.abisProjectData,
-          this.testRunId
-        );
-        if (abisReq && abisReq[appConstants.STATUS] && abisReq[appConstants.STATUS] == appConstants.SUCCESS) {
-          this.abisRequestSent = true;
-         //now fetch the response from queue
-          const abisResp: any = await this.abisTestCaseService.fetchResponseFromQueue(
+        if (this.abisRecvdMessage == appConstants.BLANK_STRING) {
+          this.showLoader = true;
+          if (!this.abisProjectData)
+          await this.getAbisProjectDetails();
+          if (this.rxStompService.connected()) {
+            this.rxStompService.deactivate();
+          }
+          this.rxStompService = this.activeMqService.setUpConfig(this.abisProjectData);
+          this.abisRequestSendFailure = false;
+          const abisReq: any = await this.abisTestCaseService.sendRequestToQueue(
+            this.rxStompService,
             testCase,
             this.abisProjectData,
-            abisReq.methodRequest,
-            abisReq.testDataSource
+            this.testRunId
           );
-          resolve(abisResp);
+          if (abisReq && abisReq[appConstants.STATUS] && abisReq[appConstants.STATUS] == appConstants.SUCCESS) {
+            this.abisSentMessage = abisReq.methodRequest;
+            this.abisSentDataSource = abisReq.testDataSource;
+            this.subscribeToABISQueue();
+          } else {
+            this.abisRequestSendFailure = true;
+            this.abisSentMessage = appConstants.BLANK_STRING;
+            this.abisSentDataSource = appConstants.BLANK_STRING;
+            resolve(true);
+          }
         } else {
-          this.abisRequestSent = false;
-          this.abisRequestSendFailure = true;
-          this.showLoader = false;
-          resolve(true);
+          this.showLoader = true;
+          //run validations
+          const validatorsResp = await this.abisTestCaseService.runValidators(testCase, this.abisProjectData, this.abisSentMessage, this.abisRecvdMessage, this.abisSentDataSource);
+          resolve(validatorsResp);
         }
       } else {
         resolve(true);
@@ -776,6 +792,10 @@ export class ExecuteTestRunComponent implements OnInit {
     console.log('setResumeAgain');
     this.showResumeAgainBtn = false;
     this.pauseExecution = false;
+    await this.startWithNextTestcase();
+  }
+
+  async startWithNextTestcase() {
     let testCases = this.testCasesList;
     const currentId = this.currectTestCaseId;
     if (
@@ -835,29 +855,30 @@ export class ExecuteTestRunComponent implements OnInit {
     this.basicTimer.stop();
   }
 
-  // scanDevice() {
-  //   const body = {
-  //     title: 'Scan Device',
-  //   };
-  //   this.dialog
-  //     .open(ScanDeviceComponent, {
-  //       width: '600px',
-  //       data: body,
-  //     })
-  //     .afterClosed()
-  //     .subscribe(() => {
-  //       this.sbiSelectedPort = localStorage.getItem(
-  //         appConstants.SBI_SELECTED_PORT
-  //       )
-  //         ? localStorage.getItem(appConstants.SBI_SELECTED_PORT)
-  //         : null;
-  //       this.sbiSelectedDevice = localStorage.getItem(
-  //         appConstants.SBI_SELECTED_DEVICE
-  //       )
-  //         ? localStorage.getItem(appConstants.SBI_SELECTED_DEVICE)
-  //         : null;
-  //     });
-  // }
+  /*
+  scanDevice() {
+    const body = {
+      title: 'Scan Device',
+    };
+    this.dialog
+      .open(ScanDeviceComponent, {
+        width: '600px',
+        data: body,
+      })
+      .afterClosed()
+      .subscribe(() => {
+        this.sbiSelectedPort = localStorage.getItem(
+          appConstants.SBI_SELECTED_PORT
+        )
+          ? localStorage.getItem(appConstants.SBI_SELECTED_PORT)
+          : null;
+        this.sbiSelectedDevice = localStorage.getItem(
+          appConstants.SBI_SELECTED_DEVICE
+        )
+          ? localStorage.getItem(appConstants.SBI_SELECTED_DEVICE)
+          : null;
+      });
+  }*/
 
   close() {
     this.dialogRef.close('reloadProjectDetails');
@@ -872,8 +893,29 @@ export class ExecuteTestRunComponent implements OnInit {
       `toolkit/project/${this.projectType}/${this.projectId}/collection/${this.collectionId}/testrun/${this.testRunId}`,
     ]);
   }
+
+  subscribeToABISQueue() {
+    const sentRequestId = this.testRunId + "_" + this.currectTestCaseId;
+    console.log(`sentRequestId: ${sentRequestId}`);
+    this.rxStompService
+      .watch(this.abisProjectData.inboundQueueName)
+      .forEach(async (message: Message) => {
+        const respObj = JSON.parse(message.body);
+        const recvdRequestId = respObj[appConstants.REQUEST_ID];
+        console.log(`recvdRequestId: ${recvdRequestId}`);
+        if (sentRequestId == recvdRequestId) {
+          this.abisRecvdMessage = message.body;
+          await this.runExecuteForLoop(false, false);
+          this.runComplete = true;
+          this.basicTimer.stop();
+        }
+      });
+  }
+
   ngOnDestroy() {
-    
+    if (this.rxStompService) {
+      this.rxStompService.deactivate();
+    }
   }
 
   getExecuteSuccessMsg(): any {
