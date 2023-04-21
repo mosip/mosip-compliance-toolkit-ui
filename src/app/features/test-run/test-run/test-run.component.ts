@@ -299,59 +299,77 @@ export class TestRunComponent implements OnInit {
   }
 
   getValidatorMessage(item: any) {
-    let translatedMsg: string;
+    
+    const COMMA_SEPARATOR = ',';
     const validatorMessages = this.resourceBundleJson["validatorMessages"];
-    const descriptionKey = item.descriptionKey;
-    const COLON_SEPARATOR = '::', COMMA_SEPARATOR = ',', JSON_PLACEHOLDER = '{}';
-    if (item && item.description && descriptionKey && this.resourceBundleJson &&
+    let descriptionKeyString = item.descriptionKey;
+    let translatedMsg = '';
+    if (item && item.description && descriptionKeyString && this.resourceBundleJson &&
       validatorMessages) {
-      //check if the descriptionKey is having any rutime attributes
-      //eg: descriptionKey="SCHEMA_VALIDATOR_001:name,size"
-      if (descriptionKey.indexOf(COLON_SEPARATOR) == -1) {
-        translatedMsg = validatorMessages[descriptionKey];
-        return translatedMsg;
-      } else {
-        //create an arr of attributes
-        let descriptionKeyArr = descriptionKey.split(COLON_SEPARATOR);
-        const descriptionKeyName = descriptionKeyArr[0];
-        const attributesArr = descriptionKeyArr[1];
-        const argumentsArr = attributesArr.split(COMMA_SEPARATOR);
-        translatedMsg = validatorMessages[descriptionKeyName];
-        const matches: RegExpMatchArray | null = translatedMsg.match(/\{\}/g);
-        const count: number = matches ? matches.length : 0;
-        // match no of palceholders in JSON value to no of arguments
-        if (count != argumentsArr.length) {
-          return translatedMsg;
-        }
-        let translatedMsgArray = translatedMsg.split(JSON_PLACEHOLDER);
-        if (translatedMsgArray.length > 0) {
-          let newTranslatedMsg = "";
-          translatedMsgArray.forEach((element, index) => {
-            if (argumentsArr.length > index) {
-              // check if the argument is actually a key in resource bundle, 
-              // eg: descriptionKey="SCHEMA_VALIDATOR_001:SCHEMA_VALIDATOR_002,SCHEMA_VALIDATOR_003"
-              const arg = argumentsArr[index];
-              const translatedArg = validatorMessages[arg];
-              if (translatedArg) {
-                newTranslatedMsg = newTranslatedMsg + element + translatedArg;
-              } else {
-                newTranslatedMsg = newTranslatedMsg + element + arg;
-              }
-            } else {
-              newTranslatedMsg = newTranslatedMsg + element;
-            }
-          });
-          return newTranslatedMsg;
-        } else {
-          return translatedMsg;
-        }
-      }
+      //case 1 "VALIDATOR_MSG_001"
+      //case 2 "VALIDATOR_MSG_001::arg1"
+      //case 3 "VALIDATOR_MSG_001::arg1;arg2"
+      //case 4 "VALIDATOR_MSG_001::VALIDATOR_MSG_002;arg2"
+      //case 5 "VALIDATOR_MSG_001,VALIDATOR_MSG_002::arg1;arg2,VALIDATOR_MSG_003::arg3"
+      //case 6 "VALIDATOR_MSG_001,textMessage,VALIDATOR_MSG_003::arg3"
+      //Eg: descriptionKeyString = "ISO_VALIDATOR_003,ISO_VALIDATOR_004::0x46495200,ISO_VALIDATOR_005::0x46495201";
+      const descriptionKeyArr = descriptionKeyString.split(COMMA_SEPARATOR);
+      descriptionKeyArr.forEach((descriptionKey: any) => {
+        translatedMsg = translatedMsg + this.performTranslation(descriptionKey, validatorMessages);
+      });
+      return translatedMsg;
     }
     if (item) {
       return item.description;
     } else {
       return "";
     }
+  }
+
+  performTranslation(descriptionKey: any, validatorMessages: any) {
+    const COLON_SEPARATOR = '::', SEMI_COLON_SEPARATOR = ';', JSON_PLACEHOLDER = '{}';
+    let translatedMsg = '';
+    //check if the descriptionKey is having any rutime attributes
+    //eg: descriptionKey="SCHEMA_VALIDATOR_001::name,size"
+    if (descriptionKey.indexOf(COLON_SEPARATOR) == -1) {
+      translatedMsg = validatorMessages[descriptionKey];
+      return translatedMsg;
+    } else {
+      //create an arr of attributes
+      let descriptionKeyArr = descriptionKey.split(COLON_SEPARATOR);
+      const descriptionKeyName = descriptionKeyArr[0];
+      const argumentsArr = descriptionKeyArr[1].split(SEMI_COLON_SEPARATOR);
+      translatedMsg = validatorMessages[descriptionKeyName];
+      const matches: RegExpMatchArray | null = translatedMsg.match(/\{\}/g);
+      const count: number = matches ? matches.length : 0;
+      //match no of palceholders in JSON value to no of arguments
+      if (count != argumentsArr.length) {
+        return translatedMsg;
+      }
+      let translatedMsgArray = translatedMsg.split(JSON_PLACEHOLDER);
+      if (translatedMsgArray.length > 0) {
+        let newTranslatedMsg = "";
+        translatedMsgArray.forEach((element, index) => {
+          if (argumentsArr.length > index) {
+            // check if the argument is actually a key in resource bundle, 
+            // eg: descriptionKey="SCHEMA_VALIDATOR_001::SCHEMA_VALIDATOR_002;SCHEMA_VALIDATOR_003"
+            const arg = argumentsArr[index];
+            const translatedArg = validatorMessages[arg];
+            if (translatedArg) {
+              newTranslatedMsg = newTranslatedMsg + element + translatedArg;
+            } else {
+              newTranslatedMsg = newTranslatedMsg + element + arg;
+            }
+          } else {
+            newTranslatedMsg = newTranslatedMsg + element;
+          }
+        });
+        return newTranslatedMsg;
+      } else {
+        return translatedMsg;
+      }
+    }
+
   }
 
   backToProject() {

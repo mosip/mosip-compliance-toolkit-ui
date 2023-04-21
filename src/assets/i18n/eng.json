@@ -3404,6 +3404,7 @@
 		}
 	},
 	"validatorMessages": {
+		"BR_TAG": "<br>",
 		"SCHEMA_VALIDATOR_001": "JSON is as expected. All mandatory values are available and they all have valid expected values.",
 		"RESPONSE_MISMATCH_VALIDATOR_001": "The bioCount, segments and exceptions in response match the request.",
 		"RESPONSE_MISMATCH_VALIDATOR_002": "ResponseMismatchValidator failed due to biocount mismatch. In request, bioCount = {} and in response, bioCount = {}",
@@ -3464,6 +3465,10 @@
 		"SEGMENT_INVALID_DATA_VALIDATOR_001": "For invalid data, expected status code received: {}",
 		"SEGMENT_INVALID_DATA_VALIDATOR_002": "For invalid data, unexpected status code received: {}",
 		"SEGMENT_NO_INPUT_DATA_VALIDATOR_001": "For invalid data, expected status code received: {}",
-		"SEGMENT_NO_INPUT_DATA_VALIDATOR_002": "For invalid data, unexpected status code received: {}"
+		"SEGMENT_NO_INPUT_DATA_VALIDATOR_002": "For invalid data, unexpected status code received: {}",
+		"ISO_VALIDATOR_003": "ISOStandardsValidator[ISO19794-4:2011] failed due to below issues:",
+		"ISO_VALIDATOR_004": "<BR>Invalid Format Identifier for Finger Modality, expected value:0x46495200, but received input value: {}",
+		"ISO_VALIDATOR_005": "<BR>Invalid test message, expected value:0x46495210, but received input value: {}"
 	}
+	
 }
