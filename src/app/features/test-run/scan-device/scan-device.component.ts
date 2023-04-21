@@ -33,8 +33,7 @@ export class ScanDeviceComponent implements OnInit {
   SBI_BASE_URL = this.appConfigService.getConfig()['SBI_BASE_URL'];
   isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
   textDirection: any = this.userProfileService.getTextDirection();
-  resourceBundleJson: any = this.userProfileService.getResourceBundle();
-  langCode = this.userProfileService.getUserPreferredLanguage();
+  resourceBundleJson: any = {};
 
   constructor(
     private dialogRef: MatDialogRef<ScanDeviceComponent>,
@@ -49,7 +48,12 @@ export class ScanDeviceComponent implements OnInit {
 
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
-    this.data.title = this.resourceBundleJson['scanDevice']['title'];
+    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
+      (response: any) => {
+        this.resourceBundleJson = response;
+        this.data.title = this.resourceBundleJson['scanDevice']['title'];
+      }
+    );
     this.scanForm.addControl(
       'ports',
       new FormControl('', [Validators.required])

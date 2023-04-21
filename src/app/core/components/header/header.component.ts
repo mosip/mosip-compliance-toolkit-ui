@@ -64,12 +64,6 @@ export class HeaderComponent implements OnInit {
     } else {
       this.userName = this.userProfileService.getUsername();
     }
-    this.httpClient.get(`./assets/i18n/${this.userProfileService.getUserPreferredLanguage()}.json`).subscribe(
-      (response: any) => {
-        this.userProfileService.setResourceBundle(response);
-        console.log(response);
-      }
-    )
   }
   onLogoClick() {
     if (this.authService.isAuthenticated()) {

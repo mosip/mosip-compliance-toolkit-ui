@@ -59,7 +59,7 @@ export class TestRunComponent implements OnInit {
   panelOpenState = false;
   runDetails: any;
   textDirection: any = this.userProfileService.getTextDirection();
-  resourceBundleJson: any = this.userProfileService.getResourceBundle();
+  resourceBundleJson: any = {};
   langCode = this.userProfileService.getUserPreferredLanguage();
 
   constructor(
@@ -75,6 +75,11 @@ export class TestRunComponent implements OnInit {
 
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
+    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
+      (response: any) => {
+        this.resourceBundleJson = response;
+      }
+    );
     await this.initAllParams();
     await this.getCollection();
     if (this.projectType == appConstants.SBI) {
@@ -218,7 +223,7 @@ export class TestRunComponent implements OnInit {
             if (this.userProfileService.getUserPreferredLanguage()) {
               let testcasesListTranslated = [];
               for (let testcase of this.testcasesList) {
-                testcasesListTranslated.push(Utils.translateTestcase(testcase, this.userProfileService.getResourceBundle()));
+                testcasesListTranslated.push(Utils.translateTestcase(testcase, this.resourceBundleJson));
               }
               this.testcasesList = testcasesListTranslated;
             }
