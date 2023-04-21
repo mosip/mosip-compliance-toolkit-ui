@@ -332,7 +332,7 @@ export class TestRunComponent implements OnInit {
     //check if the descriptionKey is having any rutime attributes
     //eg: descriptionKey="SCHEMA_VALIDATOR_001::name,size"
     if (descriptionKey.indexOf(COLON_SEPARATOR) == -1) {
-      translatedMsg = validatorMessages[descriptionKey];
+      translatedMsg = validatorMessages[descriptionKey] ? validatorMessages[descriptionKey] : descriptionKey;
       return translatedMsg;
     } else {
       //create an arr of attributes

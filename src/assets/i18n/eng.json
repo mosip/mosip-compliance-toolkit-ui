@@ -3442,6 +3442,12 @@
 		"EXTRACT_TEMPLATE_NO_INPUT_DATA_VALIDATOR_002": "For invalid data, unexpected status code received: {}",
 		"EXTRACT_TEMPLATE_INVALID_DATA_VALIDATOR_001": "For invalid data, expected status code received: {}",
 		"EXTRACT_TEMPLATE_INVALID_DATA_VALIDATOR_002": "For invalid data, unexpected status code received: {}",
+		"MATCH_VALIDATOR_001": "Positive Match for ",
+		"MATCH_VALIDATOR_002": " is successful for gallery",
+		"MATCH_VALIDATOR_003": ".xml",
+		"MATCH_VALIDATOR_004": "Negative Match for ",
+		"MATCH_VALIDATOR_005": " failed for gallery",
+		"MATCH_VALIDATOR_006": "Match status code failed, received: {}",
 		"MATCH_INVALID_DATA_VALIDATOR_001": "For invalid data, expected status code received: {}",
 		"MATCH_INVALID_DATA_VALIDATOR_002": "For invalid data, unexpected status code received: {}",
 		"MATCH_NO_DATA_VALIDATOR_001": "No data for Match, expected status code received: {}",
@@ -3470,5 +3476,4 @@
 		"ISO_VALIDATOR_004": "<BR>Invalid Format Identifier for Finger Modality, expected value:0x46495200, but received input value: {}",
 		"ISO_VALIDATOR_005": "<BR>Invalid test message, expected value:0x46495210, but received input value: {}"
 	}
-	
 }

@@ -3404,6 +3404,7 @@
 		}
 	},
 	"validatorMessages": {
+		"BR_TAG": "<br>",
 		"SCHEMA_VALIDATOR_001": "Valide la réponse pour les attributs obligatoires et les valeurs correctes",
 		"RESPONSE_MISMATCH_VALIDATOR_001": "Le bioCount, les segments et les exceptions en réponse correspondent à la requête.",
 		"RESPONSE_MISMATCH_VALIDATOR_002": "ResponseMismatchValidator a échoué en raison d'une incompatibilité de biocompte. En requête, bioCount = {} et en réponse, bioCount = {}",
@@ -3440,6 +3441,12 @@
 		"EXTRACT_TEMPLATE_NO_INPUT_DATA_VALIDATOR_002": "Pour les données non valides, code d'état inattendu reçu : {}",
 		"EXTRACT_TEMPLATE_INVALID_DATA_VALIDATOR_001": "Pour les données non valides, code d'état attendu reçu : {}",
 		"EXTRACT_TEMPLATE_INVALID_DATA_VALIDATOR_002": "Pour les données non valides, code d'état inattendu reçu : {}",
+		"MATCH_VALIDATOR_001": "Correspondance positive pour ",
+		"MATCH_VALIDATOR_002": " est un succès pour la gallery",
+		"MATCH_VALIDATOR_003": ".xml",
+		"MATCH_VALIDATOR_004": "Correspondance négative pour ",
+		"MATCH_VALIDATOR_005": " échec pour la gallery",
+		"MATCH_VALIDATOR_006": "Échec du code d'état de correspondance, reçu : {}",
 		"MATCH_INVALID_DATA_VALIDATOR_001": "Pour les données non valides, code d'état attendu reçu : {}",
 		"MATCH_INVALID_DATA_VALIDATOR_002": "Pour les données non valides, code d'état inattendu reçu : {}",
 		"MATCH_NO_DATA_VALIDATOR_001": "Aucune donnée pour Match, code d'état attendu reçu : {}",
