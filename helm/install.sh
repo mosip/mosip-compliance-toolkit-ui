@@ -16,6 +16,7 @@ helm dependency update
 
 echo Istio label
 kubectl label ns $NS istio-injection=disabled --overwrite
+helm repo add mosip https://mosip.github.io/mosip-helm
 helm repo update
 
 echo Copy configmaps
