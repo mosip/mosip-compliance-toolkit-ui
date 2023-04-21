@@ -10,20 +10,19 @@ import { RxStompService } from './rx-stomp.service';
   providedIn: 'root',
 })
 export class AbisTestCaseService {
-  //rxStompService: RxStompService;
+ 
   constructor(
     private dataService: DataService,
     private activeMqService: ActiveMqService
   ) { }
 
   async sendRequestToQueue(
+    rxStompService: RxStompService,
     testCase: TestCaseModel,
     abisProjectData: AbisProjectModel,
     runId: string
   ) {
     return new Promise(async (resolve, reject) => {
-      const rxStompService = this.activeMqService.setUpConfig(abisProjectData);
-  
       let dataShareResp: any = null;
       dataShareResp = await this.getDataShareUrl(
         testCase,
@@ -43,7 +42,6 @@ export class AbisTestCaseService {
           validationRequest[appConstants.RESPONSE].status ==
           appConstants.SUCCESS
         ) {
-          console.log("request sent to ABIS");
           //SEND THE REQUEST JSON TO ABIS QUEUE
           let sendRequestResp: any = await this.activeMqService.sendToQueue(rxStompService, abisProjectData, methodRequest);
           resolve({
@@ -63,11 +61,9 @@ export class AbisTestCaseService {
             methodRequest: methodRequest,
             validationResponse: validationResponse,
           };
-          rxStompService.deactivate();
           resolve(finalResponse);
         }
       } else {
-        rxStompService.deactivate();
         resolve({
           errors: [
             {
@@ -82,47 +78,31 @@ export class AbisTestCaseService {
     });
   }
 
-  async fetchResponseFromQueue(
+  async runValidators(
     testCase: TestCaseModel,
     abisProjectData: AbisProjectModel,
-    methodRequest: any,
+    methodRequest: string,
+    methodResponse: string,
     testDataSource: string
   ) {
     return new Promise(async (resolve, reject) => {
-       const rxStompService = this.activeMqService.setUpConfig(abisProjectData);
-      //FETCH THE RESPONSE JSON TO ABIS QUEUE
-      this.activeMqService.readFromQueue(rxStompService, abisProjectData, methodRequest).then(async methodResponse => {
-        // now validate the method response against all the validators
-        let validationResponse = await this.validateResponse(
-          testCase,
-          methodRequest,
-          methodResponse,
-          testCase.methodName[0],
-          0
-        );
-        let finalResponse = {
-          methodResponse: methodResponse,
-          methodRequest: methodRequest,
-          validationResponse: validationResponse,
-          methodUrl: abisProjectData.url,
-          testDataSource: testDataSource
-        };
-        rxStompService.deactivate();
-        resolve(finalResponse);
-      })
-        .catch(e => {
-          rxStompService.deactivate();
-          resolve({
-            errors: [
-              {
-                errorCode: 'Connection Failure',
-                message: 'Unable to send request to ABIS queue',
-              },
-            ],
-          });
-        });
-
-    });
+      // now validate the method response against all the validators
+      let validationResponse = await this.validateResponse(
+        testCase,
+        methodRequest,
+        methodResponse,
+        testCase.methodName[0],
+        0
+      );
+      let finalResponse = {
+        methodResponse: methodResponse,
+        methodRequest: methodRequest,
+        validationResponse: validationResponse,
+        methodUrl: abisProjectData.url,
+        testDataSource: testDataSource
+      };
+      resolve(finalResponse);
+    })
   }
 
   getDataShareUrl(
