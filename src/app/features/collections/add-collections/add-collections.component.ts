@@ -45,7 +45,7 @@ export class AddCollectionsComponent implements OnInit {
   isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
   dataSubmitted = false;
   textDirection: any = this.userProfileService.getTextDirection();
-
+  resourceBundleJson: any = {};
   constructor(
     public authService: AuthService,
     private activatedRoute: ActivatedRoute,
@@ -59,6 +59,11 @@ export class AddCollectionsComponent implements OnInit {
 
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
+    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
+      (response: any) => {
+        this.resourceBundleJson = response;
+      }
+    );
     this.initForm();
     await this.initProjectIdAndType();
     if (this.projectType == appConstants.SBI) {
@@ -249,10 +254,10 @@ export class AddCollectionsComponent implements OnInit {
     if (testcases && testcases.length > 0) {
       for (let testcase of testcases) {
         if (!this.isAndroidAppMode) {
-          testcaseArr.push(Utils.translateTestcase(testcase,this.userProfileService.getResourceBundle()));
+          testcaseArr.push(Utils.translateTestcase(testcase,this.resourceBundleJson));
         } else if (this.isAndroidAppMode && (!testcase.inactiveForAndroid
           || (testcase.inactiveForAndroid && testcase.inactiveForAndroid != "yes"))) {
-          testcaseArr.push(Utils.translateTestcase(testcase,this.userProfileService.getResourceBundle()));
+          testcaseArr.push(Utils.translateTestcase(testcase,this.resourceBundleJson));
         }
       }
       //sort the testcases based on the testId

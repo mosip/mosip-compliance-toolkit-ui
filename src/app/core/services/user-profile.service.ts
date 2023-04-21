@@ -10,7 +10,6 @@ export class UserProfileService {
   private displayUserName = '';
   private userPreferredLanguage = '';
   private textDirection = '';
-  private resourceBundle: any;
 
   constructor() {}
 
@@ -62,14 +61,6 @@ export class UserProfileService {
     } else {
       return 'eng';
     }
-  }
-
-  setResourceBundle(resourceBundle: any) {
-    this.resourceBundle = resourceBundle;
-  }
-
-  getResourceBundle() {
-    return this.resourceBundle;
   }
 
   setTextDirection(textDirection: string) {

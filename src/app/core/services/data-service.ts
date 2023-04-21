@@ -233,4 +233,7 @@ export class DataService {
     return this.httpClient.post(url, body);
   }
 
+  getResourceBundle(langCode: string) {
+    return this.httpClient.get(`./assets/i18n/${langCode}.json`);
+  }
 }

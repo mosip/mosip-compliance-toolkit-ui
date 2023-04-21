@@ -96,7 +96,7 @@ export class ExecuteTestRunComponent implements OnInit {
   abisRequestSendFailure = false;
   private topicSubscription: Subscription;
   textDirection: any = this.userProfileService.getTextDirection();
-  resourceBundleJson: any = this.userProfileService.getResourceBundle();
+  resourceBundleJson: any = {};
 
   constructor(
     private dialogRef: MatDialogRef<ExecuteTestRunComponent>,
@@ -118,6 +118,11 @@ export class ExecuteTestRunComponent implements OnInit {
 
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
+    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
+      (response: any) => {
+        this.resourceBundleJson = response;
+      }
+    );
     this.input = this.data;
     this.collectionId = this.input.collectionId;
     this.projectType = this.input.projectType;

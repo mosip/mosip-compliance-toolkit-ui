@@ -42,6 +42,7 @@ export class ViewCollectionsComponent implements OnInit {
   dataSubmitted = false;
   @ViewChild(MatSort) sort: MatSort;
   textDirection: any = this.userProfileService.getTextDirection();
+  resourceBundleJson: any = {};
 
   constructor(
     public authService: AuthService,
@@ -56,6 +57,11 @@ export class ViewCollectionsComponent implements OnInit {
 
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
+    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
+      (response: any) => {
+        this.resourceBundleJson = response;
+      }
+    );
     this.initForm();
     await this.initAllParams();
     await this.getCollection();
@@ -180,7 +186,7 @@ export class ViewCollectionsComponent implements OnInit {
             let testcases = response['response']['testcases'];
             let testcaseArr = [];
             for (let testcase of testcases) {
-              testcaseArr.push(Utils.translateTestcase(testcase,this.userProfileService.getResourceBundle()));
+              testcaseArr.push(Utils.translateTestcase(testcase,this.resourceBundleJson));
             }
             //console.log(testcaseArr);
             //sort the testcases based on the testId
