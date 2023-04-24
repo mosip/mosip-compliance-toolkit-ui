@@ -3470,6 +3470,9 @@
 		"SEGMENT_INVALID_DATA_VALIDATOR_001": "بالنسبة للبيانات غير الصالحة ، تم استلام رمز الحالة المتوقع: {}",
 		"SEGMENT_INVALID_DATA_VALIDATOR_002": "بالنسبة للبيانات غير الصالحة ، تم استلام رمز حالة غير متوقع: {}",
 		"SEGMENT_NO_INPUT_DATA_VALIDATOR_001": "بالنسبة للبيانات غير الصالحة ، تم استلام رمز الحالة المتوقع: {}",
-		"SEGMENT_NO_INPUT_DATA_VALIDATOR_002": "بالنسبة للبيانات غير الصالحة ، تم استلام رمز حالة غير متوقع: {}"
+		"SEGMENT_NO_INPUT_DATA_VALIDATOR_002": "بالنسبة للبيانات غير الصالحة ، تم استلام رمز حالة غير متوقع: {}",
+		"BIOMETRIC_QUALITY_CHECK_001": "القياسات الحيوية",
+		"BIOMETRIC_QUALITY_CHECK_002": "القياسات الحيوية",
+		"BIOMETRIC_QUALITY_CHECK_003": "غير قادر على الاتصال"
 	}
 }

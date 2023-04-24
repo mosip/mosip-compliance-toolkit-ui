@@ -3469,6 +3469,9 @@
 		"SEGMENT_INVALID_DATA_VALIDATOR_001": "Pour les données non valides, code d'état attendu reçu : {}",
 		"SEGMENT_INVALID_DATA_VALIDATOR_002": "Pour les données non valides, code d'état inattendu reçu : {}",
 		"SEGMENT_NO_INPUT_DATA_VALIDATOR_001": "Pour les données non valides, code d'état attendu reçu : {}",
-		"SEGMENT_NO_INPUT_DATA_VALIDATOR_002": "Pour les données non valides, code d'état inattendu reçu : {}"
+		"SEGMENT_NO_INPUT_DATA_VALIDATOR_002": "Pour les données non valides, code d'état inattendu reçu : {}",
+		"BIOMETRIC_QUALITY_CHECK_001": "Les validations BiometricsQualityCheckValidator échouent.",
+		"BIOMETRIC_QUALITY_CHECK_002": "Les validations BiometricsQualityCheckValidator sont réussies.",
+		"BIOMETRIC_QUALITY_CHECK_003": "Impossible de se connecter"
 	}
 }
