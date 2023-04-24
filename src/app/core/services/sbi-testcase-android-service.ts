@@ -6,14 +6,17 @@ import * as appConstants from 'src/app/app.constants';
 import { SbiDiscoverResponseModel } from '../models/sbi-discover';
 import Utils from 'src/app/app.utils';
 import { MosipSbiCapacitorPlugin } from 'mosip-sbi-capacitor-plugin';
+import { UserProfileService } from './user-profile.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SbiTestCaseAndroidService {
+  resourceBundleJson: any = {};
   constructor(
     private dataService: DataService,
-    private appConfigService: AppConfigService
+    private appConfigService: AppConfigService,
+    private userProfileService: UserProfileService
   ) { }
 
   async runTestCase(
@@ -23,6 +26,11 @@ export class SbiTestCaseAndroidService {
     sbiSelectedDevice: string,
     beforeKeyRotationResp: any
   ) {
+    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
+      (response: any) => {
+        this.resourceBundleJson = response;
+      }
+    );
     return new Promise(async (resolve, reject) => {
       const methodRequest = this.createRequest(testCase, sbiSelectedDevice);
       let startExecutionTime = new Date().toISOString();
@@ -79,8 +87,12 @@ export class SbiTestCaseAndroidService {
         resolve({
           errors: [
             {
-              errorCode: 'Connection Failure',
-              message: 'Unable to connect to device / SBI',
+              errorCode: this.resourceBundleJson.executeTestRun['connectionFailure']
+                ? this.resourceBundleJson.executeTestRun['connectionFailure']
+                : 'Connection Failure',
+              message: this.resourceBundleJson.executeTestRun['unableToConnectSBI']
+                ? this.resourceBundleJson.executeTestRun['unableToConnectSBI']
+                : 'Unable to connect to device / SBI',
             },
           ],
         });
