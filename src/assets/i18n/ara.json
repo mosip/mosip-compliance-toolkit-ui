@@ -3404,6 +3404,7 @@
 		}
 	},
 	"validatorMessages": {
+		"BR_TAG": "<br>",
 		"SCHEMA_VALIDATOR_001": "يتحقق من الاستجابة للسمات المطلوبة والقيم الصحيحة",
 		"RESPONSE_MISMATCH_VALIDATOR_001": "تطابق bioCount والشرائح والاستثناءات استجابة للطلب",
 		"RESPONSE_MISMATCH_VALIDATOR_002": "فشل ResponseMismatchValidator بسبب عدم تطابق العد الحيوي. في الطلب ، bioCount = {} واستجابة لذلك ، bioCount = {}",
@@ -3441,6 +3442,11 @@
 		"EXTRACT_TEMPLATE_NO_INPUT_DATA_VALIDATOR_002": "بالنسبة للبيانات غير الصالحة ، تم استلام رمز حالة غير متوقع: {}",
 		"EXTRACT_TEMPLATE_INVALID_DATA_VALIDATOR_001": "بالنسبة للبيانات غير الصالحة ، تم استلام رمز الحالة المتوقع: {}",
 		"EXTRACT_TEMPLATE_INVALID_DATA_VALIDATOR_002": "بالنسبة للبيانات غير الصالحة ، تم استلام رمز حالة غير متوقع: {}",
+		"MATCH_VALIDATOR_001": "تطابق إيجابي لـ ",
+		"MATCH_VALIDATOR_002": " ناجح ل gallery",
+		"MATCH_VALIDATOR_003": "مطابقة سلبية لـ ",
+		"MATCH_VALIDATOR_004": " فشل في gallery",
+		"MATCH_VALIDATOR_005": "فشل رمز حالة المباراة ، تم استلامه: {}",
 		"MATCH_INVALID_DATA_VALIDATOR_001": "بالنسبة للبيانات غير الصالحة ، تم استلام رمز الحالة المتوقع: {}",
 		"MATCH_INVALID_DATA_VALIDATOR_002": "بالنسبة للبيانات غير الصالحة ، تم استلام رمز حالة غير متوقع: {}",
 		"MATCH_NO_DATA_VALIDATOR_001": "لا توجد بيانات للمطابقة ، تم استلام رمز الحالة المتوقع: {}",
