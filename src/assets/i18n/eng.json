@@ -3474,6 +3474,7 @@
 		"ISO_VALIDATOR_003": "ISOStandardsValidator[ISO19794-4:2011] failed due to below issues:",
 		"ISO_VALIDATOR_004": "<BR>Invalid Format Identifier for Finger Modality, expected values[0x46495200], but received input value[{}]",
 		"ISO_VALIDATOR_005": "<BR>Invalid Version Number for Finger Modality, expected values[0x30323000], but received input value[{}]",
+		"ISO_VALIDATOR_006": "<BR>Invalid No Of Representations for Finger Modality, expected values[0x0001], but received input value[{}]",
 		"BIOMETRIC_QUALITY_CHECK_001": "BiometricsQualityCheckValidator validations are not successful.",
 		"BIOMETRIC_QUALITY_CHECK_002": "BiometricsQualityCheckValidator validations are successful.",
 		"BIOMETRIC_QUALITY_CHECK_003": "Unable to connect"
