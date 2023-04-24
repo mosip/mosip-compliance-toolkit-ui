@@ -299,7 +299,6 @@ export class TestRunComponent implements OnInit {
   }
 
   getValidatorMessage(item: any) {
-    
     const COMMA_SEPARATOR = ',';
     const validatorMessages = this.resourceBundleJson["validatorMessages"];
     let descriptionKeyString = item.descriptionKey;
