@@ -31,6 +31,7 @@ export class AddTestDataComponent implements OnInit {
   fileByteArray: any;
   textDirection: any = this.userProfileService.getTextDirection();
   buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : 'null';
+  resourceBundleJson: any = {};
   allowedFileTypes = this.appConfigService
     .getConfig()
     ['allowedFileTypes'].split(',');
@@ -52,6 +53,11 @@ export class AddTestDataComponent implements OnInit {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
     this.initForm();
     this.getAllowedFileTypes(this.allowedFileTypes);
+    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
+      (response: any) => {
+        this.resourceBundleJson = response;
+      }
+    );
   }
 
   initForm() {
@@ -94,8 +100,8 @@ export class AddTestDataComponent implements OnInit {
   }
 
   showToolTip() {
-    const title = 'Info';
-    const msg = `Using the upload test data option you can upload your test data for testing. If you don’t want to upload the test data, MOSIP default data will be used for testing.
+    let title = 'Info';
+    let msg = `Using the upload test data option you can upload your test data for testing. If you don’t want to upload the test data, MOSIP default data will be used for testing.
     
     For uploading the test data please follow the below instructions:
     
@@ -106,6 +112,9 @@ export class AddTestDataComponent implements OnInit {
     5. Modify the test cases with proper expected input data as per the scenario and zip the overall folder and upload it.
     
     ** If you don’t want to upload any test data for a test scenario then don't modify data for that Test Case folder and keep it as is in the zip file.`;
+    let translatedMsgs = this.resourceBundleJson['addTestData'];
+    translatedMsgs.title ? title = translatedMsgs.title : title;
+    translatedMsgs.msg ? msg = translatedMsgs.msg : msg; 
     const body = {
       case: 'INFO',
       title: title,

@@ -68,7 +68,10 @@
 		"nameIsRequired": "Le nom est requis",
 		"projectTypeIsRequired": "Le type de projet est requis",
 		"purposeIsRequired": "Le but est requis",
-		"back": "retour"
+		"back": "retour",
+		"title": "Info",
+		"msg": "À l'aide de l'option de téléchargement des données de test, vous pouvez télécharger vos données de test pour les tests. Si vous ne souhaitez pas télécharger les données de test, les données par défaut MOSIP seront utilisées pour les tests.\n\nPour télécharger les données de test, veuillez suivre les instructions ci-dessous :\n\n1. Cliquez sur le bouton Télécharger un exemple de fichier.\n2. Un fichier zip contenant le modèle pour préparer les données de test sera téléchargé.\n3. Dans le fichier zip, vous trouverez plusieurs sous-dossiers avec les ID de cas de test.\n4. Dans chaque dossier, vous trouverez un fichier readMe.txt avec une description détaillée du cas de test, des données d'entrée attendues et de la sortie attendue. Les dossiers contiendront également des exemples de fichiers CBEFF qui doivent être modifiés ou remplacés par les données biométriques requises.\n5. Modifiez les cas de test avec les données d'entrée attendues appropriées selon le scénario, compressez le dossier global et téléchargez-le.\n\n** Si vous ne souhaitez pas télécharger de données de test pour un scénario de test, ne modifiez pas les données pour ce dossier Test Case et conservez-le tel quel dans le fichier zip.",
+		"close": "Fermer"
 	},
 	"viewProject": {
 		"name": "Nom",

@@ -20,6 +20,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import {ClipboardModule} from '@angular/cdk/clipboard';
+import { I18nModule } from '../i18n.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -64,7 +66,8 @@ import {ClipboardModule} from '@angular/cdk/clipboard';
     MatCheckboxModule,
     MatTooltipModule,
     MatProgressBarModule,
-    ClipboardModule
+    ClipboardModule,
+    I18nModule
   ],
 })
 export class MaterialModule {}
