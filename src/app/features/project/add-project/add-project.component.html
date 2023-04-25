@@ -374,29 +374,6 @@
                 </div>
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
-                        <mat-label>{{"addProject.purpose" | translate }}
-                            <span class="required-annotation">*</span>
-                        </mat-label>
-                    </span>
-                    <span class="fieldContainer">
-                        <mat-form-field appearance="legacy" class="fieldContainerBox">
-                            <mat-label>{{"addProject.purpose" | translate }}</mat-label>
-                            <mat-select formControlName="abisPurpose" #singleSelect  (selectionChange)="handleAbisPurposeChange()">
-                                <mat-option value="Insert">
-                                    Insert
-                                </mat-option>
-                                <mat-option value="Identify">
-                                    Identify
-                                </mat-option>
-                            </mat-select>
-                            <mat-error *ngIf="projectForm.controls['abisPurpose'].hasError('required')">
-                                {{"addProject.purposeIsRequired"|translate}}
-                            </mat-error>
-                        </mat-form-field>
-                    </span>
-                </div>
-                <div class="fieldWrapper">
-                    <span class="fieldLabel">
                         <mat-label>{{"addProject.selectTestData" | translate}}
                             <span class="required-annotation">*</span>
                         </mat-label>

@@ -232,8 +232,7 @@ export class AddCollectionsComponent implements OnInit {
       this.subscriptions.push(
         this.dataService
           .getAbisTestCases(
-            this.abisProjectData.abisVersion,
-            this.abisProjectData.purpose
+            this.abisProjectData.abisVersion
           )
           .subscribe(
             (response: any) => {

@@ -10,7 +10,7 @@ import { RxStompService } from './rx-stomp.service';
   providedIn: 'root',
 })
 export class AbisTestCaseService {
- 
+
   constructor(
     private dataService: DataService,
     private activeMqService: ActiveMqService
@@ -20,60 +20,65 @@ export class AbisTestCaseService {
     rxStompService: RxStompService,
     testCase: TestCaseModel,
     abisProjectData: AbisProjectModel,
-    runId: string
+    requestId: string,
+    referenceId: string,
+    cbeffFileIndex: number
   ) {
     return new Promise(async (resolve, reject) => {
       let dataShareResp: any = null;
-      dataShareResp = await this.getDataShareUrl(
-        testCase,
-        abisProjectData.bioTestDataFileName
-      );
-      if (dataShareResp) {
-        let methodRequest: any = this.createRequest(testCase, dataShareResp["url"], runId);
-        methodRequest = JSON.stringify(methodRequest);
-        //now validate the method request against the Schema
-        let validationRequest: any = await this.validateRequest(
+      //create a datashare URL but only for Insert
+      if (testCase.methodName[0] == appConstants.ABIS_INSERT) {
+        dataShareResp = await this.getDataShareUrl(
           testCase,
-          methodRequest
+          abisProjectData.bioTestDataFileName,
+          cbeffFileIndex
         );
-        if (
-          validationRequest &&
-          validationRequest[appConstants.RESPONSE] &&
-          validationRequest[appConstants.RESPONSE].status ==
-          appConstants.SUCCESS
-        ) {
-          //SEND THE REQUEST JSON TO ABIS QUEUE
-          let sendRequestResp: any = await this.activeMqService.sendToQueue(rxStompService, abisProjectData, methodRequest);
+        if (!dataShareResp) {
           resolve({
-            ...sendRequestResp,
-            methodRequest: methodRequest,
-            testDataSource: dataShareResp.testDataSource
+            errors: [
+              {
+                errorCode: 'Failure',
+                message:
+                  'Unable to generate datashare URL for testcase : ' +
+                  testCase.testId,
+              },
+            ],
           });
-        } else {
-          let validationResponse = {
-            response: {
-              validationsList: [validationRequest[appConstants.RESPONSE]],
-            },
-            errors: [],
-          };
-          let finalResponse = {
-            methodResponse: 'Method not invoked since request is invalid.',
-            methodRequest: methodRequest,
-            validationResponse: validationResponse,
-          };
-          resolve(finalResponse);
         }
-      } else {
+      }
+      let methodRequest: any = this.createRequest(testCase, dataShareResp, requestId, referenceId);
+      methodRequest = JSON.stringify(methodRequest);
+      //now validate the method request against the Schema
+      let validationRequest: any = await this.validateRequest(
+        testCase,
+        methodRequest
+      );
+      if (
+        validationRequest &&
+        validationRequest[appConstants.RESPONSE] &&
+        validationRequest[appConstants.RESPONSE].status ==
+        appConstants.SUCCESS
+      ) {
+        //SEND THE REQUEST JSON TO ABIS QUEUE
+        let sendRequestResp: any = await this.activeMqService.sendToQueue(rxStompService, abisProjectData, methodRequest);
         resolve({
-          errors: [
-            {
-              errorCode: 'Failure',
-              message:
-                'Unable to generate datashare URL for testcase : ' +
-                testCase.methodName,
-            },
-          ],
+          ...sendRequestResp,
+          methodRequest: methodRequest,
+          testDataSource: dataShareResp ? dataShareResp.testDataSource : ''
         });
+      } else {
+        let validationResponse = {
+          response: {
+            validationsList: [validationRequest[appConstants.RESPONSE]],
+          },
+          errors: [],
+        };
+        let finalResponse = {
+          methodResponse: 'Method not invoked since request is invalid.',
+          methodRequest: methodRequest,
+          validationResponse: validationResponse,
+        };
+        resolve(finalResponse);
       }
     });
   }
@@ -107,14 +112,14 @@ export class AbisTestCaseService {
 
   getDataShareUrl(
     testCase: TestCaseModel,
-    selectedBioTestDataName: string
+    selectedBioTestDataName: string,
+    cbeffFileIndex: number
   ): any {
     return new Promise((resolve, reject) => {
       let dataShareRequestDto = {
         testcaseId: testCase.testId,
         bioTestDataName: selectedBioTestDataName,
-        purpose: testCase.otherAttributes.abisPurpose[0],
-        methodName: testCase.methodName[0],
+        cbeffFileSuffix: cbeffFileIndex
       };
       let request = {
         id: appConstants.DATASHARE_ID,
@@ -153,16 +158,16 @@ export class AbisTestCaseService {
     });
   }
 
-  createRequest(testCase: TestCaseModel, dataShareUrl: string, runId: string): any {
+  createRequest(testCase: TestCaseModel, dataShareResp: any, requestId: string, referenceId: string): any {
     let request: any = {};
     if (testCase.methodName[0] == appConstants.ABIS_METHOD_INSERT) {
       request = {
-        "id": appConstants.ABIS_INSERT,
+        "id": appConstants.ABIS_INSERT_ID,
         "version": appConstants.ABIS_INSERT_VERSION,
-        "requestId": runId + "_" + testCase.testId,
+        "requestId": requestId,
         "requesttime": new Date().toISOString(),
-        "referenceId": runId + "_" + testCase.testId,
-        "referenceURL": dataShareUrl
+        "referenceId": referenceId,
+        "referenceURL": dataShareResp ? dataShareResp["url"] : ""
       };
     }
     if (testCase.methodName[0] == appConstants.ABIS_METHOS_IDENTIFY) {

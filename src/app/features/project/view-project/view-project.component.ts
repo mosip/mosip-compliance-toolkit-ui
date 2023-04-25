@@ -99,7 +99,7 @@ export class ViewProjectComponent implements OnInit {
       this.initAbisProjectForm();
       await this.getAbisProjectDetails();
       this.populateAbisProjectForm();
-      await this.getBioTestDataNames(this.projectForm.controls['abisPurpose'].value);
+      await this.getBioTestDataNames(appConstants.ABIS);
     }
     await this.getCollections();
     this.dataSource.paginator = this.paginator;
@@ -297,9 +297,6 @@ export class ViewProjectComponent implements OnInit {
       this.projectForm.controls['abisSpecVersion'].setValue(
         this.projectFormData.abisVersion
       );
-      this.projectForm.controls['abisPurpose'].setValue(
-        this.projectFormData.purpose
-      );
       this.projectForm.controls['abisBioTestData'].setValue(
         this.projectFormData.bioTestDataFileName
       );
@@ -344,10 +341,6 @@ export class ViewProjectComponent implements OnInit {
     await this.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value);
   }
 
-  async handleAbisPurposeChange() {
-    await this.getBioTestDataNames(this.projectForm.controls['abisPurpose'].value);
-  }
-  
   addCollection() {
     this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}/collection/add`,

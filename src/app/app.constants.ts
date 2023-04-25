@@ -16,8 +16,10 @@ export const TEST_RUN_DELETE_ID = 'mosip.toolkit.testrun.delete';
 export const DATASHARE_ID = 'mosip.toolkit.abis.datashare.url';
 export const ABIS_SEND_TO_QUEUE = 'mosip.toolkit.abis.send';
 export const ABIS_READ_FROM_QUEUE = 'mosip.toolkit.abis.read';
-export const ABIS_INSERT = "mosip.abis.insert";
+export const ABIS_INSERT_ID = "mosip.abis.insert";
 export const ABIS_INSERT_VERSION = "1.1";
+export const ABIS_INSERT = "insert";
+export const ABIS_IDENTIFY = "identify";
 
 export const VERSION = '1.0';
 
@@ -45,7 +47,7 @@ export const SBI_CONTROLS = [
   'deviceType',
   'deviceSubType',
 ];
-export const ABIS_CONTROLS = ['abisUrl', 'username', 'password', 'outboundQueueName','inboundQueueName', 'abisSpecVersion', 'abisPurpose','abisBioTestData'];
+export const ABIS_CONTROLS = ['abisUrl', 'username', 'password', 'outboundQueueName','inboundQueueName', 'abisSpecVersion','abisBioTestData'];
 export const TEST_DATA_CONTROLS= ['name', 'type', 'purpose'];
 export const SBI_KEY_ROTATION_ITERATIONS = 'keyRotationIterations';
 //SBI methods related constants
@@ -85,3 +87,4 @@ export const ACCESS_TOKEN = 'accessToken';
 export const AUTHORIZATION = 'Authorization';
 export const REQUEST_ID = 'requestId';
 export const BLANK_STRING = "";
+export const UNDERSCORE = "_";

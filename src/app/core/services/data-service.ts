@@ -99,8 +99,8 @@ export class DataService {
     return this.httpClient.get(url);
   }
 
-  getAbisTestCases(abisSpecVersion: string, abisPurpose: string) {
-    let url = `${this.SERVICES_BASE_URL}getAbisTestCases?abisSpecVersion=${abisSpecVersion}&abisPurpose=${abisPurpose}`;
+  getAbisTestCases(abisSpecVersion: string) {
+    let url = `${this.SERVICES_BASE_URL}getAbisTestCases?abisSpecVersion=${abisSpecVersion}`;
     return this.httpClient.get(url);
   }
 

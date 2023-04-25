@@ -98,6 +98,7 @@ export class ExecuteTestRunComponent implements OnInit {
   abisSentMessage: string = appConstants.BLANK_STRING;
   abisSentDataSource: string = appConstants.BLANK_STRING;
   abisRecvdMessage: string = appConstants.BLANK_STRING;
+  cbeffFileIndex: number = 0;
   textDirection: any = this.userProfileService.getTextDirection();
   resourceBundleJson: any = {};
 
@@ -372,17 +373,26 @@ export class ExecuteTestRunComponent implements OnInit {
             this.showResumeAgainBtn = true;
             await new Promise(async (resolve, reject) => { });
           }
+          let resetCurrentTestCase = true;
           //reset all attributes for next testcase
           if (this.projectType == appConstants.ABIS) {
             this.abisRequestSendFailure = false;
+            this.cbeffFileIndex = 0;
             this.abisSentMessage = appConstants.BLANK_STRING;
             this.abisSentDataSource = appConstants.BLANK_STRING;
             this.abisRecvdMessage = appConstants.BLANK_STRING;
+            if (this.cbeffFileIndex > 0) {
+              //do no reset current testcaseId
+              resetCurrentTestCase = false;
+              await this.startWithSameTestcase();
+            } 
           }
-          this.currectTestCaseId = '';
-          this.currectTestCaseName = '';
-          this.currentTestDescription = '';
-          this.showLoader = false;
+          if (resetCurrentTestCase) {
+            this.currectTestCaseId = '';
+            this.currectTestCaseName = '';
+            this.currentTestDescription = '';
+            this.showLoader = false;
+          }
           
         }
       }
@@ -441,6 +451,7 @@ export class ExecuteTestRunComponent implements OnInit {
       this.serviceErrors = true;
       this.errorsSummary = [];
       errors.forEach((err: any) => {
+
         this.errorsSummary.push(
           err[appConstants.ERROR_CODE] + ' - ' + err[appConstants.MESSAGE]
         );
@@ -705,18 +716,45 @@ export class ExecuteTestRunComponent implements OnInit {
             this.rxStompService.deactivate();
           }
           this.rxStompService = this.activeMqService.setUpConfig(this.abisProjectData);
+          let cbeffFilesCount = 0;
+          if (testCase.otherAttributes.cbeffFilesCount) {
+            cbeffFilesCount = Number.parseInt(testCase.otherAttributes.cbeffFilesCount);
+          }
+          let requestId = this.testRunId + appConstants.UNDERSCORE + testCase.testId;
+          if (cbeffFilesCount > 1) {
+            if (this.cbeffFileIndex == 0) {
+              this.cbeffFileIndex = 1;
+            }
+            requestId = requestId + appConstants.UNDERSCORE + this.cbeffFileIndex;  
+          }
+          let referenceId = requestId;
+          if (testCase.otherAttributes.referenceTestId) {
+            referenceId = this.testRunId + appConstants.UNDERSCORE + testCase.otherAttributes.referenceTestId;
+          }
+          console.log(`requestId: ${requestId}`);
+          console.log(`referenceId: ${referenceId}`);
           this.abisRequestSendFailure = false;
           const abisReq: any = await this.abisTestCaseService.sendRequestToQueue(
             this.rxStompService,
             testCase,
             this.abisProjectData,
-            this.testRunId
+           requestId,
+           referenceId,
+           this.cbeffFileIndex
           );
           if (abisReq && abisReq[appConstants.STATUS] && abisReq[appConstants.STATUS] == appConstants.SUCCESS) {
+            if (cbeffFilesCount > 1) {
+              this.cbeffFileIndex = this.cbeffFileIndex + 1;
+            } 
+            if (this.cbeffFileIndex == this.cbeffFileIndex) {
+              //start with next testcase
+              this.cbeffFileIndex = 0;
+            }
             this.abisSentMessage = abisReq.methodRequest;
             this.abisSentDataSource = abisReq.testDataSource;
-            this.subscribeToABISQueue();
+            this.subscribeToABISQueue(requestId, cbeffFilesCount);
           } else {
+            this.cbeffFileIndex = 0;
             this.abisRequestSendFailure = true;
             this.abisSentMessage = appConstants.BLANK_STRING;
             this.abisSentDataSource = appConstants.BLANK_STRING;
@@ -817,6 +855,12 @@ export class ExecuteTestRunComponent implements OnInit {
     this.basicTimer.stop();
   }
 
+  async startWithSameTestcase() {
+    await this.runExecuteForLoop(false, true);
+    this.runComplete = true;
+    this.basicTimer.stop();
+  }
+
   getStreamImgTagId() {
     let id = this.currectTestCaseId;
     return id;
@@ -894,9 +938,7 @@ export class ExecuteTestRunComponent implements OnInit {
     ]);
   }
 
-  subscribeToABISQueue() {
-    const sentRequestId = this.testRunId + "_" + this.currectTestCaseId;
-    console.log(`sentRequestId: ${sentRequestId}`);
+  subscribeToABISQueue(sentRequestId: string, cbeffFilesCount: number) {
     this.rxStompService
       .watch(this.abisProjectData.inboundQueueName)
       .forEach(async (message: Message) => {

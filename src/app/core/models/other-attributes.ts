@@ -17,6 +17,7 @@ export class OtherAttributesModel {
       public keyRotationTestCase: boolean,
       public transactionId: any,
       public invalidRequestAttribute: any,
-      public abisPurpose: any
+      public cbeffFilesCount: any,
+      public referenceTestId: any
     ) {}
   }
