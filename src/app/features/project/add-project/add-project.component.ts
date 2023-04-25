@@ -45,7 +45,7 @@ export class AddProjectComponent implements OnInit {
       await this.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value);
     }
     if (projectType == appConstants.ABIS) {
-      await this.getBioTestDataNames(this.projectForm.controls['abisPurpose'].value);
+      await this.getBioTestDataNames(appConstants.ABIS);
     } 
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
   }
@@ -140,10 +140,6 @@ export class AddProjectComponent implements OnInit {
 
   async handleSdkPurposeChange() {
     await this.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value);
-  }
-
-  async handleAbisPurposeChange() {
-    await this.getBioTestDataNames(this.projectForm.controls['abisPurpose'].value);
   }
 
   async saveProject() {
