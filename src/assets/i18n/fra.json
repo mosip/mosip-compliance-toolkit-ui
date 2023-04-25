@@ -201,7 +201,13 @@
 		"resume": "Reprendre",
 		"resumeNext": "Reprendre Suivant",
 		"continue": "Continuer",
-		"viewTestRun": "Afficher le test"
+		"viewTestRun": "Afficher le test",
+		"connectionFailure": "Échec de connexion",
+		"unableToConnectSBI": "Impossible de se connecter à l'appareil / SBI",
+		"unableToConnectSDK": "Impossible de se connecter aux services SDK",
+		"methodNotInvoked": "Méthode non invoquée car la requête n'est pas valide.",
+		"failure": "Échec",
+		"unableToGenerateRequest": "Impossible de générer une demande au service SDK : "
 	},
 	"testcases": {
 		"SBI1000": {

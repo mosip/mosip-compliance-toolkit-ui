@@ -201,7 +201,13 @@
 		"resume": "سيرة ذاتية",
 		"resumeNext": "استئناف بعد ذلك",
 		"continue": "يكمل",
-		"viewTestRun": "مشاهدة ملف امتحان يجري"
+		"viewTestRun": "مشاهدة ملف امتحان يجري",
+		"connectionFailure": "فشل الاتصال",
+		"unableToConnectSBI": "تعذر الاتصال بالجهاز / SBI",
+		"unableToConnectSDK": "تعذر الاتصال بخدمات SDK",
+		"methodNotInvoked": "لم يتم استدعاء الأسلوب لأن الطلب غير صالح.",
+		"failure": "فشل",
+		"unableToGenerateRequest": "تعذر إنشاء طلب لخدمة SDK: "
 	},
 	"testcases": {
 		"SBI1000": {

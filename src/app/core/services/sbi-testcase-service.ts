@@ -5,6 +5,7 @@ import { DataService } from './data-service';
 import * as appConstants from 'src/app/app.constants';
 import { SbiDiscoverResponseModel } from '../models/sbi-discover';
 import Utils from 'src/app/app.utils';
+import { UserProfileService } from './user-profile.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,9 +13,11 @@ import Utils from 'src/app/app.utils';
 export class SbiTestCaseService {
   constructor(
     private dataService: DataService,
-    private appConfigService: AppConfigService
+    private appConfigService: AppConfigService,
+    private userProfileService: UserProfileService
   ) {}
   SBI_BASE_URL = this.appConfigService.getConfig()['SBI_BASE_URL'];
+  resourceBundleJson: any = {};
 
   async runTestCase(
     testCase: TestCaseModel,
@@ -22,6 +25,11 @@ export class SbiTestCaseService {
     sbiSelectedDevice: string,
     beforeKeyRotationResp: any
   ) {
+    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
+      (response: any) => {
+        this.resourceBundleJson = response;
+      }
+    );
     return new Promise(async (resolve, reject) => {
       const methodRequest = this.createRequest(testCase, sbiSelectedDevice);
       //now validate the method request against the Schema
@@ -86,8 +94,12 @@ export class SbiTestCaseService {
           resolve({
             errors: [
               {
-                errorCode: 'Connection Failure',
-                message: 'Unable to connect to device / SBI',
+                errorCode: this.resourceBundleJson.executeTestRun['connectionFailure']
+                  ? this.resourceBundleJson.executeTestRun['connectionFailure']
+                  : 'Connection Failure',
+                message: this.resourceBundleJson.executeTestRun['unableToConnectSBI']
+                  ? this.resourceBundleJson.executeTestRun['unableToConnectSBI']
+                  : 'Unable to connect to device / SBI',
               },
             ],
           });
@@ -100,7 +112,9 @@ export class SbiTestCaseService {
           errors: [],
         };
         let finalResponse = {
-          methodResponse: 'Method not invoked since request is invalid.',
+          methodResponse: this.resourceBundleJson.executeTestRun['methodNotInvoked']
+            ? this.resourceBundleJson.executeTestRun['methodNotInvoked']
+            : 'Method not invoked since request is invalid.',
           methodRequest: JSON.stringify(methodRequest),
           validationResponse: validationResponse,
         };
