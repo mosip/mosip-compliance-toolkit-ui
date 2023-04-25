@@ -48,6 +48,7 @@ export class TestRunHistoryComponent implements OnInit {
   pageIndex = 0;
   pageSizeOptions: number[] = [5, 10, 15, 20];
   dataSubmitted = false;
+  resourceBundleJson: any = {};
 
   constructor(
     public authService: AuthService,
@@ -62,6 +63,11 @@ export class TestRunHistoryComponent implements OnInit {
 
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
+    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
+      (response: any) => {
+        this.resourceBundleJson = response;
+      }
+    );
     await this.initAllParams();
     await this.getCollection();
     if (this.projectType == appConstants.SBI) {
@@ -77,23 +83,25 @@ export class TestRunHistoryComponent implements OnInit {
   }
 
   initBreadCrumb() {
+    const breadcrumbLabels = this.resourceBundleJson['breadcrumb'];
+    this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
     if (this.sbiProjectData) {
       this.breadcrumbService.set(
         '@projectBreadCrumb',
-        `${this.projectType} Project - ${this.sbiProjectData.name}`
+        `${this.projectType} ${breadcrumbLabels.project} - ${this.sbiProjectData.name}`
       );
     }
     if (this.sdkProjectData) {
       this.breadcrumbService.set(
         '@projectBreadCrumb',
-        `${this.projectType} Project - ${this.sdkProjectData.name}`
+        `${this.projectType} ${breadcrumbLabels.project} - ${this.sdkProjectData.name}`
       );
     }
     this.breadcrumbService.set(
       '@collectionBreadCrumb',
       `${this.collectionName}`
     );
-    this.breadcrumbService.set('@testrunBreadCrumb', `Test Run History`);
+    this.breadcrumbService.set('@testrunBreadCrumb', `${breadcrumbLabels.testRunHistory}`);
   }
 
   initAllParams() {

@@ -107,16 +107,18 @@ export class TestRunComponent implements OnInit {
   }
 
   initBreadCrumb() {
+    const breadcrumbLabels = this.resourceBundleJson['breadcrumb'];
+    this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
     if (this.sbiProjectData) {
       this.breadcrumbService.set(
         '@projectBreadCrumb',
-        `${this.projectType} Project - ${this.sbiProjectData.name}`
+        `${this.projectType} ${breadcrumbLabels.project} - ${this.sbiProjectData.name}`
       );
     }
     if (this.sdkProjectData) {
       this.breadcrumbService.set(
         '@projectBreadCrumb',
-        `${this.projectType} Project - ${this.sdkProjectData.name}`
+        `${this.projectType} ${breadcrumbLabels.project} - ${this.sdkProjectData.name}`
       );
     }
     this.breadcrumbService.set(
@@ -125,7 +127,7 @@ export class TestRunComponent implements OnInit {
     );
     this.breadcrumbService.set(
       '@testrunBreadCrumb',
-      `Test Run - (${new Date(this.runDetails.runDtimes).toLocaleString()})`
+      `${breadcrumbLabels.testRun} - (${new Date(this.runDetails.runDtimes).toLocaleString()})`
     );
   }
 

@@ -1,4 +1,15 @@
 {
+	"breadcrumb": {
+		"home": "Maison",
+		"project": "Projet",
+		"testRun": "Essai",
+		"add": "Ajouter",
+		"projectsDashboard": "Tableau de bord des projets",
+		"biometricTestData": "Données de test biométriques",
+		"addNewProject": "Ajouter un nouveau projet",
+		"uploadBiometricTestData": "Télécharger les données de test biométrique",
+		"testRunHistory": "Historique des tests"
+	},
 	"projectDashboard": {
 		"addProject": "Ajouter un projet",
 		"biometricData": "Données biométriques",

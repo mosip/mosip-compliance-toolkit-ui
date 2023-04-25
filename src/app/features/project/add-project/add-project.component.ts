@@ -12,6 +12,7 @@ import { SdkProjectModel } from 'src/app/core/models/sdk-project';
 import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
+import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
   selector: 'app-project',
@@ -29,17 +30,21 @@ export class AddProjectComponent implements OnInit {
   hidePassword = true;
   dataLoaded = true;
   dataSubmitted = false;
+
   constructor(
     public authService: AuthService,
     private dataService: DataService,
     private dialog: MatDialog,
     private router: Router,
+    private breadcrumbService: BreadcrumbService,
     private userProfileService: UserProfileService,
     private translate:TranslateService
   ) {}
 
   async ngOnInit() {
+    this.translate.use(this.userProfileService.getUserPreferredLanguage());
     this.initForm();
+    this.initBreadCrumb();
     const projectType = this.projectForm.controls['projectType'].value;
     if (projectType == appConstants.SDK) {
       await this.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value);
@@ -47,7 +52,16 @@ export class AddProjectComponent implements OnInit {
     if (projectType == appConstants.ABIS) {
       await this.getBioTestDataNames(this.projectForm.controls['abisPurpose'].value);
     } 
-    this.translate.use(this.userProfileService.getUserPreferredLanguage());
+  }
+
+  initBreadCrumb() {
+    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
+      (response: any) => {
+        const breadcrumbLabels = response['breadcrumb'];
+        this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
+        this.breadcrumbService.set('@addProjectBreadCrumb', `${breadcrumbLabels.addNewProject}`);
+      }
+    );
   }
 
   initForm() {

@@ -9,7 +9,9 @@ const routes: Routes = [
     pathMatch: 'full',
     component: AddProjectComponent,
     data: {
-      breadcrumb: 'Add a new Project',
+      breadcrumb: {
+        alias: 'addProjectBreadCrumb',
+      },
     },
   },
   {

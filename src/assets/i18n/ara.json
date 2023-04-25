@@ -1,4 +1,15 @@
 {
+	"breadcrumb": {
+		"home": "بيت",
+		"project": "مشروع",
+		"testRun": "اختبار المدى",
+		"add": "يضيف",
+		"projectsDashboard": "لوحة تحكم المشاريع",
+		"biometricTestData": "بيانات اختبار القياسات الحيوية",
+		"addNewProject": "أضف مشروع جديد",
+		"uploadBiometricTestData": "تحميل بيانات اختبار القياسات الحيوية",
+		"testRunHistory": "سجل تشغيل الاختبار"
+	},
 	"projectDashboard": {
 		"addProject": "أضف مشروع",
 		"biometricData": "البيانات البيومترية",

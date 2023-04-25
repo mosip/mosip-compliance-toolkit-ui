@@ -11,6 +11,7 @@ import { AppConfigService } from 'src/app/app-config.service';
 import { DialogComponent } from 'src/app/core/components/dialog/dialog.component';
 import { TranslateService } from '@ngx-translate/core';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
+import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
   selector: 'app-add-test-data',
@@ -45,13 +46,25 @@ export class AddTestDataComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router,
     private translate: TranslateService,
+    private breadcrumbService: BreadcrumbService,
     private userProfileService: UserProfileService
   ) {}
 
   ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
     this.initForm();
+    this.initBreadCrumb();
     this.getAllowedFileTypes(this.allowedFileTypes);
+  }
+
+  initBreadCrumb() {
+    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
+      (response: any) => {
+        const breadcrumbLabels = response['breadcrumb'];
+        this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
+        this.breadcrumbService.set('@uploadTestDataBreadCrumb', `${breadcrumbLabels.uploadBiometricTestData}`);
+      }
+    );
   }
 
   initForm() {

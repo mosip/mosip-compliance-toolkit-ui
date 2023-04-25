@@ -1,4 +1,15 @@
 {
+	"breadcrumb": {
+		"home": "Home",
+		"project": "Project",
+		"testRun": "Test Run",
+		"add": "Add",
+		"projectsDashboard": "Projects Dashboard",
+		"biometricTestData": "Biometrics Test Data",
+		"addNewProject": "Add a new Project",
+		"uploadBiometricTestData": "Upload Biometrics Test Data",
+		"testRunHistory": "Test Run History"
+	},
 	"projectDashboard": {
 		"addProject": "Add Project",
 		"biometricData": "Biometric Data",
