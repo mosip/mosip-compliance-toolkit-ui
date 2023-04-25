@@ -32,6 +32,7 @@ export class AddTestDataComponent implements OnInit {
   fileByteArray: any;
   textDirection: any = this.userProfileService.getTextDirection();
   buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : 'null';
+  resourceBundleJson: any = {};
   allowedFileTypes = this.appConfigService
     .getConfig()
     ['allowedFileTypes'].split(',');
@@ -55,6 +56,11 @@ export class AddTestDataComponent implements OnInit {
     this.initForm();
     this.initBreadCrumb();
     this.getAllowedFileTypes(this.allowedFileTypes);
+    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
+      (response: any) => {
+        this.resourceBundleJson = response;
+      }
+    );
   }
 
   initBreadCrumb() {
@@ -107,18 +113,11 @@ export class AddTestDataComponent implements OnInit {
   }
 
   showToolTip() {
-    const title = 'Info';
-    const msg = `Using the upload test data option you can upload your test data for testing. If you don’t want to upload the test data, MOSIP default data will be used for testing.
-    
-    For uploading the test data please follow the below instructions:
-    
-    1. Click on the Download Sample File button.
-    2. A zip file will be downloaded which has the template to prepare the test data.
-    3. Inside the zip file, you will find multiple subfolders with the Test Case IDs.
-    4. In each folder, you will find a readMe.txt file with a detailed description of the test case, expected input data and expected output. The folders will also have sample CBEFF files which should be either modified or replaced with required biometric data.
-    5. Modify the test cases with proper expected input data as per the scenario and zip the overall folder and upload it.
-    
-    ** If you don’t want to upload any test data for a test scenario then don't modify data for that Test Case folder and keep it as is in the zip file.`;
+    let title;
+    let msg;
+    let translatedMsgs = this.resourceBundleJson['addTestData'];
+    translatedMsgs.title ? title = translatedMsgs.title : title;
+    translatedMsgs.msg ? msg = translatedMsgs.msg : msg; 
     const body = {
       case: 'INFO',
       title: title,
