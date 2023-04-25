@@ -7,12 +7,20 @@ const routes: Routes = [
   {
     path: '',
     component: ProjectsDashboardComponent,
-    data: { breadcrumb: 'Projects Dashboard' },
+    data: { 
+      breadcrumb: {
+        alias: 'projectDashboardBreadCrumb',
+      },
+    },
   },
   {
     path: 'biometric',
     component: BiometricDashboardComponent,
-    data: { breadcrumb: 'Biomterics Test Data' },
+    data: { 
+      breadcrumb: {
+        alias: 'biometricDashboardBreadCrumb',
+      },
+    },
   },
 ];
 

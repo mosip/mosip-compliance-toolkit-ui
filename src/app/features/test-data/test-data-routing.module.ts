@@ -6,7 +6,11 @@ import { ViewTestDataComponent } from './view-test-data/view-test-data.component
 const routes: Routes = [
   {
     path: 'add',
-    data: { breadcrumb: 'Upload Biometrics Test Data' },
+    data: { 
+      breadcrumb: {
+        alias: 'uploadTestDataBreadCrumb',
+      }, 
+    },
     component: AddTestDataComponent,
   },
   { path: ':testDataId', component: ViewTestDataComponent },

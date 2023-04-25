@@ -10,6 +10,8 @@ import { MatDialog } from '@angular/material/dialog';
 import * as appConstants from 'src/app/app.constants';
 import Utils from 'src/app/app.utils';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
+import { BreadcrumbService } from 'xng-breadcrumb';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface BiometricsData {
   id: string;
@@ -42,17 +44,27 @@ export class BiometricDashboardComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   textDirection: any = this.userProfileService.getTextDirection();
   buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : {'float': 'right'};
+  resourceBundleJson: any = {};
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private breadcrumbService: BreadcrumbService,
     private dialog: MatDialog,
     private dataService: DataService,
-    private userProfileService: UserProfileService
+    private userProfileService: UserProfileService,
+    private translate: TranslateService
   ) {}
 
   async ngOnInit() {
+    this.translate.use(this.userProfileService.getUserPreferredLanguage());
+    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
+      (response: any) => {
+        this.resourceBundleJson = response;
+      }
+    );
     await this.getListOfBiometricTestData();
+    this.initBreadCrumb();
     this.dataSource.paginator = this.paginator;
     if (this.sort) {
       this.sort.sort({ id: 'crDate', start: 'desc' } as MatSortable);
@@ -62,6 +74,12 @@ export class BiometricDashboardComponent implements OnInit {
     this.dataLoaded = true;
   }
 
+  initBreadCrumb() {
+    const breadcrumbLabels = this.resourceBundleJson['breadcrumb'];
+    this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
+    this.breadcrumbService.set('@biometricDashboardBreadCrumb', `${breadcrumbLabels.biometricTestData}`);
+  }
+  
   async getListOfBiometricTestData() {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(

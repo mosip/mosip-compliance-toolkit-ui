@@ -12,6 +12,7 @@ import * as appConstants from 'src/app/app.constants';
 import Utils from 'src/app/app.utils';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { environment } from 'src/environments/environment';
+import { BreadcrumbService } from 'xng-breadcrumb';
 
 export interface ProjectData {
   id: string;
@@ -47,10 +48,13 @@ export class ProjectsDashboardComponent implements OnInit {
   isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
   textDirection: any = this.userProfileService.getTextDirection();
   buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : {'float': 'right'};
+  resourceBundleJson: any = {};
+
   constructor(
     private router: Router,
     private translate: TranslateService,
     private route: ActivatedRoute,
+    private breadcrumbService: BreadcrumbService,
     private dialog: MatDialog,
     private userProfileService: UserProfileService,
     private dataService: DataService
@@ -58,11 +62,24 @@ export class ProjectsDashboardComponent implements OnInit {
 
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
+    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
+      (response: any) => {
+        this.resourceBundleJson = response;
+      }
+    );
     await this.getProjects();
+    this.initBreadCrumb();
     this.dataLoaded = true;
     this.dataSource.paginator = this.paginator;
     this.sort.sort(({ id: 'lastRunDt', start: 'desc'}) as MatSortable);
     this.dataSource.sort = this.sort;
+  }
+
+  initBreadCrumb() {
+    const breadcrumbLabels = this.resourceBundleJson['breadcrumb'];
+    this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
+    this.breadcrumbService.set('@projectDashboardBreadCrumb', `${breadcrumbLabels.projectsDashboard}`);
+
   }
 
   async getProjects() {
