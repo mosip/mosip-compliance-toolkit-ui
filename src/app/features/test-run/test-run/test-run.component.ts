@@ -280,12 +280,12 @@ export class TestRunComponent implements OnInit {
       let jsonData = JSON.parse(row.resultDescription);
       let list = jsonData['validationsList'];
       let validatorDefs = this.testcasesList[0].validatorDefs;
-      list.forEach((element: any)=>{
-          validatorDefs[0].forEach((element2:any)=>{
-            if(element.validatorName == element2.name){
-              element.validatorDescription = element2.description;
-            }
-          })
+      list.forEach((element: any) => {
+        validatorDefs[0].forEach((element2: any) => {
+          if (element.validatorName == element2.name) {
+            element.validatorDescription = element2.description;
+          }
+        })
       });
       return list;
     } else {
