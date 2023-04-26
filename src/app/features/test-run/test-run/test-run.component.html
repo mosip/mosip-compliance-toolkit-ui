@@ -107,7 +107,7 @@
                                                 <span class="custom-class" *ngIf="item.status == 'failure'">
                                                     <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon>
                                                 </span>&nbsp;
-                                                <b>{{item.validatorName}}</b>&nbsp;({{item.validatorDescription}})
+                                                {{getValidatorDetails(item, element)}}
                                             </span>
                                             <span *ngIf="item.status== 'success'" [ngStyle]="{color: 'green'}">
                                                 <div [innerHTML]="getValidatorMessage(item)"></div>
