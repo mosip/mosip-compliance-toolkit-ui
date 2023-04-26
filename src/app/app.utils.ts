@@ -243,7 +243,6 @@ export default class Utils {
       testcase.testDescription = resourceBundle.testcases[testcase.testId]['testDescription'];
       testcase.validatorDefs = resourceBundle.testcases[testcase.testId]['validatorDefs'];
     }
-    console.log(testcase.testName);
     return testcase;
   }
 }
