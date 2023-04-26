@@ -279,6 +279,14 @@ export class TestRunComponent implements OnInit {
     if (row.resultDescription != '') {
       let jsonData = JSON.parse(row.resultDescription);
       let list = jsonData['validationsList'];
+      let validatorDefs = this.testcasesList[0].validatorDefs;
+      list.forEach((element: any)=>{
+          validatorDefs[0].forEach((element2:any)=>{
+            if(element.validatorName == element2.name){
+              element.validatorDescription = element2.description;
+            }
+          })
+      });
       return list;
     } else {
       let data = [];
@@ -299,6 +307,7 @@ export class TestRunComponent implements OnInit {
   }
 
   getValidatorMessage(item: any) {
+    console.log(item);
     const COMMA_SEPARATOR = ',';
     const validatorMessages = this.resourceBundleJson["validatorMessages"];
     let descriptionKeyString = item.descriptionKey;
