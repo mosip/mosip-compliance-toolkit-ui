@@ -15,6 +15,6 @@ export class TestCaseModel {
     public requestSchema: any,
     public responseSchema: any,
     public validatorDefs: ValidatorModel[],
-    public otherAttributes: OtherAttributesModel
+    public otherAttributes: OtherAttributesModel,
   ) {}
 }

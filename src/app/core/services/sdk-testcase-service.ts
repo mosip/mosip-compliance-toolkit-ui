@@ -3,14 +3,17 @@ import { AppConfigService } from '../../app-config.service';
 import { TestCaseModel } from '../models/testcase';
 import { DataService } from './data-service';
 import * as appConstants from 'src/app/app.constants';
+import { UserProfileService } from './user-profile.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SdkTestCaseService {
+  resourceBundleJson: any = {};
   constructor(
     private dataService: DataService,
-    private appConfigService: AppConfigService
+    private appConfigService: AppConfigService,
+    private userProfileService: UserProfileService
   ) {}
 
   async runTestCase(
@@ -18,6 +21,11 @@ export class SdkTestCaseService {
     sdkUrl: string,
     selectedBioTestDataName: string
   ) {
+    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
+      (response: any) => {
+        this.resourceBundleJson = response;
+      }
+    );
     return new Promise(async (resolve, reject) => {
       let isCombinationTestCase = testCase.methodName.length > 1 ? true : false;
       const methodsArr = testCase.methodName;
@@ -66,9 +74,12 @@ export class SdkTestCaseService {
               resolve({
                 errors: [
                   {
-                    errorCode: 'Failure',
-                    message:
-                      'Unable to generate request to SDK service: ' + method,
+                    errorCode: this.resourceBundleJson.executeTestRun['failure']
+                      ? this.resourceBundleJson.executeTestRun['failure']
+                      : 'Failure',
+                    message: this.resourceBundleJson.executeTestRun['unableToGenerateRequest']
+                      ? this.resourceBundleJson.executeTestRun['unableToGenerateRequest'] + method
+                      : 'Unable to generate request to SDK service: ' + method,
                   },
                 ],
               });
@@ -149,8 +160,12 @@ export class SdkTestCaseService {
             resolve({
               errors: [
                 {
-                  errorCode: 'Connection Failure',
-                  message: 'Unable to connect to SDK services',
+                  errorCode: this.resourceBundleJson.executeTestRun['connectionFailure']
+                    ? this.resourceBundleJson.executeTestRun['connectionFailure']
+                    : 'Connection Failure',
+                  message: this.resourceBundleJson.executeTestRun['unableToConnectSDK']
+                    ? this.resourceBundleJson.executeTestRun['unableToConnectSDK']
+                    : 'Unable to connect to SDK services',
                 },
               ],
             });
@@ -163,7 +178,9 @@ export class SdkTestCaseService {
             errors: [],
           };
           let finalResponse = {
-            methodResponse: 'Method not invoked since request is invalid.',
+            methodResponse: this.resourceBundleJson.executeTestRun['methodNotInvoked']
+              ? this.resourceBundleJson.executeTestRun['methodNotInvoked']
+              : 'Method not invoked since request is invalid.',
             methodRequest: JSON.stringify(methodRequest),
             validationResponse: validationResponse,
           };
@@ -173,10 +190,12 @@ export class SdkTestCaseService {
         resolve({
           errors: [
             {
-              errorCode: 'Failure',
-              message:
-                'Unable to generate request to SDK service: ' +
-                testCase.methodName,
+              errorCode: this.resourceBundleJson.executeTestRun['failure']
+                ? this.resourceBundleJson.executeTestRun['failure']
+                : 'Failure',
+              message: this.resourceBundleJson.executeTestRun['unableToGenerateRequest']
+                ? this.resourceBundleJson.executeTestRun['unableToGenerateRequest'] + testCase.methodName
+                : 'Unable to generate request to SDK service: ' + testCase.methodName,
             },
           ],
         });

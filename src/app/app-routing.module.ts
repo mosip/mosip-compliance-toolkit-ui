@@ -8,7 +8,11 @@ const routes: Routes = [
   {
     path: 'toolkit',
     component: MainLayoutComponent,
-    data: { breadcrumb: 'Home' },
+    data: { 
+      breadcrumb: {
+        alias: 'homeBreadCrumb',
+      }, 
+    },
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       {
