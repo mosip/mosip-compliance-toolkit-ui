@@ -7,12 +7,10 @@ if [ $# -ge 1 ] ; then
 fi
 
 NS=compliance-toolkit
+CHART_VERSION=12.0.2
 
 echo Create $NS namespace
 kubectl create ns $NS
-
-echo Updating Helm Dependencies
-helm dependency update
 
 echo Istio label
 kubectl label ns $NS istio-injection=disabled --overwrite
@@ -26,7 +24,7 @@ API_HOST=$(kubectl get cm global -o jsonpath={.data.mosip-api-internal-host})
 COMPLIANCE_HOST=$(kubectl get cm global -o jsonpath={.data.mosip-compliance-host})
 
 echo Installing compliance-toolkit-ui
-helm -n $NS install compliance-toolkit-ui . --set compliance.apiHost=$API_HOST --set istio.hosts\[0\]=$COMPLIANCE_HOST 
+helm -n $NS install compliance-toolkit-ui mosip/compliance-toolkit-ui --set compliance.apiHost=$API_HOST --set istio.hosts\[0\]=$COMPLIANCE_HOST --version $CHART_VERSION
 
 kubectl -n $NS get deploy -o name | xargs -n1 -t kubectl -n $NS rollout status
 
