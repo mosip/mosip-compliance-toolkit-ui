@@ -10,6 +10,10 @@
 		"uploadBiometricTestData": "Télécharger les données de test biométrique",
 		"testRunHistory": "Historique des tests"
 	},
+	"paginationLabel": {
+		"itemPerPage": "Objets par page:",
+		"of": "de"
+	},
 	"projectDashboard": {
 		"addProject": "Ajouter un projet",
 		"biometricData": "Données biométriques",
