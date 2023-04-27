@@ -202,6 +202,7 @@
 		"hasStarted": "a commencé.",
 		"currentTestcase": "Cas de test actuel :",
 		"abisRequestSent": "La demande a été envoyée à la file d'attente. En attente de réponse de la file d'attente. Si cela prend trop de temps, vous pouvez revenir après un certain temps.",
+		"abisResponseRecvd": "Traitement de la réponse reçue d'ABIS",
 		"abisRequestSentFail": "Impossible d'envoyer la demande à la file d'attente ABIS. Vérifiez l'URL, le nom d'utilisateur et les autres attributs, puis réessayez.",
 		"initiateCaptureMsg": "Cliquez sur le bouton Lancer la capture pour capturer les données biométriques de l'appareil.",
 		"serviceError": "Des erreurs se sont produites lors du traitement du service.",
