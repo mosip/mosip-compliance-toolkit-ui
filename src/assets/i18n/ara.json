@@ -10,6 +10,10 @@
 		"uploadBiometricTestData": "تحميل بيانات اختبار القياسات الحيوية",
 		"testRunHistory": "سجل تشغيل الاختبار"
 	},
+	"paginationLabel": {
+		"itemPerPage": "مواد لكل صفحة:",
+		"rangeLabel": "ل"
+	},
 	"projectDashboard": {
 		"addProject": "أضف مشروع",
 		"biometricData": "البيانات البيومترية",
