@@ -17,7 +17,8 @@ export const DATASHARE_ID = 'mosip.toolkit.abis.datashare.url';
 export const ABIS_SEND_TO_QUEUE = 'mosip.toolkit.abis.send';
 export const ABIS_READ_FROM_QUEUE = 'mosip.toolkit.abis.read';
 export const ABIS_INSERT_ID = "mosip.abis.insert";
-export const ABIS_INSERT_VERSION = "1.1";
+export const ABIS_IDENTIFY_ID = "mosip.abis.identify";
+export const ABIS_VERSION = "1.1";
 export const ABIS_INSERT = "insert";
 export const ABIS_IDENTIFY = "identify";
 
