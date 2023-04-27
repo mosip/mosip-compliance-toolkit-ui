@@ -1,6 +1,6 @@
 import { OnInit, Component, ViewChild } from '@angular/core';
 import { TranslateService } from "@ngx-translate/core";
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort, MatSortable } from '@angular/material/sort';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from 'src/app/core/services/data-service';
@@ -57,7 +57,8 @@ export class ProjectsDashboardComponent implements OnInit {
     private breadcrumbService: BreadcrumbService,
     private dialog: MatDialog,
     private userProfileService: UserProfileService,
-    private dataService: DataService
+    private dataService: DataService,
+    private paginatorIntl: MatPaginatorIntl
   ) {}
 
   async ngOnInit() {
@@ -65,6 +66,12 @@ export class ProjectsDashboardComponent implements OnInit {
     this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
       (response: any) => {
         this.resourceBundleJson = response;
+        this.paginatorIntl.itemsPerPageLabel = this.resourceBundleJson.paginationLabel['itemPerPage'];
+        this.paginatorIntl.getRangeLabel = (page: number, pageSize: number, length: number) => {
+          const from = (page) * pageSize + 1;
+          const to = Math.min((page + 1) * pageSize, length);
+          return `${from} - ${to} ${this.resourceBundleJson.paginationLabel['rangeLabel']} ${length}`;
+        };
       }
     );
     await this.getProjects();
