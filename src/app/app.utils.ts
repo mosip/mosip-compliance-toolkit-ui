@@ -241,7 +241,13 @@ export default class Utils {
     if (resourceBundle && resourceBundle.testcases != null && resourceBundle.testcases[testcase.testId] != null) {
       testcase.testName = resourceBundle.testcases[testcase.testId]['testName'];
       testcase.testDescription = resourceBundle.testcases[testcase.testId]['testDescription'];
-      testcase.validatorDefs = resourceBundle.testcases[testcase.testId]['validatorDefs'];
+      for ( const validators of testcase.validatorDefs) {
+        for ( const validator of validators) {
+          validator.description = resourceBundle.validators[validator.name] 
+          ? resourceBundle.validators[validator.name]
+          : validator.description;
+        } 
+      }
     }
     return testcase;
   }

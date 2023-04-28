@@ -297,31 +297,11 @@ export class TestRunComponent implements OnInit {
       return data;
     }
   }
-  getValidatorDetails(item: any, element: any) {
-    if (this.resourceBundleJson && this.resourceBundleJson.testcases != null && this.resourceBundleJson.testcases[element.testId] != null) {
-      const translatedValidatorDefs = this.resourceBundleJson.testcases[element.testId]['validatorDefs'];
-      let msg = '';
-      if (translatedValidatorDefs) {
-        translatedValidatorDefs.forEach((translatedValidatorDefArr: any[]) => {
-          if (translatedValidatorDefArr) {
-            translatedValidatorDefArr.forEach(translatedValidatorDef => {
-              if (translatedValidatorDef["name"] == item.validatorName) {
-                msg = `${translatedValidatorDef["name"]} (${translatedValidatorDef["description"]})`;
-              }
-            });
-          }
-        });
-      }
-      if (msg != '') {
-        return msg;
-      }
-    }
-    if (item.validatorName) {
-      return `${item.validatorName} (${item.validatorDescription})`;
-    } else {
-      return "";
-    }
-    
+  getValidatorDetails(item: any) {
+    //console.log(item);
+    return this.resourceBundleJson.validators[item.validatorName] 
+      ? `${item.validatorName} (${this.resourceBundleJson.validators[item.validatorName]})` 
+      : `${item.validatorName} (${item.validatorDescription})`;
   }
 
   getValidatorMessage(item: any) {
