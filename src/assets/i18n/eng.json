@@ -228,3204 +228,795 @@
 		"failure": "Failure",
 		"unableToGenerateRequest": "Unable to generate request to SDK service: "
 	},
+	"validators": {
+		"SchemaValidator":"Validates the response for mandatory attributes and correct values",
+		"SignatureValidator":"Validates the response signature",
+		"ResponseMismatchValidator":"Validates the response to check if  bioCount, exceptions and segments match the ones set in request",
+		"TransactionIdValidator":"Validates the methodRequest and methodResponse transactionId are same",
+		"KeyRotationValidator":"Validator to validate the device key rotation",
+		"TimeoutValidator":"Validates if response is received within the given timeout period or not",
+		"ISOStandardsValidator":"Validates the 'bioValue' in response of 'rcapture' is as per ISO standards ISO19794-4:2011",
+		"BiometricsQualityCheckValidator":"Checks the quality of biometrics using all configured SDK services",
+		"TimeCheckValidator":"Validates if response is received within the given timestamp interval or not",
+		"QualityCheckValidator": "Checks the quality score of the modality",
+		"QualityCheckInvalidDataValidator":"Validates the status code for invalid data",
+		"QualityCheckNoDataValidator":"Validates the status code for no data",
+		"MatchValidator":"Validates if biomterics match for the modality",
+		"MatchInvalidDataValidator":"Validates the status code for invalid data",
+		"MatchNoDataValidator":"Validates the status code for no data",
+		"MatchMultiGalleryValidator":"Validates if biomterics match for the modality",
+		"ExtractTemplateValidator":"Validates if input BDB data present in the Probe for the modality is valid",
+		"ExtractTemplateInvalidDataValidator":"Validates if input BDB data present in the Probe for the modality is valid",
+		"ExtractTemplateNoInputDataValidator":"Validates if no input BDB data present in the Probe",
+		"SegmentValidator":"Validates if input BDB data present in the Probe for the modality is valid",
+		"SegmentInvalidDataValidator":"Validates if input BDB data present in the Probe for the modality is valid",
+		"SegmentNoInputDataValidator": "Validates if no input BDB data present in the Probe",
+		"ConvertDataValidator":"Validates the input BDB data present in the Probe",
+		"ConvertInvalidDataValidator":"Validates if input BDB data present in the Probe for the modality is valid",
+		"ConvertNoInputDataValidator":"Validates if no input BDB data present in the Probe"
+	},
 	"testcases": {
 		"SBI1000": {
 			"testName": "Discover device",
-			"testDescription": "Test to perform validation for the device discovery interface",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"testDescription": "Test to perform validation for the device discovery interface"
 		},
 		"SBI1001": {
 			"testName": "Device Info",
-			"testDescription": "Test to perform validation for the device info interface",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"testDescription": "Test to perform validation for the device info interface"
 		},
 		"SBI1002": {
 			"testName": "Registration capture - Left Slap",
 			"testDescription": "Test to validate the RCapture interface for Left Slap Fingerprints<br><br>Steps:<br>1. Click on Start Streaming button. <br>2. Once streaming is done, click on Inititate Capture button to start the capture.  <br> 3. Place your left slap on the device until the capture completes",
-			"androidTestDescription": "Test to validate the RCapture interface for Left Slap Fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place your left slap on the device until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate the RCapture interface for Left Slap Fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place your left slap on the device until the capture completes"
 		},
 		"SBI1003": {
 			"testName": "Registration capture - Left Slap - One Exception",
 			"testDescription": "Test to validate RCapture interface for Left Slap Fingerprints with one missing finger<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your left slap on the device except the left ring finger until the capture completes",
-			"androidTestDescription": "Test to validate RCapture interface for Left Slap Fingerprints with one missing finger<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your left slap on the device except the left ring finger until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate RCapture interface for Left Slap Fingerprints with one missing finger<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your left slap on the device except the left ring finger until the capture completes"
 		},
 		"SBI1004": {
 			"testName": "Registration capture - Right Slap",
 			"testDescription": "Test to validate RCapture interface for Right Slap Fingerprints<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your right slap on the device until the capture completes",
-			"androidTestDescription": "Test to validate RCapture interface for Right Slap Fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right slap on the device until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate RCapture interface for Right Slap Fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right slap on the device until the capture completes"
 		},
 		"SBI1005": {
 			"testName": "Registration capture - Right Slap - Two Exception",
 			"testDescription": "Test to validate RCapture interface for Right Slap Fingerprints with two missing fingers<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your right slap on the device except the right index and middle finger until the capture completes",
-			"androidTestDescription": "Test to validate RCapture interface for Right Slap Fingerprints with two missing fingers<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right slap on the device except the right index and middle finger until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate RCapture interface for Right Slap Fingerprints with two missing fingers<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right slap on the device except the right index and middle finger until the capture completes"
 		},
 		"SBI1006": {
 			"testName": "Registration capture - Two Thumbs",
 			"testDescription": "Test to validate RCapture interface for Two Thumbs<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place both your thumbs on the device until the capture completes",
-			"androidTestDescription": "Test to validate RCapture interface for Two Thumbs<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place both your thumbs on the device until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate RCapture interface for Two Thumbs<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place both your thumbs on the device until the capture completes"
 		},
 		"SBI1007": {
 			"testName": "Registration capture - Two Thumbs - One Exception",
 			"testDescription": "Test to validate RCapture interface for Two Thumbs with one missing thumb<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place only the right thumb on the device until the capture completes",
-			"androidTestDescription": "Test to validate RCapture interface for Two Thumbs with one missing thumb<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place only the right thumb on the device until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate RCapture interface for Two Thumbs with one missing thumb<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place only the right thumb on the device until the capture completes"
 		},
 		"SBI1008": {
 			"testName": "Registration capture - Two Thumbs - Both Exception",
 			"testDescription": "Test to validate RCapture interface for Two Thumbs when both the thumbs are missing<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Do not press any finger or thumb on the device until the capture completes",
-			"androidTestDescription": "Test to validate RCapture interface for Two Thumbs when both the thumbs are missing<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Do not press any finger or thumb on the device until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate RCapture interface for Two Thumbs when both the thumbs are missing<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Do not press any finger or thumb on the device until the capture completes"
 		},
 		"SBI1009": {
 			"testName": "Registration capture - Double Iris",
 			"testDescription": "Test to validate RCapture interface for Two Iris<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place both your iris on the device until the capture completes",
-			"androidTestDescription": "Test to validate RCapture interface for Two Iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place both your iris on the device until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate RCapture interface for Two Iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place both your iris on the device until the capture completes"
 		},
 		"SBI1010": {
 			"testName": "Registration capture - Double Iris - One Exception",
 			"testDescription": "Test to validate RCapture interface for iris with one missing iris<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place only the right iris on the device until the capture completes",
-			"androidTestDescription": "Test to validate RCapture interface for iris with one missing iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place only the right iris on the device until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate RCapture interface for iris with one missing iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place only the right iris on the device until the capture completes"
 		},
 		"SBI1011": {
 			"testName": "Registration capture - Double Iris - Both Exception",
 			"testDescription": "Test to validate RCapture interface for iris when both iris are missing<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Do not place any iris on the device during capture",
-			"androidTestDescription": "Test to validate RCapture interface for iris when both iris are missing<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Do not place any iris on the device during capture",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate RCapture interface for iris when both iris are missing<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Do not place any iris on the device during capture"
 		},
 		"SBI1012": {
 			"testName": "Registration capture - Face",
 			"testDescription": "Test to validate RCapture interface for face<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your face infront of the camera until the capture completes",
-			"androidTestDescription": "Test to validate RCapture interface for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate RCapture interface for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera until the capture completes"
 		},
 		"SBI1013": {
 			"testName": "Registration capture - Exception Photo",
 			"testDescription": "Test to validate RCapture interface for exception photo<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Raise your hands during capture",
-			"androidTestDescription": "Test to validate RCapture interface for exception photo<br><br>Steps:<br><br>1. Click on Inititate Capture button to start the capture <br>2. Raise your hands during capture",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate RCapture interface for exception photo<br><br>Steps:<br><br>1. Click on Inititate Capture button to start the capture <br>2. Raise your hands during capture"
 		},
 		"SBI1014": {
 			"testName": "Auth capture - Face",
-			"testDescription": "Test to validate Capture method for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "TransactionIdValidator",
-						"description": "Validates the methodRequest and methodResponse transactionId are same"
-					}
-				]
-			]
+			"testDescription": "Test to validate Capture method for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera until the capture completes"
 		},
 		"SBI1015": {
 			"testName": "Auth capture - Single Iris - Unknown Iris",
-			"testDescription": "Test to validate Capture method for a single iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place one of your iris infront of the iris scanner",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "TransactionIdValidator",
-						"description": "Validates the methodRequest and methodResponse transactionId are same"
-					}
-				]
-			]
+			"testDescription": "Test to validate Capture method for a single iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place one of your iris infront of the iris scanner"
 		},
 		"SBI1016": {
 			"testName": "Auth capture - Single Iris - Left Iris",
-			"testDescription": "Test to validate Capture method for left iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your left iris infront of the iris scanner",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "TransactionIdValidator",
-						"description": "Validates the methodRequest and methodResponse transactionId are same"
-					}
-				]
-			]
+			"testDescription": "Test to validate Capture method for left iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your left iris infront of the iris scanner"
 		},
 		"SBI1017": {
 			"testName": "Auth capture - Single Iris - Right Iris",
-			"testDescription": "Test to validate Capture method for right iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right iris infront of the iris scanner",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "TransactionIdValidator",
-						"description": "Validates the methodRequest and methodResponse transactionId are same"
-					}
-				]
-			]
+			"testDescription": "Test to validate Capture method for right iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right iris infront of the iris scanner"
 		},
 		"SBI1018": {
 			"testName": "Auth capture - Unknown Finger",
-			"testDescription": "Test to validate Capture method for a finger<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place one of your finger on the single fingerprint scanner",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "TransactionIdValidator",
-						"description": "Validates the methodRequest and methodResponse transactionId are same"
-					}
-				]
-			]
+			"testDescription": "Test to validate Capture method for a finger<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place one of your finger on the single fingerprint scanner"
 		},
 		"SBI1019": {
 			"testName": "Auth capture - Two Unknown Finger",
-			"testDescription": "Test to validate Capture method for two fingers<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place two fingers, one by one on the fingerprint scanner",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "TransactionIdValidator",
-						"description": "Validates the methodRequest and methodResponse transactionId are same"
-					}
-				]
-			]
+			"testDescription": "Test to validate Capture method for two fingers<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place two fingers, one by one on the fingerprint scanner"
 		},
 		"SBI1020": {
 			"testName": "Auth capture - LeftIndex Finger",
-			"testDescription": "Test to validate Capture method for left index finger<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your left index finger on the fingerprint scanner",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "TransactionIdValidator",
-						"description": "Validates the methodRequest and methodResponse transactionId are same"
-					}
-				]
-			]
+			"testDescription": "Test to validate Capture method for left index finger<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your left index finger on the fingerprint scanner"
 		},
 		"SBI1021": {
 			"testName": "Auth capture - Two Finger",
-			"testDescription": "Test to validate Capture method for two fingers<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place two fingers, one by one on the fingerprint scanner",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "TransactionIdValidator",
-						"description": "Validates the methodRequest and methodResponse transactionId are same"
-					}
-				]
-			]
+			"testDescription": "Test to validate Capture method for two fingers<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place two fingers, one by one on the fingerprint scanner"
 		},
 		"SBI1022": {
 			"testName": "Registration capture - Key Rotation - Left Slap",
-			"testDescription": "Test for device key rotation<br><br>Steps:<br>1. Current device key information has been saved.<br>2. Rotate the device key in the SBI and click on <b>Continue</b> button,<br> 3. <i>Repeat step 2</i> as many times as setup in project configuration.",
-			"validatorDefs": [
-				[
-					{
-						"name": "KeyRotationValidator",
-						"description": "Validator to validate the device key rotation"
-					}
-				]
-			]
+			"testDescription": "Test for device key rotation<br><br>Steps:<br>1. Current device key information has been saved.<br>2. Rotate the device key in the SBI and click on <b>Continue</b> button,<br> 3. <i>Repeat step 2</i> as many times as setup in project configuration."
 		},
 		"SBI1023": {
 			"testName": "Auth capture - Single Iris - Left Iris - Key Rotation",
-			"testDescription": "Test for device key rotation<br><br>Steps:<br>1. Current device key information has been saved.<br>2. Rotate the device key in the SBI and click on <b>Continue</b> button,<br> 3. <i>Repeat step 2</i> as many times as setup in project configuration.",
-			"validatorDefs": [
-				[
-					{
-						"name": "KeyRotationValidator",
-						"description": "Validator to validate the device key rotation"
-					}
-				]
-			]
+			"testDescription": "Test for device key rotation<br><br>Steps:<br>1. Current device key information has been saved.<br>2. Rotate the device key in the SBI and click on <b>Continue</b> button,<br> 3. <i>Repeat step 2</i> as many times as setup in project configuration."
 		},
 		"SBI1024": {
 			"testName": "Auth capture - Key Rotation - LeftIndex Finger",
-			"testDescription": "Test for device key rotation<br><br>Steps:<br>1. Current device key information has been saved.<br>2. Rotate the device key in the SBI and click on <b>Continue</b> button,<br> 3. <i>Repeat step 2</i> as many times as setup in project configuration.",
-			"validatorDefs": [
-				[
-					{
-						"name": "KeyRotationValidator",
-						"description": "Validator to validate the device key rotation"
-					}
-				]
-			]
+			"testDescription": "Test for device key rotation<br><br>Steps:<br>1. Current device key information has been saved.<br>2. Rotate the device key in the SBI and click on <b>Continue</b> button,<br> 3. <i>Repeat step 2</i> as many times as setup in project configuration."
 		},
 		"SBI1025": {
 			"testName": "Auth capture - Face - Key Rotation",
-			"testDescription": "Test for device key rotation<br><br>Steps:<br>1. Current device key information has been saved.<br>2. Rotate the device key in the SBI and click on <b>Continue</b> button,<br> 3. <i>Repeat step 2</i> as many times as setup in project configuration.",
-			"validatorDefs": [
-				[
-					{
-						"name": "KeyRotationValidator",
-						"description": "Validator to validate the device key rotation"
-					}
-				]
-			]
+			"testDescription": "Test for device key rotation<br><br>Steps:<br>1. Current device key information has been saved.<br>2. Rotate the device key in the SBI and click on <b>Continue</b> button,<br> 3. <i>Repeat step 2</i> as many times as setup in project configuration."
 		},
 		"SBI1026": {
 			"testName": "Check Device Status - Ready",
-			"testDescription": "Test to validate Device Info interface for a device that is in Ready state<br><br>Steps:<br>1. Make sure the device placed is in Ready state",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"testDescription": "Test to validate Device Info interface for a device that is in Ready state<br><br>Steps:<br>1. Make sure the device placed is in Ready state"
 		},
 		"SBI1027": {
 			"testName": "Check Device Status - Busy",
-			"testDescription": "Test to validate if the device is in Busy state<br><br>Steps:<br>1. Make the device is in <b>busy</b> state<br>2. Click on <b>Resume</b> button<br>3. After test execution is done, make the device status as <b>ready</b> and click on <b>Resume Next</b> button",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					}
-				]
-			]
+			"testDescription": "Test to validate if the device is in Busy state<br><br>Steps:<br>1. Make the device is in <b>busy</b> state<br>2. Click on <b>Resume</b> button<br>3. After test execution is done, make the device status as <b>ready</b> and click on <b>Resume Next</b> button"
 		},
 		"SBI1028": {
 			"testName": "Check Device Status - Not Ready",
-			"testDescription": "Test to validate if the device is in Not Ready state<br><br>Steps:<br>1. <b>Disconnect</b> the device<br>2. Click on <b>Resume</b> button<br>3. After test execution is done, <b>re-connect</b> the device and click on <b>Resume Next</b> button",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					}
-				]
-			]
+			"testDescription": "Test to validate if the device is in Not Ready state<br><br>Steps:<br>1. <b>Disconnect</b> the device<br>2. Click on <b>Resume</b> button<br>3. After test execution is done, <b>re-connect</b> the device and click on <b>Resume Next</b> button"
 		},
 		"SBI1029": {
 			"testName": "Check Device Status - Not Registered",
-			"testDescription": "Test to validate if the device is in Not Registered state<br><br>Steps:<br>1. <b>De-register</b> the device <br>2. Click on <b>Resume</b> button<br>3. After test execution is done, <b>register</b> the device and click on <b>Resume Next</b> button",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					}
-				]
-			]
+			"testDescription": "Test to validate if the device is in Not Registered state<br><br>Steps:<br>1. <b>De-register</b> the device <br>2. Click on <b>Resume</b> button<br>3. After test execution is done, <b>register</b> the device and click on <b>Resume Next</b> button"
 		},
 		"SBI1030": {
 			"testName": "Auth capture - Fingerprint - Bio Count Mismatch",
-			"testDescription": "Test to validate bio count mismatch for auth fingerprint device<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your finger on the device until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					}
-				]
-			]
+			"testDescription": "Test to validate bio count mismatch for auth fingerprint device<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your finger on the device until the capture completes"
 		},
 		"SBI1031": {
 			"testName": "Auth capture - Iris - Bio Count Mismatch",
-			"testDescription": "Test to validate bio count mismatch for auth iris device<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your iris on the device until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					}
-				]
-			]
+			"testDescription": "Test to validate bio count mismatch for auth iris device<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your iris on the device until the capture completes"
 		},
 		"SBI1032": {
 			"testName": "Auth capture - Face - Bio Count Mismatch",
-			"testDescription": "Test to validate bio count mismatch for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					}
-				]
-			]
+			"testDescription": "Test to validate bio count mismatch for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera until the capture completes"
 		},
 		"SBI1033": {
 			"testName": "Registration capture - Left Slap - Bio Count Mismatch",
 			"testDescription": "Test to validate bio count mismatch for registration left slap<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your left slap and miss one or two fingers on the slap scanner until the capture completes",
-			"androidTestDescription": "Test to validate bio count mismatch for registration left slap<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your left slap and miss one or two fingers on the slap scanner until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate bio count mismatch for registration left slap<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your left slap and miss one or two fingers on the slap scanner until the capture completes"
 		},
 		"SBI1034": {
 			"testName": "Registration capture - Right Slap - Bio Count Mismatch",
 			"testDescription": "Test to validate bio count mismatch for registration right slap<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your right slap and miss one or two fingers on the slap scanner until the capture completes",
-			"androidTestDescription": "Test to validate bio count mismatch for registration right slap<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right slap and miss one or two fingers on the slap scanner until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate bio count mismatch for registration right slap<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right slap and miss one or two fingers on the slap scanner until the capture completes"
 		},
 		"SBI1035": {
 			"testName": "Registration capture - Two Thumbs - Bio Count Mismatch",
 			"testDescription": "Test to validate bio count mismatch for registration thumbs<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your any one thumb on the slap scanner until the capture completes",
-			"androidTestDescription": "Test to validate bio count mismatch for registration thumbs<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your any one thumb on the slap scanner until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate bio count mismatch for registration thumbs<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your any one thumb on the slap scanner until the capture completes"
 		},
 		"SBI1036": {
 			"testName": "Registration capture - Left iris - Bio Count Mismatch",
 			"testDescription": "Test to validate bio count mismatch for registration left iris<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your left iris on the device until the capture completes",
-			"androidTestDescription": "Test to validate bio count mismatch for registration left iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your left iris on the device until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate bio count mismatch for registration left iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your left iris on the device until the capture completes"
 		},
 		"SBI1037": {
 			"testName": "Registration capture - Right Iris - Bio Count Mismatch",
 			"testDescription": "Test to validate bio count mismatch for registration right iris<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your right iris on the device until the capture completes",
-			"androidTestDescription": "Test to validate bio count mismatch for registration right iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right iris on the device until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate bio count mismatch for registration right iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right iris on the device until the capture completes"
 		},
 		"SBI1038": {
 			"testName": "Registration capture - Both Iris - Bio Count Mismatch",
 			"testDescription": "Test to validate bio count mismatch for registration both iris<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place both your iris on the device until the capture completes",
-			"androidTestDescription": "Test to validate bio count mismatch for registration both iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place both your iris on the device until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate bio count mismatch for registration both iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place both your iris on the device until the capture completes"
 		},
 		"SBI1039": {
 			"testName": "Registration capture - Face - Bio Count Mismatch",
 			"testDescription": "Test to validate bio count mismatch for registration face<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your face infront of the camera until the capture completes",
-			"androidTestDescription": "Test to validate bio count mismatch for registration both iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place both your iris on the device until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate bio count mismatch for registration both iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place both your iris on the device until the capture completes"
 		},
 		"SBI1040": {
 			"testName": "Registration capture - Face - Timeout",
 			"testDescription": "Test to validate face timeout<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Donot place your face infront of the camera and wait for capture to timeout",
-			"androidTestDescription": "Test to validate face timeout<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Do not place your face infront of the camera and wait for capture to timeout",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "TimeoutValidator",
-						"description": "Validates if response is received within the given timeout period or not"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate face timeout<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Do not place your face infront of the camera and wait for capture to timeout"
 		},
 		"SBI1041": {
 			"testName": "Registration capture - Double Iris - Timeout",
 			"testDescription": "Test to validate iris timeout<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Do not place your iris on the iris scanner and wait for capture to timeout",
-			"androidTestDescription": "Test to validate iris timeout<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Do not place your iris on the iris scanner and wait for capture to timeout",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "TimeoutValidator",
-						"description": "Validates if response is received within the given timeout period or not"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate iris timeout<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Do not place your iris on the iris scanner and wait for capture to timeout"
 		},
 		"SBI1042": {
 			"testName": "Registration capture - Left Slap - Timeout",
 			"testDescription": "Test to validate left slap timeout<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Do not place your fingers on the slap scanner and wait for capture to timeout",
-			"androidTestDescription": "Test to validate left slap timeout<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Do not place your fingers on the slap scanner and wait for capture to timeout",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "TimeoutValidator",
-						"description": "Validates if response is received within the given timeout period or not"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate left slap timeout<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Do not place your fingers on the slap scanner and wait for capture to timeout"
 		},
 		"SBI1043": {
 			"testName": "Registration capture - Right Slap - Timeout",
 			"testDescription": "Test to validate right slap timeout<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Do not place your fingers on the slap scanner and wait for capture to timeout",
-			"androidTestDescription": "Test to validate right slap timeout<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Do not place your fingers on the slap scanner and wait for capture to timeout",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "TimeoutValidator",
-						"description": "Validates if response is received within the given timeout period or not"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate right slap timeout<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Do not place your fingers on the slap scanner and wait for capture to timeout"
 		},
 		"SBI1044": {
 			"testName": "Registration capture - Two Thumbs - Timeout",
 			"testDescription": "Test to validate thumb timeout<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Do not place your fingers on the slap scanner and wait for capture to timeout",
-			"androidTestDescription": "Test to validate thumb timeout<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Do not place your fingers on the slap scanner and wait for capture to timeout",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "TimeoutValidator",
-						"description": "Validates if response is received within the given timeout period or not"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate thumb timeout<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Do not place your fingers on the slap scanner and wait for capture to timeout"
 		},
 		"SBI1045": {
 			"testName": "Registration capture - Exception Photo - Timeout",
 			"testDescription": "Test to validate exception photo timeout<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Do not place your face infront of the camera and wait for capture to timeout",
-			"androidTestDescription": "Test to validate exception photo timeout<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Do not place your face infront of the camera and wait for capture to timeout",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "TimeoutValidator",
-						"description": "Validates if response is received within the given timeout period or not"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate exception photo timeout<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Do not place your face infront of the camera and wait for capture to timeout"
 		},
 		"SBI1046": {
 			"testName": "Auth capture - Face - Timeout",
-			"testDescription": "Test to validate face timeout<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Do not place your face infront of the camera and wait for capture to timeout",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "TimeoutValidator",
-						"description": "Validates if response is received within the given timeout period or not"
-					}
-				]
-			]
+			"testDescription": "Test to validate face timeout<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Do not place your face infront of the camera and wait for capture to timeout"
 		},
 		"SBI1047": {
 			"testName": "Auth capture - Single Iris - Unknown Iris - Timeout",
-			"testDescription": "Test to validate iris timeout<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Donot place your iris on ths iris scanner and wait for capture to timeout",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "TimeoutValidator",
-						"description": "Validates if response is received within the given timeout period or not"
-					}
-				]
-			]
+			"testDescription": "Test to validate iris timeout<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Donot place your iris on ths iris scanner and wait for capture to timeout"
 		},
 		"SBI1048": {
 			"testName": "Auth capture - Unknown Finger - Timeout",
-			"testDescription": "Test to validate finger timeout<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Donot place your finger on the finger scanner and wait for capture to timeout",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "TimeoutValidator",
-						"description": "Validates if response is received within the given timeout period or not"
-					}
-				]
-			]
+			"testDescription": "Test to validate finger timeout<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Donot place your finger on the finger scanner and wait for capture to timeout"
 		},
 		"SBI1049": {
 			"testName": "Registration capture - Face - Force Capture",
 			"testDescription": "Force Capture validation for registration capture request for face<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your face infront of the camera and wait for capture",
-			"androidTestDescription": "Force Capture validation for registration capture request for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera and wait for capture",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "TimeoutValidator",
-						"description": "Validates if response is received within the given timeout period or not"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"androidTestDescription": "Force Capture validation for registration capture request for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera and wait for capture"
 		},
 		"SBI1050": {
 			"testName": "Registration capture - Double Iris - Force Capture",
 			"testDescription": "Force Capture validation for registration capture request for double iris<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your iris infront of the camera and wait for capture",
-			"androidTestDescription": "Force Capture validation for registration capture request for double iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your iris infront of the camera and wait for capture",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "TimeoutValidator",
-						"description": "Validates if response is received within the given timeout period or not"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"androidTestDescription": "Force Capture validation for registration capture request for double iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your iris infront of the camera and wait for capture"
 		},
 		"SBI1051": {
 			"testName": "Registration capture - Left Slap - Force Capture",
 			"testDescription": "Force Capture validation for registration capture request for Left Slap<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your left slap on device and wait for capture",
-			"androidTestDescription": "Force Capture validation for registration capture request for Left Slap<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your left slap on device and wait for capture",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "TimeoutValidator",
-						"description": "Validates if response is received within the given timeout period or not"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"androidTestDescription": "Force Capture validation for registration capture request for Left Slap<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your left slap on device and wait for capture"
 		},
 		"SBI1052": {
 			"testName": "Registration capture - Right Slap - Force Capture",
 			"testDescription": "Force Capture validation for registration capture request for Right Slap<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your right slap on device and wait for capture",
-			"androidTestDescription": "Force Capture validation for registration capture request for Right Slap<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right slap on device and wait for capture",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "TimeoutValidator",
-						"description": "Validates if response is received within the given timeout period or not"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"androidTestDescription": "Force Capture validation for registration capture request for Right Slap<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right slap on device and wait for capture"
 		},
 		"SBI1053": {
 			"testName": "Registration capture - Two Thumbs - Force Capture",
 			"testDescription": "Force Capture validation for registration capture request for Two Thumbs<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your two thumbs on device and wait for capture",
-			"androidTestDescription": "Force Capture validation for registration capture request for Two Thumbs<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your two thumbs on device and wait for capture",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "TimeoutValidator",
-						"description": "Validates if response is received within the given timeout period or not"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"androidTestDescription": "Force Capture validation for registration capture request for Two Thumbs<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your two thumbs on device and wait for capture"
 		},
 		"SBI1054": {
 			"testName": "Registration capture - Exception Photo - Force Capture",
-			"testDescription": "Force Capture validation for Face device type exception value left little finger or any will give Exception photo ",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "TimeoutValidator",
-						"description": "Validates if response is received within the given timeout period or not"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"testDescription": "Force Capture validation for Face device type exception value left little finger or any will give Exception photo "
 		},
 		"SBI1055": {
 			"testName": "Auth capture - Face - Force Capture",
-			"testDescription": "Force Capture validation for Auth capture Request only for Face",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "TimeoutValidator",
-						"description": "Validates if response is received within the given timeout period or not"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"testDescription": "Force Capture validation for Auth capture Request only for Face"
 		},
 		"SBI1056": {
 			"testName": "Auth capture - Single Iris - Unknown Iris - Force Capture",
-			"testDescription": "Force Capture validation for Auth capture Request for Unknown iris",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "TimeoutValidator",
-						"description": "Validates if response is received within the given timeout period or not"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"testDescription": "Force Capture validation for Auth capture Request for Unknown iris"
 		},
 		"SBI1057": {
 			"testName": "Auth capture - Unknown Finger - Force Capture",
-			"testDescription": "Force Capture validation for Auth capture Request for Unknown Finger",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "TimeoutValidator",
-						"description": "Validates if response is received within the given timeout period or not"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"testDescription": "Force Capture validation for Auth capture Request for Unknown Finger"
 		},
 		"SBI1058": {
 			"testName": "Auth capture - 10 Fingers",
-			"testDescription": "Test to perform Auth capture for 10 Fingers",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if bioCount and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"testDescription": "Test to perform Auth capture for 10 Fingers"
 		},
 		"SBI1059": {
 			"testName": "Auth capture - 2 Iris",
-			"testDescription": "Test to perform Auth capture for 2 Iris",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if bioCount and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"testDescription": "Test to perform Auth capture for 2 Iris"
 		},
 		"SBI1060": {
 			"testName": "Registration capture - Key Rotation - Face",
-			"testDescription": "Test for device key rotation<br><br>Steps:<br>1. Current device key information has been saved.<br>2. Rotate the device key in the SBI and click on <b>Continue</b> button,<br> 3. <i>Repeat step 2</i> as many times as setup in project configuration.",
-			"validatorDefs": [
-				[
-					{
-						"name": "KeyRotationValidator",
-						"description": "Validator to validate the device key rotation"
-					}
-				]
-			]
+			"testDescription": "Test for device key rotation<br><br>Steps:<br>1. Current device key information has been saved.<br>2. Rotate the device key in the SBI and click on <b>Continue</b> button,<br> 3. <i>Repeat step 2</i> as many times as setup in project configuration."
 		},
 		"SBI1061": {
 			"testName": "Registration capture - Key Rotation - Double Iris",
-			"testDescription": "Test for device key rotation<br><br>Steps:<br>1. Current device key information has been saved.<br>2. Rotate the device key in the SBI and click on <b>Continue</b> button,<br> 3. <i>Repeat step 2</i> as many times as setup in project configuration.",
-			"validatorDefs": [
-				[
-					{
-						"name": "KeyRotationValidator",
-						"description": "Validator to validate the device key rotation"
-					}
-				]
-			]
+			"testDescription": "Test for device key rotation<br><br>Steps:<br>1. Current device key information has been saved.<br>2. Rotate the device key in the SBI and click on <b>Continue</b> button,<br> 3. <i>Repeat step 2</i> as many times as setup in project configuration."
 		},
 		"SBI1062": {
 			"testName": "Registration capture - Left Slap - ISO Standard Validations",
 			"testDescription": "Test to validate the RCapture interface for Left Slap Fingerprints<br><br>Steps:<br>1. Click on Start Streaming button. <br>2. Once streaming is done, click on Inititate Capture button to start the capture.  <br> 3. Place your left slap on the device until the capture completes",
-			"androidTestDescription": "Test to validate the RCapture interface for Left Slap Fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place your left slap on the device until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "ISOStandardsValidator",
-						"description": "Validates the 'bioValue' in response of 'rcapture' is as per ISO standards ISO19794-4:2011"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate the RCapture interface for Left Slap Fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place your left slap on the device until the capture completes"
 		},
 		"SBI1063": {
 			"testName": "Registration capture - Right Slap - ISO Standard Validations",
 			"testDescription": "Test to validate RCapture interface for Right Slap Fingerprints<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your right slap on the device until the capture completes",
-			"androidTestDescription": "Test to validate RCapture interface for Right Slap Fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right slap on the device until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "ISOStandardsValidator",
-						"description": "Validates the 'bioValue' in response of 'rcapture' is as per ISO standards ISO19794-4:2011"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate RCapture interface for Right Slap Fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right slap on the device until the capture completes"
 		},
 		"SBI1064": {
 			"testName": "Registration capture - Double Iris - ISO Standard Validations",
 			"testDescription": "Test to validate RCapture interface for Two Iris<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place both your iris on the device until the capture completes",
-			"androidTestDescription": "Test to validate RCapture interface for Two Iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place both your iris on the device until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "ISOStandardsValidator",
-						"description": "Validates the 'bioValue' in response of 'rcapture' is as per ISO standards ISO19794-4:2011"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate RCapture interface for Two Iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place both your iris on the device until the capture completes"
 		},
 		"SBI1065": {
 			"testName": "Registration capture - Face - ISO Standard Validations",
 			"testDescription": "Test to validate RCapture interface for face<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your face infront of the camera until the capture completes",
-			"androidTestDescription": "Test to validate RCapture interface for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "ISOStandardsValidator",
-						"description": "Validates the 'bioValue' in response of 'rcapture' is as per ISO standards ISO19794-4:2011"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate RCapture interface for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera until the capture completes"
 		},
 		"SBI1066": {
 			"testName": "Auth capture - Face - ISO Standard Validations",
-			"testDescription": "Test to validate Capture interface for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "ISOStandardsValidator",
-						"description": "Validates the 'bioValue' in response of 'rcapture' is as per ISO standards ISO19794-4:2011"
-					}
-				]
-			]
+			"testDescription": "Test to validate Capture interface for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera until the capture completes"
 		},
 		"SBI1067": {
 			"testName": "Auth capture - Single Iris - Left Iris - ISO Standard Validations",
-			"testDescription": "Test to validate Capture interface for left iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your left iris infront of the iris scanner",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "ISOStandardsValidator",
-						"description": "Validates the 'bioValue' in response of 'rcapture' is as per ISO standards ISO19794-4:2011"
-					}
-				]
-			]
+			"testDescription": "Test to validate Capture interface for left iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your left iris infront of the iris scanner"
 		},
 		"SBI1068": {
 			"testName": "Auth capture - Single Iris - Right Iris - ISO Standard Validations",
-			"testDescription": "Test to validate Capture interface for right iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right iris infront of the iris scanner",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "ISOStandardsValidator",
-						"description": "Validates the 'bioValue' in response of 'rcapture' is as per ISO standards ISO19794-4:2011"
-					}
-				]
-			]
+			"testDescription": "Test to validate Capture interface for right iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right iris infront of the iris scanner"
 		},
 		"SBI1069": {
 			"testName": "Auth capture - Unknown Finger - ISO Standard Validations",
-			"testDescription": "Test to validate Capture interface for a finger<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place one of your finger on the single fingerprint scanner",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "ISOStandardsValidator",
-						"description": "Validates the 'bioValue' in response of 'rcapture' is as per ISO standards ISO19794-4:2011"
-					}
-				]
-			]
+			"testDescription": "Test to validate Capture interface for a finger<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place one of your finger on the single fingerprint scanner"
 		},
 		"SBI1070": {
 			"testName": "Streaming test with Registration capture - Left Slap",
 			"testDescription": "Streaming Test to validate the RCapture interface for Left Slap Fingerprints<br><br>Steps:<br>1. Click on Start Streaming button. <br>2. Once streaming is done, click on Inititate Capture button to start the capture.  <br> 3. Place your left slap on the device until the capture completes",
-			"androidTestDescription": "Streaming Test to validate the RCapture interface for Left Slap Fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place your left slap on the device until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"androidTestDescription": "Streaming Test to validate the RCapture interface for Left Slap Fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place your left slap on the device until the capture completes"
 		},
 		"SBI1071": {
 			"testName": "Streaming test with Registration capture - Right Slap",
 			"testDescription": "Streaming Test to validate the RCapture interface for Right Slap Fingerprints<br><br>Steps:<br>1. Click on Start Streaming button. <br>2. Once streaming is done, click on Inititate Capture button to start the capture.  <br> 3. Place your Right slap on the device until the capture completes",
-			"androidTestDescription": "Streaming Test to validate the RCapture interface for Right Slap Fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place your Right slap on the device until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"androidTestDescription": "Streaming Test to validate the RCapture interface for Right Slap Fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place your Right slap on the device until the capture completes"
 		},
 		"SBI1072": {
 			"testName": "Streaming test with Registration capture - Two Thumbs",
 			"testDescription": "Streaming Test to validate the RCapture interface for Two Thumbs<br><br>Steps:<br>1. Click on Start Streaming button. <br>2. Once streaming is done, click on Inititate Capture button to start the capture.  <br> 3. Place both your thumbs on the device until the capture completes",
-			"androidTestDescription": "Streaming Test to validate the RCapture interface for Two Thumbs<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place both your thumbs on the device until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"androidTestDescription": "Streaming Test to validate the RCapture interface for Two Thumbs<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place both your thumbs on the device until the capture completes"
 		},
 		"SBI1073": {
 			"testName": "Streaming test with Registration capture - Double Iris",
 			"testDescription": "Streaming Test to validate the RCapture interface for Two Iris<br><br>Steps:<br>1. Click on Start Streaming button. <br>2. Once streaming is done, click on Inititate Capture button to start the capture.  <br> 3. Place both your iris on the device until the capture completes",
-			"androidTestDescription": "Streaming Test to validate the RCapture interface for Two Iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place both your iris on the device until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"androidTestDescription": "Streaming Test to validate the RCapture interface for Two Iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place both your iris on the device until the capture completes"
 		},
 		"SBI1074": {
 			"testName": "Streaming test with Registration capture - Face",
 			"testDescription": "Streaming Test to validate the RCapture interface for face<br><br>Steps:<br>1. Click on Start Streaming button. <br>2. Once streaming is done, click on Inititate Capture button to start the capture.  <br> 3. Place your face infront of the camera until the capture completes",
-			"androidTestDescription": "Streaming Test to validate the RCapture interface for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place your face infront of the camera until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"androidTestDescription": "Streaming Test to validate the RCapture interface for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place your face infront of the camera until the capture completes"
 		},
 		"SBI1075": {
 			"testName": "Biometrics Quality Check for Registration capture - Left Slap",
 			"testDescription": "Quality Check Test to validate the biometrics captured by RCapture interface for left slap fingerprints<br><br>Steps:<br>1. Click on Start Streaming button. <br>2. Once streaming is done, click on Inititate Capture button to start the capture.  <br> 3. Place your left slap on the device until the capture completes",
-			"androidTestDescription": "Quality Check Test to validate the biometrics captured by RCapture interface for left slap fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place your left slap on the device until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "BiometricsQualityCheckValidator",
-						"description": "Checks the quality of biometrics using all configured SDK services"
-					}
-				]
-			]
+			"androidTestDescription": "Quality Check Test to validate the biometrics captured by RCapture interface for left slap fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place your left slap on the device until the capture completes"
 		},
 		"SBI1076": {
 			"testName": "Biometrics Quality Check for Registration capture - Right Slap",
 			"testDescription": "Quality Check Test to validate the biometrics captured by RCapture interface for right slap fingerprints<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your right slap on the device until the capture completes",
-			"androidTestDescription": "Quality Check Test to validate the biometrics captured by RCapture interface for right slap fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right slap on the device until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "BiometricsQualityCheckValidator",
-						"description": "Checks the quality of biometrics using all configured SDK services"
-					}
-				]
-			]
+			"androidTestDescription": "Quality Check Test to validate the biometrics captured by RCapture interface for right slap fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right slap on the device until the capture completes"
 		},
 		"SBI1077": {
 			"testName": "Biometrics Quality Check for Registration capture - Double Iris",
 			"testDescription": "Quality Check Test to validate the biometrics captured by RCapture interface for both iris<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place both your iris on the device until the capture completes",
-			"androidTestDescription": "Quality Check Test to validate the biometrics captured by RCapture interface for both iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place both your iris on the device until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "BiometricsQualityCheckValidator",
-						"description": "Checks the quality of biometrics using all configured SDK services"
-					}
-				]
-			]
+			"androidTestDescription": "Quality Check Test to validate the biometrics captured by RCapture interface for both iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place both your iris on the device until the capture completes"
 		},
 		"SBI1078": {
 			"testName": "Biometrics Quality Check for Registration capture - Face",
 			"testDescription": "Quality Check Test to validate the biometrics captured by RCapture interface for face<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your face infront of the camera until the capture completes",
-			"androidTestDescription": "Quality Check Test to validate the biometrics captured by RCapture interface for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "BiometricsQualityCheckValidator",
-						"description": "Checks the quality of biometrics using all configured SDK services"
-					}
-				]
-			]
+			"androidTestDescription": "Quality Check Test to validate the biometrics captured by RCapture interface for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera until the capture completes"
 		},
 		"SBI1079": {
 			"testName": "Biometrics Quality Check for Auth capture - Face",
-			"testDescription": "Quality Check Test to validate the biometrics captured by Capture interface for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "BiometricsQualityCheckValidator",
-						"description": "Checks the quality of biometrics using all configured SDK services"
-					}
-				]
-			]
+			"testDescription": "Quality Check Test to validate the biometrics captured by Capture interface for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera until the capture completes"
 		},
 		"SBI1080": {
 			"testName": "Biometrics Quality Check for Auth capture - Single Iris - Left Iris",
-			"testDescription": "Quality Check Test to validate the biometrics captured by Capture interface for left iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your left iris infront of the iris scanner",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "BiometricsQualityCheckValidator",
-						"description": "Checks the quality of biometrics using all configured SDK services"
-					}
-				]
-			]
+			"testDescription": "Quality Check Test to validate the biometrics captured by Capture interface for left iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your left iris infront of the iris scanner"
 		},
 		"SBI1081": {
 			"testName": "Biometrics Quality Check for Auth capture - Single Iris - Right Iris",
-			"testDescription": "Quality Check Test to validate the biometrics captured by Capture interface for right iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right iris infront of the iris scanner",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "BiometricsQualityCheckValidator",
-						"description": "Checks the quality of biometrics using all configured SDK services"
-					}
-				]
-			]
+			"testDescription": "Quality Check Test to validate the biometrics captured by Capture interface for right iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right iris infront of the iris scanner"
 		},
 		"SBI1082": {
 			"testName": "Biometrics Quality Check for Auth capture - Unknown Finger",
-			"testDescription": "Quality Check Test to validate the biometrics captured by Capture interface for a finger<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place one of your finger on the single fingerprint scanner",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "BiometricsQualityCheckValidator",
-						"description": "Checks the quality of biometrics using all configured SDK services"
-					}
-				]
-			]
+			"testDescription": "Quality Check Test to validate the biometrics captured by Capture interface for a finger<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place one of your finger on the single fingerprint scanner"
 		},
 		"SBI1083": {
 			"testName": "Time Check for Registration capture - Left Slap",
 			"testDescription": "Test to validate the timestamp captured by RCapture interface for left slap fingerprints<br><br>Steps:<br>1. Click on Start Streaming button. <br>2. Once streaming is done, click on Inititate Capture button to start the capture.  <br> 3. Place your left slap on the device until the capture completes",
-			"androidTestDescription": "Test to validate the timestamp captured by RCapture interface for left slap fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place your left slap on the device until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "TimeCheckValidator",
-						"description": "Validates if response is received within the given timestamp interval or not"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate the timestamp captured by RCapture interface for left slap fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place your left slap on the device until the capture completes"
 		},
 		"SBI1084": {
 			"testName": "Time Check for Registration capture - Right Slap",
 			"testDescription": "Test to validate the timestamp captured by RCapture interface for right slap fingerprints<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your right slap on the device until the capture completes",
-			"androidTestDescription": "Test to validate the timestamp captured by RCapture interface for right slap fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right slap on the device until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "TimeCheckValidator",
-						"description": "Validates if response is received within the given timestamp interval or not"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate the timestamp captured by RCapture interface for right slap fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right slap on the device until the capture completes"
 		},
 		"SBI1085": {
 			"testName": "Time Check for Registration capture - Double Iris",
 			"testDescription": "Test to validate the timestamp captured by RCapture interface for both iris<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place both your iris on the device until the capture completes",
-			"androidTestDescription": "Test to validate the timestamp captured by RCapture interface for both iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place both your iris on the device until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "TimeCheckValidator",
-						"description": "Validates if response is received within the given timestamp interval or not"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate the timestamp captured by RCapture interface for both iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place both your iris on the device until the capture completes"
 		},
 		"SBI1086": {
 			"testName": "Time Check for Registration capture - Face",
 			"testDescription": "Test to validate the timestamp captured by RCapture interface for face<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your face infront of the camera until the capture completes",
-			"androidTestDescription": "Test to validate the timestamp captured by RCapture interface for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "TimeCheckValidator",
-						"description": "Validates if response is received within the given timestamp interval or not"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate the timestamp captured by RCapture interface for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera until the capture completes"
 		},
 		"SBI1087": {
 			"testName": "Time Check for Auth capture - Face",
-			"testDescription": "Test to validate the timestamp captured by Capture interface for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "TimeCheckValidator",
-						"description": "Validates if response is received within the given timestamp interval or not"
-					}
-				]
-			]
+			"testDescription": "Test to validate the timestamp captured by Capture interface for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera until the capture completes"
 		},
 		"SBI1088": {
 			"testName": "Time Check for Auth capture - Single Iris - Left Iris",
-			"testDescription": "Test to validate the timestamp captured by Capture interface for left iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your left iris infront of the iris scanner",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "TimeCheckValidator",
-						"description": "Validates if response is received within the given timestamp interval or not"
-					}
-				]
-			]
+			"testDescription": "Test to validate the timestamp captured by Capture interface for left iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your left iris infront of the iris scanner"
 		},
 		"SBI1089": {
 			"testName": "Time Check for Auth capture - Single Iris - Right Iris",
-			"testDescription": "Test to validate the timestamp captured by Capture interface for right iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right iris infront of the iris scanner",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "TimeCheckValidator",
-						"description": "Validates if response is received within the given timestamp interval or not"
-					}
-				]
-			]
+			"testDescription": "Test to validate the timestamp captured by Capture interface for right iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right iris infront of the iris scanner"
 		},
 		"SBI1090": {
 			"testName": "Time Check for Auth capture - Unknown Finger",
-			"testDescription": "Test to validate the timestamp captured by Capture interface for a finger<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place one of your finger on the single fingerprint scanner",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					},
-					{
-						"name": "TimeCheckValidator",
-						"description": "Validates if response is received within the given timestamp interval or not"
-					}
-				]
-			]
+			"testDescription": "Test to validate the timestamp captured by Capture interface for a finger<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place one of your finger on the single fingerprint scanner"
 		},
 		"SBI1091": {
 			"testName": "Auth capture - Face - Invalid Transaction Id",
-			"testDescription": "Test to validate transactionId of Capture method for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"testDescription": "Test to validate transactionId of Capture method for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera until the capture completes"
 		},
 		"SBI1092": {
 			"testName": "Auth capture - Single Iris - Left Iris - Invalid Transaction Id",
-			"testDescription": "Test to validate transactionId of Capture method for left iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your left iris infront of the iris scanner",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"testDescription": "Test to validate transactionId of Capture method for left iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your left iris infront of the iris scanner"
 		},
 		"SBI1093": {
 			"testName": "Auth capture - Unknown Finger - Invalid Transaction Id",
-			"testDescription": "Test to validate transactionId of Capture method for a finger<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place one of your finger on the single fingerprint scanner",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					},
-					{
-						"name": "ResponseMismatchValidator",
-						"description": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request"
-					},
-					{
-						"name": "SignatureValidator",
-						"description": "Validates the response signature"
-					}
-				]
-			]
+			"testDescription": "Test to validate transactionId of Capture method for a finger<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place one of your finger on the single fingerprint scanner"
 		},
 		"SBI1094": {
 			"testName": "Registration capture - Left Slap - Invalid Request Json (wrong attribute name envXXX)",
 			"testDescription": "Test to validate invalid request json in RCapture method for Left Slap Fingerprints<br><br>Steps:<br>1. Click on Start Streaming button. <br>2. Once streaming is done, click on Inititate Capture button to start the capture.  <br> 3. Place your left slap on the device until the capture completes",
-			"androidTestDescription": "Test to validate invalid request json in RCapture method for Left Slap Fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place your left slap on the device until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate invalid request json in RCapture method for Left Slap Fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place your left slap on the device until the capture completes"
 		},
 		"SBI1095": {
 			"testName": "Registration capture - Right Slap - Invalid Request Json (wrong attribute name timeoutXXX)",
 			"testDescription": "Test to validate invalid request json in RCapture method for Right Slap Fingerprints<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your right slap on the device until the capture completes",
-			"androidTestDescription": "Test to validate invalid request json in RCapture method for Right Slap Fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right slap on the device until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate invalid request json in RCapture method for Right Slap Fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right slap on the device until the capture completes"
 		},
 		"SBI1096": {
 			"testName": "Registration capture - Two Thumbs - Invalid Request Json (wrong attribute name specVersionXXX)",
 			"testDescription": "Test to validate invalid request json in RCapture method for Two Thumbs<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place both your thumbs on the device until the capture completes",
-			"androidTestDescription": "Test to validate invalid request json in RCapture method for Two Thumbs<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place both your thumbs on the device until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate invalid request json in RCapture method for Two Thumbs<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place both your thumbs on the device until the capture completes"
 		},
 		"SBI1097": {
 			"testName": "Registration capture - Double Iris - Invalid Request Json (wrong attribute name purposeXXX)",
 			"testDescription": "Test to validate invalid request json in RCapture method for Two Iris<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place both your iris on the device until the capture completes",
-			"androidTestDescription": "Test to validate invalid request json in RCapture method for Two Iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place both your iris on the device until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate invalid request json in RCapture method for Two Iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place both your iris on the device until the capture completes"
 		},
 		"SBI1098": {
 			"testName": "Registration capture - Face - Invalid Request Json (wrong attribute name bioXXX)",
 			"testDescription": "Test to validate invalid request json in RCapture method for face<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your face infront of the camera until the capture completes",
-			"androidTestDescription": "Test to validate invalid request json in RCapture method for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate invalid request json in RCapture method for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera until the capture completes"
 		},
 		"SBI1099": {
 			"testName": "Registration capture - Double Iris - One Exception - Invalid Request Json (wrong attribute name countXXX)",
 			"testDescription": "Test to validate invalid request json in RCapture method for iris with one missing iris<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place only the right iris on the device until the capture completes",
-			"androidTestDescription": "Test to validate invalid request json in RCapture method for iris with one missing iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place only the right iris on the device until the capture completes",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate invalid request json in RCapture method for iris with one missing iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place only the right iris on the device until the capture completes"
 		},
 		"SBI1100": {
 			"testName": "Registration capture - Exception Photo - Invalid Request Json (wrong attribute name deviceSubIdXXX)",
 			"testDescription": "Test to validate invalid request json in RCapture method for exception photo<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Raise your hands during capture",
-			"androidTestDescription": "Test to validate invalid request json in RCapture method for exception photo<br><br>Steps:<br><br>1. Click on Inititate Capture button to start the capture <br>2. Raise your hands during capture",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					}
-				]
-			]
+			"androidTestDescription": "Test to validate invalid request json in RCapture method for exception photo<br><br>Steps:<br><br>1. Click on Inititate Capture button to start the capture <br>2. Raise your hands during capture"
 		},
 		"SDK2000": {
 			"testName": "Init Test",
-			"testDescription": "Initialise Bio SDK Services",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates the response for mandatory attributes and correct values"
-					}
-				]
-			]
+			"testDescription": "Initialise Bio SDK Services"
 		},
 		"SDK2001": {
 			"testName": "Good face quality",
-			"testDescription": "1. This testcase checks the biomterics for face to be of good quality.<br>2. Add the appropriate probe.xml",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "QualityCheckValidator",
-						"description": "Checks the quality score of the modality"
-					}
-				]
-			]
+			"testDescription": "1. This testcase checks the biomterics for face to be of good quality.<br>2. Add the appropriate probe.xml"
 		},
 		"SDK2002": {
 			"testName": "Bad face quality",
-			"testDescription": "Bad face quality",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "QualityCheckValidator",
-						"description": "Checks the quality score of the modality"
-					}
-				]
-			]
+			"testDescription": "Bad face quality"
 		},
 		"SDK2003": {
 			"testName": "Invalid face data for quality check",
-			"testDescription": "Invalid face data for quality check",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "QualityCheckInvalidDataValidator",
-						"description": "Validates the status code for invalid data"
-					}
-				]
-			]
+			"testDescription": "Invalid face data for quality check"
 		},
 		"SDK2004": {
 			"testName": "No face data for quality check",
-			"testDescription": "No face data for quality check",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "QualityCheckNoDataValidator",
-						"description": "Validates the status code for no data"
-					}
-				]
-			]
+			"testDescription": "No face data for quality check"
 		},
 		"SDK2005": {
 			"testName": "Bad finger quality",
-			"testDescription": "Bad finger quality",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "QualityCheckValidator",
-						"description": "Checks the quality score of the modality"
-					}
-				]
-			]
+			"testDescription": "Bad finger quality"
 		},
 		"SDK2006": {
 			"testName": "Good finger quality",
-			"testDescription": "Good finger quality",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "QualityCheckValidator",
-						"description": "Checks the quality score of the modality"
-					}
-				]
-			]
+			"testDescription": "Good finger quality"
 		},
 		"SDK2007": {
 			"testName": "Invalid finger data for quality check",
-			"testDescription": "Invalid finger data for quality check",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "QualityCheckInvalidDataValidator",
-						"description": "Validates the status code for invalid data"
-					}
-				]
-			]
+			"testDescription": "Invalid finger data for quality check"
 		},
 		"SDK2008": {
 			"testName": "No finger data for quality check",
-			"testDescription": "No finger data for quality check",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "QualityCheckNoDataValidator",
-						"description": "Validates the status code for no data"
-					}
-				]
-			]
+			"testDescription": "No finger data for quality check"
 		},
 		"SDK2009": {
 			"testName": "Bad iris quality",
-			"testDescription": "Bad iris quality",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "QualityCheckValidator",
-						"description": "Checks the quality score of the modality"
-					}
-				]
-			]
+			"testDescription": "Bad iris quality"
 		},
 		"SDK2010": {
 			"testName": "Good iris quality",
-			"testDescription": "Good iris quality",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "QualityCheckValidator",
-						"description": "Checks the quality score of the modality"
-					}
-				]
-			]
+			"testDescription": "Good iris quality"
 		},
 		"SDK2011": {
 			"testName": "Invalid iris data for quality check",
-			"testDescription": "Invalid iris data for quality check",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "QualityCheckInvalidDataValidator",
-						"description": "Validates the status code for invalid data"
-					}
-				]
-			]
+			"testDescription": "Invalid iris data for quality check"
 		},
 		"SDK2012": {
 			"testName": "No iris data for quality check",
-			"testDescription": "No iris data for quality check",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "QualityCheckNoDataValidator",
-						"description": "Validates the status code for no data"
-					}
-				]
-			]
+			"testDescription": "No iris data for quality check"
 		},
 		"SDK2013": {
 			"testName": "Multi modality (Face & Finger) quality check success",
-			"testDescription": "modality quality check success",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "QualityCheckValidator",
-						"description": "Checks the quality score of the modality"
-					}
-				]
-			]
+			"testDescription": "modality quality check success"
 		},
 		"SDK2014": {
 			"testName": "Multi modality (Face, Finger, Iris) quality check success",
-			"testDescription": "modality quality check success",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "QualityCheckValidator",
-						"description": "Checks the quality score of the modality"
-					}
-				]
-			]
+			"testDescription": "modality quality check success"
 		},
 		"SDK2015": {
 			"testName": "Face match failure",
-			"testDescription": "Face match failure",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "MatchValidator",
-						"description": "Validates if biometrics match for the modality"
-					}
-				]
-			]
+			"testDescription": "Face match failure"
 		},
 		"SDK2016": {
 			"testName": "Face match success",
-			"testDescription": "Face match success",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "MatchValidator",
-						"description": "Validates if biometrics match for the modality"
-					}
-				]
-			]
+			"testDescription": "Face match success"
 		},
 		"SDK2017": {
 			"testName": "Invalid face data for match",
-			"testDescription": "Invalid face data for match",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "MatchInvalidDataValidator",
-						"description": "Validates the status code for invalid data"
-					}
-				]
-			]
+			"testDescription": "Invalid face data for match"
 		},
 		"SDK2018": {
 			"testName": "No face data for match",
-			"testDescription": "No face data for match",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "MatchNoDataValidator",
-						"description": "Validates the status code for no data"
-					}
-				]
-			]
+			"testDescription": "No face data for match"
 		},
 		"SDK2019": {
 			"testName": "Face match against more than one face",
-			"testDescription": "Face match against more than one face",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "MatchMultiGalleryValidator",
-						"description": "Validates if biometrics match for the modality"
-					}
-				]
-			]
+			"testDescription": "Face match against more than one face"
 		},
 		"SDK2020": {
 			"testName": "Sending finger data instead of face",
-			"testDescription": "Sending finger data instead of face",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "MatchInvalidDataValidator",
-						"description": "Validates the status code for invalid data"
-					}
-				]
-			]
+			"testDescription": "Sending finger data instead of face"
 		},
 		"SDK2021": {
 			"testName": "Finger match failure",
-			"testDescription": "Finger match failure",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "MatchValidator",
-						"description": "Validates if biomterics match for the modality"
-					}
-				]
-			]
+			"testDescription": "Finger match failure"
 		},
 		"SDK2022": {
 			"testName": "Finger match success",
-			"testDescription": "Finger match success",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "MatchValidator",
-						"description": "Validates if biomterics match for the modality"
-					}
-				]
-			]
+			"testDescription": "Finger match success"
 		},
 		"SDK2023": {
 			"testName": "Invalid finger data for match",
-			"testDescription": "Invalid finger data for match",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "MatchInvalidDataValidator",
-						"description": "Validates the status code for invalid data"
-					}
-				]
-			]
+			"testDescription": "Invalid finger data for match"
 		},
 		"SDK2024": {
 			"testName": "No finger data for match",
-			"testDescription": "No finger data for match",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "MatchNoDataValidator",
-						"description": "Validates the status code for no data"
-					}
-				]
-			]
+			"testDescription": "No finger data for match"
 		},
 		"SDK2025": {
 			"testName": "Finger match against more than 10 fingers",
-			"testDescription": "Finger match against more than 10 fingers",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "MatchMultiGalleryValidator",
-						"description": "Validates if biomterics match for the modality"
-					}
-				]
-			]
+			"testDescription": "Finger match against more than 10 fingers"
 		},
 		"SDK2026": {
 			"testName": "Finger match fail when wrong subtype",
-			"testDescription": "Finger match fail when wrong subtype",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "MatchInvalidDataValidator",
-						"description": "Validates the status code for invalid data"
-					}
-				]
-			]
+			"testDescription": "Finger match fail when wrong subtype"
 		},
 		"SDK2027": {
 			"testName": "Sending face data instead of finger",
-			"testDescription": "Sending face data instead of finger",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "MatchInvalidDataValidator",
-						"description": "Validates the status code for invalid data"
-					}
-				]
-			]
+			"testDescription": "Sending face data instead of finger"
 		},
 		"SDK2028": {
 			"testName": "Iris match failure",
-			"testDescription": "Iris match failure",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "MatchValidator",
-						"description": "Validates if biomterics match for the modality"
-					}
-				]
-			]
+			"testDescription": "Iris match failure"
 		},
 		"SDK2029": {
 			"testName": "Iris match success",
-			"testDescription": "Iris match success",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "MatchValidator",
-						"description": "Validates if biomterics match for the modality"
-					}
-				]
-			]
+			"testDescription": "Iris match success"
 		},
 		"SDK2030": {
 			"testName": "Invalid iris data for match",
-			"testDescription": "Invalid iris data for match",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "MatchInvalidDataValidator",
-						"description": "Validates the status code for invalid data"
-					}
-				]
-			]
+			"testDescription": "Invalid iris data for match"
 		},
 		"SDK2031": {
 			"testName": "No iris data for match",
-			"testDescription": "No iris data for match",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "MatchNoDataValidator",
-						"description": "Validates the status code for no data"
-					}
-				]
-			]
+			"testDescription": "No iris data for match"
 		},
 		"SDK2032": {
 			"testName": "Iris match against more than 2 iris",
-			"testDescription": "Iris match against more than 2 iris",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "MatchMultiGalleryValidator",
-						"description": "Validates if biomterics match for the modality"
-					}
-				]
-			]
+			"testDescription": "Iris match against more than 2 iris"
 		},
 		"SDK2033": {
 			"testName": "Iris match fail when wrong subtype",
-			"testDescription": "Iris match fail when wrong subtype",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "MatchInvalidDataValidator",
-						"description": "Validates the status code for invalid data"
-					}
-				]
-			]
+			"testDescription": "Iris match fail when wrong subtype"
 		},
 		"SDK2034": {
 			"testName": "Sending face data instead of iris",
-			"testDescription": "Sending face data instead of iris",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "MatchInvalidDataValidator",
-						"description": "Validates the status code for invalid data"
-					}
-				]
-			]
+			"testDescription": "Sending face data instead of iris"
 		},
 		"SDK2035": {
 			"testName": "Multi modality (Face, Finger) match success",
-			"testDescription": "Multi modality (Face, Finger) match success",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "MatchValidator",
-						"description": "Validates if biomterics match for the modality"
-					}
-				]
-			]
+			"testDescription": "Multi modality (Face, Finger) match success"
 		},
 		"SDK2036": {
 			"testName": "Multi Modality (Face, Finger, Iris) match success",
-			"testDescription": "Multi Modality match success",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "MatchValidator",
-						"description": "Validates if biomterics match for the modality"
-					}
-				]
-			]
+			"testDescription": "Multi Modality match success"
 		},
 		"SDK2037": {
 			"testName": "Multi modality (Face, Finger, Iris) match success - multi gallery",
-			"testDescription": "Multi modality match success - multi gallery",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "MatchMultiGalleryValidator",
-						"description": "Validates if biomterics match for the modality"
-					}
-				]
-			]
+			"testDescription": "Multi modality match success - multi gallery"
 		},
 		"SDK2038": {
 			"testName": "Finger Extract Template Success",
-			"testDescription": "Finger extract template is successful or not",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "ExtractTemplateValidator",
-						"description": "Validates if input BDB data present in the Probe for the modality is valid"
-					}
-				]
-			]
+			"testDescription": "Finger extract template is successful or not"
 		},
 		"SDK2039": {
 			"testName": "Face Extract Template Success",
-			"testDescription": "Face extract template is successful or not",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "ExtractTemplateValidator",
-						"description": "Validates if input BDB data present in the Probe for the modality is valid"
-					}
-				]
-			]
+			"testDescription": "Face extract template is successful or not"
 		},
 		"SDK2040": {
 			"testName": "Iris Extract Template Success",
-			"testDescription": "Iris extract template is successful or not",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "ExtractTemplateValidator",
-						"description": "Validates if input BDB data present in the Probe for the modality is valid"
-					}
-				]
-			]
+			"testDescription": "Iris extract template is successful or not"
 		},
 		"SDK2041": {
 			"testName": "Finger Extract Template Fail",
-			"testDescription": "Finger extract template is failure or not",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "ExtractTemplateValidator",
-						"description": "Validates if input BDB data present in the Probe for the modality is valid"
-					}
-				]
-			]
+			"testDescription": "Finger extract template is failure or not"
 		},
 		"SDK2042": {
 			"testName": "Face Extract Template Fail",
-			"testDescription": "Face extract template is failure or not",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "ExtractTemplateValidator",
-						"description": "Validates if input BDB data present in the Probe for the modality is valid"
-					}
-				]
-			]
+			"testDescription": "Face extract template is failure or not"
 		},
 		"SDK2043": {
 			"testName": "Iris Extract Template Fail",
-			"testDescription": "Iris extract template is failure or not",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "ExtractTemplateValidator",
-						"description": "Validates if input BDB data present in the Probe for the modality is valid"
-					}
-				]
-			]
+			"testDescription": "Iris extract template is failure or not"
 		},
 		"SDK2044": {
 			"testName": "Finger extract invalid data failure",
-			"testDescription": "Finger extract invalid data failure",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "ExtractTemplateInvalidDataValidator",
-						"description": "Validates if input BDB data present in the Probe for the modality is valid"
-					}
-				]
-			]
+			"testDescription": "Finger extract invalid data failure"
 		},
 		"SDK2045": {
 			"testName": "Face extract invalid data failure",
-			"testDescription": "Face extract invalid data failure",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "ExtractTemplateInvalidDataValidator",
-						"description": "Validates if input BDB data present in the Probe for the modality is valid"
-					}
-				]
-			]
+			"testDescription": "Face extract invalid data failure"
 		},
 		"SDK2046": {
 			"testName": "Iris extract invalid data failure",
-			"testDescription": "Iris extract invalid data failure",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "ExtractTemplateInvalidDataValidator",
-						"description": "Validates if input BDB data present in the Probe for the modality is valid"
-					}
-				]
-			]
+			"testDescription": "Iris extract invalid data failure"
 		},
 		"SDK2047": {
 			"testName": "Finger extract no input failure",
-			"testDescription": "Finger extract no input failure",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "ExtractTemplateNoInputDataValidator",
-						"description": "Validates if no input BDB data present in the Probe"
-					}
-				]
-			]
+			"testDescription": "Finger extract no input failure"
 		},
 		"SDK2048": {
 			"testName": "Face extract no input failure",
-			"testDescription": "Face extract no input failure",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "ExtractTemplateNoInputDataValidator",
-						"description": "Validates if no input BDB data present in the Probe"
-					}
-				]
-			]
+			"testDescription": "Face extract no input failure"
 		},
 		"SDK2049": {
 			"testName": "Iris extract no input failure",
-			"testDescription": "Iris extract no input failure",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "ExtractTemplateNoInputDataValidator",
-						"description": "Validates if no input BDB data present in the Probe"
-					}
-				]
-			]
+			"testDescription": "Iris extract no input failure"
 		},
 		"SDK2050": {
 			"testName": "Finger Extract Template And Match FMR Success",
-			"testDescription": "Finger Extract And Match FMR Success",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "ExtractTemplateValidator",
-						"description": "Validates if input BDB data present in the Probe for the modality is valid"
-					}
-				],
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "MatchValidator",
-						"description": "Validates if biomterics match for the modality"
-					}
-				]
-			]
+			"testDescription": "Finger Extract And Match FMR Success"
 		},
 		"SDK2051": {
 			"testName": "Face Extract Template And Match FMR Success",
-			"testDescription": "Face Extract And Match FMR Success",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "ExtractTemplateValidator",
-						"description": "Validates if input BDB data present in the Probe for the modality is valid"
-					}
-				],
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "MatchValidator",
-						"description": "Validates if biomterics match for the modality"
-					}
-				]
-			]
+			"testDescription": "Face Extract And Match FMR Success"
 		},
 		"SDK2052": {
 			"testName": "Iris Extract Template And Match FMR Success",
-			"testDescription": "Iris Extract And Match FMR Success",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "ExtractTemplateValidator",
-						"description": "Validates if input BDB data present in the Probe for the modality is valid"
-					}
-				],
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "MatchValidator",
-						"description": "Validates if biomterics match for the modality"
-					}
-				]
-			]
+			"testDescription": "Iris Extract And Match FMR Success"
 		},
 		"SDK2053": {
 			"testName": "Finger Extract Template And Match FMR Fail",
-			"testDescription": "Finger Extract And Match FMR Fail",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "ExtractTemplateValidator",
-						"description": "Validates if input BDB data present in the Probe for the modality is valid"
-					}
-				],
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "MatchValidator",
-						"description": "Validates if biomterics match for the modality"
-					}
-				]
-			]
+			"testDescription": "Finger Extract And Match FMR Fail"
 		},
 		"SDK2054": {
 			"testName": "Face Extract Template And Match FMR Fail",
-			"testDescription": "Face Extract And Match FMR Fail",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "ExtractTemplateValidator",
-						"description": "Validates if input BDB data present in the Probe for the modality is valid"
-					}
-				],
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "MatchValidator",
-						"description": "Validates if biomterics match for the modality"
-					}
-				]
-			]
+			"testDescription": "Face Extract And Match FMR Fail"
 		},
 		"SDK2055": {
 			"testName": "Iris Extract Template And Match FMR Fail",
-			"testDescription": "Iris Extract And Match FMR Fail",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "ExtractTemplateValidator",
-						"description": "Validates if input BDB data present in the Probe for the modality is valid"
-					}
-				],
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "MatchValidator",
-						"description": "Validates if biomterics match for the modality"
-					}
-				]
-			]
+			"testDescription": "Iris Extract And Match FMR Fail"
 		},
 		"SDK2056": {
 			"testName": "Finger segment good quality",
-			"testDescription": "Finger segment good quality",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "SegmentValidator",
-						"description": "Validates if input BDB data present in the Probe for the modality is valid"
-					}
-				]
-			]
+			"testDescription": "Finger segment good quality"
 		},
 		"SDK2057": {
 			"testName": "Face segment good quality",
-			"testDescription": "Face segment good quality",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "SegmentValidator",
-						"description": "Validates if input BDB data present in the Probe for the modality is valid"
-					}
-				]
-			]
+			"testDescription": "Face segment good quality"
 		},
 		"SDK2058": {
 			"testName": "Iris segment good quality",
-			"testDescription": "Iris segment good quality",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "SegmentValidator",
-						"description": "Validates if input BDB data present in the Probe for the modality is valid"
-					}
-				]
-			]
+			"testDescription": "Iris segment good quality"
 		},
 		"SDK2059": {
 			"testName": "Finger segment invalid data failure",
-			"testDescription": "Finger segment invalid data failure",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "SegmentInvalidDataValidator",
-						"description": "Validates if input BDB data present in the Probe for the modality is valid"
-					}
-				]
-			]
+			"testDescription": "Finger segment invalid data failure"
 		},
 		"SDK2060": {
 			"testName": "Face segment invalid data failure",
-			"testDescription": "Face segment invalid data failure",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "SegmentInvalidDataValidator",
-						"description": "Validates if input BDB data present in the Probe for the modality is valid"
-					}
-				]
-			]
+			"testDescription": "Face segment invalid data failure"
 		},
 		"SDK2061": {
 			"testName": "Iris segment invalid data failure",
-			"testDescription": "Iris segment invalid data failure",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "SegmentInvalidDataValidator",
-						"description": "Validates if input BDB data present in the Probe for the modality is valid"
-					}
-				]
-			]
+			"testDescription": "Iris segment invalid data failure"
 		},
 		"SDK2062": {
 			"testName": "Finger segment no input failure",
-			"testDescription": "Finger segment no input failure",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "SegmentNoInputDataValidator",
-						"description": "Validates if no input BDB data present in the Probe"
-					}
-				]
-			]
+			"testDescription": "Finger segment no input failure"
 		},
 		"SDK2063": {
 			"testName": "Face segment no input failure",
-			"testDescription": "Face segment no input failure",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "SegmentNoInputDataValidator",
-						"description": "Validates if no input BDB data present in the Probe"
-					}
-				]
-			]
+			"testDescription": "Face segment no input failure"
 		},
 		"SDK2064": {
 			"testName": "Iris segment no input failure",
-			"testDescription": "Iris segment no input failure",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "SegmentNoInputDataValidator",
-						"description": "Validates if no input BDB data present in the Probe"
-					}
-				]
-			]
+			"testDescription": "Iris segment no input failure"
 		},
 		"SDK2065": {
 			"testName": "Face convert from ISO19794_5_2011 to IMAGE/JPEG",
-			"testDescription": "Face convert from ISO19794_5_2011 to IMAGE/JPEG",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "ConvertDataValidator",
-						"description": "Validates the input BDB data present in the Probe"
-					}
-				]
-			]
+			"testDescription": "Face convert from ISO19794_5_2011 to IMAGE/JPEG"
 		},
 		"SDK2066": {
 			"testName": "Face convert from ISO19794_5_2011 to IMAGE/PNG",
-			"testDescription": "Face convert from ISO19794_5_2011 to IMAGE/PNG",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "ConvertDataValidator",
-						"description": "Validates the input BDB data present in the Probe"
-					}
-				]
-			]
+			"testDescription": "Face convert from ISO19794_5_2011 to IMAGE/PNG"
 		},
 		"SDK2067": {
 			"testName": "Face convert invalid data failure",
-			"testDescription": "Face convert invalid data failure",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "ConvertInvalidDataValidator",
-						"description": "Validates if input BDB data present in the Probe for the modality is valid"
-					}
-				]
-			]
+			"testDescription": "Face convert invalid data failure"
 		},
 		"SDK2068": {
 			"testName": "Face convert no input failure",
-			"testDescription": "Face convert no input failure",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "ConvertNoInputDataValidator",
-						"description": "Validates if no input BDB data present in the Probe"
-					}
-				]
-			]
+			"testDescription": "Face convert no input failure"
 		},
 		"SDK2069": {
 			"testName": "Finger convert from ISO19794_4_2011 to IMAGE/JPEG",
-			"testDescription": "Finger convert from ISO19794_4_2011 to IMAGE/JPEG",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "ConvertDataValidator",
-						"description": "Validates the input BDB data present in the Probe"
-					}
-				]
-			]
+			"testDescription": "Finger convert from ISO19794_4_2011 to IMAGE/JPEG"
 		},
 		"SDK2070": {
 			"testName": "Finger convert from ISO19794_4_2011 to IMAGE/PNG",
-			"testDescription": "Finger convert from ISO19794_4_2011 to IMAGE/PNG",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "ConvertDataValidator",
-						"description": "Validates the input BDB data present in the Probe"
-					}
-				]
-			]
+			"testDescription": "Finger convert from ISO19794_4_2011 to IMAGE/PNG"
 		},
 		"SDK2071": {
 			"testName": "Finger convert invalid data failure",
-			"testDescription": "Finger convert invalid data failure",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "ConvertInvalidDataValidator",
-						"description": "Validates if input BDB data present in the Probe for the modality is valid"
-					}
-				]
-			]
+			"testDescription": "Finger convert invalid data failure"
 		},
 		"SDK2072": {
 			"testName": "Finger convert no input failure",
-			"testDescription": "Finger convert no input failure",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "ConvertNoInputDataValidator",
-						"description": "Validates if no input BDB data present in the Probe"
-					}
-				]
-			]
+			"testDescription": "Finger convert no input failure"
 		},
 		"SDK2073": {
 			"testName": "Iris convert from ISO19794_6_2011 to IMAGE/PNG",
-			"testDescription": "Iris convert from ISO19794_6_2011 to IMAGE/PNG",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "ConvertDataValidator",
-						"description": "Validates the input BDB data present in the Probe"
-					}
-				]
-			]
+			"testDescription": "Iris convert from ISO19794_6_2011 to IMAGE/PNG"
 		},
 		"SDK2074": {
 			"testName": "Iris convert invalid data failure",
-			"testDescription": "Iris convert invalid data failure",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "ConvertInvalidDataValidator",
-						"description": "Validates if input BDB data present in the Probe for the modality is valid"
-					}
-				]
-			]
+			"testDescription": "Iris convert invalid data failure"
 		},
 		"SDK2075": {
 			"testName": "Iris convert no input failure",
-			"testDescription": "Iris convert no input failure",
-			"validatorDefs": [
-				[
-					{
-						"name": "SchemaValidator",
-						"description": "Validates if response has all mandatory attributes and they have allowed values"
-					},
-					{
-						"name": "ConvertNoInputDataValidator",
-						"description": "Validates if no input BDB data present in the Probe"
-					}
-				]
-			]
+			"testDescription": "Iris convert no input failure"
 		}
 	},
 	"validatorMessages": {
