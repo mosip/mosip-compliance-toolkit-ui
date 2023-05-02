@@ -377,13 +377,17 @@ export class ExecuteTestRunComponent implements OnInit {
           //reset all attributes for next testcase
           if (this.projectType == appConstants.ABIS) {
             this.abisRequestSendFailure = false;
-            this.cbeffFileIndex = 0;
             this.abisSentMessage = appConstants.BLANK_STRING;
             this.abisSentDataSource = appConstants.BLANK_STRING;
             this.abisRecvdMessage = appConstants.BLANK_STRING;
+            console.log(`after first round, found cbeffFileIndex: ${this.cbeffFileIndex}`);
             if (this.cbeffFileIndex > 0) {
               //do no reset current testcaseId
               resetCurrentTestCase = false;
+              if (this.countOfSuccessTestcases > 0)
+              this.countOfSuccessTestcases = this.countOfSuccessTestcases - 1;
+              if (this.countOfFailedTestcases > 0)
+              this.countOfFailedTestcases = this.countOfFailedTestcases - 1;
               await this.startWithSameTestcase();
             } 
           }
@@ -606,16 +610,28 @@ export class ExecuteTestRunComponent implements OnInit {
               resolve(true);
             }
             // console.log(response);
-            this.progressDone =
+            if (this.projectType == appConstants.ABIS) {
+              if (this.cbeffFileIndex == 0) {
+                this.progressDone =
+                this.progressDone + 100 / this.testCasesList.length;  
+              }
+            } else {
+              this.progressDone =
               this.progressDone + 100 / this.testCasesList.length;
-
+            }  
             resolve(true);
           },
           (errors) => {
             this.errorsInSavingTestRun = true;
-            this.progressDone =
+            if (this.projectType == appConstants.ABIS) {
+              if (this.cbeffFileIndex == 0) {
+                this.progressDone =
+                this.progressDone + 100 / this.testCasesList.length;  
+              }
+            } else {
+              this.progressDone =
               this.progressDone + 100 / this.testCasesList.length;
-
+            }  
             resolve(true);
           }
         )
@@ -712,22 +728,30 @@ export class ExecuteTestRunComponent implements OnInit {
           this.showLoader = true;
           if (!this.abisProjectData)
           await this.getAbisProjectDetails();
+          //disconnect from queue if already connected
           if (this.rxStompService.connected()) {
             this.rxStompService.deactivate();
           }
+          //setup connection as per project configuration
           this.rxStompService = this.activeMqService.setUpConfig(this.abisProjectData);
           let cbeffFilesCount = 0;
           if (testCase.otherAttributes.cbeffFilesCount) {
             cbeffFilesCount = Number.parseInt(testCase.otherAttributes.cbeffFilesCount);
           }
+          //ABIS requestId is unique per request so set to testRunId_testcaseId
           let requestId = this.testRunId + appConstants.UNDERSCORE + testCase.testId;
+          //ABIS testcase can have multiple CBEFF files, for each CBEFF file, same processing is reqd
+          //this will help in cases where multiple sets of biometrics are to be inserted in ABIS in same testcase
           if (cbeffFilesCount > 1) {
+            //cbeffFileIndex keeps track of the current CBEFF file index for a testcase
             if (this.cbeffFileIndex == 0) {
               this.cbeffFileIndex = 1;
             }
             requestId = requestId + appConstants.UNDERSCORE + this.cbeffFileIndex;  
           }
+          //ABIS referenceId is unique per set of biometrics so set to testRunId_testcaseId
           let referenceId = requestId;
+          //if testcase defines referenceTestId, then it is used 
           if (testCase.otherAttributes.referenceTestId) {
             referenceId = this.testRunId + appConstants.UNDERSCORE + testCase.otherAttributes.referenceTestId;
           }
@@ -746,7 +770,7 @@ export class ExecuteTestRunComponent implements OnInit {
             if (cbeffFilesCount > 1) {
               this.cbeffFileIndex = this.cbeffFileIndex + 1;
             } 
-            if (this.cbeffFileIndex == this.cbeffFileIndex) {
+            if (this.cbeffFileIndex > cbeffFilesCount) {
               //start with next testcase
               this.cbeffFileIndex = 0;
             }
@@ -827,7 +851,6 @@ export class ExecuteTestRunComponent implements OnInit {
   }
 
   async setResumeAgain() {
-    console.log('setResumeAgain');
     this.showResumeAgainBtn = false;
     this.pauseExecution = false;
     await this.startWithNextTestcase();
@@ -843,10 +866,8 @@ export class ExecuteTestRunComponent implements OnInit {
       for (const testCase of this.testCasesList) {
         if (currentId != '' && currentId == testCase.testId) {
           let ind = testCases.indexOf(testCase);
-          console.log(ind);
           ind = ind + 1;
           if (testCases[ind]) this.currectTestCaseId = testCases[ind].testId;
-          console.log(this.currectTestCaseId);
         }
       }
       await this.runExecuteForLoop(false, true);
@@ -882,7 +903,6 @@ export class ExecuteTestRunComponent implements OnInit {
       this.sbiSelectedPort +
       '/' +
       appConstants.SBI_METHOD_STREAM;
-    console.log(methodUrl);
     start_streaming(methodUrl, deviceId, deviceSubId, this.getStreamImgTagId());
     this.streamingDone = true;
     this.showInitiateCaptureBtn = true;
@@ -930,9 +950,6 @@ export class ExecuteTestRunComponent implements OnInit {
 
   viewTestRun() {
     this.dialogRef.close('');
-    console.log(
-      `toolkit/project/${this.projectType}/${this.projectId}/collection/${this.collectionId}/testrun/${this.testRunId}`
-    );
     this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}/collection/${this.collectionId}/testrun/${this.testRunId}`,
     ]);

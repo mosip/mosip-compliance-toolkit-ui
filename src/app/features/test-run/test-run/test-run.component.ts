@@ -245,9 +245,7 @@ export class TestRunComponent implements OnInit {
       this.subscriptions.push(
         this.dataService.getSbiProject(this.projectId).subscribe(
           (response: any) => {
-            console.log(response);
             this.sbiProjectData = response['response'];
-            console.log(this.sbiProjectData);
             resolve(true);
           },
           (errors) => {
@@ -298,6 +296,12 @@ export class TestRunComponent implements OnInit {
       }
       return data;
     }
+  }
+  getValidatorDetails(item: any) {
+    //console.log(item);
+    return this.resourceBundleJson.validators[item.validatorName] 
+      ? `${item.validatorName} (${this.resourceBundleJson.validators[item.validatorName]})` 
+      : `${item.validatorName} (${item.validatorDescription})`;
   }
 
   getValidatorMessage(item: any) {

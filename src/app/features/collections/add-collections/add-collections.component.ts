@@ -255,10 +255,10 @@ export class AddCollectionsComponent implements OnInit {
     if (testcases && testcases.length > 0) {
       for (let testcase of testcases) {
         if (!this.isAndroidAppMode) {
-          testcaseArr.push(Utils.translateTestcase(testcase,this.resourceBundleJson));
+          testcaseArr.push(Utils.translateTestcase(testcase, this.resourceBundleJson));
         } else if (this.isAndroidAppMode && (!testcase.inactiveForAndroid
           || (testcase.inactiveForAndroid && testcase.inactiveForAndroid != "yes"))) {
-          testcaseArr.push(Utils.translateTestcase(testcase,this.resourceBundleJson));
+          testcaseArr.push(Utils.translateTestcase(testcase, this.resourceBundleJson));
         }
       }
       //sort the testcases based on the testId
