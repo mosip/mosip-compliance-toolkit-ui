@@ -147,6 +147,9 @@ mat-expansion-panel-header {
   }
 }
 @media screen and (max-width: 2000px) {
+  .scandeviceButton-android{
+    margin-left: 880px;
+  }
   .scandeviceButton{
     margin-left: 300px;
   }
