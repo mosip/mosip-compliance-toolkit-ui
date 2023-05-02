@@ -51,6 +51,10 @@
                         <p></p><span [ngStyle]="{color: '#fd518c'}">{{ "executeTestRun.abisRequestSent" | translate }}
                         </span>
                     </div>
+                    <div *ngIf="abisRecvdMessage != ''">
+                        <p></p><b>{{ "executeTestRun.abisResponseRecvd" | translate }}
+                        </b>
+                    </div>
                     <div *ngIf="abisRequestSendFailure">
                         <p></p><span [ngStyle]="{color: '#fd518c'}">{{ "executeTestRun.abisRequestSentFail" | translate }}
                         </span>

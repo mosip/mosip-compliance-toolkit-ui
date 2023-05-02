@@ -163,7 +163,7 @@ export class AbisTestCaseService {
     if (testCase.methodName[0] == appConstants.ABIS_METHOD_INSERT) {
       request = {
         "id": appConstants.ABIS_INSERT_ID,
-        "version": appConstants.ABIS_INSERT_VERSION,
+        "version": appConstants.ABIS_VERSION,
         "requestId": requestId,
         "requesttime": new Date().toISOString(),
         "referenceId": referenceId,
@@ -171,6 +171,27 @@ export class AbisTestCaseService {
       };
     }
     if (testCase.methodName[0] == appConstants.ABIS_METHOS_IDENTIFY) {
+      request = {
+        "id": appConstants.ABIS_IDENTIFY_ID,
+        "version": appConstants.ABIS_VERSION,
+        "requestId": requestId,
+        "requesttime": new Date().toISOString(),
+        "referenceId": referenceId,
+        // "referenceUrl": null,
+        // "gallery": {
+        //   "referenceIds": [
+        //     {
+        //       "referenceId": "string"
+        //     }
+        //   ]
+        // },
+        // "flags": {
+        //   "maxResults": 0,
+        //   "targetFPIR": 0,
+        //   "flag1": "string",
+        //   "flag2": "string"
+        // }
+      }
     }
     return request;
   }
