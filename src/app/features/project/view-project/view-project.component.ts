@@ -50,8 +50,7 @@ export class ViewProjectComponent implements OnInit {
   isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
   textDirection: any = this.userProfileService.getTextDirection();
   buttonPosition: any = this.textDirection == 'rtl' ? { 'float': 'left' } : null;
-  collectionsButtonMobile: any = this.textDirection == 'rtl' ? 'collectionButtonMobile' : 'collections-button2';
-  scanDeviceButtonReg: any = this.textDirection == 'rtl' ? 'scandeviceButtonREGMobile' : 'scandeviceButtonREG';
+  isTrue: any = this.textDirection == 'rtl' ? true : false;
   isScanComplete =
     localStorage.getItem(appConstants.SBI_SCAN_COMPLETE) == 'true'
       ? true

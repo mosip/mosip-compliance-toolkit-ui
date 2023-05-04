@@ -213,6 +213,10 @@ mat-expansion-panel-header {
   .scandeviceButton-android{
     margin-left: 420px;
   }
+  .collectionButtonMobile{
+    margin-right: 540px;
+    position: absolute;
+  }
 }
 @media screen and (min-width: 685px) and (max-width: 763px) {
   .collections-button{
