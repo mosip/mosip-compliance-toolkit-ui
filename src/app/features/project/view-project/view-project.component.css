@@ -106,6 +106,12 @@ mat-expansion-panel-header {
   .scandeviceButtonREG{
     margin-left: 1700px;
   }
+  .collectionButtonMobile{
+    margin-right: 1400px;
+  }
+  .scandeviceButtonREG{
+    margin-left: 1500px;
+  }
 }
 @media screen and (max-width: 1440px) {
   .encryptionkeyButton{
@@ -117,11 +123,14 @@ mat-expansion-panel-header {
   .encryptionkeyButton{
     margin-left: 460px;
   }
-  .scandeviceButtonREG{
-    margin-left: 990px;
+  .collections-button2{
+    position: absolute;
   }
   .add-button{
     margin-right: 20px;
+  }
+  .collectionButtonMobile{
+    margin-right: 1000px;
   }
 }
 @media screen and (min-width:1275px) and (max-width: 1380px) {
@@ -132,7 +141,7 @@ mat-expansion-panel-header {
     margin-right: 0px;
   }
   .scandeviceButtonREG{
-    margin-left: 930px;
+    margin-left: 900px;
   }
 }
 @media screen and (min-width: 1200px) and (max-width: 1279px) {
@@ -143,13 +152,10 @@ mat-expansion-panel-header {
     margin-left: 340px;
   }
   .scandeviceButtonREG{
-    margin-left: 850px;
+    margin-left: 800px;
   }
 }
 @media screen and (max-width: 2000px) {
-  .scandeviceButton-android{
-    margin-left: 880px;
-  }
   .scandeviceButton{
     margin-left: 300px;
   }
@@ -164,11 +170,15 @@ mat-expansion-panel-header {
   .encryptionkeyButton{
     margin-left: 200px;
   }
-  .scandeviceButton{
-    margin-left: 200px;
+  .scandeviceButtonREG{
+    margin-left: 700px;
   }
   .scandeviceButton-android{
     margin-left: 680px;
+  }
+  .collectionButtonMobile{
+    position: absolute;
+    margin-right: 600px;
   }
 }
 @media screen and (max-width: 960px) {
@@ -202,6 +212,10 @@ mat-expansion-panel-header {
   }
   .scandeviceButton-android{
     margin-left: 420px;
+  }
+  .collectionButtonMobile{
+    margin-right: 540px;
+    position: absolute;
   }
 }
 @media screen and (min-width: 685px) and (max-width: 763px) {
@@ -341,13 +355,20 @@ mat-expansion-panel-header {
   }
   .collections-button2{
     position: absolute;
-    width: 160px;
+    width: 170px;
     height: 40px;
     float: left;
   }
+  .collectionButtonMobile{
+    margin-right: 180px;
+    position: absolute;
+    width: 170px;
+    height: 40px;
+  }
   .scandeviceButtonREG{
+    position: relative;
     margin-left: 180px;
-    width: 152px;
+    width: 170px;
     height: 40px;
   }
   .buttonspan{
@@ -411,7 +432,7 @@ mat-expansion-panel-header {
     width: 150px;
   }
 }
-@media screen and (max-width: 378px) {
+@media screen and (max-width: 402px) {
   .fieldWrapper {
     width: 330px;
     padding-left: -5px;
@@ -424,6 +445,25 @@ mat-expansion-panel-header {
   }
   .scandeviceButton-android{
     margin-left: 60px;
+  }
+  .collections-button2{
+    margin-left: 60px;
+    width: 200px;
+  }
+  .scandeviceButtonREG{
+    margin-top: 60px;
+    margin-left: 60px;
+    width: 200px;
+    text-overflow:ellipsis;
+  }
+  .collectionButtonMobile{
+    width: 200px;
+    margin-right: 60px;
+  }
+  .scandeviceButtonREGMobile{
+    width: 200px;
+    margin-right: 60px;
+    margin-top: 60px;
   }
 }
 @media screen and (max-width: 360px) {
@@ -468,15 +508,15 @@ mat-expansion-panel-header {
   }
   .collections-button2{
     position: absolute;
-    margin-left: 0px;
-    width: 140px;
+    margin-left: 60px;
+    width: 180px;
     height: 40px;
     float: left;
   }
   .scandeviceButtonREG{
     position: relative;
-    margin-left: 145px;
-    width: 140px;
+    margin-left: 60px;
+    width: 180px;
     height: 40px;
   }
   .buttonspan{
@@ -580,6 +620,10 @@ mat-expansion-panel-header {
   .scandeviceButton-android{
     margin-left: 10px;
   }
+  .collectionButtonMobile{
+    width: 120px;
+    margin-right: 140px;
+  }
   .collectionicon{
     margin-left: -15px;
   }
@@ -594,15 +638,15 @@ mat-expansion-panel-header {
   }
   .collections-button2{
     position: absolute;
-    margin-left: 0px;
-    width: 130px;
+    margin-left: 40px;
+    width: 180px;
     height: 40px;
     float: left;
   }
   .scandeviceButtonREG{
     position: relative;
-    margin-left: 135px;
-    width: 130px;
+    margin-left: 40px;
+    width: 180px;
     height: 40px;
   }
   .buttonspan{
