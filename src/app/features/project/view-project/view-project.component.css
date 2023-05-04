@@ -123,8 +123,8 @@ mat-expansion-panel-header {
   .encryptionkeyButton{
     margin-left: 460px;
   }
-  .scandeviceButtonREG{
-    margin-left: 1200px;
+  .collections-button2{
+    position: absolute;
   }
   .add-button{
     margin-right: 20px;
@@ -171,13 +171,13 @@ mat-expansion-panel-header {
     margin-left: 200px;
   }
   .scandeviceButtonREG{
-    position: absolute;
-    margin-left: 600px;
+    margin-left: 700px;
   }
   .scandeviceButton-android{
     margin-left: 680px;
   }
   .collectionButtonMobile{
+    position: absolute;
     margin-right: 600px;
   }
 }
