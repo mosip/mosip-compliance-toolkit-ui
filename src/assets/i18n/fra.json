@@ -1,4 +1,12 @@
 {
+	"dialogMessages": {
+		"logoutMessage": "Vous avez été déconnecté.",
+		"success": "Succès",
+		"collectionSuccessMessage": "Collection créée avec succès",
+		"sbiSuccessMessage": "Projet créé avec succès",
+		"sdkSuccessMessage": "Projet créé avec succès",
+		"close": "Fermer"
+	},
 	"breadcrumb": {
 		"home": "Maison",
 		"project": "Projet",

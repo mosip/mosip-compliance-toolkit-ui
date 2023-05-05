@@ -20,6 +20,7 @@ import { BreadcrumbService } from 'xng-breadcrumb';
   styleUrls: ['./add-project.component.css'],
 })
 export class AddProjectComponent implements OnInit {
+  resourceBundleJson: any = {};
   projectForm = new FormGroup({});
   allControls: string[];
   isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
@@ -42,6 +43,11 @@ export class AddProjectComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
+    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
+      (response: any) => {
+        this.resourceBundleJson = response;
+      }
+    );
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
     this.initForm();
     this.initBreadCrumb();
@@ -240,9 +246,14 @@ export class AddProjectComponent implements OnInit {
               resolve(true);
               Utils.showErrorMessage(response.errors, this.dialog);
             } else {
+              let resourceBundle = this.resourceBundleJson.dialogMessages;
+              let successMsg = 'success';
+              let sbiProjectMsg = 'sbiSuccessMessage';
               this.dataLoaded = true;
               const dialogRef = Utils.showSuccessMessage(
-                'Project created successfully',
+                resourceBundle,
+                successMsg,
+                sbiProjectMsg,
                 this.dialog
               );
               dialogRef.afterClosed().subscribe((res) => {
@@ -274,9 +285,14 @@ export class AddProjectComponent implements OnInit {
               resolve(true);
               Utils.showErrorMessage(response.errors, this.dialog);
             } else {
+              let resourceBundle = this.resourceBundleJson.dialogMessages;
+              let successMsg = 'success';
+              let sdkProjectMsg = 'sdkSuccessMessage';
               this.dataLoaded = true;
               const dialogRef = Utils.showSuccessMessage(
-                'Project created successfully',
+                resourceBundle,
+                successMsg,
+                sdkProjectMsg,
                 this.dialog
               );
               dialogRef.afterClosed().subscribe((res) => {

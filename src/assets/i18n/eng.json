@@ -1,4 +1,12 @@
 {
+	"dialogMessages": {
+		"logoutMessage": "You have been logged out.",
+		"success": "Success",
+		"collectionSuccessMessage": "Collection created successfully",
+		"sbiSuccessMessage": "Project created successfully",
+		"sdkSuccessMessage": "Project created successfully",
+		"close": "Close"
+	},
 	"breadcrumb": {
 		"home": "Home",
 		"project": "Project",

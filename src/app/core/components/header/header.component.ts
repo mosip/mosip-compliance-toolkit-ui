@@ -19,6 +19,7 @@ import { HttpClient } from '@angular/common/http';
   encapsulation: ViewEncapsulation.None,
 })
 export class HeaderComponent implements OnInit {
+  resourceBundleJson: any = {};
   appVersion: '';
   userName: string;
   profile = {
@@ -49,8 +50,13 @@ export class HeaderComponent implements OnInit {
     await this.logoutService.logout();
     const isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
     if (isAndroidAppMode) {
+      let resourceBundle = this.resourceBundleJson.dialogMessages;
+      let successMsg = 'success';
+      let logoutMsg = 'logoutMessage';
       const dialogRef = Utils.showSuccessMessage(
-        'You have been logged out.',
+        resourceBundle,
+        successMsg,
+        logoutMsg,
         this.dialog
       );
       dialogRef.afterClosed().subscribe((res) => {
@@ -59,6 +65,11 @@ export class HeaderComponent implements OnInit {
     }
   }
   ngOnInit() {
+    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
+      (response: any) => {
+        this.resourceBundleJson = response;
+      }
+    );
     if (this.userProfileService.getDisplayUserName()) {
       this.userName = this.userProfileService.getDisplayUserName();
     } else {

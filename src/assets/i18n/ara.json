@@ -1,4 +1,12 @@
 {
+	"dialogMessages": {
+		"logoutMessage": "لقد تم تسجيل الخروج.",
+		"success": "نجاح",
+		"collectionSuccessMessage": "تم إنشاء المجموعة بنجاح",
+		"sbiSuccessMessage": "تم إنشاء المشروع بنجاح",
+		"sdkSuccessMessage": "تم إنشاء المشروع بنجاح",
+		"close": "يغلق"
+	},
 	"breadcrumb": {
 		"home": "بيت",
 		"project": "مشروع",
