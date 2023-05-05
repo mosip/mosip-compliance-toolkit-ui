@@ -184,8 +184,16 @@ export default class Utils {
     }
   }
 
-  static showSuccessMessage(message: string, dialog: MatDialog) {
-    const title = 'Success';
+  static showSuccessMessage(resourceBundle: any, titleKey: string, messageKey: string, dialog: MatDialog) {
+    let title: any;
+    let message: any;
+    if (resourceBundle && resourceBundle[titleKey] && resourceBundle[messageKey]) {
+      title = resourceBundle[titleKey];
+      message = resourceBundle[messageKey];
+    } else {
+      title = titleKey;
+      message = messageKey;
+    }
     const body = {
       case: 'SUCCESS',
       title: title,

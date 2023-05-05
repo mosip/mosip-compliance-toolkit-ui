@@ -393,9 +393,14 @@ export class AddCollectionsComponent implements OnInit {
               resolve(true);
               Utils.showErrorMessage(response.errors, this.dialog);
             } else {
+              let resourceBundle = this.resourceBundleJson.dialogMessages;
+              let successMsg = 'success';
+              let collectionMsg = 'collectionSuccessMessage';
               this.dataLoaded = true;
               const dialogRef = Utils.showSuccessMessage(
-                'Collection created successfully',
+                resourceBundle,
+                successMsg,
+                collectionMsg,
                 this.dialog
               );
               dialogRef.afterClosed().subscribe((res) => {

@@ -272,7 +272,9 @@ export class AddTestDataComponent implements OnInit {
               if (info) {
                 msg += info;
               }
-              const dialogRef = Utils.showSuccessMessage(msg, this.dialog);
+              let resourceBundle = this.resourceBundleJson.dialogMessages;
+              let successMsg = 'success';
+              const dialogRef = Utils.showSuccessMessage(resourceBundle, successMsg, msg, this.dialog);
               dialogRef.afterClosed().subscribe((res) => {
                 this.showBiometricDashboard();
               });
