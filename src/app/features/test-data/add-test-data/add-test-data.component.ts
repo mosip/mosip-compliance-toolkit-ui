@@ -146,6 +146,7 @@ export class AddTestDataComponent implements OnInit {
       if (!extensionRegex.test(this.fileExtension)) {
         this.fileExtension = oldFileExtension;
         Utils.showErrorMessage(
+          this.resourceBundleJson,
           null,
           this.dialog,
           'File extension is not allowed other than: ' +
@@ -154,6 +155,7 @@ export class AddTestDataComponent implements OnInit {
       } else {
         if (event.target.files[0].name.length > this.allowedFileNameLegth) {
           Utils.showErrorMessage(
+            this.resourceBundleJson,
             null,
             this.dialog,
             'File name is not allowed more than: ' +
@@ -164,6 +166,7 @@ export class AddTestDataComponent implements OnInit {
           if (event.target.files[0].size > this.allowedFileSize) {
             let size = this.allowedFileSize / 1000000;
             Utils.showErrorMessage(
+              this.resourceBundleJson,
               null,
               this.dialog,
               'File size is not allowed more than: ' + size + ' MB'
@@ -213,6 +216,7 @@ export class AddTestDataComponent implements OnInit {
             }
           } else {
             Utils.showErrorMessage(
+              this.resourceBundleJson,
               null,
               this.dialog,
               'Unable to download sample test data ZIP file. Try Again!'
@@ -221,7 +225,7 @@ export class AddTestDataComponent implements OnInit {
 
         },
         (errors) => {
-          Utils.showErrorMessage(errors, this.dialog);
+          Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
         }
       );
       this.subscriptions.push(subs);
@@ -259,7 +263,7 @@ export class AddTestDataComponent implements OnInit {
           (response: any) => {
             console.log(response);
             if (response.errors && response.errors.length > 0) {
-              Utils.showErrorMessage(response.errors, this.dialog, '', false);
+              Utils.showErrorMessage(this.resourceBundleJson, response.errors, this.dialog, '', false);
               this.dataLoaded = true;
               resolve(true);
             } else {
@@ -283,7 +287,7 @@ export class AddTestDataComponent implements OnInit {
           },
           (errors) => {
             this.dataLoaded = true;
-            Utils.showErrorMessage(errors, this.dialog);
+            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
             resolve(false);
           }
         )

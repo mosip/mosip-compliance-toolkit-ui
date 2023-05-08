@@ -135,7 +135,7 @@ export class AddCollectionsComponent implements OnInit {
             resolve(true);
           },
           (errors) => {
-            Utils.showErrorMessage(errors, this.dialog);
+            Utils.showErrorMessage(this.resourceBundleJson,errors, this.dialog);
             resolve(false);
           }
         )
@@ -153,7 +153,7 @@ export class AddCollectionsComponent implements OnInit {
             resolve(true);
           },
           (errors) => {
-            Utils.showErrorMessage(errors, this.dialog);
+            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
             resolve(false);
           }
         )
@@ -171,7 +171,7 @@ export class AddCollectionsComponent implements OnInit {
             resolve(true);
           },
           (errors) => {
-            Utils.showErrorMessage(errors, this.dialog);
+            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
             resolve(false);
           }
         )
@@ -196,7 +196,7 @@ export class AddCollectionsComponent implements OnInit {
               resolve(true);
             },
             (errors) => {
-              Utils.showErrorMessage(errors, this.dialog);
+              Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
               resolve(false);
             }
           )
@@ -219,7 +219,7 @@ export class AddCollectionsComponent implements OnInit {
               resolve(true);
             },
             (errors: any) => {
-              Utils.showErrorMessage(errors, this.dialog);
+              Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
               resolve(false);
             }
           )
@@ -241,7 +241,7 @@ export class AddCollectionsComponent implements OnInit {
               resolve(true);
             },
             (errors: any) => {
-              Utils.showErrorMessage(errors, this.dialog);
+              Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
               resolve(false);
             }
           )
@@ -311,10 +311,10 @@ export class AddCollectionsComponent implements OnInit {
     if (this.collectionForm.valid) {
       if (this.selection.isEmpty()) {
         const err = {
-          errorCode: '',
+          errorCode: 'TESTCASE_001',
           message: 'Please select ateleast one testcase.',
         };
-        Utils.showErrorMessage([err], this.dialog);
+        Utils.showErrorMessage(this.resourceBundleJson, [err], this.dialog);
       } else {
         this.dataLoaded = false;
         this.dataSubmitted = true;
@@ -366,7 +366,7 @@ export class AddCollectionsComponent implements OnInit {
               this.dataLoaded = true;
               this.dataSubmitted = false;
               resolve(true);
-              Utils.showErrorMessage(response.errors, this.dialog);
+              Utils.showErrorMessage(this.resourceBundleJson, response.errors, this.dialog);
             } else {
               resolve(response);
             }
@@ -374,7 +374,7 @@ export class AddCollectionsComponent implements OnInit {
           (errors) => {
             this.dataLoaded = true;
             this.dataSubmitted = false;
-            Utils.showErrorMessage(errors, this.dialog);
+            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
             resolve(false);
           }
         )
@@ -391,7 +391,7 @@ export class AddCollectionsComponent implements OnInit {
               this.dataLoaded = true;
               this.dataSubmitted = false;
               resolve(true);
-              Utils.showErrorMessage(response.errors, this.dialog);
+              Utils.showErrorMessage(this.resourceBundleJson, response.errors, this.dialog);
             } else {
               let resourceBundle = this.resourceBundleJson.dialogMessages;
               let successMsg = 'success';
@@ -412,7 +412,7 @@ export class AddCollectionsComponent implements OnInit {
           (errors) => {
             this.dataLoaded = true;
             this.dataSubmitted = false;
-            Utils.showErrorMessage(errors, this.dialog);
+            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
             resolve(false);
           }
         )

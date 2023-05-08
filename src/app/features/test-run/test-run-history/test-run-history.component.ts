@@ -124,7 +124,7 @@ export class TestRunHistoryComponent implements OnInit {
             resolve(true);
           },
           (errors) => {
-            Utils.showErrorMessage(errors, this.dialog);
+            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
             resolve(false);
           }
         )
@@ -140,7 +140,7 @@ export class TestRunHistoryComponent implements OnInit {
             resolve(response['response']['resultStatus']);
           },
           (errors) => {
-            Utils.showErrorMessage(errors, this.dialog);
+            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
             resolve(false);
           }
         )
@@ -159,7 +159,7 @@ export class TestRunHistoryComponent implements OnInit {
             resolve(true);
           },
           (errors) => {
-            Utils.showErrorMessage(errors, this.dialog);
+            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
             resolve(false);
           }
         )
@@ -177,7 +177,7 @@ export class TestRunHistoryComponent implements OnInit {
             resolve(true);
           },
           (errors) => {
-            Utils.showErrorMessage(errors, this.dialog);
+            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
             resolve(false);
           }
         )
@@ -196,7 +196,7 @@ export class TestRunHistoryComponent implements OnInit {
               resolve(true);
             },
             (errors) => {
-              Utils.showErrorMessage(errors, this.dialog);
+              Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
               resolve(false);
             }
           )
@@ -275,7 +275,7 @@ export class TestRunHistoryComponent implements OnInit {
           },
           (errors) => {
             this.dataLoaded = true;
-            Utils.showErrorMessage(errors, this.dialog);
+            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
           }
         )
       );

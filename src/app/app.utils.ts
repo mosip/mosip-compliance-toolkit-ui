@@ -207,6 +207,7 @@ export default class Utils {
   }
 
   static showErrorMessage(
+    resourceBundle: any,
     errorsList: any,
     dialog: MatDialog,
     customMsg?: string,
@@ -216,12 +217,24 @@ export default class Utils {
     let message = '';
     if (errorsList && errorsList.length > 0) {
       let error = errorsList[0];
+      //check if translation is available
+      const translatedMsg = resourceBundle.serviceErrors[error.errorCode];
       if (!showErrCode) {
-        message = error.message;
+        if (translatedMsg) {
+          message = translatedMsg;
+        } else {
+          message = error.message;
+        }
       } else {
-        message = error.errorCode
-          ? error.errorCode + ' - ' + error.message
-          : error.message;
+        if (translatedMsg) {
+          message = error.errorCode
+            ? error.errorCode + ' - ' + translatedMsg
+            : translatedMsg;
+        } else {
+          message = error.errorCode
+            ? error.errorCode + ' - ' + error.message
+            : error.message;
+        }
       }
     }
     if (customMsg) {
