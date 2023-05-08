@@ -77,7 +77,6 @@ export class ScanDeviceComponent implements OnInit {
 
   populatePreviousScan(scannedData: string) {
     this.portDevicesData = new Map(JSON.parse(scannedData));
-    this.scanComplete = true;
     this.previousScanAvailable = true;
     for (const port of this.portDevicesData.keys()) {
       this.portsData.push(port);
@@ -88,6 +87,7 @@ export class ScanDeviceComponent implements OnInit {
     this.devicesData = devicesDataArr;
     const device = localStorage.getItem(appConstants.SBI_SELECTED_DEVICE);
     this.scanForm.controls['devices'].setValue(device);
+    this.scanComplete = true;
   }
 
   resetPreviousScan() {
@@ -215,11 +215,14 @@ export class ScanDeviceComponent implements OnInit {
     if (field) {
       let deviceLabel = this.resourceBundleJson['deviceLabel'];
       //console.log(this.resourceBundleJson);
-      if (!this.isAndroidAppMode) {
-        return `${deviceLabel.deviceId}: ${field.deviceId}, ${deviceLabel.purpose}: ${field.purpose}, ${deviceLabel.deviceType}: ${field.digitalIdDecoded.type}, ${deviceLabel.deviceSubType}: ${field.digitalIdDecoded.deviceSubType}`;
-      } else {
-        return `${deviceLabel.purpose}: ${field.purpose}, ${deviceLabel.deviceType}: ${field.digitalIdDecoded.type}, ${deviceLabel.deviceSubType}: ${field.digitalIdDecoded.deviceSubType}`;
+      if (deviceLabel) {
+        if (!this.isAndroidAppMode) {
+          return `${deviceLabel.deviceId}: ${field.deviceId}, ${deviceLabel.purpose}: ${field.purpose}, ${deviceLabel.deviceType}: ${field.digitalIdDecoded.type}, ${deviceLabel.deviceSubType}: ${field.digitalIdDecoded.deviceSubType}`;
+        } else {
+          return `${deviceLabel.purpose}: ${field.purpose}, ${deviceLabel.deviceType}: ${field.digitalIdDecoded.type}, ${deviceLabel.deviceSubType}: ${field.digitalIdDecoded.deviceSubType}`;
+        }
       }
+      return '';
     } else {
       return '';
     }

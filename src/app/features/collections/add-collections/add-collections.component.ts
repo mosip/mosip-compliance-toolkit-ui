@@ -332,7 +332,7 @@ export class AddCollectionsComponent implements OnInit {
         this.dataLoaded = false;
         this.dataSubmitted = true;
         let collectionResp: any = await this.addCollection(request);
-        if (collectionResp) {
+        if (collectionResp && collectionResp['response']) {
           const collectionId = collectionResp['response']['collectionId'];
           let selectedTestcaseArr: object[] = [];
           this.dataSource.data.forEach((row: TestCaseModel) => {
