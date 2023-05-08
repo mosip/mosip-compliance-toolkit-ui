@@ -20,18 +20,21 @@ export class AbisTestCaseService {
     rxStompService: RxStompService,
     testCase: TestCaseModel,
     abisProjectData: AbisProjectModel,
+    methodName: string,
+    methodIndex: number,
     requestId: string,
     referenceId: string,
-    cbeffFileIndex: number
+    galleryIds: any[],
+    cbeffFileSuffix: number
   ) {
     return new Promise(async (resolve, reject) => {
       let dataShareResp: any = null;
       //create a datashare URL but only for Insert
-      if (testCase.methodName[0] == appConstants.ABIS_INSERT) {
+      if (methodName == appConstants.ABIS_METHOD_INSERT) {
         dataShareResp = await this.getDataShareUrl(
           testCase,
           abisProjectData.bioTestDataFileName,
-          cbeffFileIndex
+          cbeffFileSuffix
         );
         if (!dataShareResp) {
           resolve({
@@ -46,12 +49,13 @@ export class AbisTestCaseService {
           });
         }
       }
-      let methodRequest: any = this.createRequest(testCase, dataShareResp, requestId, referenceId);
+      let methodRequest: any = this.createRequest(methodName, dataShareResp, requestId, referenceId, galleryIds);
       methodRequest = JSON.stringify(methodRequest);
       //now validate the method request against the Schema
       let validationRequest: any = await this.validateRequest(
         testCase,
-        methodRequest
+        methodRequest,
+        methodIndex
       );
       if (
         validationRequest &&
@@ -86,9 +90,11 @@ export class AbisTestCaseService {
   async runValidators(
     testCase: TestCaseModel,
     abisProjectData: AbisProjectModel,
+    methodName: string,
     methodRequest: string,
     methodResponse: string,
-    testDataSource: string
+    testDataSource: string,
+    methodIndex: number
   ) {
     return new Promise(async (resolve, reject) => {
       // now validate the method response against all the validators
@@ -96,8 +102,8 @@ export class AbisTestCaseService {
         testCase,
         methodRequest,
         methodResponse,
-        testCase.methodName[0],
-        0
+        methodName,
+        methodIndex
       );
       let finalResponse = {
         methodResponse: methodResponse,
@@ -158,9 +164,9 @@ export class AbisTestCaseService {
     });
   }
 
-  createRequest(testCase: TestCaseModel, dataShareResp: any, requestId: string, referenceId: string): any {
+  createRequest(methodName: string, dataShareResp: any, requestId: string, referenceId: string, galleryIds: any[]): any {
     let request: any = {};
-    if (testCase.methodName[0] == appConstants.ABIS_METHOD_INSERT) {
+    if (methodName == appConstants.ABIS_METHOD_INSERT) {
       request = {
         "id": appConstants.ABIS_INSERT_ID,
         "version": appConstants.ABIS_VERSION,
@@ -170,7 +176,8 @@ export class AbisTestCaseService {
         "referenceURL": dataShareResp ? dataShareResp["url"] : ""
       };
     }
-    if (testCase.methodName[0] == appConstants.ABIS_METHOS_IDENTIFY) {
+    if (methodName == appConstants.ABIS_METHOD_IDENTIFY) {
+      
       request = {
         "id": appConstants.ABIS_IDENTIFY_ID,
         "version": appConstants.ABIS_VERSION,
@@ -178,13 +185,9 @@ export class AbisTestCaseService {
         "requesttime": new Date().toISOString(),
         "referenceId": referenceId,
         // "referenceUrl": null,
-        // "gallery": {
-        //   "referenceIds": [
-        //     {
-        //       "referenceId": "string"
-        //     }
-        //   ]
-        // },
+        "gallery": {
+          "referenceIds": galleryIds
+        },
         // "flags": {
         //   "maxResults": 0,
         //   "targetFPIR": 0,
@@ -237,7 +240,8 @@ export class AbisTestCaseService {
 
   async validateRequest(
     testCase: TestCaseModel,
-    methodRequest: any
+    methodRequest: any,
+    methodIndex: number
   ) {
     return new Promise((resolve, reject) => {
       let validateRequest = {
@@ -245,7 +249,7 @@ export class AbisTestCaseService {
         testName: testCase.testName,
         specVersion: testCase.specVersion,
         testDescription: testCase.testDescription,
-        requestSchema: testCase.requestSchema[0],
+        requestSchema: testCase.requestSchema[methodIndex],
         methodRequest: methodRequest,
       };
       let request = {

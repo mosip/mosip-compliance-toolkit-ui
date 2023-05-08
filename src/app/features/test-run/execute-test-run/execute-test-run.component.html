@@ -48,7 +48,7 @@
                     <p></p>
                     <div  *ngIf="!showLoader || showResumeAgainBtn || showContinueBtn" [innerHTML]="currentTestDescription"></div>
                     <div *ngIf="abisSentMessage != ''">
-                        <p></p><span [ngStyle]="{color: '#fd518c'}">{{ "executeTestRun.abisRequestSent" | translate }}
+                        <p></p><span [ngStyle]="{color: '#fd518c'}">{{ getAbisSentMessage() }}
                         </span>
                     </div>
                     <div *ngIf="abisRecvdMessage != ''">
