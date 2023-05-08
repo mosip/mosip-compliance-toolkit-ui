@@ -5,7 +5,8 @@
 		"collectionSuccessMessage": "تم إنشاء المجموعة بنجاح",
 		"sbiSuccessMessage": "تم إنشاء المشروع بنجاح",
 		"sdkSuccessMessage": "تم إنشاء المشروع بنجاح",
-		"close": "يغلق"
+		"close": "يغلق",
+		"logout": "تسجيل خروج"
 	},
 	"breadcrumb": {
 		"home": "بيت",

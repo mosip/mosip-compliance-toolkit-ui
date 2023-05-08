@@ -5,7 +5,8 @@
 		"collectionSuccessMessage": "Collection créée avec succès",
 		"sbiSuccessMessage": "Projet créé avec succès",
 		"sdkSuccessMessage": "Projet créé avec succès",
-		"close": "Fermer"
+		"close": "Fermer",
+		"logout": "Se déconnecter"
 	},
 	"breadcrumb": {
 		"home": "Maison",
