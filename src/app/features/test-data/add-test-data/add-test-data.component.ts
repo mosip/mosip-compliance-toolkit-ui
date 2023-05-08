@@ -31,7 +31,7 @@ export class AddTestDataComponent implements OnInit {
   fileName: string = '';
   fileByteArray: any;
   textDirection: any = this.userProfileService.getTextDirection();
-  buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : 'null';
+  buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : null;
   resourceBundleJson: any = {};
   allowedFileTypes = this.appConfigService
     .getConfig()
