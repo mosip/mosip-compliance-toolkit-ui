@@ -1309,6 +1309,7 @@
 		"TOOLKIT_ABIS_PROJECTS_002": "Objectif ABIS invalide",
 		"TOOLKIT_ABIS_PROJECTS_003": "Invalid ABIS Spec Version",
 		"TESTCASE_001": "Veuillez sélectionner au moins un cas de test.",
-        "ENCRYPTION_KEY_001": "Impossible d'obtenir la clé de chiffrement. Essayer à nouveau!"
+        "ENCRYPTION_KEY_001": "Impossible d'obtenir la clé de chiffrement. Essayer à nouveau!",
+		"error": "Errorerreur"
 	}
 }

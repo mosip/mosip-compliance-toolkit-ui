@@ -213,7 +213,7 @@ export default class Utils {
     customMsg?: string,
     showErrCode?: boolean
   ) {
-    const titleOnError = 'Error';
+    const titleOnError = resourceBundle.serviceErrors['error']? resourceBundle.serviceErrors['error'] : 'Error';
     let message = '';
     if (errorsList && errorsList.length > 0) {
       let error = errorsList[0];
