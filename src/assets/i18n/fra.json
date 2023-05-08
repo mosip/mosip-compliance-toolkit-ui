@@ -238,31 +238,31 @@
 		"unableToGenerateRequest": "Impossible de générer une demande au service SDK : "
 	},
 	"validators": {
-		"SchemaValidator":"Valide la réponse pour les attributs obligatoires et les valeurs correctes",
-		"SignatureValidator":"Valide la signature de la réponse",
-		"ResponseMismatchValidator":"Valide la réponse pour vérifier si bioCount, les exceptions et les segments correspondent à ceux définis dans la demande",
-		"TransactionIdValidator":"Valide que methodRequest et methodResponse transactionId sont identiques",
-		"KeyRotationValidator":"Validateur pour valider la rotation de la clé de l'appareil",
-		"TimeoutValidator":"Valide si la réponse est reçue dans le délai imparti ou non",
-		"ISOStandardsValidator":"Valide la bioValeur en réponse à la rcapture conformément aux normes ISO ISO19794-4:2011",
-		"BiometricsQualityCheckValidator":"Vérifie la qualité de la biométrie à l'aide de tous les services SDK configurés",
-		"TimeCheckValidator":"Valide si la réponse est reçue dans l'intervalle d'horodatage donné ou non",
+		"SchemaValidator": "Valide la réponse pour les attributs obligatoires et les valeurs correctes",
+		"SignatureValidator": "Valide la signature de la réponse",
+		"ResponseMismatchValidator": "Valide la réponse pour vérifier si bioCount, les exceptions et les segments correspondent à ceux définis dans la demande",
+		"TransactionIdValidator": "Valide que methodRequest et methodResponse transactionId sont identiques",
+		"KeyRotationValidator": "Validateur pour valider la rotation de la clé de l'appareil",
+		"TimeoutValidator": "Valide si la réponse est reçue dans le délai imparti ou non",
+		"ISOStandardsValidator": "Valide la bioValeur en réponse à la rcapture conformément aux normes ISO ISO19794-4:2011",
+		"BiometricsQualityCheckValidator": "Vérifie la qualité de la biométrie à l'aide de tous les services SDK configurés",
+		"TimeCheckValidator": "Valide si la réponse est reçue dans l'intervalle d'horodatage donné ou non",
 		"QualityCheckValidator": "Vérifie le score de qualité de la modalité",
-		"QualityCheckInvalidDataValidator":"Valide le code d'état pour les données invalides",
-		"QualityCheckNoDataValidator":"Valide le code d'état pour aucune donnée",
-		"MatchValidator":"Valide si la biométrie correspond à la modalité",
-		"MatchInvalidDataValidator":"Valide le code d'état pour les données invalides",
-		"MatchNoDataValidator":"Valide le code d'état pour aucune donnée",
-		"MatchMultiGalleryValidator":"Valide si la biométrie correspond à la modalité",
-		"ExtractTemplateValidator":"Valide si les données BDB d'entrée présentes dans la sonde pour la modalité sont valides",
-		"ExtractTemplateInvalidDataValidator":"Valide si les données BDB d'entrée présentes dans la sonde pour la modalité sont valides",
-		"ExtractTemplateNoInputDataValidator":"Valide si aucune donnée BDB d'entrée n'est présente dans la sonde",
-		"SegmentValidator":"Valide si les données BDB d'entrée présentes dans la sonde pour la modalité sont valides",
-		"SegmentInvalidDataValidator":"Valide si les données BDB d'entrée présentes dans la sonde pour la modalité sont valides",
+		"QualityCheckInvalidDataValidator": "Valide le code d'état pour les données invalides",
+		"QualityCheckNoDataValidator": "Valide le code d'état pour aucune donnée",
+		"MatchValidator": "Valide si la biométrie correspond à la modalité",
+		"MatchInvalidDataValidator": "Valide le code d'état pour les données invalides",
+		"MatchNoDataValidator": "Valide le code d'état pour aucune donnée",
+		"MatchMultiGalleryValidator": "Valide si la biométrie correspond à la modalité",
+		"ExtractTemplateValidator": "Valide si les données BDB d'entrée présentes dans la sonde pour la modalité sont valides",
+		"ExtractTemplateInvalidDataValidator": "Valide si les données BDB d'entrée présentes dans la sonde pour la modalité sont valides",
+		"ExtractTemplateNoInputDataValidator": "Valide si aucune donnée BDB d'entrée n'est présente dans la sonde",
+		"SegmentValidator": "Valide si les données BDB d'entrée présentes dans la sonde pour la modalité sont valides",
+		"SegmentInvalidDataValidator": "Valide si les données BDB d'entrée présentes dans la sonde pour la modalité sont valides",
 		"SegmentNoInputDataValidator": "Valide si aucune donnée BDB d'entrée n'est présente dans la sonde",
-		"ConvertDataValidator":"Valide les données BDB d'entrée présentes dans la sonde",
-		"ConvertInvalidDataValidator":"Valide si les données BDB d'entrée présentes dans la sonde pour la modalité sont valides",
-		"ConvertNoInputDataValidator":"Valide si aucune donnée BDB d'entrée n'est présente dans la sonde"
+		"ConvertDataValidator": "Valide les données BDB d'entrée présentes dans la sonde",
+		"ConvertInvalidDataValidator": "Valide si les données BDB d'entrée présentes dans la sonde pour la modalité sont valides",
+		"ConvertNoInputDataValidator": "Valide si aucune donnée BDB d'entrée n'est présente dans la sonde"
 	},
 	"testcases": {
 		"SBI1000": {
@@ -276,7 +276,8 @@
 		"SBI1002": {
 			"testName": "Capture d'enregistrement - Claque Gauche",
 			"testDescription": "Test pour valider l'interface RCapture pour claque gauche Empreintes<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 3. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée",
-			"androidTestDescription": "Test pour valider l'interface RCapture pour claque gauche Empreintes<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture.  <br> 2. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée"		},
+			"androidTestDescription": "Test pour valider l'interface RCapture pour claque gauche Empreintes<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture.  <br> 2. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée"
+		},
 		"SBI1003": {
 			"testName": "Capture d'enregistrement - Claque Gauche - Une exception",
 			"testDescription": "Test pour valider l'interface RCapture pour les empreintes digitales claque gauche avec un doigt manquant<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre claque gauche sur l'appareil à l'exception de l'annulaire gauche jusqu'à ce que la capture soit terminée",
@@ -358,23 +359,23 @@
 		},
 		"SBI1020": {
 			"testName": "Capture d'authentification - Doigt d'index gauche",
-			"testDescription": "Test pour valider la méthode Capture pour l'index gauche<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre index gauche sur le lecteur d'empreintes digitales"	
+			"testDescription": "Test pour valider la méthode Capture pour l'index gauche<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre index gauche sur le lecteur d'empreintes digitales"
 		},
 		"SBI1021": {
 			"testName": "Capture d'authentification - Deux doigts",
-			"testDescription": "Test pour valider la méthode Capture pour deux doigts<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez deux doigts, un par un, sur le lecteur d'empreintes digitales"	
+			"testDescription": "Test pour valider la méthode Capture pour deux doigts<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez deux doigts, un par un, sur le lecteur d'empreintes digitales"
 		},
 		"SBI1022": {
 			"testName": "Capture d'enregistrement - Rotation des clés - Claque Gauche",
-			"testDescription": "Tester la rotation des clés de l'appareil<br><br>Pas:<br>1. Les informations actuelles sur la clé de l'appareil ont été enregistrées.<br>2. Tournez la clé de l'appareil dans le SBI et cliquez sur <b>Continuer</b> bouton,<br> 3. <i>Répéter l'étape 2</i> autant de fois que configuré dans la configuration du projet."	
+			"testDescription": "Tester la rotation des clés de l'appareil<br><br>Pas:<br>1. Les informations actuelles sur la clé de l'appareil ont été enregistrées.<br>2. Tournez la clé de l'appareil dans le SBI et cliquez sur <b>Continuer</b> bouton,<br> 3. <i>Répéter l'étape 2</i> autant de fois que configuré dans la configuration du projet."
 		},
 		"SBI1023": {
 			"testName": "Capture d'authentification - Iris unique - Iris gauche - Rotation des clés",
-			"testDescription": "Tester la rotation des clés de l'appareil<br><br>Pas:<br>1. Les informations actuelles sur la clé de l'appareil ont été enregistrées.<br>2. Tournez la clé de l'appareil dans le SBI et cliquez sur <b>Continuer</b> bouton,<br> 3. <i>Répéter l'étape 2</i> autant de fois que configuré dans la configuration du projet."	
+			"testDescription": "Tester la rotation des clés de l'appareil<br><br>Pas:<br>1. Les informations actuelles sur la clé de l'appareil ont été enregistrées.<br>2. Tournez la clé de l'appareil dans le SBI et cliquez sur <b>Continuer</b> bouton,<br> 3. <i>Répéter l'étape 2</i> autant de fois que configuré dans la configuration du projet."
 		},
 		"SBI1024": {
 			"testName": "Capture d'authentification - Rotation des clés - Doigt d'index gauche",
-			"testDescription": "Tester la rotation des clés de l'appareil<br><br>Pas:<br>1. Les informations actuelles sur la clé de l'appareil ont été enregistrées.<br>2. Tournez la clé de l'appareil dans le SBI et cliquez sur <b>Continuer</b> bouton,<br> 3. <i>Répéter l'étape 2</i> autant de fois que configuré dans la configuration du projet."	
+			"testDescription": "Tester la rotation des clés de l'appareil<br><br>Pas:<br>1. Les informations actuelles sur la clé de l'appareil ont été enregistrées.<br>2. Tournez la clé de l'appareil dans le SBI et cliquez sur <b>Continuer</b> bouton,<br> 3. <i>Répéter l'étape 2</i> autant de fois que configuré dans la configuration du projet."
 		},
 		"SBI1025": {
 			"testName": "Capture d'authentification - Visage - Rotation des clés",
@@ -382,7 +383,7 @@
 		},
 		"SBI1026": {
 			"testName": "Vérifier l'état de l'appareil - Prêt",
-			"testDescription": "Tester pour valider l'interface Device Info pour un appareil qui est à l'état Prêt<br><br>Pas:<br>1. Assurez-vous que l'appareil placé est à l'état Prêt"			
+			"testDescription": "Tester pour valider l'interface Device Info pour un appareil qui est à l'état Prêt<br><br>Pas:<br>1. Assurez-vous que l'appareil placé est à l'état Prêt"
 		},
 		"SBI1027": {
 			"testName": "Vérifier l'état de l'appareil - Occupé",
@@ -537,12 +538,10 @@
 		"SBI1060": {
 			"testName": "Capture d'enregistrement - Rotation des clés - Visage",
 			"testDescription": "Tester la rotation des clés de l'appareil<br><br>Pas:<br>1. Les informations actuelles sur la clé de l'appareil ont été enregistrées.<br>2. Tournez la clé de l'appareil dans le SBI et cliquez sur <b>Continuer</b> bouton,<br> 3. <i>Répéter l'étape 2</i> autant de fois que configuré dans la configuration du projet."
-			
 		},
 		"SBI1061": {
 			"testName": "Capture d'enregistrement - Rotation des clés - Double Iris",
 			"testDescription": "Tester la rotation des clés de l'appareil<br><br>Pas:<br>1. Les informations actuelles sur la clé de l'appareil ont été enregistrées.<br>2. Tournez la clé de l'appareil dans le SBI et cliquez sur <b>Continuer</b> bouton,<br> 3. <i>Répéter l'étape 2</i> autant de fois que configuré dans la configuration du projet."
-			
 		},
 		"SBI1062": {
 			"testName": "Capture d'enregistrement - Claque Gauche - Validations de la norme ISO",
@@ -1279,12 +1278,12 @@
 		"TOOLKIT_REQ_ERR_038": "Échec du déchiffrement de la valeur Auth Bio",
 		"TOOLKIT_REQ_ERR_039": "Impossible d'obtenir le certificat de chiffrement de KeyManager pour l'appId",
 		"TOOLKIT_REQ_ERR_500": "Erreur technique",
-		"TOOLKIT_DB_ERR_001": "Vous avez précédemment créé un projet avec le nom :",
-		"TOOLKIT_DB_ERR_002": "Vous avez précédemment ajouté des données de test biométrique avec le nom :",
-		"TOOLKIT_DB_ERR_003": "Vous avez précédemment créé une collection avec le nom :",
+		"TOOLKIT_DB_ERR_001": "Vous avez précédemment créé un projet avec le nom",
+		"TOOLKIT_DB_ERR_002": "Vous avez précédemment ajouté des données de test biométrique avec le nom",
+		"TOOLKIT_DB_ERR_003": "Vous avez précédemment créé une collection avec le nom",
 		"TOOLKIT_RESOURCE_UPLOAD_ERR_001": "Impossible de télécharger la ressource",
 		"TOOLKIT_OBJECT_STORE_ERR_001": "Erreur de magasin d'objets",
-		"TOOLKIT_OBJECT_STORE_ERR_002": "Vous avez déjà téléchargé un fichier portant le même nom :",
+		"TOOLKIT_OBJECT_STORE_ERR_002": "Vous avez déjà téléchargé un fichier portant le même nom",
 		"TOOLKIT_OBJECT_STORE_ERR_003": "Impossible d'ajouter le fichier",
 		"TOOLKIT_OBJECT_STORE_ERR_004": "Impossible d'obtenir le fichier",
 		"TOOLKIT_OBJECT_STORE_ERR_005": "Fichier de magasin d'objets non disponible",
@@ -1310,7 +1309,7 @@
 		"TOOLKIT_ABIS_PROJECTS_002": "Objectif ABIS invalide",
 		"TOOLKIT_ABIS_PROJECTS_003": "Invalid ABIS Spec Version",
 		"TESTCASE_001": "Veuillez sélectionner au moins un cas de test.",
-        "ENCRYPTION_KEY_001": "Impossible d'obtenir la clé de chiffrement. Essayer à nouveau!",
+		"ENCRYPTION_KEY_001": "Impossible d'obtenir la clé de chiffrement. Essayer à nouveau!",
 		"error": "Errorerreur"
 	}
 }
