@@ -3,10 +3,8 @@
 		"logoutMessage": "لقد تم تسجيل الخروج.",
 		"success": "نجاح",
 		"collectionSuccessMessage": "تم إنشاء المجموعة بنجاح",
-		"sbiSuccessMessage": "تم إنشاء المشروع بنجاح",
-		"sdkSuccessMessage": "تم إنشاء المشروع بنجاح",
-		"close": "يغلق",
-		"logout": "تسجيل خروج"
+		"successMessage": "تم إنشاء المشروع بنجاح",
+		"close": "يغلق"
 	},
 	"breadcrumb": {
 		"home": "بيت",
@@ -1309,11 +1307,10 @@
 		"TOOLKIT_ZIP_FILE_ERR_002": "حجم البيانات غير المضغوطة كبير جدًا بالنسبة لسعة موارد التطبيق.",
 		"TOOLKIT_ZIP_FILE_ERR_003": "الكثير من الإدخالات في هذا الأرشيف ، يمكن أن يؤدي إلى استنفاد inodes للنظام.",
 		"ABIS_DATA_SHARE_URL_EXCEPTION_001": "تعذر إنشاء عنوان url لمشاركة البيانات",
-		"ABIS_QUEUE_EXCEPTION_002": "تعذر الإرسال إلى قائمة الانتظار",
-		"ABIS_QUEUE_EXCEPTION_003": "غير قادر على قراءة قائمة الانتظار",
 		"TOOLKIT_ABIS_PROJECTS_001": "لا يوجد مشروع ABIS مطابق متاح للمعرف المحدد",
-		"TOOLKIT_ABIS_PROJECTS_002": "غرض ABIS غير صالح",
-		"TOOLKIT_ABIS_PROJECTS_003": "إصدار مواصفات ABIS غير صالح",
+		"TOOLKIT_ABIS_PROJECTS_002": "إصدار مواصفات ABIS غير صالح",
+		"TOOLKIT_ABIS_PROJECTS_003": "مشروع ABIS غير قادر على الإضافة",
+		"TOOLKIT_ABIS_PROJECTS_004": "عنوان url الخاص بـ ABIS غير صالح",
 		"TESTCASE_001": "الرجاء تحديد حقيبة اختبار واحدة على الأقل.",
 		"ENCRYPTION_KEY_001": "تعذر الحصول على مفتاح التشفير. حاول ثانية!",
 		"error": "خطأ"

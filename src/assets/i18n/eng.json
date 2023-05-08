@@ -3,10 +3,8 @@
 		"logoutMessage": "You have been logged out.",
 		"success": "Success",
 		"collectionSuccessMessage": "Collection created successfully",
-		"sbiSuccessMessage": "Project created successfully",
-		"sdkSuccessMessage": "Project created successfully",
-		"close": "Close",
-		"logout": "Logout"
+		"successMessage": "Project created successfully",
+		"close": "Close"
 	},
 	"breadcrumb": {
 		"home": "Home",
@@ -1309,11 +1307,10 @@
 		"TOOLKIT_ZIP_FILE_ERR_003": "Too much entries in this archive, can lead to inodes exhaustion of the system.",
 		"TOOLKIT_REQ_ERR_500": "Technical Error",
 		"ABIS_DATA_SHARE_URL_EXCEPTION_001": "Unable to generate data share url",
-		"ABIS_QUEUE_EXCEPTION_002": "Unable to send to queue",
-		"ABIS_QUEUE_EXCEPTION_003": "Unable to read the queue",
 		"TOOLKIT_ABIS_PROJECTS_001": "No matching ABIS project available for the given id",
-		"TOOLKIT_ABIS_PROJECTS_002": "Invalid ABIS Purpose",
-		"TOOLKIT_ABIS_PROJECTS_003": "Invalid ABIS Spec Version",
+		"TOOLKIT_ABIS_PROJECTS_002": "Invalid ABIS Spec Version",
+		"TOOLKIT_ABIS_PROJECTS_003": "ABIS Project unable to add",
+		"TOOLKIT_ABIS_PROJECTS_004": "Invalid ABIS url",
 		"TESTCASE_001": "Please select ateleast one testcase.",
 		"ENCRYPTION_KEY_001": "Unable to get encryption key. Try Again!",
 		"error": "Error"
