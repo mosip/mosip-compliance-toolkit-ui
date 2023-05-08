@@ -19,8 +19,6 @@ export const ABIS_READ_FROM_QUEUE = 'mosip.toolkit.abis.read';
 export const ABIS_INSERT_ID = "mosip.abis.insert";
 export const ABIS_IDENTIFY_ID = "mosip.abis.identify";
 export const ABIS_VERSION = "1.1";
-export const ABIS_INSERT = "insert";
-export const ABIS_IDENTIFY = "identify";
 
 export const VERSION = '1.0';
 
@@ -65,7 +63,7 @@ export const SBI_METHOD_STREAM = 'stream';
 export const SBI_METHOD_STREAM_KEY = 'STREAM';
 export const DEVELOPER = 'Developer';
 export const ABIS_METHOD_INSERT = 'insert';
-export const ABIS_METHOS_IDENTIFY = 'identify';
+export const ABIS_METHOD_IDENTIFY = 'identify';
 
 //localStorage keys
 export const SBI_SCAN_COMPLETE = 'sbiScanComplete';

@@ -98,7 +98,10 @@ export class ExecuteTestRunComponent implements OnInit {
   abisSentMessage: string = appConstants.BLANK_STRING;
   abisSentDataSource: string = appConstants.BLANK_STRING;
   abisRecvdMessage: string = appConstants.BLANK_STRING;
-  cbeffFileIndex: number = 0;
+  cbeffFileSuffix: number = 0;
+  currentCbeffFile: number = 0;
+  isCombinationAbisTestcase = false;
+  currentAbisMethod: string = "";
   textDirection: any = this.userProfileService.getTextDirection();
   resourceBundleJson: any = {};
 
@@ -380,24 +383,35 @@ export class ExecuteTestRunComponent implements OnInit {
             this.abisSentMessage = appConstants.BLANK_STRING;
             this.abisSentDataSource = appConstants.BLANK_STRING;
             this.abisRecvdMessage = appConstants.BLANK_STRING;
-            console.log(`after first round, found cbeffFileIndex: ${this.cbeffFileIndex}`);
-            if (this.cbeffFileIndex > 0) {
+            console.log(`after last round, found cbeffFileSuffix: ${this.cbeffFileSuffix}`);
+            if (this.cbeffFileSuffix > 0) {
               //do no reset current testcaseId
               resetCurrentTestCase = false;
               if (this.countOfSuccessTestcases > 0)
-              this.countOfSuccessTestcases = this.countOfSuccessTestcases - 1;
+                this.countOfSuccessTestcases = this.countOfSuccessTestcases - 1;
               if (this.countOfFailedTestcases > 0)
-              this.countOfFailedTestcases = this.countOfFailedTestcases - 1;
+                this.countOfFailedTestcases = this.countOfFailedTestcases - 1;
               await this.startWithSameTestcase();
-            } 
+            }
+            else if (this.isCombinationAbisTestcase) {
+              this.currentAbisMethod = appConstants.ABIS_METHOD_IDENTIFY;
+              //do no reset current testcaseId
+              resetCurrentTestCase = false;
+              if (this.countOfSuccessTestcases > 0)
+                this.countOfSuccessTestcases = this.countOfSuccessTestcases - 1;
+              if (this.countOfFailedTestcases > 0)
+                this.countOfFailedTestcases = this.countOfFailedTestcases - 1;
+              await this.startWithSameTestcase();
+            }
           }
           if (resetCurrentTestCase) {
             this.currectTestCaseId = '';
             this.currectTestCaseName = '';
             this.currentTestDescription = '';
+            this.currentCbeffFile = 0;
             this.showLoader = false;
           }
-          
+
         }
       }
     }
@@ -611,27 +625,27 @@ export class ExecuteTestRunComponent implements OnInit {
             }
             // console.log(response);
             if (this.projectType == appConstants.ABIS) {
-              if (this.cbeffFileIndex == 0) {
+              if (this.cbeffFileSuffix == 0 && !this.isCombinationAbisTestcase) {
                 this.progressDone =
-                this.progressDone + 100 / this.testCasesList.length;  
+                  this.progressDone + 100 / this.testCasesList.length;
               }
             } else {
               this.progressDone =
-              this.progressDone + 100 / this.testCasesList.length;
-            }  
+                this.progressDone + 100 / this.testCasesList.length;
+            }
             resolve(true);
           },
           (errors) => {
             this.errorsInSavingTestRun = true;
             if (this.projectType == appConstants.ABIS) {
-              if (this.cbeffFileIndex == 0) {
+              if (this.cbeffFileSuffix == 0) {
                 this.progressDone =
-                this.progressDone + 100 / this.testCasesList.length;  
+                  this.progressDone + 100 / this.testCasesList.length;
               }
             } else {
               this.progressDone =
-              this.progressDone + 100 / this.testCasesList.length;
-            }  
+                this.progressDone + 100 / this.testCasesList.length;
+            }
             resolve(true);
           }
         )
@@ -724,61 +738,96 @@ export class ExecuteTestRunComponent implements OnInit {
         );
         resolve(res);
       } else if (this.projectType == appConstants.ABIS) {
+        this.isCombinationAbisTestcase = testCase.methodName.length > 1 ? true : false;
+        console.log(`isCombinationTestCase: ${this.isCombinationAbisTestcase}`);
+        if (this.isCombinationAbisTestcase && this.currentAbisMethod == appConstants.BLANK_STRING) {
+          this.currentAbisMethod = appConstants.ABIS_METHOD_INSERT;
+        }
+        if (!this.isCombinationAbisTestcase) {
+          this.currentAbisMethod = testCase.methodName[0];
+        }
         if (this.abisRecvdMessage == appConstants.BLANK_STRING) {
           this.showLoader = true;
           if (!this.abisProjectData)
-          await this.getAbisProjectDetails();
+            await this.getAbisProjectDetails();
           //disconnect from queue if already connected
           if (this.rxStompService.connected()) {
             this.rxStompService.deactivate();
           }
           //setup connection as per project configuration
           this.rxStompService = this.activeMqService.setUpConfig(this.abisProjectData);
-          let cbeffFilesCount = 0;
-          if (testCase.otherAttributes.cbeffFilesCount) {
-            cbeffFilesCount = Number.parseInt(testCase.otherAttributes.cbeffFilesCount);
-          }
-          //ABIS requestId is unique per request so set to testRunId_testcaseId
-          let requestId = this.testRunId + appConstants.UNDERSCORE + testCase.testId;
-          //ABIS testcase can have multiple CBEFF files, for each CBEFF file, same processing is reqd
-          //this will help in cases where multiple sets of biometrics are to be inserted in ABIS in same testcase
-          if (cbeffFilesCount > 1) {
-            //cbeffFileIndex keeps track of the current CBEFF file index for a testcase
-            if (this.cbeffFileIndex == 0) {
-              this.cbeffFileIndex = 1;
+          let requestId = "";
+          let referenceId = "";
+          let insertCount = 0;
+
+          if (this.currentAbisMethod == appConstants.ABIS_METHOD_INSERT) {
+            //ABIS testcase can have multiple CBEFF files, for each CBEFF file, same processing is reqd
+            //this will help in cases where multiple sets of biometrics are to be inserted in ABIS in same testcase
+            if (testCase.otherAttributes.bulkInsert && testCase.otherAttributes.insertCount) {
+              insertCount = Number.parseInt(testCase.otherAttributes.insertCount);
             }
-            requestId = requestId + appConstants.UNDERSCORE + this.cbeffFileIndex;  
+            //ABIS requestId is unique per request so set to testRunId_testcaseId
+            requestId = this.testRunId + appConstants.UNDERSCORE + testCase.testId;
+            if (insertCount > 1) {
+              //cbeffFileSuffix keeps track of the current CBEFF file index for a testcase
+              if (this.cbeffFileSuffix == 0) {
+                this.cbeffFileSuffix = 1;
+              }
+              requestId = requestId + appConstants.UNDERSCORE + this.cbeffFileSuffix;
+            }
+            //ABIS referenceId is unique per set of biometrics so set to testRunId_testcaseId
+            referenceId = requestId;
           }
-          //ABIS referenceId is unique per set of biometrics so set to testRunId_testcaseId
-          let referenceId = requestId;
-          //if testcase defines referenceTestId, then it is used 
-          if (testCase.otherAttributes.referenceTestId) {
-            referenceId = this.testRunId + appConstants.UNDERSCORE + testCase.otherAttributes.referenceTestId;
+
+          let galleryIds: { referenceId: string; }[] = [];
+          //if testcase defines identifyReferenceId, then it is used 
+          if (this.currentAbisMethod == appConstants.ABIS_METHOD_IDENTIFY) {
+            requestId = this.testRunId + appConstants.UNDERSCORE + testCase.testId + appConstants.UNDERSCORE + appConstants.ABIS_METHOD_IDENTIFY;
+            if (testCase.otherAttributes.identifyReferenceId) {
+              referenceId = this.testRunId + appConstants.UNDERSCORE + testCase.otherAttributes.identifyReferenceId;
+            }
+            if (testCase.otherAttributes.identifyGalleryIds) {
+              testCase.otherAttributes.identifyGalleryIds.forEach((galleryId: string) => {
+                galleryIds.push({
+                  "referenceId": this.testRunId + appConstants.UNDERSCORE + galleryId
+                });
+              });
+            }
           }
           console.log(`requestId: ${requestId}`);
           console.log(`referenceId: ${referenceId}`);
+          console.log(`cbeffFileSuffix: ${this.cbeffFileSuffix}`);
+          this.currentCbeffFile = this.cbeffFileSuffix;
           this.abisRequestSendFailure = false;
+          let methodIndex = 0;
+          if (this.currentAbisMethod == appConstants.ABIS_METHOD_IDENTIFY) {
+            methodIndex = 1;
+          }
+
           const abisReq: any = await this.abisTestCaseService.sendRequestToQueue(
             this.rxStompService,
             testCase,
             this.abisProjectData,
-           requestId,
-           referenceId,
-           this.cbeffFileIndex
+            this.currentAbisMethod,
+            methodIndex,
+            requestId,
+            referenceId,
+            galleryIds,
+            this.cbeffFileSuffix,
           );
           if (abisReq && abisReq[appConstants.STATUS] && abisReq[appConstants.STATUS] == appConstants.SUCCESS) {
-            if (cbeffFilesCount > 1) {
-              this.cbeffFileIndex = this.cbeffFileIndex + 1;
-            } 
-            if (this.cbeffFileIndex > cbeffFilesCount) {
-              //start with next testcase
-              this.cbeffFileIndex = 0;
+            if (insertCount > 1) {
+              this.cbeffFileSuffix = this.cbeffFileSuffix + 1;
+            }
+            if (this.cbeffFileSuffix > insertCount) {
+              //reset the cbeffFileSuffix to zero, since all are processed
+              this.cbeffFileSuffix = 0;
             }
             this.abisSentMessage = abisReq.methodRequest;
             this.abisSentDataSource = abisReq.testDataSource;
-            this.subscribeToABISQueue(requestId, cbeffFilesCount);
+            this.subscribeToABISQueue(requestId);
           } else {
-            this.cbeffFileIndex = 0;
+            this.cbeffFileSuffix = 0;
             this.abisRequestSendFailure = true;
             this.abisSentMessage = appConstants.BLANK_STRING;
             this.abisSentDataSource = appConstants.BLANK_STRING;
@@ -787,7 +836,16 @@ export class ExecuteTestRunComponent implements OnInit {
         } else {
           this.showLoader = true;
           //run validations
-          const validatorsResp = await this.abisTestCaseService.runValidators(testCase, this.abisProjectData, this.abisSentMessage, this.abisRecvdMessage, this.abisSentDataSource);
+          let methodIndex = 0;
+          if (this.currentAbisMethod == appConstants.ABIS_METHOD_IDENTIFY) {
+            methodIndex = 1;
+          }
+          const validatorsResp = await this.abisTestCaseService.runValidators(testCase, this.abisProjectData, this.currentAbisMethod,
+            this.abisSentMessage, this.abisRecvdMessage, this.abisSentDataSource, methodIndex);
+          if (this.currentAbisMethod == appConstants.ABIS_METHOD_IDENTIFY) {
+            this.isCombinationAbisTestcase = false;
+            this.currentAbisMethod = appConstants.BLANK_STRING;
+          }
           resolve(validatorsResp);
         }
       } else {
@@ -817,6 +875,22 @@ export class ExecuteTestRunComponent implements OnInit {
       this.countOfSuccessTestcases++;
     } else {
       this.countOfFailedTestcases++;
+    }
+  }
+
+  getAbisSentMessage() {
+    if (this.currentAbisMethod == appConstants.ABIS_METHOD_INSERT) {
+      let translatedMsg = this.resourceBundleJson["executeTestRun"]["abisInsertRequestSent"];
+      if (this.currentCbeffFile == 0) {
+        translatedMsg = translatedMsg.replace(/\{\}/g, "");
+      } else {
+        translatedMsg = translatedMsg.replace(/\{\}/g, (this.currentCbeffFile));
+      }
+      return translatedMsg;
+    }
+    if (this.currentAbisMethod == appConstants.ABIS_METHOD_IDENTIFY) {
+      let translatedMsg = this.resourceBundleJson["executeTestRun"]["abisIdentifyRequestSent"];
+      return translatedMsg;
     }
   }
 
@@ -955,7 +1029,7 @@ export class ExecuteTestRunComponent implements OnInit {
     ]);
   }
 
-  subscribeToABISQueue(sentRequestId: string, cbeffFilesCount: number) {
+  subscribeToABISQueue(sentRequestId: string) {
     this.rxStompService
       .watch(this.abisProjectData.inboundQueueName)
       .forEach(async (message: Message) => {
