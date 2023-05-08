@@ -9,7 +9,6 @@ export class AbisProjectModel {
       public password: string,
       public outboundQueueName: string,
       public inboundQueueName: string,
-      public purpose: string,
       public bioTestDataFileName: string
     ) {}
   }

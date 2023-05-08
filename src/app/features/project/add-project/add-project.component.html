@@ -37,7 +37,7 @@
                             <span *ngIf="!isAndroidAppMode">
                                 <mat-radio-button value="SBI" [ngStyle]="buttonPosition">SBI</mat-radio-button>
                                 <mat-radio-button value="SDK">SDK</mat-radio-button>
-                                <mat-radio-button value="ABIS" disabled="true">ABIS</mat-radio-button>
+                                <mat-radio-button value="ABIS">ABIS</mat-radio-button>
                             </span>
                             <span *ngIf="isAndroidAppMode">
                                 <mat-radio-button value="SBI">SBI</mat-radio-button>
@@ -271,7 +271,9 @@
             <div *ngIf="projectForm.controls['projectType']?.value == 'ABIS'">
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
-                        <mat-label>{{"addProject.baseUrl" | translate }}</mat-label>
+                        <mat-label>{{"addProject.activeMqUrl" | translate }}
+                            <span class="required-annotation">*</span>
+                        </mat-label>
                     </span>
                     <span class="fieldContainer">
                         <mat-form-field appearance="legacy" class="fieldContainerBox">
@@ -289,6 +291,7 @@
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
                         <mat-label>{{"addProject.username"|translate}}
+                            <span class="required-annotation">*</span>
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
@@ -304,6 +307,7 @@
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
                         <mat-label>{{"addProject.password"|translate}}
+                            <span class="required-annotation">*</span>
                         </mat-label>
                     </span>
                     <span class="fieldContainer">
@@ -322,7 +326,7 @@
                 </div>
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
-                        <mat-label>{{"addProject.outboundQueueName"|translate}}
+                        <mat-label>{{"addProject.requestQueueName"|translate}}
                             <span class="required-annotation">*</span>
                         </mat-label>
                     </span>
@@ -338,7 +342,7 @@
                 </div>
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
-                        <mat-label>{{"addProject.inboundQueueName"|translate}}
+                        <mat-label>{{"addProject.responseQueueName"|translate}}
                             <span class="required-annotation">*</span>
                         </mat-label>
                     </span>

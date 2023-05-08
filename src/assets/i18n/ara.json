@@ -76,11 +76,15 @@
 		"deviceSubTypeIsRequired": "نوع الجهاز الفرعي مطلوب",
 		"deviceSubTypeIsInvalid": "النوع الفرعي للجهاز غير صالح",
 		"usernameIsRequired": "اسم المستخدم مطلوب",
+		"passwordIsRequired": "كلمة المرور مطلوبة",
 		"queueNameIsRequired": "اسم قائمة الانتظار مطلوب",
 		"outboundQueueNameIsRequired": "اسم قائمة الانتظار الصادرة مطلوب",
 		"outboundQueueName": "اسم قائمة الانتظار الصادرة",
 		"inboundQueueName": "اسم قائمة الانتظار الواردة",
-		"inboundQueueNameIsRequired": "اسم قائمة الانتظار الوارد مطلوب"
+		"inboundQueueNameIsRequired": "اسم قائمة الانتظار الوارد مطلوب",
+		"activeMqUrl": "نشيط MQ URL",
+		"requestQueueName": "طلب اسم قائمة الانتظار",
+		"responseQueueName": "اسم قائمة انتظار الاستجابة"
 	},
 	"addTestData": {
 		"name": "اسم",

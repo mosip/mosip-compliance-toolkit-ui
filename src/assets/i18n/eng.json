@@ -76,11 +76,15 @@
 		"deviceSubTypeIsRequired": "Device Sub Type is required",
 		"deviceSubTypeIsInvalid": "Device Sub Type is invalid",
 		"usernameIsRequired": "Username is required",
+		"passwordIsRequired": "Password is required",
 		"queueNameIsRequired": "Queue Name is required",
 		"outboundQueueName": "Outbound Queue Name:",
 		"outboundQueueNameIsRequired": "Outbound Queue Name is required",
 		"inboundQueueName": "Inbound Queue Name:",
-		"inboundQueueNameIsRequired": "Inbound Queue Name is required"
+		"inboundQueueNameIsRequired": "Inbound Queue Name is required",
+		"activeMqUrl": "Active MQ URL:",
+		"requestQueueName": "Request Queue Name:",
+		"responseQueueName": "Response Queue Name:"
 	},
 	"addTestData": {
 		"name": "Name:",

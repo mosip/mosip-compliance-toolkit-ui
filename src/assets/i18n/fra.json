@@ -76,11 +76,15 @@
 		"deviceSubTypeIsRequired": "Le sous-type d'appareil est requis",
 		"deviceSubTypeIsInvalid": "Le sous-type de périphérique n'est pas valide",
 		"usernameIsRequired": "Nom d'utilisateur est nécessaire",
+		"passwordIsRequired": "Mot de passe requis",
 		"queueNameIsRequired": "Le nom de la file d'attente est requis",
 		"outboundQueueName": "Nom de la file d'attente sortante",
 		"outboundQueueNameIsRequired": "Le nom de la file d'attente sortante est requis",
 		"inboundQueueName": "Nom de la file d'attente entrante",
-		"inboundQueueNameIsRequired": "Le nom de la file d'attente entrante est requis"
+		"inboundQueueNameIsRequired": "Le nom de la file d'attente entrante est requis",
+		"activeMqUrl": "Actif MQ URL:",
+		"requestQueueName": "Nom de la file d'attente des requêtes:",
+		"responseQueueName": "Nom de la file d'attente de réponses:"
 	},
 	"addTestData": {
 		"name": "Nom",
