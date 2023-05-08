@@ -72,7 +72,6 @@ export const SBI_SCAN_DATA = 'sbiScanData';
 export const SBI_SELECTED_DEVICE = 'sbiSelectedDevice';
 export const SBI_SELECTED_PORT = 'sbiSelectedPort';
 export const SDK_PROJECT_URL = 'sdkProjectUrl';
-export const ABIS_PROJECT_URL = 'abisProjectUrl';
 
 //android app
 export const DISCOVERY_INTENT_ACTION = 'io.sbi.device';

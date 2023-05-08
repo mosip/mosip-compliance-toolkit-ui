@@ -144,7 +144,7 @@ export class AddProjectComponent implements OnInit {
         if (controlId == 'abisUrl') {
           this.projectForm.controls[controlId].setValidators([
             Validators.required,
-            Validators.pattern('^(ws|wss)://(.*)'),
+            Validators.pattern('^(ws|wss)://.*\\/ws$'),
           ]);
         }
       });
@@ -264,27 +264,7 @@ export class AddProjectComponent implements OnInit {
         this.dataService.addSbiProject(request).subscribe(
           (response: any) => {
             console.log(response);
-            if (response.errors && response.errors.length > 0) {
-              this.dataLoaded = true;
-              this.dataSubmitted = false;
-              resolve(true);
-              Utils.showErrorMessage(this.resourceBundleJson, response.errors, this.dialog);
-            } else {
-              let resourceBundle = this.resourceBundleJson.dialogMessages;
-              let successMsg = 'success';
-              let sbiProjectMsg = 'successMessage';
-              this.dataLoaded = true;
-              const dialogRef = Utils.showSuccessMessage(
-                resourceBundle,
-                successMsg,
-                sbiProjectMsg,
-                this.dialog
-              );
-              dialogRef.afterClosed().subscribe((res) => {
-                this.showDashboard();
-              });
-              resolve(true);
-            }
+            resolve(this.getProjectResponse(response));
           },
           (errors) => {
             this.dataLoaded = true;
@@ -303,27 +283,7 @@ export class AddProjectComponent implements OnInit {
         this.dataService.addSdkProject(request).subscribe(
           (response: any) => {
             console.log(response);
-            if (response.errors && response.errors.length > 0) {
-              this.dataLoaded = true;
-              this.dataSubmitted = false;
-              resolve(true);
-              Utils.showErrorMessage(this.resourceBundleJson, response.errors, this.dialog);
-            } else {
-              let resourceBundle = this.resourceBundleJson.dialogMessages;
-              let successMsg = 'success';
-              let sdkProjectMsg = 'successMessage';
-              this.dataLoaded = true;
-              const dialogRef = Utils.showSuccessMessage(
-                resourceBundle,
-                successMsg,
-                sdkProjectMsg,
-                this.dialog
-              );
-              dialogRef.afterClosed().subscribe((res) => {
-                this.showDashboard();
-              });
-              resolve(true);
-            }
+            resolve(this.getProjectResponse(response));
           },
           (errors) => {
             this.dataLoaded = true;
@@ -342,27 +302,7 @@ export class AddProjectComponent implements OnInit {
         this.dataService.addAbisProject(request).subscribe(
           (response: any) => {
             console.log(response);
-            if (response.errors && response.errors.length > 0) {
-              this.dataLoaded = true;
-              this.dataSubmitted = false;
-              resolve(true);
-              Utils.showErrorMessage(this.resourceBundleJson, response.errors, this.dialog);
-            } else {
-              let resourceBundle = this.resourceBundleJson.dialogMessages;
-              let successMsg = 'success';
-              let abisProjectMsg = 'successMessage';
-              this.dataLoaded = true;
-              const dialogRef = Utils.showSuccessMessage(
-                resourceBundle,
-                successMsg,
-                abisProjectMsg,
-                this.dialog
-              );
-              dialogRef.afterClosed().subscribe((res) => {
-                this.showDashboard();
-              });
-              resolve(true);
-            }
+            resolve(this.getProjectResponse(response));
           },
           (errors) => {
             this.dataLoaded = true;
@@ -373,6 +313,30 @@ export class AddProjectComponent implements OnInit {
         )
       );
     });
+  }
+
+  getProjectResponse(response: any){
+    if (response.errors && response.errors.length > 0) {
+      this.dataLoaded = true;
+      this.dataSubmitted = false;
+      Utils.showErrorMessage(this.resourceBundleJson, response.errors, this.dialog);
+      return true;
+    } else {
+      let resourceBundle = this.resourceBundleJson.dialogMessages;
+      let successMsg = 'success';
+      let projectMsg = 'successMessage';
+      this.dataLoaded = true;
+      const dialogRef = Utils.showSuccessMessage(
+        resourceBundle,
+        successMsg,
+        projectMsg,
+        this.dialog
+      );
+      dialogRef.afterClosed().subscribe((res) => {
+        this.showDashboard();
+      });
+      return true;
+    }
   }
 
   showDashboard() {
