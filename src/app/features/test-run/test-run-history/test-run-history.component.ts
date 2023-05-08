@@ -31,7 +31,7 @@ export class TestRunHistoryComponent implements OnInit {
   sdkProjectData: SdkProjectModel;
   dataSource: MatTableDataSource<TestRunHistoryModel>;
   textDirection: any = this.userProfileService.getTextDirection();
-  buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : 'null';
+  buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : null;
   displayedColumns: string[] = [
     'lastRunTime',
     'runStatus',

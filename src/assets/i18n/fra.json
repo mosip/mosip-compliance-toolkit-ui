@@ -113,7 +113,7 @@
 		"lastRunDate": "Date de la dernière exécution",
 		"run": "Courir",
 		"dashboard": "Tableau de bord",
-		"baseUrl:": "URL de base:",
+		"baseUrl": "URL de base:",
 		"selectTestData": "Sélectionnez les données de test:",
 		"username": "Nom d'utilisateur:",
 		"password": "Mot de passe",
