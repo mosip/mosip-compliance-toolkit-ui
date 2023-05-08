@@ -188,7 +188,7 @@ export class ViewProjectComponent implements OnInit {
             resolve(true);
           },
           (errors) => {
-            Utils.showErrorMessage(errors, this.dialog);
+            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
             resolve(false);
           }
         )
@@ -206,7 +206,7 @@ export class ViewProjectComponent implements OnInit {
             resolve(true);
           },
           (errors) => {
-            Utils.showErrorMessage(errors, this.dialog);
+            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
             resolve(false);
           }
         )
@@ -224,7 +224,7 @@ export class ViewProjectComponent implements OnInit {
             resolve(true);
           },
           (errors) => {
-            Utils.showErrorMessage(errors, this.dialog);
+            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
             resolve(false);
           }
         )
@@ -242,7 +242,7 @@ export class ViewProjectComponent implements OnInit {
             resolve(true);
           },
           (errors) => {
-            Utils.showErrorMessage(errors, this.dialog);
+            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
             resolve(false);
           }
         )
@@ -318,7 +318,7 @@ export class ViewProjectComponent implements OnInit {
               resolve(true);
             },
             (errors) => {
-              Utils.showErrorMessage(errors, this.dialog);
+              Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
               resolve(false);
             }
           )
@@ -474,15 +474,20 @@ export class ViewProjectComponent implements OnInit {
             link.click();
           }
         } else {
+          const err = {
+            errorCode: 'ENCRYPTION_KEY_001',
+            message: ''
+          }
           Utils.showErrorMessage(
-            null,
+            this.resourceBundleJson,
+            [err],
             this.dialog,
             'Unable to get encryption key. Try Again!'
           );
         }
       },
       (errors) => {
-        Utils.showErrorMessage(errors, this.dialog);
+        Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
       }
     );
     this.subscriptions.push(subs);
@@ -503,7 +508,7 @@ export class ViewProjectComponent implements OnInit {
               }
               this.updatingProjectUrl = false;
               resolve(true);
-              Utils.showErrorMessage(response.errors, this.dialog);
+              Utils.showErrorMessage(this.resourceBundleJson, response.errors, this.dialog);
             } else {
               if (attributeName == 'sdkUrl') {
                 this.updatingProjectUrl = false;
@@ -522,7 +527,7 @@ export class ViewProjectComponent implements OnInit {
             if (attributeName == 'bioTestData') {
               this.updatingProjectTestData = false;
             }
-            Utils.showErrorMessage(errors, this.dialog);
+            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
             resolve(false);
           }
         )

@@ -91,7 +91,7 @@ export class BiometricDashboardComponent implements OnInit {
             resolve(true);
           },
           (errors) => {
-            Utils.showErrorMessage(errors, this.dialog);
+            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
             resolve(false);
           }
         )
@@ -115,15 +115,14 @@ export class BiometricDashboardComponent implements OnInit {
           link.download = row.fileId;
           link.click();
         } else {
-          Utils.showErrorMessage(
+          Utils.showErrorMessage(this.resourceBundleJson,
             null,
             this.dialog,
-            'Unable to download ZIP file. Try Again!'
-          );
+            'Unable to download ZIP file. Try Again!');
         }
       },
       (errors) => {
-        Utils.showErrorMessage(errors, this.dialog);
+        Utils.showErrorMessage(this.resourceBundleJson ,errors, this.dialog);
       }
     );
     this.subscriptions.push(subs);
