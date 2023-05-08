@@ -11,6 +11,7 @@ import Utils from 'src/app/app.utils';
 import { environment } from 'src/environments/environment';
 import { App } from '@capacitor/app';
 import { HttpClient } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-header',
@@ -43,6 +44,7 @@ export class HeaderComponent implements OnInit {
     private dataService: DataService,
     private router: Router,
     private dialog: MatDialog,
+    private translate: TranslateService
   ) {
     this.appVersion = appConfigService.getConfig()['version'];
   }
@@ -65,6 +67,7 @@ export class HeaderComponent implements OnInit {
     }
   }
   ngOnInit() {
+    this.translate.use(this.userProfileService.getUserPreferredLanguage());
     this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
       (response: any) => {
         this.resourceBundleJson = response;
