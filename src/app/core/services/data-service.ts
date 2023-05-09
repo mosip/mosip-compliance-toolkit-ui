@@ -64,6 +64,11 @@ export class DataService {
     return this.httpClient.put(url, body);
   }
 
+  updateAbisProject(body: any) {
+    let url = `${this.SERVICES_BASE_URL}updateAbisProject`;
+    return this.httpClient.put(url, body);
+  }
+
   getCollections(projectId: string, projectType: string) {
     let url = `${this.SERVICES_BASE_URL}getCollections?projectId=${projectId}&type=${projectType}`;
     return this.httpClient.get(url);

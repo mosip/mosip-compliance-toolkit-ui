@@ -128,7 +128,10 @@
 		"baseUrlIsInvalid": "L'URL de base n'est pas valide",
 		"specVersionIsRequired": "La version de spécification est requise",
 		"Purpose is required": "Le but est requis",
-		"testDataIsRequired": "Les données de test sont requises"
+		"testDataIsRequired": "Les données de test sont requises",
+		"activeMqUrl": "Actif MQ URL:",
+		"requestQueueName": "Nom de la file d'attente des requêtes:",
+		"responseQueueName": "Nom de la file d'attente de réponses:"
 	},
 	"testRunHistory": {
 		"runDate": "Date d'exécution",

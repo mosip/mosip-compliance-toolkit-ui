@@ -84,6 +84,11 @@ export class AddProjectComponent implements OnInit {
     appConstants.COMMON_CONTROLS.forEach((controlId) => {
       this.projectForm.controls[controlId].setValidators(Validators.required);
     });
+    this.projectForm.patchValue({
+      abisUrl: 'wss://{base_URL}/ws',
+      outboundQueueName: 'ctk-to-abis',
+      inboundQueueName: 'abis-to-ctk'
+    });
   }
 
   async getBioTestDataNames(purpose: string) {

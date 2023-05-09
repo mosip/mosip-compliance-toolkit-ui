@@ -17,6 +17,7 @@ import { SdkProjectModel } from 'src/app/core/models/sdk-project';
 import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
+import { AbisProjectModel } from 'src/app/core/models/abis-project';
 
 export interface CollectionsData {
   collectionId: string;
@@ -61,6 +62,10 @@ export class ViewProjectComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   dataLoaded = false;
   updatingProjectUrl = false;
+  updatingProjectUsername = false;
+  updatingProjectPassword = false;
+  updatingProjectOutboundQueueName = false;
+  updatingProjectInboundQueueName = false;
   updatingProjectTestData = false;
   panelOpenState = false;
   bioTestDataFileNames: string[] = [];
@@ -172,7 +177,8 @@ export class ViewProjectComponent implements OnInit {
         new FormControl({
           value: '',
           disabled:
-            controlId == 'abisUrl' || controlId == 'abisBioTestData' ? false : true,
+            controlId == 'abisUrl' || controlId == 'username' || controlId == 'password' || controlId == 'outboundQueueName'
+            || controlId == 'inboundQueueName' || controlId == 'abisBioTestData' ? false : true,
         })
       );
     });
@@ -410,11 +416,39 @@ export class ViewProjectComponent implements OnInit {
   }
 
   async updateProjectUrl() {
-    await this.updateProject('sdkUrl');
+    const projectType = this.projectForm.controls['projectType'].value;
+    if (projectType == appConstants.SDK){
+      await this.updateProject('sdkUrl');
+    }
+    if (projectType == appConstants.ABIS){
+      await this.updateProject('abisUrl');
+    }
   }
 
   async updateProjectTestData() {
-    await this.updateProject('bioTestData');
+    const projectType = this.projectForm.controls['projectType'].value;
+    if (projectType == appConstants.SDK){
+      await this.updateProject('bioTestData');
+    }
+    if (projectType == appConstants.ABIS){
+      await this.updateProject('abisBioTestData');
+    }
+  }
+
+  async updateProjectUsername(){
+    await this.updateProject('username');
+  }
+
+  async updateProjectPassword(){
+    await this.updateProject('password');
+  }
+
+  async updateProjectOutboundQueueName(){
+    await this.updateProject('outboundQueueName');
+  }
+
+  async updateProjectInboundQueueName(){
+    await this.updateProject('inboundQueueName');
   }
 
   async updateProject(attributeName: string) {
@@ -457,6 +491,45 @@ export class ViewProjectComponent implements OnInit {
           this.updatingProjectTestData = true;
         }
         await this.updateSdkProject(request, attributeName);
+      }
+      if (projectType == appConstants.ABIS) {
+        const projectData: AbisProjectModel = {
+          id: this.projectFormData.id,
+          name: this.projectForm.controls['name'].value,
+          projectType: this.projectForm.controls['projectType'].value,
+          abisVersion: this.projectForm.controls['abisSpecVersion'].value,
+          url: this.projectForm.controls['abisUrl'].value,
+          username: this.projectForm.controls['username'].value,
+          password: this.projectForm.controls['password'].value,
+          outboundQueueName: this.projectForm.controls['outboundQueueName'].value,
+          inboundQueueName: this.projectForm.controls['inboundQueueName'].value,
+          bioTestDataFileName: this.projectForm.controls['abisBioTestData'].value,
+        };
+        let request = {
+          id: appConstants.ABIS_PROJECT_UPDATE_ID,
+          version: appConstants.VERSION,
+          requesttime: new Date().toISOString(),
+          request: projectData,
+        };
+        if (attributeName == 'abisUrl') {
+          this.updatingProjectUrl = true;
+        }
+        if (attributeName == 'username') {
+          this.updatingProjectUsername = true;
+        }
+        if (attributeName == 'password') {
+          this.updatingProjectPassword = true;
+        }
+        if (attributeName == 'outboundQueueName') {
+          this.updatingProjectOutboundQueueName = true;
+        }
+        if (attributeName == 'inboundQueueName') {
+          this.updatingProjectInboundQueueName = true;
+        }
+        if (attributeName == 'abisBioTestData') {
+          this.updatingProjectTestData = true;
+        }
+        await this.updateAbisProject(request, attributeName);
       }
     }
   }
@@ -525,6 +598,84 @@ export class ViewProjectComponent implements OnInit {
               this.updatingProjectUrl = false;
             }
             if (attributeName == 'bioTestData') {
+              this.updatingProjectTestData = false;
+            }
+            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
+            resolve(false);
+          }
+        )
+      );
+    });
+  }
+
+  async updateAbisProject(request: any, attributeName: string) {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.updateAbisProject(request).subscribe(
+          (response: any) => {
+            console.log(response);
+            if (response.errors && response.errors.length > 0) {
+              if (attributeName == 'abisUrl') {
+                this.updatingProjectUrl = false;
+              }
+              if (attributeName == 'username') {
+                this.updatingProjectUsername = false;
+              }
+              if (attributeName == 'password') {
+                this.updatingProjectPassword = false;
+              }
+              if (attributeName == 'outboundQueueName') {
+                this.updatingProjectOutboundQueueName = false;
+              }
+              if (attributeName == 'inboundQueueName') {
+                this.updatingProjectInboundQueueName = false;
+              }
+              if (attributeName == 'abisBioTestData') {
+                this.updatingProjectTestData = false;
+              }
+              this.updatingProjectUrl = false;
+              resolve(true);
+              Utils.showErrorMessage(this.resourceBundleJson, response.errors, this.dialog);
+            } else {
+              if (attributeName == 'abisUrl') {
+                this.updatingProjectUrl = false;
+              }
+              if (attributeName == 'username') {
+                this.updatingProjectUsername = false;
+              }
+              if (attributeName == 'password') {
+                this.updatingProjectPassword = false;
+              }
+              if (attributeName == 'outboundQueueName') {
+                this.updatingProjectOutboundQueueName = false;
+              }
+              if (attributeName == 'inboundQueueName') {
+                this.updatingProjectInboundQueueName = false;
+              }
+              if (attributeName == 'abisBioTestData') {
+                this.updatingProjectTestData = false;
+              }
+              this.panelOpenState = true;
+              resolve(true);
+            }
+          },
+          (errors) => {
+            if (attributeName == 'abisUrl') {
+              this.updatingProjectUrl = false;
+            }
+            if (attributeName == 'username') {
+              this.updatingProjectUsername = false;
+            }
+            if (attributeName == 'password') {
+              this.updatingProjectPassword = false;
+            }
+            if (attributeName == 'outboundQueueName') {
+              this.updatingProjectOutboundQueueName = false;
+            }
+            if (attributeName == 'inboundQueueName') {
+              this.updatingProjectInboundQueueName = false;
+            }
+            if (attributeName == 'abisBioTestData') {
               this.updatingProjectTestData = false;
             }
             Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
