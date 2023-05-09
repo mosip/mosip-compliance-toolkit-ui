@@ -197,21 +197,21 @@ mat-expansion-panel-header {
 }
 @media screen and (min-width: 763px) and (max-width: 801px) {
   .collections-button{
-    width: 150px;
+    width: 11.5rem;
   }
   .scandeviceButton{
-    margin-left: 120px;
-    width: 150px;
+    margin-left: 4rem;
+    width: 11rem;
   }
   .encryptionkeyButton{
-    width: 150px;
-    margin-left: 120px;
+    width: 11rem;
+    margin-left: 5rem;
   }
   .scandeviceButtonREG{
-    margin-left: 420px;
+    margin-left: 33.5rem;
   }
   .scandeviceButton-android{
-    margin-left: 420px;
+    margin-left: 33.5rem;
   }
   .collectionButtonMobile{
     margin-right: 540px;
