@@ -4,7 +4,8 @@
 		"success": "Success",
 		"collectionSuccessMessage": "Collection created successfully",
 		"successMessage": "Project created successfully",
-		"close": "Close"
+		"close": "Close",
+		"logout": "Logout"
 	},
 	"breadcrumb": {
 		"home": "Home",

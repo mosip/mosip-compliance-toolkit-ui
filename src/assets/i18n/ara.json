@@ -4,7 +4,8 @@
 		"success": "نجاح",
 		"collectionSuccessMessage": "تم إنشاء المجموعة بنجاح",
 		"successMessage": "تم إنشاء المشروع بنجاح",
-		"close": "يغلق"
+		"close": "يغلق",
+		"logout": "تسجيل خروج"
 	},
 	"breadcrumb": {
 		"home": "بيت",
