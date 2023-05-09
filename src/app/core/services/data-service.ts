@@ -38,6 +38,11 @@ export class DataService {
     return this.httpClient.post(url, body);
   }
 
+  addAbisProject(body: any) {
+    let url = `${this.SERVICES_BASE_URL}addAbisProject`;
+    return this.httpClient.post(url, body);
+  }
+
   getSbiProject(projectId: string) {
     let url = `${this.SERVICES_BASE_URL}getSbiProject/${projectId}`;
     return this.httpClient.get(url);

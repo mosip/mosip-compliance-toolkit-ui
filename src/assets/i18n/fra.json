@@ -3,10 +3,8 @@
 		"logoutMessage": "Vous avez été déconnecté.",
 		"success": "Succès",
 		"collectionSuccessMessage": "Collection créée avec succès",
-		"sbiSuccessMessage": "Projet créé avec succès",
-		"sdkSuccessMessage": "Projet créé avec succès",
-		"close": "Fermer",
-		"logout": "Se déconnecter"
+		"successMessage": "Projet créé avec succès",
+		"close": "Fermer"
 	},
 	"breadcrumb": {
 		"home": "Maison",
@@ -76,11 +74,15 @@
 		"deviceSubTypeIsRequired": "Le sous-type d'appareil est requis",
 		"deviceSubTypeIsInvalid": "Le sous-type de périphérique n'est pas valide",
 		"usernameIsRequired": "Nom d'utilisateur est nécessaire",
+		"passwordIsRequired": "Mot de passe requis",
 		"queueNameIsRequired": "Le nom de la file d'attente est requis",
 		"outboundQueueName": "Nom de la file d'attente sortante",
 		"outboundQueueNameIsRequired": "Le nom de la file d'attente sortante est requis",
 		"inboundQueueName": "Nom de la file d'attente entrante",
-		"inboundQueueNameIsRequired": "Le nom de la file d'attente entrante est requis"
+		"inboundQueueNameIsRequired": "Le nom de la file d'attente entrante est requis",
+		"activeMqUrl": "Actif MQ URL:",
+		"requestQueueName": "Nom de la file d'attente des requêtes:",
+		"responseQueueName": "Nom de la file d'attente de réponses:"
 	},
 	"addTestData": {
 		"name": "Nom",
@@ -1304,11 +1306,10 @@
 		"TOOLKIT_ZIP_FILE_ERR_002": "La taille des données non compressées est trop importante pour la capacité des ressources de l'application.",
 		"TOOLKIT_ZIP_FILE_ERR_003": "Trop d'entrées dans cette archive peuvent conduire à l'épuisement des inodes du système.",
 		"ABIS_DATA_SHARE_URL_EXCEPTION_001": "Impossible de générer l'URL de partage de données",
-		"ABIS_QUEUE_EXCEPTION_002": "Impossible d'envoyer vers la file d'attente",
-		"ABIS_QUEUE_EXCEPTION_003": "Impossible de lire la file d'attente",
 		"TOOLKIT_ABIS_PROJECTS_001": "Aucun projet ABIS correspondant disponible pour l'identifiant donné",
 		"TOOLKIT_ABIS_PROJECTS_002": "Objectif ABIS invalide",
-		"TOOLKIT_ABIS_PROJECTS_003": "Invalid ABIS Spec Version",
+		"TOOLKIT_ABIS_PROJECTS_003": "Projet ABIS impossible d'ajouter",
+		"TOOLKIT_ABIS_PROJECTS_004": "URL ABIS invalide",
 		"TESTCASE_001": "Veuillez sélectionner au moins un cas de test.",
 		"ENCRYPTION_KEY_001": "Impossible d'obtenir la clé de chiffrement. Essayer à nouveau!",
 		"error": "Errorerreur"

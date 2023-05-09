@@ -3,6 +3,7 @@ export const AUTH_ERROR_CODE = ['KER-ATH-007', 'KER-ATH-006'];
 //service request id's
 export const SBI_PROJECT_ADD_ID = 'mosip.toolkit.sbi.project.add';
 export const SDK_PROJECT_ADD_ID = 'mosip.toolkit.sdk.project.add';
+export const ABIS_PROJECT_ADD_ID = 'mosip.toolkit.abis.project.add';
 export const SDK_PROJECT_UPDATE_ID = 'mosip.toolkit.sdk.project.update';
 export const VALIDATIONS_ADD_ID = 'mosip.toolkit.api.id.validations';
 export const GENERATE_SDK_REQUEST_ID = 'mosip.toolkit.api.id.generate.sdk.request';
