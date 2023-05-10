@@ -178,23 +178,47 @@ export class AbisTestCaseService {
       };
     }
     if (methodName == appConstants.ABIS_METHOD_IDENTIFY) {
-      
-      request = {
-        "id": appConstants.ABIS_IDENTIFY_ID,
-        "version": appConstants.ABIS_VERSION,
-        "requestId": requestId,
-        "requesttime": new Date().toISOString(),
-        "referenceId": referenceId,
-        // "referenceUrl": null,
-        "gallery": {
-          "referenceIds": galleryIds
-        },
-        // "flags": {
-        //   "maxResults": 0,
-        //   "targetFPIR": 0,
-        //   "flag1": "string",
-        //   "flag2": "string"
-        // }
+      let galleryAvailable = false;
+      galleryIds.forEach(refId => {
+        if (refId["referenceId"] != "") {
+          galleryAvailable = true;
+        }
+      });
+      if (galleryAvailable) {
+        request = {
+          "id": appConstants.ABIS_IDENTIFY_ID,
+          "version": appConstants.ABIS_VERSION,
+          "requestId": requestId,
+          "requesttime": new Date().toISOString(),
+          "referenceId": referenceId,
+          // "referenceUrl": null,
+          "gallery": {
+            "referenceIds": galleryIds
+          }
+          // "flags": {
+          //   "maxResults": 0,
+          //   "targetFPIR": 0,
+          //   "flag1": "string",
+          //   "flag2": "string"
+          // }
+        }
+      } else {
+        request = {
+          "id": appConstants.ABIS_IDENTIFY_ID,
+          "version": appConstants.ABIS_VERSION,
+          "requestId": requestId,
+          "requesttime": new Date().toISOString(),
+          "referenceId": referenceId
+          // "referenceUrl": null,
+          // "gallery": {
+          //   "referenceIds": galleryIds
+          // },
+          // "flags": {
+          //   "maxResults": 0,
+          //   "targetFPIR": 0,
+          //   "flag1": "string",
+          //   "flag2": "string"
+          // }
       }
     }
     return request;
