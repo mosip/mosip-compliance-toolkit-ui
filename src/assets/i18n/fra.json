@@ -1045,7 +1045,7 @@
 		"KEY_ROTATION_VALIDATOR_001": "Les validations de la rotation des clés sont réussies.",
 		"KEY_ROTATION_VALIDATOR_002": "Les informations sur l'appareil avant la rotation des clés ne sont pas disponibles",
 		"KEY_ROTATION_VALIDATOR_003": "Les informations sur l'appareil après la rotation des clés ne sont pas disponibles",
-		"KEY_ROTATION_VALIDATOR_004": "La validation de la signature a échoué pour les informations sur l'appareil après la rotation des clés car l'appareil n'est pas enregistré.",
+		"KEY_ROTATION_VALIDATOR_004": "La validation de la signature a échoué pour les informations sur l'appareil après la rotation des clés en raison de {}",
 		"KEY_ROTATION_VALIDATOR_005": "La marque, le modèle ou le numéro de série des informations sur l'appareil ne correspondent pas.",
 		"KEY_ROTATION_VALIDATOR_006": "Les deux clés de l'appareil sont identiques. Faites tourner la clé de l'appareil et réessayez !",
 		"KEY_ROTATION_VALIDATOR_007": "La deuxième clé d'appareil doit être créée après la première clé d'appareil",
