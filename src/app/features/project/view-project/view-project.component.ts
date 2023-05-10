@@ -61,12 +61,7 @@ export class ViewProjectComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   dataLoaded = false;
-  updatingProjectUrl = false;
-  updatingProjectUsername = false;
-  updatingProjectPassword = false;
-  updatingProjectOutboundQueueName = false;
-  updatingProjectInboundQueueName = false;
-  updatingProjectTestData = false;
+  updatingAttribute: string;
   panelOpenState = false;
   bioTestDataFileNames: string[] = [];
   resourceBundleJson: any = {};
@@ -415,42 +410,6 @@ export class ViewProjectComponent implements OnInit {
     ]);
   }
 
-  async updateProjectUrl() {
-    const projectType = this.projectForm.controls['projectType'].value;
-    if (projectType == appConstants.SDK){
-      await this.updateProject('sdkUrl');
-    }
-    if (projectType == appConstants.ABIS){
-      await this.updateProject('abisUrl');
-    }
-  }
-
-  async updateProjectTestData() {
-    const projectType = this.projectForm.controls['projectType'].value;
-    if (projectType == appConstants.SDK){
-      await this.updateProject('bioTestData');
-    }
-    if (projectType == appConstants.ABIS){
-      await this.updateProject('abisBioTestData');
-    }
-  }
-
-  async updateProjectUsername(){
-    await this.updateProject('username');
-  }
-
-  async updateProjectPassword(){
-    await this.updateProject('password');
-  }
-
-  async updateProjectOutboundQueueName(){
-    await this.updateProject('outboundQueueName');
-  }
-
-  async updateProjectInboundQueueName(){
-    await this.updateProject('inboundQueueName');
-  }
-
   async updateProject(attributeName: string) {
     this.projectForm.controls['projectType'].markAsTouched();
     const projectType = this.projectForm.controls['projectType'].value;
@@ -484,12 +443,7 @@ export class ViewProjectComponent implements OnInit {
           requesttime: new Date().toISOString(),
           request: projectData,
         };
-        if (attributeName == 'sdkUrl') {
-          this.updatingProjectUrl = true;
-        }
-        if (attributeName == 'bioTestData') {
-          this.updatingProjectTestData = true;
-        }
+        this.updatingAttribute = attributeName;
         await this.updateSdkProject(request, attributeName);
       }
       if (projectType == appConstants.ABIS) {
@@ -511,24 +465,7 @@ export class ViewProjectComponent implements OnInit {
           requesttime: new Date().toISOString(),
           request: projectData,
         };
-        if (attributeName == 'abisUrl') {
-          this.updatingProjectUrl = true;
-        }
-        if (attributeName == 'username') {
-          this.updatingProjectUsername = true;
-        }
-        if (attributeName == 'password') {
-          this.updatingProjectPassword = true;
-        }
-        if (attributeName == 'outboundQueueName') {
-          this.updatingProjectOutboundQueueName = true;
-        }
-        if (attributeName == 'inboundQueueName') {
-          this.updatingProjectInboundQueueName = true;
-        }
-        if (attributeName == 'abisBioTestData') {
-          this.updatingProjectTestData = true;
-        }
+        this.updatingAttribute = attributeName;
         await this.updateAbisProject(request, attributeName);
       }
     }
@@ -572,34 +509,10 @@ export class ViewProjectComponent implements OnInit {
         this.dataService.updateSdkProject(request).subscribe(
           (response: any) => {
             console.log(response);
-            if (response.errors && response.errors.length > 0) {
-              if (attributeName == 'sdkUrl') {
-                this.updatingProjectUrl = false;
-              }
-              if (attributeName == 'bioTestData') {
-                this.updatingProjectTestData = false;
-              }
-              this.updatingProjectUrl = false;
-              resolve(true);
-              Utils.showErrorMessage(this.resourceBundleJson, response.errors, this.dialog);
-            } else {
-              if (attributeName == 'sdkUrl') {
-                this.updatingProjectUrl = false;
-              }
-              if (attributeName == 'bioTestData') {
-                this.updatingProjectTestData = false;
-              }
-              this.panelOpenState = true;
-              resolve(true);
-            }
+            resolve(this.getProjectResponse(response));
           },
           (errors) => {
-            if (attributeName == 'sdkUrl') {
-              this.updatingProjectUrl = false;
-            }
-            if (attributeName == 'bioTestData') {
-              this.updatingProjectTestData = false;
-            }
+            this.updatingAttribute = '';
             Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
             resolve(false);
           }
@@ -614,75 +527,27 @@ export class ViewProjectComponent implements OnInit {
         this.dataService.updateAbisProject(request).subscribe(
           (response: any) => {
             console.log(response);
-            if (response.errors && response.errors.length > 0) {
-              if (attributeName == 'abisUrl') {
-                this.updatingProjectUrl = false;
-              }
-              if (attributeName == 'username') {
-                this.updatingProjectUsername = false;
-              }
-              if (attributeName == 'password') {
-                this.updatingProjectPassword = false;
-              }
-              if (attributeName == 'outboundQueueName') {
-                this.updatingProjectOutboundQueueName = false;
-              }
-              if (attributeName == 'inboundQueueName') {
-                this.updatingProjectInboundQueueName = false;
-              }
-              if (attributeName == 'abisBioTestData') {
-                this.updatingProjectTestData = false;
-              }
-              this.updatingProjectUrl = false;
-              resolve(true);
-              Utils.showErrorMessage(this.resourceBundleJson, response.errors, this.dialog);
-            } else {
-              if (attributeName == 'abisUrl') {
-                this.updatingProjectUrl = false;
-              }
-              if (attributeName == 'username') {
-                this.updatingProjectUsername = false;
-              }
-              if (attributeName == 'password') {
-                this.updatingProjectPassword = false;
-              }
-              if (attributeName == 'outboundQueueName') {
-                this.updatingProjectOutboundQueueName = false;
-              }
-              if (attributeName == 'inboundQueueName') {
-                this.updatingProjectInboundQueueName = false;
-              }
-              if (attributeName == 'abisBioTestData') {
-                this.updatingProjectTestData = false;
-              }
-              this.panelOpenState = true;
-              resolve(true);
-            }
+            resolve(this.getProjectResponse(response));
           },
           (errors) => {
-            if (attributeName == 'abisUrl') {
-              this.updatingProjectUrl = false;
-            }
-            if (attributeName == 'username') {
-              this.updatingProjectUsername = false;
-            }
-            if (attributeName == 'password') {
-              this.updatingProjectPassword = false;
-            }
-            if (attributeName == 'outboundQueueName') {
-              this.updatingProjectOutboundQueueName = false;
-            }
-            if (attributeName == 'inboundQueueName') {
-              this.updatingProjectInboundQueueName = false;
-            }
-            if (attributeName == 'abisBioTestData') {
-              this.updatingProjectTestData = false;
-            }
+            this.updatingAttribute = '';
             Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
             resolve(false);
           }
         )
       );
     });
+  }
+
+  getProjectResponse(response: any){
+    if (response.errors && response.errors.length > 0) {
+      this.updatingAttribute = '';
+      Utils.showErrorMessage(this.resourceBundleJson, response.errors, this.dialog);
+      return true;
+    } else {
+      this.updatingAttribute = '';
+      this.panelOpenState = true;
+      return true;
+    }
   }
 }
