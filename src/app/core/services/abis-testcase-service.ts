@@ -64,6 +64,7 @@ export class AbisTestCaseService {
         appConstants.SUCCESS
       ) {
         //SEND THE REQUEST JSON TO ABIS QUEUE
+        console.log(methodRequest);
         let sendRequestResp: any = await this.activeMqService.sendToQueue(rxStompService, abisProjectData, methodRequest);
         resolve({
           ...sendRequestResp,
