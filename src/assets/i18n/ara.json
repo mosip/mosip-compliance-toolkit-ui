@@ -128,7 +128,10 @@
 		"baseUrlIsInvalid": "عنوان URL الأساسي غير صالح",
 		"specVersionIsRequired": "إصدار المواصفات مطلوب",
 		"Purpose is required": "الغرض مطلوب",
-		"testDataIsRequired": "بيانات الاختبار مطلوبة"
+		"testDataIsRequired": "بيانات الاختبار مطلوبة",
+		"activeMqUrl": "نشيط MQ URL",
+		"requestQueueName": "طلب اسم قائمة الانتظار",
+		"responseQueueName": "اسم قائمة انتظار الاستجابة"
 	},
 	"testRunHistory": {
 		"runDate": "تشغيل التاريخ",

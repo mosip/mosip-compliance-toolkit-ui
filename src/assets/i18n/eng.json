@@ -128,7 +128,10 @@
 		"baseUrlIsInvalid": "Base URL is Invalid",
 		"specVersionIsRequired": "Spec Version is Required",
 		"Purpose is required": "Purpose is Required",
-		"testDataIsRequired": "Test Data Is Required"
+		"testDataIsRequired": "Test Data Is Required",
+		"activeMqUrl": "Active MQ URL:",
+		"requestQueueName": "Request Queue Name:",
+		"responseQueueName": "Response Queue Name:"
 	},
 	"testRunHistory": {
 		"runDate": "Run Date",
