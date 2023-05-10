@@ -51,11 +51,13 @@ export class ActiveMqService {
             [appConstants.STATUS]: appConstants.SUCCESS
           })
         } else {
+          console.log("not connected");
           resolve({
             [appConstants.STATUS]: appConstants.FAILURE
           })
         }
       } catch (e) {
+        console.log("error");
         console.log(e);
         resolve({
           [appConstants.STATUS]: appConstants.FAILURE
