@@ -468,6 +468,7 @@ export class ViewProjectComponent implements OnInit {
         this.updatingAttribute = attributeName;
         await this.updateAbisProject(request, attributeName);
       }
+      this.updatingAttribute = '';
     }
   }
 
