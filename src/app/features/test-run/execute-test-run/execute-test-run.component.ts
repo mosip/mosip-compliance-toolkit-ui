@@ -101,7 +101,7 @@ export class ExecuteTestRunComponent implements OnInit {
   cbeffFileSuffix: number = 0;
   currentCbeffFile: number = 0;
   isCombinationAbisTestcase = false;
-  currentAbisMethod: string = "";
+  currentAbisMethod: string = appConstants.BLANK_STRING;
   textDirection: any = this.userProfileService.getTextDirection();
   resourceBundleJson: any = {};
 
@@ -827,11 +827,12 @@ export class ExecuteTestRunComponent implements OnInit {
             this.abisSentDataSource = abisReq.testDataSource;
             this.subscribeToABISQueue(requestId);
           } else {
+            console.log("INSERT REQUEST FAILED");
             this.cbeffFileSuffix = 0;
             this.abisRequestSendFailure = true;
             this.abisSentMessage = appConstants.BLANK_STRING;
             this.abisSentDataSource = appConstants.BLANK_STRING;
-            resolve(true);
+            resolve(false);
           }
         } else {
           this.showLoader = true;
