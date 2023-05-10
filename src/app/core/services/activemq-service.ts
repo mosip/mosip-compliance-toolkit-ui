@@ -45,19 +45,19 @@ export class ActiveMqService {
   sendToQueue(rxStompService: RxStompService, abisProjectData: AbisProjectModel, message: string) {
     return new Promise((resolve, reject) => {
       try {
-        if (rxStompService.connected()) {
+        //if (rxStompService.connected()) {
           rxStompService.publish({ destination: `${abisProjectData.outboundQueueName}`, body: message });
           resolve({
             [appConstants.STATUS]: appConstants.SUCCESS
           })
-        } else {
-          console.log("not connected");
-          resolve({
-            [appConstants.STATUS]: appConstants.FAILURE
-          })
-        }
+        // } else {
+        //   console.log("not connected");
+        //   resolve({
+        //     [appConstants.STATUS]: appConstants.FAILURE
+        //   })
+        // }
       } catch (e) {
-        console.log("error");
+        console.log("error in sending request");
         console.log(e);
         resolve({
           [appConstants.STATUS]: appConstants.FAILURE
