@@ -834,7 +834,7 @@ export class ExecuteTestRunComponent implements OnInit {
             this.abisRequestSendFailure = true;
             this.abisSentMessage = appConstants.BLANK_STRING;
             this.abisSentDataSource = appConstants.BLANK_STRING;
-            resolve(false);
+            resolve(true);
           }
         } else {
           this.showLoader = true;
