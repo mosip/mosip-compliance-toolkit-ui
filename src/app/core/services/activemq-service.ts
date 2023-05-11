@@ -26,7 +26,7 @@ export class ActiveMqService {
       // How often to heartbeat?
       // Interval in milliseconds, set to 0 to disable
       heartbeatIncoming: 0, // Typical value 0 - disabled
-      heartbeatOutgoing: 5000, // Typical value 20000 - every 20 seconds
+      heartbeatOutgoing: 20000, // Typical value 20000 - every 20 seconds
       // Wait in milliseconds before attempting auto reconnect
       // Set to 0 to disable
       // Typical value 500 (500 milli seconds)
@@ -45,6 +45,9 @@ export class ActiveMqService {
   sendToQueue(rxStompService: RxStompService, abisProjectData: AbisProjectModel, message: string) {
     return new Promise((resolve, reject) => {
       try {
+        if (!rxStompService.connected()) {
+          rxStompService = this.setUpConfig(abisProjectData);
+        } 
         //if (rxStompService.connected()) {
           rxStompService.publish({ destination: `${abisProjectData.outboundQueueName}`, body: message });
           resolve({
