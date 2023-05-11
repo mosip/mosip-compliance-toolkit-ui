@@ -7,7 +7,7 @@
         </div>
     </mat-dialog-content>
     <mat-dialog-actions align="end">
-        <button mat-flat-button color="accent" (click)="closeMe()">dialogMessages.close</button>
+        <button mat-flat-button color="accent" (click)="closeMe()">{{"dialogMessages.close" | translate}}</button>
     </mat-dialog-actions>
 </div>
 <div *ngIf="input.case === 'SUCCESS'">
