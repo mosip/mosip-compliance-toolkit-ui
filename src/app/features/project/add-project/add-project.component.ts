@@ -64,8 +64,10 @@ export class AddProjectComponent implements OnInit {
     this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
       (response: any) => {
         const breadcrumbLabels = response['breadcrumb'];
-        this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
-        this.breadcrumbService.set('@addProjectBreadCrumb', `${breadcrumbLabels.addNewProject}`);
+        if (breadcrumbLabels) {
+          this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
+          this.breadcrumbService.set('@addProjectBreadCrumb', `${breadcrumbLabels.addNewProject}`);
+        }
       }
     );
   }

@@ -123,11 +123,13 @@ export class ViewProjectComponent implements OnInit {
   initBreadCrumb() {
     if (this.projectFormData) {
       const breadcrumbLabels = this.resourceBundleJson['breadcrumb'];
-      this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
-      this.breadcrumbService.set(
-        '@projectBreadCrumb',
-        `${this.projectType} ${breadcrumbLabels.project} - ${this.projectFormData.name}`
-      );
+      if (breadcrumbLabels) {
+        this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
+        this.breadcrumbService.set(
+          '@projectBreadCrumb',
+          `${this.projectType} ${breadcrumbLabels.project} - ${this.projectFormData.name}`
+        );
+      }
     }
   }
 

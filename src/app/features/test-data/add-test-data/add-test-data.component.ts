@@ -67,8 +67,10 @@ export class AddTestDataComponent implements OnInit {
     this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
       (response: any) => {
         const breadcrumbLabels = response['breadcrumb'];
-        this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
-        this.breadcrumbService.set('@uploadTestDataBreadCrumb', `${breadcrumbLabels.uploadBiometricTestData}`);
+        if (breadcrumbLabels) {
+          this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
+          this.breadcrumbService.set('@uploadTestDataBreadCrumb', `${breadcrumbLabels.uploadBiometricTestData}`);
+        }
       }
     );
   }
