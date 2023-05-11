@@ -84,9 +84,10 @@ export class ProjectsDashboardComponent implements OnInit {
 
   initBreadCrumb() {
     const breadcrumbLabels = this.resourceBundleJson['breadcrumb'];
-    this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
-    this.breadcrumbService.set('@projectDashboardBreadCrumb', `${breadcrumbLabels.projectsDashboard}`);
-
+    if (breadcrumbLabels) {
+      this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
+      this.breadcrumbService.set('@projectDashboardBreadCrumb', `${breadcrumbLabels.projectsDashboard}`);
+    }
   }
 
   async getProjects() {
