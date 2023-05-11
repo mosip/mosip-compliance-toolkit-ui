@@ -76,8 +76,10 @@ export class BiometricDashboardComponent implements OnInit {
 
   initBreadCrumb() {
     const breadcrumbLabels = this.resourceBundleJson['breadcrumb'];
-    this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
-    this.breadcrumbService.set('@biometricDashboardBreadCrumb', `${breadcrumbLabels.biometricTestData}`);
+    if (breadcrumbLabels) {
+      this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
+      this.breadcrumbService.set('@biometricDashboardBreadCrumb', `${breadcrumbLabels.biometricTestData}`);
+    }
   }
   
   async getListOfBiometricTestData() {

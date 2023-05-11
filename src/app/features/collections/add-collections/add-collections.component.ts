@@ -86,26 +86,28 @@ export class AddCollectionsComponent implements OnInit {
 
   initBreadCrumb() {
     const breadcrumbLabels = this.resourceBundleJson['breadcrumb'];
-    this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
-    if (this.sbiProjectData) {
-      this.breadcrumbService.set(
-        '@projectBreadCrumb',
-        `${this.projectType} ${breadcrumbLabels.project} - ${this.sbiProjectData.name}`
-      );
+    if (breadcrumbLabels) {
+      this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
+      if (this.sbiProjectData) {
+        this.breadcrumbService.set(
+          '@projectBreadCrumb',
+          `${this.projectType} ${breadcrumbLabels.project} - ${this.sbiProjectData.name}`
+        );
+      }
+      if (this.sdkProjectData) {
+        this.breadcrumbService.set(
+          '@projectBreadCrumb',
+          `${this.projectType} ${breadcrumbLabels.project} - ${this.sdkProjectData.name}`
+        );
+      }
+      if (this.abisProjectData) {
+        this.breadcrumbService.set(
+          '@projectBreadCrumb',
+          `${this.projectType} ${breadcrumbLabels.project} - ${this.abisProjectData.name}`
+        );
+      }
+      this.breadcrumbService.set('@collectionBreadCrumb', `${breadcrumbLabels.add}`);
     }
-    if (this.sdkProjectData) {
-      this.breadcrumbService.set(
-        '@projectBreadCrumb',
-        `${this.projectType} ${breadcrumbLabels.project} - ${this.sdkProjectData.name}`
-      );
-    }
-    if (this.abisProjectData) {
-      this.breadcrumbService.set(
-        '@projectBreadCrumb',
-        `${this.projectType} ${breadcrumbLabels.project} - ${this.abisProjectData.name}`
-      );
-    }
-    this.breadcrumbService.set('@collectionBreadCrumb', `${breadcrumbLabels.add}`);
   }
 
   initForm() {
