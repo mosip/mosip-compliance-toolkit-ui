@@ -754,10 +754,10 @@ export class ExecuteTestRunComponent implements OnInit {
           this.showLoader = true;
           if (!this.abisProjectData)
             await this.getAbisProjectDetails();
-          // //disconnect from queue if already connected
-          // if (this.rxStompService.connected()) {
-          //   this.rxStompService.deactivate();
-          // }
+          //disconnect from queue if already connected
+          if (this.rxStompService.connected()) {
+            this.rxStompService.deactivate();
+          }
           //setup connection as per project configuration
           this.rxStompService = this.activeMqService.setUpConfig(this.abisProjectData);
           let requestId = "";
