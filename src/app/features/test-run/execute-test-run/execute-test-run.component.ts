@@ -383,7 +383,7 @@ export class ExecuteTestRunComponent implements OnInit {
             this.abisSentMessage = appConstants.BLANK_STRING;
             this.abisSentDataSource = appConstants.BLANK_STRING;
             this.abisRecvdMessage = appConstants.BLANK_STRING;
-            console.log(`after last round, found cbeffFileSuffix: ${this.cbeffFileSuffix}`);
+            //console.log(`after last round, found cbeffFileSuffix: ${this.cbeffFileSuffix}`);
             if (this.cbeffFileSuffix > 0) {
               //do no reset current testcaseId
               resetCurrentTestCase = false;
@@ -739,7 +739,7 @@ export class ExecuteTestRunComponent implements OnInit {
         resolve(res);
       } else if (this.projectType == appConstants.ABIS) {
         this.isCombinationAbisTestcase = testCase.methodName.length > 1 ? true : false;
-        console.log(`isCombinationTestCase: ${this.isCombinationAbisTestcase}`);
+        //console.log(`isCombinationTestCase: ${this.isCombinationAbisTestcase}`);
         if (this.isCombinationAbisTestcase && this.currentAbisMethod == appConstants.BLANK_STRING) {
           this.currentAbisMethod = appConstants.ABIS_METHOD_INSERT;
         }
@@ -796,7 +796,7 @@ export class ExecuteTestRunComponent implements OnInit {
           }
           console.log(`requestId: ${requestId}`);
           console.log(`referenceId: ${referenceId}`);
-          console.log(`cbeffFileSuffix: ${this.cbeffFileSuffix}`);
+          //console.log(`cbeffFileSuffix: ${this.cbeffFileSuffix}`);
           this.currentCbeffFile = this.cbeffFileSuffix;
           this.abisRequestSendFailure = false;
           let methodIndex = 0;
@@ -815,8 +815,6 @@ export class ExecuteTestRunComponent implements OnInit {
             galleryIds,
             this.cbeffFileSuffix,
           );
-          console.log("abisReq");
-          console.log(abisReq);
           if (abisReq && abisReq[appConstants.STATUS] && abisReq[appConstants.STATUS] == appConstants.SUCCESS) {
             if (insertCount > 1) {
               this.cbeffFileSuffix = this.cbeffFileSuffix + 1;

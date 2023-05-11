@@ -184,6 +184,8 @@ export class AbisTestCaseService {
           galleryAvailable = true;
         }
       });
+      console.log(galleryIds);
+      console.log(`galleryAvailable: ${galleryAvailable}`);
       if (galleryAvailable) {
         request = {
           "id": appConstants.ABIS_IDENTIFY_ID,
@@ -191,17 +193,17 @@ export class AbisTestCaseService {
           "requestId": requestId,
           "requesttime": new Date().toISOString(),
           "referenceId": referenceId,
-          // "referenceUrl": null,
           "gallery": {
             "referenceIds": galleryIds
           }
-          // "flags": {
-          //   "maxResults": 0,
-          //   "targetFPIR": 0,
-          //   "flag1": "string",
-          //   "flag2": "string"
-          // }
         }
+        // "referenceUrl": null,
+        // "flags": {
+        //   "maxResults": 0,
+        //   "targetFPIR": 0,
+        //   "flag1": "string",
+        //   "flag2": "string"
+        // }
       } else {
         request = {
           "id": appConstants.ABIS_IDENTIFY_ID,
@@ -210,7 +212,7 @@ export class AbisTestCaseService {
           "requesttime": new Date().toISOString(),
           "referenceId": referenceId
         }
-      }  
+      }
     }
     return request;
   }
