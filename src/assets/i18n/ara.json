@@ -6,7 +6,8 @@
 		"sbiSuccessMessage": "تم إنشاء المشروع بنجاح",
 		"sdkSuccessMessage": "تم إنشاء المشروع بنجاح",
 		"close": "يغلق",
-		"logout": "تسجيل خروج"
+		"logout": "تسجيل خروج",
+		"addTestDataSuccessMsg": "تمت إضافة بيانات الاختبار بنجاح."
 	},
 	"breadcrumb": {
 		"home": "بيت",

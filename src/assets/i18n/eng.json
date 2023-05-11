@@ -6,7 +6,8 @@
 		"sbiSuccessMessage": "Project created successfully",
 		"sdkSuccessMessage": "Project created successfully",
 		"close": "Close",
-		"logout": "Logout"
+		"logout": "Logout",
+		"addTestDataSuccessMsg": "Test data added successfully."
 	},
 	"breadcrumb": {
 		"home": "Home",
