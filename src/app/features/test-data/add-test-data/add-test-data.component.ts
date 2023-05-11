@@ -272,7 +272,7 @@ export class AddTestDataComponent implements OnInit {
               if (response[appConstants.RESPONSE]) {
                 info = response[appConstants.RESPONSE]['info'];
               }
-              let msg = 'Test data added successfully. ';
+              let msg = 'addTestDataSuccessMsg';
               if (info) {
                 msg += info;
               }
