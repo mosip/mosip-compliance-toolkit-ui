@@ -84,24 +84,26 @@ export class TestRunHistoryComponent implements OnInit {
 
   initBreadCrumb() {
     const breadcrumbLabels = this.resourceBundleJson['breadcrumb'];
-    this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
-    if (this.sbiProjectData) {
+    if (breadcrumbLabels) {
+      this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
+      if (this.sbiProjectData) {
+        this.breadcrumbService.set(
+          '@projectBreadCrumb',
+          `${this.projectType} ${breadcrumbLabels.project} - ${this.sbiProjectData.name}`
+        );
+      }
+      if (this.sdkProjectData) {
+        this.breadcrumbService.set(
+          '@projectBreadCrumb',
+          `${this.projectType} ${breadcrumbLabels.project} - ${this.sdkProjectData.name}`
+        );
+      }
       this.breadcrumbService.set(
-        '@projectBreadCrumb',
-        `${this.projectType} ${breadcrumbLabels.project} - ${this.sbiProjectData.name}`
+        '@collectionBreadCrumb',
+        `${this.collectionName}`
       );
+      this.breadcrumbService.set('@testrunBreadCrumb', `${breadcrumbLabels.testRunHistory}`);
     }
-    if (this.sdkProjectData) {
-      this.breadcrumbService.set(
-        '@projectBreadCrumb',
-        `${this.projectType} ${breadcrumbLabels.project} - ${this.sdkProjectData.name}`
-      );
-    }
-    this.breadcrumbService.set(
-      '@collectionBreadCrumb',
-      `${this.collectionName}`
-    );
-    this.breadcrumbService.set('@testrunBreadCrumb', `${breadcrumbLabels.testRunHistory}`);
   }
 
   initAllParams() {
