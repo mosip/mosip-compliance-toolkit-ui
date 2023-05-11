@@ -379,6 +379,10 @@ export class ExecuteTestRunComponent implements OnInit {
           let resetCurrentTestCase = true;
           //reset all attributes for next testcase
           if (this.projectType == appConstants.ABIS) {
+            // //disconnect from queue if already connected
+            if (this.rxStompService && this.rxStompService.connected()) {
+              this.rxStompService.deactivate();
+            }
             this.abisRequestSendFailure = false;
             this.abisSentMessage = appConstants.BLANK_STRING;
             this.abisSentDataSource = appConstants.BLANK_STRING;
@@ -409,7 +413,7 @@ export class ExecuteTestRunComponent implements OnInit {
             this.currectTestCaseName = '';
             this.currentTestDescription = '';
             this.currentCbeffFile = 0;
-            this.showLoader = false;
+            this.showLoader = false;             
           }
 
         }
@@ -750,10 +754,10 @@ export class ExecuteTestRunComponent implements OnInit {
           this.showLoader = true;
           if (!this.abisProjectData)
             await this.getAbisProjectDetails();
-          //disconnect from queue if already connected
-          if (this.rxStompService.connected()) {
-            this.rxStompService.deactivate();
-          }
+          // //disconnect from queue if already connected
+          // if (this.rxStompService.connected()) {
+          //   this.rxStompService.deactivate();
+          // }
           //setup connection as per project configuration
           this.rxStompService = this.activeMqService.setUpConfig(this.abisProjectData);
           let requestId = "";
