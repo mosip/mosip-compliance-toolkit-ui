@@ -252,7 +252,7 @@
 		"TransactionIdValidator": "Validates the methodRequest and methodResponse transactionId are same",
 		"KeyRotationValidator": "Validator to validate the device key rotation",
 		"TimeoutValidator": "Validates if response is received within the given timeout period or not",
-		"ISOStandardsValidator": "Validates the 'bioValue' in response of 'rcapture' is as per ISO standards ISO19794-4:2011",
+		"ISOStandardsValidator": "Validates that the 'bioValue' is as per the defined ISO standards.",
 		"BiometricsQualityCheckValidator": "Checks the quality of biometrics using all configured SDK services",
 		"TimeCheckValidator": "Validates if response is received within the given timestamp interval or not",
 		"QualityCheckValidator": "Checks the quality score of the modality",
@@ -552,39 +552,39 @@
 			"testDescription": "Test for device key rotation<br><br>Steps:<br>1. Current device key information has been saved.<br>2. Rotate the device key in the SBI and click on <b>Continue</b> button,<br> 3. <i>Repeat step 2</i> as many times as setup in project configuration."
 		},
 		"SBI1062": {
-			"testName": "Registration capture - Left Slap - ISO Standard Validations",
+			"testName": "Registration capture - Left Slap - ISO Standard Validations (ISO19794-4:2011)",
 			"testDescription": "Test to validate the RCapture interface for Left Slap Fingerprints<br><br>Steps:<br>1. Click on Start Streaming button. <br>2. Once streaming is done, click on Inititate Capture button to start the capture.  <br> 3. Place your left slap on the device until the capture completes",
 			"androidTestDescription": "Test to validate the RCapture interface for Left Slap Fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place your left slap on the device until the capture completes"
 		},
 		"SBI1063": {
-			"testName": "Registration capture - Right Slap - ISO Standard Validations",
+			"testName": "Registration capture - Right Slap - ISO Standard Validations (ISO19794-4:2011)",
 			"testDescription": "Test to validate RCapture interface for Right Slap Fingerprints<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your right slap on the device until the capture completes",
 			"androidTestDescription": "Test to validate RCapture interface for Right Slap Fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right slap on the device until the capture completes"
 		},
 		"SBI1064": {
-			"testName": "Registration capture - Double Iris - ISO Standard Validations",
+			"testName": "Registration capture - Double Iris - ISO Standard Validations (ISO19794-6:2011)",
 			"testDescription": "Test to validate RCapture interface for Two Iris<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place both your iris on the device until the capture completes",
 			"androidTestDescription": "Test to validate RCapture interface for Two Iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place both your iris on the device until the capture completes"
 		},
 		"SBI1065": {
-			"testName": "Registration capture - Face - ISO Standard Validations",
+			"testName": "Registration capture - Face - ISO Standard Validations (ISO19794-5:2011)",
 			"testDescription": "Test to validate RCapture interface for face<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your face infront of the camera until the capture completes",
 			"androidTestDescription": "Test to validate RCapture interface for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera until the capture completes"
 		},
 		"SBI1066": {
-			"testName": "Auth capture - Face - ISO Standard Validations",
+			"testName": "Auth capture - Face - ISO Standard Validations (ISO19794-5:2011)",
 			"testDescription": "Test to validate Capture interface for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera until the capture completes"
 		},
 		"SBI1067": {
-			"testName": "Auth capture - Single Iris - Left Iris - ISO Standard Validations",
+			"testName": "Auth capture - Single Iris - Left Iris - ISO Standard Validations (ISO19794-6:2011)",
 			"testDescription": "Test to validate Capture interface for left iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your left iris infront of the iris scanner"
 		},
 		"SBI1068": {
-			"testName": "Auth capture - Single Iris - Right Iris - ISO Standard Validations",
+			"testName": "Auth capture - Single Iris - Right Iris - ISO Standard Validations (ISO19794-6:2011)",
 			"testDescription": "Test to validate Capture interface for right iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right iris infront of the iris scanner"
 		},
 		"SBI1069": {
-			"testName": "Auth capture - Unknown Finger - ISO Standard Validations",
+			"testName": "Auth capture - Unknown Finger - ISO Standard Validations (ISO19794-4:2011)",
 			"testDescription": "Test to validate Capture interface for a finger<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place one of your finger on the single fingerprint scanner"
 		},
 		"SBI1070": {
