@@ -245,7 +245,7 @@
 		"TransactionIdValidator": "Valide que methodRequest et methodResponse transactionId sont identiques",
 		"KeyRotationValidator": "Validateur pour valider la rotation de la clé de l'appareil",
 		"TimeoutValidator": "Valide si la réponse est reçue dans le délai imparti ou non",
-		"ISOStandardsValidator": "Valide la 'bioValeur' en réponse à la 'capture' conformément aux normes ISO ISO19794-4:2011",
+		"ISOStandardsValidator": "Valide que la 'bioValeur' est conforme aux normes ISO définies.",
 		"BiometricsQualityCheckValidator": "Vérifie la qualité de la biométrie à l'aide de tous les services SDK configurés",
 		"TimeCheckValidator": "Valide si la réponse est reçue dans l'intervalle d'horodatage donné ou non",
 		"QualityCheckValidator": "Vérifie le score de qualité de la modalité",
@@ -545,39 +545,39 @@
 			"testDescription": "Tester la rotation des clés de l'appareil<br><br>Pas:<br>1. Les informations actuelles sur la clé de l'appareil ont été enregistrées.<br>2. Tournez la clé de l'appareil dans le SBI et cliquez sur <b>Continuer</b> bouton,<br> 3. <i>Répéter l'étape 2</i> autant de fois que configuré dans la configuration du projet."
 		},
 		"SBI1062": {
-			"testName": "Capture d'enregistrement - Claque Gauche - Validations de la norme ISO",
+			"testName": "Capture d'enregistrement - Claque Gauche - Validations de la norme ISO (ISO19794-4:2011)",
 			"testDescription": "Test pour valider l'interface RCapture pour empreintes digitales claque gauche<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 3. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée",
 			"androidTestDescription": "Test pour valider l'interface RCapture pour empreintes digitales claque gauche<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture.  <br> 2. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée"
 		},
 		"SBI1063": {
-			"testName": "Capture d'enregistrement - Claque Droit - Validations de la norme ISO",
+			"testName": "Capture d'enregistrement - Claque Droit - Validations de la norme ISO (ISO19794-4:2011)",
 			"testDescription": "Test pour valider l'interface RCapture pour les empreintes digitales Claque Droite<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Placez votre claque droite sur l'appareil jusqu'à ce que la capture soit terminée",
 			"androidTestDescription": "Test pour valider l'interface RCapture pour les empreintes digitales Claque Droite<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre claque droite sur l'appareil jusqu'à ce que la capture soit terminée"
 		},
 		"SBI1064": {
-			"testName": "Capture d'enregistrement - Double Iris - Validations de la norme ISO",
+			"testName": "Capture d'enregistrement - Double Iris - Validations de la norme ISO (ISO19794-6:2011)",
 			"testDescription": "Test pour valider l'interface RCapture pour Deux Iris<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Placez vos deux iris sur l'appareil jusqu'à ce que la capture soit terminée",
 			"androidTestDescription": "Test pour valider l'interface RCapture pour Deux Iris<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez vos deux iris sur l'appareil jusqu'à ce que la capture soit terminée"
 		},
 		"SBI1065": {
-			"testName": "Capture d'enregistrement - Visage - Validations de la norme ISO",
+			"testName": "Capture d'enregistrement - Visage - Validations de la norme ISO (ISO19794-5:2011)",
 			"testDescription": "Test pour valider l'interface RCapture pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
 			"androidTestDescription": "Test pour valider l'interface RCapture pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée"
 		},
 		"SBI1066": {
-			"testName": "Capture d'authentification - Visage - Validations de la norme ISO",
+			"testName": "Capture d'authentification - Visage - Validations de la norme ISO (ISO19794-5:2011)",
 			"testDescription": "Test pour valider l'interface Capture pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée"
 		},
 		"SBI1067": {
-			"testName": "Capture d'authentification - Iris unique - Iris gauche - Validations de la norme ISO",
+			"testName": "Capture d'authentification - Iris unique - Iris gauche - Validations de la norme ISO (ISO19794-6:2011)",
 			"testDescription": "Test pour valider l'interface Capture pour l'iris gauche<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre iris gauche devant le scanner d'iris"
 		},
 		"SBI1068": {
-			"testName": "Capture d'authentification - Iris unique - Iris droit - Validations de la norme ISO",
+			"testName": "Capture d'authentification - Iris unique - Iris droit - Validations de la norme ISO (ISO19794-6:2011)",
 			"testDescription": "Test pour valider l'interface Capture pour l'iris droit<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre iris droit devant le scanner d'iris"
 		},
 		"SBI1069": {
-			"testName": "Capture d'authentification - Doigt inconnu - Validations de la norme ISO",
+			"testName": "Capture d'authentification - Doigt inconnu - Validations de la norme ISO (ISO19794-4:2011)",
 			"testDescription": "Test pour valider l'interface Capture pour un doigt<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez un doigt sur le lecteur d'empreintes digitales unique"
 		},
 		"SBI1070": {
