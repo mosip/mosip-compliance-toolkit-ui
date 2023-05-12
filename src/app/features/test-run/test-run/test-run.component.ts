@@ -299,11 +299,17 @@ export class TestRunComponent implements OnInit {
       return data;
     }
   }
-  getValidatorDetails(item: any) {
-    //console.log(item);
-    return this.resourceBundleJson.validators[item.validatorName] 
-      ? `${item.validatorName} (${this.resourceBundleJson.validators[item.validatorName]})` 
-      : `${item.validatorName} (${item.validatorDescription})`;
+  getValidatorDetails(item: any, element: any) {
+    const data = JSON.parse(element.methodRequest);
+    const purpose = data.purpose;
+    const validatorName = item.validatorName + '_' + purpose;
+    if (this.resourceBundleJson.validators[validatorName]) {
+      return  `${item.validatorName} (${this.resourceBundleJson.validators[validatorName]})` ;
+    } else {
+      return this.resourceBundleJson.validators[item.validatorName] 
+        ? `${item.validatorName} (${this.resourceBundleJson.validators[item.validatorName]})` 
+        : `${item.validatorName} (${item.validatorDescription})`;
+    }
   }
 
   getValidatorMessage(item: any) {
