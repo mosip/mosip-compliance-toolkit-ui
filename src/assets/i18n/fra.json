@@ -252,7 +252,7 @@
 		"TransactionIdValidator": "Valide que methodRequest et methodResponse transactionId sont identiques",
 		"KeyRotationValidator": "Validateur pour valider la rotation de la clé de l'appareil",
 		"TimeoutValidator": "Valide si la réponse est reçue dans le délai imparti ou non",
-		"ISOStandardsValidator": "Valide la bioValeur en réponse à la rcapture conformément aux normes ISO ISO19794-4:2011",
+		"ISOStandardsValidator": "Valide la 'bioValeur' en réponse à la 'capture' conformément aux normes ISO ISO19794-4:2011",
 		"BiometricsQualityCheckValidator": "Vérifie la qualité de la biométrie à l'aide de tous les services SDK configurés",
 		"TimeCheckValidator": "Valide si la réponse est reçue dans l'intervalle d'horodatage donné ou non",
 		"QualityCheckValidator": "Vérifie le score de qualité de la modalité",
