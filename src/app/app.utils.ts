@@ -264,9 +264,17 @@ export default class Utils {
       testcase.testDescription = resourceBundle.testcases[testcase.testId]['testDescription'];
       for ( const validators of testcase.validatorDefs) {
         for ( const validator of validators) {
-          validator.description = resourceBundle.validators[validator.name] 
-          ? resourceBundle.validators[validator.name]
-          : validator.description;
+          const validatorNameReg = validator.name + '_Registration'; 
+          const validatorNameAuth = validator.name + '_Auth'; 
+          if (resourceBundle.validators[validatorNameReg] && testcase.methodName[0] == 'rcapture') {
+            validator.description = resourceBundle.validators[validatorNameReg];
+          } else if (resourceBundle.validators[validatorNameAuth] && testcase.methodName[0] == 'capture') {
+            validator.description = resourceBundle.validators[validatorNameAuth];
+          } else {
+            validator.description = resourceBundle.validators[validator.name] 
+            ? resourceBundle.validators[validator.name]
+            : validator.description;
+          }
         } 
       }
     }
