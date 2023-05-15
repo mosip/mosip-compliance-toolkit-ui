@@ -461,15 +461,15 @@ mat-expansion-panel-header {
   }
   .collectionButtonMobile{
     width: 200px;
-    margin-right: 60px;
+    margin-right: 70px;
   }
   .scandeviceButtonREGMobile{
     width: 200px;
-    margin-right: 60px;
+    margin-right: 70px;
     margin-top: 60px;
   }
 }
-@media screen and (max-width: 360px) {
+@media screen and (max-width: 375px) {
   .tablediv{
     overflow-x: auto;
   }
@@ -711,5 +711,8 @@ mat-expansion-panel-header {
   }
   .options{
     margin-left: -20px;
+  }
+  .projectNameHeader{
+    font-size: small;
   }
 }

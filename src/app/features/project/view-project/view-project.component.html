@@ -17,7 +17,7 @@
         <mat-accordion>
             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
                 [expanded]="panelOpenState">
-                <mat-expansion-panel-header>
+                <mat-expansion-panel-header class="projectNameHeader">
                     <mat-panel-title>
                         {{"viewProject.projectName"|translate}} {{projectForm.controls['name'].value}}
                     </mat-panel-title>
