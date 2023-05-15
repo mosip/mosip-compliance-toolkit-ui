@@ -1,4 +1,4 @@
-[![Maven Package upon a push](https://github.com/mosip/mosip-compliance-toolkit-ui/actions/workflows/push_trigger.yml/badge.svg?branch=develop)](https://github.com/mosip/mosip-compliance-toolkit-ui/actions/workflows/push_trigger.yml)
+[![Maven Package upon a push](https://github.com/mosip/mosip-compliance-toolkit-ui/actions/workflows/push_trigger.yml/badge.svg?branch=1.1.0)](https://github.com/mosip/mosip-compliance-toolkit-ui/actions/workflows/push_trigger.yml)
 
 # Compliance-Toolkit Portal
 
@@ -64,6 +64,22 @@ The code is written in Angular JS.
   - Now start the server by typing <code>ng serve --proxy-config proxy.conf.json</code>
   - Open the browser, load the app with <code>https://localhost:4200</code>
 
+### Local Android Build
+  - Capacitor JS is used to generate an Hybrid App using the Angular JS code.
+  - Follow the following steps to build the android APK on your system.
+  - Navigate to the mosip-compliance-toolkit-ui directory inside the cloned repository. Then run the following command in that directory
+  - <code>npm install</code>
+  - Next set values for following properties based on where CTK service and KeyCloak service is running.
+  - <code>SET NX_APP_SERVICES_BASE_URL=https://api-internal.${env}.mosip.net/v1/toolkit/</code>
+  - <code>SET NX_APP_IAM_URL=https://iam.${env}.mosip.net/auth</code>
+  - <code>SET NX_APP_IAM_REALM=mosip</code>
+  - <code>SET NX_APP_IAM_CLIENT_ID=mosip-toolkit-android-client</code>
+  - Now trigger the build with command <code>ng build -c=android</code>
+  - Sync the build with command <code>npx cap sync</code>
+  - Change directory with <code> cd android</code>
+  - Trigger build with <code>gradle build</code>
+  - This will create an APK in folder: mosip-compliance-toolkit-ui\android\app\build\outputs\apk\debug
+  
 ## Installing in k8s cluster using helm
 ### Pre-requisites
 1. Set the kube config file of the Mosip cluster having dependent services.
