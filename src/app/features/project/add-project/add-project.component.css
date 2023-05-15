@@ -98,7 +98,7 @@
     width: 320px;
   }
 }
-@media screen and (max-width: 325px) {
+@media screen and (max-width: 365px) {
   .formContainer {
     width: 270px;
     height: 450px;
