@@ -819,6 +819,7 @@ export class ExecuteTestRunComponent implements OnInit {
             galleryIds,
             this.cbeffFileSuffix,
           );
+          console.log(abisReq);
           if (abisReq && abisReq[appConstants.STATUS] && abisReq[appConstants.STATUS] == appConstants.SUCCESS) {
             if (insertCount > 1) {
               this.cbeffFileSuffix = this.cbeffFileSuffix + 1;

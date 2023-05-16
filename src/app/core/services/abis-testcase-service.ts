@@ -5,6 +5,7 @@ import * as appConstants from 'src/app/app.constants';
 import { AbisProjectModel } from '../models/abis-project';
 import { ActiveMqService } from './activemq-service';
 import { RxStompService } from './rx-stomp.service';
+import Utils from 'src/app/app.utils';
 
 @Injectable({
   providedIn: 'root',
@@ -49,7 +50,7 @@ export class AbisTestCaseService {
           });
         }
       }
-      let methodRequest: any = this.createRequest(methodName, dataShareResp, requestId, referenceId, galleryIds);
+      let methodRequest: any = this.createRequest(testCase, methodName, dataShareResp, requestId, referenceId, galleryIds);
       methodRequest = JSON.stringify(methodRequest);
       //now validate the method request against the Schema
       let validationRequest: any = await this.validateRequest(
@@ -165,7 +166,7 @@ export class AbisTestCaseService {
     });
   }
 
-  createRequest(methodName: string, dataShareResp: any, requestId: string, referenceId: string, galleryIds: any[]): any {
+  createRequest(testCase: TestCaseModel, methodName: string, dataShareResp: any, requestId: string, referenceId: string, galleryIds: any[]): any {
     let request: any = {};
     if (methodName == appConstants.ABIS_METHOD_INSERT) {
       request = {
@@ -214,6 +215,8 @@ export class AbisTestCaseService {
         }
       }
     }
+    request = Utils.handleInvalidRequestAttribute(testCase, request);
+    //delete request.requestId;
     return request;
   }
 

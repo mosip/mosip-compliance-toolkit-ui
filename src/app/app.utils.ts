@@ -1,8 +1,7 @@
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from './core/components/dialog/dialog.component';
 import { SbiDiscoverResponseModel } from './core/models/sbi-discover';
-import { UserProfileService } from './core/services/user-profile.service';
-import { DataService } from './core/services/data-service';
+import { TestCaseModel } from './core/models/testcase';
 
 export default class Utils {
   static getCurrentDate() {
@@ -271,5 +270,56 @@ export default class Utils {
       }
     }
     return testcase;
+  }
+
+  static handleInvalidRequestAttribute(testCase: TestCaseModel, request: any) {
+    if (testCase.otherAttributes.invalidRequestAttribute) {
+      let newRequest: any = {};
+      let invalidKey = testCase.otherAttributes.invalidRequestAttribute;
+      if (
+        invalidKey.includes('[') &&
+        invalidKey.includes(']') &&
+        invalidKey.includes('.')
+      ) {
+        newRequest = request;
+        let splitArr = invalidKey.split('[');
+        if (splitArr.length > 0) {
+          let firstPart = splitArr[0];
+          let nestedObj = request[firstPart][0];
+          let secondSplitArr = invalidKey.split('.');
+          let newNestedRequest = this.changeKeyName(nestedObj, secondSplitArr[1]);
+          newRequest[firstPart] = [newNestedRequest];
+        }
+      } else if (invalidKey.includes('.')) {
+        newRequest = request;
+        let splitArr = invalidKey.split('.');
+        if (splitArr.length > 0) {
+          let nestedObj = request[splitArr[0]];
+          let newNestedRequest = this.changeKeyName(nestedObj, splitArr[1]);
+          newRequest[splitArr[0]] = newNestedRequest;
+        }
+      } else {
+        newRequest = this.changeKeyName(request, invalidKey);
+      }      
+      return newRequest;
+    }
+    return request;
+  }
+
+  static changeKeyName(request: any, invalidKeyName: any) {
+    let newRequest: any = {};
+    var keys = Object.keys(request);
+    for (const key of keys) {
+      const keyName = key.toString();
+      console.log(keyName);
+      if (invalidKeyName === keyName) {
+        const invalidKeyName = keyName + 'XXX';
+        newRequest[invalidKeyName] = request[keyName];
+      } else {
+        const val = request[keyName];
+        newRequest[keyName] = val;
+      }
+    }
+    return newRequest;
   }
 }
