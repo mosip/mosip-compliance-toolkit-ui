@@ -6,6 +6,7 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { AppConfigService } from '../../app-config.service';
+import { catchError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -244,6 +245,10 @@ export class DataService {
   }
 
   getResourceBundle(langCode: string) {
-    return this.httpClient.get(`./assets/i18n/${langCode}.json`);
+    return this.httpClient.get(`./assets/i18n/${langCode}.json`).pipe(
+      catchError(() => {
+        return this.httpClient.get('./assets/i18n/eng.json');
+      })
+    );
   }
 }
