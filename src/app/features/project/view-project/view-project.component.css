@@ -169,6 +169,25 @@ mat-expansion-panel-header {
     margin-left: 850px;
   }
 }
+@media screen and (min-width: 1140px) and (max-width: 1190px) {
+  .encryptionkeyButton{
+    margin-left: 300px;
+  }
+  .scandeviceButton{
+    margin-left: 300px;
+  }
+  .scandeviceButtonREG{
+    margin-left: 900px;
+  }
+  .collections-button2{
+    margin-right: 950px;
+  }
+}
+@media screen and (min-width: 1069px) and (max-width: 1140px) {
+  .collections-button2{
+    margin-right: 850px;
+  }
+}
 @media screen and (min-width: 1024px) and (max-width: 1068px) {
   .encryptionkeyButton{
     margin-left: 200px;
@@ -182,6 +201,9 @@ mat-expansion-panel-header {
   .collectionButtonMobile{
     position: absolute;
     margin-right: 600px;
+  }
+  collections-button2{
+    margin-right: 820px;
   }
 }
 @media screen and (max-width: 960px) {
