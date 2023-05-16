@@ -254,53 +254,7 @@ export class SbiTestCaseService {
         ],
         customOpts: null,
       };
-      if (testCase.otherAttributes.invalidRequestAttribute) {
-        let newRequest: any = {};
-        let invalidKey = testCase.otherAttributes.invalidRequestAttribute;
-        if (
-          invalidKey.includes('[') &&
-          invalidKey.includes(']') &&
-          invalidKey.includes('.')
-        ) {
-          newRequest = request;
-          let splitArr = invalidKey.split('[');
-          if (splitArr.length > 0) {
-            let firstPart = splitArr[0];
-            let nestedObj = request[firstPart][0];
-            let secondSplitArr = invalidKey.split('.');
-            let newNestedRequest = changeKeyName(nestedObj, secondSplitArr[1]);
-            newRequest[firstPart] = [newNestedRequest];
-          }
-        } else if (invalidKey.includes('.')) {
-          newRequest = request;
-          let splitArr = invalidKey.split('.');
-          if (splitArr.length > 0) {
-            let nestedObj = request[splitArr[0]];
-            let newNestedRequest = changeKeyName(nestedObj, splitArr[1]);
-            newRequest[splitArr[0]] = newNestedRequest;
-          }
-        } else {
-          newRequest = changeKeyName(request, invalidKey);
-        }
-
-        function changeKeyName(request: any, invalidKeyName: any) {
-          let newRequest: any = {};
-          var keys = Object.keys(request);
-          for (const key of keys) {
-            const keyName = key.toString();
-            console.log(keyName);
-            if (invalidKeyName === keyName) {
-              const invalidKeyName = keyName + 'XXX';
-              newRequest[invalidKeyName] = request[keyName];
-            } else {
-              const val = request[keyName];
-              newRequest[keyName] = val;
-            }
-          }
-          return newRequest;
-        }
-        request = newRequest;
-      }
+      request = Utils.handleInvalidRequestAttribute(testCase, request);
     }
     //console.log(JSON.stringify(request));
     return request;
