@@ -103,7 +103,6 @@ export class AddTestDataComponent implements OnInit {
     this.testDataForm.controls['name'].setValidators(Validators.required);
     this.testDataForm.controls['name'].updateValueAndValidity();
     this.allControls.forEach((controlId) => {
-      console.log(this.testDataForm.controls[controlId]);
       this.testDataForm.controls[controlId].markAsTouched();
     });
     if (this.testDataForm.valid) {
