@@ -66,13 +66,9 @@ export class HeaderComponent implements OnInit {
       });
     }
   }
-  ngOnInit() {
+  async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
-    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
-      (response: any) => {
-        this.resourceBundleJson = response;
-      }
-    );
+    this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     if (this.userProfileService.getDisplayUserName()) {
       this.userName = this.userProfileService.getDisplayUserName();
     } else {

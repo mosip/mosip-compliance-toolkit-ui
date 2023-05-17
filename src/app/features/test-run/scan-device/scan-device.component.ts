@@ -48,12 +48,8 @@ export class ScanDeviceComponent implements OnInit {
 
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
-    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
-      (response: any) => {
-        this.resourceBundleJson = response;
-        this.data.title = this.resourceBundleJson['scanDevice']['title'];
-      }
-    );
+    this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
+    this.data.title = this.resourceBundleJson['scanDevice']['title'];
     this.scanForm.addControl(
       'ports',
       new FormControl('', [Validators.required])

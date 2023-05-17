@@ -63,17 +63,13 @@ export class ProjectsDashboardComponent implements OnInit {
 
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
-    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
-      (response: any) => {
-        this.resourceBundleJson = response;
-        this.paginatorIntl.itemsPerPageLabel = this.resourceBundleJson.paginationLabel['itemPerPage'];
-        this.paginatorIntl.getRangeLabel = (page: number, pageSize: number, length: number) => {
-          const from = (page) * pageSize + 1;
-          const to = Math.min((page + 1) * pageSize, length);
-          return `${from} - ${to} ${this.resourceBundleJson.paginationLabel['rangeLabel']} ${length}`;
-        };
-      }
-    );
+    this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
+    this.paginatorIntl.itemsPerPageLabel = this.resourceBundleJson.paginationLabel['itemPerPage'];
+    this.paginatorIntl.getRangeLabel = (page: number, pageSize: number, length: number) => {
+      const from = (page) * pageSize + 1;
+      const to = Math.min((page + 1) * pageSize, length);
+      return `${from} - ${to} ${this.resourceBundleJson.paginationLabel['rangeLabel']} ${length}`;
+    };
     await this.getProjects();
     this.initBreadCrumb();
     this.dataLoaded = true;

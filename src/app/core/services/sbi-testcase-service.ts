@@ -25,11 +25,7 @@ export class SbiTestCaseService {
     sbiSelectedDevice: string,
     beforeKeyRotationResp: any
   ) {
-    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
-      (response: any) => {
-        this.resourceBundleJson = response;
-      }
-    );
+    this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     return new Promise(async (resolve, reject) => {
       const methodRequest = this.createRequest(testCase, sbiSelectedDevice);
       //now validate the method request against the Schema
