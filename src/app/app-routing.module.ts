@@ -17,6 +17,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       {
         path: 'dashboard',
+        data: { breadcrumb: { label: 'dashboard', skip: true } },
         loadChildren: () =>
           import('./features/dashboard/dashboard.module').then(
             (m) => m.DashboardModule

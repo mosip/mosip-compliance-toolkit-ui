@@ -1033,6 +1033,9 @@ export class ExecuteTestRunComponent implements OnInit {
   }
 
   subscribeToABISQueue(sentRequestId: string) {
+    if (!this.rxStompService.connected()) {
+      this.rxStompService = this.activeMqService.setUpConfig(this.abisProjectData);
+    }
     this.rxStompService
       .watch(this.abisProjectData.inboundQueueName)
       .forEach(async (message: Message) => {

@@ -26,11 +26,11 @@ export class AddProjectComponent implements OnInit {
   allControls: string[];
   isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
   textDirection: any = this.userProfileService.getTextDirection();
-  buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : null;
+  buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : {'float': 'right'};
   subscriptions: Subscription[] = [];
   bioTestDataFileNames: string[] = [];
   hidePassword = true;
-  dataLoaded = true;
+  dataLoaded = false;
   dataSubmitted = false;
 
   constructor(
@@ -55,6 +55,7 @@ export class AddProjectComponent implements OnInit {
     if (projectType == appConstants.ABIS) {
       await this.getBioTestDataNames(appConstants.ABIS);
     } 
+    this.dataLoaded = true;
   }
 
   initBreadCrumb() {

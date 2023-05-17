@@ -25,13 +25,13 @@ export class AddTestDataComponent implements OnInit {
   allControls: string[];
   subscriptions: Subscription[] = [];
   hidePassword = true;
-  dataLoaded = true;
+  dataLoaded = false;
   allowedFilesExtensions: string = '';
   fileExtension: string = 'zip';
   fileName: string = '';
   fileByteArray: any;
   textDirection: any = this.userProfileService.getTextDirection();
-  buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : null;
+  buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : {'float': 'right'};
   resourceBundleJson: any = {};
   allowedFileTypes = this.appConfigService
     .getConfig()
@@ -57,6 +57,7 @@ export class AddTestDataComponent implements OnInit {
     this.initForm();
     this.initBreadCrumb();
     this.getAllowedFileTypes(this.allowedFileTypes);
+    this.dataLoaded = true;
   }
 
   initBreadCrumb() {
