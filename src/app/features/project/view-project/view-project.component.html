@@ -459,7 +459,7 @@
         <mat-paginator [pageSizeOptions]="[5, 10, 25, 50, 100]" aria-label="Select page of users"></mat-paginator>
         <div class="tablediv">
         <table mat-table [dataSource]="dataSource" matSort class="collections-table">
-            <caption>List of Collections</caption>
+            <caption>{{ "viewProject.tableDescription" | translate }}</caption>
             <!--- Note that these columns can be defined in any order.
               The actual rendered columns are set as a property on the row definition" -->
             <ng-container matColumnDef="name">
