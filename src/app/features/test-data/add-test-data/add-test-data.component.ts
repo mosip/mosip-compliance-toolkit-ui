@@ -33,6 +33,7 @@ export class AddTestDataComponent implements OnInit {
   textDirection: any = this.userProfileService.getTextDirection();
   buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : null;
   resourceBundleJson: any = {};
+  togglePurpose:boolean = true;
   allowedFileTypes = this.appConfigService
     .getConfig()
     ['allowedFileTypes'].split(',');
@@ -102,6 +103,7 @@ export class AddTestDataComponent implements OnInit {
     this.testDataForm.controls['name'].setValidators(Validators.required);
     this.testDataForm.controls['name'].updateValueAndValidity();
     this.allControls.forEach((controlId) => {
+      console.log(this.testDataForm.controls[controlId]);
       this.testDataForm.controls[controlId].markAsTouched();
     });
     if (this.testDataForm.valid) {
@@ -109,6 +111,20 @@ export class AddTestDataComponent implements OnInit {
       if (el) {
         el.click();
       }
+    }
+  }
+
+  abisData(projectType: string) {
+    const abisProject: string = 'ABIS';
+    if (projectType == abisProject) {
+      this.togglePurpose = false;
+      this.testDataForm.controls['purpose'].setValidators(null);
+      this.testDataForm.controls['purpose'].updateValueAndValidity();
+      this.testDataForm.controls['purpose'].setValue(null);
+    } else {
+      this.togglePurpose = true;
+      this.testDataForm.controls['purpose'].setValidators(Validators.required);
+      this.testDataForm.controls['purpose'].updateValueAndValidity();
     }
   }
 
