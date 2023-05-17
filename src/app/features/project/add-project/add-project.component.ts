@@ -30,7 +30,7 @@ export class AddProjectComponent implements OnInit {
   subscriptions: Subscription[] = [];
   bioTestDataFileNames: string[] = [];
   hidePassword = true;
-  dataLoaded = true;
+  dataLoaded = false;
   dataSubmitted = false;
 
   constructor(
@@ -55,6 +55,7 @@ export class AddProjectComponent implements OnInit {
     if (projectType == appConstants.ABIS) {
       await this.getBioTestDataNames(appConstants.ABIS);
     } 
+    this.dataLoaded = true;
   }
 
   initBreadCrumb() {

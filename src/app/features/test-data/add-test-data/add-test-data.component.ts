@@ -25,7 +25,7 @@ export class AddTestDataComponent implements OnInit {
   allControls: string[];
   subscriptions: Subscription[] = [];
   hidePassword = true;
-  dataLoaded = true;
+  dataLoaded = false;
   allowedFilesExtensions: string = '';
   fileExtension: string = 'zip';
   fileName: string = '';
@@ -57,6 +57,7 @@ export class AddTestDataComponent implements OnInit {
     this.initForm();
     this.initBreadCrumb();
     this.getAllowedFileTypes(this.allowedFileTypes);
+    this.dataLoaded = true;
   }
 
   initBreadCrumb() {
