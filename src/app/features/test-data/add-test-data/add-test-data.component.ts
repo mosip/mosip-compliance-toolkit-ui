@@ -33,7 +33,7 @@ export class AddTestDataComponent implements OnInit {
   textDirection: any = this.userProfileService.getTextDirection();
   buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : null;
   resourceBundleJson: any = {};
-  togglePurpose:boolean = true;
+  showSdkPurpose:boolean = true;
   allowedFileTypes = this.appConfigService
     .getConfig()
     ['allowedFileTypes'].split(',');
@@ -116,12 +116,12 @@ export class AddTestDataComponent implements OnInit {
   abisData(projectType: string) {
     const abisProject: string = 'ABIS';
     if (projectType == abisProject) {
-      this.togglePurpose = false;
+      this.showSdkPurpose = false;
       this.testDataForm.controls['purpose'].setValidators(null);
       this.testDataForm.controls['purpose'].updateValueAndValidity();
-      this.testDataForm.controls['purpose'].setValue(null);
+      this.testDataForm.controls['purpose'].setValue(appConstants.ABIS);
     } else {
-      this.togglePurpose = true;
+      this.showSdkPurpose = true;
       this.testDataForm.controls['purpose'].setValidators(Validators.required);
       this.testDataForm.controls['purpose'].updateValueAndValidity();
     }
