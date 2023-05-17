@@ -276,7 +276,12 @@ export default class Utils {
     if (testCase.otherAttributes.invalidRequestAttribute) {
       let newRequest: any = {};
       let invalidKey = testCase.otherAttributes.invalidRequestAttribute;
-      if (
+      if (invalidKey == 'all') {
+        newRequest = {
+          request:  request
+        }
+      }
+      else if (
         invalidKey.includes('[') &&
         invalidKey.includes(']') &&
         invalidKey.includes('.')
@@ -311,7 +316,6 @@ export default class Utils {
     var keys = Object.keys(request);
     for (const key of keys) {
       const keyName = key.toString();
-      console.log(keyName);
       if (invalidKeyName === keyName) {
         const invalidKeyName = keyName + 'XXX';
         newRequest[invalidKeyName] = request[keyName];
