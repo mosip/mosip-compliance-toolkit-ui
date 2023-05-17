@@ -11,7 +11,7 @@ import { Message } from '@stomp/stompjs';
 })
 export class ActiveMqService {
   constructor() { }
-  
+
   setUpConfig(abisProjectData: AbisProjectModel) {
     let ctkRxStompConfig = {
       // Which server?
@@ -35,7 +35,7 @@ export class ActiveMqService {
       // It can be quite verbose, not recommended in production
       // Skip this key to stop logging to console
       debug: (msg: string): void => {
-        console.log(msg);
+        //console.log(msg);
       },
     }
     const rxStomp = rxStompServiceFactory(ctkRxStompConfig);
@@ -47,18 +47,11 @@ export class ActiveMqService {
       try {
         if (!rxStompService.connected()) {
           rxStompService = this.setUpConfig(abisProjectData);
-        } 
-        //if (rxStompService.connected()) {
-          rxStompService.publish({ destination: `${abisProjectData.outboundQueueName}`, body: message });
-          resolve({
-            [appConstants.STATUS]: appConstants.SUCCESS
-          })
-        // } else {
-        //   console.log("not connected");
-        //   resolve({
-        //     [appConstants.STATUS]: appConstants.FAILURE
-        //   })
-        // }
+        }
+        rxStompService.publish({ destination: `${abisProjectData.outboundQueueName}`, body: message });
+        resolve({
+          [appConstants.STATUS]: appConstants.SUCCESS
+        })
       } catch (e) {
         console.log("error in sending request");
         console.log(e);
