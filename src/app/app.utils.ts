@@ -322,4 +322,19 @@ export default class Utils {
     }
     return newRequest;
   }
+
+  static getResourceBundle(lang: any, dataService: any) {
+    return new Promise((resolve, reject) => {
+      dataService.getResourceBundle(lang).subscribe(
+        (response: any) => {
+          //console.log(response);
+          resolve(response);
+        },
+        (errors: any) => {
+          console.log(errors);
+          resolve(false);
+        }
+      )
+    });
+  }
 }
