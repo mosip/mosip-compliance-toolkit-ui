@@ -33,7 +33,7 @@ export class TestRunHistoryComponent implements OnInit {
   abisProjectData: AbisProjectModel;
   dataSource: MatTableDataSource<TestRunHistoryModel>;
   textDirection: any = this.userProfileService.getTextDirection();
-  buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : null;
+  buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : {'float': 'right'};
   displayedColumns: string[] = [
     'lastRunTime',
     'runStatus',

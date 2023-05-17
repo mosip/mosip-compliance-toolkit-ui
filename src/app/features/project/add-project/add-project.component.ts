@@ -26,7 +26,7 @@ export class AddProjectComponent implements OnInit {
   allControls: string[];
   isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
   textDirection: any = this.userProfileService.getTextDirection();
-  buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : null;
+  buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : {'float': 'right'};
   subscriptions: Subscription[] = [];
   bioTestDataFileNames: string[] = [];
   hidePassword = true;
