@@ -51,28 +51,20 @@ export class AddTestDataComponent implements OnInit {
     private userProfileService: UserProfileService
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
+    this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     this.initForm();
     this.initBreadCrumb();
     this.getAllowedFileTypes(this.allowedFileTypes);
-    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
-      (response: any) => {
-        this.resourceBundleJson = response;
-      }
-    );
   }
 
   initBreadCrumb() {
-    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
-      (response: any) => {
-        const breadcrumbLabels = response['breadcrumb'];
-        if (breadcrumbLabels) {
-          this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
-          this.breadcrumbService.set('@uploadTestDataBreadCrumb', `${breadcrumbLabels.uploadBiometricTestData}`);
-        }
-      }
-    );
+    const breadcrumbLabels = this.resourceBundleJson['breadcrumb'];
+    if (breadcrumbLabels) {
+      this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
+      this.breadcrumbService.set('@uploadTestDataBreadCrumb', `${breadcrumbLabels.uploadBiometricTestData}`);
+    }
   }
 
   initForm() {

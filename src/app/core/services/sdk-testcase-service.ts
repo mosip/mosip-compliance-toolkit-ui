@@ -4,6 +4,7 @@ import { TestCaseModel } from '../models/testcase';
 import { DataService } from './data-service';
 import * as appConstants from 'src/app/app.constants';
 import { UserProfileService } from './user-profile.service';
+import Utils from 'src/app/app.utils';
 
 @Injectable({
   providedIn: 'root',
@@ -21,11 +22,7 @@ export class SdkTestCaseService {
     sdkUrl: string,
     selectedBioTestDataName: string
   ) {
-    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
-      (response: any) => {
-        this.resourceBundleJson = response;
-      }
-    );
+    this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     return new Promise(async (resolve, reject) => {
       let isCombinationTestCase = testCase.methodName.length > 1 ? true : false;
       const methodsArr = testCase.methodName;

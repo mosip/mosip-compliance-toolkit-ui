@@ -44,12 +44,8 @@ export class AddProjectComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
-      (response: any) => {
-        this.resourceBundleJson = response;
-      }
-    );
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
+    this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     this.initForm();
     this.initBreadCrumb();
     const projectType = this.projectForm.controls['projectType'].value;
@@ -62,15 +58,11 @@ export class AddProjectComponent implements OnInit {
   }
 
   initBreadCrumb() {
-    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
-      (response: any) => {
-        const breadcrumbLabels = response['breadcrumb'];
-        if (breadcrumbLabels) {
-          this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
-          this.breadcrumbService.set('@addProjectBreadCrumb', `${breadcrumbLabels.addNewProject}`);
-        }
-      }
-    );
+    const breadcrumbLabels = this.resourceBundleJson['breadcrumb'];
+    if (breadcrumbLabels) {
+      this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
+      this.breadcrumbService.set('@addProjectBreadCrumb', `${breadcrumbLabels.addNewProject}`);
+    }
   }
 
   initForm() {

@@ -26,6 +26,7 @@ import { ActiveMqService } from 'src/app/core/services/activemq-service';
 import { Message } from '@stomp/stompjs';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { TranslateService } from '@ngx-translate/core';
+import Utils from 'src/app/app.utils';
 
 declare const start_streaming: any;
 declare const stop_streaming: any;
@@ -126,11 +127,7 @@ export class ExecuteTestRunComponent implements OnInit {
 
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
-    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
-      (response: any) => {
-        this.resourceBundleJson = response;
-      }
-    );
+    this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     this.input = this.data;
     this.collectionId = this.input.collectionId;
     this.projectType = this.input.projectType;
