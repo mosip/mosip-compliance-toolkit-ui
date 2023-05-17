@@ -23,6 +23,7 @@ import { SdkProjectModel } from 'src/app/core/models/sdk-project';
 import { TestCaseModel } from 'src/app/core/models/testcase';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { TranslateService } from '@ngx-translate/core';
+import { AbisProjectModel } from 'src/app/core/models/abis-project';
 
 @Component({
   selector: 'app-test-run',
@@ -50,6 +51,7 @@ export class TestRunComponent implements OnInit {
   dataLoaded = false;
   sbiProjectData: SbiProjectModel;
   sdkProjectData: SdkProjectModel;
+  abisProjectData: AbisProjectModel;
   testcasesList: any;
   dataSource: MatTableDataSource<TestRunModel>;
   displayedColumns: string[] = ['testId', 'testName', 'resultStatus', 'scrollIcon'];
@@ -83,6 +85,10 @@ export class TestRunComponent implements OnInit {
     }
     if (this.projectType == appConstants.SDK) {
       await this.getSdkProjectDetails();
+    }
+    if (this.projectType == appConstants.ABIS) {
+      await this.getAbisProjectDetails();
+      this.initBreadCrumb();
     }
     await this.getTestcasesForCollection();
     await this.getTestRun();
@@ -118,14 +124,28 @@ export class TestRunComponent implements OnInit {
           `${this.projectType} ${breadcrumbLabels.project} - ${this.sdkProjectData.name}`
         );
       }
+      if (this.abisProjectData) {
+        this.breadcrumbService.set(
+          '@projectBreadCrumb',
+          `${this.projectType} ${breadcrumbLabels.project} - ${this.abisProjectData.name}`
+        );
+      }
       this.breadcrumbService.set(
         '@collectionBreadCrumb',
         `${this.collectionName}`
       );
-      this.breadcrumbService.set(
-        '@testrunBreadCrumb',
-        `${breadcrumbLabels.testRun} - (${new Date(this.runDetails.runDtimes).toLocaleString()})`
-      );
+      if (this.runDetails) {
+        this.breadcrumbService.set(
+          '@testrunBreadCrumb',
+          `${breadcrumbLabels.testRun} - (${new Date(this.runDetails.runDtimes).toLocaleString()})`
+        );
+      } else {
+        this.breadcrumbService.set(
+          '@testrunBreadCrumb',
+          `${breadcrumbLabels.testRun}`
+        );
+      }
+      
     }
   }
 
@@ -265,6 +285,24 @@ export class TestRunComponent implements OnInit {
             resolve(true);
           },
           (errors: any) => {
+            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
+            resolve(false);
+          }
+        )
+      );
+    });
+  }
+
+  async getAbisProjectDetails() {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.getAbisProject(this.projectId).subscribe(
+          (response: any) => {
+            //console.log(response);
+            this.abisProjectData = response['response'];
+            resolve(true);
+          },
+          (errors) => {
             Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
             resolve(false);
           }

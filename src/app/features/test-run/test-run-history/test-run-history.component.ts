@@ -14,6 +14,7 @@ import { TestRunHistoryModel } from 'src/app/core/models/testrunhistory';
 import { SdkProjectModel } from 'src/app/core/models/sdk-project';
 import { TranslateService } from '@ngx-translate/core';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
+import { AbisProjectModel } from 'src/app/core/models/abis-project';
 
 @Component({
   selector: 'app-test-run-history',
@@ -29,6 +30,7 @@ export class TestRunHistoryComponent implements OnInit {
   dataLoaded = false;
   sbiProjectData: SbiProjectModel;
   sdkProjectData: SdkProjectModel;
+  abisProjectData: AbisProjectModel;
   dataSource: MatTableDataSource<TestRunHistoryModel>;
   textDirection: any = this.userProfileService.getTextDirection();
   buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : null;
@@ -74,6 +76,10 @@ export class TestRunHistoryComponent implements OnInit {
       await this.getSdkProjectDetails();
       this.initBreadCrumb();
     }
+    if (this.projectType == appConstants.ABIS) {
+      await this.getAbisProjectDetails();
+      this.initBreadCrumb();
+    }
     await this.getTestRunHistory();
     this.dataLoaded = true;
   }
@@ -92,6 +98,12 @@ export class TestRunHistoryComponent implements OnInit {
         this.breadcrumbService.set(
           '@projectBreadCrumb',
           `${this.projectType} ${breadcrumbLabels.project} - ${this.sdkProjectData.name}`
+        );
+      }
+      if (this.abisProjectData) {
+        this.breadcrumbService.set(
+          '@projectBreadCrumb',
+          `${this.projectType} ${breadcrumbLabels.project} - ${this.abisProjectData.name}`
         );
       }
       this.breadcrumbService.set(
@@ -182,6 +194,25 @@ export class TestRunHistoryComponent implements OnInit {
       );
     });
   }
+
+  async getAbisProjectDetails() {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.getAbisProject(this.projectId).subscribe(
+          (response: any) => {
+            //console.log(response);
+            this.abisProjectData = response['response'];
+            resolve(true);
+          },
+          (errors) => {
+            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
+            resolve(false);
+          }
+        )
+      );
+    });
+  }
+  
   async getTestRunHistory() {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(

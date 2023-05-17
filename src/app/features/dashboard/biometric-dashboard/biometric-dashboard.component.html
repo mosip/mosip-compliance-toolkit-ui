@@ -1,5 +1,5 @@
 <div class="outerdiv" [dir]="textDirection">
-<p>
+<p *ngIf="dataLoaded">
     <xng-breadcrumb></xng-breadcrumb>
 </p>
 <div class="dashboard-button-first-container"  *ngIf="dataLoaded" [ngStyle]="buttonPosition">
