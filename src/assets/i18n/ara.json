@@ -36,7 +36,8 @@
 		"lastRunStatus": "آخر حالة تشغيل",
 		"success": "نجاح",
 		"failure": "فشل",
-		"projectRow": "لا توجد مشاريع متاحة."
+		"projectRow": "لا توجد مشاريع متاحة.",
+		"tableDescription": "قائمة المشاريع"
 	},
 	"biometricDashboard": {
 		"projectDashboard": "لوحة تحكم المشاريع",
@@ -48,7 +49,8 @@
 		"purpose": "غاية",
 		"fileName": "اسم الملف",
 		"creationDate": "تاريخ الإنشاء",
-		"biometricRecord": "لا توجد سجلات متاحة."
+		"biometricRecord": "لا توجد سجلات متاحة.",
+		"tableDescription": "قائمة البيانات البيومترية"
 	},
 	"addProject": {
 		"biometricData": "البيانات البيومترية",
@@ -132,7 +134,8 @@
 		"testDataIsRequired": "بيانات الاختبار مطلوبة",
 		"activeMqUrl": "نشيط MQ URL",
 		"requestQueueName": "طلب اسم قائمة الانتظار",
-		"responseQueueName": "اسم قائمة انتظار الاستجابة"
+		"responseQueueName": "اسم قائمة انتظار الاستجابة",
+		"tableDescription": "قائمة المجموعات"
 	},
 	"testRunHistory": {
 		"runDate": "تشغيل التاريخ",
@@ -145,7 +148,8 @@
 		"success": "نجاح",
 		"view": "منظر",
 		"delete": "يمسح",
-		"back": "يعود"
+		"back": "يعود",
+		"tableDescription": "تفاصيل سجل تشغيل الاختبار"
 	},
 	"viewTestRun": {
 		"testRunDetailsAreNotAvailable": "تفاصيل اختبار التشغيل غير متوفرة",
@@ -160,7 +164,8 @@
 		"otherDetails": "تفاصيل أخرى:",
 		"methodUrl": "طريقة URL",
 		"testDataSource": "مصدر بيانات الاختبار",
-		"back": "يعود"
+		"back": "يعود",
+		"tableDescription": "تفاصيل اختبار التشغيل"
 	},
 	"addCollections": {
 		"collectionName": "اسم المجموعة:",
@@ -172,7 +177,8 @@
 		"validators": "المدققون",
 		"customClass": "لا توجد حالات اختبار متاحة لهذا المشروع. يرجى الاتصال بالمسؤول.",
 		"back": "خلف",
-		"saveCollection": "حفظ المجموعة"
+		"saveCollection": "حفظ المجموعة",
+		"tableDescription": "قائمة حالات حالات تجريبية"
 	},
 	"viewCollection": {
 		"collectionName": "اسم المجموعة:",
@@ -181,7 +187,8 @@
 		"name": "اسم",
 		"description": "وصف",
 		"validators": "المدققون",
-		"back": "خلف"
+		"back": "خلف",
+		"tableDescription": "تفاصيل حالات الاختبار المختارة"
 	},
 	"scanDevice": {
 		"title": "جهاز فحص",

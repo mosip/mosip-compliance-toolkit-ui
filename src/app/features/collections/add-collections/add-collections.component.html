@@ -31,6 +31,7 @@
     </div>
     <div class="table-container">
         <table mat-table [dataSource]="dataSource" class="testcases-table">
+            <caption>{{ "addCollections.tableDescription" | translate }}</caption>
             <!--- Note that these columns can be defined in any order.
               The actual rendered columns are set as a property on the row definition" -->
             <ng-container matColumnDef="testId">

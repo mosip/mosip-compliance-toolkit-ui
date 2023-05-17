@@ -11,6 +11,7 @@
     </div>
     <div class="table-container" *ngIf="dataSource.data.length > 0">
         <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="testcases-table">
+            <caption>{{ "viewTestRun.tableDescription" | translate }}</caption>
             <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
             <!-- Test Order Sequence Column -->
