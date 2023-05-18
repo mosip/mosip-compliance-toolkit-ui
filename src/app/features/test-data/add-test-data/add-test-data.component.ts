@@ -304,12 +304,12 @@ export class AddTestDataComponent implements OnInit {
     });
   }
 
-  showBiometricDashboard() {
-    this.router.navigate([`toolkit/dashboard/biometric`]);
+  async showBiometricDashboard() {
+    await this.router.navigate([`toolkit/dashboard/biometric`]);
   }
 
-  showDashboard() {
-    this.router.navigate([`toolkit/dashboard`]);
+  async showDashboard() {
+    await this.router.navigate([`toolkit/dashboard`]);
   }
 
   ngOnDestroy(): void {
