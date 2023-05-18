@@ -113,7 +113,7 @@ export class AddTestDataComponent implements OnInit {
     }
   }
 
-  abisData(projectType: string) {
+  handleProjectTypeChange(projectType: string) {
     if (projectType == appConstants.ABIS) {
       this.showSdkPurpose = false;
       this.testDataForm.controls['purpose'].setValidators(null);
