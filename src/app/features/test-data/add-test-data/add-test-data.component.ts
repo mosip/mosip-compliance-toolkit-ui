@@ -182,7 +182,7 @@ export class AddTestDataComponent implements OnInit {
             );
           } else {
             this.getBase64(event.target.files[0]).then((data) => {
-            this.saveTestData(event);
+              this.saveTestData(event);
             });
           }
         }
