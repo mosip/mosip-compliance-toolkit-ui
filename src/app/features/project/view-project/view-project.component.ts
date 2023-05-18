@@ -329,11 +329,11 @@ export class ViewProjectComponent implements OnInit {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
-  showDashboard() {
+  async showDashboard() {
     if (this.authService.isAuthenticated()) {
-      this.router.navigate([`toolkit/dashboard`]);
+      await this.router.navigate([`toolkit/dashboard`]);
     } else {
-      this.router.navigate([``]);
+      await this.router.navigate([``]);
     }
   }
 
@@ -341,14 +341,14 @@ export class ViewProjectComponent implements OnInit {
     await this.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value);
   }
 
-  addCollection() {
-    this.router.navigate([
+  async addCollection() {
+    await this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}/collection/add`,
     ]);
   }
 
-  viewCollection(collection: any) {
-    this.router.navigate([
+  async viewCollection(collection: any) {
+    await this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}/collection/${collection.collectionId}`,
     ]);
   }
@@ -396,14 +396,14 @@ export class ViewProjectComponent implements OnInit {
 
   }
 
-  viewTestRun(row: any) {
-    this.router.navigate([
+  async viewTestRun(row: any) {
+    await this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}/collection/${row.collectionId}/testrun/${row.runId}`,
     ]);
   }
 
-  viewTestRunsHistory(row: any) {
-    this.router.navigate([
+  async viewTestRunsHistory(row: any) {
+    await this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}/collection/${row.collectionId}/testrunhistory`,
     ]);
   }
