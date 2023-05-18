@@ -80,7 +80,7 @@ export class BiometricDashboardComponent implements OnInit {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
         this.dataService.getListOfBiometricTestData().subscribe(
-          async (response: any) => {
+          (response: any) => {
             console.log(response);
             let dataArr = response['response'];
             this.dataSource = new MatTableDataSource(dataArr);

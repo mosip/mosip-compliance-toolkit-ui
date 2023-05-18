@@ -139,7 +139,7 @@ export class AddTestDataComponent implements OnInit {
     dialogRef.disableClose = false;
   }
 
-  handleFileInput(event: any) {
+  async handleFileInput(event: any) {
     this.allControls.forEach((controlId) => {
       this.testDataForm.controls[controlId].markAsTouched();
     });
@@ -181,8 +181,8 @@ export class AddTestDataComponent implements OnInit {
               'File size is not allowed more than: ' + size + ' MB'
             );
           } else {
-            this.getBase64(event.target.files[0]).then((data) => {
-              this.saveTestData(event);
+            await this.getBase64(event.target.files[0]).then(async (data) => {
+            await this.saveTestData(event);
             });
           }
         }
@@ -288,8 +288,8 @@ export class AddTestDataComponent implements OnInit {
               let resourceBundle = this.resourceBundleJson.dialogMessages;
               let successMsg = 'success';
               const dialogRef = Utils.showSuccessMessage(resourceBundle, successMsg, msg, this.dialog);
-              dialogRef.afterClosed().subscribe((res) => {
-                this.showBiometricDashboard();
+              dialogRef.afterClosed().subscribe(async (res) => {
+                await this.showBiometricDashboard();
               });
               resolve(true);
             }
@@ -304,12 +304,12 @@ export class AddTestDataComponent implements OnInit {
     });
   }
 
-  showBiometricDashboard() {
-    this.router.navigate([`toolkit/dashboard/biometric`]);
+  async showBiometricDashboard() {
+    await this.router.navigate([`toolkit/dashboard/biometric`]);
   }
 
-  showDashboard() {
-    this.router.navigate([`toolkit/dashboard`]);
+  async showDashboard() {
+    await this.router.navigate([`toolkit/dashboard`]);
   }
 
   ngOnDestroy(): void {

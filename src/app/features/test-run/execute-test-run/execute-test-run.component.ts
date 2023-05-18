@@ -17,7 +17,6 @@ import { Router } from '@angular/router';
 import { SbiProjectModel } from 'src/app/core/models/sbi-project';
 import { SbiDiscoverResponseModel } from 'src/app/core/models/sbi-discover';
 import { SdkProjectModel } from 'src/app/core/models/sdk-project';
-import { ScanDeviceComponent } from '../scan-device/scan-device.component';
 import { environment } from 'src/environments/environment';
 import { AbisTestCaseService } from 'src/app/core/services/abis-testcase-service';
 import { AbisProjectModel } from 'src/app/core/models/abis-project';
@@ -196,7 +195,6 @@ export class ExecuteTestRunComponent implements OnInit {
       this.subscriptions.push(
         this.dataService.getSbiProject(this.projectId).subscribe(
           (response: any) => {
-            //console.log(response);
             this.sbiProjectData = response['response'];
             resolve(true);
           },
@@ -214,7 +212,6 @@ export class ExecuteTestRunComponent implements OnInit {
       this.subscriptions.push(
         this.dataService.getSdkProject(this.projectId).subscribe(
           (response: any) => {
-            //console.log(response);
             this.sdkProjectData = response['response'];
             resolve(true);
           },
@@ -232,7 +229,6 @@ export class ExecuteTestRunComponent implements OnInit {
       this.subscriptions.push(
         this.dataService.getAbisProject(this.projectId).subscribe(
           (response: any) => {
-            //console.log(response);
             this.abisProjectData = response['response'];
             resolve(true);
           },
@@ -276,7 +272,6 @@ export class ExecuteTestRunComponent implements OnInit {
               this.errorsInGettingTestcases = true;
               resolve(true);
             }
-            //console.log(response);
             this.testCasesList =
               response[appConstants.RESPONSE][appConstants.TESTCASES];
             resolve(true);
@@ -361,7 +356,7 @@ export class ExecuteTestRunComponent implements OnInit {
           if (this.currentKeyRotationIndex < this.keyRotationIterations) {
             this.handleKeyRotationFlow(startingForLoop, testCase, res);
             if (this.showContinueBtn) {
-              await new Promise(async (resolve, reject) => { });
+              await new Promise((resolve, reject) => { });
             }
           }
           this.calculateTestcaseResults(res[appConstants.VALIDATIONS_RESPONSE]);
@@ -371,20 +366,19 @@ export class ExecuteTestRunComponent implements OnInit {
           await this.updateTestRun();
           if (testCase.otherAttributes.resumeAgainBtn) {
             this.showResumeAgainBtn = true;
-            await new Promise(async (resolve, reject) => { });
+            await new Promise((resolve, reject) => { });
           }
           let resetCurrentTestCase = true;
           //reset all attributes for next testcase
           if (this.projectType == appConstants.ABIS) {
             // //disconnect from queue if already connected
             if (this.rxStompService && this.rxStompService.connected()) {
-              this.rxStompService.deactivate();
+              await this.rxStompService.deactivate();
             }
             this.abisRequestSendFailure = false;
             this.abisSentMessage = appConstants.BLANK_STRING;
             this.abisSentDataSource = appConstants.BLANK_STRING;
             this.abisRecvdMessage = appConstants.BLANK_STRING;
-            //console.log(`after last round, found cbeffFileSuffix: ${this.cbeffFileSuffix}`);
             if (this.cbeffFileSuffix > 0) {
               //do no reset current testcaseId
               resetCurrentTestCase = false;
@@ -464,7 +458,6 @@ export class ExecuteTestRunComponent implements OnInit {
   }
 
   handleErr(res: any) {
-    //console.log('handleErr');
     const errors = res[appConstants.ERRORS];
     if (errors && errors.length > 0) {
       this.serviceErrors = true;
@@ -624,7 +617,6 @@ export class ExecuteTestRunComponent implements OnInit {
               this.errorsInSavingTestRun = true;
               resolve(true);
             }
-            // console.log(response);
             if (this.projectType == appConstants.ABIS) {
               if (this.cbeffFileSuffix == 0 && !this.isCombinationAbisTestcase) {
                 this.progressDone =
@@ -740,7 +732,6 @@ export class ExecuteTestRunComponent implements OnInit {
         resolve(res);
       } else if (this.projectType == appConstants.ABIS) {
         this.isCombinationAbisTestcase = testCase.methodName.length > 1 ? true : false;
-        //console.log(`isCombinationTestCase: ${this.isCombinationAbisTestcase}`);
         if (this.isCombinationAbisTestcase && this.currentAbisMethod == appConstants.BLANK_STRING) {
           this.currentAbisMethod = appConstants.ABIS_METHOD_INSERT;
         }
@@ -753,7 +744,7 @@ export class ExecuteTestRunComponent implements OnInit {
             await this.getAbisProjectDetails();
           //disconnect from queue if already connected
           if (this.rxStompService.connected()) {
-            this.rxStompService.deactivate();
+            await this.rxStompService.deactivate();
           }
           //setup connection as per project configuration
           this.rxStompService = this.activeMqService.setUpConfig(this.abisProjectData);
@@ -797,7 +788,6 @@ export class ExecuteTestRunComponent implements OnInit {
           }
           console.log(`requestId: ${requestId}`);
           console.log(`referenceId: ${referenceId}`);
-          //console.log(`cbeffFileSuffix: ${this.cbeffFileSuffix}`);
           this.currentCbeffFile = this.cbeffFileSuffix;
           this.abisRequestSendFailure = false;
           let methodIndex = 0;
@@ -827,7 +817,7 @@ export class ExecuteTestRunComponent implements OnInit {
             }
             this.abisSentMessage = abisReq.methodRequest;
             this.abisSentDataSource = abisReq.testDataSource;
-            this.subscribeToABISQueue(requestId);
+            await this.subscribeToABISQueue(requestId);
           } else {
             console.log("INSERT REQUEST FAILED");
             this.cbeffFileSuffix = 0;
@@ -1025,18 +1015,18 @@ export class ExecuteTestRunComponent implements OnInit {
     this.dialogRef.close('reloadProjectDetails');
   }
 
-  viewTestRun() {
+  async viewTestRun() {
     this.dialogRef.close('');
-    this.router.navigate([
+    await this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}/collection/${this.collectionId}/testrun/${this.testRunId}`,
     ]);
   }
 
-  subscribeToABISQueue(sentRequestId: string) {
+  async subscribeToABISQueue(sentRequestId: string) {
     if (!this.rxStompService.connected()) {
       this.rxStompService = this.activeMqService.setUpConfig(this.abisProjectData);
     }
-    this.rxStompService
+    await this.rxStompService
       .watch(this.abisProjectData.inboundQueueName)
       .forEach(async (message: Message) => {
         const respObj = JSON.parse(message.body);
@@ -1051,9 +1041,9 @@ export class ExecuteTestRunComponent implements OnInit {
       });
   }
 
-  ngOnDestroy() {
+  async ngOnDestroy() {
     if (this.rxStompService) {
-      this.rxStompService.deactivate();
+      await this.rxStompService.deactivate();
     }
   }
 

@@ -331,8 +331,8 @@ export class AddProjectComponent implements OnInit {
         projectMsg,
         this.dialog
       );
-      dialogRef.afterClosed().subscribe((res) => {
-        this.showDashboard();
+      dialogRef.afterClosed().subscribe(async (res) => {
+        await this.showDashboard();
       });
       return true;
     }
