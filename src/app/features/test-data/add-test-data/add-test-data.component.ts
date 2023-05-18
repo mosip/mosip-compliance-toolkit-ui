@@ -139,7 +139,7 @@ export class AddTestDataComponent implements OnInit {
     dialogRef.disableClose = false;
   }
 
-  async handleFileInput(event: any) {
+  handleFileInput(event: any) {
     this.allControls.forEach((controlId) => {
       this.testDataForm.controls[controlId].markAsTouched();
     });
@@ -181,8 +181,8 @@ export class AddTestDataComponent implements OnInit {
               'File size is not allowed more than: ' + size + ' MB'
             );
           } else {
-            await this.getBase64(event.target.files[0]).then(async (data) => {
-            await this.saveTestData(event);
+            this.getBase64(event.target.files[0]).then((data) => {
+            this.saveTestData(event);
             });
           }
         }
@@ -288,8 +288,8 @@ export class AddTestDataComponent implements OnInit {
               let resourceBundle = this.resourceBundleJson.dialogMessages;
               let successMsg = 'success';
               const dialogRef = Utils.showSuccessMessage(resourceBundle, successMsg, msg, this.dialog);
-              dialogRef.afterClosed().subscribe(async (res) => {
-                await this.showBiometricDashboard();
+              dialogRef.afterClosed().subscribe((res) => {
+                this.showBiometricDashboard();
               });
               resolve(true);
             }

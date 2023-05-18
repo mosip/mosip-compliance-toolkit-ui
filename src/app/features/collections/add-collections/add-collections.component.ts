@@ -396,7 +396,7 @@ export class AddCollectionsComponent implements OnInit {
                 this.dialog
               );
               dialogRef.afterClosed().subscribe(async (res) => {
-                await this.backToProject();
+                this.backToProject();
               });
               resolve(response);
             }

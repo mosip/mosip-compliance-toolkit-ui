@@ -356,7 +356,7 @@ export class ExecuteTestRunComponent implements OnInit {
           if (this.currentKeyRotationIndex < this.keyRotationIterations) {
             this.handleKeyRotationFlow(startingForLoop, testCase, res);
             if (this.showContinueBtn) {
-              await new Promise((resolve, reject) => { });
+              await new Promise(async (resolve, reject) => { });
             }
           }
           this.calculateTestcaseResults(res[appConstants.VALIDATIONS_RESPONSE]);
@@ -366,14 +366,14 @@ export class ExecuteTestRunComponent implements OnInit {
           await this.updateTestRun();
           if (testCase.otherAttributes.resumeAgainBtn) {
             this.showResumeAgainBtn = true;
-            await new Promise((resolve, reject) => { });
+            await new Promise(async (resolve, reject) => { });
           }
           let resetCurrentTestCase = true;
           //reset all attributes for next testcase
           if (this.projectType == appConstants.ABIS) {
             // //disconnect from queue if already connected
             if (this.rxStompService && this.rxStompService.connected()) {
-              await this.rxStompService.deactivate();
+              this.rxStompService.deactivate();
             }
             this.abisRequestSendFailure = false;
             this.abisSentMessage = appConstants.BLANK_STRING;
@@ -744,7 +744,7 @@ export class ExecuteTestRunComponent implements OnInit {
             await this.getAbisProjectDetails();
           //disconnect from queue if already connected
           if (this.rxStompService.connected()) {
-            await this.rxStompService.deactivate();
+            this.rxStompService.deactivate();
           }
           //setup connection as per project configuration
           this.rxStompService = this.activeMqService.setUpConfig(this.abisProjectData);
@@ -817,7 +817,7 @@ export class ExecuteTestRunComponent implements OnInit {
             }
             this.abisSentMessage = abisReq.methodRequest;
             this.abisSentDataSource = abisReq.testDataSource;
-            await this.subscribeToABISQueue(requestId);
+            this.subscribeToABISQueue(requestId);
           } else {
             console.log("INSERT REQUEST FAILED");
             this.cbeffFileSuffix = 0;
@@ -1022,11 +1022,11 @@ export class ExecuteTestRunComponent implements OnInit {
     ]);
   }
 
-  async subscribeToABISQueue(sentRequestId: string) {
+  subscribeToABISQueue(sentRequestId: string) {
     if (!this.rxStompService.connected()) {
       this.rxStompService = this.activeMqService.setUpConfig(this.abisProjectData);
     }
-    await this.rxStompService
+    this.rxStompService
       .watch(this.abisProjectData.inboundQueueName)
       .forEach(async (message: Message) => {
         const respObj = JSON.parse(message.body);
@@ -1041,9 +1041,9 @@ export class ExecuteTestRunComponent implements OnInit {
       });
   }
 
-  async ngOnDestroy() {
+  ngOnDestroy() {
     if (this.rxStompService) {
-      await this.rxStompService.deactivate();
+      this.rxStompService.deactivate();
     }
   }
 
