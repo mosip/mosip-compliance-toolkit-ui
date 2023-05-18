@@ -19,6 +19,7 @@ export class OtherAttributesModel {
       public invalidRequestAttribute: any,
       public bulkInsert: boolean,
       public insertCount: any,
+      public insertReferenceId: any,
       public identifyReferenceId: any,
       public identifyGalleryIds: any,
       public expectedDuplicateCount: any,

@@ -786,6 +786,12 @@ export class ExecuteTestRunComponent implements OnInit {
               });
             }
           }
+          //if testcase defines insertReferenceId, overwrite the above referenceId
+          if (this.currentAbisMethod == appConstants.ABIS_METHOD_INSERT) {
+            if (testCase.otherAttributes.insertReferenceId) {
+              referenceId = this.testRunId + appConstants.UNDERSCORE + testCase.otherAttributes.insertReferenceId;
+            }
+          }
           console.log(`requestId: ${requestId}`);
           console.log(`referenceId: ${referenceId}`);
           this.currentCbeffFile = this.cbeffFileSuffix;
