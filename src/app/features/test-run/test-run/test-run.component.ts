@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { AuthService } from '../../../core/services/authservice.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../../../core/services/data-service';
@@ -18,7 +18,6 @@ import {
   transition,
   animate,
 } from '@angular/animations';
-import * as moment from 'moment';
 import { SdkProjectModel } from 'src/app/core/models/sdk-project';
 import { TestCaseModel } from 'src/app/core/models/testcase';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
@@ -229,7 +228,6 @@ export class TestRunComponent implements OnInit {
       this.subscriptions.push(
         this.dataService.getTestcasesForCollection(this.collectionId).subscribe(
           (response: any) => {
-            //console.log(response);
             let testcases = response['response']['testcases'];
             //sort the testcases based on the testId
             if (testcases && testcases.length > 0) {
@@ -280,7 +278,6 @@ export class TestRunComponent implements OnInit {
       this.subscriptions.push(
         this.dataService.getSdkProject(this.projectId).subscribe(
           (response: any) => {
-            //console.log(response);
             this.sdkProjectData = response['response'];
             resolve(true);
           },
@@ -298,7 +295,6 @@ export class TestRunComponent implements OnInit {
       this.subscriptions.push(
         this.dataService.getAbisProject(this.projectId).subscribe(
           (response: any) => {
-            //console.log(response);
             this.abisProjectData = response['response'];
             resolve(true);
           },
@@ -334,7 +330,6 @@ export class TestRunComponent implements OnInit {
     }
   }
   getValidatorDetails(item: any) {
-    //console.log(item);
     return this.resourceBundleJson.validators[item.validatorName] 
       ? `${item.validatorName} (${this.resourceBundleJson.validators[item.validatorName]})` 
       : `${item.validatorName} (${item.validatorDescription})`;
@@ -413,8 +408,8 @@ export class TestRunComponent implements OnInit {
 
   }
 
-  backToProject() {
-    this.router.navigate([
+  async backToProject() {
+    await this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}`,
     ]);
   }

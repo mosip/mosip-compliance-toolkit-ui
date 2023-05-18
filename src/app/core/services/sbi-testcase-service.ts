@@ -132,7 +132,6 @@ export class SbiTestCaseService {
         appConstants.SBI_METHOD_DEVICE_KEY,
         methodRequest
       );
-      //console.log(methodResponse);
       return methodResponse;
     }
     if (methodName == appConstants.SBI_METHOD_DEVICE_INFO) {
@@ -141,7 +140,6 @@ export class SbiTestCaseService {
         appConstants.SBI_METHOD_DEVICE_INFO_KEY,
         methodRequest
       );
-      //console.log(methodResponse);
       return methodResponse;
     }
     if (methodName == appConstants.SBI_METHOD_CAPTURE) {
@@ -252,12 +250,10 @@ export class SbiTestCaseService {
       };
       request = Utils.handleInvalidRequestAttribute(testCase, request);
     }
-    //console.log(JSON.stringify(request));
     return request;
     //return JSON.stringify(request);
   }
   getTransactionId(testCase: TestCaseModel) {
-    //console.log("getTransactionId" +testCase.otherAttributes.transactionId);
     return testCase.otherAttributes.transactionId
       ? testCase.otherAttributes.transactionId.toString()
       : testCase.testId + '-' + new Date().getUTCMilliseconds();
@@ -427,7 +423,6 @@ export class SbiTestCaseService {
     const selectedSbiDevice: SbiDiscoverResponseModel =
       JSON.parse(sbiSelectedDevice);
     return new Promise((resolve, reject) => {
-      //console.log('validateResponse called');
       let validateRequest = {
         testCaseType: testCase.testCaseType,
         testName: testCase.testName,

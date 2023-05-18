@@ -1,11 +1,9 @@
-
 import { Injectable } from '@angular/core';
 import { AppConfigService } from 'src/app/app-config.service';
 import { AndroidKeycloakService } from './android-keycloak';
 import { environment } from 'src/environments/environment';
 import * as appConstants from 'src/app/app.constants';
 import { CapacitorCookies } from '@capacitor/core';
-import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,8 +11,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class LogoutService {
   constructor(
     private androidKeycloakService: AndroidKeycloakService,
-    private appService: AppConfigService,
-    private cookieService: CookieService,
+    private appService: AppConfigService
   ) { }
 
   async logout() {

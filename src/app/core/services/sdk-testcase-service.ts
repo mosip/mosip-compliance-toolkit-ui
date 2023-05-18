@@ -13,7 +13,6 @@ export class SdkTestCaseService {
   resourceBundleJson: any = {};
   constructor(
     private dataService: DataService,
-    private appConfigService: AppConfigService,
     private userProfileService: UserProfileService
   ) {}
 
@@ -345,7 +344,6 @@ export class SdkTestCaseService {
     methodIndex: number
   ) {
     return new Promise((resolve, reject) => {
-      //console.log('validateRequest called');
       let validateRequest = {
         testCaseType: testCase.testCaseType,
         testName: testCase.testName,
@@ -354,7 +352,6 @@ export class SdkTestCaseService {
         requestSchema: testCase.requestSchema[methodIndex],
         methodRequest: methodRequest,
       };
-      //console.log(validateRequest);
       let request = {
         id: appConstants.VALIDATIONS_ADD_ID,
         version: appConstants.VERSION,
@@ -363,7 +360,6 @@ export class SdkTestCaseService {
       };
       this.dataService.validateRequest(request).subscribe(
         (response) => {
-          //console.log(response);
           resolve(response);
         },
         (errors) => {

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, Injectable } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as appConstants from 'src/app/app.constants';
 import { DataService } from '../../../core/services/data-service';
@@ -210,7 +210,6 @@ export class ScanDeviceComponent implements OnInit {
   getDeviceLabel(field: any) {
     if (field) {
       let deviceLabel = this.resourceBundleJson['deviceLabel'];
-      //console.log(this.resourceBundleJson);
       if (deviceLabel) {
         if (!this.isAndroidAppMode) {
           return `${deviceLabel.deviceId}: ${field.deviceId}, ${deviceLabel.purpose}: ${field.purpose}, ${deviceLabel.deviceType}: ${field.digitalIdDecoded.type}, ${deviceLabel.deviceSubType}: ${field.digitalIdDecoded.deviceSubType}`;

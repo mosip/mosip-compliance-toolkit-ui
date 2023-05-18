@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { AppConfigService } from 'src/app/app-config.service';
 import { UserProfileService } from '../../services/user-profile.service';
@@ -10,7 +10,6 @@ import { MatDialog } from '@angular/material/dialog';
 import Utils from 'src/app/app.utils';
 import { environment } from 'src/environments/environment';
 import { App } from '@capacitor/app';
-import { HttpClient } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -38,7 +37,6 @@ export class HeaderComponent implements OnInit {
   constructor(
     public authService: AuthService,
     private appConfigService: AppConfigService,
-    private httpClient: HttpClient,
     private userProfileService: UserProfileService,
     private logoutService: LogoutService,
     private dataService: DataService,
@@ -75,11 +73,11 @@ export class HeaderComponent implements OnInit {
       this.userName = this.userProfileService.getUsername();
     }
   }
-  onLogoClick() {
+  async onLogoClick() {
     if (this.authService.isAuthenticated()) {
-      this.router.navigateByUrl(`toolkit/dashboard`);
+      await this.router.navigateByUrl(`toolkit/dashboard`);
     } else {
-      this.router.navigateByUrl(``);
+      await this.router.navigateByUrl(``);
     }
   }
 }
