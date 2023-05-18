@@ -268,7 +268,6 @@ export class SbiTestCaseAndroidService {
       };
       request = Utils.handleInvalidRequestAttribute(testCase, request);
     }
-    //console.log(JSON.stringify(request));
     return request;
   }
 
@@ -436,7 +435,6 @@ export class SbiTestCaseAndroidService {
     const selectedSbiDevice: SbiDiscoverResponseModel =
       JSON.parse(sbiSelectedDevice);
     return new Promise((resolve, reject) => {
-      //console.log('validateResponse called');
       let validateRequest = {
         testCaseType: testCase.testCaseType,
         testName: testCase.testName,

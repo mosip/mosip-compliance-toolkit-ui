@@ -49,7 +49,6 @@ export class AuthInterceptor implements HttpInterceptor {
         key: appConstants.AUTHORIZATION,
         value: accessToken ? accessToken : '',
       });
-      //console.log("cookie set for android");
     }
   }
   constructor(

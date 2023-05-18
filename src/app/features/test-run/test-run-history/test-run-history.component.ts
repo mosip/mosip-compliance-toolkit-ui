@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../core/services/authservice.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../../../core/services/data-service';
@@ -232,8 +231,8 @@ export class TestRunHistoryComponent implements OnInit {
       );
     });
   }
-  backToProject() {
-    this.router.navigate([
+  async backToProject() {
+    await this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}`,
     ]);
   }
@@ -285,8 +284,8 @@ export class TestRunHistoryComponent implements OnInit {
     this.dataLoaded = true;
   }
 
-  viewTestRun(row: any) {
-    this.router.navigate([
+  async viewTestRun(row: any) {
+    await this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}/collection/${this.collectionId}/testrun/${row.runId}`,
     ]);
   }
