@@ -276,7 +276,11 @@ export default class Utils {
     if (testCase.otherAttributes.invalidRequestAttribute) {
       let newRequest: any = {};
       let invalidKey = testCase.otherAttributes.invalidRequestAttribute;
-      if (invalidKey == 'all') {
+      if (invalidKey == 'add-extra-attribute') {
+        request = {
+          ...request,
+          "newUnknownValue" : "testing with newUnknownValue"
+        }
         newRequest = {
           request:  request
         }
