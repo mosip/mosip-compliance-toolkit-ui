@@ -174,7 +174,6 @@ export class ViewCollectionsComponent implements OnInit {
       this.subscriptions.push(
         this.dataService.getSdkProject(this.projectId).subscribe(
           (response: any) => {
-            //console.log(response);
             this.sdkProjectData = response['response'];
             resolve(true);
           },
@@ -192,7 +191,6 @@ export class ViewCollectionsComponent implements OnInit {
       this.subscriptions.push(
         this.dataService.getAbisProject(this.projectId).subscribe(
           (response: any) => {
-            //console.log(response);
             this.abisProjectData = response['response'];
             resolve(true);
           },
@@ -210,13 +208,11 @@ export class ViewCollectionsComponent implements OnInit {
       this.subscriptions.push(
         this.dataService.getTestcasesForCollection(this.collectionId).subscribe(
           (response: any) => {
-            //console.log(response);
             let testcases = response['response']['testcases'];
             let testcaseArr = [];
             for (let testcase of testcases) {
               testcaseArr.push(Utils.translateTestcase(testcase,this.resourceBundleJson));
             }
-            //console.log(testcaseArr);
             //sort the testcases based on the testId
             if (testcaseArr && testcaseArr.length > 0) {
               testcaseArr.sort(function (a: TestCaseModel, b: TestCaseModel) {
@@ -236,8 +232,8 @@ export class ViewCollectionsComponent implements OnInit {
       );
     });
   }
-  backToProject() {
-    this.router.navigate([
+  async backToProject() {
+    await this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}`,
     ]);
   }

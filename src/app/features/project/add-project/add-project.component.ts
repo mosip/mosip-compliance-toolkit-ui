@@ -91,7 +91,6 @@ export class AddProjectComponent implements OnInit {
       this.subscriptions.push(
         this.dataService.getBioTestDataNames(purpose).subscribe(
           (response: any) => {
-            //console.log(response);
             this.bioTestDataFileNames = response[appConstants.RESPONSE];
             resolve(true);
           },
@@ -339,8 +338,8 @@ export class AddProjectComponent implements OnInit {
     }
   }
 
-  showDashboard() {
-    this.router.navigate([`toolkit/dashboard`]);
+  async showDashboard() {
+    await this.router.navigate([`toolkit/dashboard`]);
   }
 
   ngOnDestroy(): void {
