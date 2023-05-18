@@ -33,6 +33,7 @@ export class AddTestDataComponent implements OnInit {
   textDirection: any = this.userProfileService.getTextDirection();
   buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : {'float': 'right'};
   resourceBundleJson: any = {};
+  showSdkPurpose:boolean = true;
   allowedFileTypes = this.appConfigService
     .getConfig()
     ['allowedFileTypes'].split(',');
@@ -104,6 +105,19 @@ export class AddTestDataComponent implements OnInit {
       if (el) {
         el.click();
       }
+    }
+  }
+
+  handleProjectTypeChange(projectType: string) {
+    if (projectType == appConstants.ABIS) {
+      this.showSdkPurpose = false;
+      this.testDataForm.controls['purpose'].setValidators(null);
+      this.testDataForm.controls['purpose'].updateValueAndValidity();
+      this.testDataForm.controls['purpose'].setValue(appConstants.ABIS);
+    } else {
+      this.showSdkPurpose = true;
+      this.testDataForm.controls['purpose'].setValidators(Validators.required);
+      this.testDataForm.controls['purpose'].updateValueAndValidity();
     }
   }
 
