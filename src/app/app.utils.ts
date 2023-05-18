@@ -286,9 +286,15 @@ export default class Utils {
         }
         newRequest = request
       }
-      if (invalidKey == 'incorrectReferenceURL') {
+      else if (invalidKey == 'incorrectReferenceURL') {
         let correctVal = request["referenceURL"];
         let incorrectVal = correctVal.replace("datashare", "datashare1"); 
+        request["referenceURL"] = incorrectVal;
+        newRequest = request;
+      }
+      else if (invalidKey == 'invalidReferenceURL') {
+        let correctVal = request["referenceURL"];
+        let incorrectVal = correctVal.replace("/", ":"); 
         request["referenceURL"] = incorrectVal;
         newRequest = request;
       }

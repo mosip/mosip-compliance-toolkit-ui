@@ -216,7 +216,6 @@ export class AbisTestCaseService {
       }
     }
     request = Utils.handleInvalidRequestAttribute(testCase, request);
-    //delete request.requestId;
     return request;
   }
 
