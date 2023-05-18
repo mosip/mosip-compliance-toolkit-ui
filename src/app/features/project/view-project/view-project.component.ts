@@ -1,4 +1,4 @@
-import { Component, LOCALE_ID, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
@@ -182,7 +182,6 @@ export class ViewProjectComponent implements OnInit {
       this.subscriptions.push(
         this.dataService.getBioTestDataNames(purpose).subscribe(
           (response: any) => {
-            //console.log(response);
             this.bioTestDataFileNames = response[appConstants.RESPONSE];
             resolve(true);
           },
@@ -200,7 +199,6 @@ export class ViewProjectComponent implements OnInit {
       this.subscriptions.push(
         this.dataService.getSbiProject(this.projectId).subscribe(
           (response: any) => {
-            //console.log(response);
             this.projectFormData = response['response'];
             resolve(true);
           },
@@ -218,7 +216,6 @@ export class ViewProjectComponent implements OnInit {
       this.subscriptions.push(
         this.dataService.getSdkProject(this.projectId).subscribe(
           (response: any) => {
-            //console.log(response);
             this.projectFormData = response['response'];
             resolve(true);
           },
@@ -236,7 +233,6 @@ export class ViewProjectComponent implements OnInit {
       this.subscriptions.push(
         this.dataService.getAbisProject(this.projectId).subscribe(
           (response: any) => {
-            //console.log(response);
             this.projectFormData = response['response'];
             resolve(true);
           },
@@ -310,7 +306,6 @@ export class ViewProjectComponent implements OnInit {
           .getCollections(this.projectId, this.projectType)
           .subscribe(
             (response: any) => {
-              //console.log(response);
               this.dataSource = new MatTableDataSource(
                 response[appConstants.RESPONSE]['collections']
               );
