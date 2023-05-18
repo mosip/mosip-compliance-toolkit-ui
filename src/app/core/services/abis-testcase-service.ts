@@ -237,6 +237,10 @@ export class AbisTestCaseService {
         isNegativeTestcase: testCase.isNegativeTestcase
           ? testCase.isNegativeTestcase
           : false,
+        extraInfoJson: JSON.stringify({
+          expectedFailureReason: testCase.otherAttributes.expectedFailureReason,
+          expectedDuplicateCount: testCase.otherAttributes.expectedDuplicateCount
+        }),
         methodResponse: methodResponse,
         methodRequest: methodRequest,
         methodName: method,
