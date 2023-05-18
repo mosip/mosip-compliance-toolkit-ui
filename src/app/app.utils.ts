@@ -281,9 +281,7 @@ export default class Utils {
           ...request,
           "newUnknownValue" : "testing with newUnknownValue"
         }
-        newRequest = {
-          request:  request
-        }
+        newRequest = request
       }
       else if (
         invalidKey.includes('[') &&
