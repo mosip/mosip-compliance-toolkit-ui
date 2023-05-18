@@ -2,11 +2,10 @@ import { OnInit, Component, ViewChild } from '@angular/core';
 import { TranslateService } from "@ngx-translate/core";
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort, MatSortable } from '@angular/material/sort';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router} from '@angular/router';
 import { DataService } from 'src/app/core/services/data-service';
 import { Subscription } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import * as appConstants from 'src/app/app.constants';
 import Utils from 'src/app/app.utils';
@@ -86,7 +85,7 @@ export class ProjectsDashboardComponent implements OnInit {
     }
   }
 
-  async getProjects() {
+  async getProjects(): Promise<boolean> {
     let projectType = "";
     if (this.isAndroidAppMode) {
       projectType = appConstants.SBI;
@@ -139,26 +138,25 @@ export class ProjectsDashboardComponent implements OnInit {
       );
     });
   }
-  ngAfterViewInit() {}
 
-  addProject() {
-    this.router.navigate([`toolkit/project/add`]);
+  async addProject() {
+    await this.router.navigate([`toolkit/project/add`]);
   }
 
-  viewProject(project: any) {
+  async viewProject(project: any) {
     if (this.isAndroidAppMode) {
       localStorage.removeItem(appConstants.SBI_SELECTED_PORT);
       localStorage.removeItem(appConstants.SBI_SELECTED_DEVICE);
       localStorage.removeItem(appConstants.SBI_SCAN_DATA);
       localStorage.removeItem(appConstants.SBI_SCAN_COMPLETE);
     }
-    this.router.navigate([
+    await this.router.navigate([
       `toolkit/project/${project.projectType}/${project.id}`,
     ]);
   }
   
-  showBiometricDashboard() {
-    this.router.navigate([`toolkit/dashboard/biometric`]);
+  async showBiometricDashboard() {
+    await this.router.navigate([`toolkit/dashboard/biometric`]);
   }
 
   deleteProject(project: any) {
