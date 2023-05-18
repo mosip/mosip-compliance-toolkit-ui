@@ -183,7 +183,7 @@ export default class Utils {
     }
   }
 
-  static showSuccessMessage(resourceBundle: any, titleKey: string, messageKey: string, dialog: MatDialog) {
+  static showSuccessMessage(resourceBundle: any, titleKey: string, messageKey: string, dialog: MatDialog, customMsg?: string) {
     let title: any;
     let message: any;
     if (resourceBundle && resourceBundle[titleKey] && resourceBundle[messageKey]) {
@@ -192,6 +192,9 @@ export default class Utils {
     } else {
       title = titleKey;
       message = messageKey;
+    }
+    if (customMsg) {
+      message = message + " " + customMsg;
     }
     const body = {
       case: 'SUCCESS',
@@ -276,12 +279,18 @@ export default class Utils {
     if (testCase.otherAttributes.invalidRequestAttribute) {
       let newRequest: any = {};
       let invalidKey = testCase.otherAttributes.invalidRequestAttribute;
-      if (invalidKey == 'add-extra-attribute') {
+      if (invalidKey == 'newUnknownValue') {
         request = {
           ...request,
           "newUnknownValue" : "testing with newUnknownValue"
         }
         newRequest = request
+      }
+      if (invalidKey == 'incorrectReferenceURL') {
+        let correctVal = request["referenceURL"];
+        let incorrectVal = correctVal.replace("datashare", "datashare1"); 
+        request["referenceURL"] = incorrectVal;
+        newRequest = request;
       }
       else if (
         invalidKey.includes('[') &&
