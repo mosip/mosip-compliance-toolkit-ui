@@ -356,7 +356,7 @@ export class ExecuteTestRunComponent implements OnInit {
           if (this.currentKeyRotationIndex < this.keyRotationIterations) {
             this.handleKeyRotationFlow(startingForLoop, testCase, res);
             if (this.showContinueBtn) {
-              await new Promise(async (resolve, reject) => { });
+              await new Promise((resolve, reject) => { });
             }
           }
           this.calculateTestcaseResults(res[appConstants.VALIDATIONS_RESPONSE]);
@@ -366,14 +366,17 @@ export class ExecuteTestRunComponent implements OnInit {
           await this.updateTestRun();
           if (testCase.otherAttributes.resumeAgainBtn) {
             this.showResumeAgainBtn = true;
-            await new Promise(async (resolve, reject) => { });
+            await new Promise((resolve, reject) => { });
           }
           let resetCurrentTestCase = true;
           //reset all attributes for next testcase
           if (this.projectType == appConstants.ABIS) {
             // //disconnect from queue if already connected
             if (this.rxStompService && this.rxStompService.connected()) {
-              this.rxStompService.deactivate();
+              this.rxStompService.deactivate()
+                .catch((error) => {
+                  console.log(error);
+                });
             }
             this.abisRequestSendFailure = false;
             this.abisSentMessage = appConstants.BLANK_STRING;
@@ -744,7 +747,10 @@ export class ExecuteTestRunComponent implements OnInit {
             await this.getAbisProjectDetails();
           //disconnect from queue if already connected
           if (this.rxStompService.connected()) {
-            this.rxStompService.deactivate();
+            this.rxStompService.deactivate()
+              .catch((error) => {
+                console.log(error);
+              });
           }
           //setup connection as per project configuration
           this.rxStompService = this.activeMqService.setUpConfig(this.abisProjectData);
@@ -1049,7 +1055,10 @@ export class ExecuteTestRunComponent implements OnInit {
 
   ngOnDestroy() {
     if (this.rxStompService) {
-      this.rxStompService.deactivate();
+      this.rxStompService.deactivate()
+      .catch((error) => {
+        console.log(error);
+      });
     }
   }
 
