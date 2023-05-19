@@ -332,7 +332,10 @@ export class AddProjectComponent implements OnInit {
         this.dialog
       );
       dialogRef.afterClosed().subscribe((res) => {
-        this.showDashboard();
+        this.showDashboard()
+          .catch((error) => {
+            console.log(error);
+          });
       });
       return true;
     }

@@ -12,6 +12,7 @@ import { DialogComponent } from 'src/app/core/components/dialog/dialog.component
 import { TranslateService } from '@ngx-translate/core';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { BreadcrumbService } from 'xng-breadcrumb';
+import { error } from 'console';
 
 @Component({
   selector: 'app-add-test-data',
@@ -125,8 +126,8 @@ export class AddTestDataComponent implements OnInit {
     let title;
     let msg;
     let translatedMsgs = this.resourceBundleJson['addTestData'];
-    translatedMsgs.title ? title = translatedMsgs.title : title;
-    translatedMsgs.msg ? msg = translatedMsgs.msg : msg; 
+    title = translatedMsgs.title ? translatedMsgs.title : title;
+    msg = translatedMsgs.msg ? translatedMsgs.msg : msg; 
     const body = {
       case: 'INFO',
       title: title,
@@ -181,9 +182,16 @@ export class AddTestDataComponent implements OnInit {
               'File size is not allowed more than: ' + size + ' MB'
             );
           } else {
-            this.getBase64(event.target.files[0]).then((data) => {
-              this.saveTestData(event);
-            });
+            this.getBase64(event.target.files[0])
+              .then((data) => {
+                this.saveTestData(event)
+                  .catch((error) => {
+                    console.log(error);
+                  });
+              })
+              .catch((error) => {
+                console.log(error);
+              });
           }
         }
       }
@@ -287,7 +295,10 @@ export class AddTestDataComponent implements OnInit {
               let successMsg = 'success';
               const dialogRef = Utils.showSuccessMessage(resourceBundle, successMsg, msg, this.dialog, info);
               dialogRef.afterClosed().subscribe((res) => {
-                this.showBiometricDashboard();
+                this.showBiometricDashboard()
+                  .catch((error) => {
+                    console.log(error);
+                  });
               });
               resolve(true);
             }

@@ -17,6 +17,7 @@ import { environment } from 'src/environments/environment';
 import { AbisProjectModel } from 'src/app/core/models/abis-project';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { TranslateService } from '@ngx-translate/core';
+import { error } from 'console';
 
 @Component({
   selector: 'app-add-collections',
@@ -396,7 +397,10 @@ export class AddCollectionsComponent implements OnInit {
                 this.dialog
               );
               dialogRef.afterClosed().subscribe((res) => {
-                this.backToProject();
+                this.backToProject()
+                  .catch((error) => {
+                    console.log(error);
+                  });
               });
               resolve(response);
             }
