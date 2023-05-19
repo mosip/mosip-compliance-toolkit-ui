@@ -11,6 +11,7 @@ import Utils from 'src/app/app.utils';
 import { environment } from 'src/environments/environment';
 import { App } from '@capacitor/app';
 import { TranslateService } from '@ngx-translate/core';
+import { error } from 'console';
 
 @Component({
   selector: 'app-header',
@@ -60,7 +61,9 @@ export class HeaderComponent implements OnInit {
         this.dialog
       );
       dialogRef.afterClosed().subscribe((res) => {
-        App.exitApp();
+        App.exitApp().catch((error) => {
+          console.log(error);
+        });
       });
     }
   }

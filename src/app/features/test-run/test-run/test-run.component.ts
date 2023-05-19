@@ -152,11 +152,10 @@ export class TestRunComponent implements OnInit {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
         this.dataService.getTestRunDetails(this.runId).subscribe(
-          async (response: any) => {
+          (response: any) => {
             this.runDetails = response['response'];
             let list: any[] = response['response']['testRunDetailsList'];
             let tableData = [];
-            this.testcasesList;
             for (const testCase of this.testcasesList) {
               let testRunData = null;
               for (const testRun of list) {
