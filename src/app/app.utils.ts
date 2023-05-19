@@ -2,6 +2,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from './core/components/dialog/dialog.component';
 import { SbiDiscoverResponseModel } from './core/models/sbi-discover';
 import { TestCaseModel } from './core/models/testcase';
+import * as appConstants from 'src/app/app.constants';
 
 export default class Utils {
   static getCurrentDate() {
@@ -296,6 +297,16 @@ export default class Utils {
         let correctVal = request["referenceURL"];
         let incorrectVal = correctVal.replace("/", ":"); 
         request["referenceURL"] = incorrectVal;
+        newRequest = request;
+      }
+      else if (invalidKey == 'invalidRequestTime') {
+        let correctVal = request["requesttime"];
+        let incorrectVal = new Date(correctVal).toUTCString(); 
+        request["requesttime"] = incorrectVal;
+        newRequest = request;
+      }
+      else if (invalidKey == 'invalidId' && testCase.methodName[0] == appConstants.ABIS_METHOD_INSERT) {
+        request["id"] =  appConstants.ABIS_IDENTIFY_ID;
         newRequest = request;
       }
       else if (
