@@ -258,6 +258,70 @@ export default class Utils {
     return dialogRef;
   }
 
+  static getTranslatedMessage(resourceBundleMessages: any, messageKey: string) {
+    const COMMA_SEPARATOR = ',';
+    let translatedMsg = '';
+    if (messageKey && resourceBundleMessages) {
+      //case 1 "VALIDATOR_MSG_001"
+      //case 2 "VALIDATOR_MSG_001::arg1"
+      //case 3 "VALIDATOR_MSG_001::arg1;arg2"
+      //case 4 "VALIDATOR_MSG_001::VALIDATOR_MSG_002;arg2"
+      //case 5 "VALIDATOR_MSG_001,VALIDATOR_MSG_002::arg1;arg2,VALIDATOR_MSG_003::arg3"
+      //case 6 "VALIDATOR_MSG_001,textMessage,VALIDATOR_MSG_003::arg3"
+      //Eg: messageKey = "ISO_VALIDATOR_003,ISO_VALIDATOR_004::0x46495200,ISO_VALIDATOR_005::0x46495201";
+      const messageKeyArr = messageKey.split(COMMA_SEPARATOR);
+      messageKeyArr.forEach((messageKey: any) => {
+        translatedMsg = translatedMsg + this.performTranslation(messageKey, resourceBundleMessages);
+      });
+    }
+    return translatedMsg;
+  }
+
+  static performTranslation(messageKey: any, resourceBundleMessages: any) {
+    const COLON_SEPARATOR = '::', SEMI_COLON_SEPARATOR = ';', JSON_PLACEHOLDER = '{}';
+    let translatedMsg = '';
+    //check if the messageKey is having any rutime attributes
+    //eg: messageKey="SCHEMA_VALIDATOR_001::name,size"
+    if (messageKey.indexOf(COLON_SEPARATOR) == -1) {
+      translatedMsg = resourceBundleMessages[messageKey] ? resourceBundleMessages[messageKey] : messageKey;
+      return translatedMsg;
+    } else {
+      //create an arr of attributes
+      let messageKeyArr = messageKey.split(COLON_SEPARATOR);
+      const messageKeyName = messageKeyArr[0];
+      const argumentsArr = messageKeyArr[1].split(SEMI_COLON_SEPARATOR);
+      translatedMsg = resourceBundleMessages[messageKeyName];
+      const matches: RegExpMatchArray | null = translatedMsg.match(/\{\}/g);
+      const count: number = matches ? matches.length : 0;
+      //match no of palceholders in JSON value to no of arguments
+      if (count != argumentsArr.length) {
+        return translatedMsg;
+      }
+      let translatedMsgArray = translatedMsg.split(JSON_PLACEHOLDER);
+      if (translatedMsgArray.length > 0) {
+        let newTranslatedMsg = "";
+        translatedMsgArray.forEach((element, index) => {
+          if (argumentsArr.length > index) {
+            // check if the argument is actually a key in resource bundle, 
+            // eg: messageKey="SCHEMA_VALIDATOR_001::SCHEMA_VALIDATOR_002;SCHEMA_VALIDATOR_003"
+            const arg = argumentsArr[index];
+            const translatedArg = resourceBundleMessages[arg];
+            if (translatedArg) {
+              newTranslatedMsg = newTranslatedMsg + element + translatedArg;
+            } else {
+              newTranslatedMsg = newTranslatedMsg + element + arg;
+            }
+          } else {
+            newTranslatedMsg = newTranslatedMsg + element;
+          }
+        });
+        return newTranslatedMsg;
+      } else {
+        return translatedMsg;
+      }
+    }
+  }
+
   static translateTestcase(
     testcase: any,
     resourceBundle: any

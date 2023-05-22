@@ -1310,7 +1310,7 @@
 		"TOOLKIT_VALIDATION_ERR_003": "فشل التحقق من صحة معرف الشريك",
 		"TOOLKIT_VALIDATION_ERR_004": "اسم أسلوب غير صالح",
 		"TOOLKIT_TESTDATA_ERR_001": "Testdata لها غرض خاطئ",
-		"TOOLKIT_TESTDATA_ERR_002": "يحتوي Testdata على ملف معرض غير صالح",
+		"TOOLKIT_TESTDATA_ERR_002": "يحتوي Testdata على ملف معرض غير صالح {} في {}",
 		"TOOLKIT_TESTDATA_ERR_003": "خطأ في بنية مجلد Testdata",
 		"TOOLKIT_TESTDATA_ERR_004": "يحتوي Testdata على مجلد غير صالح",
 		"TOOLKIT_TESTDATA_ERR_005": "ملف Testdata غير صالح",
