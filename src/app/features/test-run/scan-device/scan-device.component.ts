@@ -12,6 +12,7 @@ import { MosipSbiCapacitorPlugin } from 'mosip-sbi-capacitor-plugin';
 import { environment } from '../../../../environments/environment';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { TranslateService } from '@ngx-translate/core';
+import { error } from 'console';
 
 @Component({
   selector: 'app-scan-device',
@@ -125,6 +126,8 @@ export class ScanDeviceComponent implements OnInit {
     return new Promise((resolve, reject) => {
       Toast.show({
         text: 'Searching for SBI devices for : ' + sbiDeviceType,
+      }).catch((error) => { 
+        console.log(error) 
       });
       MosipSbiCapacitorPlugin.startActivity({
         methodType: appConstants.SBI_METHOD_DISCOVER,
