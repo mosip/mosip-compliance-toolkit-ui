@@ -14,6 +14,7 @@ import { SdkProjectModel } from 'src/app/core/models/sdk-project';
 import { TranslateService } from '@ngx-translate/core';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { AbisProjectModel } from 'src/app/core/models/abis-project';
+import { error } from 'console';
 
 @Component({
   selector: 'app-test-run-history',
@@ -218,10 +219,15 @@ export class TestRunHistoryComponent implements OnInit {
         this.dataService
           .getTestRunHistory(this.collectionId, this.pageIndex, this.pageSize)
           .subscribe(
-            async (response: any) => {
+            (response: any) => {
               console.log(response);
-              await this.populateTableData(response);
-              resolve(true);
+              this.populateTableData(response)
+                .then(() => {
+                  resolve(true);
+                })
+                .catch((error) => {
+                  reject(error);
+                });
             },
             (errors) => {
               Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
@@ -295,11 +301,16 @@ export class TestRunHistoryComponent implements OnInit {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
         this.dataService.deleteTestRun(row.runId).subscribe(
-          async (response: any) => {
+          (response: any) => {
             this.dataLoaded = true;
             console.log(response);
-            await this.getTestRunHistory();
-            this.dataLoaded = true;
+            this.getTestRunHistory()
+              .then(() => {
+                this.dataLoaded = true;
+              })
+              .catch((error) => {
+                reject(error);
+              });
           },
           (errors) => {
             this.dataLoaded = true;
