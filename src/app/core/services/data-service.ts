@@ -234,8 +234,8 @@ export class DataService {
     return this.httpClient.get(url);
   }
 
-  getDataShareUrl(body: any) {
-    let url = `${this.SERVICES_BASE_URL}getDataShareUrl`;
+  createDataShareUrl(body: any) {
+    let url = `${this.SERVICES_BASE_URL}createDataShareUrl`;
      return this.httpClient.post(url, body);
   }
   
@@ -250,5 +250,10 @@ export class DataService {
         return this.httpClient.get('./assets/i18n/eng.json');
       })
     );
+  }
+
+  expireDataShareUrl(body: any) {
+    let url = `${this.SERVICES_BASE_URL}expireDataShareUrl`;
+    return this.httpClient.post(url, body);
   }
 }
