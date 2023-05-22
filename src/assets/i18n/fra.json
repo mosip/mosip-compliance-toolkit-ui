@@ -1309,7 +1309,7 @@
 		"TOOLKIT_VALIDATION_ERR_003": "Échec de la validation de l'identifiant du partenaire",
 		"TOOLKIT_VALIDATION_ERR_004": "Nom de méthode non valide",
 		"TOOLKIT_TESTDATA_ERR_001": "Les données de test ont un mauvais objectif",
-		"TOOLKIT_TESTDATA_ERR_002": "Testdata a un fichier de galerie non valide",
+		"TOOLKIT_TESTDATA_ERR_002": "Testdata a un fichier de galerie non valide {} dans {}",
 		"TOOLKIT_TESTDATA_ERR_003": "Erreur de structure du dossier Testdata",
 		"TOOLKIT_TESTDATA_ERR_004": "Testdata a un dossier invalide",
 		"TOOLKIT_TESTDATA_ERR_005": "Le fichier de données de test n'est pas valide",

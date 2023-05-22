@@ -1309,7 +1309,7 @@
 		"TOOLKIT_VALIDATION_ERR_003": "Partner Id validation failed",
 		"TOOLKIT_VALIDATION_ERR_004": "Invalid MethodName",
 		"TOOLKIT_TESTDATA_ERR_001": "Testdata has wrong purpose",
-		"TOOLKIT_TESTDATA_ERR_002": "Testdata has invalid gallery file ",
+		"TOOLKIT_TESTDATA_ERR_002": "Testdata has invalid gallery file {} in {} ",
 		"TOOLKIT_TESTDATA_ERR_003": "Testdata folder structure error",
 		"TOOLKIT_TESTDATA_ERR_004": "Testdata has invalid folder",
 		"TOOLKIT_TESTDATA_ERR_005": "Testdata file is invalid",
