@@ -51,13 +51,14 @@ export class AbisTestCaseService {
         }
       }
       let methodRequest: any = this.createRequest(testCase, methodName, dataShareResp, requestId, referenceId, galleryIds);
+      
       //handle expireDataShareUrl testcase
       let invalidKey = testCase.otherAttributes.invalidRequestAttribute;
       if (invalidKey == 'expireDataShareUrl') {
         await this.expireDataShareUrl(dataShareResp);
       }
 
-      methodRequest = JSON.stringify(methodRequest);
+      
       //now validate the method request against the Schema
       let validationRequest: any = await this.validateRequest(
         testCase,
@@ -173,7 +174,7 @@ export class AbisTestCaseService {
     });
   }
 
-  async createRequest(testCase: TestCaseModel, methodName: string, dataShareResp: any, requestId: string, referenceId: string, galleryIds: any[]): Promise<any> {
+  createRequest(testCase: TestCaseModel, methodName: string, dataShareResp: any, requestId: string, referenceId: string, galleryIds: any[]) {
     let request: any = {};
     if (methodName == appConstants.ABIS_METHOD_INSERT) {
       request = {
@@ -223,8 +224,8 @@ export class AbisTestCaseService {
       }
     }
     request = Utils.handleInvalidRequestAttribute(testCase, request);
-   
-    return request;
+    console.log(request);
+    return JSON.stringify(request);
   }
 
   async validateResponse(
