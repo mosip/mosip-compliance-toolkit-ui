@@ -32,7 +32,7 @@ export class AbisTestCaseService {
       let dataShareResp: any = null;
       //create a datashare URL but only for Insert
       if (methodName == appConstants.ABIS_METHOD_INSERT) {
-        dataShareResp = await this.getDataShareUrl(
+        dataShareResp = await this.createDataShareUrl(
           testCase,
           abisProjectData.bioTestDataFileName,
           cbeffFileSuffix
@@ -51,6 +51,12 @@ export class AbisTestCaseService {
         }
       }
       let methodRequest: any = this.createRequest(testCase, methodName, dataShareResp, requestId, referenceId, galleryIds);
+      //handle expireDataShareUrl testcase
+      let invalidKey = testCase.otherAttributes.invalidRequestAttribute;
+      if (invalidKey == 'expireDataShareUrl') {
+        await this.expireDataShareUrl(dataShareResp);
+      }
+
       methodRequest = JSON.stringify(methodRequest);
       //now validate the method request against the Schema
       let validationRequest: any = await this.validateRequest(
@@ -118,7 +124,7 @@ export class AbisTestCaseService {
     })
   }
 
-  getDataShareUrl(
+  createDataShareUrl(
     testCase: TestCaseModel,
     selectedBioTestDataName: string,
     cbeffFileIndex: number
@@ -136,7 +142,7 @@ export class AbisTestCaseService {
         metadata: {},
         request: dataShareRequestDto,
       };
-      this.dataService.getDataShareUrl(request).subscribe(
+      this.dataService.createDataShareUrl(request).subscribe(
         (response: any) => {
           if (response.errors && response.errors.length > 0) {
             resolve(false);
@@ -151,7 +157,8 @@ export class AbisTestCaseService {
                 if (url) {
                   resolve({
                     url: url,
-                    testDataSource: resp['testDataSource']
+                    testDataSource: resp['testDataSource'],
+                    transactionsAllowed: dataShare['transactionsAllowed']
                   });
                 }
               }
@@ -166,7 +173,7 @@ export class AbisTestCaseService {
     });
   }
 
-  createRequest(testCase: TestCaseModel, methodName: string, dataShareResp: any, requestId: string, referenceId: string, galleryIds: any[]): any {
+  async createRequest(testCase: TestCaseModel, methodName: string, dataShareResp: any, requestId: string, referenceId: string, galleryIds: any[]): Promise<any> {
     let request: any = {};
     if (methodName == appConstants.ABIS_METHOD_INSERT) {
       request = {
@@ -216,6 +223,7 @@ export class AbisTestCaseService {
       }
     }
     request = Utils.handleInvalidRequestAttribute(testCase, request);
+   
     return request;
   }
 
@@ -288,6 +296,34 @@ export class AbisTestCaseService {
         },
         (errors) => {
           resolve(errors);
+        }
+      );
+    });
+  }
+
+  async expireDataShareUrl(
+    dataShareResp: any
+  ) {
+    let dataShareRequestDto = {
+      url: dataShareResp["url"],
+      transactionsAllowed: dataShareResp["transactionsAllowed"]
+    }
+    let request = {
+      id: appConstants.DATASHARE_ID,
+      version: appConstants.VERSION,
+      requesttime: new Date().toISOString(),
+      metadata: {},
+      request: dataShareRequestDto,
+    };
+    console.log(dataShareResp);
+    return new Promise((resolve, reject) => {
+      this.dataService.expireDataShareUrl(request).subscribe(
+        (response: any) => {
+         resolve(response[appConstants.RESPONSE]);
+        },
+        (errors) => {
+          console.log(errors);
+          resolve(false);
         }
       );
     });
