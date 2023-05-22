@@ -306,7 +306,7 @@ export default class Utils {
         newRequest = request;
       }
       else if (invalidKey == 'invalidId' && testCase.methodName[0] == appConstants.ABIS_METHOD_INSERT) {
-        request["id"] =  appConstants.ABIS_IDENTIFY_ID;
+        request["id"] =  "abis.invalid.id";
         newRequest = request;
       }
       else if (
