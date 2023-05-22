@@ -258,7 +258,7 @@ export default class Utils {
     return dialogRef;
   }
 
-  static getTranslatedMessage(resourceBundleMessages: any, messageKey: string ) {
+  static getTranslatedMessage(resourceBundleMessages: any, messageKey: string) {
     const COMMA_SEPARATOR = ',';
     let translatedMsg = '';
     if (messageKey && resourceBundleMessages) {
