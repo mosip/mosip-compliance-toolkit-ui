@@ -85,7 +85,9 @@ export class AuthInterceptor implements HttpInterceptor {
       } else {
         //for android 9,10,11 the Capacitor Cookies will set
         //the cookie header with token and 'withCredentials' work
-        this.addCookieForAndroid();
+        this.addCookieForAndroid().catch((error) => {
+          console.log(error);
+        });
         request = request.clone({ withCredentials: true });
         //for android 12+, the Capacitor Cookies and 'withCredentials' do not work
         //hence setting token as a new header 'accessToken'
@@ -136,7 +138,10 @@ export class AuthInterceptor implements HttpInterceptor {
                   event.body.errors[0]['errorCode'] ===
                   appConstants.AUTH_ERROR_CODE[1])
               ) {
-                this.showHomePage(isAndroidAppMode);
+                this.showHomePage(isAndroidAppMode)
+                  .catch((error) => {
+                    console.log(error);
+                  });
               }
             }
           }
@@ -144,7 +149,10 @@ export class AuthInterceptor implements HttpInterceptor {
         (err) => {
           if (err instanceof HttpErrorResponse) {
             if (!isLocalUrl) {
-              this.showHomePage(isAndroidAppMode);
+              this.showHomePage(isAndroidAppMode)
+                .catch((error) => {
+                  console.log(error);
+                });
             }
           }
         }
