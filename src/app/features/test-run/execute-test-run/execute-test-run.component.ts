@@ -803,7 +803,7 @@ export class ExecuteTestRunComponent implements OnInit {
           this.currentCbeffFile = this.cbeffFileSuffix;
           this.abisRequestSendFailure = false;
           let methodIndex = 0;
-          if (this.currentAbisMethod == appConstants.ABIS_METHOD_IDENTIFY) {
+          if (this.isCombinationAbisTestcase && this.currentAbisMethod == appConstants.ABIS_METHOD_IDENTIFY) {
             methodIndex = 1;
           }
 
@@ -842,7 +842,7 @@ export class ExecuteTestRunComponent implements OnInit {
           this.showLoader = true;
           //run validations
           let methodIndex = 0;
-          if (this.currentAbisMethod == appConstants.ABIS_METHOD_IDENTIFY) {
+          if (this.isCombinationAbisTestcase && this.currentAbisMethod == appConstants.ABIS_METHOD_IDENTIFY) {
             methodIndex = 1;
           }
           const validatorsResp = await this.abisTestCaseService.runValidators(testCase, this.abisProjectData, this.currentAbisMethod,

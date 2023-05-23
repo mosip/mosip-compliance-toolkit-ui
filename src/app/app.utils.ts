@@ -370,7 +370,8 @@ export default class Utils {
         request["requesttime"] = incorrectVal;
         newRequest = request;
       }
-      else if (invalidKey == 'invalidId' && testCase.methodName[0] == appConstants.ABIS_METHOD_INSERT) {
+      else if (invalidKey == 'invalidId' && 
+      (testCase.methodName[0] == appConstants.ABIS_METHOD_INSERT ||  testCase.methodName[0] == appConstants.ABIS_METHOD_IDENTIFY)) {
         request["id"] =  "abis.invalid.id";
         newRequest = request;
       }
