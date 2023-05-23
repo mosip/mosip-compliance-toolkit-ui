@@ -7,6 +7,7 @@ import { SbiDiscoverResponseModel } from '../models/sbi-discover';
 import Utils from 'src/app/app.utils';
 import { MosipSbiCapacitorPlugin } from 'mosip-sbi-capacitor-plugin';
 import { UserProfileService } from './user-profile.service';
+import { error } from 'console';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +28,6 @@ export class SbiTestCaseAndroidService {
     beforeKeyRotationResp: any
   ) {
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
-    return new Promise(async (resolve, reject) => {
       const methodRequest = this.createRequest(testCase, sbiSelectedDevice);
       let startExecutionTime = new Date().toISOString();
       let executeResponse: any = await this.executeMethod(
@@ -78,9 +78,9 @@ export class SbiTestCaseAndroidService {
           methodUrl: executeResponse.methodUrl,
           testDataSource: '',
         };
-        resolve(finalResponse);
+        return finalResponse;
       } else {
-        resolve({
+        return {
           errors: [
             {
               errorCode: this.resourceBundleJson.executeTestRun['connectionFailure']
@@ -91,9 +91,8 @@ export class SbiTestCaseAndroidService {
                 : 'Unable to connect to device / SBI',
             },
           ],
-        });
+        };
       }
-    });
   }
 
   async executeMethod(
@@ -158,7 +157,7 @@ export class SbiTestCaseAndroidService {
               } else {
                 resolve(false);
               }
-            });
+            }).catch((error) => {reject(error)});
           }
           if (testcaseMethodName == appConstants.SBI_METHOD_RCAPTURE) {
             MosipSbiCapacitorPlugin.startActivity({
@@ -178,7 +177,7 @@ export class SbiTestCaseAndroidService {
               } else {
                 resolve(false);
               }
-            });
+            }).catch((error) => {reject(error)});
           }
           if (testcaseMethodName == appConstants.SBI_METHOD_CAPTURE) {
             MosipSbiCapacitorPlugin.startActivity({
@@ -198,7 +197,7 @@ export class SbiTestCaseAndroidService {
               } else {
                 resolve(false);
               }
-            });
+            }).catch((error) => {reject(error)});
           }
         } else {
           resolve(false);

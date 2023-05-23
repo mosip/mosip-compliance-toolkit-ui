@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { AppConfigService } from '../../app-config.service';
 import { TestCaseModel } from '../models/testcase';
 import { DataService } from './data-service';
 import * as appConstants from 'src/app/app.constants';
@@ -22,7 +21,6 @@ export class SdkTestCaseService {
     selectedBioTestDataName: string
   ) {
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
-    return new Promise(async (resolve, reject) => {
       let isCombinationTestCase = testCase.methodName.length > 1 ? true : false;
       const methodsArr = testCase.methodName;
       let methodIndex = 0;
@@ -41,7 +39,7 @@ export class SdkTestCaseService {
           );
           console.log('done: ' + method);
           if (!isCombinationTestCase) {
-            resolve(firstResponse);
+            return firstResponse;
           }
           methodIndex++;
         } else {
@@ -65,9 +63,9 @@ export class SdkTestCaseService {
                 methodIndex,
                 firstMethodResponse.response.response.segments
               );
-              resolve(secondMethodResponse);
+              return secondMethodResponse;
             } else {
-              resolve({
+              return {
                 errors: [
                   {
                     errorCode: this.resourceBundleJson.executeTestRun['failure']
@@ -78,14 +76,13 @@ export class SdkTestCaseService {
                       : 'Unable to generate request to SDK service: ' + method,
                   },
                 ],
-              });
+              };
             }
           } else {
-            resolve(firstResponse);
+            return firstResponse;
           }
         }
       }
-    });
   }
 
   async runTestCaseMethod(
@@ -96,7 +93,6 @@ export class SdkTestCaseService {
     methodIndex: number,
     firstMethodResponse: any
   ) {
-    return new Promise(async (resolve, reject) => {
       let methodRequestResp: any = null;
       if (firstMethodResponse) {
         methodRequestResp = await this.generateRequestForSDKFrmBirs(
@@ -151,9 +147,9 @@ export class SdkTestCaseService {
               methodUrl: url,
               testDataSource: testDataSource
             };
-            resolve(finalResponse);
+            return finalResponse;
           } else {
-            resolve({
+            return {
               errors: [
                 {
                   errorCode: this.resourceBundleJson.executeTestRun['connectionFailure']
@@ -164,7 +160,7 @@ export class SdkTestCaseService {
                     : 'Unable to connect to SDK services',
                 },
               ],
-            });
+            };
           }
         } else {
           let validationResponse = {
@@ -180,10 +176,10 @@ export class SdkTestCaseService {
             methodRequest: JSON.stringify(methodRequest),
             validationResponse: validationResponse,
           };
-          resolve(finalResponse);
+          return finalResponse;
         }
       } else {
-        resolve({
+        return {
           errors: [
             {
               errorCode: this.resourceBundleJson.executeTestRun['failure']
@@ -194,9 +190,8 @@ export class SdkTestCaseService {
                 : 'Unable to generate request to SDK service: ' + testCase.methodName,
             },
           ],
-        });
+        };
       }
-    });
   }
 
   async executeMethod(sdkUrl: string, methodRequest: any) {

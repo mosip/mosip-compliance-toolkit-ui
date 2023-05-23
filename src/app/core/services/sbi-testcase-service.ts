@@ -26,7 +26,6 @@ export class SbiTestCaseService {
     beforeKeyRotationResp: any
   ) {
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
-    return new Promise(async (resolve, reject) => {
       const methodRequest = this.createRequest(testCase, sbiSelectedDevice);
       //now validate the method request against the Schema
       let validationRequest: any = await this.validateRequest(
@@ -85,9 +84,9 @@ export class SbiTestCaseService {
             methodUrl: methodUrl,
             testDataSource: '',
           };
-          resolve(finalResponse);
+          return finalResponse;
         } else {
-          resolve({
+          return {
             errors: [
               {
                 errorCode: this.resourceBundleJson.executeTestRun['connectionFailure']
@@ -98,7 +97,7 @@ export class SbiTestCaseService {
                   : 'Unable to connect to device / SBI',
               },
             ],
-          });
+          };
         }
       } else {
         let validationResponse = {
@@ -116,9 +115,8 @@ export class SbiTestCaseService {
         };
         console.log('request schema validation failed');
         console.log(finalResponse);
-        resolve(finalResponse);
+        return finalResponse;
       }
-    });
   }
 
   async executeMethod(
