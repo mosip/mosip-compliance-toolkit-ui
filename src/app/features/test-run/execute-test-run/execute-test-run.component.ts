@@ -330,7 +330,6 @@ export class ExecuteTestRunComponent implements OnInit {
       if (proceedTestCase || startingForLoop) {
         startingForLoop = true;
         this.currectTestCaseId = testCase.testId;
-        console.log(`this.currectTestCaseId: ${this.currectTestCaseId}`);
         const testCaseInResourceBundle = this.resourceBundleJson.testcases[testCase.testId];
         this.currectTestCaseName = testCaseInResourceBundle
           ? testCaseInResourceBundle.testName
@@ -349,6 +348,7 @@ export class ExecuteTestRunComponent implements OnInit {
         if (!this.streamingDone) {
           this.checkIfToShowStreamBtn(testCase);
         }
+        console.log(`this.currectTestCaseId: ${this.currectTestCaseId}`);
         const res: any = await this.executeCurrentTestCase(testCase);
         if (res) {
           startingForLoop = this.handleErr(res);
@@ -382,13 +382,16 @@ export class ExecuteTestRunComponent implements OnInit {
             this.abisSentMessage = appConstants.BLANK_STRING;
             this.abisSentDataSource = appConstants.BLANK_STRING;
             this.abisRecvdMessage = appConstants.BLANK_STRING;
+            
             if (this.cbeffFileSuffix > 0) {
               //do no reset current testcaseId
               resetCurrentTestCase = false;
-              if (this.countOfSuccessTestcases > 0)
-                this.countOfSuccessTestcases = this.countOfSuccessTestcases - 1;
+              if (!testCase.otherAttributes.insertReferenceId) {
+                if (this.countOfSuccessTestcases > 0)
+                  this.countOfSuccessTestcases = this.countOfSuccessTestcases - 1;
+              }
               if (this.countOfFailedTestcases > 0)
-                this.countOfFailedTestcases = this.countOfFailedTestcases - 1;
+              this.countOfFailedTestcases = this.countOfFailedTestcases - 1; 
               await this.startWithSameTestcase();
             }
             else if (this.isCombinationAbisTestcase) {
@@ -818,7 +821,8 @@ export class ExecuteTestRunComponent implements OnInit {
             galleryIds,
             this.cbeffFileSuffix,
           );
-          console.log(abisReq);
+          if (abisReq)
+          console.log(`send to queue status ${abisReq[appConstants.STATUS]}`);
           if (abisReq && abisReq[appConstants.STATUS] && abisReq[appConstants.STATUS] == appConstants.SUCCESS) {
             if (insertCount > 1) {
               this.cbeffFileSuffix = this.cbeffFileSuffix + 1;

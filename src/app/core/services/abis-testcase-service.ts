@@ -72,7 +72,7 @@ export class AbisTestCaseService {
         appConstants.SUCCESS
       ) {
         //SEND THE REQUEST JSON TO ABIS QUEUE
-        console.log(methodRequest);
+       // console.log(methodRequest);
         let sendRequestResp: any = await this.activeMqService.sendToQueue(rxStompService, abisProjectData, methodRequest);
         resolve({
           ...sendRequestResp,
@@ -224,7 +224,7 @@ export class AbisTestCaseService {
       }
     }
     request = Utils.handleInvalidRequestAttribute(testCase, request);
-    console.log(request);
+    //console.log(request);
     return JSON.stringify(request);
   }
 
