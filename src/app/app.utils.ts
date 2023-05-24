@@ -342,7 +342,7 @@ export default class Utils {
 
   static handleInvalidRequestAttribute(testCase: TestCaseModel, request: any) {
     if (testCase.otherAttributes.invalidRequestAttribute) {
-      console.log(`invalidRequestAttribute: ${testCase.otherAttributes.invalidRequestAttribute}`);
+     // console.log(`invalidRequestAttribute: ${testCase.otherAttributes.invalidRequestAttribute}`);
       let newRequest: any = {};
       let invalidKey = testCase.otherAttributes.invalidRequestAttribute;
       if (invalidKey == 'newUnknownValue') {
