@@ -7,6 +7,7 @@ import { SbiDiscoverResponseModel } from '../models/sbi-discover';
 import Utils from 'src/app/app.utils';
 import { MosipSbiCapacitorPlugin } from 'mosip-sbi-capacitor-plugin';
 import { UserProfileService } from './user-profile.service';
+import { error } from 'console';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +26,7 @@ export class SbiTestCaseAndroidService {
     callbackId: string,
     sbiSelectedDevice: string,
     beforeKeyRotationResp: any
-  ) {
+  ): Promise<any> {
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     return new Promise(async (resolve, reject) => {
       const methodRequest = this.createRequest(testCase, sbiSelectedDevice);
@@ -158,7 +159,7 @@ export class SbiTestCaseAndroidService {
               } else {
                 resolve(false);
               }
-            });
+            }).catch((error) => { reject(error) });
           }
           if (testcaseMethodName == appConstants.SBI_METHOD_RCAPTURE) {
             MosipSbiCapacitorPlugin.startActivity({
@@ -178,7 +179,7 @@ export class SbiTestCaseAndroidService {
               } else {
                 resolve(false);
               }
-            });
+            }).catch((error) => { reject(error) });
           }
           if (testcaseMethodName == appConstants.SBI_METHOD_CAPTURE) {
             MosipSbiCapacitorPlugin.startActivity({
@@ -198,7 +199,7 @@ export class SbiTestCaseAndroidService {
               } else {
                 resolve(false);
               }
-            });
+            }).catch((error) => { reject(error) });
           }
         } else {
           resolve(false);
