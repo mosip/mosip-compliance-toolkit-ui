@@ -24,7 +24,7 @@ export class SbiTestCaseService {
     sbiSelectedPort: string,
     sbiSelectedDevice: string,
     beforeKeyRotationResp: any
-  ) {
+  ): Promise<any> {
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     return new Promise(async (resolve, reject) => {
       const methodRequest = this.createRequest(testCase, sbiSelectedDevice);
