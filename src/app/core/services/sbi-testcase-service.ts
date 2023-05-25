@@ -121,8 +121,19 @@ export class SbiTestCaseService {
           resolve(finalResponse);
         }
       } catch(error) {
-        console.log(error);
-        reject(error);
+        console.log("Exception caught");
+        resolve({
+          errors: [
+            {
+              errorCode: this.resourceBundleJson.executeTestRun['connectionFailure']
+                ? this.resourceBundleJson.executeTestRun['connectionFailure']
+                : 'Connection Failure',
+              message: this.resourceBundleJson.executeTestRun['unableToConnectSBI']
+                ? this.resourceBundleJson.executeTestRun['unableToConnectSBI']
+                : 'Unable to connect to device / SBI',
+            },
+          ],
+        });
       }
     });
   }
