@@ -20,9 +20,9 @@ export class SdkTestCaseService {
     testCase: TestCaseModel,
     sdkUrl: string,
     selectedBioTestDataName: string
-  ): Promise<any> {
+  ) {
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
-    return new Promise(async (resolve, reject) => {
+    return new Promise<any>(async (resolve, reject) => {
       let isCombinationTestCase = testCase.methodName.length > 1 ? true : false;
       const methodsArr = testCase.methodName;
       let methodIndex = 0;
@@ -95,8 +95,8 @@ export class SdkTestCaseService {
     method: string,
     methodIndex: number,
     firstMethodResponse: any
-  ): Promise<any> {
-    return new Promise(async (resolve, reject) => {
+  ) {
+    return new Promise<any>(async (resolve, reject) => {
       let methodRequestResp: any = null;
       if (firstMethodResponse) {
         methodRequestResp = await this.generateRequestForSDKFrmBirs(

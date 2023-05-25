@@ -17,7 +17,7 @@ export class LogoutService {
   async logout() {
     const isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
     if (isAndroidAppMode) {
-      return new Promise(async (resolve, reject) => {
+      return new Promise<any>(async (resolve, reject) => {
         await this.androidKeycloakService.getInstance().logout();
         this.androidKeycloakService.getInstance().clearToken();
         await CapacitorCookies.deleteCookie({

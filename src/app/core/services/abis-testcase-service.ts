@@ -28,7 +28,7 @@ export class AbisTestCaseService {
     galleryIds: any[],
     cbeffFileSuffix: number
   ) {
-    return new Promise(async (resolve, reject) => {
+    return new Promise<any>(async (resolve, reject) => {
       let dataShareResp: any = null;
       //create a datashare URL but only for Insert
       if (methodName == appConstants.ABIS_METHOD_INSERT) {
@@ -105,7 +105,7 @@ export class AbisTestCaseService {
     testDataSource: string,
     methodIndex: number
   ) {
-    return new Promise(async (resolve, reject) => {
+    return new Promise<any>(async (resolve, reject) => {
       // now validate the method response against all the validators
       let validationResponse = await this.validateResponse(
         testCase,
