@@ -1150,6 +1150,10 @@
 			"testName": "Invalid Identify request - invalid request time format",
 			"testDescription": "Invalid Identify request - invalid request time format"
 		},
+		"ABIS3026": {
+			"testName": "Identify - duplicate found for the referenceId (gallery skipped). <b>Clear the ABIS cache before running this testcase.</b>",
+			"testDescription": "Insert same biometrics twice, then test if duplicate is found for the referenceId, (gallery skipped)"
+		},
 		"ABIS3027": {
 			"testName": "Identify - duplicate found for the referenceId against gallery - provide referenceId's sub set (IDs already inserted)",
 			"testDescription": "Insert same biometrics twice, then test if duplicate is found for the referenceId against gallery - provide referenceId's sub set (IDs already inserted)"

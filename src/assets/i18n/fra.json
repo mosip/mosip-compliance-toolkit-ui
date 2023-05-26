@@ -1149,6 +1149,9 @@
 		"ABIS3025": {
 			"testName": "Demande d'identification non valide - format d'heure de demande non valide",
 			"testDescription": "Demande d'identification non valide - format d'heure de demande non valide"
+		},"ABIS3026": {
+			"testName": "Identifier - doublon trouvé pour le referenceId (galerie ignorée). <b>Effacez le cache ABIS avant d'exécuter ce cas de test.</b>",
+			"testDescription": "Insérez deux fois les mêmes données biométriques, puis testez si un doublon est trouvé pour le referenceId, (galerie ignorée)"
 		},
 		"ABIS3027": {
 			"testName": "Identifier - doublon trouvé pour le referenceId par rapport à la galerie - fournir le sous-ensemble de referenceId (ID déjà insérés)",
