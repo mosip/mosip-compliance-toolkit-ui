@@ -279,7 +279,8 @@
 		"ConvertInvalidDataValidator": "Validates if input BDB data present in the Probe for the modality is valid",
 		"ConvertNoInputDataValidator": "Validates if no input BDB data present in the Probe",
 		"ExpectedFailureReasonValidator": "Validates the failure reason to match the expected value",
-		"IdentifyDuplicateFoundValidator": "Validates the count of duplicates found by ABIS for the given referenceId"
+		"IdentifyDuplicateFoundValidator": "Validates the count of duplicates found by ABIS for the given referenceId",
+		"ExpectedDuplicateCountValidator": "Validates the duplicates found to match the expected value"
 	},
 	"testcases": {
 		"SBI1000": {
@@ -1358,7 +1359,9 @@
 		"IDENTIFY_DUPLICATE_FOUND_VALIDATOR_001": "Identify - found {} duplicate for given the referenceId.",
 		"IDENTIFY_DUPLICATE_FOUND_VALIDATOR_002": "Identify - no duplicate found for given the referenceId.",
 		"DUPLICATE_NOT_FOUND_VALIDATOR_001": "Identify - no duplicate found for given the referenceId.",
-		"DUPLICATE_NOT_FOUND_VALIDATOR_002": "Identify - found {} duplicate for given the referenceId."
+		"DUPLICATE_NOT_FOUND_VALIDATOR_002": "Identify - found {} duplicate for given the referenceId.",
+		"EXPECTED_DUPLICATE_COUNT_VALIDATOR_001": "Identify - found the expected duplicate count as: {} for given the referenceId",
+		"EXPECTED_DUPLICATE_COUNT_VALIDATOR_002": "Identify - did not find the expected duplicate count. Expected duplicate count is: {}. But received duplicate count as: {}"
 	},
 	"serviceErrors": {
 		"TOOLKIT_SUCCESS_000": "Success",
