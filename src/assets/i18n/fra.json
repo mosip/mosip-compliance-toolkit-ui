@@ -280,7 +280,8 @@
 		"ConvertInvalidDataValidator": "Valide si les données BDB d'entrée présentes dans la sonde pour la modalité sont valides",
 		"ConvertNoInputDataValidator": "Valide si aucune donnée BDB d'entrée n'est présente dans la sonde",
 		"ExpectedFailureReasonValidator": "Valide la raison de l'échec pour correspondre à la valeur attendue",
-		"IdentifyDuplicateFoundValidator": "Valide le nombre de doublons trouvés par ABIS pour le referenceId donné"
+		"IdentifyDuplicateFoundValidator": "Valide le nombre de doublons trouvés par ABIS pour le referenceId donné",
+		"ExpectedDuplicateCountValidator": "Valide les doublons trouvés pour correspondre à la valeur attendue"
 	},
 	"testcases": {
 		"SBI1000": {
@@ -1358,7 +1359,9 @@
 		"IDENTIFY_DUPLICATE_FOUND_VALIDATOR_001": "Identifier - trouvé {} doublon pour étant donné le referenceId.",
 		"IDENTIFY_DUPLICATE_FOUND_VALIDATOR_002": "Identifier - aucun doublon trouvé pour le referenceId donné.",
 		"DUPLICATE_NOT_FOUND_VALIDATOR_001": "Identifier - aucun doublon trouvé pour le referenceId donné.",
-		"DUPLICATE_NOT_FOUND_VALIDATOR_002": "Identifier - trouvé {} doublon pour étant donné le referenceId."
+		"DUPLICATE_NOT_FOUND_VALIDATOR_002": "Identifier - trouvé {} doublon pour étant donné le referenceId.",
+		"EXPECTED_DUPLICATE_COUNT_VALIDATOR_001": "Identifier - a trouvé le nombre de doublons attendu comme : {} pour l'identifiant de référence donné",
+		"EXPECTED_DUPLICATE_COUNT_VALIDATOR_002": "Identifier - n'a pas trouvé le nombre de doublons attendu. Le nombre de doublons attendu est : {}. Mais les doublons reçus comptent comme : {}"
 	},
 	"serviceErrors": {
 		"TOOLKIT_SUCCESS_000": "Succès",

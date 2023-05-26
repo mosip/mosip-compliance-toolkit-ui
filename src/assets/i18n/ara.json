@@ -280,7 +280,8 @@
 		"ConvertInvalidDataValidator": "يتحقق من صحة إدخال بيانات BDB الموجودة في المسبار للطريقة",
 		"ConvertNoInputDataValidator": "يتحقق من عدم وجود بيانات BDB الإدخال موجودة في المسبار",
 		"ExpectedFailureReasonValidator": "يتحقق من سبب الفشل لمطابقة القيمة المتوقعة",
-		"IdentifyDuplicateFoundValidator": "يتحقق من صحة عدد التكرارات التي تم العثور عليها بواسطة ABIS للمرجع المرجعي المحدد"
+		"IdentifyDuplicateFoundValidator": "يتحقق من صحة عدد التكرارات التي تم العثور عليها بواسطة ABIS للمرجع المرجعي المحدد",
+		"ExpectedDuplicateCountValidator": "يتحقق من صحة التكرارات التي تم العثور عليها لمطابقة القيمة المتوقعة"
 	},
 	"testcases": {
 		"SBI1000": {
@@ -1359,7 +1360,9 @@
 		"IDENTIFY_DUPLICATE_FOUND_VALIDATOR_001": "تحديد - تم العثور على {} نسخة طبق الأصل لمعرّف المرجع.",
 		"IDENTIFY_DUPLICATE_FOUND_VALIDATOR_002": "تحديد - لم يتم العثور على نسخة مكررة لإعطاء المرجع المرجعي.",
 		"DUPLICATE_NOT_FOUND_VALIDATOR_001": "تحديد - لم يتم العثور على نسخة مكررة لإعطاء المرجع المرجعي.",
-		"DUPLICATE_NOT_FOUND_VALIDATOR_002": "تحديد - تم العثور على {} نسخة طبق الأصل لمعرّف المرجع."
+		"DUPLICATE_NOT_FOUND_VALIDATOR_002": "تحديد - تم العثور على {} نسخة طبق الأصل لمعرّف المرجع.",
+		"EXPECTED_DUPLICATE_COUNT_VALIDATOR_001": "تحديد - تم العثور على عدد التكرارات المتوقع على النحو التالي: {} لمعرّف المرجع",
+		"EXPECTED_DUPLICATE_COUNT_VALIDATOR_002": "تحديد - لم يتم العثور على العدد المكرر المتوقع. عدد التكرارات المتوقع هو: {}. لكن تم تلقي عدد مكرر على النحو التالي: {}"
 	},
 	"serviceErrors": {
 		"TOOLKIT_SUCCESS_000": "نجاح",
