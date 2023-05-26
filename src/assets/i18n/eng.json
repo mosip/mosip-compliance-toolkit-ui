@@ -1112,6 +1112,10 @@
 			"testName": "Invalid Insert request - invalid data",
 			"testDescription": "Invalid Insert request - invalid data"
 		},
+		"ABIS3017": {
+			"testName": "Invalid Insert request - CBEFF data decryption failure",
+			"testDescription": "Invalid Insert request - CBEFF data decryption failure"
+		},
 		"ABIS3018": {
 			"testName": "Identify - duplicate found for the referenceId against gallery",
 			"testDescription": "Insert same biometrics twice, then test if duplicate is found for the referenceId against gallery"
@@ -1147,6 +1151,14 @@
 		"ABIS3027": {
 			"testName": "Identify - duplicate found for the referenceId against gallery - provide referenceId's sub set (IDs already inserted)",
 			"testDescription": "Insert same biometrics twice, then test if duplicate is found for the referenceId against gallery - provide referenceId's sub set (IDs already inserted)"
+		},
+		"ABIS3028": {
+			"testName": "Identify - duplicate found for the referenceId against gallery - but the referenceId's are not inserted.",
+			"testDescription": "Insert biometrics once, then test if duplicate is found for the referenceId against gallery - but the referenceId's are not inserted."
+		},
+		"ABIS3029": {
+			"testName": "Identify - duplicate not found for the referenceId against gallery",
+			"testDescription": "Identify - duplicate not found for the referenceId against gallery"
 		}
 	},
 	"validatorMessages": {

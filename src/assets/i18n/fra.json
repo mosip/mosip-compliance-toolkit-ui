@@ -1112,6 +1112,10 @@
 			"testName": "Demande d'insertion invalide - données invalides",
 			"testDescription": "Demande d'insertion invalide - données invalides"
 		},
+		"ABIS3017": {
+			"testName": "Demande d'insertion non valide - Échec du déchiffrement des données CBEFF",
+			"testDescription": "Demande d'insertion non valide - Échec du déchiffrement des données CBEFF"
+		},
 		"ABIS3018": {
 			"testName": "Identifier - doublon trouvé pour le referenceId par rapport à la galerie",
 			"testDescription": "Insérez deux fois les mêmes données biométriques, puis testez si un doublon est trouvé pour le referenceId par rapport à la galerie"
@@ -1147,6 +1151,14 @@
 		"ABIS3027": {
 			"testName": "Identifier - doublon trouvé pour le referenceId par rapport à la galerie - fournir le sous-ensemble de referenceId (ID déjà insérés)",
 			"testDescription": "Insérez deux fois les mêmes données biométriques, puis testez si un doublon est trouvé pour le referenceId par rapport à la galerie - fournissez le sous-ensemble de referenceId (ID déjà insérés)"
+		},
+		"ABIS3028": {
+			"testName": "Identifier - doublon trouvé pour le referenceId par rapport à la galerie - mais les referenceId ne sont pas insérés.",
+			"testDescription": "Insérez la biométrie une fois, puis testez si un doublon est trouvé pour le referenceId par rapport à la galerie - mais les referenceId ne sont pas insérés."
+		},
+		"ABIS3029": {
+			"testName": "Identifier - doublon introuvable pour le referenceId contre la galerie",
+			"testDescription": "Identifier - doublon introuvable pour le referenceId contre la galerie"
 		}
 	},
 	"validatorMessages": {
