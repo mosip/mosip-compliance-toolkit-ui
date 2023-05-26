@@ -250,7 +250,8 @@
 		"unableToConnectSDK": "تعذر الاتصال بخدمات SDK",
 		"methodNotInvoked": "لم يتم استدعاء الأسلوب لأن الطلب غير صالح.",
 		"failure": "فشل",
-		"unableToGenerateRequest": "تعذر إنشاء طلب لخدمة SDK: "
+		"unableToGenerateRequest": "تعذر إنشاء طلب لخدمة SDK: ",
+		"executionFailed": "فشل التنفيذ"
 	},
 	"validators": {
 		"SchemaValidator": "يتحقق من صحة الاستجابة للسمات الإلزامية والقيم الصحيحة",
