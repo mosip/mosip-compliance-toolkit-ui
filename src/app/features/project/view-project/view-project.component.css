@@ -114,17 +114,12 @@ mat-expansion-panel-header {
   }
 }
 @media screen and (max-width: 1440px) {
-  .encryptionkeyButton{
-    margin-left: 900px;
-  }
-  .scandeviceButton{
-    margin-left: 460px;
-  }
-  .encryptionkeyButton{
-    margin-left: 460px;
-  }
   .collections-button2{
     position: absolute;
+  }
+  .buttonspan{
+    position: absolute;
+    width: 85em;
   }
   .add-button{
     margin-right: 20px;

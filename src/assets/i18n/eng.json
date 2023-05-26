@@ -277,7 +277,9 @@
 		"SegmentNoInputDataValidator": "Validates if no input BDB data present in the Probe",
 		"ConvertDataValidator": "Validates the input BDB data present in the Probe",
 		"ConvertInvalidDataValidator": "Validates if input BDB data present in the Probe for the modality is valid",
-		"ConvertNoInputDataValidator": "Validates if no input BDB data present in the Probe"
+		"ConvertNoInputDataValidator": "Validates if no input BDB data present in the Probe",
+		"ExpectedFailureReasonValidator": "Validates the failure reason to match the expected value",
+		"IdentifyDuplicateFoundValidator": "Validates the count of duplicates found by ABIS for the given referenceId"
 	},
 	"testcases": {
 		"SBI1000": {
@@ -1041,6 +1043,110 @@
 		"SDK2075": {
 			"testName": "Iris convert no input failure",
 			"testDescription": "Iris convert no input failure"
+		},
+		"ABIS3000": {
+			"testName": "Insert one person's biomterics in ABIS",
+			"testDescription": "Insert one person's biomterics in ABIS"
+		},
+		"ABIS3001": {
+			"testName": "Insert two person's biomterics in ABIS",
+			"testDescription": "Insert two person's biomterics in ABIS"
+		},
+		"ABIS3002": {
+			"testName": "Invalid Insert request structure",
+			"testDescription": "Invalid Insert request - request json structure is invalid"
+		},
+		"ABIS3003": {
+			"testName": "Invalid Insert request - missing referenceId",
+			"testDescription": "Invalid Insert request - missing referenceId"
+		},
+		"ABIS3004": {
+			"testName": "Invalid Insert request - missing requestId",
+			"testDescription": "Invalid Insert request - missing requestId"
+		},
+		"ABIS3005": {
+			"testName": "Unable to fetch biometric details using referenceURL",
+			"testDescription": "Unable to fetch biometric details using referenceURL"
+		},
+		"ABIS3006": {
+			"testName": "Invalid Insert request - Invalid reference url",
+			"testDescription": "Invalid Insert request - Invalid reference url"
+		},
+		"ABIS3007": {
+			"testName": "Invalid Insert request - missing reference URL",
+			"testDescription": "Invalid Insert request - missing reference URL"
+		},
+		"ABIS3008": {
+			"testName": "Invalid Insert request - missing request time",
+			"testDescription": "Invalid Insert request - missing request time"
+		},
+		"ABIS3009": {
+			"testName": "Invalid Insert request - referenceId already exists",
+			"testDescription": "Invalid Insert request - referenceId already exists"
+		},
+		"ABIS3010": {
+			"testName": "Invalid Insert request - CBEFF has no data",
+			"testDescription": "CBEFF has no data /No biometric available for deduplication"
+		},
+		"ABIS3011": {
+			"testName": "Invalid Insert request - invalid version",
+			"testDescription": "Invalid Insert request - invalid version"
+		},
+		"ABIS3012": {
+			"testName": "Invalid Insert request - invalid id",
+			"testDescription": "Invalid Insert request - invalid id"
+		},
+		"ABIS3013": {
+			"testName": "Invalid Insert request - invalid request time format",
+			"testDescription": "Invalid Insert request - invalid request time format"
+		},
+		"ABIS3014": {
+			"testName": "Invalid Insert request - invalid CBEFF format",
+			"testDescription": "Invalid Insert request - invalid CBEFF format"
+		},
+		"ABIS3015": {
+			"testName": "Invalid Insert request - data share URL has expired",
+			"testDescription": "Invalid Insert request - data share URL has expired"
+		},
+		"ABIS3016": {
+			"testName": "Invalid Insert request - invalid data",
+			"testDescription": "Invalid Insert request - invalid data"
+		},
+		"ABIS3018": {
+			"testName": "Identify - duplicate found for the referenceId against gallery",
+			"testDescription": "Insert same biometrics twice, then test if duplicate is found for the referenceId against gallery"
+		},
+		"ABIS3019": {
+			"testName": "Invalid Identify request structure",
+			"testDescription": "Invalid Identify request - request json structure is invalid"
+		},
+		"ABIS3020": {
+			"testName": "Invalid Identify request - missing referenceId",
+			"testDescription": "Invalid Identify request - missing referenceId"
+		},
+		"ABIS3021": {
+			"testName": "Invalid Identify request - missing requestId",
+			"testDescription": "Invalid Identify request - missing requestId"
+		},
+		"ABIS3022": {
+			"testName": "Invalid Identify request - missing request time",
+			"testDescription": "Invalid Identify request - missing request time"
+		},
+		"ABIS3023": {
+			"testName": "Invalid Identify request - invalid version",
+			"testDescription": "Invalid Identify request - invalid version"
+		},
+		"ABIS3024": {
+			"testName": "Invalid Identify request - invalid id",
+			"testDescription": "Invalid Identify request - invalid id"
+		},
+		"ABIS3025": {
+			"testName": "Invalid Identify request - invalid request time format",
+			"testDescription": "Invalid Identify request - invalid request time format"
+		},
+		"ABIS3027": {
+			"testName": "Identify - duplicate found for the referenceId against gallery - provide referenceId's sub set (IDs already inserted)",
+			"testDescription": "Insert same biometrics twice, then test if duplicate is found for the referenceId against gallery - provide referenceId's sub set (IDs already inserted)"
 		}
 	},
 	"validatorMessages": {
@@ -1234,7 +1340,13 @@
 		"ISO_VALIDATOR_114": "<BR>Invalid Image Bit Depth Value for Face Modality, expected values[0x01], but received input value[{}]",
 		"ISO_VALIDATOR_115": "<BR>Invalid Image Data Length for Face Modality, expected values between[0x00000001 and 0xFFFFFFFF], but received input value[{}]",
 		"ISO_VALIDATOR_116": "<BR>Invalid Image Data for Face Modality, expected values[JPEG_2000_LOSSY(Auth), JPEG_2000_LOSS_LESS(Registration)]",
-		"ISO_VALIDATOR_117": "ISO Standards Validation is successful"
+		"ISO_VALIDATOR_117": "ISO Standards Validation is successful",
+		"EXPECTED_FAILURE_REASON_VALIDATOR_001": "Expected failure reason: {} successfully validated.",
+		"EXPECTED_FAILURE_REASON_VALIDATOR_002": "The failure reason expected was: {}, but received: {}",
+		"IDENTIFY_DUPLICATE_FOUND_VALIDATOR_001": "Identify - found {} duplicate for given the referenceId.",
+		"IDENTIFY_DUPLICATE_FOUND_VALIDATOR_002": "Identify - no duplicate found for given the referenceId.",
+		"DUPLICATE_NOT_FOUND_VALIDATOR_001": "Identify - no duplicate found for given the referenceId.",
+		"DUPLICATE_NOT_FOUND_VALIDATOR_002": "Identify - found {} duplicate for given the referenceId."
 	},
 	"serviceErrors": {
 		"TOOLKIT_SUCCESS_000": "Success",
