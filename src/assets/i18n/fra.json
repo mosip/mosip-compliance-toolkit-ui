@@ -277,7 +277,9 @@
 		"SegmentNoInputDataValidator": "Valide si aucune donnée BDB d'entrée n'est présente dans la sonde",
 		"ConvertDataValidator": "Valide les données BDB d'entrée présentes dans la sonde",
 		"ConvertInvalidDataValidator": "Valide si les données BDB d'entrée présentes dans la sonde pour la modalité sont valides",
-		"ConvertNoInputDataValidator": "Valide si aucune donnée BDB d'entrée n'est présente dans la sonde"
+		"ConvertNoInputDataValidator": "Valide si aucune donnée BDB d'entrée n'est présente dans la sonde",
+		"ExpectedFailureReasonValidator": "Valide la raison de l'échec pour correspondre à la valeur attendue",
+		"IdentifyDuplicateFoundValidator": "Valide le nombre de doublons trouvés par ABIS pour le referenceId donné"
 	},
 	"testcases": {
 		"SBI1000": {
@@ -1041,6 +1043,110 @@
 		"SDK2075": {
 			"testName": "Conversion d'iris sans échec d'entrée",
 			"testDescription": "Conversion d'iris sans échec d'entrée"
+		},
+		"ABIS3000": {
+			"testName": "Insérer les données biométriques d'une personne dans ABIS",
+			"testDescription": "Insérer les données biométriques d'une personne dans ABIS"
+		},
+		"ABIS3001": {
+			"testName": "Insérer les données biométriques de deux personnes dans ABIS",
+			"testDescription": "Insérer les données biométriques de deux personnes dans ABIS"
+		},
+		"ABIS3002": {
+			"testName": "Structure de demande d'insertion non valide",
+			"testDescription": "Demande d'insertion non valide - la structure json de la demande n'est pas valide"
+		},
+		"ABIS3003": {
+			"testName": "Demande d'insertion non valide - ID de référence manquant",
+			"testDescription": "Demande d'insertion non valide - ID de référence manquant"
+		},
+		"ABIS3004": {
+			"testName": "Demande d'insertion non valide - ID de demande manquant",
+			"testDescription": "Demande d'insertion non valide - ID de demande manquant"
+		},
+		"ABIS3005": {
+			"testName": "Impossible de récupérer les détails biométriques à l'aide de l'URL de référence",
+			"testDescription": "Impossible de récupérer les détails biométriques à l'aide de l'URL de référence"
+		},
+		"ABIS3006": {
+			"testName": "Demande d'insertion invalide - URL de référence invalide",
+			"testDescription": "Demande d'insertion invalide - URL de référence invalide"
+		},
+		"ABIS3007": {
+			"testName": "Demande d'insertion non valide - URL de référence manquante",
+			"testDescription": "Demande d'insertion non valide - URL de référence manquante"
+		},
+		"ABIS3008": {
+			"testName": "Demande d'insertion non valide : heure de la demande manquante",
+			"testDescription": "Demande d'insertion non valide : heure de la demande manquante"
+		},
+		"ABIS3009": {
+			"testName": "Demande d'insertion non valide - l'ID de référence existe déjà",
+			"testDescription": "Demande d'insertion non valide - l'ID de référence existe déjà"
+		},
+		"ABIS3010": {
+			"testName": "Demande d'insertion invalide - CBEFF n'a pas de données",
+			"testDescription": "Le CBEFF n'a pas de données/Pas de données biométriques disponibles pour la déduplication"
+		},
+		"ABIS3011": {
+			"testName": "Demande d'insertion invalide - version invalide",
+			"testDescription": "Demande d'insertion invalide - version invalide"
+		},
+		"ABIS3012": {
+			"testName": "Demande d'insertion non valide - ID non valide",
+			"testDescription": "Demande d'insertion non valide - ID non valide"
+		},
+		"ABIS3013": {
+			"testName": "Demande d'insertion non valide - format d'heure de demande non valide",
+			"testDescription": "Demande d'insertion non valide - format d'heure de demande non valide"
+		},
+		"ABIS3014": {
+			"testName": "Demande d'insertion non valide - format CBEFF non valide",
+			"testDescription": "Demande d'insertion non valide - format CBEFF non valide"
+		},
+		"ABIS3015": {
+			"testName": "Demande d'insertion non valide : l'URL de partage de données a expiré",
+			"testDescription": "Demande d'insertion non valide : l'URL de partage de données a expiré"
+		},
+		"ABIS3016": {
+			"testName": "Demande d'insertion invalide - données invalides",
+			"testDescription": "Demande d'insertion invalide - données invalides"
+		},
+		"ABIS3018": {
+			"testName": "Identifier - doublon trouvé pour le referenceId par rapport à la galerie",
+			"testDescription": "Insérez deux fois les mêmes données biométriques, puis testez si un doublon est trouvé pour le referenceId par rapport à la galerie"
+		},
+		"ABIS3019": {
+			"testName": "Structure de demande d'identification non valide",
+			"testDescription": "Demande d'identification invalide - la structure json de la demande n'est pas valide"
+		},
+		"ABIS3020": {
+			"testName": "Demande d'identification non valide - ID de référence manquant",
+			"testDescription": "Demande d'identification non valide - ID de référence manquant"
+		},
+		"ABIS3021": {
+			"testName": "Demande d'identification non valide - ID de demande manquant",
+			"testDescription": "Demande d'identification non valide - ID de demande manquant"
+		},
+		"ABIS3022": {
+			"testName": "Demande d'identification non valide : heure de la demande manquante",
+			"testDescription": "Demande d'identification non valide : heure de la demande manquante"
+		},
+		"ABIS3023": {
+			"testName": "Demande d'identification non valide - version non valide",
+			"testDescription": "Demande d'identification non valide - version non valide"
+		},
+		"ABIS3024": {
+			"testName": "Demande d'identification non valide - ID non valide",
+			"testDescription": "Demande d'identification non valide - ID non valide"
+		},
+		"ABIS3025": {
+			"testName": "Demande d'identification non valide - format d'heure de demande non valide",
+			"testDescription": "Demande d'identification non valide - format d'heure de demande non valide"
+		},
+		"ABIS3027": {
+			"testName": "Identifier - doublon trouvé pour le referenceId par rapport à la galerie - fournir le sous-ensemble de referenceId (ID déjà insérés)",
+			"testDescription": "Insérez deux fois les mêmes données biométriques, puis testez si un doublon est trouvé pour le referenceId par rapport à la galerie - fournissez le sous-ensemble de referenceId (ID déjà insérés)"
 		}
 	},
 	"validatorMessages": {
@@ -1233,7 +1339,13 @@
 		"ISO_VALIDATOR_114": "<BR>Valeur de profondeur de bit d'image non valide pour la modalité de visage, valeurs attendues[0x01], mais valeur d'entrée reçue[{}]",
 		"ISO_VALIDATOR_115": "<BR>Longueur des données d'image non valide pour la modalité de visage, valeurs attendues entre [0x00000001 et 0xFFFFFFFF], mais valeur d'entrée reçue[{}]",
 		"ISO_VALIDATOR_116": "<BR>Données d'image non valides pour la modalité de visage, valeurs attendues[JPEG_2000_LOSSY(Auth), JPEG_2000_LOSS_LESS(Registration)]",
-		"ISO_VALIDATOR_117": "La validation des normes ISO est réussie"
+		"ISO_VALIDATOR_117": "La validation des normes ISO est réussie",
+		"EXPECTED_FAILURE_REASON_VALIDATOR_001": "Raison de l'échec attendu : {} validé avec succès.",
+		"EXPECTED_FAILURE_REASON_VALIDATOR_002": "La raison de l'échec attendue était : {}, mais reçue : {}",
+		"IDENTIFY_DUPLICATE_FOUND_VALIDATOR_001": "Identifier - trouvé {} doublon pour étant donné le referenceId.",
+		"IDENTIFY_DUPLICATE_FOUND_VALIDATOR_002": "Identifier - aucun doublon trouvé pour le referenceId donné.",
+		"DUPLICATE_NOT_FOUND_VALIDATOR_001": "Identifier - aucun doublon trouvé pour le referenceId donné.",
+		"DUPLICATE_NOT_FOUND_VALIDATOR_002": "Identifier - trouvé {} doublon pour étant donné le referenceId."
 	},
 	"serviceErrors": {
 		"TOOLKIT_SUCCESS_000": "Succès",
