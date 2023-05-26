@@ -250,7 +250,8 @@
 		"unableToConnectSDK": "Unable to connect to SDK services",
 		"methodNotInvoked": "Method not invoked since request is invalid.",
 		"failure": "Failure",
-		"unableToGenerateRequest": "Unable to generate request to SDK service: "
+		"unableToGenerateRequest": "Unable to generate request to SDK service: ",
+		"executionFailed": "Execution Failed"
 	},
 	"validators": {
 		"SchemaValidator": "Validates the response for mandatory attributes and correct values",
