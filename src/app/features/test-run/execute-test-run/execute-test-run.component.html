@@ -44,7 +44,8 @@
                         <span *ngIf="progressDone < 100" style="position: absolute; top: 0.5em;" [ngStyle]="{'left': progressDone + '%'}">&nbsp;{{progressDone | number:'1.0-0'}}%</span>
                         <p></p>
                     </div>
-                    <p></p><p></p>{{ "executeTestRun.currentTestcase" | translate }} {{currectTestCaseId}} - {{currectTestCaseName}}
+                    <p></p><p></p>{{ "executeTestRun.currentTestcase" | translate }} {{currectTestCaseId}}
+                    <div [innerHTML]="currectTestCaseName"></div>
                     <p></p>
                     <div  *ngIf="!showLoader || showResumeAgainBtn || showContinueBtn" [innerHTML]="currentTestDescription"></div>
                     <div *ngIf="abisSentMessage != ''">
