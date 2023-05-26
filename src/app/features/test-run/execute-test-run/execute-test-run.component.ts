@@ -26,6 +26,7 @@ import { Message } from '@stomp/stompjs';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { TranslateService } from '@ngx-translate/core';
 import Utils from 'src/app/app.utils';
+import { error } from 'console';
 
 declare const start_streaming: any;
 declare const stop_streaming: any;
@@ -1076,6 +1077,8 @@ export class ExecuteTestRunComponent implements OnInit {
           this.runComplete = true;
           this.basicTimer.stop();
         }
+      }).catch((error) => {
+        console.log(error);
       });
   }
 
