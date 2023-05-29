@@ -653,20 +653,18 @@ export class ExecuteTestRunComponent implements OnInit {
     });
   }
   async executeCurrentTestCase(testCase: TestCaseModel) {
-    return new Promise(async (resolve, reject) => {
-      if (this.projectType === appConstants.SBI) {
-        const res: any = await this.executeSBITestCase(testCase);
-        resolve(res);
-      } else if (this.projectType == appConstants.SDK) {
-        const res: any = await this.executeSDKTestCase(testCase);
-        resolve(res);
-      } else if (this.projectType == appConstants.ABIS) {
-        const res: any = await this.executeABISTestCase(testCase);
-        resolve(res);
-      } else {
-        resolve(true);
-      }
-    });
+    if (this.projectType === appConstants.SBI) {
+      const res: any = await this.executeSBITestCase(testCase);
+      return res;
+    } else if (this.projectType == appConstants.SDK) {
+      const res: any = await this.executeSDKTestCase(testCase);
+      return res;
+    } else if (this.projectType == appConstants.ABIS) {
+      const res: any = await this.executeABISTestCase(testCase);
+      return res;
+    } else {
+      return true;
+    }
   }
 
   async executeSDKTestCase(testCase: TestCaseModel) {
@@ -1073,6 +1071,7 @@ export class ExecuteTestRunComponent implements OnInit {
         console.log(`recvdRequestId: ${recvdRequestId}`);
         if (sentRequestId == recvdRequestId) {
           this.abisRecvdMessage = message.body;
+          //console.log(this.abisRecvdMessage);
           await this.runExecuteForLoop(false, false);
           this.runComplete = true;
           this.basicTimer.stop();
