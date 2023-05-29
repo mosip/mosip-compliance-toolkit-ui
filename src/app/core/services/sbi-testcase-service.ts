@@ -16,7 +16,7 @@ export class SbiTestCaseService {
     private dataService: DataService,
     private appConfigService: AppConfigService,
     private userProfileService: UserProfileService
-  ) {}
+  ) { }
   SBI_BASE_URL = this.appConfigService.getConfig()['SBI_BASE_URL'];
   resourceBundleJson: any = {};
 
@@ -25,114 +25,114 @@ export class SbiTestCaseService {
     sbiSelectedPort: string,
     sbiSelectedDevice: string,
     beforeKeyRotationResp: any
-  ): Promise<any> {
+  ) {
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
-    return new Promise<any>(async (resolve, reject) => {
-      try {
-        const methodRequest = this.createRequest(testCase, sbiSelectedDevice);
-        //now validate the method request against the Schema
-        let validationRequest: any = await this.validateRequest(
-          testCase,
+    try {
+      const methodRequest = this.createRequest(testCase, sbiSelectedDevice);
+      //now validate the method request against the Schema
+      let validationRequest: any = await this.validateRequest(
+        testCase,
+        methodRequest
+      );
+      if (
+        validationRequest &&
+        validationRequest[appConstants.RESPONSE] &&
+        validationRequest[appConstants.RESPONSE].status == appConstants.SUCCESS
+      ) {
+        let startExecutionTime = new Date().toISOString();
+        const methodUrl = this.getMethodUrl(sbiSelectedPort, testCase);
+        let methodResponse: any = await this.executeMethod(
+          testCase.methodName[0],
+          methodUrl,
           methodRequest
         );
-        if (
-          validationRequest &&
-          validationRequest[appConstants.RESPONSE] &&
-          validationRequest[appConstants.RESPONSE].status == appConstants.SUCCESS
-        ) {
-          let startExecutionTime = new Date().toISOString();
-          const methodUrl = this.getMethodUrl(sbiSelectedPort, testCase);
-          let methodResponse: any = await this.executeMethod(
-            testCase.methodName[0],
-            methodUrl,
-            methodRequest
+        let endExecutionTime = new Date().toISOString();
+        if (methodResponse) {
+          const decodedMethodResp = this.createDecodedResponse(
+            testCase,
+            methodResponse,
+            sbiSelectedDevice
           );
-          let endExecutionTime = new Date().toISOString();
-          if (methodResponse) {
-            const decodedMethodResp = this.createDecodedResponse(
-              testCase,
-              methodResponse,
-              sbiSelectedDevice
-            );
-            let performValidations = true;
-            if (
-              testCase.otherAttributes.keyRotationTestCase &&
-              !beforeKeyRotationResp
-            ) {
-              performValidations = false;
-            }
-            if (
-              testCase.otherAttributes.keyRotationTestCase &&
-              beforeKeyRotationResp
-            ) {
-              performValidations = true;
-            }
-            //now validate the method response against all the validators
-            let validationResponse: any = {};
-            if (performValidations) {
-              validationResponse = await this.validateResponse(
-                testCase,
-                methodRequest,
-                decodedMethodResp,
-                sbiSelectedDevice,
-                startExecutionTime,
-                endExecutionTime,
-                beforeKeyRotationResp
-              );
-            }
-            let finalResponse = {
-              methodResponse: JSON.stringify(decodedMethodResp),
-              methodRequest: JSON.stringify(methodRequest),
-              validationResponse: validationResponse,
-              methodUrl: methodUrl,
-              testDataSource: '',
-            };
-            resolve(finalResponse);
-          } else {
-            resolve({
-              errors: [
-                {
-                  errorCode: this.resourceBundleJson.executeTestRun['connectionFailure']
-                    ? this.resourceBundleJson.executeTestRun['connectionFailure']
-                    : 'Connection Failure',
-                  message: this.resourceBundleJson.executeTestRun['unableToConnectSBI']
-                    ? this.resourceBundleJson.executeTestRun['unableToConnectSBI']
-                    : 'Unable to connect to device / SBI',
-                },
-              ],
-            });
+          let performValidations = true;
+          if (
+            testCase.otherAttributes.keyRotationTestCase &&
+            !beforeKeyRotationResp
+          ) {
+            performValidations = false;
           }
-        } else {
-          let validationResponse = {
-            response: {
-              validationsList: [validationRequest[appConstants.RESPONSE]],
-            },
-            errors: [],
-          };
-          let finalResponse = {
-            methodResponse: this.resourceBundleJson.executeTestRun['methodNotInvoked']
-              ? this.resourceBundleJson.executeTestRun['methodNotInvoked']
-              : 'Method not invoked since request is invalid.',
+          if (
+            testCase.otherAttributes.keyRotationTestCase &&
+            beforeKeyRotationResp
+          ) {
+            performValidations = true;
+          }
+          //now validate the method response against all the validators
+          let validationResponse: any = {};
+          if (performValidations) {
+            validationResponse = await this.validateResponse(
+              testCase,
+              methodRequest,
+              decodedMethodResp,
+              sbiSelectedDevice,
+              startExecutionTime,
+              endExecutionTime,
+              beforeKeyRotationResp
+            );
+          }
+          const finalResponse = {
+            methodResponse: JSON.stringify(decodedMethodResp),
             methodRequest: JSON.stringify(methodRequest),
             validationResponse: validationResponse,
+            methodUrl: methodUrl,
+            testDataSource: '',
           };
-          console.log('request schema validation failed');
-          console.log(finalResponse);
-          resolve(finalResponse);
+          return finalResponse;
+        } else {
+          const finalResponse = {
+            errors: [
+              {
+                errorCode: this.resourceBundleJson.executeTestRun['connectionFailure']
+                  ? this.resourceBundleJson.executeTestRun['connectionFailure']
+                  : 'Connection Failure',
+                message: this.resourceBundleJson.executeTestRun['unableToConnectSBI']
+                  ? this.resourceBundleJson.executeTestRun['unableToConnectSBI']
+                  : 'Unable to connect to device / SBI',
+              },
+            ],
+          };
+          return finalResponse;
         }
-      } catch(error) {
-        resolve({
-          errors: [
-            {
-              errorCode: error,
-              message: this.resourceBundleJson.executeTestRun['executionFailed']
-                    ? this.resourceBundleJson.executeTestRun['executionFailed']
-                    : 'Execution Failed',
-            },
-          ],
-        });
+      } else {
+        const validationResponse = {
+          response: {
+            validationsList: [validationRequest[appConstants.RESPONSE]],
+          },
+          errors: [],
+        };
+        const finalResponse = {
+          methodResponse: this.resourceBundleJson.executeTestRun['methodNotInvoked']
+            ? this.resourceBundleJson.executeTestRun['methodNotInvoked']
+            : 'Method not invoked since request is invalid.',
+          methodRequest: JSON.stringify(methodRequest),
+          validationResponse: validationResponse,
+        };
+        console.log('request schema validation failed');
+        console.log(finalResponse);
+        return finalResponse;
       }
-    });
+    } catch (error) {
+      const finalResponse = {
+        errors: [
+          {
+            errorCode: error,
+            message: this.resourceBundleJson.executeTestRun['executionFailed']
+              ? this.resourceBundleJson.executeTestRun['executionFailed']
+              : 'Execution Failed',
+          },
+        ],
+      };
+      return finalResponse;
+    }
   }
 
   async executeMethod(
@@ -276,8 +276,8 @@ export class SbiTestCaseService {
     return testCase.otherAttributes.timeout
       ? testCase.otherAttributes.timeout.toString()
       : this.appConfigService.getConfig()['sbiTimeout']
-      ? this.appConfigService.getConfig()['sbiTimeout'].toString()
-      : '10000';
+        ? this.appConfigService.getConfig()['sbiTimeout'].toString()
+        : '10000';
   }
   getBioSubType(segments: Array<string>): Array<string> {
     let bioSubTypes = new Array<string>();
