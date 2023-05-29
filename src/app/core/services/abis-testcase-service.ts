@@ -28,72 +28,71 @@ export class AbisTestCaseService {
     galleryIds: any[],
     cbeffFileSuffix: number
   ) {
-    return new Promise<any>(async (resolve, reject) => {
-      let dataShareResp: any = null;
-      //create a datashare URL but only for Insert
-      if (methodName == appConstants.ABIS_METHOD_INSERT) {
-        dataShareResp = await this.createDataShareUrl(
-          testCase,
-          abisProjectData.bioTestDataFileName,
-          cbeffFileSuffix
-        );
-        if (!dataShareResp) {
-          resolve({
-            errors: [
-              {
-                errorCode: 'Failure',
-                message:
-                  'Unable to generate datashare URL for testcase : ' +
-                  testCase.testId,
-              },
-            ],
-          });
-        }
-      }
-      let methodRequest: any = this.createRequest(testCase, methodName, dataShareResp, requestId, referenceId, galleryIds);
-      
-      //handle expireDataShareUrl testcase
-      let invalidKey = testCase.otherAttributes.invalidRequestAttribute;
-      if (invalidKey == 'expireDataShareUrl') {
-        await this.expireDataShareUrl(dataShareResp);
-      }
-
-      
-      //now validate the method request against the Schema
-      let validationRequest: any = await this.validateRequest(
+    
+    let dataShareResp: any = null;
+    //create a datashare URL but only for Insert
+    if (methodName == appConstants.ABIS_METHOD_INSERT) {
+      dataShareResp = await this.createDataShareUrl(
         testCase,
-        methodRequest,
-        methodIndex
+        abisProjectData.bioTestDataFileName,
+        cbeffFileSuffix
       );
-      if (
-        validationRequest &&
-        validationRequest[appConstants.RESPONSE] &&
-        validationRequest[appConstants.RESPONSE].status ==
-        appConstants.SUCCESS
-      ) {
-        //SEND THE REQUEST JSON TO ABIS QUEUE
-       // console.log(methodRequest);
-        let sendRequestResp: any = await this.activeMqService.sendToQueue(rxStompService, abisProjectData, methodRequest);
-        resolve({
-          ...sendRequestResp,
-          methodRequest: methodRequest,
-          testDataSource: dataShareResp ? dataShareResp.testDataSource : ''
-        });
-      } else {
-        let validationResponse = {
-          response: {
-            validationsList: [validationRequest[appConstants.RESPONSE]],
-          },
-          errors: [],
+      if (!dataShareResp) {
+        const finalResponse = {
+          errors: [
+            {
+              errorCode: 'Failure',
+              message:
+                'Unable to generate datashare URL for testcase : ' +
+                testCase.testId,
+            },
+          ],
         };
-        let finalResponse = {
-          methodResponse: 'Method not invoked since request is invalid.',
-          methodRequest: methodRequest,
-          validationResponse: validationResponse,
-        };
-        resolve(finalResponse);
+        return finalResponse;
       }
-    });
+    }
+    let methodRequest: any = this.createRequest(testCase, methodName, dataShareResp, requestId, referenceId, galleryIds);    
+    //handle expireDataShareUrl testcase
+    let invalidKey = testCase.otherAttributes.invalidRequestAttribute;
+    if (invalidKey == 'expireDataShareUrl') {
+      await this.expireDataShareUrl(dataShareResp);
+    }
+    //now validate the method request against the Schema
+    let validationRequest: any = await this.validateRequest(
+      testCase,
+      methodRequest,
+      methodIndex
+    );
+    if (
+      validationRequest &&
+      validationRequest[appConstants.RESPONSE] &&
+      validationRequest[appConstants.RESPONSE].status ==
+      appConstants.SUCCESS
+    ) {
+      //SEND THE REQUEST JSON TO ABIS QUEUE
+      // console.log(methodRequest);
+      let sendRequestResp: any = await this.activeMqService.sendToQueue(rxStompService, abisProjectData, methodRequest);
+      const finalResponse = {
+        ...sendRequestResp,
+        methodRequest: methodRequest,
+        testDataSource: dataShareResp ? dataShareResp.testDataSource : ''
+      };
+      return finalResponse;
+    } else {
+      const validationResponse = {
+        response: {
+          validationsList: [validationRequest[appConstants.RESPONSE]],
+        },
+        errors: [],
+      };
+      const finalResponse = {
+        methodResponse: 'Method not invoked since request is invalid.',
+        methodRequest: methodRequest,
+        validationResponse: validationResponse,
+      };
+      return finalResponse;
+    }
+    
   }
 
   async runValidators(
@@ -193,8 +192,8 @@ export class AbisTestCaseService {
           galleryAvailable = true;
         }
       });
-      console.log(galleryIds);
-      console.log(`galleryAvailable: ${galleryAvailable}`);
+      //console.log(galleryIds);
+      //console.log(`galleryAvailable: ${galleryAvailable}`);
       if (galleryAvailable) {
         request = {
           "id": appConstants.ABIS_IDENTIFY_ID,
