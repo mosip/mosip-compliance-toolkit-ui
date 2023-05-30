@@ -104,7 +104,6 @@ export class AbisTestCaseService {
     testDataSource: string,
     methodIndex: number
   ) {
-    return new Promise<any>(async (resolve, reject) => {
       // now validate the method response against all the validators
       let validationResponse = await this.validateResponse(
         testCase,
@@ -113,15 +112,14 @@ export class AbisTestCaseService {
         methodName,
         methodIndex
       );
-      let finalResponse = {
+      const finalResponse = {
         methodResponse: methodResponse,
         methodRequest: methodRequest,
         validationResponse: validationResponse,
         methodUrl: abisProjectData.url,
         testDataSource: testDataSource
       };
-      resolve(finalResponse);
-    })
+      return finalResponse;
   }
 
   createDataShareUrl(
