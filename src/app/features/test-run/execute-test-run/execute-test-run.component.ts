@@ -383,26 +383,17 @@ export class ExecuteTestRunComponent implements OnInit {
             this.abisSentMessage = appConstants.BLANK_STRING;
             this.abisSentDataSource = appConstants.BLANK_STRING;
             this.abisRecvdMessage = appConstants.BLANK_STRING;
-            
+            //when there are multiple cbeff files to be inserted then after last file is inserted
+            //this.cbeffFileSuffix will be reset to 0, otherwise it will be > 0
             if (this.cbeffFileSuffix > 0) {
               //do no reset current testcaseId
               resetCurrentTestCase = false;
-              if (!testCase.otherAttributes.insertReferenceId) {
-                if (this.countOfSuccessTestcases > 0)
-                  this.countOfSuccessTestcases = this.countOfSuccessTestcases - 1;
-              }
-              if (this.countOfFailedTestcases > 0)
-              this.countOfFailedTestcases = this.countOfFailedTestcases - 1; 
               await this.startWithSameTestcase();
             }
             else if (this.isCombinationAbisTestcase) {
               this.currentAbisMethod = appConstants.ABIS_METHOD_IDENTIFY;
               //do no reset current testcaseId
               resetCurrentTestCase = false;
-              if (this.countOfSuccessTestcases > 0)
-                this.countOfSuccessTestcases = this.countOfSuccessTestcases - 1;
-              if (this.countOfFailedTestcases > 0)
-                this.countOfFailedTestcases = this.countOfFailedTestcases - 1;
               await this.startWithSameTestcase();
             }
           }
@@ -411,7 +402,7 @@ export class ExecuteTestRunComponent implements OnInit {
             this.currectTestCaseName = '';
             this.currentTestDescription = '';
             this.currentCbeffFile = 0;
-            this.showLoader = false;             
+            this.showLoader = false;
           }
 
         }
@@ -684,7 +675,7 @@ export class ExecuteTestRunComponent implements OnInit {
       resolve(res);
     });
   }
-  
+
   async executeABISTestCase(testCase: TestCaseModel) {
     return new Promise(async (resolve, reject) => {
       this.isCombinationAbisTestcase = testCase.methodName.length > 1 ? true : false;
@@ -901,10 +892,24 @@ export class ExecuteTestRunComponent implements OnInit {
         }
       }
     }
-    if (allValidatorsPassed) {
-      this.countOfSuccessTestcases++;
+    let updateCount = false;
+    if (this.projectType == appConstants.ABIS) {
+      if (!this.isCombinationAbisTestcase) {
+        if (this.cbeffFileSuffix == 0) {
+          updateCount = true;
+        }
+      } else if (this.currentAbisMethod == appConstants.ABIS_METHOD_IDENTIFY) {
+        updateCount = true;
+      }
     } else {
-      this.countOfFailedTestcases++;
+      updateCount = true;
+    }
+    if (updateCount) {
+      if (allValidatorsPassed) {
+        this.countOfSuccessTestcases++;
+      } else {
+        this.countOfFailedTestcases++;
+      }
     }
   }
 
@@ -1084,9 +1089,9 @@ export class ExecuteTestRunComponent implements OnInit {
   ngOnDestroy() {
     if (this.rxStompService) {
       this.rxStompService.deactivate()
-      .catch((error) => {
-        console.log(error);
-      });
+        .catch((error) => {
+          console.log(error);
+        });
     }
   }
 
