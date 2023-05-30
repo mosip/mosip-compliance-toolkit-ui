@@ -668,7 +668,6 @@ export class ExecuteTestRunComponent implements OnInit {
   }
 
   async executeSDKTestCase(testCase: TestCaseModel) {
-    return new Promise(async (resolve, reject) => {
       if (!this.sdkProjectData)
         await this.getSdkProjectDetails();
       localStorage.setItem(
@@ -681,8 +680,7 @@ export class ExecuteTestRunComponent implements OnInit {
         this.sdkProjectData.url,
         this.sdkProjectData.bioTestDataFileName
       );
-      resolve(res);
-    });
+      return res;
   }
   
   async executeABISTestCase(testCase: TestCaseModel) {
