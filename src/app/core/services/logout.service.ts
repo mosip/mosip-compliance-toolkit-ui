@@ -14,18 +14,16 @@ export class LogoutService {
     private appService: AppConfigService
   ) { }
 
-  async logout() {
+  async logout(): Promise<any> {
     const isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
     if (isAndroidAppMode) {
-      return new Promise<any>(async (resolve, reject) => {
-        await this.androidKeycloakService.getInstance().logout();
-        this.androidKeycloakService.getInstance().clearToken();
-        await CapacitorCookies.deleteCookie({
-          url: encodeURI(environment.SERVICES_BASE_URL),
-          key: appConstants.AUTHORIZATION
-        });
-        resolve(true);
+      await this.androidKeycloakService.getInstance().logout();
+      this.androidKeycloakService.getInstance().clearToken();
+      await CapacitorCookies.deleteCookie({
+        url: encodeURI(environment.SERVICES_BASE_URL),
+        key: appConstants.AUTHORIZATION
       });
+      return true;
     } else {
       window.location.href = `${this.appService.getConfig().SERVICES_BASE_URL}${this.appService.getConfig().logout}?redirecturi=` + btoa(window.location.href);
     }
