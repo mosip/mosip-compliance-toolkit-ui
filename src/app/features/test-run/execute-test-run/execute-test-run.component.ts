@@ -380,8 +380,7 @@ export class ExecuteTestRunComponent implements OnInit {
                 });
             }
             this.abisRequestSendFailure = false;
-            this.abisSentMessage = appConstants.BLANK_STRING;
-            this.abisSentDataSource = appConstants.BLANK_STRING;
+            this.abisSentMessage = appConstants.BLANK_STRING;  
             this.abisRecvdMessage = appConstants.BLANK_STRING;
             //when there are multiple cbeff files to be inserted then after last file is inserted
             //this.cbeffFileSuffix will be reset to 0, otherwise it will be > 0
@@ -403,6 +402,7 @@ export class ExecuteTestRunComponent implements OnInit {
             this.currentTestDescription = '';
             this.currentCbeffFile = 0;
             this.showLoader = false;
+            this.abisSentDataSource = appConstants.BLANK_STRING;
           }
 
         }
@@ -762,6 +762,7 @@ export class ExecuteTestRunComponent implements OnInit {
         );
         if (abisReq)
           console.log(`send to queue status ${abisReq[appConstants.STATUS]}`);
+          //console.log(abisReq);
         if (abisReq && abisReq[appConstants.STATUS] && abisReq[appConstants.STATUS] == appConstants.SUCCESS) {
           if (insertCount > 1) {
             this.cbeffFileSuffix = this.cbeffFileSuffix + 1;
@@ -771,7 +772,10 @@ export class ExecuteTestRunComponent implements OnInit {
             this.cbeffFileSuffix = 0;
           }
           this.abisSentMessage = abisReq.methodRequest;
-          this.abisSentDataSource = abisReq.testDataSource;
+          if (this.isCombinationAbisTestcase && this.currentAbisMethod !== appConstants.ABIS_METHOD_IDENTIFY) {
+            this.abisSentDataSource = abisReq.testDataSource;
+          }
+          console.log(`this.abisSentDataSource ${this.abisSentDataSource}`);
           this.subscribeToABISQueue(requestId);
         } else {
           console.log("INSERT REQUEST FAILED");
