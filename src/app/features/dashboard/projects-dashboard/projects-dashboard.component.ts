@@ -93,26 +93,28 @@ export class ProjectsDashboardComponent implements OnInit {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
         this.dataService.getProjects(projectType).subscribe(
-          async (response: any) => {
-            console.log(response);
-            let dataArr = response['response']['projects'];
-            let tableData = [];
-            for (let row of dataArr) {
-              if (row.lastRunId) {
-                let runStatus = await this.getTestRunStatus(row.lastRunId);
-                tableData.push({
-                  ...row,
-                  lastRunStatus: runStatus,
-                });
-              } else {
-                tableData.push({
-                  ...row,
-                  lastRunStatus: '',
-                });
-              }
-            }
-            this.dataSource = new MatTableDataSource(tableData);
-            resolve(true);
+          (response: any) => {
+            (async () => {
+                console.log(response);
+                let dataArr = response['response']['projects'];
+                let tableData = [];
+                for (let row of dataArr) {
+                  if (row.lastRunId) {
+                    let runStatus = await this.getTestRunStatus(row.lastRunId);
+                    tableData.push({
+                      ...row,
+                      lastRunStatus: runStatus,
+                    });
+                  } else {
+                    tableData.push({
+                      ...row,
+                      lastRunStatus: '',
+                    });
+                  }
+                }
+                this.dataSource = new MatTableDataSource(tableData);
+                resolve(true);
+              })().catch((error) => reject(error));
           },
           (errors) => {
             Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
