@@ -1453,6 +1453,7 @@
 		"TOOLKIT_ABIS_PROJECTS_002": "Objectif ABIS invalide",
 		"TOOLKIT_ABIS_PROJECTS_003": "Projet ABIS impossible d'ajouter",
 		"TOOLKIT_ABIS_PROJECTS_004": "URL ABIS invalide",
+		"TOOLKIT_ABIS_PROJECTS_005": "Le partenaire ABIS peut uniquement créer un projet ABIS",
 		"TESTCASE_001": "Veuillez sélectionner au moins un cas de test.",
 		"ENCRYPTION_KEY_001": "Impossible d'obtenir la clé de chiffrement. Essayer à nouveau!",
 		"error": "Errorerreur"

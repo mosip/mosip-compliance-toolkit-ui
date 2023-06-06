@@ -1455,6 +1455,7 @@
 		"TOOLKIT_ABIS_PROJECTS_002": "Invalid ABIS Spec Version",
 		"TOOLKIT_ABIS_PROJECTS_003": "ABIS Project unable to add",
 		"TOOLKIT_ABIS_PROJECTS_004": "Invalid ABIS url",
+		"TOOLKIT_ABIS_PROJECTS_005": "ABIS partner can only create an ABIS project",
 		"TESTCASE_001": "Please select ateleast one testcase.",
 		"ENCRYPTION_KEY_001": "Unable to get encryption key. Try Again!",
 		"error": "Error"
