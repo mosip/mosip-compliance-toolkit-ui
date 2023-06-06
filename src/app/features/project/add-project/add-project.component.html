@@ -37,7 +37,7 @@
                             <span *ngIf="!isAndroidAppMode">
                                 <mat-radio-button value="SBI" [ngStyle]="buttonPosition">SBI</mat-radio-button>
                                 <mat-radio-button value="SDK">SDK</mat-radio-button>
-                                <mat-radio-button value="ABIS">ABIS</mat-radio-button>
+                                <mat-radio-button value="ABIS" [disabled]="!isAbisPartner" [title]="invalidPartnerType">ABIS</mat-radio-button>
                             </span>
                             <span *ngIf="isAndroidAppMode">
                                 <mat-radio-button value="SBI">SBI</mat-radio-button>

@@ -86,7 +86,8 @@
 		"inboundQueueNameIsRequired": "اسم قائمة الانتظار الوارد مطلوب",
 		"activeMqUrl": "نشيط MQ URL",
 		"requestQueueName": "طلب اسم قائمة الانتظار",
-		"responseQueueName": "اسم قائمة انتظار الاستجابة"
+		"responseQueueName": "اسم قائمة انتظار الاستجابة",
+		"invalidPartnerTypeMsg": "يمكن لشريك ABIS فقط إنشاء مشروع ABIS"
 	},
 	"addTestData": {
 		"name": "اسم",

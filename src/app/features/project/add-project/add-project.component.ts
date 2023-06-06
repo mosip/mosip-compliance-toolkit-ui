@@ -14,6 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { AbisProjectModel } from 'src/app/core/models/abis-project';
+import { AppConfigService } from 'src/app/app-config.service';
 
 @Component({
   selector: 'app-project',
@@ -32,10 +33,13 @@ export class AddProjectComponent implements OnInit {
   hidePassword = true;
   dataLoaded = false;
   dataSubmitted = false;
+  isAbisPartner = this.appConfigService.getConfig()['abisPartnerType'] == "ABIS_PARTNER" ? true : false;
+  invalidPartnerType: string = '';
 
   constructor(
     public authService: AuthService,
     private dataService: DataService,
+    private appConfigService: AppConfigService,
     private dialog: MatDialog,
     private router: Router,
     private breadcrumbService: BreadcrumbService,
@@ -46,6 +50,9 @@ export class AddProjectComponent implements OnInit {
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
+    this.invalidPartnerType = this.isAbisPartner
+      ? ''
+      : this.resourceBundleJson.addProject['invalidPartnerTypeMsg'];
     this.initForm();
     this.initBreadCrumb();
     const projectType = this.projectForm.controls['projectType'].value;
