@@ -842,7 +842,7 @@ export class ExecuteTestRunComponent implements OnInit {
         return res;
       } else {
         //no resp to keep the for loop on hold
-        return await new Promise(async (resolve, reject) => { });
+        return new Promise(async (resolve, reject) => { });
       }
     } else {
       if (this.showResumeBtn) {
@@ -879,7 +879,7 @@ export class ExecuteTestRunComponent implements OnInit {
         return res;
       } else {
         //no resp to keep the for loop on hold
-        return await new Promise(async (resolve, reject) => { });
+        return new Promise(async (resolve, reject) => { });
       }
     }
     //});
