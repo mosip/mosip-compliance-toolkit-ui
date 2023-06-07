@@ -779,7 +779,8 @@ export class ExecuteTestRunComponent implements OnInit {
           }
           console.log(`this.abisSentDataSource ${this.abisSentDataSource}`);
           this.subscribeToABISQueue(requestId);
-          return new Promise(async (resolve, reject) => {});
+          const p = await new Promise(async (resolve, reject) => { });
+          return p;
         } else {
           console.log("INSERT REQUEST FAILED");
           this.cbeffFileSuffix = 0;
@@ -842,7 +843,8 @@ export class ExecuteTestRunComponent implements OnInit {
         return res;
       } else {
         //no resp to keep the for loop on hold
-        return new Promise(async (resolve, reject) => { });
+        const p = await new Promise(async (resolve, reject) => { });
+        return p;
       }
     } else {
       if (this.showResumeBtn) {
@@ -879,7 +881,8 @@ export class ExecuteTestRunComponent implements OnInit {
         return res;
       } else {
         //no resp to keep the for loop on hold
-        return new Promise(async (resolve, reject) => { });
+        const p = await new Promise(async (resolve, reject) => { });
+        return p;
       }
     }
     //});
