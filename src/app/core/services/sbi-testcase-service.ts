@@ -6,7 +6,6 @@ import * as appConstants from 'src/app/app.constants';
 import { SbiDiscoverResponseModel } from '../models/sbi-discover';
 import Utils from 'src/app/app.utils';
 import { UserProfileService } from './user-profile.service';
-import { error } from 'console';
 
 @Injectable({
   providedIn: 'root',
@@ -117,7 +116,7 @@ export class SbiTestCaseService {
           validationResponse: validationResponse,
         };
         console.log('request schema validation failed');
-        console.log(finalResponse);
+        //console.log(finalResponse);
         return finalResponse;
       }
     } catch (error) {
@@ -194,7 +193,7 @@ export class SbiTestCaseService {
         .callSBIMethod(methodUrl, methodType, requestBody)
         .subscribe(
           (response) => {
-            console.log(response);
+            //console.log(response);
             //return response;
             resolve(response);
           },
