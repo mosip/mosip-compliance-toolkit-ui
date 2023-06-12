@@ -135,7 +135,7 @@ mat-expansion-panel-header {
     margin-left: 900px;
   }
   .scandeviceButton{
-    margin-left: 360px;
+    margin-left: 30em;
   }
   .encryptionkeyButton{
     margin-left: 460px;
@@ -155,7 +155,7 @@ mat-expansion-panel-header {
     margin-left: 380px;
   }
   .scandeviceButton{
-    margin-right: 0px;
+    margin-left: 22em;
   }
   .scandeviceButton-android{
     margin-left: 60em;
@@ -190,7 +190,7 @@ mat-expansion-panel-header {
     margin-left: 300px;
   }
   .scandeviceButton{
-    margin-left: 300px;
+    margin-left: 0px;
   }
   .scandeviceButtonREG{
     margin-left: 40em;
@@ -210,6 +210,9 @@ mat-expansion-panel-header {
   }
   .scandeviceButtonREG{
     margin-left: 59em;
+  }
+  .scandeviceButton{
+    margin-left: 19em;
   }
   .scandeviceButton-android{
     margin-left: 680px;
