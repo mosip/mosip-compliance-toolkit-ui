@@ -376,7 +376,7 @@ export class ViewProjectComponent implements OnInit {
     };
     this.dialog
       .open(ExecuteTestRunComponent, {
-        width: '1000px',
+        width: '800px',
         data: body,
       })
       .afterClosed()

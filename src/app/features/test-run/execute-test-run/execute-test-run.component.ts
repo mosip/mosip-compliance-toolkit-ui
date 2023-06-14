@@ -379,21 +379,21 @@ export class ExecuteTestRunComponent implements OnInit {
                   console.log(error);
                 });
             }
-            this.abisRequestSendFailure = false;
             this.abisSentMessage = appConstants.BLANK_STRING;
-            this.abisSentDataSource = appConstants.BLANK_STRING;
             this.abisRecvdMessage = appConstants.BLANK_STRING;
             //when there are multiple cbeff files to be inserted then after last file is inserted
             //this.cbeffFileSuffix will be reset to 0, otherwise it will be > 0
-            if (this.cbeffFileSuffix > 0) {
+            if (this.cbeffFileSuffix > 0 && !this.abisRequestSendFailure) {
               //do no reset current testcaseId
               resetCurrentTestCase = false;
+              this.abisRequestSendFailure = false;
               await this.startWithSameTestcase();
             }
-            else if (this.isCombinationAbisTestcase) {
+            else if (this.isCombinationAbisTestcase && !this.abisRequestSendFailure) {
               this.currentAbisMethod = appConstants.ABIS_METHOD_IDENTIFY;
               //do no reset current testcaseId
               resetCurrentTestCase = false;
+              this.abisRequestSendFailure = false;
               await this.startWithSameTestcase();
             }
           }
@@ -403,6 +403,8 @@ export class ExecuteTestRunComponent implements OnInit {
             this.currentTestDescription = '';
             this.currentCbeffFile = 0;
             this.showLoader = false;
+            this.abisSentDataSource = appConstants.BLANK_STRING;
+            this.abisRequestSendFailure = false;
           }
 
         }
@@ -659,109 +661,110 @@ export class ExecuteTestRunComponent implements OnInit {
   }
 
   async executeSDKTestCase(testCase: TestCaseModel) {
-      if (!this.sdkProjectData)
-        await this.getSdkProjectDetails();
-      localStorage.setItem(
-        appConstants.SDK_PROJECT_URL,
-        this.sdkProjectData ? this.sdkProjectData.url : ''
-      );
-      this.showLoader = true;
-      const res = await this.sdkTestCaseService.runTestCase(
-        testCase,
-        this.sdkProjectData.url,
-        this.sdkProjectData.bioTestDataFileName
-      );
-      return res;
+    if (!this.sdkProjectData)
+      await this.getSdkProjectDetails();
+    localStorage.setItem(
+      appConstants.SDK_PROJECT_URL,
+      this.sdkProjectData ? this.sdkProjectData.url : ''
+    );
+    this.showLoader = true;
+    const res = await this.sdkTestCaseService.runTestCase(
+      testCase,
+      this.sdkProjectData.url,
+      this.sdkProjectData.bioTestDataFileName
+    );
+    return res;
   }
 
   async executeABISTestCase(testCase: TestCaseModel) {
-    return new Promise(async (resolve, reject) => {
-      this.isCombinationAbisTestcase = testCase.methodName.length > 1 ? true : false;
-      if (this.isCombinationAbisTestcase && this.currentAbisMethod == appConstants.BLANK_STRING) {
-        this.currentAbisMethod = appConstants.ABIS_METHOD_INSERT;
+    //return new Promise(async (resolve, reject) => {
+    this.isCombinationAbisTestcase = testCase.methodName.length > 1 ? true : false;
+    if (this.isCombinationAbisTestcase && this.currentAbisMethod == appConstants.BLANK_STRING) {
+      this.currentAbisMethod = appConstants.ABIS_METHOD_INSERT;
+    }
+    if (!this.isCombinationAbisTestcase) {
+      this.currentAbisMethod = testCase.methodName[0];
+    }
+    if (this.abisRecvdMessage == appConstants.BLANK_STRING) {
+      this.showLoader = true;
+      if (!this.abisProjectData)
+        await this.getAbisProjectDetails();
+      //disconnect from queue if already connected
+      if (this.rxStompService.connected()) {
+        this.rxStompService.deactivate()
+          .catch((error) => {
+            console.log(error);
+          });
       }
-      if (!this.isCombinationAbisTestcase) {
-        this.currentAbisMethod = testCase.methodName[0];
+      //setup connection as per project configuration
+      this.rxStompService = this.activeMqService.setUpConfig(this.abisProjectData);
+      let requestId = "";
+      let referenceId = "";
+      let insertCount = 0;
+
+      if (this.currentAbisMethod == appConstants.ABIS_METHOD_INSERT) {
+        //ABIS testcase can have multiple CBEFF files, for each CBEFF file, same processing is reqd
+        //this will help in cases where multiple sets of biometrics are to be inserted in ABIS in same testcase
+        if (testCase.otherAttributes.bulkInsert && testCase.otherAttributes.insertCount) {
+          insertCount = Number.parseInt(testCase.otherAttributes.insertCount);
+        }
+        //ABIS requestId is unique per request so set to testRunId_testcaseId
+        requestId = this.testRunId + appConstants.UNDERSCORE + testCase.testId;
+        if (insertCount > 1) {
+          //cbeffFileSuffix keeps track of the current CBEFF file index for a testcase
+          if (this.cbeffFileSuffix == 0) {
+            this.cbeffFileSuffix = 1;
+          }
+          requestId = requestId + appConstants.UNDERSCORE + this.cbeffFileSuffix;
+        }
+        //ABIS referenceId is unique per set of biometrics so set to testRunId_testcaseId
+        referenceId = requestId;
       }
-      if (this.abisRecvdMessage == appConstants.BLANK_STRING) {
-        this.showLoader = true;
-        if (!this.abisProjectData)
-          await this.getAbisProjectDetails();
-        //disconnect from queue if already connected
-        if (this.rxStompService.connected()) {
-          this.rxStompService.deactivate()
-            .catch((error) => {
-              console.log(error);
+
+      let galleryIds: { referenceId: string; }[] = [];
+      //if testcase defines identifyReferenceId, then it is used 
+      if (this.currentAbisMethod == appConstants.ABIS_METHOD_IDENTIFY) {
+        requestId = this.testRunId + appConstants.UNDERSCORE + testCase.testId + appConstants.UNDERSCORE + appConstants.ABIS_METHOD_IDENTIFY;
+        if (testCase.otherAttributes.identifyReferenceId) {
+          referenceId = this.testRunId + appConstants.UNDERSCORE + testCase.otherAttributes.identifyReferenceId;
+        }
+        if (testCase.otherAttributes.identifyGalleryIds) {
+          testCase.otherAttributes.identifyGalleryIds.forEach((galleryId: string) => {
+            galleryIds.push({
+              "referenceId": this.testRunId + appConstants.UNDERSCORE + galleryId
             });
+          });
         }
-        //setup connection as per project configuration
-        this.rxStompService = this.activeMqService.setUpConfig(this.abisProjectData);
-        let requestId = "";
-        let referenceId = "";
-        let insertCount = 0;
+      }
+      //if testcase defines insertReferenceId, overwrite the above referenceId
+      if (this.currentAbisMethod == appConstants.ABIS_METHOD_INSERT) {
+        if (testCase.otherAttributes.insertReferenceId) {
+          referenceId = this.testRunId + appConstants.UNDERSCORE + testCase.otherAttributes.insertReferenceId;
+        }
+      }
+      console.log(`requestId: ${requestId}`);
+      console.log(`referenceId: ${referenceId}`);
+      this.currentCbeffFile = this.cbeffFileSuffix;
+      this.abisRequestSendFailure = false;
+      let methodIndex = 0;
+      if (this.isCombinationAbisTestcase && this.currentAbisMethod == appConstants.ABIS_METHOD_IDENTIFY) {
+        methodIndex = 1;
+      }
 
-        if (this.currentAbisMethod == appConstants.ABIS_METHOD_INSERT) {
-          //ABIS testcase can have multiple CBEFF files, for each CBEFF file, same processing is reqd
-          //this will help in cases where multiple sets of biometrics are to be inserted in ABIS in same testcase
-          if (testCase.otherAttributes.bulkInsert && testCase.otherAttributes.insertCount) {
-            insertCount = Number.parseInt(testCase.otherAttributes.insertCount);
-          }
-          //ABIS requestId is unique per request so set to testRunId_testcaseId
-          requestId = this.testRunId + appConstants.UNDERSCORE + testCase.testId;
-          if (insertCount > 1) {
-            //cbeffFileSuffix keeps track of the current CBEFF file index for a testcase
-            if (this.cbeffFileSuffix == 0) {
-              this.cbeffFileSuffix = 1;
-            }
-            requestId = requestId + appConstants.UNDERSCORE + this.cbeffFileSuffix;
-          }
-          //ABIS referenceId is unique per set of biometrics so set to testRunId_testcaseId
-          referenceId = requestId;
-        }
-
-        let galleryIds: { referenceId: string; }[] = [];
-        //if testcase defines identifyReferenceId, then it is used 
-        if (this.currentAbisMethod == appConstants.ABIS_METHOD_IDENTIFY) {
-          requestId = this.testRunId + appConstants.UNDERSCORE + testCase.testId + appConstants.UNDERSCORE + appConstants.ABIS_METHOD_IDENTIFY;
-          if (testCase.otherAttributes.identifyReferenceId) {
-            referenceId = this.testRunId + appConstants.UNDERSCORE + testCase.otherAttributes.identifyReferenceId;
-          }
-          if (testCase.otherAttributes.identifyGalleryIds) {
-            testCase.otherAttributes.identifyGalleryIds.forEach((galleryId: string) => {
-              galleryIds.push({
-                "referenceId": this.testRunId + appConstants.UNDERSCORE + galleryId
-              });
-            });
-          }
-        }
-        //if testcase defines insertReferenceId, overwrite the above referenceId
-        if (this.currentAbisMethod == appConstants.ABIS_METHOD_INSERT) {
-          if (testCase.otherAttributes.insertReferenceId) {
-            referenceId = this.testRunId + appConstants.UNDERSCORE + testCase.otherAttributes.insertReferenceId;
-          }
-        }
-        console.log(`requestId: ${requestId}`);
-        console.log(`referenceId: ${referenceId}`);
-        this.currentCbeffFile = this.cbeffFileSuffix;
-        this.abisRequestSendFailure = false;
-        let methodIndex = 0;
-        if (this.isCombinationAbisTestcase && this.currentAbisMethod == appConstants.ABIS_METHOD_IDENTIFY) {
-          methodIndex = 1;
-        }
-
-        const abisReq: any = await this.abisTestCaseService.sendRequestToQueue(
-          this.rxStompService,
-          testCase,
-          this.abisProjectData,
-          this.currentAbisMethod,
-          methodIndex,
-          requestId,
-          referenceId,
-          galleryIds,
-          this.cbeffFileSuffix,
-        );
-        if (abisReq)
-          console.log(`send to queue status ${abisReq[appConstants.STATUS]}`);
+      const abisReq: any = await this.abisTestCaseService.sendRequestToQueue(
+        this.rxStompService,
+        testCase,
+        this.abisProjectData,
+        this.currentAbisMethod,
+        methodIndex,
+        requestId,
+        referenceId,
+        galleryIds,
+        this.cbeffFileSuffix,
+      );
+      if (abisReq)
+        console.log(`send to queue status ${abisReq[appConstants.STATUS]}`);
+        //console.log(abisReq);
         if (abisReq && abisReq[appConstants.STATUS] && abisReq[appConstants.STATUS] == appConstants.SUCCESS) {
           if (insertCount > 1) {
             this.cbeffFileSuffix = this.cbeffFileSuffix + 1;
@@ -771,106 +774,118 @@ export class ExecuteTestRunComponent implements OnInit {
             this.cbeffFileSuffix = 0;
           }
           this.abisSentMessage = abisReq.methodRequest;
-          this.abisSentDataSource = abisReq.testDataSource;
+          if (this.isCombinationAbisTestcase && this.currentAbisMethod !== appConstants.ABIS_METHOD_IDENTIFY) {
+            this.abisSentDataSource = abisReq.testDataSource;
+          }
+          console.log(`this.abisSentDataSource ${this.abisSentDataSource}`);
           this.subscribeToABISQueue(requestId);
+          const p = await new Promise(async (resolve, reject) => { });
+          return p;
         } else {
           console.log("INSERT REQUEST FAILED");
           this.cbeffFileSuffix = 0;
           this.abisRequestSendFailure = true;
           this.abisSentMessage = appConstants.BLANK_STRING;
           this.abisSentDataSource = appConstants.BLANK_STRING;
-          resolve(true);
+          //resolve(true);
+          return true;
         }
       } else {
-        this.showLoader = true;
-        //run validations
-        let methodIndex = 0;
-        if (this.isCombinationAbisTestcase && this.currentAbisMethod == appConstants.ABIS_METHOD_IDENTIFY) {
-          methodIndex = 1;
-        }
-        const validatorsResp = await this.abisTestCaseService.runValidators(testCase, this.abisProjectData, this.currentAbisMethod,
-          this.abisSentMessage, this.abisRecvdMessage, this.abisSentDataSource, methodIndex);
-        if (this.currentAbisMethod == appConstants.ABIS_METHOD_IDENTIFY) {
-          this.isCombinationAbisTestcase = false;
-          this.currentAbisMethod = appConstants.BLANK_STRING;
-        }
-        resolve(validatorsResp);
+      this.showLoader = true;
+      //run validations
+      let methodIndex = 0;
+      if (this.isCombinationAbisTestcase && this.currentAbisMethod == appConstants.ABIS_METHOD_IDENTIFY) {
+        methodIndex = 1;
       }
-    });
+      const validatorsResp = await this.abisTestCaseService.runValidators(testCase, this.abisProjectData, this.currentAbisMethod,
+        this.abisSentMessage, this.abisRecvdMessage, this.abisSentDataSource, methodIndex);
+      if (this.currentAbisMethod == appConstants.ABIS_METHOD_IDENTIFY) {
+        this.isCombinationAbisTestcase = false;
+        this.currentAbisMethod = appConstants.BLANK_STRING;
+      }
+      //resolve(validatorsResp);
+      return validatorsResp;
+    }
+    //});
   }
 
   async executeSBITestCase(testCase: TestCaseModel) {
-    return new Promise(async (resolve, reject) => {
-      if (
-        testCase.methodName[0] == appConstants.SBI_METHOD_CAPTURE ||
-        testCase.methodName[0] == appConstants.SBI_METHOD_RCAPTURE
-      ) {
-        if (this.initiateCapture) {
-          this.initiateCapture = false;
-          this.showLoader = true;
-          let res: any;
-          if (!this.isAndroidAppMode) {
-            res = await this.sbiTestCaseService.runTestCase(
-              testCase,
-              this.sbiSelectedPort ? this.sbiSelectedPort : '',
-              this.sbiSelectedDevice ? this.sbiSelectedDevice : '',
-              null
-            );
-          } else {
-            res = await this.sbiTestCaseAndroidService.runTestCase(
-              testCase,
-              this.sbiDeviceType,
-              this.sbiSelectedPort ? this.sbiSelectedPort : '',
-              this.sbiSelectedDevice ? this.sbiSelectedDevice : '',
-              null
-            );
-          }
-          this.streamingDone = false;
-          if (!this.isAndroidAppMode) {
-            this.stopStreaming();
-          }
-          resolve(res);
+    //return new Promise(async (resolve, reject) => {
+    if (
+      testCase.methodName[0] == appConstants.SBI_METHOD_CAPTURE ||
+      testCase.methodName[0] == appConstants.SBI_METHOD_RCAPTURE
+    ) {
+      if (this.initiateCapture) {
+        this.initiateCapture = false;
+        this.showLoader = true;
+        let res: any;
+        if (!this.isAndroidAppMode) {
+          res = await this.sbiTestCaseService.runTestCase(
+            testCase,
+            this.sbiSelectedPort ? this.sbiSelectedPort : '',
+            this.sbiSelectedDevice ? this.sbiSelectedDevice : '',
+            null
+          );
         } else {
-          //no resp to keep the for loop on hold
+          res = await this.sbiTestCaseAndroidService.runTestCase(
+            testCase,
+            this.sbiDeviceType,
+            this.sbiSelectedPort ? this.sbiSelectedPort : '',
+            this.sbiSelectedDevice ? this.sbiSelectedDevice : '',
+            null
+          );
         }
+        this.streamingDone = false;
+        if (!this.isAndroidAppMode) {
+          this.stopStreaming();
+        }
+        //resolve(res);
+        return res;
       } else {
-        if (this.showResumeBtn) {
-          this.pauseExecution = true;
+        //no resp to keep the for loop on hold
+        const p = await new Promise(async (resolve, reject) => { });
+        return p;
+      }
+    } else {
+      if (this.showResumeBtn) {
+        this.pauseExecution = true;
+      }
+      if (!this.pauseExecution) {
+        this.showLoader = true;
+        let beforeKeyRotationDeviceResp = null;
+        if (
+          testCase.otherAttributes.keyRotationTestCase &&
+          this.beforeKeyRotationResp
+        ) {
+          beforeKeyRotationDeviceResp = this.beforeKeyRotationResp;
         }
-        if (!this.pauseExecution) {
-          this.showLoader = true;
-          let beforeKeyRotationDeviceResp = null;
-          if (
-            testCase.otherAttributes.keyRotationTestCase &&
-            this.beforeKeyRotationResp
-          ) {
-            beforeKeyRotationDeviceResp = this.beforeKeyRotationResp;
-          }
-          let res: any;
-          if (!this.isAndroidAppMode) {
-            res = await this.sbiTestCaseService.runTestCase(
-              testCase,
-              this.sbiSelectedPort ? this.sbiSelectedPort : '',
-              this.sbiSelectedDevice ? this.sbiSelectedDevice : '',
-              beforeKeyRotationDeviceResp
-            );
-          } else {
-            res = await this.sbiTestCaseAndroidService.runTestCase(
-              testCase,
-              this.sbiDeviceType,
-              this.sbiSelectedPort ? this.sbiSelectedPort : '',
-              this.sbiSelectedDevice ? this.sbiSelectedDevice : '',
-              beforeKeyRotationDeviceResp
-            );
-          }
-          this.beforeKeyRotationResp = null;
-          resolve(res);
+        let res: any;
+        if (!this.isAndroidAppMode) {
+          res = await this.sbiTestCaseService.runTestCase(
+            testCase,
+            this.sbiSelectedPort ? this.sbiSelectedPort : '',
+            this.sbiSelectedDevice ? this.sbiSelectedDevice : '',
+            beforeKeyRotationDeviceResp
+          );
         } else {
-          //no resp to keep the for loop on hold
+          res = await this.sbiTestCaseAndroidService.runTestCase(
+            testCase,
+            this.sbiDeviceType,
+            this.sbiSelectedPort ? this.sbiSelectedPort : '',
+            this.sbiSelectedDevice ? this.sbiSelectedDevice : '',
+            beforeKeyRotationDeviceResp
+          );
         }
+        this.beforeKeyRotationResp = null;
+        //resolve(res);
+        return res;
+      } else {
+        //no resp to keep the for loop on hold
+        const p = await new Promise(async (resolve, reject) => { });
+        return p;
       }
     }
-    );
+    //});
   }
 
   calculateTestcaseResults(res: any) {

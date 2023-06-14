@@ -6,15 +6,18 @@ import { AbisProjectModel } from '../models/abis-project';
 import { ActiveMqService } from './activemq-service';
 import { RxStompService } from './rx-stomp.service';
 import Utils from 'src/app/app.utils';
+import { AppConfigService } from 'src/app/app-config.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AbisTestCaseService {
+  
 
   constructor(
     private dataService: DataService,
-    private activeMqService: ActiveMqService
+    private activeMqService: ActiveMqService,
+    private appConfigService: AppConfigService
   ) { }
 
   async sendRequestToQueue(
@@ -28,7 +31,7 @@ export class AbisTestCaseService {
     galleryIds: any[],
     cbeffFileSuffix: number
   ) {
-    
+    console.log(`abisProjectData.bioTestDataFileName: ${abisProjectData.bioTestDataFileName}`);
     let dataShareResp: any = null;
     //create a datashare URL but only for Insert
     if (methodName == appConstants.ABIS_METHOD_INSERT) {
@@ -119,6 +122,9 @@ export class AbisTestCaseService {
         methodUrl: abisProjectData.url,
         testDataSource: testDataSource
       };
+      console.log('finalResponse');
+      console.log(finalResponse);
+      
       return finalResponse;
   }
 
@@ -128,10 +134,15 @@ export class AbisTestCaseService {
     cbeffFileIndex: number
   ): any {
     return new Promise((resolve, reject) => {
+      let incorrectPartnerId;
+      if (testCase && testCase.otherAttributes.invalidRequestAttribute == 'incorrectPartnerId') {
+        incorrectPartnerId = this.appConfigService.getConfig()['incorrectPartnerId'];
+      }
       let dataShareRequestDto = {
         testcaseId: testCase.testId,
         bioTestDataName: selectedBioTestDataName,
-        cbeffFileSuffix: cbeffFileIndex
+        cbeffFileSuffix: cbeffFileIndex,
+        incorrectPartnerId: incorrectPartnerId ? incorrectPartnerId : ''
       };
       let request = {
         id: appConstants.DATASHARE_ID,

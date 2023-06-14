@@ -86,7 +86,8 @@
 		"inboundQueueNameIsRequired": "اسم قائمة الانتظار الوارد مطلوب",
 		"activeMqUrl": "نشيط MQ URL",
 		"requestQueueName": "طلب اسم قائمة الانتظار",
-		"responseQueueName": "اسم قائمة انتظار الاستجابة"
+		"responseQueueName": "اسم قائمة انتظار الاستجابة",
+		"invalidPartnerTypeMsg": "يمكن لشريك ABIS فقط إنشاء مشروع ABIS"
 	},
 	"addTestData": {
 		"name": "اسم",
@@ -1215,9 +1216,9 @@
 		"MATCH_NO_DATA_VALIDATOR_001": "لا توجد بيانات للمطابقة ، تم استلام رمز الحالة المتوقع: {}",
 		"MATCH_NO_DATA_VALIDATOR_002": "لا توجد بيانات للمطابقة ، تم استلام رمز حالة غير متوقع: {}",
 		"QUALITY_CHECK_001": "فشل فحص الجودة ، طريقة غير صالحة: {}",
-		"QUALITY_CHECK_002": "تم التحقق من الجودة الإيجابية بنجاح",
+		"QUALITY_CHECK_002": "فحص الجودة السلبي ناجح",
 		"QUALITY_CHECK_003": "فشل رمز حالة فحص الجودة ، تم استلام: {}",
-		"QUALITY_CHECK_004": "تم بنجاح فحص الجودة الإيجابي لـ {}. النتيجة المستلمة: {}",
+		"QUALITY_CHECK_004": "تم التحقق من الجودة الإيجابي لـ {} بنجاح. النتيجة المستلمة: {}",
 		"QUALITY_CHECK_005": "فشل فحص الجودة الإيجابي لـ {}. النتيجة أقل من قيمة العتبة. النتيجة المستلمة: {}",
 		"QUALITY_CHECK_006": "تم بنجاح فحص الجودة السلبية لـ {}. النتيجة المستلمة: {}",
 		"QUALITY_CHECK_007": "فشل فحص الجودة السلبي لـ {}. النتيجة أعلى من قيمة العتبة. النتيجة المستلمة: {}",
@@ -1241,6 +1242,7 @@
 		"BIOMETRIC_QUALITY_CHECK_001": "القياسات الحيوية",
 		"BIOMETRIC_QUALITY_CHECK_002": "القياسات الحيوية",
 		"BIOMETRIC_QUALITY_CHECK_003": "غير قادر على الاتصال",
+		"BIOMETRIC_QUALITY_CHECK_004": "خياري",
 		"ISO_VALIDATOR_001": "فشل ISOStandardsValidator بسبب المشكلات التالية: bioType غير صالح = {}",
 		"ISO_VALIDATOR_002": "فشل ISOStandardsValidator بسبب المشكلات التالية: isValidISOTemplate القيمة الحيوية فارغة أو خالية",
 		"ISO_VALIDATOR_003": "فشل ISOStandardsValidator [ISO19794-4: 2011] بسبب المشكلات التالية:",

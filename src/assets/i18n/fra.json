@@ -86,7 +86,8 @@
 		"inboundQueueNameIsRequired": "Le nom de la file d'attente entrante est requis",
 		"activeMqUrl": "Actif MQ URL:",
 		"requestQueueName": "Nom de la file d'attente des requêtes:",
-		"responseQueueName": "Nom de la file d'attente de réponses:"
+		"responseQueueName": "Nom de la file d'attente de réponses:",
+		"invalidPartnerTypeMsg": "Le partenaire ABIS peut uniquement créer un projet ABIS"
 	},
 	"addTestData": {
 		"name": "Nom",
@@ -1214,7 +1215,7 @@
 		"MATCH_NO_DATA_VALIDATOR_001": "Aucune donnée pour Match, code d'état attendu reçu : {}",
 		"MATCH_NO_DATA_VALIDATOR_002": "Aucune donnée pour Match, code d'état inattendu reçu : {}",
 		"QUALITY_CHECK_001": "Échec du contrôle qualité, modalité non valide : {}",
-		"QUALITY_CHECK_002": "Le contrôle de qualité positif pour est réussi",
+		"QUALITY_CHECK_002": "Le contrôle qualité négatif est réussi.",
 		"QUALITY_CHECK_003": "Échec du code d'état du contrôle qualité, reçu : {}",
 		"QUALITY_CHECK_004": "Le contrôle de qualité positif pour {} a réussi. Note reçue : {}",
 		"QUALITY_CHECK_005": "Le contrôle de qualité positif pour {} a échoué. Le score est inférieur à la valeur seuil. Note reçue : {}",
@@ -1240,6 +1241,7 @@
 		"BIOMETRIC_QUALITY_CHECK_001": "Les validations BiometricsQualityCheckValidator échouent.",
 		"BIOMETRIC_QUALITY_CHECK_002": "Les validations BiometricsQualityCheckValidator sont réussies.",
 		"BIOMETRIC_QUALITY_CHECK_003": "Impossible de se connecter",
+		"BIOMETRIC_QUALITY_CHECK_004": "Facultatif",
 		"ISO_VALIDATOR_001": "ISOStandardsValidator a échoué en raison des problèmes ci-dessous : bioType non valide = {}",
 		"ISO_VALIDATOR_002": "ISOStandardsValidator a échoué en raison des problèmes ci-dessous : isValidISOTemplate 'bioValue' is Empty or Null",
 		"ISO_VALIDATOR_003": "ISOStandardsValidator[ISO19794-4:2011] a échoué en raison des problèmes ci-dessous :",
