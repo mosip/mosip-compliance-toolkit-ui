@@ -1366,7 +1366,20 @@
 		"DUPLICATE_NOT_FOUND_VALIDATOR_001": "Identifier - aucun doublon trouvé pour le referenceId donné.",
 		"DUPLICATE_NOT_FOUND_VALIDATOR_002": "Identifier - trouvé {} doublon pour étant donné le referenceId.",
 		"EXPECTED_DUPLICATE_COUNT_VALIDATOR_001": "Identifier - a trouvé le nombre de doublons attendu comme : {} pour l'identifiant de référence donné",
-		"EXPECTED_DUPLICATE_COUNT_VALIDATOR_002": "Identifier - n'a pas trouvé le nombre de doublons attendu. Le nombre de doublons attendu est : {}. Mais les doublons reçus comptent comme : {}"
+		"EXPECTED_DUPLICATE_COUNT_VALIDATOR_002": "Identifier - n'a pas trouvé le nombre de doublons attendu. Le nombre de doublons attendu est : {}. Mais les doublons reçus comptent comme : {}",
+		"ISO_WARNING_001": "<br> Avertissements : ",
+		"ISO_WARNING_002": "<BR>Valeurs autorisées pour le taux de compression d'image non valide Jusqu'à 15:1 </span>",
+		"ISO_WARNING_003": "<BR>Valeurs autorisées du rapport hauteur/largeur de l'image jusqu'à 1:1 </span>",
+		"ISO_WARNING_004": "<BR>Valeurs autorisées pour l'espace colorimétrique de l'image non valide Jusqu'à GRAY [8 bits] </span>",
+		"ISO_WARNING_005": "<BR>Image non valide Résolution minimale entre 500 DPI et 1 000 DPI </span>",
+		"ISO_WARNING_006": "<BR>Taux de compression d'image invalide Valeurs autorisées Jusqu'à 15:1 pour Auth </span>",
+		"ISO_WARNING_007": "<BR>Valeurs autorisées du rapport hauteur/largeur de l'image jusqu'à 1:1 </span>",
+		"ISO_WARNING_008": "<BR>Valeurs autorisées pour l'espace colorimétrique de l'image non valide Jusqu'à GRAY [8 bits] </span>",
+		"ISO_WARNING_009": "<BR>Image non valide Résolution minimale entre 500 DPI et 1 000 DPI </span>",
+		"ISO_WARNING_010": "<BR>Taux de compression d'image invalide Valeurs autorisées Jusqu'à 15:1 pour Auth",
+		"ISO_WARNING_011": "<BR>Valeurs autorisées du rapport hauteur/largeur de l'image jusqu'à 1:1",
+		"ISO_WARNING_012": "<BR>Valeurs autorisées pour l'espace colorimétrique de l'image non valide Jusqu'à RVB [24 bits]",
+		"ISO_WARNING_013": "<BR>Image non valide Résolution minimale entre 500 DPI et 1 000 DPI"
 	},
 	"serviceErrors": {
 		"TOOLKIT_SUCCESS_000": "Succès",

@@ -1368,7 +1368,20 @@
 		"DUPLICATE_NOT_FOUND_VALIDATOR_001": "Identify - no duplicate found for given the referenceId.",
 		"DUPLICATE_NOT_FOUND_VALIDATOR_002": "Identify - found {} duplicate for given the referenceId.",
 		"EXPECTED_DUPLICATE_COUNT_VALIDATOR_001": "Identify - found the expected duplicate count as: {} for given the referenceId",
-		"EXPECTED_DUPLICATE_COUNT_VALIDATOR_002": "Identify - did not find the expected duplicate count. Expected duplicate count is: {}. But received duplicate count as: {}"
+		"EXPECTED_DUPLICATE_COUNT_VALIDATOR_002": "Identify - did not find the expected duplicate count. Expected duplicate count is: {}. But received duplicate count as: {}",
+		"ISO_WARNING_001": "<br> Warnings: ",
+		"ISO_WARNING_002": "<BR>Invalid Image Compression ratio allowed values Up to 15:1",
+		"ISO_WARNING_003": "<BR>Invalid Image Aspect ratio allowed values Up to 1:1",
+		"ISO_WARNING_004": "<BR>Invalid Image Color Space allowed values Up to GRAY[8 bit]",
+		"ISO_WARNING_005": "<BR>Invalid Image Minimum resolution between 500 DPI and 1000 DPI",
+		"ISO_WARNING_006": "<BR>Invalid Image Compression ratio allowed values Up to 15:1 for Auth",
+		"ISO_WARNING_007": "<BR>Invalid Image Aspect ratio allowed values Up to 1:1",
+		"ISO_WARNING_008": "<BR>Invalid Image Color Space allowed values Up to GRAY[8 bit]",
+		"ISO_WARNING_009": "<BR>Invalid Image Minimum resolution between 500 DPI and 1000 DPI",
+		"ISO_WARNING_010": "<BR>Invalid Image Compression ratio allowed values Up to 15:1 for Auth",
+		"ISO_WARNING_011": "<BR>Invalid Image Aspect ratio allowed values Up to 1:1",
+		"ISO_WARNING_012": "<BR>Invalid Image Color Space allowed values Up to RGB[24 bit]",
+		"ISO_WARNING_013": "<BR>Invalid Image Minimum resolution between 500 DPI and 1000 DPI"
 	},
 	"serviceErrors": {
 		"TOOLKIT_SUCCESS_000": "Success",
