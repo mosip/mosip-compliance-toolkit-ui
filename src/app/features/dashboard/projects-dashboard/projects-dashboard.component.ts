@@ -175,12 +175,12 @@ export class ProjectsDashboardComponent implements OnInit {
     this.dataSource.filterPredicate = this.customFilterPredicate;
   }
   customFilterPredicate(data: ProjectData, filter: string): boolean {
-    const formattedFilter = new Date(filter);
+    const formattedDate = new Date(filter);
     const crDate = new Date(data.crDate);
 
     const nameMatch = data.name.trim().toLowerCase().includes(filter);
     const typeMatch = data.projectType.trim().toLowerCase().includes(filter);
-    const dateMatch = crDate.toDateString() === formattedFilter.toDateString();
+    const dateMatch = crDate.toDateString() === formattedDate.toDateString();
 
     return nameMatch || typeMatch || dateMatch;
   }
