@@ -11,6 +11,7 @@ import * as appConstants from 'src/app/app.constants';
 import Utils from 'src/app/app.utils';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { environment } from 'src/environments/environment';
+import { formatDate } from '@angular/common';
 import { BreadcrumbService } from 'xng-breadcrumb';
 
 export interface ProjectData {
@@ -166,13 +167,24 @@ export class ProjectsDashboardComponent implements OnInit {
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    console.log(filterValue);
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.dataSource.filter = filterValue;
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+    this.dataSource.filterPredicate = this.customFilterPredicate;
   }
+  customFilterPredicate(data: ProjectData, filter: string): boolean {
+    const formattedDate = new Date(filter);
+    const crDate = new Date(data.crDate);
+
+    const nameMatch = data.name.trim().toLowerCase().includes(filter);
+    const typeMatch = data.projectType.trim().toLowerCase().includes(filter);
+    const dateMatch = crDate.toDateString() === formattedDate.toDateString();
+
+    return nameMatch || typeMatch || dateMatch;
+  }
+
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
