@@ -114,7 +114,7 @@ export class ProjectsDashboardComponent implements OnInit {
                   }
                 }
                 this.dataSource = new MatTableDataSource(tableData);
-                this.dataSource.filterPredicate = this.customFilterPredicate.bind(this);
+                this.dataSource.filterPredicate = this.customFilterPredicate;
                 resolve(true);
               })().catch((error) => reject(error));
           },
