@@ -66,45 +66,22 @@ export class AddCollectionsComponent implements OnInit {
     if (this.projectType == appConstants.SBI) {
       await this.getSbiProjectDetails();
       await this.getSbiTestcases();
-      this.initBreadCrumb();
+      Utils.initBreadCrumb(this.resourceBundleJson, this.breadcrumbService, 
+        this.sbiProjectData, null, null, this.projectType, null);
     }
     if (this.projectType == appConstants.SDK) {
       await this.getSdkProjectDetails();
       await this.getSdkTestcases();
-      this.initBreadCrumb();
+      Utils.initBreadCrumb(this.resourceBundleJson, this.breadcrumbService, 
+        null, this.sdkProjectData, null, this.projectType, null);
     }
     if (this.projectType == appConstants.ABIS) {
       await this.getAbisProjectDetails();
       await this.getAbisTestcases();
-      this.initBreadCrumb();
+      Utils.initBreadCrumb(this.resourceBundleJson, this.breadcrumbService, 
+        null, null, this.abisProjectData, this.projectType, null);
     }
     this.dataLoaded = true;
-  }
-
-  initBreadCrumb() {
-    const breadcrumbLabels = this.resourceBundleJson['breadcrumb'];
-    if (breadcrumbLabels) {
-      this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
-      if (this.sbiProjectData) {
-        this.breadcrumbService.set(
-          '@projectBreadCrumb',
-          `${this.projectType} ${breadcrumbLabels.project} - ${this.sbiProjectData.name}`
-        );
-      }
-      if (this.sdkProjectData) {
-        this.breadcrumbService.set(
-          '@projectBreadCrumb',
-          `${this.projectType} ${breadcrumbLabels.project} - ${this.sdkProjectData.name}`
-        );
-      }
-      if (this.abisProjectData) {
-        this.breadcrumbService.set(
-          '@projectBreadCrumb',
-          `${this.projectType} ${breadcrumbLabels.project} - ${this.abisProjectData.name}`
-        );
-      }
-      this.breadcrumbService.set('@collectionBreadCrumb', `${breadcrumbLabels.add}`);
-    }
   }
 
   initForm() {
@@ -134,7 +111,7 @@ export class AddCollectionsComponent implements OnInit {
             resolve(true);
           },
           (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson,errors, this.dialog);
+            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
             resolve(false);
           }
         )

@@ -87,29 +87,9 @@ export class TestRunHistoryComponent implements OnInit {
   initBreadCrumb() {
     const breadcrumbLabels = this.resourceBundleJson['breadcrumb'];
     if (breadcrumbLabels) {
-      this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
-      if (this.sbiProjectData) {
-        this.breadcrumbService.set(
-          '@projectBreadCrumb',
-          `${this.projectType} ${breadcrumbLabels.project} - ${this.sbiProjectData.name}`
-        );
-      }
-      if (this.sdkProjectData) {
-        this.breadcrumbService.set(
-          '@projectBreadCrumb',
-          `${this.projectType} ${breadcrumbLabels.project} - ${this.sdkProjectData.name}`
-        );
-      }
-      if (this.abisProjectData) {
-        this.breadcrumbService.set(
-          '@projectBreadCrumb',
-          `${this.projectType} ${breadcrumbLabels.project} - ${this.abisProjectData.name}`
-        );
-      }
-      this.breadcrumbService.set(
-        '@collectionBreadCrumb',
-        `${this.collectionName}`
-      );
+      Utils.initBreadCrumb(this.resourceBundleJson, this.breadcrumbService, 
+        this.sbiProjectData, this.sdkProjectData, this.abisProjectData, 
+        this.projectType, this.collectionName);
       this.breadcrumbService.set('@testrunBreadCrumb', `${breadcrumbLabels.testRunHistory}`);
     }
   }
