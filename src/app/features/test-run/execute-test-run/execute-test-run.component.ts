@@ -677,7 +677,6 @@ export class ExecuteTestRunComponent implements OnInit {
   }
 
   async executeABISTestCase(testCase: TestCaseModel) {
-    //return new Promise(async (resolve, reject) => {
     this.isCombinationAbisTestcase = testCase.methodName.length > 1 ? true : false;
     if (this.isCombinationAbisTestcase && this.currentAbisMethod == appConstants.BLANK_STRING) {
       this.currentAbisMethod = appConstants.ABIS_METHOD_INSERT;
@@ -803,14 +802,11 @@ export class ExecuteTestRunComponent implements OnInit {
         this.isCombinationAbisTestcase = false;
         this.currentAbisMethod = appConstants.BLANK_STRING;
       }
-      //resolve(validatorsResp);
       return validatorsResp;
     }
-    //});
   }
 
   async executeSBITestCase(testCase: TestCaseModel) {
-    //return new Promise(async (resolve, reject) => {
     if (
       testCase.methodName[0] == appConstants.SBI_METHOD_CAPTURE ||
       testCase.methodName[0] == appConstants.SBI_METHOD_RCAPTURE
@@ -841,10 +837,11 @@ export class ExecuteTestRunComponent implements OnInit {
         }
         //resolve(res);
         return res;
-      } else {
+      } 
+      else {
         //no resp to keep the for loop on hold
         await new Promise(async (resolve, reject) => { });
-        //return p;
+        return true;
       }
     } else {
       if (this.showResumeBtn) {
@@ -877,15 +874,13 @@ export class ExecuteTestRunComponent implements OnInit {
           );
         }
         this.beforeKeyRotationResp = null;
-        //resolve(res);
         return res;
-      } else {
-        //no resp to keep the for loop on hold
+      } 
+      else {
         await new Promise(async (resolve, reject) => { });
-        //return p;
+        return true;
       }
     }
-    //});
   }
 
   calculateTestcaseResults(res: any) {
