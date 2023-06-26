@@ -783,7 +783,7 @@ export class ExecuteTestRunComponent implements OnInit {
         if (await promise) {
           return true;
         } else {
-          return true; 
+          return false;
         }
       } else {
         console.log("INSERT REQUEST FAILED");
@@ -849,7 +849,7 @@ export class ExecuteTestRunComponent implements OnInit {
         const promise = new Promise((resolve, reject) => { });
         if (await promise) {
           return false;
-        }  
+        }
       }
     } else {
       if (this.showResumeBtn) {
@@ -887,11 +887,11 @@ export class ExecuteTestRunComponent implements OnInit {
       else {
         //no resp to keep the for loop on hold
         //wait till user clicks on the required button in UI
-        const promise = new Promise((resolve, reject) => {});
+        const promise = new Promise((resolve, reject) => { });
         if (await promise) {
           return false;
-        }  
-        
+        }
+
       }
     }
   }
@@ -1092,19 +1092,21 @@ export class ExecuteTestRunComponent implements OnInit {
     this.rxStompService
       .watch(this.abisProjectData.inboundQueueName)
       .subscribe(async (message: Message) => {
-        const respObj = JSON.parse(message.body);
-        const recvdRequestId = respObj[appConstants.REQUEST_ID];
-        console.log(`recvdRequestId: ${recvdRequestId}`);
-        if (sentRequestId == recvdRequestId) {
-          this.abisRecvdMessage = message.body;
-          //console.log(this.abisRecvdMessage);
-          await this.runExecuteForLoop(false, false);
-          this.runComplete = true;
-          this.basicTimer.stop();
-        }
+        await this.handleMessage(message, sentRequestId);
       });
   }
-
+  async handleMessage(message: Message, sentRequestId: string) {
+    const respObj = JSON.parse(message.body);
+    const recvdRequestId = respObj[appConstants.REQUEST_ID];
+    console.log(`recvdRequestId: ${recvdRequestId}`);
+    if (sentRequestId == recvdRequestId) {
+      this.abisRecvdMessage = message.body;
+      //console.log(this.abisRecvdMessage);
+      await this.runExecuteForLoop(false, false);
+      this.runComplete = true;
+      this.basicTimer.stop();
+    }
+  }
   ngOnDestroy() {
     if (this.rxStompService) {
       this.rxStompService.deactivate()
