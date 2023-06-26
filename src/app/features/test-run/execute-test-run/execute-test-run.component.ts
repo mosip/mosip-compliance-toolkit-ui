@@ -1091,10 +1091,11 @@ export class ExecuteTestRunComponent implements OnInit {
     }
     this.rxStompService
       .watch(this.abisProjectData.inboundQueueName)
-      .subscribe(async (message: Message) => {
-        await this.handleMessage(message, sentRequestId);
+      .subscribe((message: Message) => {
+        this.handleMessage(message, sentRequestId);
       });
   }
+  
   async handleMessage(message: Message, sentRequestId: string) {
     const respObj = JSON.parse(message.body);
     const recvdRequestId = respObj[appConstants.REQUEST_ID];
