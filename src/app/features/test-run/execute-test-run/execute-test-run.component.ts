@@ -778,8 +778,13 @@ export class ExecuteTestRunComponent implements OnInit {
         }
         console.log(`this.abisSentDataSource ${this.abisSentDataSource}`);
         this.subscribeToABISQueue(requestId);
-        await new Promise(async (resolve, reject) => { });
-        return true;
+        //wait till some message arrives in active mq
+        const promise = new Promise((resolve, reject) => { });
+        if (await promise) {
+          return true;
+        } else {
+          return true; 
+        }
       } else {
         console.log("INSERT REQUEST FAILED");
         this.cbeffFileSuffix = 0;
