@@ -777,9 +777,14 @@ export class ExecuteTestRunComponent implements OnInit {
           this.abisSentDataSource = abisReq.testDataSource;
         }
         console.log(`this.abisSentDataSource ${this.abisSentDataSource}`);
-        return await this.subscribeToABISQueue(requestId);
-        // await new Promise(async (resolve, reject) => { });
-        // return true;
+        this.subscribeToABISQueue(requestId);
+        //wait till some message arrives in active mq
+        const promise = new Promise((resolve, reject) => { });
+        if (await promise) {
+          return true;
+        } else {
+          return true; 
+        }
       } else {
         console.log("INSERT REQUEST FAILED");
         this.cbeffFileSuffix = 0;
@@ -1081,28 +1086,23 @@ export class ExecuteTestRunComponent implements OnInit {
   }
 
   subscribeToABISQueue(sentRequestId: string) {
-    return new Promise((resolve, reject) => {
-      if (!this.rxStompService.connected()) {
-        this.rxStompService = this.activeMqService.setUpConfig(this.abisProjectData);
-      }
-      this.rxStompService
-        .watch(this.abisProjectData.inboundQueueName)
-        .subscribe(async (message: Message) => {
-          const respObj = JSON.parse(message.body);
-          const recvdRequestId = respObj[appConstants.REQUEST_ID];
-          console.log(`recvdRequestId: ${recvdRequestId}`);
-          if (sentRequestId == recvdRequestId) {
-            this.abisRecvdMessage = message.body;
-            //console.log(this.abisRecvdMessage);
-            await this.runExecuteForLoop(false, false);
-            this.runComplete = true;
-            this.basicTimer.stop();
-            resolve(true);
-          }
-        });
-
-    });  
-    
+    if (!this.rxStompService.connected()) {
+      this.rxStompService = this.activeMqService.setUpConfig(this.abisProjectData);
+    }
+    this.rxStompService
+      .watch(this.abisProjectData.inboundQueueName)
+      .subscribe(async (message: Message) => {
+        const respObj = JSON.parse(message.body);
+        const recvdRequestId = respObj[appConstants.REQUEST_ID];
+        console.log(`recvdRequestId: ${recvdRequestId}`);
+        if (sentRequestId == recvdRequestId) {
+          this.abisRecvdMessage = message.body;
+          //console.log(this.abisRecvdMessage);
+          await this.runExecuteForLoop(false, false);
+          this.runComplete = true;
+          this.basicTimer.stop();
+        }
+      });
   }
 
   ngOnDestroy() {
