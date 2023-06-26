@@ -677,7 +677,6 @@ export class ExecuteTestRunComponent implements OnInit {
   }
 
   async executeABISTestCase(testCase: TestCaseModel) {
-    //return new Promise(async (resolve, reject) => {
     this.isCombinationAbisTestcase = testCase.methodName.length > 1 ? true : false;
     if (this.isCombinationAbisTestcase && this.currentAbisMethod == appConstants.BLANK_STRING) {
       this.currentAbisMethod = appConstants.ABIS_METHOD_INSERT;
@@ -764,33 +763,38 @@ export class ExecuteTestRunComponent implements OnInit {
       );
       if (abisReq)
         console.log(`send to queue status ${abisReq[appConstants.STATUS]}`);
-        //console.log(abisReq);
-        if (abisReq && abisReq[appConstants.STATUS] && abisReq[appConstants.STATUS] == appConstants.SUCCESS) {
-          if (insertCount > 1) {
-            this.cbeffFileSuffix = this.cbeffFileSuffix + 1;
-          }
-          if (this.cbeffFileSuffix > insertCount) {
-            //reset the cbeffFileSuffix to zero, since all are processed
-            this.cbeffFileSuffix = 0;
-          }
-          this.abisSentMessage = abisReq.methodRequest;
-          if (this.isCombinationAbisTestcase && this.currentAbisMethod !== appConstants.ABIS_METHOD_IDENTIFY) {
-            this.abisSentDataSource = abisReq.testDataSource;
-          }
-          console.log(`this.abisSentDataSource ${this.abisSentDataSource}`);
-          this.subscribeToABISQueue(requestId);
-          const p = await new Promise(async (resolve, reject) => { });
-          return p;
-        } else {
-          console.log("INSERT REQUEST FAILED");
+      //console.log(abisReq);
+      if (abisReq && abisReq[appConstants.STATUS] && abisReq[appConstants.STATUS] == appConstants.SUCCESS) {
+        if (insertCount > 1) {
+          this.cbeffFileSuffix = this.cbeffFileSuffix + 1;
+        }
+        if (this.cbeffFileSuffix > insertCount) {
+          //reset the cbeffFileSuffix to zero, since all are processed
           this.cbeffFileSuffix = 0;
-          this.abisRequestSendFailure = true;
-          this.abisSentMessage = appConstants.BLANK_STRING;
-          this.abisSentDataSource = appConstants.BLANK_STRING;
-          //resolve(true);
+        }
+        this.abisSentMessage = abisReq.methodRequest;
+        if (this.isCombinationAbisTestcase && this.currentAbisMethod !== appConstants.ABIS_METHOD_IDENTIFY) {
+          this.abisSentDataSource = abisReq.testDataSource;
+        }
+        console.log(`this.abisSentDataSource ${this.abisSentDataSource}`);
+        this.subscribeToABISQueue(requestId);
+        //wait till some message arrives in active mq
+        const promise = new Promise((resolve, reject) => { });
+        if (await promise) {
           return true;
+        } else {
+          return false;
         }
       } else {
+        console.log("INSERT REQUEST FAILED");
+        this.cbeffFileSuffix = 0;
+        this.abisRequestSendFailure = true;
+        this.abisSentMessage = appConstants.BLANK_STRING;
+        this.abisSentDataSource = appConstants.BLANK_STRING;
+        //resolve(true);
+        return true;
+      }
+    } else {
       this.showLoader = true;
       //run validations
       let methodIndex = 0;
@@ -803,14 +807,11 @@ export class ExecuteTestRunComponent implements OnInit {
         this.isCombinationAbisTestcase = false;
         this.currentAbisMethod = appConstants.BLANK_STRING;
       }
-      //resolve(validatorsResp);
       return validatorsResp;
     }
-    //});
   }
 
   async executeSBITestCase(testCase: TestCaseModel) {
-    //return new Promise(async (resolve, reject) => {
     if (
       testCase.methodName[0] == appConstants.SBI_METHOD_CAPTURE ||
       testCase.methodName[0] == appConstants.SBI_METHOD_RCAPTURE
@@ -841,10 +842,14 @@ export class ExecuteTestRunComponent implements OnInit {
         }
         //resolve(res);
         return res;
-      } else {
+      }
+      else {
         //no resp to keep the for loop on hold
-        const p = await new Promise(async (resolve, reject) => { });
-        return p;
+        //wait till user clicks on the required button in UI
+        const promise = new Promise((resolve, reject) => { });
+        if (await promise) {
+          return false;
+        }
       }
     } else {
       if (this.showResumeBtn) {
@@ -877,15 +882,18 @@ export class ExecuteTestRunComponent implements OnInit {
           );
         }
         this.beforeKeyRotationResp = null;
-        //resolve(res);
         return res;
-      } else {
+      }
+      else {
         //no resp to keep the for loop on hold
-        const p = await new Promise(async (resolve, reject) => { });
-        return p;
+        //wait till user clicks on the required button in UI
+        const promise = new Promise((resolve, reject) => { });
+        if (await promise) {
+          return false;
+        }
+
       }
     }
-    //});
   }
 
   calculateTestcaseResults(res: any) {
@@ -1083,22 +1091,23 @@ export class ExecuteTestRunComponent implements OnInit {
     }
     this.rxStompService
       .watch(this.abisProjectData.inboundQueueName)
-      .forEach(async (message: Message) => {
-        const respObj = JSON.parse(message.body);
-        const recvdRequestId = respObj[appConstants.REQUEST_ID];
-        console.log(`recvdRequestId: ${recvdRequestId}`);
-        if (sentRequestId == recvdRequestId) {
-          this.abisRecvdMessage = message.body;
-          //console.log(this.abisRecvdMessage);
-          await this.runExecuteForLoop(false, false);
-          this.runComplete = true;
-          this.basicTimer.stop();
-        }
-      }).catch((error) => {
-        console.log(error);
+      .subscribe((message: Message) => {
+        this.handleMessage(message, sentRequestId);
       });
   }
-
+  
+  async handleMessage(message: Message, sentRequestId: string) {
+    const respObj = JSON.parse(message.body);
+    const recvdRequestId = respObj[appConstants.REQUEST_ID];
+    console.log(`recvdRequestId: ${recvdRequestId}`);
+    if (sentRequestId == recvdRequestId) {
+      this.abisRecvdMessage = message.body;
+      //console.log(this.abisRecvdMessage);
+      await this.runExecuteForLoop(false, false);
+      this.runComplete = true;
+      this.basicTimer.stop();
+    }
+  }
   ngOnDestroy() {
     if (this.rxStompService) {
       this.rxStompService.deactivate()
