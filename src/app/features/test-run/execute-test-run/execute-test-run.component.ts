@@ -1086,7 +1086,7 @@ export class ExecuteTestRunComponent implements OnInit {
     }
     this.rxStompService
       .watch(this.abisProjectData.inboundQueueName)
-      .forEach(async (message: Message) => {
+      .subscribe(async (message: Message) => {
         const respObj = JSON.parse(message.body);
         const recvdRequestId = respObj[appConstants.REQUEST_ID];
         console.log(`recvdRequestId: ${recvdRequestId}`);
@@ -1097,8 +1097,6 @@ export class ExecuteTestRunComponent implements OnInit {
           this.runComplete = true;
           this.basicTimer.stop();
         }
-      }).catch((error) => {
-        console.log(error);
       });
   }
 
