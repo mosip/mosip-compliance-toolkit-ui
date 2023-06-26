@@ -110,29 +110,9 @@ export class TestRunComponent implements OnInit {
   initBreadCrumb() {
     const breadcrumbLabels = this.resourceBundleJson['breadcrumb'];
     if (breadcrumbLabels) {
-      this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
-      if (this.sbiProjectData) {
-        this.breadcrumbService.set(
-          '@projectBreadCrumb',
-          `${this.projectType} ${breadcrumbLabels.project} - ${this.sbiProjectData.name}`
-        );
-      }
-      if (this.sdkProjectData) {
-        this.breadcrumbService.set(
-          '@projectBreadCrumb',
-          `${this.projectType} ${breadcrumbLabels.project} - ${this.sdkProjectData.name}`
-        );
-      }
-      if (this.abisProjectData) {
-        this.breadcrumbService.set(
-          '@projectBreadCrumb',
-          `${this.projectType} ${breadcrumbLabels.project} - ${this.abisProjectData.name}`
-        );
-      }
-      this.breadcrumbService.set(
-        '@collectionBreadCrumb',
-        `${this.collectionName}`
-      );
+      Utils.initBreadCrumb(this.resourceBundleJson, this.breadcrumbService, 
+        this.sbiProjectData, this.sdkProjectData, this.abisProjectData, 
+        this.projectType, this.collectionName);
       if (this.runDetails) {
         this.breadcrumbService.set(
           '@testrunBreadCrumb',
@@ -144,7 +124,7 @@ export class TestRunComponent implements OnInit {
           `${breadcrumbLabels.testRun}`
         );
       }
-      
+
     }
   }
 
@@ -329,8 +309,8 @@ export class TestRunComponent implements OnInit {
     }
   }
   getValidatorDetails(item: any) {
-    return this.resourceBundleJson.validators[item.validatorName] 
-      ? `${item.validatorName} (${this.resourceBundleJson.validators[item.validatorName]})` 
+    return this.resourceBundleJson.validators[item.validatorName]
+      ? `${item.validatorName} (${this.resourceBundleJson.validators[item.validatorName]})`
       : `${item.validatorName} (${item.validatorDescription})`;
   }
 

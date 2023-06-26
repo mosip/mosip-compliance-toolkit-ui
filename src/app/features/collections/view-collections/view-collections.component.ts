@@ -66,50 +66,26 @@ export class ViewCollectionsComponent implements OnInit {
     this.populateCollection();
     if (this.projectType == appConstants.SBI) {
       await this.getSbiProjectDetails();
-      this.initBreadCrumb();
+      Utils.initBreadCrumb(this.resourceBundleJson, this.breadcrumbService, 
+        this.sbiProjectData, null, null, this.projectType, this.collectionName);
     }
     if (this.projectType == appConstants.SDK) {
       await this.getSdkProjectDetails();
-      this.initBreadCrumb();
+      Utils.initBreadCrumb(this.resourceBundleJson, this.breadcrumbService, 
+        null, this.sdkProjectData, null, this.projectType, this.collectionName);
     }
     if (this.projectType == appConstants.ABIS) {
       await this.getAbisProjectDetails();
-      this.initBreadCrumb();
+      Utils.initBreadCrumb(this.resourceBundleJson, this.breadcrumbService, 
+        null, null, this.abisProjectData, this.projectType, this.collectionName);
     }
+    this.breadcrumbService.set(
+      '@collectionBreadCrumb',
+      `${this.collectionName}`
+    );
     await this.getTestcasesForCollection();
     this.dataSource.sort = this.sort;
     this.dataLoaded = true;
-  }
-
-  initBreadCrumb() {
-    const breadcrumbLabels = this.resourceBundleJson['breadcrumb'];
-    if (breadcrumbLabels) {
-      this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
-      if (this.sbiProjectData) {
-        this.breadcrumbService.set(
-          '@projectBreadCrumb',
-          `${this.projectType} ${breadcrumbLabels.project} - ${this.sbiProjectData.name}`
-        );
-      }
-      if (this.sdkProjectData) {
-        this.breadcrumbService.set(
-          '@projectBreadCrumb',
-          `${this.projectType} ${breadcrumbLabels.project} - ${this.sdkProjectData.name}`
-        );
-       
-      }
-      if (this.abisProjectData) {
-        this.breadcrumbService.set(
-          '@projectBreadCrumb',
-          `${this.projectType} ${breadcrumbLabels.project} - ${this.abisProjectData.name}`
-        );
-      }
-      this.breadcrumbService.set(
-        '@collectionBreadCrumb',
-        `${this.collectionName}`
-      );
-
-    }
   }
 
   initForm() {

@@ -3,6 +3,7 @@ import { DialogComponent } from './core/components/dialog/dialog.component';
 import { SbiDiscoverResponseModel } from './core/models/sbi-discover';
 import { TestCaseModel } from './core/models/testcase';
 import * as appConstants from 'src/app/app.constants';
+import { BreadcrumbService } from 'xng-breadcrumb';
 
 export default class Utils {
   static getCurrentDate() {
@@ -440,5 +441,40 @@ export default class Utils {
         }
       )
     });
+  }
+
+  static initBreadCrumb(resourceBundleJson: any, breadcrumbService: BreadcrumbService, sbiProjectData: any,
+    sdkProjectData: any, abisProjectData: any, projectType: string, collectionName: any) {
+    const breadcrumbLabels = resourceBundleJson['breadcrumb'];
+    if (breadcrumbLabels) {
+      breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
+      if (sbiProjectData) {
+        breadcrumbService.set(
+          '@projectBreadCrumb',
+          `${projectType} ${breadcrumbLabels.project} - ${sbiProjectData.name}`
+        );
+      }
+      if (sdkProjectData) {
+        breadcrumbService.set(
+          '@projectBreadCrumb',
+          `${projectType} ${breadcrumbLabels.project} - ${sdkProjectData.name}`
+        );
+      }
+      if (abisProjectData) {
+        breadcrumbService.set(
+          '@projectBreadCrumb',
+          `${projectType} ${breadcrumbLabels.project} - ${abisProjectData.name}`
+        );
+      }
+      if (collectionName) {
+        breadcrumbService.set(
+          '@collectionBreadCrumb',
+          `${collectionName}`
+        );
+      } else {
+        breadcrumbService.set('@collectionBreadCrumb', `${breadcrumbLabels.add}`);
+      }
+
+    }
   }
 }
