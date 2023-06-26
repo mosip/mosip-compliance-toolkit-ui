@@ -840,9 +840,11 @@ export class ExecuteTestRunComponent implements OnInit {
       }
       else {
         //no resp to keep the for loop on hold
-        await new Promise(async (resolve, reject) => {
-          return true;
-        });
+        //wait till user clicks on the required button in UI
+        const promise = new Promise((resolve, reject) => { });
+        if (await promise) {
+          return false;
+        }  
       }
     } else {
       if (this.showResumeBtn) {
@@ -878,9 +880,13 @@ export class ExecuteTestRunComponent implements OnInit {
         return res;
       }
       else {
-        await new Promise(async (resolve, reject) => {
-          return true;
-        });
+        //no resp to keep the for loop on hold
+        //wait till user clicks on the required button in UI
+        const promise = new Promise((resolve, reject) => {});
+        if (await promise) {
+          return false;
+        }  
+        
       }
     }
   }
