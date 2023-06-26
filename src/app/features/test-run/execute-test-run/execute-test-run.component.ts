@@ -763,33 +763,33 @@ export class ExecuteTestRunComponent implements OnInit {
       );
       if (abisReq)
         console.log(`send to queue status ${abisReq[appConstants.STATUS]}`);
-        //console.log(abisReq);
-        if (abisReq && abisReq[appConstants.STATUS] && abisReq[appConstants.STATUS] == appConstants.SUCCESS) {
-          if (insertCount > 1) {
-            this.cbeffFileSuffix = this.cbeffFileSuffix + 1;
-          }
-          if (this.cbeffFileSuffix > insertCount) {
-            //reset the cbeffFileSuffix to zero, since all are processed
-            this.cbeffFileSuffix = 0;
-          }
-          this.abisSentMessage = abisReq.methodRequest;
-          if (this.isCombinationAbisTestcase && this.currentAbisMethod !== appConstants.ABIS_METHOD_IDENTIFY) {
-            this.abisSentDataSource = abisReq.testDataSource;
-          }
-          console.log(`this.abisSentDataSource ${this.abisSentDataSource}`);
-          this.subscribeToABISQueue(requestId);
-          await new Promise(async (resolve, reject) => { });
-          return true;
-        } else {
-          console.log("INSERT REQUEST FAILED");
-          this.cbeffFileSuffix = 0;
-          this.abisRequestSendFailure = true;
-          this.abisSentMessage = appConstants.BLANK_STRING;
-          this.abisSentDataSource = appConstants.BLANK_STRING;
-          //resolve(true);
-          return true;
+      //console.log(abisReq);
+      if (abisReq && abisReq[appConstants.STATUS] && abisReq[appConstants.STATUS] == appConstants.SUCCESS) {
+        if (insertCount > 1) {
+          this.cbeffFileSuffix = this.cbeffFileSuffix + 1;
         }
+        if (this.cbeffFileSuffix > insertCount) {
+          //reset the cbeffFileSuffix to zero, since all are processed
+          this.cbeffFileSuffix = 0;
+        }
+        this.abisSentMessage = abisReq.methodRequest;
+        if (this.isCombinationAbisTestcase && this.currentAbisMethod !== appConstants.ABIS_METHOD_IDENTIFY) {
+          this.abisSentDataSource = abisReq.testDataSource;
+        }
+        console.log(`this.abisSentDataSource ${this.abisSentDataSource}`);
+        this.subscribeToABISQueue(requestId);
+        await new Promise(async (resolve, reject) => { });
+        return true;
       } else {
+        console.log("INSERT REQUEST FAILED");
+        this.cbeffFileSuffix = 0;
+        this.abisRequestSendFailure = true;
+        this.abisSentMessage = appConstants.BLANK_STRING;
+        this.abisSentDataSource = appConstants.BLANK_STRING;
+        //resolve(true);
+        return true;
+      }
+    } else {
       this.showLoader = true;
       //run validations
       let methodIndex = 0;
@@ -837,11 +837,12 @@ export class ExecuteTestRunComponent implements OnInit {
         }
         //resolve(res);
         return res;
-      } 
+      }
       else {
         //no resp to keep the for loop on hold
-        await new Promise(async (resolve, reject) => { });
-        return true;
+        await new Promise(async (resolve, reject) => {
+          return true;
+        });
       }
     } else {
       if (this.showResumeBtn) {
@@ -875,10 +876,11 @@ export class ExecuteTestRunComponent implements OnInit {
         }
         this.beforeKeyRotationResp = null;
         return res;
-      } 
+      }
       else {
-        await new Promise(async (resolve, reject) => { });
-        return true;
+        await new Promise(async (resolve, reject) => {
+          return true;
+        });
       }
     }
   }
