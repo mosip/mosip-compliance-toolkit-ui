@@ -181,7 +181,6 @@ export class ProjectsDashboardComponent implements OnInit {
     const nameMatch = data.name.trim().toLowerCase().includes(filter);
     const typeMatch = data.projectType.trim().toLowerCase().includes(filter);
     const dateMatch = crDate.toDateString() === formattedDate.toDateString();
-
     return nameMatch || typeMatch || dateMatch;
   }
 
