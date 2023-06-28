@@ -426,12 +426,13 @@
                 <span align="end" class="buttonspan" 
                 *ngIf="!isAndroidAppMode" >
                     <button mat-flat-button color="accent" (click)="downloadEncryptionKey()"
-                        title="Click to download encryption key for Auth devices" class="encryptionkeyButton">
+                        title="Click to download encryption key for Auth devices" class="encryptionkeyButton"
+                        [ngStyle]="buttonPosition">
                         <mat-icon class="encrypticon">save</mat-icon>
                         {{"viewProject.encryptionKey"|translate}}
                     </button>
                     &nbsp;&nbsp;&nbsp;
-                    <button mat-flat-button color="accent" (click)="scanDevice()" class="scandeviceButton">
+                    <button mat-flat-button color="accent" (click)="scanDevice()" class="scandeviceButton" [ngStyle]="buttonPosition">
                         <mat-icon *ngIf="isScanComplete" class="scandeviceicon">check_circle</mat-icon>
                         <mat-icon *ngIf="!isScanComplete" class="scandeviceicon2">radio_button_unchecked</mat-icon>
                         {{"viewProject.scanDevice"|translate}}
