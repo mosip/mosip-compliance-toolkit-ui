@@ -137,9 +137,6 @@ mat-expansion-panel-header {
   .scandeviceButton{
     margin-left: 26em;
   }
-  .encryptionkeyButton{
-    margin-left: 460px;
-  }
   .collections-button2{
     position: absolute;
   }
@@ -161,7 +158,7 @@ mat-expansion-panel-header {
     margin-left: 60em;
   }
   .scandeviceButtonREG{
-    margin-left: 76em;
+    margin-left: 74em;
   }
   .collections-button2{
     position: absolute;
