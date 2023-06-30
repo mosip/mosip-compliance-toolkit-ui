@@ -1375,7 +1375,10 @@
 		"ISO_WARNING_010": "<BR>Invalid Image Compression ratio allowed values Up to 15:1 for Auth",
 		"ISO_WARNING_011": "<BR>Invalid Image Aspect ratio allowed values Up to 1:1",
 		"ISO_WARNING_012": "<BR>Invalid Image Color Space allowed values Up to RGB[24 bit]",
-		"ISO_WARNING_013": "<BR>Invalid Image Minimum resolution between 500 DPI and 1000 DPI"
+		"ISO_WARNING_013": "<BR>Invalid Image Minimum resolution between 500 DPI and 1000 DPI",
+		"HASH_VALIDATOR_001": "Hash validation is successful",
+		"HASH_VALIDATOR_002": "Hash validation is unsuccessful",
+		"HASH_VALIDATOR_003": "Hash validation failure due to: {}"
 	},
 	"serviceErrors": {
 		"TOOLKIT_SUCCESS_000": "Success",
