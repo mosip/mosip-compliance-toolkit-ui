@@ -494,7 +494,6 @@ export class SbiTestCaseService {
         requesttime: new Date().toISOString(),
         request: validateRequest,
       };
-      console.log(request);
       this.dataService.validateRequest(request).subscribe(
         (response) => {
           resolve(response);
