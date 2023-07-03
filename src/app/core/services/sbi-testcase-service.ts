@@ -457,6 +457,7 @@ export class SbiTestCaseService {
             ? beforeKeyRotationResp
             : null,
           modality: testCase.otherAttributes.biometricTypes[0],
+          previousHash: methodRequest.bio[0].previousHash,
         }),
         validatorDefs: testCase.validatorDefs[0],
       };
@@ -493,6 +494,7 @@ export class SbiTestCaseService {
         requesttime: new Date().toISOString(),
         request: validateRequest,
       };
+      console.log(request);
       this.dataService.validateRequest(request).subscribe(
         (response) => {
           resolve(response);
