@@ -243,7 +243,6 @@ mat-expansion-panel-header {
     position: absolute;
   }
   .collections-button-mobile{
-    /* position: absolute; */
     margin-right: 0em;
   }
   .encryptionkeyButton{
