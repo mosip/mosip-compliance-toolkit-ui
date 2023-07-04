@@ -116,7 +116,6 @@ export class SbiTestCaseService {
           validationResponse: validationResponse,
         };
         console.log('request schema validation failed');
-        //console.log(finalResponse);
         return finalResponse;
       }
     } catch (error) {
