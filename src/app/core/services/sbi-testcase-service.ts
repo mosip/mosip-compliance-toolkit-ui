@@ -116,7 +116,6 @@ export class SbiTestCaseService {
           validationResponse: validationResponse,
         };
         console.log('request schema validation failed');
-        //console.log(finalResponse);
         return finalResponse;
       }
     } catch (error) {
@@ -456,8 +455,7 @@ export class SbiTestCaseService {
           beforeKeyRotationResp: beforeKeyRotationResp
             ? beforeKeyRotationResp
             : null,
-          modality: testCase.otherAttributes.biometricTypes[0],
-          previousHash: methodRequest.bio[0].previousHash,
+          modality: testCase.otherAttributes.biometricTypes[0]
         }),
         validatorDefs: testCase.validatorDefs[0],
       };
