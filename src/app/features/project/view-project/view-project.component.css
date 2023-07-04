@@ -137,7 +137,7 @@ mat-expansion-panel-header {
 }
 @media screen and (min-width: 1601px) and (max-width: 1979px) {
   .scandeviceButton{
-    margin-left: 99em;
+    margin-left: 97em;
   }
   .encryptionkeyButton{
     position: absolute;
@@ -154,7 +154,7 @@ mat-expansion-panel-header {
 }
 @media screen and (min-width: 1521px) and (max-width: 1600px) {
   .scandeviceButton{
-    margin-left: 94em;
+    margin-left: 91em;
   }
   .encryptionkeyButton{
     position: absolute;
@@ -174,7 +174,7 @@ mat-expansion-panel-header {
 }
 @media screen and (min-width: 1462px) and (max-width: 1520px) {
   .scandeviceButton{
-    margin-left: 90em;
+    margin-left: 87em;
   }
   .encryptionkeyButton{
     position: absolute;
@@ -194,7 +194,7 @@ mat-expansion-panel-header {
 }
 @media screen and (min-width: 1441px) and (max-width: 1462px) {
   .scandeviceButton{
-    margin-left: 88em;
+    margin-left: 86em;
   }
   .encryptionkeyButton{
     position: absolute;
@@ -223,7 +223,7 @@ mat-expansion-panel-header {
     margin-left: 30em;
   }
   .scandeviceButton{
-    margin-left: 70em;
+    margin-left: 67em;
   }
   .collections-button2{
     position: absolute;
@@ -364,7 +364,7 @@ mat-expansion-panel-header {
     margin-left: 28em;
   }
   .scandeviceButton{
-    margin-left: 54em;
+    margin-left: 51em;
   }
   .scandeviceButtonREG{
     margin-left: 610px;
@@ -425,13 +425,13 @@ mat-expansion-panel-header {
   }
   .encryptionkeyButton{
     position: absolute;
-    margin-left: 14em;
+    margin-left: 14.5em;
   }
   a{
     width: 60px; display: inline-block; overflow-wrap: break-word;
   }
   .scandeviceButton{
-    margin-left: 28em;
+    margin-left: 26em;
   }
   .scandeviceButton-android{
     margin-left: 250px;
@@ -468,7 +468,7 @@ mat-expansion-panel-header {
     width: 60px; display: inline-block; overflow-wrap: break-word;
   }
   .scandeviceButton{
-    margin-left: 28em;
+    margin-left: 25em;
   }
   .scandeviceButtonREG{
     margin-left: 250px;
