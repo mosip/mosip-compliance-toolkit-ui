@@ -112,8 +112,14 @@ mat-expansion-panel-header {
   .scandeviceButtonREG{
     margin-left: 1500px;
   }
+  .collections-button2{
+    position: absolute;
+  }
+  .scandeviceButtonREG{
+    margin-left: 125em;
+  }
 }
-@media screen and (max-width: 2000px) {
+@media screen and (min-width: 1980px) and (max-width: 2000px) {
   .scandeviceButton{
     margin-left: 300px;
   }
@@ -121,10 +127,66 @@ mat-expansion-panel-header {
     margin-left: 300px;
   }
   .scandeviceButtonREG{
+    margin-left: 125em;
+  }
+}
+@media screen and (min-width: 1601px) and (max-width: 1979px) {
+  .scandeviceButton{
+    margin-left: 300px;
+  }
+  .encryptionkeyButton{
+    margin-left: 300px;
+  }
+  .scandeviceButtonREG{
+    float: right;
     margin-left: 88em;
   }
 }
-@media screen and (max-width: 1440px) {
+@media screen and (min-width: 1521px) and (max-width: 1600px) {
+  .scandeviceButton{
+    margin-left: 300px;
+  }
+  .encryptionkeyButton{
+    margin-left: 300px;
+  }
+  .scandeviceButtonREG{
+    float: right;
+    margin-left: 88em;
+  }
+  .collectionButtonMobile{
+    margin-right: 95em;
+  }
+}
+@media screen and (min-width: 1462px) and (max-width: 1520px) {
+  .scandeviceButton{
+    margin-left: 300px;
+  }
+  .encryptionkeyButton{
+    margin-left: 300px;
+  }
+  .scandeviceButtonREG{
+    float: right;
+    margin-left: 88em;
+  }
+  .collectionButtonMobile{
+    margin-right: 90em;
+  }
+}
+@media screen and (min-width: 1441px) and (max-width: 1462px) {
+  .scandeviceButton{
+    margin-left: 300px;
+  }
+  .encryptionkeyButton{
+    margin-left: 300px;
+  }
+  .scandeviceButtonREG{
+    margin-left: 80em;
+  }
+  .collectionButtonMobile{
+    margin-right: 90em;
+  }
+}
+@media screen and (min-width: 1381px) and (max-width: 1440px) {
   .collections-button{
     position: absolute;
   }
@@ -146,6 +208,9 @@ mat-expansion-panel-header {
   .collectionButtonMobile{
     margin-right: 1000px;
   }
+  .scandeviceButtonREG{
+    margin-left: 82.5em;
+  }
 }
 @media screen and (min-width:1280px) and (max-width: 1380px) {
   .encryptionkeyButton{
@@ -162,6 +227,9 @@ mat-expansion-panel-header {
   }
   .collections-button2{
     position: absolute;
+  }
+  .collectionButtonMobile{
+    margin-right: 76em;
   }
 }
 @media screen and (min-width: 1200px) and (max-width: 1279px) {
