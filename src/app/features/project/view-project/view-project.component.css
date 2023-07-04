@@ -242,12 +242,23 @@ mat-expansion-panel-header {
   .collections-button{
     position: absolute;
   }
+  .collections-button-mobile{
+    /* position: absolute; */
+    margin-right: 0em;
+  }
   .encryptionkeyButton{
     position: absolute;
     margin-left: 40em;
   }
+  .encryptionkeyButton-mobile{
+    margin-right: 40em;
+  }
   .scandeviceButton{
-    margin-left: 75em;
+    margin-left: 73em;
+  }
+  .scandeviceButton-mobile{
+    position: absolute;
+    margin-right: 76em;
   }
   .scandeviceButton-android{
     margin-left: 60em;
