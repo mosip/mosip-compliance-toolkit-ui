@@ -113,6 +113,19 @@ mat-dialog-actions {
     overflow-x: auto;
   }
 }
+@media screen and (min-width:321px) and (max-width: 374px) {
+  .formContainerBox {
+    width: 200px;
+    margin-left: -5px;
+  }
+  .selectdevice{
+    width: 100%;
+  }
+  ::ng-deep .mat-select-panel {
+    max-width: 200px;
+  }
+  
+}
 @media screen and (max-width: 320px) {
   .formContainerBox {
     width: 200px;
@@ -158,5 +171,8 @@ mat-dialog-actions {
   .deviceoptions{
     display: inline-block;
     overflow-x: auto;
+  }
+  ::ng-deep .mat-select-panel {
+    max-width: 200px;
   }
 }
