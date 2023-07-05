@@ -14,14 +14,14 @@ export class SdkTestCaseService {
   constructor(
     private dataService: DataService,
     private userProfileService: UserProfileService
-  ) {}
+  ) { }
 
   async runTestCase(
     testCase: TestCaseModel,
     sdkUrl: string,
     selectedBioTestDataName: string
   ): Promise<any> {
-    this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService); 
+    this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     let isCombinationTestCase = testCase.methodName.length > 1 ? true : false;
     const methodsArr = testCase.methodName;
     let methodIndex = 0;
@@ -123,7 +123,7 @@ export class SdkTestCaseService {
         validationRequest &&
         validationRequest[appConstants.RESPONSE] &&
         validationRequest[appConstants.RESPONSE].status ==
-          appConstants.SUCCESS
+        appConstants.SUCCESS
       ) {
         if (sdkUrl.lastIndexOf('/') !== sdkUrl.length - 1) {
           sdkUrl += '/';
@@ -200,7 +200,6 @@ export class SdkTestCaseService {
 
   async executeMethod(sdkUrl: string, methodRequest: any) {
     return new Promise((resolve, reject) => {
-      
       this.dataService.callSDKMethod(sdkUrl, methodRequest).subscribe(
         (response) => {
           console.log(response);
@@ -220,25 +219,25 @@ export class SdkTestCaseService {
     testCase: TestCaseModel,
     selectedBioTestDataName: string
   ): any {
+    let sdkRequestDto = {
+      methodName: methodName,
+      testcaseId: testCase.testId,
+      modalities: testCase.otherAttributes.modalities,
+      bioTestDataName: selectedBioTestDataName,
+      convertSourceFormat: testCase.otherAttributes.convertSourceFormat
+        ? testCase.otherAttributes.convertSourceFormat.toString()
+        : '',
+      convertTargetFormat: testCase.otherAttributes.convertTargetFormat
+        ? testCase.otherAttributes.convertTargetFormat.toString()
+        : '',
+    };
+    let request = {
+      id: appConstants.GENERATE_SDK_REQUEST_ID,
+      version: appConstants.VERSION,
+      requesttime: new Date().toISOString(),
+      request: sdkRequestDto,
+    };
     return new Promise((resolve, reject) => {
-      let sdkRequestDto = {
-        methodName: methodName,
-        testcaseId: testCase.testId,
-        modalities: testCase.otherAttributes.modalities,
-        bioTestDataName: selectedBioTestDataName,
-        convertSourceFormat: testCase.otherAttributes.convertSourceFormat
-          ? testCase.otherAttributes.convertSourceFormat.toString()
-          : '',
-        convertTargetFormat: testCase.otherAttributes.convertTargetFormat
-          ? testCase.otherAttributes.convertTargetFormat.toString()
-          : '',
-      };
-      let request = {
-        id: appConstants.GENERATE_SDK_REQUEST_ID,
-        version: appConstants.VERSION,
-        requesttime: new Date().toISOString(),
-        request: sdkRequestDto,
-      };
       this.dataService.generateRequestForSDK(request).subscribe(
         (response: any) => {
           if (response.errors && response.errors.length > 0) {
@@ -305,27 +304,27 @@ export class SdkTestCaseService {
     method: string,
     methodIndex: number
   ) {
+    let validateRequest = {
+      testCaseType: testCase.testCaseType,
+      testName: testCase.testName,
+      specVersion: testCase.specVersion,
+      testDescription: testCase.testDescription,
+      responseSchema: testCase.responseSchema[methodIndex],
+      isNegativeTestcase: testCase.isNegativeTestcase
+        ? testCase.isNegativeTestcase
+        : false,
+      methodResponse: JSON.stringify(methodResponse),
+      methodRequest: methodRequest,
+      methodName: method,
+      validatorDefs: testCase.validatorDefs[methodIndex],
+    };
+    let request = {
+      id: appConstants.VALIDATIONS_ADD_ID,
+      version: appConstants.VERSION,
+      requesttime: new Date().toISOString(),
+      request: validateRequest,
+    };
     return new Promise((resolve, reject) => {
-      let validateRequest = {
-        testCaseType: testCase.testCaseType,
-        testName: testCase.testName,
-        specVersion: testCase.specVersion,
-        testDescription: testCase.testDescription,
-        responseSchema: testCase.responseSchema[methodIndex],
-        isNegativeTestcase: testCase.isNegativeTestcase
-          ? testCase.isNegativeTestcase
-          : false,
-        methodResponse: JSON.stringify(methodResponse),
-        methodRequest: methodRequest,
-        methodName: method,
-        validatorDefs: testCase.validatorDefs[methodIndex],
-      };
-      let request = {
-        id: appConstants.VALIDATIONS_ADD_ID,
-        version: appConstants.VERSION,
-        requesttime: new Date().toISOString(),
-        request: validateRequest,
-      };
       this.dataService.validateResponse(request).subscribe(
         (response) => {
           resolve(response);
@@ -342,21 +341,21 @@ export class SdkTestCaseService {
     methodRequest: any,
     methodIndex: number
   ) {
+    let validateRequest = {
+      testCaseType: testCase.testCaseType,
+      testName: testCase.testName,
+      specVersion: testCase.specVersion,
+      testDescription: testCase.testDescription,
+      requestSchema: testCase.requestSchema[methodIndex],
+      methodRequest: methodRequest,
+    };
+    let request = {
+      id: appConstants.VALIDATIONS_ADD_ID,
+      version: appConstants.VERSION,
+      requesttime: new Date().toISOString(),
+      request: validateRequest,
+    };
     return new Promise((resolve, reject) => {
-      let validateRequest = {
-        testCaseType: testCase.testCaseType,
-        testName: testCase.testName,
-        specVersion: testCase.specVersion,
-        testDescription: testCase.testDescription,
-        requestSchema: testCase.requestSchema[methodIndex],
-        methodRequest: methodRequest,
-      };
-      let request = {
-        id: appConstants.VALIDATIONS_ADD_ID,
-        version: appConstants.VERSION,
-        requesttime: new Date().toISOString(),
-        request: validateRequest,
-      };
       this.dataService.validateRequest(request).subscribe(
         (response) => {
           resolve(response);

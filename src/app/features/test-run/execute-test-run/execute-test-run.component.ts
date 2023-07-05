@@ -357,7 +357,10 @@ export class ExecuteTestRunComponent implements OnInit {
           if (this.currentKeyRotationIndex < this.keyRotationIterations) {
             this.handleKeyRotationFlow(startingForLoop, testCase, res);
             if (this.showContinueBtn) {
-              await new Promise((resolve, reject) => { });
+              const promise = new Promise((resolve, reject) => { });
+              if (await promise) {
+                console.log("done waiting");
+              }
             }
           }
           this.calculateTestcaseResults(res[appConstants.VALIDATIONS_RESPONSE]);
@@ -367,7 +370,10 @@ export class ExecuteTestRunComponent implements OnInit {
           await this.updateTestRun();
           if (testCase.otherAttributes.resumeAgainBtn) {
             this.showResumeAgainBtn = true;
-            await new Promise((resolve, reject) => { });
+            const promise = new Promise((resolve, reject) => { });
+            if (await promise) {
+              console.log("done waiting");
+            }
           }
           let resetCurrentTestCase = true;
           //reset all attributes for next testcase
@@ -431,6 +437,8 @@ export class ExecuteTestRunComponent implements OnInit {
       testCase.otherAttributes.keyRotationTestCase
     ) {
       let testcaseFailed = false;
+      console.log("res");
+      console.log(res);
       if (
         res &&
         res[appConstants.VALIDATIONS_RESPONSE] &&
@@ -759,7 +767,7 @@ export class ExecuteTestRunComponent implements OnInit {
         requestId,
         referenceId,
         galleryIds,
-        this.cbeffFileSuffix,
+        this.cbeffFileSuffix
       );
       if (abisReq)
         console.log(`send to queue status ${abisReq[appConstants.STATUS]}`);
@@ -891,7 +899,6 @@ export class ExecuteTestRunComponent implements OnInit {
         if (await promise) {
           return true;
         }
-
       }
     }
   }
@@ -1095,7 +1102,7 @@ export class ExecuteTestRunComponent implements OnInit {
         this.handleMessage(message, sentRequestId);
       });
   }
-  
+
   async handleMessage(message: Message, sentRequestId: string) {
     const respObj = JSON.parse(message.body);
     const recvdRequestId = respObj[appConstants.REQUEST_ID];
