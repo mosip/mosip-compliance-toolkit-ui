@@ -354,15 +354,11 @@ export class ExecuteTestRunComponent implements OnInit {
         if (res) {
           startingForLoop = this.handleErr(res);
           //handle key rotation flow
-          console.log(`this.currentKeyRotationIndex ${this.currentKeyRotationIndex}`);
-          console.log(`this.keyRotationIterations ${this.keyRotationIterations}`);
           if (this.currentKeyRotationIndex < this.keyRotationIterations) {
             this.handleKeyRotationFlow(startingForLoop, testCase, res);
             if (this.showContinueBtn) {
-              //await new Promise((resolve, reject) => { });
               const promise = new Promise((resolve, reject) => { });
               if (await promise) {
-                //return true;
                 console.log("done waiting");
               }
             }
@@ -376,8 +372,7 @@ export class ExecuteTestRunComponent implements OnInit {
             this.showResumeAgainBtn = true;
             const promise = new Promise((resolve, reject) => { });
             if (await promise) {
-             // return true;
-             console.log("done waiting");
+              console.log("done waiting");
             }
           }
           let resetCurrentTestCase = true;
@@ -436,10 +431,6 @@ export class ExecuteTestRunComponent implements OnInit {
     testCase: TestCaseModel,
     res: any
   ) {
-    console.log("handleKeyRotationFlow");
-    console.log(`startingForLoop ${startingForLoop}`)
-    console.log(`projectType ${this.projectType}`)
-    console.log(` testCase.otherAttributes.keyRotationTestCase ${ testCase.otherAttributes.keyRotationTestCase}`)
     if (
       startingForLoop &&
       this.projectType === appConstants.SBI &&
@@ -876,7 +867,6 @@ export class ExecuteTestRunComponent implements OnInit {
       if (!this.pauseExecution) {
         this.showLoader = true;
         let beforeKeyRotationDeviceResp = null;
-        console.log(`this.beforeKeyRotationResp ${this.beforeKeyRotationResp}`);
         if (
           testCase.otherAttributes.keyRotationTestCase &&
           this.beforeKeyRotationResp
@@ -885,16 +875,13 @@ export class ExecuteTestRunComponent implements OnInit {
         }
         let res: any;
         if (!this.isAndroidAppMode) {
-          console.log("keyrotation started");
           res = await this.sbiTestCaseService.runTestCase(
             testCase,
             this.sbiSelectedPort ? this.sbiSelectedPort : '',
             this.sbiSelectedDevice ? this.sbiSelectedDevice : '',
             beforeKeyRotationDeviceResp
           );
-
         } else {
-          
           res = await this.sbiTestCaseAndroidService.runTestCase(
             testCase,
             this.sbiDeviceType,
@@ -913,7 +900,6 @@ export class ExecuteTestRunComponent implements OnInit {
         if (await promise) {
           return true;
         }
-
       }
     }
   }
@@ -1117,7 +1103,7 @@ export class ExecuteTestRunComponent implements OnInit {
         this.handleMessage(message, sentRequestId);
       });
   }
-  
+
   async handleMessage(message: Message, sentRequestId: string) {
     const respObj = JSON.parse(message.body);
     const recvdRequestId = respObj[appConstants.REQUEST_ID];

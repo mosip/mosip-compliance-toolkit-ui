@@ -12,7 +12,7 @@ import { AppConfigService } from 'src/app/app-config.service';
   providedIn: 'root',
 })
 export class AbisTestCaseService {
-  
+
 
   constructor(
     private dataService: DataService,
@@ -56,7 +56,7 @@ export class AbisTestCaseService {
         return finalResponse;
       }
     }
-    let methodRequest: any = this.createRequest(testCase, methodName, dataShareResp, requestId, referenceId, galleryIds);    
+    let methodRequest: any = this.createRequest(testCase, methodName, dataShareResp, requestId, referenceId, galleryIds);
     //handle expireDataShareUrl testcase
     let invalidKey = testCase.otherAttributes.invalidRequestAttribute;
     if (invalidKey == 'expireDataShareUrl') {
@@ -97,7 +97,7 @@ export class AbisTestCaseService {
       };
       return finalResponse;
     }
-    
+
   }
 
   async runValidators(
@@ -109,25 +109,25 @@ export class AbisTestCaseService {
     testDataSource: string,
     methodIndex: number
   ) {
-      // now validate the method response against all the validators
-      let validationResponse = await this.validateResponse(
-        testCase,
-        methodRequest,
-        methodResponse,
-        methodName,
-        methodIndex
-      );
-      const finalResponse = {
-        methodResponse: methodResponse,
-        methodRequest: methodRequest,
-        validationResponse: validationResponse,
-        methodUrl: abisProjectData.url,
-        testDataSource: testDataSource
-      };
-      console.log('finalResponse');
-      console.log(finalResponse);
-      
-      return finalResponse;
+    // now validate the method response against all the validators
+    let validationResponse = await this.validateResponse(
+      testCase,
+      methodRequest,
+      methodResponse,
+      methodName,
+      methodIndex
+    );
+    const finalResponse = {
+      methodResponse: methodResponse,
+      methodRequest: methodRequest,
+      validationResponse: validationResponse,
+      methodUrl: abisProjectData.url,
+      testDataSource: testDataSource
+    };
+    console.log('finalResponse');
+    console.log(finalResponse);
+
+    return finalResponse;
   }
 
   createDataShareUrl(
@@ -136,25 +136,25 @@ export class AbisTestCaseService {
     cbeffFileIndex: number,
     testRunId: string
   ): any {
+    let incorrectPartnerId;
+    if (testCase && testCase.otherAttributes.invalidRequestAttribute == 'incorrectPartnerId') {
+      incorrectPartnerId = this.appConfigService.getConfig()['incorrectPartnerId'];
+    }
+    let dataShareRequestDto = {
+      testcaseId: testCase.testId,
+      bioTestDataName: selectedBioTestDataName,
+      cbeffFileSuffix: cbeffFileIndex,
+      incorrectPartnerId: incorrectPartnerId ? incorrectPartnerId : '',
+      testRunId: testRunId
+    };
+    let request = {
+      id: appConstants.DATASHARE_ID,
+      version: appConstants.VERSION,
+      requesttime: new Date().toISOString(),
+      metadata: {},
+      request: dataShareRequestDto,
+    };
     return new Promise((resolve, reject) => {
-      let incorrectPartnerId;
-      if (testCase && testCase.otherAttributes.invalidRequestAttribute == 'incorrectPartnerId') {
-        incorrectPartnerId = this.appConfigService.getConfig()['incorrectPartnerId'];
-      }
-      let dataShareRequestDto = {
-        testcaseId: testCase.testId,
-        bioTestDataName: selectedBioTestDataName,
-        cbeffFileSuffix: cbeffFileIndex,
-        incorrectPartnerId: incorrectPartnerId ? incorrectPartnerId : '',
-        testRunId: testRunId 
-      };
-      let request = {
-        id: appConstants.DATASHARE_ID,
-        version: appConstants.VERSION,
-        requesttime: new Date().toISOString(),
-        metadata: {},
-        request: dataShareRequestDto,
-      };
       this.dataService.createDataShareUrl(request).subscribe(
         (response: any) => {
           if (response.errors && response.errors.length > 0) {
@@ -247,31 +247,31 @@ export class AbisTestCaseService {
     method: string,
     methodIndex: number
   ) {
+    let validateRequest = {
+      testCaseType: testCase.testCaseType,
+      testName: testCase.testName,
+      specVersion: testCase.specVersion,
+      testDescription: testCase.testDescription,
+      responseSchema: testCase.responseSchema[methodIndex],
+      isNegativeTestcase: testCase.isNegativeTestcase
+        ? testCase.isNegativeTestcase
+        : false,
+      extraInfoJson: JSON.stringify({
+        expectedFailureReason: testCase.otherAttributes.expectedFailureReason,
+        expectedDuplicateCount: testCase.otherAttributes.expectedDuplicateCount
+      }),
+      methodResponse: methodResponse,
+      methodRequest: methodRequest,
+      methodName: method,
+      validatorDefs: testCase.validatorDefs[methodIndex],
+    };
+    let request = {
+      id: appConstants.VALIDATIONS_ADD_ID,
+      version: appConstants.VERSION,
+      requesttime: new Date().toISOString(),
+      request: validateRequest,
+    };
     return new Promise((resolve, reject) => {
-      let validateRequest = {
-        testCaseType: testCase.testCaseType,
-        testName: testCase.testName,
-        specVersion: testCase.specVersion,
-        testDescription: testCase.testDescription,
-        responseSchema: testCase.responseSchema[methodIndex],
-        isNegativeTestcase: testCase.isNegativeTestcase
-          ? testCase.isNegativeTestcase
-          : false,
-        extraInfoJson: JSON.stringify({
-          expectedFailureReason: testCase.otherAttributes.expectedFailureReason,
-          expectedDuplicateCount: testCase.otherAttributes.expectedDuplicateCount
-        }),
-        methodResponse: methodResponse,
-        methodRequest: methodRequest,
-        methodName: method,
-        validatorDefs: testCase.validatorDefs[methodIndex],
-      };
-      let request = {
-        id: appConstants.VALIDATIONS_ADD_ID,
-        version: appConstants.VERSION,
-        requesttime: new Date().toISOString(),
-        request: validateRequest,
-      };
       this.dataService.validateResponse(request).subscribe(
         (response) => {
           resolve(response);
@@ -288,21 +288,21 @@ export class AbisTestCaseService {
     methodRequest: any,
     methodIndex: number
   ) {
+    let validateRequest = {
+      testCaseType: testCase.testCaseType,
+      testName: testCase.testName,
+      specVersion: testCase.specVersion,
+      testDescription: testCase.testDescription,
+      requestSchema: testCase.requestSchema[methodIndex],
+      methodRequest: methodRequest,
+    };
+    let request = {
+      id: appConstants.VALIDATIONS_ADD_ID,
+      version: appConstants.VERSION,
+      requesttime: new Date().toISOString(),
+      request: validateRequest,
+    };
     return new Promise((resolve, reject) => {
-      let validateRequest = {
-        testCaseType: testCase.testCaseType,
-        testName: testCase.testName,
-        specVersion: testCase.specVersion,
-        testDescription: testCase.testDescription,
-        requestSchema: testCase.requestSchema[methodIndex],
-        methodRequest: methodRequest,
-      };
-      let request = {
-        id: appConstants.VALIDATIONS_ADD_ID,
-        version: appConstants.VERSION,
-        requesttime: new Date().toISOString(),
-        request: validateRequest,
-      };
       this.dataService.validateRequest(request).subscribe(
         (response) => {
           resolve(response);
@@ -332,7 +332,7 @@ export class AbisTestCaseService {
     return new Promise((resolve, reject) => {
       this.dataService.expireDataShareUrl(request).subscribe(
         (response: any) => {
-         resolve(response[appConstants.RESPONSE]);
+          resolve(response[appConstants.RESPONSE]);
         },
         (errors) => {
           console.log(errors);
