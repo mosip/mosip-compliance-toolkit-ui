@@ -436,12 +436,14 @@ export class ExecuteTestRunComponent implements OnInit {
     testCase: TestCaseModel,
     res: any
   ) {
+    console.log("handleKeyRotationFlow");
     if (
       startingForLoop &&
       this.projectType === appConstants.SBI &&
       testCase.otherAttributes.keyRotationTestCase
     ) {
       let testcaseFailed = false;
+      console.log(res);
       if (
         res &&
         res[appConstants.VALIDATIONS_RESPONSE] &&
