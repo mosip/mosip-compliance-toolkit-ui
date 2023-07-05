@@ -115,7 +115,21 @@ export class AuthInterceptor implements HttpInterceptor {
                 this.userProfileService.setRoles(event.body.response.role);
                 //Set all attributes required for selected language
                 const langCode = this.decoded['locale'];
-                this.userProfileService.setUserPreferredLanguage(langCode);
+                // Set user preferred language
+                const fileUrl = `./assets/i18n/${langCode}.json`;
+                fetch(fileUrl, { method: 'HEAD' })
+                  .then(response => {
+                    if (response.ok) {
+                      // The file exists
+                      this.userProfileService.setUserPreferredLanguage(langCode);
+                    } else {
+                      // The file does not exist
+                      this.userProfileService.setUserPreferredLanguage('eng');
+                    }
+                  })
+                  .catch(error => {
+                    console.log(error);
+                  });
                 //Set if language is RTL or LTR
                 const rtlLanguages = this.appConfigService.getConfig()['rtlLanguages']
                   ? this.appConfigService.getConfig()['rtlLanguages'].split(',')

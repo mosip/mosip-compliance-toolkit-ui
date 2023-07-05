@@ -419,19 +419,20 @@
                 </button>
             </div>
             <div *ngIf="projectForm.controls['sbiPurpose']?.value == 'Auth'">
-                <button mat-flat-button color="accent" (click)="addCollection()" class="collections-button" [ngStyle]="buttonPosition">
+                <button mat-flat-button color="accent" (click)="addCollection()" class="isMobileButton ? collections-button-mobile : collections-button" [ngStyle]="buttonPosition">
                     <mat-icon class="collectionicon">add</mat-icon>
                     {{"viewProject.addCollection"|translate}}
                 </button>
                 <span align="end" class="buttonspan" 
                 *ngIf="!isAndroidAppMode" >
                     <button mat-flat-button color="accent" (click)="downloadEncryptionKey()"
-                        title="Click to download encryption key for Auth devices" class="encryptionkeyButton">
+                        title="Click to download encryption key for Auth devices" class="isMobileButton ? encryptionkeyButton-mobile : encryptionkeyButton"
+                        [ngStyle]="buttonPosition">
                         <mat-icon class="encrypticon">save</mat-icon>
                         {{"viewProject.encryptionKey"|translate}}
                     </button>
                     &nbsp;&nbsp;&nbsp;
-                    <button mat-flat-button color="accent" (click)="scanDevice()" class="scandeviceButton">
+                    <button mat-flat-button color="accent" (click)="scanDevice()" class="isMobileButton ? scandeviceButton-mobile : scandeviceButton" [ngStyle]="buttonPosition">
                         <mat-icon *ngIf="isScanComplete" class="scandeviceicon">check_circle</mat-icon>
                         <mat-icon *ngIf="!isScanComplete" class="scandeviceicon2">radio_button_unchecked</mat-icon>
                         {{"viewProject.scanDevice"|translate}}
@@ -449,7 +450,7 @@
                 <mat-icon class="collectionicon">add</mat-icon>
                 {{"viewProject.addCollection"|translate}}
             </button>
-            <button mat-flat-button color="accent" (click)="scanDevice()" class="isMobileButton ? scandeviceButtonREGMobile : scandeviceButtonREG">
+            <button mat-flat-button color="accent" (click)="scanDevice()" class="isMobileButton ? scandeviceButtonREGMobile : scandeviceButtonREG" [ngStyle]="buttonPosition">
                 <mat-icon *ngIf="isScanComplete">check_circle</mat-icon>
                 <mat-icon *ngIf="!isScanComplete">radio_button_unchecked</mat-icon>
                 {{"viewProject.scanDevice"|translate}}
