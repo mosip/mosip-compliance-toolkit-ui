@@ -29,7 +29,8 @@ export class AbisTestCaseService {
     requestId: string,
     referenceId: string,
     galleryIds: any[],
-    cbeffFileSuffix: number
+    cbeffFileSuffix: number,
+    testRunId: string
   ) {
     console.log(`abisProjectData.bioTestDataFileName: ${abisProjectData.bioTestDataFileName}`);
     let dataShareResp: any = null;
@@ -38,7 +39,8 @@ export class AbisTestCaseService {
       dataShareResp = await this.createDataShareUrl(
         testCase,
         abisProjectData.bioTestDataFileName,
-        cbeffFileSuffix
+        cbeffFileSuffix,
+        testRunId
       );
       if (!dataShareResp) {
         const finalResponse = {
@@ -131,7 +133,8 @@ export class AbisTestCaseService {
   createDataShareUrl(
     testCase: TestCaseModel,
     selectedBioTestDataName: string,
-    cbeffFileIndex: number
+    cbeffFileIndex: number,
+    testRunId: string
   ): any {
     return new Promise((resolve, reject) => {
       let incorrectPartnerId;
@@ -142,7 +145,8 @@ export class AbisTestCaseService {
         testcaseId: testCase.testId,
         bioTestDataName: selectedBioTestDataName,
         cbeffFileSuffix: cbeffFileIndex,
-        incorrectPartnerId: incorrectPartnerId ? incorrectPartnerId : ''
+        incorrectPartnerId: incorrectPartnerId ? incorrectPartnerId : '',
+        testRunId: testRunId 
       };
       let request = {
         id: appConstants.DATASHARE_ID,
