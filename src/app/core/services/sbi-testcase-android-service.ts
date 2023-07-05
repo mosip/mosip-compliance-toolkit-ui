@@ -27,7 +27,7 @@ export class SbiTestCaseAndroidService {
     sbiSelectedDevice: string,
     beforeKeyRotationResp: any
   ) {
-    this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);    
+    this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     const methodRequest = this.createRequest(testCase, sbiSelectedDevice);
     let startExecutionTime = new Date().toISOString();
     let executeResponse: any = await this.executeMethod(
@@ -108,17 +108,20 @@ export class SbiTestCaseAndroidService {
       let executeResponse = await this.callSBIMethodAndroid(appConstants.SBI_METHOD_DISCOVER, sbiDeviceType, callbackId, methodRequestStr);
       return executeResponse;
     }
-    if (methodName == appConstants.SBI_METHOD_DEVICE_INFO) {
+    else if (methodName == appConstants.SBI_METHOD_DEVICE_INFO) {
       let executeResponse = await this.callSBIMethodAndroid(appConstants.SBI_METHOD_DEVICE_INFO, sbiDeviceType, callbackId, methodRequestStr);
       return executeResponse;
     }
-    if (methodName == appConstants.SBI_METHOD_CAPTURE) {
+    else if (methodName == appConstants.SBI_METHOD_CAPTURE) {
       let executeResponse = await this.callSBIMethodAndroid(appConstants.SBI_METHOD_CAPTURE, sbiDeviceType, callbackId, methodRequestStr);
       return executeResponse;
     }
-    if (methodName == appConstants.SBI_METHOD_RCAPTURE) {
+    else if (methodName == appConstants.SBI_METHOD_RCAPTURE) {
       let executeResponse = await this.callSBIMethodAndroid(appConstants.SBI_METHOD_RCAPTURE, sbiDeviceType, callbackId, methodRequestStr);
       return executeResponse;
+    }
+    else {
+      return null;
     }
   }
 
@@ -214,7 +217,7 @@ export class SbiTestCaseAndroidService {
   createRequest(testCase: TestCaseModel, sbiSelectedDevice: string): any {
     const selectedSbiDevice: SbiDiscoverResponseModel =
       JSON.parse(sbiSelectedDevice);
-      let request: any = {};
+    let request: any = {};
     if (testCase.methodName[0] == appConstants.SBI_METHOD_DISCOVER) {
       //will be taken from "sbiDeviceType"
     }
@@ -434,37 +437,37 @@ export class SbiTestCaseAndroidService {
   ) {
     const selectedSbiDevice: SbiDiscoverResponseModel =
       JSON.parse(sbiSelectedDevice);
+    let validateRequest = {
+      testCaseType: testCase.testCaseType,
+      testName: testCase.testName,
+      specVersion: testCase.specVersion,
+      testDescription: testCase.testDescription,
+      responseSchema: testCase.responseSchema[0],
+      isNegativeTestcase: testCase.isNegativeTestcase
+        ? testCase.isNegativeTestcase
+        : false,
+      methodResponse: JSON.stringify(methodResponse),
+      methodRequest: JSON.stringify(methodRequest),
+      methodName: testCase.methodName[0],
+      extraInfoJson: JSON.stringify({
+        certificationType: selectedSbiDevice.certification,
+        startExecutionTime: startExecutionTime,
+        endExecutionTime: endExecutionTime,
+        timeout: this.getTimeout(testCase),
+        beforeKeyRotationResp: beforeKeyRotationResp
+          ? beforeKeyRotationResp
+          : null,
+        modality: testCase.otherAttributes.biometricTypes[0],
+      }),
+      validatorDefs: testCase.validatorDefs[0],
+    };
+    let request = {
+      id: appConstants.VALIDATIONS_ADD_ID,
+      version: appConstants.VERSION,
+      requesttime: new Date().toISOString(),
+      request: validateRequest,
+    };
     return new Promise((resolve, reject) => {
-      let validateRequest = {
-        testCaseType: testCase.testCaseType,
-        testName: testCase.testName,
-        specVersion: testCase.specVersion,
-        testDescription: testCase.testDescription,
-        responseSchema: testCase.responseSchema[0],
-        isNegativeTestcase: testCase.isNegativeTestcase
-          ? testCase.isNegativeTestcase
-          : false,
-        methodResponse: JSON.stringify(methodResponse),
-        methodRequest: JSON.stringify(methodRequest),
-        methodName: testCase.methodName[0],
-        extraInfoJson: JSON.stringify({
-          certificationType: selectedSbiDevice.certification,
-          startExecutionTime: startExecutionTime,
-          endExecutionTime: endExecutionTime,
-          timeout: this.getTimeout(testCase),
-          beforeKeyRotationResp: beforeKeyRotationResp
-            ? beforeKeyRotationResp
-            : null,
-          modality: testCase.otherAttributes.biometricTypes[0],
-        }),
-        validatorDefs: testCase.validatorDefs[0],
-      };
-      let request = {
-        id: appConstants.VALIDATIONS_ADD_ID,
-        version: appConstants.VERSION,
-        requesttime: new Date().toISOString(),
-        request: validateRequest,
-      };
       this.dataService.validateResponse(request).subscribe(
         (response) => {
           resolve(response);
@@ -477,21 +480,21 @@ export class SbiTestCaseAndroidService {
   }
 
   async validateRequest(testCase: TestCaseModel, methodRequest: any) {
+    let validateRequest = {
+      testCaseType: testCase.testCaseType,
+      testName: testCase.testName,
+      specVersion: testCase.specVersion,
+      testDescription: testCase.testDescription,
+      requestSchema: testCase.requestSchema[0],
+      methodRequest: JSON.stringify(methodRequest),
+    };
+    let request = {
+      id: appConstants.VALIDATIONS_ADD_ID,
+      version: appConstants.VERSION,
+      requesttime: new Date().toISOString(),
+      request: validateRequest,
+    };
     return new Promise((resolve, reject) => {
-      let validateRequest = {
-        testCaseType: testCase.testCaseType,
-        testName: testCase.testName,
-        specVersion: testCase.specVersion,
-        testDescription: testCase.testDescription,
-        requestSchema: testCase.requestSchema[0],
-        methodRequest: JSON.stringify(methodRequest),
-      };
-      let request = {
-        id: appConstants.VALIDATIONS_ADD_ID,
-        version: appConstants.VERSION,
-        requesttime: new Date().toISOString(),
-        request: validateRequest,
-      };
       this.dataService.validateRequest(request).subscribe(
         (response) => {
           resolve(response);
