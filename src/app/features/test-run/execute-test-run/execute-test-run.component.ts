@@ -759,8 +759,7 @@ export class ExecuteTestRunComponent implements OnInit {
         requestId,
         referenceId,
         galleryIds,
-        this.cbeffFileSuffix,
-        this.testRunId
+        this.cbeffFileSuffix
       );
       if (abisReq)
         console.log(`send to queue status ${abisReq[appConstants.STATUS]}`);
