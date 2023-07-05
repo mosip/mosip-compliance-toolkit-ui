@@ -194,6 +194,9 @@ mat-expansion-panel-header {
   }
 }
 @media screen and (min-width: 1462px) and (max-width: 1520px) {
+  .actionsHeader{
+    width: 2em;
+  }
   .scandeviceButton{
     margin-left: 87em;
   }
@@ -221,6 +224,9 @@ mat-expansion-panel-header {
   }
 }
 @media screen and (min-width: 1441px) and (max-width: 1462px) {
+  .actionsHeader{
+    width: 2em;
+  }
   .scandeviceButton{
     margin-left: 86em;
   }
@@ -247,6 +253,9 @@ mat-expansion-panel-header {
   }
 }
 @media screen and (min-width: 1381px) and (max-width: 1440px) {
+  .actionsHeader{
+    width: 2em;
+  }
   .collections-button{
     position: absolute;
   }
@@ -281,6 +290,9 @@ mat-expansion-panel-header {
   }
 }
 @media screen and (min-width:1280px) and (max-width: 1380px) {
+  .actionsHeader{
+    width: 2em;
+  }
   .collections-button{
     position: absolute;
   }
@@ -315,6 +327,9 @@ mat-expansion-panel-header {
   }
 }
 @media screen and (min-width: 1200px) and (max-width: 1279px) {
+  .actionsHeader{
+    width: 2em;
+  }
   .collections-button{
     position: absolute;
     margin-left: 0em;
@@ -579,6 +594,13 @@ mat-expansion-panel-header {
     margin-left: 0em;
     width: 11.5em;
     float: left;
+  }
+  .encryptionkeyButton-mobile{
+    margin-right: 2em;
+  }
+  .scandeviceButton-mobile{
+    position: absolute;
+    margin-right: -11.5em;
   }
   .encryptionkeyButton{
     width: 160px;
