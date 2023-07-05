@@ -52,6 +52,8 @@ export class SbiTestCaseService {
             methodResponse,
             sbiSelectedDevice
           );
+          console.log("decodedMethodResp");
+          console.log(decodedMethodResp);
           let performValidations = true;
           if (
             testCase.otherAttributes.keyRotationTestCase &&
@@ -67,6 +69,7 @@ export class SbiTestCaseService {
           }
           //now validate the method response against all the validators
           let validationResponse: any = {};
+          console.log(`performValidations ${performValidations}`);
           if (performValidations) {
             validationResponse = await this.validateResponse(
               testCase,
@@ -78,6 +81,7 @@ export class SbiTestCaseService {
               beforeKeyRotationResp
             );
           }
+          console.log("finalResponse");
           const finalResponse = {
             methodResponse: JSON.stringify(decodedMethodResp),
             methodRequest: JSON.stringify(methodRequest),
@@ -85,6 +89,7 @@ export class SbiTestCaseService {
             methodUrl: methodUrl,
             testDataSource: '',
           };
+          console.log(finalResponse);
           return finalResponse;
         } else {
           const finalResponse = {
