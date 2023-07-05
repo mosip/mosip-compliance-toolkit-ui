@@ -889,7 +889,7 @@ export class ExecuteTestRunComponent implements OnInit {
         //wait till user clicks on the required button in UI
         const promise = new Promise((resolve, reject) => { });
         if (await promise) {
-          return false;
+          return true;
         }
 
       }
