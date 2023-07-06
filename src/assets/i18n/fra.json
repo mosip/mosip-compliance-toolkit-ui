@@ -1167,12 +1167,12 @@
 			"testDescription": "Identifier - doublon introuvable pour le referenceId contre la galerie"
 		},
 		"ABIS3030": {
-			"testName": "Vérifiez si ABIS ne génère pas de nouveaux jetons pour chaque demande d'insertion - ABIS3030",
-			"testDescription": "Vérifiez si ABIS ne génère pas de nouveaux jetons pour chaque demande d'insertion - ABIS3030"
+			"testName": "Vérifiez si ABIS ne génère pas de nouveaux jetons pour chaque demande d'insertion",
+			"testDescription": "Vérifiez si ABIS ne génère pas de nouveaux jetons pour chaque demande d'insertion"
 		},
 		"ABIS3031": {
-			"testName": "Vérifiez si ABIS est capable de générer un nouveau jeton lorsqu'il a expiré sans renvoyer une réponse d'erreur dans la file d'attente - ABIS3031",
-			"testDescription": "Vérifiez si ABIS est capable de générer un nouveau jeton lorsqu'il a expiré sans renvoyer une réponse d'erreur dans la file d'attente - ABIS3031"
+			"testName": "Vérifiez si ABIS est capable de générer un nouveau jeton lorsqu'il a expiré sans renvoyer une réponse d'erreur dans la file d'attente",
+			"testDescription": "Vérifiez si ABIS est capable de générer un nouveau jeton lorsqu'il a expiré sans renvoyer une réponse d'erreur dans la file d'attente"
 		}
 	},
 	"validatorMessages": {
