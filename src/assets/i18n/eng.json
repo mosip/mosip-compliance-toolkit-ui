@@ -1170,6 +1170,14 @@
 		"ABIS3029": {
 			"testName": "Identify - duplicate not found for the referenceId against gallery",
 			"testDescription": "Identify - duplicate not found for the referenceId against gallery"
+		},
+		"ABIS3030": {
+			"testName": "Verify if ABIS is not generating new tokens for every insert request",
+			"testDescription": "Verify if ABIS is not generating new tokens for every insert request"
+		},
+		"ABIS3031": {
+			"testName": "Verify if ABIS is able to generate a new token when one has expired without sending an error response back in the queue",
+			"testDescription": "Verify if ABIS is able to generate a new token when one has expired without sending an error response back in the queue"
 		}
 	},
 	"validatorMessages": {
