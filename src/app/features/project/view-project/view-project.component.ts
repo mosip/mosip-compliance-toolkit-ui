@@ -290,6 +290,7 @@ export class ViewProjectComponent implements OnInit {
       this.projectForm.controls['outboundQueueName'].setValue(this.projectFormData.outboundQueueName);
       this.projectForm.controls['username'].setValue(this.projectFormData.username);
       this.projectForm.controls['password'].setValue(this.projectFormData.password);
+      this.projectForm.controls['modality'].setValue(this.projectFormData.modality);
       this.projectForm.controls['abisSpecVersion'].setValue(
         this.projectFormData.abisVersion
       );
@@ -450,6 +451,7 @@ export class ViewProjectComponent implements OnInit {
           password: this.projectForm.controls['password'].value,
           outboundQueueName: this.projectForm.controls['outboundQueueName'].value,
           inboundQueueName: this.projectForm.controls['inboundQueueName'].value,
+          modality:this.projectForm.controls['modality'].value,
           bioTestDataFileName: this.projectForm.controls['abisBioTestData'].value,
         };
         let request = {

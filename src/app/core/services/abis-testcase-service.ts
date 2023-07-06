@@ -39,6 +39,7 @@ export class AbisTestCaseService {
       dataShareResp = await this.createDataShareUrl(
         testCase,
         abisProjectData.bioTestDataFileName,
+        abisProjectData.modality,
         cbeffFileSuffix,
         testRunId
       );
@@ -133,6 +134,7 @@ export class AbisTestCaseService {
   createDataShareUrl(
     testCase: TestCaseModel,
     selectedBioTestDataName: string,
+    modality: string,
     cbeffFileIndex: number,
     testRunId: string
   ): any {
@@ -143,6 +145,7 @@ export class AbisTestCaseService {
     let dataShareRequestDto = {
       testcaseId: testCase.testId,
       bioTestDataName: selectedBioTestDataName,
+      abisProjectModality: modality,
       cbeffFileSuffix: cbeffFileIndex,
       incorrectPartnerId: incorrectPartnerId ? incorrectPartnerId : '',
       testRunId: testRunId

@@ -356,6 +356,42 @@
                         </div>
                         <div class="fieldWrapper">
                             <span class="fieldLabel">
+                                <mat-label>{{"viewProject.modality"|translate}}</mat-label>
+                            </span>
+                            <span class="fieldContainer">
+                                <mat-form-field appearance="legacy" class="fieldContainerBox">
+                                    <mat-label>{{"viewProject.modality"|translate}}</mat-label>
+                                    <mat-select formControlName="modality" #singleSelect>
+                                        <mat-option value="All">
+                                            All
+                                        </mat-option>
+                                        <mat-option value="Finger">
+                                            Finger
+                                        </mat-option>
+                                        <mat-option value="Iris">
+                                            Iris
+                                        </mat-option>
+                                        <mat-option value="Face">
+                                            Face
+                                        </mat-option>
+                                        <mat-option value="Finger and Iris">
+                                            Finger and Iris
+                                        </mat-option>
+                                        <mat-option value="Iris and Face">
+                                            Iris and Face
+                                        </mat-option>
+                                        <mat-option value="Finger and Face">
+                                            Finger and Face
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="projectForm.controls['modality'].hasError('required')">
+                                        {{"viewProject.modalityIsRequired"|translate}}
+                                    </mat-error>
+                                </mat-form-field>
+                            </span>
+                        </div>
+                        <div class="fieldWrapper">
+                            <span class="fieldLabel">
                                 <mat-label>{{"viewProject.specVersion"|translate}}</mat-label>
                             </span>
                             <span class="fieldContainer">

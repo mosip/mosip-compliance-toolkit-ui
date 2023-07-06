@@ -87,7 +87,9 @@
 		"activeMqUrl": "Actif MQ URL:",
 		"requestQueueName": "Nom de la file d'attente des requêtes:",
 		"responseQueueName": "Nom de la file d'attente de réponses:",
-		"invalidPartnerTypeMsg": "Le partenaire ABIS peut uniquement créer un projet ABIS"
+		"invalidPartnerTypeMsg": "Le partenaire ABIS peut uniquement créer un projet ABIS",
+		"modality": "Modalité",
+		"modalityIsRequired": "La modalité est requise"
 	},
 	"addTestData": {
 		"name": "Nom",
@@ -136,7 +138,9 @@
 		"activeMqUrl": "Actif MQ URL:",
 		"requestQueueName": "Nom de la file d'attente des requêtes:",
 		"responseQueueName": "Nom de la file d'attente de réponses:",
-		"tableDescription": "Liste des collections"
+		"tableDescription": "Liste des collections",
+		"modality": "Modalité",
+		"modalityIsRequired": "La modalité est requise"
 	},
 	"testRunHistory": {
 		"runDate": "Date d'exécution",
