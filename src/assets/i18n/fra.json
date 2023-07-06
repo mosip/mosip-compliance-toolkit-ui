@@ -268,6 +268,7 @@
 		"ISOStandardsValidator": "Valide que la 'bioValeur' est conforme aux normes ISO définies.",
 		"BiometricsQualityCheckValidator": "Vérifie la qualité de la biométrie à l'aide de tous les services SDK configurés",
 		"TimeCheckValidator": "Valide si la réponse est reçue dans l'intervalle d'horodatage donné ou non",
+		"HashValidator": "Valide la 'valeur de hachage' reçue dans la réponse correspond au 'hachage précédent' dans la demande",
 		"QualityCheckValidator": "Vérifie le score de qualité de la modalité",
 		"QualityCheckInvalidDataValidator": "Valide le code d'état pour les données invalides",
 		"QualityCheckNoDataValidator": "Valide le code d'état pour aucune donnée",

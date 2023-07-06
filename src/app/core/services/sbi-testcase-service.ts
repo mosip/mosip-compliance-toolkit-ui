@@ -23,11 +23,12 @@ export class SbiTestCaseService {
     testCase: TestCaseModel,
     sbiSelectedPort: string,
     sbiSelectedDevice: string,
-    beforeKeyRotationResp: any
+    beforeKeyRotationResp: any,
+    previousHash: string
   ) {
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     try {
-      const methodRequest = this.createRequest(testCase, sbiSelectedDevice);
+      const methodRequest = this.createRequest(testCase, sbiSelectedDevice, previousHash);
       //now validate the method request against the Schema
       let validationRequest: any = await this.validateRequest(
         testCase,
@@ -206,7 +207,7 @@ export class SbiTestCaseService {
     });
   }
 
-  createRequest(testCase: TestCaseModel, sbiSelectedDevice: string): any {
+  createRequest(testCase: TestCaseModel, sbiSelectedDevice: string, previousHash: string): any {
     const selectedSbiDevice: SbiDiscoverResponseModel =
       JSON.parse(sbiSelectedDevice);
     let request: any = {};
@@ -234,7 +235,7 @@ export class SbiTestCaseService {
             requestedScore: testCase.otherAttributes.requestedScore,
             deviceId: selectedSbiDevice.deviceId,
             deviceSubId: testCase.otherAttributes.deviceSubId,
-            previousHash: '',
+            previousHash: previousHash,
             bioSubType: this.getBioSubType(testCase.otherAttributes.segments),
           },
         ],
@@ -257,7 +258,7 @@ export class SbiTestCaseService {
             requestedScore: testCase.otherAttributes.requestedScore,
             deviceId: selectedSbiDevice.deviceId,
             deviceSubId: testCase.otherAttributes.deviceSubId,
-            previousHash: '',
+            previousHash: previousHash,
             bioSubType: this.getBioSubType(testCase.otherAttributes.segments),
           },
         ],
@@ -459,6 +460,7 @@ export class SbiTestCaseService {
           ? beforeKeyRotationResp
           : null,
         modality: testCase.otherAttributes.biometricTypes[0],
+        previousHash: ""
       }),
       validatorDefs: testCase.validatorDefs[0],
     };

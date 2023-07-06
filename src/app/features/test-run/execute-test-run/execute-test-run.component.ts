@@ -67,6 +67,7 @@ export class ExecuteTestRunComponent implements OnInit {
   showResumeAgainBtn = false;
   showContinueBtn = false;
   beforeKeyRotationResp: any = null;
+  previousHash: string = "";
   errorsSummary: string[];
   testCasesList: any;
   testRunId: string;
@@ -457,7 +458,17 @@ export class ExecuteTestRunComponent implements OnInit {
         }
       }
       if (!testcaseFailed) {
-        this.beforeKeyRotationResp = JSON.parse(res.methodResponse);
+        const methodRespJson = JSON.parse(res.methodResponse);
+        this.beforeKeyRotationResp = methodRespJson;
+        let hashArr: any[] = [];
+        if (methodRespJson && methodRespJson.biometrics) {
+          methodRespJson.biometrics.forEach((dataResp: any) => {
+            hashArr.push(dataResp.get("hash"));
+          });
+        }
+        if (hashArr.length > 1) {
+          this.previousHash = hashArr[hashArr.length-1];
+        }
         this.showContinueBtn = true;
         this.showLoader = false;
         this.currentKeyRotationIndex++;
@@ -834,7 +845,8 @@ export class ExecuteTestRunComponent implements OnInit {
             testCase,
             this.sbiSelectedPort ? this.sbiSelectedPort : '',
             this.sbiSelectedDevice ? this.sbiSelectedDevice : '',
-            null
+            null,
+            this.previousHash
           );
         } else {
           res = await this.sbiTestCaseAndroidService.runTestCase(
@@ -879,7 +891,8 @@ export class ExecuteTestRunComponent implements OnInit {
             testCase,
             this.sbiSelectedPort ? this.sbiSelectedPort : '',
             this.sbiSelectedDevice ? this.sbiSelectedDevice : '',
-            beforeKeyRotationDeviceResp
+            beforeKeyRotationDeviceResp,
+            this.previousHash
           );
         } else {
           res = await this.sbiTestCaseAndroidService.runTestCase(
