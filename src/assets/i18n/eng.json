@@ -87,7 +87,9 @@
 		"activeMqUrl": "Active MQ URL:",
 		"requestQueueName": "Request Queue Name:",
 		"responseQueueName": "Response Queue Name:",
-		"invalidPartnerTypeMsg": "ABIS partner can only create an ABIS project"
+		"invalidPartnerTypeMsg": "ABIS partner can only create an ABIS project",
+		"modality": "Modality",
+		"modalityIsRequired": "Modality is required"
 	},
 	"addTestData": {
 		"name": "Name:",
@@ -136,7 +138,9 @@
 		"activeMqUrl": "Active MQ URL:",
 		"requestQueueName": "Request Queue Name:",
 		"responseQueueName": "Response Queue Name:",
-		"tableDescription": "List of Collections"
+		"tableDescription": "List of Collections",
+		"modality": "Modality",
+		"modalityIsRequired": "Modality is required"
 	},
 	"testRunHistory": {
 		"runDate": "Run Date",

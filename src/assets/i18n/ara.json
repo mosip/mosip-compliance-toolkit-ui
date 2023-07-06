@@ -87,7 +87,9 @@
 		"activeMqUrl": "نشيط MQ URL",
 		"requestQueueName": "طلب اسم قائمة الانتظار",
 		"responseQueueName": "اسم قائمة انتظار الاستجابة",
-		"invalidPartnerTypeMsg": "يمكن لشريك ABIS فقط إنشاء مشروع ABIS"
+		"invalidPartnerTypeMsg": "يمكن لشريك ABIS فقط إنشاء مشروع ABIS",
+		"modality": "طريقة",
+		"modalityIsRequired": "طريقة مطلوبة"
 	},
 	"addTestData": {
 		"name": "اسم",
@@ -136,7 +138,9 @@
 		"activeMqUrl": "نشيط MQ URL",
 		"requestQueueName": "طلب اسم قائمة الانتظار",
 		"responseQueueName": "اسم قائمة انتظار الاستجابة",
-		"tableDescription": "قائمة المجموعات"
+		"tableDescription": "قائمة المجموعات",
+		"modality": "طريقة",
+		"modalityIsRequired": "طريقة مطلوبة"
 	},
 	"testRunHistory": {
 		"runDate": "تشغيل التاريخ",

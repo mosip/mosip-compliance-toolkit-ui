@@ -244,6 +244,7 @@ export class AddProjectComponent implements OnInit {
           password:this.projectForm.controls['password'].value,
           outboundQueueName:this.projectForm.controls['outboundQueueName'].value,
           inboundQueueName:this.projectForm.controls['inboundQueueName'].value,
+          modality:this.projectForm.controls['modality'].value,
           bioTestDataFileName: this.projectForm.controls['abisBioTestData'].value,
         };
         let request = {
