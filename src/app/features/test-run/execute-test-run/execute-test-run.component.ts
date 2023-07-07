@@ -95,6 +95,8 @@ export class ExecuteTestRunComponent implements OnInit {
     )
     : 0;
   currentKeyRotationIndex = 0;
+  currentHashValidatorIndex = 0;
+  hashValidatorIterations = 2;
   isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
   abisRequestSendFailure = false;
   abisSentMessage: string = appConstants.BLANK_STRING;
@@ -355,55 +357,20 @@ export class ExecuteTestRunComponent implements OnInit {
         if (res) {
           startingForLoop = this.handleErr(res);
           //handle key rotation flow
-          if (this.currentKeyRotationIndex < this.keyRotationIterations) {
-            this.handleKeyRotationFlow(startingForLoop, testCase, res);
-            if (this.showContinueBtn) {
-              const promise = new Promise((resolve, reject) => { });
-              if (await promise) {
-                console.log("done waiting");
-              }
-            }
-          }
+          await this.handleKeyRotationTestCaseFlow(startingForLoop, testCase, res);
+          //handle hash Validation flow
+          await this.handleHashValidationTestCaseFlow(startingForLoop, testCase, res);
+          //calculate testreults
           this.calculateTestcaseResults(res[appConstants.VALIDATIONS_RESPONSE]);
           //update the test run details in db
           await this.addTestRunDetails(testCase, res);
           //update the testrun in db with execution time
           await this.updateTestRun();
-          if (testCase.otherAttributes.resumeAgainBtn) {
-            this.showResumeAgainBtn = true;
-            const promise = new Promise((resolve, reject) => { });
-            if (await promise) {
-              console.log("done waiting");
-            }
-          }
+          await this.handleResumeAgainFlow(testCase);
+          //reset the testcase
           let resetCurrentTestCase = true;
-          //reset all attributes for next testcase
-          if (this.projectType == appConstants.ABIS) {
-            // //disconnect from queue if already connected
-            if (this.rxStompService && this.rxStompService.connected()) {
-              this.rxStompService.deactivate()
-                .catch((error) => {
-                  console.log(error);
-                });
-            }
-            this.abisSentMessage = appConstants.BLANK_STRING;
-            this.abisRecvdMessage = appConstants.BLANK_STRING;
-            //when there are multiple cbeff files to be inserted then after last file is inserted
-            //this.cbeffFileSuffix will be reset to 0, otherwise it will be > 0
-            if (this.cbeffFileSuffix > 0 && !this.abisRequestSendFailure) {
-              //do no reset current testcaseId
-              resetCurrentTestCase = false;
-              this.abisRequestSendFailure = false;
-              await this.startWithSameTestcase();
-            }
-            else if (this.isCombinationAbisTestcase && !this.abisRequestSendFailure) {
-              this.currentAbisMethod = appConstants.ABIS_METHOD_IDENTIFY;
-              //do no reset current testcaseId
-              resetCurrentTestCase = false;
-              this.abisRequestSendFailure = false;
-              await this.startWithSameTestcase();
-            }
-          }
+          //for ABIS, decide to reset the current testcase or not
+          resetCurrentTestCase = await this.handleABISResetCurrentTestCaseFlow();
           if (resetCurrentTestCase) {
             this.currectTestCaseId = '';
             this.currectTestCaseName = '';
@@ -413,7 +380,6 @@ export class ExecuteTestRunComponent implements OnInit {
             this.abisSentDataSource = appConstants.BLANK_STRING;
             this.abisRequestSendFailure = false;
           }
-
         }
       }
     }
@@ -427,7 +393,79 @@ export class ExecuteTestRunComponent implements OnInit {
         : testcase.testDescription;
     }
   }
-  handleKeyRotationFlow(
+
+  async handleKeyRotationTestCaseFlow(startingForLoop: boolean,
+    testCase: TestCaseModel,
+    res: any) {
+    if (testCase.otherAttributes.keyRotationTestCase &&
+      this.currentKeyRotationIndex < this.keyRotationIterations) {
+      this.handleContinueBtnFlow(startingForLoop, testCase, res);
+      if (this.showContinueBtn) {
+        const promise = new Promise((resolve, reject) => { });
+        if (await promise) {
+          console.log("done waiting");
+        }
+      }
+    }
+  }
+
+  async handleHashValidationTestCaseFlow(startingForLoop: boolean,
+    testCase: TestCaseModel,
+    res: any) {
+    if (testCase.otherAttributes.hashValidationTestCase &&
+      this.currentHashValidatorIndex < this.hashValidatorIterations) {
+      this.handleContinueBtnFlow(startingForLoop, testCase, res);
+      if (this.showContinueBtn) {
+        const promise = new Promise((resolve, reject) => { });
+        if (await promise) {
+          console.log("done waiting");
+        }
+      }
+    }
+  }
+
+  async handleABISResetCurrentTestCaseFlow() {
+    let resetCurrentTestCase = true;
+    if (this.projectType == appConstants.ABIS) {
+      // //disconnect from queue if already connected
+      if (this.rxStompService && this.rxStompService.connected()) {
+        this.rxStompService.deactivate()
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+      this.abisSentMessage = appConstants.BLANK_STRING;
+      this.abisRecvdMessage = appConstants.BLANK_STRING;
+      //when there are multiple cbeff files to be inserted then after last file is inserted
+      //this.cbeffFileSuffix will be reset to 0, otherwise it will be > 0
+      if (this.cbeffFileSuffix > 0 && !this.abisRequestSendFailure) {
+        //do no reset current testcaseId
+        resetCurrentTestCase = false;
+        this.abisRequestSendFailure = false;
+        await this.startWithSameTestcase();
+      }
+      else if (this.isCombinationAbisTestcase && !this.abisRequestSendFailure) {
+        this.currentAbisMethod = appConstants.ABIS_METHOD_IDENTIFY;
+        //do no reset current testcaseId
+        resetCurrentTestCase = false;
+        this.abisRequestSendFailure = false;
+        await this.startWithSameTestcase();
+      }
+    }
+    return resetCurrentTestCase;
+  }
+
+  async handleResumeAgainFlow(testCase: TestCaseModel) {
+    if (testCase.otherAttributes.resumeAgainBtn) {
+      this.showResumeAgainBtn = true;
+      const promise = new Promise((resolve, reject) => { });
+      if (await promise) {
+        console.log("done waiting");
+      }
+    }
+  }
+
+  handleContinueBtnFlow(
     startingForLoop: boolean,
     testCase: TestCaseModel,
     res: any
@@ -435,7 +473,8 @@ export class ExecuteTestRunComponent implements OnInit {
     if (
       startingForLoop &&
       this.projectType === appConstants.SBI &&
-      testCase.otherAttributes.keyRotationTestCase
+      (testCase.otherAttributes.keyRotationTestCase ||
+        testCase.otherAttributes.hashValidationTestCase)
     ) {
       let testcaseFailed = false;
       console.log("res");
@@ -459,19 +498,24 @@ export class ExecuteTestRunComponent implements OnInit {
       }
       if (!testcaseFailed) {
         const methodRespJson = JSON.parse(res.methodResponse);
-        this.beforeKeyRotationResp = methodRespJson;
-        let hashArr: any[] = [];
-        if (methodRespJson && methodRespJson.biometrics) {
-          methodRespJson.biometrics.forEach((dataResp: any) => {
-            hashArr.push(dataResp.get("hash"));
-          });
+        if (testCase.otherAttributes.keyRotationTestCase) {
+          this.beforeKeyRotationResp = methodRespJson;
+          this.currentKeyRotationIndex++;
         }
-        if (hashArr.length > 1) {
-          this.previousHash = hashArr[hashArr.length-1];
+        if (testCase.otherAttributes.hashValidationTestCase) {
+          let hashArr: any[] = [];
+          if (methodRespJson && methodRespJson.biometrics) {
+            methodRespJson.biometrics.forEach((dataResp: any) => {
+              hashArr.push(dataResp["hash"]);
+            });
+          }
+          if (hashArr.length >= 1) {
+            this.previousHash = hashArr[hashArr.length - 1];
+          }
+          this.currentHashValidatorIndex++;
         }
         this.showContinueBtn = true;
         this.showLoader = false;
-        this.currentKeyRotationIndex++;
       }
     }
   }
@@ -854,7 +898,8 @@ export class ExecuteTestRunComponent implements OnInit {
             this.sbiDeviceType,
             this.sbiSelectedPort ? this.sbiSelectedPort : '',
             this.sbiSelectedDevice ? this.sbiSelectedDevice : '',
-            null
+            null,
+            this.previousHash
           );
         }
         this.streamingDone = false;
@@ -872,7 +917,9 @@ export class ExecuteTestRunComponent implements OnInit {
           return false;
         }
       }
-    } else {
+    } 
+    //discover & deviceInfo flows
+    else {
       if (this.showResumeBtn) {
         this.pauseExecution = true;
       }
@@ -892,7 +939,7 @@ export class ExecuteTestRunComponent implements OnInit {
             this.sbiSelectedPort ? this.sbiSelectedPort : '',
             this.sbiSelectedDevice ? this.sbiSelectedDevice : '',
             beforeKeyRotationDeviceResp,
-            this.previousHash
+            ""
           );
         } else {
           res = await this.sbiTestCaseAndroidService.runTestCase(
@@ -900,7 +947,8 @@ export class ExecuteTestRunComponent implements OnInit {
             this.sbiDeviceType,
             this.sbiSelectedPort ? this.sbiSelectedPort : '',
             this.sbiSelectedDevice ? this.sbiSelectedDevice : '',
-            beforeKeyRotationDeviceResp
+            beforeKeyRotationDeviceResp,
+            ""
           );
         }
         this.beforeKeyRotationResp = null;

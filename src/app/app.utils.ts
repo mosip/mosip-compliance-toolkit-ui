@@ -282,7 +282,7 @@ export default class Utils {
     const COLON_SEPARATOR = '::', SEMI_COLON_SEPARATOR = ';', JSON_PLACEHOLDER = '{}';
 
     messageKey = messageKey.trim();
-    console.log(messageKey);
+    //console.log(messageKey);
     if (messageKey != '') {
       let translatedMsg = '';
       //check if the messageKey is having any rutime attributes
