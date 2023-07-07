@@ -1381,8 +1381,8 @@
 		"ISO_WARNING_011": "<BR>Valeurs autorisées du rapport hauteur/largeur de l'image jusqu'à 1:1",
 		"ISO_WARNING_012": "<BR>Valeurs autorisées pour l'espace colorimétrique de l'image non valide Jusqu'à RVB [24 bits]",
 		"ISO_WARNING_013": "<BR>Image non valide Résolution minimale entre 500 DPI et 1 000 DPI",
-		"HASH_VALIDATOR_001": "La validation du hachage est réussie",
-		"HASH_VALIDATOR_002": "La validation du hachage a échoué",
+		"HASH_VALIDATOR_001": "La validation de la chaîne de hachage est réussie sur plusieurs captures",
+		"HASH_VALIDATOR_002": "La validation de la chaîne de hachage a échoué sur plusieurs captures. Le hachage précédent pour la dernière requête était {}, le hachage généré par le validateur est {} et le hachage reçu est {}",
 		"HASH_VALIDATOR_003": "Échec de la validation du hachage en raison de : {}"
 	},
 	"serviceErrors": {
