@@ -108,7 +108,8 @@ export class AbisTestCaseService {
     methodRequest: string,
     methodResponse: string,
     testDataSource: string,
-    methodIndex: number
+    methodIndex: number,
+    testRunId: string
   ) {
     // now validate the method response against all the validators
     let validationResponse = await this.validateResponse(
@@ -116,7 +117,8 @@ export class AbisTestCaseService {
       methodRequest,
       methodResponse,
       methodName,
-      methodIndex
+      methodIndex,
+      testRunId
     );
     const finalResponse = {
       methodResponse: methodResponse,
@@ -248,7 +250,8 @@ export class AbisTestCaseService {
     methodRequest: any,
     methodResponse: any,
     method: string,
-    methodIndex: number
+    methodIndex: number,
+    testRunId: string
   ) {
     let validateRequest = {
       testCaseType: testCase.testCaseType,
@@ -261,7 +264,9 @@ export class AbisTestCaseService {
         : false,
       extraInfoJson: JSON.stringify({
         expectedFailureReason: testCase.otherAttributes.expectedFailureReason,
-        expectedDuplicateCount: testCase.otherAttributes.expectedDuplicateCount
+        expectedDuplicateCount: testCase.otherAttributes.expectedDuplicateCount,
+        testcaseId: testCase.testId,
+        testRunId: testRunId
       }),
       methodResponse: methodResponse,
       methodRequest: methodRequest,

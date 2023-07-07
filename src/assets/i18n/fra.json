@@ -287,7 +287,8 @@
 		"ConvertNoInputDataValidator": "Valide si aucune donnée BDB d'entrée n'est présente dans la sonde",
 		"ExpectedFailureReasonValidator": "Valide la raison de l'échec pour correspondre à la valeur attendue",
 		"IdentifyDuplicateFoundValidator": "Valide le nombre de doublons trouvés par ABIS pour le referenceId donné",
-		"ExpectedDuplicateCountValidator": "Valide les doublons trouvés pour correspondre à la valeur attendue"
+		"ExpectedDuplicateCountValidator": "Valide les doublons trouvés pour correspondre à la valeur attendue",
+		"ABISTokenValidator": "Valide qu'ABIS ne génère pas de nouveau jeton pour chaque demande d'insertion, sauf si le jeton a expiré"
 	},
 	"testcases": {
 		"SBI1000": {
@@ -1415,7 +1416,10 @@
 		"ISO_WARNING_013": "<BR>Image non valide Résolution minimale entre 500 DPI et 1 000 DPI",
 		"HASH_VALIDATOR_001": "La validation de la chaîne de hachage est réussie sur plusieurs captures",
 		"HASH_VALIDATOR_002": "La validation de la chaîne de hachage a échoué sur plusieurs captures. Le hachage précédent pour la dernière requête était {}, le hachage généré par le validateur est {} et le hachage reçu est {}",
-		"HASH_VALIDATOR_003": "Échec de la validation du hachage en raison de : {}"
+		"HASH_VALIDATOR_003": "Échec de la validation du hachage en raison de : {}",
+		"ABIS_TOKEN_VALIDATOR_001": "La validation du jeton est réussie. Vérifié qu'ABIS ne génère pas de nouveaux jetons pour chaque demande d'insertion.",
+		"ABIS_TOKEN_VALIDATOR_002": "La validation du jeton a échoué, ABIS génère de NOUVEAUX jetons pour chaque demande d'insertion.",
+		"ABIS_TOKEN_VALIDATOR_003": "Échec de la validation du jeton, car aucune donnée correspondante n'est disponible dans le tableau pour l'ID de cas de test : {}, testRunId : {} et partnerId : {}"
 	},
 	"serviceErrors": {
 		"TOOLKIT_SUCCESS_000": "Succès",
