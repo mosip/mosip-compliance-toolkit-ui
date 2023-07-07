@@ -76,7 +76,8 @@ export class SbiTestCaseService {
               sbiSelectedDevice,
               startExecutionTime,
               endExecutionTime,
-              beforeKeyRotationResp
+              beforeKeyRotationResp,
+              previousHash
             );
           }
           const finalResponse = {
@@ -434,11 +435,13 @@ export class SbiTestCaseService {
     sbiSelectedDevice: string,
     startExecutionTime: string,
     endExecutionTime: string,
-    beforeKeyRotationResp: any
+    beforeKeyRotationResp: any,
+    previousHash: string
   ) {
     //console.log("validateResponse");
     const selectedSbiDevice: SbiDiscoverResponseModel =
       JSON.parse(sbiSelectedDevice);
+    console.log(`previousHash ${previousHash}`);
     let validateRequest = {
       testCaseType: testCase.testCaseType,
       testName: testCase.testName,
@@ -460,7 +463,7 @@ export class SbiTestCaseService {
           ? beforeKeyRotationResp
           : null,
         modality: testCase.otherAttributes.biometricTypes[0],
-        previousHash: ""
+        previousHash: previousHash
       }),
       validatorDefs: testCase.validatorDefs[0],
     };

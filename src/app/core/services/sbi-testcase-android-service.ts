@@ -7,7 +7,6 @@ import { SbiDiscoverResponseModel } from '../models/sbi-discover';
 import Utils from 'src/app/app.utils';
 import { MosipSbiCapacitorPlugin } from 'mosip-sbi-capacitor-plugin';
 import { UserProfileService } from './user-profile.service';
-import { error } from 'console';
 
 @Injectable({
   providedIn: 'root',
@@ -25,10 +24,11 @@ export class SbiTestCaseAndroidService {
     sbiDeviceType: string,
     callbackId: string,
     sbiSelectedDevice: string,
-    beforeKeyRotationResp: any
+    beforeKeyRotationResp: any,
+    previousHash: string
   ) {
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
-    const methodRequest = this.createRequest(testCase, sbiSelectedDevice);
+    const methodRequest = this.createRequest(testCase, sbiSelectedDevice, previousHash);
     let startExecutionTime = new Date().toISOString();
     let executeResponse: any = await this.executeMethod(
       testCase,
@@ -68,7 +68,8 @@ export class SbiTestCaseAndroidService {
           sbiSelectedDevice,
           startExecutionTime,
           endExecutionTime,
-          beforeKeyRotationResp
+          beforeKeyRotationResp,
+          previousHash
         );
       }
       const finalResponse = {
@@ -214,7 +215,8 @@ export class SbiTestCaseAndroidService {
   }
 
 
-  createRequest(testCase: TestCaseModel, sbiSelectedDevice: string): any {
+  createRequest(testCase: TestCaseModel, sbiSelectedDevice: string, 
+    previousHash: string): any {
     const selectedSbiDevice: SbiDiscoverResponseModel =
       JSON.parse(sbiSelectedDevice);
     let request: any = {};
@@ -240,7 +242,7 @@ export class SbiTestCaseAndroidService {
             requestedScore: testCase.otherAttributes.requestedScore,
             deviceId: selectedSbiDevice.deviceId,
             deviceSubId: testCase.otherAttributes.deviceSubId,
-            previousHash: '',
+            previousHash: previousHash,
             bioSubType: this.getBioSubType(testCase.otherAttributes.segments),
           },
         ],
@@ -263,7 +265,7 @@ export class SbiTestCaseAndroidService {
             requestedScore: testCase.otherAttributes.requestedScore,
             deviceId: selectedSbiDevice.deviceId,
             deviceSubId: testCase.otherAttributes.deviceSubId,
-            previousHash: '',
+            previousHash: previousHash,
             bioSubType: this.getBioSubType(testCase.otherAttributes.segments),
           },
         ],
@@ -433,10 +435,12 @@ export class SbiTestCaseAndroidService {
     sbiSelectedDevice: string,
     startExecutionTime: string,
     endExecutionTime: string,
-    beforeKeyRotationResp: any
+    beforeKeyRotationResp: any,
+    previousHash: string
   ) {
     const selectedSbiDevice: SbiDiscoverResponseModel =
       JSON.parse(sbiSelectedDevice);
+    console.log(`previousHash ${previousHash}`);  
     let validateRequest = {
       testCaseType: testCase.testCaseType,
       testName: testCase.testName,
@@ -458,6 +462,7 @@ export class SbiTestCaseAndroidService {
           ? beforeKeyRotationResp
           : null,
         modality: testCase.otherAttributes.biometricTypes[0],
+        previousHash: previousHash
       }),
       validatorDefs: testCase.validatorDefs[0],
     };
