@@ -748,6 +748,38 @@
 			"testDescription": "Test to validate invalid request json in RCapture method for exception photo<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Raise your hands during capture",
 			"androidTestDescription": "Test to validate invalid request json in RCapture method for exception photo<br><br>Steps:<br><br>1. Click on Inititate Capture button to start the capture <br>2. Raise your hands during capture"
 		},
+		"SBI1101": {
+			"testName": "Registration capture - Left Slap - Hash Validations",
+			"testDescription": "Test to validate the RCapture interface for Left Slap Fingerprints<br><br>Steps:<br>1. Click on Start Streaming button. <br>2. Once streaming is done, click on Inititate Capture button to start the capture.  <br> 3. Place your left slap on the device until the capture completes",
+			"androidTestDescription": "Test to validate the RCapture interface for Left Slap Fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place your left slap on the device until the capture completes"
+		},
+		"SBI1102": {
+			"testName": "Registration capture - Face - Hash Validations",
+			"testDescription": "Test to validate RCapture interface for face<br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your face infront of the camera until the capture completes",
+			"androidTestDescription": "Test to validate RCapture interface for face<br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera until the capture completes"
+		},
+		"SBI1103":{
+			"testName": "Registration capture - Right Slap - Hash Validations",
+			"testDescription": "Test to validate RCapture interface for Right Slap Fingerprints<br>Steps:<br>1. Click on Start Streaming button.<br>3. Once streaming is done, click on Inititate Capture button to start the capture <br>2. Place your right slap on the device until the capture completes",
+			"androidTestDescription": "Test to validate RCapture interface for Right Slap Fingerprints<br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right slap on the device until the capture completes"
+		},
+		"SBI1104":{
+			"testName": "Registration capture - Double Iris- Hash Validations",
+			"testDescription": "Test to validate RCapture interface for Two Iris<br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place both your iris on the device until the capture completes",
+			"androidTestDescription": "Test to validate RCapture interface for Two Iris<br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place both your iris on the device until the capture completes"
+		},
+		"SBI1105":{
+			"testName": "Auth capture - Face - Hash Validations",
+			"testDescription": "Test to validate Capture method for face<br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera until the capture completes"
+		},
+		"SBI1106":{
+			"testName": "Auth capture - Single Iris - Unknown Iris - Hash Validations",
+			"testDescription": "Test to validate Capture method for a single iris<br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place one of your iris infront of the iris scanner"
+		},
+		"SBI1107":{
+			"testName": "Auth capture - Unknown Finger - Hash Validations",
+			"testDescription": "Test to validate Capture method for a finger<br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place one of your finger on the single fingerprint scanner"
+		},
 		"SDK2000": {
 			"testName": "Init Test",
 			"testDescription": "Initialise Bio SDK Services"
@@ -1383,8 +1415,8 @@
 		"ISO_WARNING_011": "<BR>Invalid Image Aspect ratio allowed values Up to 1:1",
 		"ISO_WARNING_012": "<BR>Invalid Image Color Space allowed values Up to RGB[24 bit]",
 		"ISO_WARNING_013": "<BR>Invalid Image Minimum resolution between 500 DPI and 1000 DPI",
-		"HASH_VALIDATOR_001": "Hash validation is successful",
-		"HASH_VALIDATOR_002": "Hash validation is unsuccessful",
+		"HASH_VALIDATOR_001": "Validation of hash chain is successful across multiple captures",
+		"HASH_VALIDATOR_002": "Validation of hash chain failed across multiple captures. Previous Hash for last request was {},hash generated  by validator is {} and hash received is {}",
 		"HASH_VALIDATOR_003": "Hash validation failure due to: {}"
 	},
 	"serviceErrors": {
