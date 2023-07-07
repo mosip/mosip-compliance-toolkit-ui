@@ -287,7 +287,8 @@
 		"ConvertNoInputDataValidator": "Validates if no input BDB data present in the Probe",
 		"ExpectedFailureReasonValidator": "Validates the failure reason to match the expected value",
 		"IdentifyDuplicateFoundValidator": "Validates the count of duplicates found by ABIS for the given referenceId",
-		"ExpectedDuplicateCountValidator": "Validates the duplicates found to match the expected value"
+		"ExpectedDuplicateCountValidator": "Validates the duplicates found to match the expected value",
+		"ABISTokenValidator": "Validates that ABIS is not generating a new token for every insert request, unless token has expired"
 	},
 	"testcases": {
 		"SBI1000": {
@@ -1416,8 +1417,11 @@
 		"ISO_WARNING_012": "<BR>Invalid Image Color Space allowed values Up to RGB[24 bit]",
 		"ISO_WARNING_013": "<BR>Invalid Image Minimum resolution between 500 DPI and 1000 DPI",
 		"HASH_VALIDATOR_001": "Validation of hash chain is successful across multiple captures",
-		"HASH_VALIDATOR_002": "Validation of hash chain failed across multiple captures. Previous Hash for last request was {},hash generated  by validator is {} and hash received is {}",
-		"HASH_VALIDATOR_003": "Hash validation failure due to: {}"
+		"HASH_VALIDATOR_002": "Validation of hash chain failed across multiple captures. Previous Hash for last request was {}, hash generated  by validator is {} and hash received is {}",
+		"HASH_VALIDATOR_003": "Hash validation failure due to: {}",
+		"ABIS_TOKEN_VALIDATOR_001": "Token validation is successful. Verified that ABIS is not generating new tokens for every insert request.",
+		"ABIS_TOKEN_VALIDATOR_002": "Token validation failed, ABIS is generating NEW tokens for every insert request.",
+		"ABIS_TOKEN_VALIDATOR_003": "Token validation failed, since no matching data is available in table for testcase id: {}, testRunId: {} and partnerId: {}"
 	},
 	"serviceErrors": {
 		"TOOLKIT_SUCCESS_000": "Success",
