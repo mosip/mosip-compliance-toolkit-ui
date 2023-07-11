@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Restart the mosip-compliance-toolkit-ui services
 ## Usage: ./restart.sh [kubeconfig]
 

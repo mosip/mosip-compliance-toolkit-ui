@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Installs all compliance-toolkit helm charts
 ## Usage: ./install.sh [kubeconfig]
 
