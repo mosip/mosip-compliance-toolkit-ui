@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Uninstalls all  compliance-toolkit helm charts
 
 function deleting_compliance-toolkit-ui() {
