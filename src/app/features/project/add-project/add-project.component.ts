@@ -191,6 +191,12 @@ export class AddProjectComponent implements OnInit {
         this.projectForm.controls[controlId].markAsTouched();
       });
     }
+    const projectName = this.projectForm.controls['name'].value;
+    if (projectName.trim().length === 0) {
+      this.projectForm.controls['name'].setValue(null);
+    } else {
+      this.projectForm.controls['name'].setValue(projectName);
+    }
     if (this.projectForm.valid) {
       //Save the project in db
       console.log('valid');
