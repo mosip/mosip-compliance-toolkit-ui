@@ -278,6 +278,12 @@ export class AddCollectionsComponent implements OnInit {
 
   async saveCollection() {
     this.collectionForm.controls['name'].markAsTouched();
+    const collectionName = this.collectionForm.controls['name'].value;
+    if (collectionName.trim().length === 0) {
+      this.collectionForm.controls['name'].setValue(null);
+    } else {
+      this.collectionForm.controls['name'].setValue(collectionName);
+    }
     if (this.collectionForm.valid) {
       if (this.selection.isEmpty()) {
         const err = {
