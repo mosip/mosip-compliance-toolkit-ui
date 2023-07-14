@@ -330,6 +330,30 @@ export class TestRunComponent implements OnInit {
     }
   }
 
+  downloadReport() {
+    const subs = this.dataService.createReport(this.runId).subscribe(
+      (res: any) => {
+        if (res) {
+          const fileByteArray = res;
+          var blob = new Blob([fileByteArray], { type: 'application/pdf' });
+          var link = document.createElement('a');
+          link.href = window.URL.createObjectURL(blob);
+          link.download = this.runId;
+          link.click();
+        } else {
+          Utils.showErrorMessage(this.resourceBundleJson,
+            null,
+            this.dialog,
+            'Unable to download PDF file. Try Again!');
+        }
+      },
+      (errors) => {
+        Utils.showErrorMessage(this.resourceBundleJson ,errors, this.dialog);
+      }
+    );
+    this.subscriptions.push(subs);
+  }
+
   async backToProject() {
     await this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}`,
