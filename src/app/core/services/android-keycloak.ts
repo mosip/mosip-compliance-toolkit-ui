@@ -2,7 +2,7 @@ import * as Keycloak from 'src/app/lib/keycloak';
 import * as appConstants from 'src/app/app.constants';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { CapacitorCookies } from '@capacitor/core';
+import { error } from 'console';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +20,6 @@ export class AndroidKeycloakService {
   }
 
   public setUp() {
-    //console.log("creating androidKeycloak instance");
     this.androidKeycloak = Keycloak({
       clientId: environment.IAM_CLIENT_ID,
       realm: environment.IAM_REALM,
@@ -28,9 +27,7 @@ export class AndroidKeycloakService {
     });
     this.androidKeycloak.onAuthSuccess = () => {
       // save tokens to device storage
-      //console.log('onAuthSuccess');
       const accessToken = this.androidKeycloak.token;
-      //console.log(accessToken);
       if (accessToken) {
         localStorage.setItem(appConstants.ACCESS_TOKEN, accessToken);
         window.location.reload();
@@ -42,6 +39,8 @@ export class AndroidKeycloakService {
       enableLogging: true,
       useNonce: false,
       redirectUri: environment.redirectUri
+    }).catch((error) => {
+      console.log(error);
     });
   }
   getInstance() {

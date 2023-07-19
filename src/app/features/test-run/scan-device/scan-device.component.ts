@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, Injectable } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as appConstants from 'src/app/app.constants';
 import { DataService } from '../../../core/services/data-service';
@@ -12,6 +12,7 @@ import { MosipSbiCapacitorPlugin } from 'mosip-sbi-capacitor-plugin';
 import { environment } from '../../../../environments/environment';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { TranslateService } from '@ngx-translate/core';
+import { error } from 'console';
 
 @Component({
   selector: 'app-scan-device',
@@ -48,12 +49,8 @@ export class ScanDeviceComponent implements OnInit {
 
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
-    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
-      (response: any) => {
-        this.resourceBundleJson = response;
-        this.data.title = this.resourceBundleJson['scanDevice']['title'];
-      }
-    );
+    this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
+    this.data.title = this.resourceBundleJson['scanDevice']['title'];
     this.scanForm.addControl(
       'ports',
       new FormControl('', [Validators.required])
@@ -129,6 +126,8 @@ export class ScanDeviceComponent implements OnInit {
     return new Promise((resolve, reject) => {
       Toast.show({
         text: 'Searching for SBI devices for : ' + sbiDeviceType,
+      }).catch((error) => { 
+        console.log(error) 
       });
       MosipSbiCapacitorPlugin.startActivity({
         methodType: appConstants.SBI_METHOD_DISCOVER,
@@ -214,7 +213,6 @@ export class ScanDeviceComponent implements OnInit {
   getDeviceLabel(field: any) {
     if (field) {
       let deviceLabel = this.resourceBundleJson['deviceLabel'];
-      //console.log(this.resourceBundleJson);
       if (deviceLabel) {
         if (!this.isAndroidAppMode) {
           return `${deviceLabel.deviceId}: ${field.deviceId}, ${deviceLabel.purpose}: ${field.purpose}, ${deviceLabel.deviceType}: ${field.digitalIdDecoded.type}, ${deviceLabel.deviceSubType}: ${field.digitalIdDecoded.deviceSubType}`;

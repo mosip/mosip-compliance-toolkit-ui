@@ -3,8 +3,7 @@
 		"logoutMessage": "Vous avez été déconnecté.",
 		"success": "Succès",
 		"collectionSuccessMessage": "Collection créée avec succès",
-		"sbiSuccessMessage": "Projet créé avec succès",
-		"sdkSuccessMessage": "Projet créé avec succès",
+		"successMessage": "Projet créé avec succès",
 		"close": "Fermer",
 		"logout": "Se déconnecter",
 		"addTestDataSuccessMsg": "Données de test ajoutées avec succès."
@@ -37,7 +36,8 @@
 		"lastRunStatus": "État de la dernière exécution",
 		"success": "Succès",
 		"failure": "Échec",
-		"projectRow": "Il n'y a pas de projets disponibles."
+		"projectRow": "Il n'y a pas de projets disponibles.",
+		"tableDescription": "Liste des projets"
 	},
 	"biometricDashboard": {
 		"projectDashboard": "Tableau de bord des projets",
@@ -49,7 +49,8 @@
 		"purpose": "But",
 		"fileName": "Nom de fichier",
 		"creationDate": "Date de création",
-		"biometricRecord": "Il n'y a pas d'enregistrements disponibles."
+		"biometricRecord": "Il n'y a pas d'enregistrements disponibles.",
+		"tableDescription": "Liste des données biométriques"
 	},
 	"addProject": {
 		"biometricData": "Données biométriques",
@@ -77,11 +78,16 @@
 		"deviceSubTypeIsRequired": "Le sous-type d'appareil est requis",
 		"deviceSubTypeIsInvalid": "Le sous-type de périphérique n'est pas valide",
 		"usernameIsRequired": "Nom d'utilisateur est nécessaire",
+		"passwordIsRequired": "Mot de passe requis",
 		"queueNameIsRequired": "Le nom de la file d'attente est requis",
 		"outboundQueueName": "Nom de la file d'attente sortante",
 		"outboundQueueNameIsRequired": "Le nom de la file d'attente sortante est requis",
 		"inboundQueueName": "Nom de la file d'attente entrante",
-		"inboundQueueNameIsRequired": "Le nom de la file d'attente entrante est requis"
+		"inboundQueueNameIsRequired": "Le nom de la file d'attente entrante est requis",
+		"activeMqUrl": "Actif MQ URL:",
+		"requestQueueName": "Nom de la file d'attente des requêtes:",
+		"responseQueueName": "Nom de la file d'attente de réponses:",
+		"invalidPartnerTypeMsg": "Le partenaire ABIS peut uniquement créer un projet ABIS"
 	},
 	"addTestData": {
 		"name": "Nom",
@@ -126,7 +132,11 @@
 		"baseUrlIsInvalid": "L'URL de base n'est pas valide",
 		"specVersionIsRequired": "La version de spécification est requise",
 		"Purpose is required": "Le but est requis",
-		"testDataIsRequired": "Les données de test sont requises"
+		"testDataIsRequired": "Les données de test sont requises",
+		"activeMqUrl": "Actif MQ URL:",
+		"requestQueueName": "Nom de la file d'attente des requêtes:",
+		"responseQueueName": "Nom de la file d'attente de réponses:",
+		"tableDescription": "Liste des collections"
 	},
 	"testRunHistory": {
 		"runDate": "Date d'exécution",
@@ -139,7 +149,8 @@
 		"success": "Succès",
 		"view": "Voir",
 		"delete": "Supprimer",
-		"back": "Retour"
+		"back": "Retour",
+		"tableDescription": "Détails de l'historique des tests"
 	},
 	"viewTestRun": {
 		"testRunDetailsAreNotAvailable": "Les détails de l'exécution du test ne sont pas disponibles",
@@ -154,7 +165,8 @@
 		"otherDetails": "Autres détails:",
 		"methodUrl": "URL de la méthode",
 		"testDataSource": "Tester la source de données",
-		"back": "retour"
+		"back": "retour",
+		"tableDescription": "Détails de l'exécution du test"
 	},
 	"addCollections": {
 		"collectionName": "Nom de la collection:",
@@ -166,7 +178,8 @@
 		"validators": "Validateurs",
 		"customClass": "Il n'y a pas de cas de test disponibles pour ce projet. Veuillez contacter l'administrateur.",
 		"back": "Dos",
-		"saveCollection": "Enregistrer la collection"
+		"saveCollection": "Enregistrer la collection",
+		"tableDescription": "Liste des cas de test"
 	},
 	"viewCollection": {
 		"collectionName": "Nom de la collection:",
@@ -175,7 +188,8 @@
 		"name": "Nom",
 		"description": "Description",
 		"validators": "Validateurs",
-		"back": "Dos"
+		"back": "Dos",
+		"tableDescription": "Détails des cas de test sélectionnés"
 	},
 	"scanDevice": {
 		"title": "Analyser l'appareil",
@@ -211,7 +225,8 @@
 		"testcasesForCollection": "cas de test pour la collecte",
 		"hasStarted": "a commencé.",
 		"currentTestcase": "Cas de test actuel :",
-		"abisRequestSent": "La demande a été envoyée à la file d'attente. En attente de réponse de la file d'attente. Si cela prend trop de temps, vous pouvez revenir après un certain temps.",
+		"abisInsertRequestSent": "La demande d'insertion a été envoyée à la file d'attente pour le fichier CBEFF {}. En attente de réponse de la file d'attente. Si cela prend trop de temps, vous pouvez revenir après un certain temps.",
+		"abisIdentifyRequestSent": "La demande d'identification a été envoyée à la file d'attente. En attente de réponse de la file d'attente. Si cela prend trop de temps, vous pouvez revenir après un certain temps.",
 		"abisResponseRecvd": "Traitement de la réponse reçue d'ABIS",
 		"abisRequestSentFail": "Impossible d'envoyer la demande à la file d'attente ABIS. Vérifiez l'URL, le nom d'utilisateur et les autres attributs, puis réessayez.",
 		"initiateCaptureMsg": "Cliquez sur le bouton Lancer la capture pour capturer les données biométriques de l'appareil.",
@@ -236,7 +251,8 @@
 		"unableToConnectSDK": "Impossible de se connecter aux services SDK",
 		"methodNotInvoked": "Méthode non invoquée car la requête n'est pas valide.",
 		"failure": "Échec",
-		"unableToGenerateRequest": "Impossible de générer une demande au service SDK : "
+		"unableToGenerateRequest": "Impossible de générer une demande au service SDK : ",
+		"executionFailed": "Échec de l'exécution"
 	},
 	"validators": {
 		"SchemaValidator": "Valide la réponse pour les attributs obligatoires et les valeurs correctes",
@@ -263,7 +279,10 @@
 		"SegmentNoInputDataValidator": "Valide si aucune donnée BDB d'entrée n'est présente dans la sonde",
 		"ConvertDataValidator": "Valide les données BDB d'entrée présentes dans la sonde",
 		"ConvertInvalidDataValidator": "Valide si les données BDB d'entrée présentes dans la sonde pour la modalité sont valides",
-		"ConvertNoInputDataValidator": "Valide si aucune donnée BDB d'entrée n'est présente dans la sonde"
+		"ConvertNoInputDataValidator": "Valide si aucune donnée BDB d'entrée n'est présente dans la sonde",
+		"ExpectedFailureReasonValidator": "Valide la raison de l'échec pour correspondre à la valeur attendue",
+		"IdentifyDuplicateFoundValidator": "Valide le nombre de doublons trouvés par ABIS pour le referenceId donné",
+		"ExpectedDuplicateCountValidator": "Valide les doublons trouvés pour correspondre à la valeur attendue"
 	},
 	"testcases": {
 		"SBI1000": {
@@ -1027,6 +1046,125 @@
 		"SDK2075": {
 			"testName": "Conversion d'iris sans échec d'entrée",
 			"testDescription": "Conversion d'iris sans échec d'entrée"
+		},
+		"ABIS3000": {
+			"testName": "Insérer les données biométriques d'une personne dans ABIS",
+			"testDescription": "Insérer les données biométriques d'une personne dans ABIS"
+		},
+		"ABIS3001": {
+			"testName": "Insérer les données biométriques de deux personnes dans ABIS",
+			"testDescription": "Insérer les données biométriques de deux personnes dans ABIS"
+		},
+		"ABIS3002": {
+			"testName": "Structure de demande d'insertion non valide",
+			"testDescription": "Demande d'insertion non valide - la structure json de la demande n'est pas valide"
+		},
+		"ABIS3003": {
+			"testName": "Demande d'insertion non valide - ID de référence manquant",
+			"testDescription": "Demande d'insertion non valide - ID de référence manquant"
+		},
+		"ABIS3004": {
+			"testName": "Demande d'insertion non valide - ID de demande manquant",
+			"testDescription": "Demande d'insertion non valide - ID de demande manquant"
+		},
+		"ABIS3005": {
+			"testName": "Impossible de récupérer les détails biométriques à l'aide de l'URL de référence",
+			"testDescription": "Impossible de récupérer les détails biométriques à l'aide de l'URL de référence"
+		},
+		"ABIS3006": {
+			"testName": "Demande d'insertion invalide - URL de référence invalide",
+			"testDescription": "Demande d'insertion invalide - URL de référence invalide"
+		},
+		"ABIS3007": {
+			"testName": "Demande d'insertion non valide - URL de référence manquante",
+			"testDescription": "Demande d'insertion non valide - URL de référence manquante"
+		},
+		"ABIS3008": {
+			"testName": "Demande d'insertion non valide : heure de la demande manquante",
+			"testDescription": "Demande d'insertion non valide : heure de la demande manquante"
+		},
+		"ABIS3009": {
+			"testName": "Demande d'insertion non valide - l'ID de référence existe déjà",
+			"testDescription": "Demande d'insertion non valide - l'ID de référence existe déjà"
+		},
+		"ABIS3010": {
+			"testName": "Demande d'insertion invalide - CBEFF n'a pas de données",
+			"testDescription": "Le CBEFF n'a pas de données/Pas de données biométriques disponibles pour la déduplication"
+		},
+		"ABIS3011": {
+			"testName": "Demande d'insertion invalide - version invalide",
+			"testDescription": "Demande d'insertion invalide - version invalide"
+		},
+		"ABIS3012": {
+			"testName": "Demande d'insertion non valide - ID non valide",
+			"testDescription": "Demande d'insertion non valide - ID non valide"
+		},
+		"ABIS3013": {
+			"testName": "Demande d'insertion non valide - format d'heure de demande non valide",
+			"testDescription": "Demande d'insertion non valide - format d'heure de demande non valide"
+		},
+		"ABIS3014": {
+			"testName": "Demande d'insertion non valide - format CBEFF non valide",
+			"testDescription": "Demande d'insertion non valide - format CBEFF non valide"
+		},
+		"ABIS3015": {
+			"testName": "Demande d'insertion non valide : l'URL de partage de données a expiré",
+			"testDescription": "Demande d'insertion non valide : l'URL de partage de données a expiré"
+		},
+		"ABIS3016": {
+			"testName": "Demande d'insertion invalide - données invalides",
+			"testDescription": "Demande d'insertion invalide - données invalides"
+		},
+		"ABIS3017": {
+			"testName": "Demande d'insertion non valide - Échec du déchiffrement des données CBEFF",
+			"testDescription": "Demande d'insertion non valide - Échec du déchiffrement des données CBEFF"
+		},
+		"ABIS3018": {
+			"testName": "Identifier - doublon trouvé pour le referenceId par rapport à la galerie",
+			"testDescription": "Insérez deux fois les mêmes données biométriques, puis testez si un doublon est trouvé pour le referenceId par rapport à la galerie"
+		},
+		"ABIS3019": {
+			"testName": "Structure de demande d'identification non valide",
+			"testDescription": "Demande d'identification invalide - la structure json de la demande n'est pas valide"
+		},
+		"ABIS3020": {
+			"testName": "Demande d'identification non valide - ID de référence manquant",
+			"testDescription": "Demande d'identification non valide - ID de référence manquant"
+		},
+		"ABIS3021": {
+			"testName": "Demande d'identification non valide - ID de demande manquant",
+			"testDescription": "Demande d'identification non valide - ID de demande manquant"
+		},
+		"ABIS3022": {
+			"testName": "Demande d'identification non valide : heure de la demande manquante",
+			"testDescription": "Demande d'identification non valide : heure de la demande manquante"
+		},
+		"ABIS3023": {
+			"testName": "Demande d'identification non valide - version non valide",
+			"testDescription": "Demande d'identification non valide - version non valide"
+		},
+		"ABIS3024": {
+			"testName": "Demande d'identification non valide - ID non valide",
+			"testDescription": "Demande d'identification non valide - ID non valide"
+		},
+		"ABIS3025": {
+			"testName": "Demande d'identification non valide - format d'heure de demande non valide",
+			"testDescription": "Demande d'identification non valide - format d'heure de demande non valide"
+		},"ABIS3026": {
+			"testName": "Identifier - doublon trouvé pour le referenceId (galerie ignorée). <b>Effacez le cache ABIS avant d'exécuter ce cas de test.</b>",
+			"testDescription": "Insérez deux fois les mêmes données biométriques, puis testez si un doublon est trouvé pour le referenceId, (galerie ignorée)"
+		},
+		"ABIS3027": {
+			"testName": "Identifier - doublon trouvé pour le referenceId par rapport à la galerie - fournir le sous-ensemble de referenceId (ID déjà insérés)",
+			"testDescription": "Insérez deux fois les mêmes données biométriques, puis testez si un doublon est trouvé pour le referenceId par rapport à la galerie - fournissez le sous-ensemble de referenceId (ID déjà insérés)"
+		},
+		"ABIS3028": {
+			"testName": "Identifier - doublon trouvé pour le referenceId par rapport à la galerie - mais les referenceId ne sont pas insérés.",
+			"testDescription": "Insérez la biométrie une fois, puis testez si un doublon est trouvé pour le referenceId par rapport à la galerie - mais les referenceId ne sont pas insérés."
+		},
+		"ABIS3029": {
+			"testName": "Identifier - doublon introuvable pour le referenceId contre la galerie",
+			"testDescription": "Identifier - doublon introuvable pour le referenceId contre la galerie"
 		}
 	},
 	"validatorMessages": {
@@ -1077,11 +1215,11 @@
 		"MATCH_NO_DATA_VALIDATOR_001": "Aucune donnée pour Match, code d'état attendu reçu : {}",
 		"MATCH_NO_DATA_VALIDATOR_002": "Aucune donnée pour Match, code d'état inattendu reçu : {}",
 		"QUALITY_CHECK_001": "Échec du contrôle qualité, modalité non valide : {}",
-		"QUALITY_CHECK_002": "Le contrôle de qualité positif pour est réussi",
+		"QUALITY_CHECK_002": "Le contrôle qualité négatif est réussi.",
 		"QUALITY_CHECK_003": "Échec du code d'état du contrôle qualité, reçu : {}",
-		"QUALITY_CHECK_004": "Le contrôle de qualité positif pour {} a réussi",
+		"QUALITY_CHECK_004": "Le contrôle de qualité positif pour {} a réussi. Note reçue : {}",
 		"QUALITY_CHECK_005": "Le contrôle de qualité positif pour {} a échoué. Le score est inférieur à la valeur seuil. Note reçue : {}",
-		"QUALITY_CHECK_006": "Le contrôle qualité négatif pour {} a réussi",
+		"QUALITY_CHECK_006": "Le contrôle qualité négatif pour {} a réussi. Note reçue : {}",
 		"QUALITY_CHECK_007": "Échec du contrôle qualité négatif pour {}. Le score est supérieur à la valeur seuil. Note reçue : {}",
 		"QUALITY_CHECK_INVALID_DATA_VALIDATOR_001": "Aucune donnée pour le contrôle qualité, code d'état attendu reçu : {}",
 		"QUALITY_CHECK_INVALID_DATA_VALIDATOR_002": "Aucune donnée pour le contrôle qualité, code d'état inattendu reçu : {}",
@@ -1103,6 +1241,7 @@
 		"BIOMETRIC_QUALITY_CHECK_001": "Les validations BiometricsQualityCheckValidator échouent.",
 		"BIOMETRIC_QUALITY_CHECK_002": "Les validations BiometricsQualityCheckValidator sont réussies.",
 		"BIOMETRIC_QUALITY_CHECK_003": "Impossible de se connecter",
+		"BIOMETRIC_QUALITY_CHECK_004": "Facultatif",
 		"ISO_VALIDATOR_001": "ISOStandardsValidator a échoué en raison des problèmes ci-dessous : bioType non valide = {}",
 		"ISO_VALIDATOR_002": "ISOStandardsValidator a échoué en raison des problèmes ci-dessous : isValidISOTemplate 'bioValue' is Empty or Null",
 		"ISO_VALIDATOR_003": "ISOStandardsValidator[ISO19794-4:2011] a échoué en raison des problèmes ci-dessous :",
@@ -1219,7 +1358,28 @@
 		"ISO_VALIDATOR_114": "<BR>Valeur de profondeur de bit d'image non valide pour la modalité de visage, valeurs attendues[0x01], mais valeur d'entrée reçue[{}]",
 		"ISO_VALIDATOR_115": "<BR>Longueur des données d'image non valide pour la modalité de visage, valeurs attendues entre [0x00000001 et 0xFFFFFFFF], mais valeur d'entrée reçue[{}]",
 		"ISO_VALIDATOR_116": "<BR>Données d'image non valides pour la modalité de visage, valeurs attendues[JPEG_2000_LOSSY(Auth), JPEG_2000_LOSS_LESS(Registration)]",
-		"ISO_VALIDATOR_117": "La validation des normes ISO est réussie"
+		"ISO_VALIDATOR_117": "La validation des normes ISO est réussie",
+		"EXPECTED_FAILURE_REASON_VALIDATOR_001": "Raison de l'échec attendu : {} validé avec succès.",
+		"EXPECTED_FAILURE_REASON_VALIDATOR_002": "La raison de l'échec attendue était : {}, mais reçue : {}",
+		"IDENTIFY_DUPLICATE_FOUND_VALIDATOR_001": "Identifier - trouvé {} doublon pour étant donné le referenceId.",
+		"IDENTIFY_DUPLICATE_FOUND_VALIDATOR_002": "Identifier - aucun doublon trouvé pour le referenceId donné.",
+		"DUPLICATE_NOT_FOUND_VALIDATOR_001": "Identifier - aucun doublon trouvé pour le referenceId donné.",
+		"DUPLICATE_NOT_FOUND_VALIDATOR_002": "Identifier - trouvé {} doublon pour étant donné le referenceId.",
+		"EXPECTED_DUPLICATE_COUNT_VALIDATOR_001": "Identifier - a trouvé le nombre de doublons attendu comme : {} pour l'identifiant de référence donné",
+		"EXPECTED_DUPLICATE_COUNT_VALIDATOR_002": "Identifier - n'a pas trouvé le nombre de doublons attendu. Le nombre de doublons attendu est : {}. Mais les doublons reçus comptent comme : {}",
+		"ISO_WARNING_001": "<br> Avertissements : ",
+		"ISO_WARNING_002": "<BR>Valeurs autorisées pour le taux de compression d'image non valide Jusqu'à 15:1 </span>",
+		"ISO_WARNING_003": "<BR>Valeurs autorisées du rapport hauteur/largeur de l'image jusqu'à 1:1 </span>",
+		"ISO_WARNING_004": "<BR>Valeurs autorisées pour l'espace colorimétrique de l'image non valide Jusqu'à GRAY [8 bits] </span>",
+		"ISO_WARNING_005": "<BR>Image non valide Résolution minimale entre 500 DPI et 1 000 DPI </span>",
+		"ISO_WARNING_006": "<BR>Taux de compression d'image invalide Valeurs autorisées Jusqu'à 15:1 pour Auth </span>",
+		"ISO_WARNING_007": "<BR>Valeurs autorisées du rapport hauteur/largeur de l'image jusqu'à 1:1 </span>",
+		"ISO_WARNING_008": "<BR>Valeurs autorisées pour l'espace colorimétrique de l'image non valide Jusqu'à GRAY [8 bits] </span>",
+		"ISO_WARNING_009": "<BR>Image non valide Résolution minimale entre 500 DPI et 1 000 DPI </span>",
+		"ISO_WARNING_010": "<BR>Taux de compression d'image invalide Valeurs autorisées Jusqu'à 15:1 pour Auth",
+		"ISO_WARNING_011": "<BR>Valeurs autorisées du rapport hauteur/largeur de l'image jusqu'à 1:1",
+		"ISO_WARNING_012": "<BR>Valeurs autorisées pour l'espace colorimétrique de l'image non valide Jusqu'à RVB [24 bits]",
+		"ISO_WARNING_013": "<BR>Image non valide Résolution minimale entre 500 DPI et 1 000 DPI"
 	},
 	"serviceErrors": {
 		"TOOLKIT_SUCCESS_000": "Succès",
@@ -1295,7 +1455,7 @@
 		"TOOLKIT_VALIDATION_ERR_003": "Échec de la validation de l'identifiant du partenaire",
 		"TOOLKIT_VALIDATION_ERR_004": "Nom de méthode non valide",
 		"TOOLKIT_TESTDATA_ERR_001": "Les données de test ont un mauvais objectif",
-		"TOOLKIT_TESTDATA_ERR_002": "Testdata a un fichier de galerie non valide",
+		"TOOLKIT_TESTDATA_ERR_002": "Testdata a un fichier de galerie non valide {} dans {}",
 		"TOOLKIT_TESTDATA_ERR_003": "Erreur de structure du dossier Testdata",
 		"TOOLKIT_TESTDATA_ERR_004": "Testdata a un dossier invalide",
 		"TOOLKIT_TESTDATA_ERR_005": "Le fichier de données de test n'est pas valide",
@@ -1304,11 +1464,10 @@
 		"TOOLKIT_ZIP_FILE_ERR_002": "La taille des données non compressées est trop importante pour la capacité des ressources de l'application.",
 		"TOOLKIT_ZIP_FILE_ERR_003": "Trop d'entrées dans cette archive peuvent conduire à l'épuisement des inodes du système.",
 		"ABIS_DATA_SHARE_URL_EXCEPTION_001": "Impossible de générer l'URL de partage de données",
-		"ABIS_QUEUE_EXCEPTION_002": "Impossible d'envoyer vers la file d'attente",
-		"ABIS_QUEUE_EXCEPTION_003": "Impossible de lire la file d'attente",
 		"TOOLKIT_ABIS_PROJECTS_001": "Aucun projet ABIS correspondant disponible pour l'identifiant donné",
 		"TOOLKIT_ABIS_PROJECTS_002": "Objectif ABIS invalide",
-		"TOOLKIT_ABIS_PROJECTS_003": "Invalid ABIS Spec Version",
+		"TOOLKIT_ABIS_PROJECTS_003": "Projet ABIS impossible d'ajouter",
+		"TOOLKIT_ABIS_PROJECTS_004": "URL ABIS invalide",
 		"TESTCASE_001": "Veuillez sélectionner au moins un cas de test.",
 		"ENCRYPTION_KEY_001": "Impossible d'obtenir la clé de chiffrement. Essayer à nouveau!",
 		"error": "Errorerreur"

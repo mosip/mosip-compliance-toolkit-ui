@@ -1,4 +1,4 @@
-import { Component, LOCALE_ID, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
@@ -17,6 +17,7 @@ import { SdkProjectModel } from 'src/app/core/models/sdk-project';
 import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
+import { AbisProjectModel } from 'src/app/core/models/abis-project';
 
 export interface CollectionsData {
   collectionId: string;
@@ -49,7 +50,7 @@ export class ViewProjectComponent implements OnInit {
   ];
   isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
   textDirection: any = this.userProfileService.getTextDirection();
-  buttonPosition: any = this.textDirection == 'rtl' ? { 'float': 'left' } : null;
+  buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : {'float': 'right'};
   isMobileButton: any = this.textDirection == 'rtl' ? true : false;
   isScanComplete =
     localStorage.getItem(appConstants.SBI_SCAN_COMPLETE) == 'true'
@@ -60,8 +61,7 @@ export class ViewProjectComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   dataLoaded = false;
-  updatingProjectUrl = false;
-  updatingProjectTestData = false;
+  updatingAttribute: string;
   panelOpenState = false;
   bioTestDataFileNames: string[] = [];
   resourceBundleJson: any = {};
@@ -79,11 +79,7 @@ export class ViewProjectComponent implements OnInit {
 
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
-    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
-      (response: any) => {
-        this.resourceBundleJson = response;
-      }
-    );
+    this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     await this.initProjectIdAndType();
     if (this.projectType == appConstants.SBI) {
       this.initSbiProjectForm();
@@ -174,7 +170,8 @@ export class ViewProjectComponent implements OnInit {
         new FormControl({
           value: '',
           disabled:
-            controlId == 'abisUrl' || controlId == 'abisBioTestData' ? false : true,
+            controlId == 'abisUrl' || controlId == 'username' || controlId == 'password' || controlId == 'outboundQueueName'
+            || controlId == 'inboundQueueName' || controlId == 'abisBioTestData' ? false : true,
         })
       );
     });
@@ -185,7 +182,6 @@ export class ViewProjectComponent implements OnInit {
       this.subscriptions.push(
         this.dataService.getBioTestDataNames(purpose).subscribe(
           (response: any) => {
-            //console.log(response);
             this.bioTestDataFileNames = response[appConstants.RESPONSE];
             resolve(true);
           },
@@ -203,7 +199,6 @@ export class ViewProjectComponent implements OnInit {
       this.subscriptions.push(
         this.dataService.getSbiProject(this.projectId).subscribe(
           (response: any) => {
-            //console.log(response);
             this.projectFormData = response['response'];
             resolve(true);
           },
@@ -221,7 +216,6 @@ export class ViewProjectComponent implements OnInit {
       this.subscriptions.push(
         this.dataService.getSdkProject(this.projectId).subscribe(
           (response: any) => {
-            //console.log(response);
             this.projectFormData = response['response'];
             resolve(true);
           },
@@ -239,7 +233,6 @@ export class ViewProjectComponent implements OnInit {
       this.subscriptions.push(
         this.dataService.getAbisProject(this.projectId).subscribe(
           (response: any) => {
-            //console.log(response);
             this.projectFormData = response['response'];
             resolve(true);
           },
@@ -313,7 +306,6 @@ export class ViewProjectComponent implements OnInit {
           .getCollections(this.projectId, this.projectType)
           .subscribe(
             (response: any) => {
-              //console.log(response);
               this.dataSource = new MatTableDataSource(
                 response[appConstants.RESPONSE]['collections']
               );
@@ -332,11 +324,11 @@ export class ViewProjectComponent implements OnInit {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
-  showDashboard() {
+  async showDashboard() {
     if (this.authService.isAuthenticated()) {
-      this.router.navigate([`toolkit/dashboard`]);
+      await this.router.navigate([`toolkit/dashboard`]);
     } else {
-      this.router.navigate([``]);
+      await this.router.navigate([``]);
     }
   }
 
@@ -344,14 +336,14 @@ export class ViewProjectComponent implements OnInit {
     await this.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value);
   }
 
-  addCollection() {
-    this.router.navigate([
+  async addCollection() {
+    await this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}/collection/add`,
     ]);
   }
 
-  viewCollection(collection: any) {
-    this.router.navigate([
+  async viewCollection(collection: any) {
+    await this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}/collection/${collection.collectionId}`,
     ]);
   }
@@ -384,7 +376,7 @@ export class ViewProjectComponent implements OnInit {
     };
     this.dialog
       .open(ExecuteTestRunComponent, {
-        width: '1000px',
+        width: '800px',
         data: body,
       })
       .afterClosed()
@@ -399,24 +391,16 @@ export class ViewProjectComponent implements OnInit {
 
   }
 
-  viewTestRun(row: any) {
-    this.router.navigate([
+  async viewTestRun(row: any) {
+    await this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}/collection/${row.collectionId}/testrun/${row.runId}`,
     ]);
   }
 
-  viewTestRunsHistory(row: any) {
-    this.router.navigate([
+  async viewTestRunsHistory(row: any) {
+    await this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}/collection/${row.collectionId}/testrunhistory`,
     ]);
-  }
-
-  async updateProjectUrl() {
-    await this.updateProject('sdkUrl');
-  }
-
-  async updateProjectTestData() {
-    await this.updateProject('bioTestData');
   }
 
   async updateProject(attributeName: string) {
@@ -452,14 +436,32 @@ export class ViewProjectComponent implements OnInit {
           requesttime: new Date().toISOString(),
           request: projectData,
         };
-        if (attributeName == 'sdkUrl') {
-          this.updatingProjectUrl = true;
-        }
-        if (attributeName == 'bioTestData') {
-          this.updatingProjectTestData = true;
-        }
+        this.updatingAttribute = attributeName;
         await this.updateSdkProject(request, attributeName);
       }
+      if (projectType == appConstants.ABIS) {
+        const projectData: AbisProjectModel = {
+          id: this.projectFormData.id,
+          name: this.projectForm.controls['name'].value,
+          projectType: this.projectForm.controls['projectType'].value,
+          abisVersion: this.projectForm.controls['abisSpecVersion'].value,
+          url: this.projectForm.controls['abisUrl'].value,
+          username: this.projectForm.controls['username'].value,
+          password: this.projectForm.controls['password'].value,
+          outboundQueueName: this.projectForm.controls['outboundQueueName'].value,
+          inboundQueueName: this.projectForm.controls['inboundQueueName'].value,
+          bioTestDataFileName: this.projectForm.controls['abisBioTestData'].value,
+        };
+        let request = {
+          id: appConstants.ABIS_PROJECT_UPDATE_ID,
+          version: appConstants.VERSION,
+          requesttime: new Date().toISOString(),
+          request: projectData,
+        };
+        this.updatingAttribute = attributeName;
+        await this.updateAbisProject(request, attributeName);
+      }
+      this.updatingAttribute = '';
     }
   }
 
@@ -501,39 +503,45 @@ export class ViewProjectComponent implements OnInit {
         this.dataService.updateSdkProject(request).subscribe(
           (response: any) => {
             console.log(response);
-            if (response.errors && response.errors.length > 0) {
-              if (attributeName == 'sdkUrl') {
-                this.updatingProjectUrl = false;
-              }
-              if (attributeName == 'bioTestData') {
-                this.updatingProjectTestData = false;
-              }
-              this.updatingProjectUrl = false;
-              resolve(true);
-              Utils.showErrorMessage(this.resourceBundleJson, response.errors, this.dialog);
-            } else {
-              if (attributeName == 'sdkUrl') {
-                this.updatingProjectUrl = false;
-              }
-              if (attributeName == 'bioTestData') {
-                this.updatingProjectTestData = false;
-              }
-              this.panelOpenState = true;
-              resolve(true);
-            }
+            resolve(this.getProjectResponse(response));
           },
           (errors) => {
-            if (attributeName == 'sdkUrl') {
-              this.updatingProjectUrl = false;
-            }
-            if (attributeName == 'bioTestData') {
-              this.updatingProjectTestData = false;
-            }
+            this.updatingAttribute = '';
             Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
             resolve(false);
           }
         )
       );
     });
+  }
+
+  async updateAbisProject(request: any, attributeName: string) {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.updateAbisProject(request).subscribe(
+          (response: any) => {
+            console.log(response);
+            resolve(this.getProjectResponse(response));
+          },
+          (errors) => {
+            this.updatingAttribute = '';
+            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
+            resolve(false);
+          }
+        )
+      );
+    });
+  }
+
+  getProjectResponse(response: any){
+    if (response.errors && response.errors.length > 0) {
+      this.updatingAttribute = '';
+      Utils.showErrorMessage(this.resourceBundleJson, response.errors, this.dialog);
+      return true;
+    } else {
+      this.updatingAttribute = '';
+      this.panelOpenState = true;
+      return true;
+    }
   }
 }

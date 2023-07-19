@@ -2,11 +2,10 @@ import { OnInit, Component, ViewChild } from '@angular/core';
 import { TranslateService } from "@ngx-translate/core";
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort, MatSortable } from '@angular/material/sort';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router} from '@angular/router';
 import { DataService } from 'src/app/core/services/data-service';
 import { Subscription } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import * as appConstants from 'src/app/app.constants';
 import Utils from 'src/app/app.utils';
@@ -63,17 +62,13 @@ export class ProjectsDashboardComponent implements OnInit {
 
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
-    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
-      (response: any) => {
-        this.resourceBundleJson = response;
-        this.paginatorIntl.itemsPerPageLabel = this.resourceBundleJson.paginationLabel['itemPerPage'];
-        this.paginatorIntl.getRangeLabel = (page: number, pageSize: number, length: number) => {
-          const from = (page) * pageSize + 1;
-          const to = Math.min((page + 1) * pageSize, length);
-          return `${from} - ${to} ${this.resourceBundleJson.paginationLabel['rangeLabel']} ${length}`;
-        };
-      }
-    );
+    this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
+    this.paginatorIntl.itemsPerPageLabel = this.resourceBundleJson.paginationLabel['itemPerPage'];
+    this.paginatorIntl.getRangeLabel = (page: number, pageSize: number, length: number) => {
+      const from = (page) * pageSize + 1;
+      const to = Math.min((page + 1) * pageSize, length);
+      return `${from} - ${to} ${this.resourceBundleJson.paginationLabel['rangeLabel']} ${length}`;
+    };
     await this.getProjects();
     this.initBreadCrumb();
     this.dataLoaded = true;
@@ -90,7 +85,7 @@ export class ProjectsDashboardComponent implements OnInit {
     }
   }
 
-  async getProjects() {
+  async getProjects(): Promise<boolean> {
     let projectType = "";
     if (this.isAndroidAppMode) {
       projectType = appConstants.SBI;
@@ -98,26 +93,28 @@ export class ProjectsDashboardComponent implements OnInit {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
         this.dataService.getProjects(projectType).subscribe(
-          async (response: any) => {
-            console.log(response);
-            let dataArr = response['response']['projects'];
-            let tableData = [];
-            for (let row of dataArr) {
-              if (row.lastRunId) {
-                let runStatus = await this.getTestRunStatus(row.lastRunId);
-                tableData.push({
-                  ...row,
-                  lastRunStatus: runStatus,
-                });
-              } else {
-                tableData.push({
-                  ...row,
-                  lastRunStatus: '',
-                });
-              }
-            }
-            this.dataSource = new MatTableDataSource(tableData);
-            resolve(true);
+          (response: any) => {
+            (async () => {
+                console.log(response);
+                let dataArr = response['response']['projects'];
+                let tableData = [];
+                for (let row of dataArr) {
+                  if (row.lastRunId) {
+                    let runStatus = await this.getTestRunStatus(row.lastRunId);
+                    tableData.push({
+                      ...row,
+                      lastRunStatus: runStatus,
+                    });
+                  } else {
+                    tableData.push({
+                      ...row,
+                      lastRunStatus: '',
+                    });
+                  }
+                }
+                this.dataSource = new MatTableDataSource(tableData);
+                resolve(true);
+              })().catch((error) => reject(error));
           },
           (errors) => {
             Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
@@ -143,26 +140,25 @@ export class ProjectsDashboardComponent implements OnInit {
       );
     });
   }
-  ngAfterViewInit() {}
 
-  addProject() {
-    this.router.navigate([`toolkit/project/add`]);
+  async addProject() {
+    await this.router.navigate([`toolkit/project/add`]);
   }
 
-  viewProject(project: any) {
+  async viewProject(project: any) {
     if (this.isAndroidAppMode) {
       localStorage.removeItem(appConstants.SBI_SELECTED_PORT);
       localStorage.removeItem(appConstants.SBI_SELECTED_DEVICE);
       localStorage.removeItem(appConstants.SBI_SCAN_DATA);
       localStorage.removeItem(appConstants.SBI_SCAN_COMPLETE);
     }
-    this.router.navigate([
+    await this.router.navigate([
       `toolkit/project/${project.projectType}/${project.id}`,
     ]);
   }
   
-  showBiometricDashboard() {
-    this.router.navigate([`toolkit/dashboard/biometric`]);
+  async showBiometricDashboard() {
+    await this.router.navigate([`toolkit/dashboard/biometric`]);
   }
 
   deleteProject(project: any) {

@@ -7,6 +7,7 @@ import { SbiDiscoverResponseModel } from '../models/sbi-discover';
 import Utils from 'src/app/app.utils';
 import { MosipSbiCapacitorPlugin } from 'mosip-sbi-capacitor-plugin';
 import { UserProfileService } from './user-profile.service';
+import { error } from 'console';
 
 @Injectable({
   providedIn: 'root',
@@ -26,78 +27,73 @@ export class SbiTestCaseAndroidService {
     sbiSelectedDevice: string,
     beforeKeyRotationResp: any
   ) {
-    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
-      (response: any) => {
-        this.resourceBundleJson = response;
-      }
+    this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
+    const methodRequest = this.createRequest(testCase, sbiSelectedDevice);
+    let startExecutionTime = new Date().toISOString();
+    let executeResponse: any = await this.executeMethod(
+      testCase,
+      sbiDeviceType,
+      callbackId,
+      JSON.stringify(methodRequest)
     );
-    return new Promise(async (resolve, reject) => {
-      const methodRequest = this.createRequest(testCase, sbiSelectedDevice);
-      let startExecutionTime = new Date().toISOString();
-      let executeResponse: any = await this.executeMethod(
-        testCase,
-        sbiDeviceType,
-        callbackId,
-        JSON.stringify(methodRequest)
+    console.log('executeResponse');
+    console.log(executeResponse);
+    let endExecutionTime = new Date().toISOString();
+    if (executeResponse) {
+      const decodedMethodResp = this.createDecodedResponse(
+        testCase.methodName[0],
+        executeResponse.methodResponse,
+        sbiSelectedDevice
       );
-      console.log('executeResponse');
-      console.log(executeResponse);
-      let endExecutionTime = new Date().toISOString();
-      if (executeResponse) {
-        const decodedMethodResp = this.createDecodedResponse(
-          testCase.methodName[0],
-          executeResponse.methodResponse,
-          sbiSelectedDevice
-        );
-        let performValidations = true;
-        if (
-          testCase.otherAttributes.keyRotationTestCase &&
-          !beforeKeyRotationResp
-        ) {
-          performValidations = false;
-        }
-        if (
-          testCase.otherAttributes.keyRotationTestCase &&
-          beforeKeyRotationResp
-        ) {
-          performValidations = true;
-        }
-        //now validate the method response against all the validators
-        let validationResponse: any = {};
-        if (performValidations) {
-          validationResponse = await this.validateResponse(
-            testCase,
-            methodRequest,
-            decodedMethodResp,
-            sbiSelectedDevice,
-            startExecutionTime,
-            endExecutionTime,
-            beforeKeyRotationResp
-          );
-        }
-        let finalResponse = {
-          methodResponse: JSON.stringify(decodedMethodResp),
-          methodRequest: JSON.stringify(methodRequest),
-          validationResponse: validationResponse,
-          methodUrl: executeResponse.methodUrl,
-          testDataSource: '',
-        };
-        resolve(finalResponse);
-      } else {
-        resolve({
-          errors: [
-            {
-              errorCode: this.resourceBundleJson.executeTestRun['connectionFailure']
-                ? this.resourceBundleJson.executeTestRun['connectionFailure']
-                : 'Connection Failure',
-              message: this.resourceBundleJson.executeTestRun['unableToConnectSBI']
-                ? this.resourceBundleJson.executeTestRun['unableToConnectSBI']
-                : 'Unable to connect to device / SBI',
-            },
-          ],
-        });
+      let performValidations = true;
+      if (
+        testCase.otherAttributes.keyRotationTestCase &&
+        !beforeKeyRotationResp
+      ) {
+        performValidations = false;
       }
-    });
+      if (
+        testCase.otherAttributes.keyRotationTestCase &&
+        beforeKeyRotationResp
+      ) {
+        performValidations = true;
+      }
+      //now validate the method response against all the validators
+      let validationResponse: any = {};
+      if (performValidations) {
+        validationResponse = await this.validateResponse(
+          testCase,
+          methodRequest,
+          decodedMethodResp,
+          sbiSelectedDevice,
+          startExecutionTime,
+          endExecutionTime,
+          beforeKeyRotationResp
+        );
+      }
+      const finalResponse = {
+        methodResponse: JSON.stringify(decodedMethodResp),
+        methodRequest: JSON.stringify(methodRequest),
+        validationResponse: validationResponse,
+        methodUrl: executeResponse.methodUrl,
+        testDataSource: '',
+      };
+      return finalResponse;
+    } else {
+      const finalResponse = {
+        errors: [
+          {
+            errorCode: this.resourceBundleJson.executeTestRun['connectionFailure']
+              ? this.resourceBundleJson.executeTestRun['connectionFailure']
+              : 'Connection Failure',
+            message: this.resourceBundleJson.executeTestRun['unableToConnectSBI']
+              ? this.resourceBundleJson.executeTestRun['unableToConnectSBI']
+              : 'Unable to connect to device / SBI',
+          },
+        ],
+      };
+      return finalResponse;
+    }
   }
 
   async executeMethod(
@@ -112,17 +108,20 @@ export class SbiTestCaseAndroidService {
       let executeResponse = await this.callSBIMethodAndroid(appConstants.SBI_METHOD_DISCOVER, sbiDeviceType, callbackId, methodRequestStr);
       return executeResponse;
     }
-    if (methodName == appConstants.SBI_METHOD_DEVICE_INFO) {
+    else if (methodName == appConstants.SBI_METHOD_DEVICE_INFO) {
       let executeResponse = await this.callSBIMethodAndroid(appConstants.SBI_METHOD_DEVICE_INFO, sbiDeviceType, callbackId, methodRequestStr);
       return executeResponse;
     }
-    if (methodName == appConstants.SBI_METHOD_CAPTURE) {
+    else if (methodName == appConstants.SBI_METHOD_CAPTURE) {
       let executeResponse = await this.callSBIMethodAndroid(appConstants.SBI_METHOD_CAPTURE, sbiDeviceType, callbackId, methodRequestStr);
       return executeResponse;
     }
-    if (methodName == appConstants.SBI_METHOD_RCAPTURE) {
+    else if (methodName == appConstants.SBI_METHOD_RCAPTURE) {
       let executeResponse = await this.callSBIMethodAndroid(appConstants.SBI_METHOD_RCAPTURE, sbiDeviceType, callbackId, methodRequestStr);
       return executeResponse;
+    }
+    else {
+      return null;
     }
   }
 
@@ -162,7 +161,7 @@ export class SbiTestCaseAndroidService {
               } else {
                 resolve(false);
               }
-            });
+            }).catch((error) => { reject(error) });
           }
           if (testcaseMethodName == appConstants.SBI_METHOD_RCAPTURE) {
             MosipSbiCapacitorPlugin.startActivity({
@@ -182,7 +181,7 @@ export class SbiTestCaseAndroidService {
               } else {
                 resolve(false);
               }
-            });
+            }).catch((error) => { reject(error) });
           }
           if (testcaseMethodName == appConstants.SBI_METHOD_CAPTURE) {
             MosipSbiCapacitorPlugin.startActivity({
@@ -202,7 +201,7 @@ export class SbiTestCaseAndroidService {
               } else {
                 resolve(false);
               }
-            });
+            }).catch((error) => { reject(error) });
           }
         } else {
           resolve(false);
@@ -218,7 +217,7 @@ export class SbiTestCaseAndroidService {
   createRequest(testCase: TestCaseModel, sbiSelectedDevice: string): any {
     const selectedSbiDevice: SbiDiscoverResponseModel =
       JSON.parse(sbiSelectedDevice);
-      let request: any = {};
+    let request: any = {};
     if (testCase.methodName[0] == appConstants.SBI_METHOD_DISCOVER) {
       //will be taken from "sbiDeviceType"
     }
@@ -270,55 +269,8 @@ export class SbiTestCaseAndroidService {
         ],
         //customOpts: null,
       };
-      if (testCase.otherAttributes.invalidRequestAttribute) {
-        let newRequest: any = {};
-        let invalidKey = testCase.otherAttributes.invalidRequestAttribute;
-        if (
-          invalidKey.includes('[') &&
-          invalidKey.includes(']') &&
-          invalidKey.includes('.')
-        ) {
-          newRequest = request;
-          let splitArr = invalidKey.split('[');
-          if (splitArr.length > 0) {
-            let firstPart = splitArr[0];
-            let nestedObj = request[firstPart][0];
-            let secondSplitArr = invalidKey.split('.');
-            let newNestedRequest = changeKeyName(nestedObj, secondSplitArr[1]);
-            newRequest[firstPart] = [newNestedRequest];
-          }
-        } else if (invalidKey.includes('.')) {
-          newRequest = request;
-          let splitArr = invalidKey.split('.');
-          if (splitArr.length > 0) {
-            let nestedObj = request[splitArr[0]];
-            let newNestedRequest = changeKeyName(nestedObj, splitArr[1]);
-            newRequest[splitArr[0]] = newNestedRequest;
-          }
-        } else {
-          newRequest = changeKeyName(request, invalidKey);
-        }
-
-        function changeKeyName(request: any, invalidKeyName: any) {
-          let newRequest: any = {};
-          var keys = Object.keys(request);
-          for (const key of keys) {
-            const keyName = key.toString();
-            console.log(keyName);
-            if (invalidKeyName === keyName) {
-              const invalidKeyName = keyName + 'XXX';
-              newRequest[invalidKeyName] = request[keyName];
-            } else {
-              const val = request[keyName];
-              newRequest[keyName] = val;
-            }
-          }
-          return newRequest;
-        }
-        request = newRequest;
-      }
+      request = Utils.handleInvalidRequestAttribute(testCase, request);
     }
-    //console.log(JSON.stringify(request));
     return request;
   }
 
@@ -485,38 +437,37 @@ export class SbiTestCaseAndroidService {
   ) {
     const selectedSbiDevice: SbiDiscoverResponseModel =
       JSON.parse(sbiSelectedDevice);
+    let validateRequest = {
+      testCaseType: testCase.testCaseType,
+      testName: testCase.testName,
+      specVersion: testCase.specVersion,
+      testDescription: testCase.testDescription,
+      responseSchema: testCase.responseSchema[0],
+      isNegativeTestcase: testCase.isNegativeTestcase
+        ? testCase.isNegativeTestcase
+        : false,
+      methodResponse: JSON.stringify(methodResponse),
+      methodRequest: JSON.stringify(methodRequest),
+      methodName: testCase.methodName[0],
+      extraInfoJson: JSON.stringify({
+        certificationType: selectedSbiDevice.certification,
+        startExecutionTime: startExecutionTime,
+        endExecutionTime: endExecutionTime,
+        timeout: this.getTimeout(testCase),
+        beforeKeyRotationResp: beforeKeyRotationResp
+          ? beforeKeyRotationResp
+          : null,
+        modality: testCase.otherAttributes.biometricTypes[0],
+      }),
+      validatorDefs: testCase.validatorDefs[0],
+    };
+    let request = {
+      id: appConstants.VALIDATIONS_ADD_ID,
+      version: appConstants.VERSION,
+      requesttime: new Date().toISOString(),
+      request: validateRequest,
+    };
     return new Promise((resolve, reject) => {
-      //console.log('validateResponse called');
-      let validateRequest = {
-        testCaseType: testCase.testCaseType,
-        testName: testCase.testName,
-        specVersion: testCase.specVersion,
-        testDescription: testCase.testDescription,
-        responseSchema: testCase.responseSchema[0],
-        isNegativeTestcase: testCase.isNegativeTestcase
-          ? testCase.isNegativeTestcase
-          : false,
-        methodResponse: JSON.stringify(methodResponse),
-        methodRequest: JSON.stringify(methodRequest),
-        methodName: testCase.methodName[0],
-        extraInfoJson: JSON.stringify({
-          certificationType: selectedSbiDevice.certification,
-          startExecutionTime: startExecutionTime,
-          endExecutionTime: endExecutionTime,
-          timeout: this.getTimeout(testCase),
-          beforeKeyRotationResp: beforeKeyRotationResp
-            ? beforeKeyRotationResp
-            : null,
-          modality: testCase.otherAttributes.biometricTypes[0],
-        }),
-        validatorDefs: testCase.validatorDefs[0],
-      };
-      let request = {
-        id: appConstants.VALIDATIONS_ADD_ID,
-        version: appConstants.VERSION,
-        requesttime: new Date().toISOString(),
-        request: validateRequest,
-      };
       this.dataService.validateResponse(request).subscribe(
         (response) => {
           resolve(response);
@@ -529,21 +480,21 @@ export class SbiTestCaseAndroidService {
   }
 
   async validateRequest(testCase: TestCaseModel, methodRequest: any) {
+    let validateRequest = {
+      testCaseType: testCase.testCaseType,
+      testName: testCase.testName,
+      specVersion: testCase.specVersion,
+      testDescription: testCase.testDescription,
+      requestSchema: testCase.requestSchema[0],
+      methodRequest: JSON.stringify(methodRequest),
+    };
+    let request = {
+      id: appConstants.VALIDATIONS_ADD_ID,
+      version: appConstants.VERSION,
+      requesttime: new Date().toISOString(),
+      request: validateRequest,
+    };
     return new Promise((resolve, reject) => {
-      let validateRequest = {
-        testCaseType: testCase.testCaseType,
-        testName: testCase.testName,
-        specVersion: testCase.specVersion,
-        testDescription: testCase.testDescription,
-        requestSchema: testCase.requestSchema[0],
-        methodRequest: JSON.stringify(methodRequest),
-      };
-      let request = {
-        id: appConstants.VALIDATIONS_ADD_ID,
-        version: appConstants.VERSION,
-        requesttime: new Date().toISOString(),
-        request: validateRequest,
-      };
       this.dataService.validateRequest(request).subscribe(
         (response) => {
           resolve(response);

@@ -15,6 +15,7 @@ import Utils from 'src/app/app.utils';
 import { SdkProjectModel } from 'src/app/core/models/sdk-project';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { TranslateService } from '@ngx-translate/core';
+import { AbisProjectModel } from 'src/app/core/models/abis-project';
 
 @Component({
   selector: 'app-viewcollections',
@@ -31,6 +32,7 @@ export class ViewCollectionsComponent implements OnInit {
   dataLoaded = false;
   sbiProjectData: SbiProjectModel;
   sdkProjectData: SdkProjectModel;
+  abisProjectData: AbisProjectModel;
   dataSource: MatTableDataSource<TestCaseModel>;
   displayedColumns: string[] = [
     'testId',
@@ -57,11 +59,7 @@ export class ViewCollectionsComponent implements OnInit {
 
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
-    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
-      (response: any) => {
-        this.resourceBundleJson = response;
-      }
-    );
+    this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     this.initForm();
     await this.initAllParams();
     await this.getCollection();
@@ -72,6 +70,10 @@ export class ViewCollectionsComponent implements OnInit {
     }
     if (this.projectType == appConstants.SDK) {
       await this.getSdkProjectDetails();
+      this.initBreadCrumb();
+    }
+    if (this.projectType == appConstants.ABIS) {
+      await this.getAbisProjectDetails();
       this.initBreadCrumb();
     }
     await this.getTestcasesForCollection();
@@ -88,21 +90,25 @@ export class ViewCollectionsComponent implements OnInit {
           '@projectBreadCrumb',
           `${this.projectType} ${breadcrumbLabels.project} - ${this.sbiProjectData.name}`
         );
-        this.breadcrumbService.set(
-          '@collectionBreadCrumb',
-          `${this.collectionName}`
-        );
       }
       if (this.sdkProjectData) {
         this.breadcrumbService.set(
           '@projectBreadCrumb',
           `${this.projectType} ${breadcrumbLabels.project} - ${this.sdkProjectData.name}`
         );
+       
+      }
+      if (this.abisProjectData) {
         this.breadcrumbService.set(
-          '@collectionBreadCrumb',
-          `${this.collectionName}`
+          '@projectBreadCrumb',
+          `${this.projectType} ${breadcrumbLabels.project} - ${this.abisProjectData.name}`
         );
       }
+      this.breadcrumbService.set(
+        '@collectionBreadCrumb',
+        `${this.collectionName}`
+      );
+
     }
   }
 
@@ -168,8 +174,24 @@ export class ViewCollectionsComponent implements OnInit {
       this.subscriptions.push(
         this.dataService.getSdkProject(this.projectId).subscribe(
           (response: any) => {
-            //console.log(response);
             this.sdkProjectData = response['response'];
+            resolve(true);
+          },
+          (errors) => {
+            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
+            resolve(false);
+          }
+        )
+      );
+    });
+  }
+
+  async getAbisProjectDetails() {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.getAbisProject(this.projectId).subscribe(
+          (response: any) => {
+            this.abisProjectData = response['response'];
             resolve(true);
           },
           (errors) => {
@@ -186,13 +208,11 @@ export class ViewCollectionsComponent implements OnInit {
       this.subscriptions.push(
         this.dataService.getTestcasesForCollection(this.collectionId).subscribe(
           (response: any) => {
-            //console.log(response);
             let testcases = response['response']['testcases'];
             let testcaseArr = [];
             for (let testcase of testcases) {
               testcaseArr.push(Utils.translateTestcase(testcase,this.resourceBundleJson));
             }
-            //console.log(testcaseArr);
             //sort the testcases based on the testId
             if (testcaseArr && testcaseArr.length > 0) {
               testcaseArr.sort(function (a: TestCaseModel, b: TestCaseModel) {
@@ -212,8 +232,8 @@ export class ViewCollectionsComponent implements OnInit {
       );
     });
   }
-  backToProject() {
-    this.router.navigate([
+  async backToProject() {
+    await this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}`,
     ]);
   }

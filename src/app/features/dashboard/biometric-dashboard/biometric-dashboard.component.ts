@@ -1,13 +1,11 @@
 import { OnInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortable } from '@angular/material/sort';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router} from '@angular/router';
 import { DataService } from 'src/app/core/services/data-service';
 import { Subscription } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import * as appConstants from 'src/app/app.constants';
 import Utils from 'src/app/app.utils';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { BreadcrumbService } from 'xng-breadcrumb';
@@ -58,11 +56,7 @@ export class BiometricDashboardComponent implements OnInit {
 
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
-    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
-      (response: any) => {
-        this.resourceBundleJson = response;
-      }
-    );
+    this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     await this.getListOfBiometricTestData();
     this.initBreadCrumb();
     this.dataSource.paginator = this.paginator;
@@ -82,11 +76,11 @@ export class BiometricDashboardComponent implements OnInit {
     }
   }
   
-  async getListOfBiometricTestData() {
+  async getListOfBiometricTestData(): Promise<boolean> {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
         this.dataService.getListOfBiometricTestData().subscribe(
-          async (response: any) => {
+          (response: any) => {
             console.log(response);
             let dataArr = response['response'];
             this.dataSource = new MatTableDataSource(dataArr);
@@ -101,8 +95,8 @@ export class BiometricDashboardComponent implements OnInit {
     });
   }
 
-  addTestData() {
-    this.router.navigate([`toolkit/biometrics/add`]);
+  async addTestData() {
+    await this.router.navigate([`toolkit/biometrics/add`]);
   }
 
   downloadTestDataFile(row: any) {
@@ -130,8 +124,8 @@ export class BiometricDashboardComponent implements OnInit {
     this.subscriptions.push(subs);
   }
 
-  showProjectsDashboard() {
-    this.router.navigate([`toolkit/dashboard`]);
+  async showProjectsDashboard() {
+    await this.router.navigate([`toolkit/dashboard`]);
   }
 
   applyFilter(event: Event) {

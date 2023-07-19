@@ -3,7 +3,9 @@ export const AUTH_ERROR_CODE = ['KER-ATH-007', 'KER-ATH-006'];
 //service request id's
 export const SBI_PROJECT_ADD_ID = 'mosip.toolkit.sbi.project.add';
 export const SDK_PROJECT_ADD_ID = 'mosip.toolkit.sdk.project.add';
+export const ABIS_PROJECT_ADD_ID = 'mosip.toolkit.abis.project.add';
 export const SDK_PROJECT_UPDATE_ID = 'mosip.toolkit.sdk.project.update';
+export const ABIS_PROJECT_UPDATE_ID = 'mosip.toolkit.abis.project.update';
 export const VALIDATIONS_ADD_ID = 'mosip.toolkit.api.id.validations';
 export const GENERATE_SDK_REQUEST_ID = 'mosip.toolkit.api.id.generate.sdk.request';
 export const COLLECTION_ADD_ID = 'mosip.toolkit.collection.add';
@@ -19,8 +21,6 @@ export const ABIS_READ_FROM_QUEUE = 'mosip.toolkit.abis.read';
 export const ABIS_INSERT_ID = "mosip.abis.insert";
 export const ABIS_IDENTIFY_ID = "mosip.abis.identify";
 export const ABIS_VERSION = "1.1";
-export const ABIS_INSERT = "insert";
-export const ABIS_IDENTIFY = "identify";
 
 export const VERSION = '1.0';
 
@@ -65,7 +65,7 @@ export const SBI_METHOD_STREAM = 'stream';
 export const SBI_METHOD_STREAM_KEY = 'STREAM';
 export const DEVELOPER = 'Developer';
 export const ABIS_METHOD_INSERT = 'insert';
-export const ABIS_METHOS_IDENTIFY = 'identify';
+export const ABIS_METHOD_IDENTIFY = 'identify';
 
 //localStorage keys
 export const SBI_SCAN_COMPLETE = 'sbiScanComplete';

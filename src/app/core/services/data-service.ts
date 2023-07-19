@@ -6,6 +6,7 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { AppConfigService } from '../../app-config.service';
+import { catchError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -38,6 +39,11 @@ export class DataService {
     return this.httpClient.post(url, body);
   }
 
+  addAbisProject(body: any) {
+    let url = `${this.SERVICES_BASE_URL}addAbisProject`;
+    return this.httpClient.post(url, body);
+  }
+
   getSbiProject(projectId: string) {
     let url = `${this.SERVICES_BASE_URL}getSbiProject/${projectId}`;
     return this.httpClient.get(url);
@@ -56,6 +62,11 @@ export class DataService {
 
   updateSdkProject(body: any) {
     let url = `${this.SERVICES_BASE_URL}updateSdkProject`;
+    return this.httpClient.put(url, body);
+  }
+
+  updateAbisProject(body: any) {
+    let url = `${this.SERVICES_BASE_URL}updateAbisProject`;
     return this.httpClient.put(url, body);
   }
 
@@ -223,8 +234,8 @@ export class DataService {
     return this.httpClient.get(url);
   }
 
-  getDataShareUrl(body: any) {
-    let url = `${this.SERVICES_BASE_URL}getDataShareUrl`;
+  createDataShareUrl(body: any) {
+    let url = `${this.SERVICES_BASE_URL}createDataShareUrl`;
      return this.httpClient.post(url, body);
   }
   
@@ -234,6 +245,15 @@ export class DataService {
   }
 
   getResourceBundle(langCode: string) {
-    return this.httpClient.get(`./assets/i18n/${langCode}.json`);
+    return this.httpClient.get(`./assets/i18n/${langCode}.json`).pipe(
+      catchError(() => {
+        return this.httpClient.get('./assets/i18n/eng.json');
+      })
+    );
+  }
+
+  expireDataShareUrl(body: any) {
+    let url = `${this.SERVICES_BASE_URL}expireDataShareUrl`;
+    return this.httpClient.post(url, body);
   }
 }

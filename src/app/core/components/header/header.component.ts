@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { AppConfigService } from 'src/app/app-config.service';
 import { UserProfileService } from '../../services/user-profile.service';
@@ -10,8 +10,8 @@ import { MatDialog } from '@angular/material/dialog';
 import Utils from 'src/app/app.utils';
 import { environment } from 'src/environments/environment';
 import { App } from '@capacitor/app';
-import { HttpClient } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
+import { error } from 'console';
 
 @Component({
   selector: 'app-header',
@@ -38,7 +38,6 @@ export class HeaderComponent implements OnInit {
   constructor(
     public authService: AuthService,
     private appConfigService: AppConfigService,
-    private httpClient: HttpClient,
     private userProfileService: UserProfileService,
     private logoutService: LogoutService,
     private dataService: DataService,
@@ -62,28 +61,26 @@ export class HeaderComponent implements OnInit {
         this.dialog
       );
       dialogRef.afterClosed().subscribe((res) => {
-        App.exitApp();
+        App.exitApp().catch((error) => {
+          console.log(error);
+        });
       });
     }
   }
-  ngOnInit() {
+  async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
-    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
-      (response: any) => {
-        this.resourceBundleJson = response;
-      }
-    );
+    this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     if (this.userProfileService.getDisplayUserName()) {
       this.userName = this.userProfileService.getDisplayUserName();
     } else {
       this.userName = this.userProfileService.getUsername();
     }
   }
-  onLogoClick() {
+  async onLogoClick() {
     if (this.authService.isAuthenticated()) {
-      this.router.navigateByUrl(`toolkit/dashboard`);
+      await this.router.navigateByUrl(`toolkit/dashboard`);
     } else {
-      this.router.navigateByUrl(``);
+      await this.router.navigateByUrl(``);
     }
   }
 }

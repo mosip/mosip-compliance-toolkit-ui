@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/authservice.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,6 +17,7 @@ import { environment } from 'src/environments/environment';
 import { AbisProjectModel } from 'src/app/core/models/abis-project';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { TranslateService } from '@ngx-translate/core';
+import { error } from 'console';
 
 @Component({
   selector: 'app-add-collections',
@@ -59,11 +60,7 @@ export class AddCollectionsComponent implements OnInit {
 
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
-    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
-      (response: any) => {
-        this.resourceBundleJson = response;
-      }
-    );
+    this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     this.initForm();
     await this.initProjectIdAndType();
     if (this.projectType == appConstants.SBI) {
@@ -150,7 +147,6 @@ export class AddCollectionsComponent implements OnInit {
       this.subscriptions.push(
         this.dataService.getSdkProject(this.projectId).subscribe(
           (response: any) => {
-            //console.log(response);
             this.sdkProjectData = response['response'];
             resolve(true);
           },
@@ -168,7 +164,6 @@ export class AddCollectionsComponent implements OnInit {
       this.subscriptions.push(
         this.dataService.getAbisProject(this.projectId).subscribe(
           (response: any) => {
-            //console.log(response);
             this.abisProjectData = response['response'];
             resolve(true);
           },
@@ -193,7 +188,6 @@ export class AddCollectionsComponent implements OnInit {
           )
           .subscribe(
             (response: any) => {
-              //console.log(response);
               this.processTestcasesResp(response);
               resolve(true);
             },
@@ -216,7 +210,6 @@ export class AddCollectionsComponent implements OnInit {
           )
           .subscribe(
             (response: any) => {
-              //console.log(response);
               this.processTestcasesResp(response);
               resolve(true);
             },
@@ -238,7 +231,6 @@ export class AddCollectionsComponent implements OnInit {
           )
           .subscribe(
             (response: any) => {
-              //console.log(response);
               this.processTestcasesResp(response);
               resolve(true);
             },
@@ -269,7 +261,6 @@ export class AddCollectionsComponent implements OnInit {
         if (a.testId < b.testId) return -1;
         return 0;
       });
-      //console.log(testcaseArr);
     }
     this.dataSource = new MatTableDataSource(testcaseArr);
   }
@@ -302,8 +293,8 @@ export class AddCollectionsComponent implements OnInit {
       }`;
   }
 
-  backToProject() {
-    this.router.navigate([
+  async backToProject() {
+    await this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}`,
     ]);
   }
@@ -406,7 +397,10 @@ export class AddCollectionsComponent implements OnInit {
                 this.dialog
               );
               dialogRef.afterClosed().subscribe((res) => {
-                this.backToProject();
+                this.backToProject()
+                  .catch((error) => {
+                    console.log(error);
+                  });
               });
               resolve(response);
             }

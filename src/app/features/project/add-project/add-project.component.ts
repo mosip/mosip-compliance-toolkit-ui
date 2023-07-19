@@ -13,6 +13,8 @@ import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { BreadcrumbService } from 'xng-breadcrumb';
+import { AbisProjectModel } from 'src/app/core/models/abis-project';
+import { AppConfigService } from 'src/app/app-config.service';
 
 @Component({
   selector: 'app-project',
@@ -25,16 +27,19 @@ export class AddProjectComponent implements OnInit {
   allControls: string[];
   isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
   textDirection: any = this.userProfileService.getTextDirection();
-  buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : null;
+  buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : {'float': 'right'};
   subscriptions: Subscription[] = [];
   bioTestDataFileNames: string[] = [];
   hidePassword = true;
-  dataLoaded = true;
+  dataLoaded = false;
   dataSubmitted = false;
+  isAbisPartner = this.appConfigService.getConfig()['abisPartnerType'] == "ABIS_PARTNER" ? true : false;
+  invalidPartnerType: string = '';
 
   constructor(
     public authService: AuthService,
     private dataService: DataService,
+    private appConfigService: AppConfigService,
     private dialog: MatDialog,
     private router: Router,
     private breadcrumbService: BreadcrumbService,
@@ -43,12 +48,11 @@ export class AddProjectComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
-      (response: any) => {
-        this.resourceBundleJson = response;
-      }
-    );
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
+    this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
+    this.invalidPartnerType = this.isAbisPartner
+      ? ''
+      : this.resourceBundleJson.addProject['invalidPartnerTypeMsg'];
     this.initForm();
     this.initBreadCrumb();
     const projectType = this.projectForm.controls['projectType'].value;
@@ -58,18 +62,15 @@ export class AddProjectComponent implements OnInit {
     if (projectType == appConstants.ABIS) {
       await this.getBioTestDataNames(appConstants.ABIS);
     } 
+    this.dataLoaded = true;
   }
 
   initBreadCrumb() {
-    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
-      (response: any) => {
-        const breadcrumbLabels = response['breadcrumb'];
-        if (breadcrumbLabels) {
-          this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
-          this.breadcrumbService.set('@addProjectBreadCrumb', `${breadcrumbLabels.addNewProject}`);
-        }
-      }
-    );
+    const breadcrumbLabels = this.resourceBundleJson['breadcrumb'];
+    if (breadcrumbLabels) {
+      this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
+      this.breadcrumbService.set('@addProjectBreadCrumb', `${breadcrumbLabels.addNewProject}`);
+    }
   }
 
   initForm() {
@@ -85,6 +86,11 @@ export class AddProjectComponent implements OnInit {
     appConstants.COMMON_CONTROLS.forEach((controlId) => {
       this.projectForm.controls[controlId].setValidators(Validators.required);
     });
+    this.projectForm.patchValue({
+      abisUrl: 'wss://{base_URL}/ws',
+      outboundQueueName: 'ctk-to-abis',
+      inboundQueueName: 'abis-to-ctk'
+    });
   }
 
   async getBioTestDataNames(purpose: string) {
@@ -92,7 +98,6 @@ export class AddProjectComponent implements OnInit {
       this.subscriptions.push(
         this.dataService.getBioTestDataNames(purpose).subscribe(
           (response: any) => {
-            //console.log(response);
             this.bioTestDataFileNames = response[appConstants.RESPONSE];
             resolve(true);
           },
@@ -145,7 +150,7 @@ export class AddProjectComponent implements OnInit {
         if (controlId == 'abisUrl') {
           this.projectForm.controls[controlId].setValidators([
             Validators.required,
-            Validators.pattern('^(http|https)://(.*)'),
+            Validators.pattern('^(ws|wss)://.*\\/ws$'),
           ]);
         }
       });
@@ -228,6 +233,29 @@ export class AddProjectComponent implements OnInit {
         this.dataSubmitted = true;
         await this.addSdkProject(request);
       }
+      if (projectType == appConstants.ABIS) {
+        const projectData: AbisProjectModel = {
+          id: '',
+          name: this.projectForm.controls['name'].value,
+          projectType: this.projectForm.controls['projectType'].value,
+          abisVersion: this.projectForm.controls['abisSpecVersion'].value,
+          url: this.projectForm.controls['abisUrl'].value,
+          username:this.projectForm.controls['username'].value,
+          password:this.projectForm.controls['password'].value,
+          outboundQueueName:this.projectForm.controls['outboundQueueName'].value,
+          inboundQueueName:this.projectForm.controls['inboundQueueName'].value,
+          bioTestDataFileName: this.projectForm.controls['abisBioTestData'].value,
+        };
+        let request = {
+          id: appConstants.ABIS_PROJECT_ADD_ID,
+          version: appConstants.VERSION,
+          requesttime: new Date().toISOString(),
+          request: projectData,
+        };
+        this.dataLoaded = false;
+        this.dataSubmitted = true;
+        await this.addAbisProject(request);
+      }
     }
   }
 
@@ -242,27 +270,7 @@ export class AddProjectComponent implements OnInit {
         this.dataService.addSbiProject(request).subscribe(
           (response: any) => {
             console.log(response);
-            if (response.errors && response.errors.length > 0) {
-              this.dataLoaded = true;
-              this.dataSubmitted = false;
-              resolve(true);
-              Utils.showErrorMessage(this.resourceBundleJson, response.errors, this.dialog);
-            } else {
-              let resourceBundle = this.resourceBundleJson.dialogMessages;
-              let successMsg = 'success';
-              let sbiProjectMsg = 'sbiSuccessMessage';
-              this.dataLoaded = true;
-              const dialogRef = Utils.showSuccessMessage(
-                resourceBundle,
-                successMsg,
-                sbiProjectMsg,
-                this.dialog
-              );
-              dialogRef.afterClosed().subscribe((res) => {
-                this.showDashboard();
-              });
-              resolve(true);
-            }
+            resolve(this.getProjectResponse(response));
           },
           (errors) => {
             this.dataLoaded = true;
@@ -281,27 +289,7 @@ export class AddProjectComponent implements OnInit {
         this.dataService.addSdkProject(request).subscribe(
           (response: any) => {
             console.log(response);
-            if (response.errors && response.errors.length > 0) {
-              this.dataLoaded = true;
-              this.dataSubmitted = false;
-              resolve(true);
-              Utils.showErrorMessage(this.resourceBundleJson, response.errors, this.dialog);
-            } else {
-              let resourceBundle = this.resourceBundleJson.dialogMessages;
-              let successMsg = 'success';
-              let sdkProjectMsg = 'sdkSuccessMessage';
-              this.dataLoaded = true;
-              const dialogRef = Utils.showSuccessMessage(
-                resourceBundle,
-                successMsg,
-                sdkProjectMsg,
-                this.dialog
-              );
-              dialogRef.afterClosed().subscribe((res) => {
-                this.showDashboard();
-              });
-              resolve(true);
-            }
+            resolve(this.getProjectResponse(response));
           },
           (errors) => {
             this.dataLoaded = true;
@@ -314,8 +302,54 @@ export class AddProjectComponent implements OnInit {
     });
   }
 
-  showDashboard() {
-    this.router.navigate([`toolkit/dashboard`]);
+  async addAbisProject(request: any) {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.addAbisProject(request).subscribe(
+          (response: any) => {
+            console.log(response);
+            resolve(this.getProjectResponse(response));
+          },
+          (errors) => {
+            this.dataLoaded = true;
+            this.dataSubmitted = false;
+            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
+            resolve(false);
+          }
+        )
+      );
+    });
+  }
+
+  getProjectResponse(response: any){
+    if (response.errors && response.errors.length > 0) {
+      this.dataLoaded = true;
+      this.dataSubmitted = false;
+      Utils.showErrorMessage(this.resourceBundleJson, response.errors, this.dialog);
+      return true;
+    } else {
+      let resourceBundle = this.resourceBundleJson.dialogMessages;
+      let successMsg = 'success';
+      let projectMsg = 'successMessage';
+      this.dataLoaded = true;
+      const dialogRef = Utils.showSuccessMessage(
+        resourceBundle,
+        successMsg,
+        projectMsg,
+        this.dialog
+      );
+      dialogRef.afterClosed().subscribe((res) => {
+        this.showDashboard()
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+      return true;
+    }
+  }
+
+  async showDashboard() {
+    await this.router.navigate([`toolkit/dashboard`]);
   }
 
   ngOnDestroy(): void {

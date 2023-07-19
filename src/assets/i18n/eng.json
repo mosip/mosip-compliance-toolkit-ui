@@ -3,8 +3,7 @@
 		"logoutMessage": "You have been logged out.",
 		"success": "Success",
 		"collectionSuccessMessage": "Collection created successfully",
-		"sbiSuccessMessage": "Project created successfully",
-		"sdkSuccessMessage": "Project created successfully",
+		"successMessage": "Project created successfully",
 		"close": "Close",
 		"logout": "Logout",
 		"addTestDataSuccessMsg": "Test data added successfully."
@@ -37,7 +36,8 @@
 		"lastRunStatus": "Last Run Status",
 		"success": "Success",
 		"failure": "Failure",
-		"projectRow": "There are no projects available."
+		"projectRow": "There are no projects available.",
+		"tableDescription": "List of Projects"
 	},
 	"biometricDashboard": {
 		"projectDashboard": "Projects Dashboard",
@@ -49,7 +49,8 @@
 		"purpose": "Purpose",
 		"fileName": "File Name",
 		"creationDate": "Creation Date",
-		"biometricRecord": "There are no records available."
+		"biometricRecord": "There are no records available.",
+		"tableDescription": "List of Biometric Data"
 	},
 	"addProject": {
 		"biometricData": "Biometric Data",
@@ -77,11 +78,16 @@
 		"deviceSubTypeIsRequired": "Device Sub Type is required",
 		"deviceSubTypeIsInvalid": "Device Sub Type is invalid",
 		"usernameIsRequired": "Username is required",
+		"passwordIsRequired": "Password is required",
 		"queueNameIsRequired": "Queue Name is required",
 		"outboundQueueName": "Outbound Queue Name:",
 		"outboundQueueNameIsRequired": "Outbound Queue Name is required",
 		"inboundQueueName": "Inbound Queue Name:",
-		"inboundQueueNameIsRequired": "Inbound Queue Name is required"
+		"inboundQueueNameIsRequired": "Inbound Queue Name is required",
+		"activeMqUrl": "Active MQ URL:",
+		"requestQueueName": "Request Queue Name:",
+		"responseQueueName": "Response Queue Name:",
+		"invalidPartnerTypeMsg": "ABIS partner can only create an ABIS project"
 	},
 	"addTestData": {
 		"name": "Name:",
@@ -126,7 +132,11 @@
 		"baseUrlIsInvalid": "Base URL is Invalid",
 		"specVersionIsRequired": "Spec Version is Required",
 		"Purpose is required": "Purpose is Required",
-		"testDataIsRequired": "Test Data Is Required"
+		"testDataIsRequired": "Test Data Is Required",
+		"activeMqUrl": "Active MQ URL:",
+		"requestQueueName": "Request Queue Name:",
+		"responseQueueName": "Response Queue Name:",
+		"tableDescription": "List of Collections"
 	},
 	"testRunHistory": {
 		"runDate": "Run Date",
@@ -139,7 +149,8 @@
 		"success": "Success",
 		"view": "View",
 		"delete": "Delete",
-		"back": "Back"
+		"back": "Back",
+		"tableDescription": "Test Run History Details"
 	},
 	"viewTestRun": {
 		"testRunDetailsAreNotAvailable": "Test Run Details are not available",
@@ -154,7 +165,8 @@
 		"otherDetails": "Other Details:",
 		"methodUrl": "Method URL",
 		"testDataSource": "Test Data Source",
-		"back": "Back"
+		"back": "Back",
+		"tableDescription": "Test Run Details"
 	},
 	"addCollections": {
 		"collectionName": "Collection Name:",
@@ -166,7 +178,8 @@
 		"validators": "Validators",
 		"customClass": "There are no testcases available for this project. Please contact Administrator.",
 		"back": "Back",
-		"saveCollection": "Save Collection"
+		"saveCollection": "Save Collection",
+		"tableDescription": "List of Testcases"
 	},
 	"viewCollection": {
 		"collectionName": "Collection Name:",
@@ -175,7 +188,8 @@
 		"name": "Name",
 		"description": "Description",
 		"validators": "Validators",
-		"back": "Back"
+		"back": "Back",
+		"tableDescription": "Selected Testcases Details"
 	},
 	"scanDevice": {
 		"title": "Scan Device",
@@ -211,9 +225,10 @@
 		"testcasesForCollection": "testcases for collection",
 		"hasStarted": "has started.",
 		"currentTestcase": "Current testcase:",
-		"abisRequestSent": "Request has been sent to the queue for CBEFF file. Awaiting for response from queue. If it's taking too long you can come back again after sometime.",
+		"abisInsertRequestSent": "Insert request has been sent to the queue for CBEFF file {}. Awaiting for response from queue. If it's taking too long you can come back again after sometime.",
+		"abisIdentifyRequestSent": "Identify request has been sent to the queue. Awaiting for response from queue. If it's taking too long you can come back again after sometime.",
 		"abisResponseRecvd": "Processing response received from ABIS",
-		"abisRequestSentFail": "Unable to send request to the ABIS queue for CBEFF file. Check the URL, username and other attributes and try again.",
+		"abisRequestSentFail": "Unable to send request to the ABIS queue. Check the URL, username and other attributes and try again.",
 		"initiateCaptureMsg": "Click on initiate capture button to capture the biometrics from the device..",
 		"serviceError": "There were errors while processing the service.",
 		"errorInSaveTestRun": "Unable to save / update test run details. Please try again.",
@@ -236,7 +251,8 @@
 		"unableToConnectSDK": "Unable to connect to SDK services",
 		"methodNotInvoked": "Method not invoked since request is invalid.",
 		"failure": "Failure",
-		"unableToGenerateRequest": "Unable to generate request to SDK service: "
+		"unableToGenerateRequest": "Unable to generate request to SDK service: ",
+		"executionFailed": "Execution Failed"
 	},
 	"validators": {
 		"SchemaValidator": "Validates the response for mandatory attributes and correct values",
@@ -263,7 +279,10 @@
 		"SegmentNoInputDataValidator": "Validates if no input BDB data present in the Probe",
 		"ConvertDataValidator": "Validates the input BDB data present in the Probe",
 		"ConvertInvalidDataValidator": "Validates if input BDB data present in the Probe for the modality is valid",
-		"ConvertNoInputDataValidator": "Validates if no input BDB data present in the Probe"
+		"ConvertNoInputDataValidator": "Validates if no input BDB data present in the Probe",
+		"ExpectedFailureReasonValidator": "Validates the failure reason to match the expected value",
+		"IdentifyDuplicateFoundValidator": "Validates the count of duplicates found by ABIS for the given referenceId",
+		"ExpectedDuplicateCountValidator": "Validates the duplicates found to match the expected value"
 	},
 	"testcases": {
 		"SBI1000": {
@@ -1027,6 +1046,126 @@
 		"SDK2075": {
 			"testName": "Iris convert no input failure",
 			"testDescription": "Iris convert no input failure"
+		},
+		"ABIS3000": {
+			"testName": "Insert one person's biomterics in ABIS",
+			"testDescription": "Insert one person's biomterics in ABIS"
+		},
+		"ABIS3001": {
+			"testName": "Insert two person's biomterics in ABIS",
+			"testDescription": "Insert two person's biomterics in ABIS"
+		},
+		"ABIS3002": {
+			"testName": "Invalid Insert request structure",
+			"testDescription": "Invalid Insert request - request json structure is invalid"
+		},
+		"ABIS3003": {
+			"testName": "Invalid Insert request - missing referenceId",
+			"testDescription": "Invalid Insert request - missing referenceId"
+		},
+		"ABIS3004": {
+			"testName": "Invalid Insert request - missing requestId",
+			"testDescription": "Invalid Insert request - missing requestId"
+		},
+		"ABIS3005": {
+			"testName": "Unable to fetch biometric details using referenceURL",
+			"testDescription": "Unable to fetch biometric details using referenceURL"
+		},
+		"ABIS3006": {
+			"testName": "Invalid Insert request - Invalid reference url",
+			"testDescription": "Invalid Insert request - Invalid reference url"
+		},
+		"ABIS3007": {
+			"testName": "Invalid Insert request - missing reference URL",
+			"testDescription": "Invalid Insert request - missing reference URL"
+		},
+		"ABIS3008": {
+			"testName": "Invalid Insert request - missing request time",
+			"testDescription": "Invalid Insert request - missing request time"
+		},
+		"ABIS3009": {
+			"testName": "Invalid Insert request - referenceId already exists",
+			"testDescription": "Invalid Insert request - referenceId already exists"
+		},
+		"ABIS3010": {
+			"testName": "Invalid Insert request - CBEFF has no data",
+			"testDescription": "CBEFF has no data /No biometric available for deduplication"
+		},
+		"ABIS3011": {
+			"testName": "Invalid Insert request - invalid version",
+			"testDescription": "Invalid Insert request - invalid version"
+		},
+		"ABIS3012": {
+			"testName": "Invalid Insert request - invalid id",
+			"testDescription": "Invalid Insert request - invalid id"
+		},
+		"ABIS3013": {
+			"testName": "Invalid Insert request - invalid request time format",
+			"testDescription": "Invalid Insert request - invalid request time format"
+		},
+		"ABIS3014": {
+			"testName": "Invalid Insert request - invalid CBEFF format",
+			"testDescription": "Invalid Insert request - invalid CBEFF format"
+		},
+		"ABIS3015": {
+			"testName": "Invalid Insert request - data share URL has expired",
+			"testDescription": "Invalid Insert request - data share URL has expired"
+		},
+		"ABIS3016": {
+			"testName": "Invalid Insert request - invalid data",
+			"testDescription": "Invalid Insert request - invalid data"
+		},
+		"ABIS3017": {
+			"testName": "Invalid Insert request - CBEFF data decryption failure",
+			"testDescription": "Invalid Insert request - CBEFF data decryption failure"
+		},
+		"ABIS3018": {
+			"testName": "Identify - duplicate found for the referenceId against gallery",
+			"testDescription": "Insert same biometrics twice, then test if duplicate is found for the referenceId against gallery"
+		},
+		"ABIS3019": {
+			"testName": "Invalid Identify request structure",
+			"testDescription": "Invalid Identify request - request json structure is invalid"
+		},
+		"ABIS3020": {
+			"testName": "Invalid Identify request - missing referenceId",
+			"testDescription": "Invalid Identify request - missing referenceId"
+		},
+		"ABIS3021": {
+			"testName": "Invalid Identify request - missing requestId",
+			"testDescription": "Invalid Identify request - missing requestId"
+		},
+		"ABIS3022": {
+			"testName": "Invalid Identify request - missing request time",
+			"testDescription": "Invalid Identify request - missing request time"
+		},
+		"ABIS3023": {
+			"testName": "Invalid Identify request - invalid version",
+			"testDescription": "Invalid Identify request - invalid version"
+		},
+		"ABIS3024": {
+			"testName": "Invalid Identify request - invalid id",
+			"testDescription": "Invalid Identify request - invalid id"
+		},
+		"ABIS3025": {
+			"testName": "Invalid Identify request - invalid request time format",
+			"testDescription": "Invalid Identify request - invalid request time format"
+		},
+		"ABIS3026": {
+			"testName": "Identify - duplicate found for the referenceId (gallery skipped). <b>Clear the ABIS cache before running this testcase.</b>",
+			"testDescription": "Insert same biometrics twice, then test if duplicate is found for the referenceId, (gallery skipped)"
+		},
+		"ABIS3027": {
+			"testName": "Identify - duplicate found for the referenceId against gallery - provide referenceId's sub set (IDs already inserted)",
+			"testDescription": "Insert same biometrics twice, then test if duplicate is found for the referenceId against gallery - provide referenceId's sub set (IDs already inserted)"
+		},
+		"ABIS3028": {
+			"testName": "Identify - duplicate found for the referenceId against gallery - but the referenceId's are not inserted.",
+			"testDescription": "Insert biometrics once, then test if duplicate is found for the referenceId against gallery - but the referenceId's are not inserted."
+		},
+		"ABIS3029": {
+			"testName": "Identify - duplicate not found for the referenceId against gallery",
+			"testDescription": "Identify - duplicate not found for the referenceId against gallery"
 		}
 	},
 	"validatorMessages": {
@@ -1078,11 +1217,11 @@
 		"MATCH_NO_DATA_VALIDATOR_001": "No data for Match, expected status code received: {}",
 		"MATCH_NO_DATA_VALIDATOR_002": "No data for Match, unexpected status code received: {}",
 		"QUALITY_CHECK_001": "Quality Check failed, invalid modality: {}",
-		"QUALITY_CHECK_002": "Positive Quality Check for is successful",
+		"QUALITY_CHECK_002": "Negative Quality Check is successful.",
 		"QUALITY_CHECK_003": "Quality Check status code failed, received: {}",
-		"QUALITY_CHECK_004": "Positive Quality Check for {} is successful",
+		"QUALITY_CHECK_004": "Positive Quality Check for {} is successful. Score received: {}",
 		"QUALITY_CHECK_005": "Positive Quality Check for {} failed. Score is below the threshold value. Score received: {}",
-		"QUALITY_CHECK_006": "Negative Quality Check for {} is successful",
+		"QUALITY_CHECK_006": "Negative Quality Check for {} is successful. Score received: {}",
 		"QUALITY_CHECK_007": "Negative Quality Check for {} failed. Score is above the threshold value. Score received: {}",
 		"QUALITY_CHECK_INVALID_DATA_VALIDATOR_001": "No data for Quality Check, expected status code received: {}",
 		"QUALITY_CHECK_INVALID_DATA_VALIDATOR_002": "No data for Quality Check, unexpected status code received: {}",
@@ -1104,6 +1243,7 @@
 		"BIOMETRIC_QUALITY_CHECK_001": "BiometricsQualityCheckValidator validations are not successful.",
 		"BIOMETRIC_QUALITY_CHECK_002": "BiometricsQualityCheckValidator validations are successful.",
 		"BIOMETRIC_QUALITY_CHECK_003": "Unable to connect",
+		"BIOMETRIC_QUALITY_CHECK_004": "Optional",
 		"ISO_VALIDATOR_001": "ISOStandardsValidator failed due to below issues: invalid bioType = {}",
 		"ISO_VALIDATOR_002": "ISOStandardsValidator failed due to below issues: isValidISOTemplate 'bioValue' is Empty or Null",
 		"ISO_VALIDATOR_003": "ISOStandardsValidator[ISO19794-4:2011] failed due to below issues:",
@@ -1220,7 +1360,28 @@
 		"ISO_VALIDATOR_114": "<BR>Invalid Image Bit Depth Value for Face Modality, expected values[0x01], but received input value[{}]",
 		"ISO_VALIDATOR_115": "<BR>Invalid Image Data Length for Face Modality, expected values between[0x00000001 and 0xFFFFFFFF], but received input value[{}]",
 		"ISO_VALIDATOR_116": "<BR>Invalid Image Data for Face Modality, expected values[JPEG_2000_LOSSY(Auth), JPEG_2000_LOSS_LESS(Registration)]",
-		"ISO_VALIDATOR_117": "ISO Standards Validation is successful"
+		"ISO_VALIDATOR_117": "ISO Standards Validation is successful",
+		"EXPECTED_FAILURE_REASON_VALIDATOR_001": "Expected failure reason: {} successfully validated.",
+		"EXPECTED_FAILURE_REASON_VALIDATOR_002": "The failure reason expected was: {}, but received: {}",
+		"IDENTIFY_DUPLICATE_FOUND_VALIDATOR_001": "Identify - found {} duplicate for given the referenceId.",
+		"IDENTIFY_DUPLICATE_FOUND_VALIDATOR_002": "Identify - no duplicate found for given the referenceId.",
+		"DUPLICATE_NOT_FOUND_VALIDATOR_001": "Identify - no duplicate found for given the referenceId.",
+		"DUPLICATE_NOT_FOUND_VALIDATOR_002": "Identify - found {} duplicate for given the referenceId.",
+		"EXPECTED_DUPLICATE_COUNT_VALIDATOR_001": "Identify - found the expected duplicate count as: {} for given the referenceId",
+		"EXPECTED_DUPLICATE_COUNT_VALIDATOR_002": "Identify - did not find the expected duplicate count. Expected duplicate count is: {}. But received duplicate count as: {}",
+		"ISO_WARNING_001": "<br> Warnings: ",
+		"ISO_WARNING_002": "<BR>Invalid Image Compression ratio allowed values Up to 15:1",
+		"ISO_WARNING_003": "<BR>Invalid Image Aspect ratio allowed values Up to 1:1",
+		"ISO_WARNING_004": "<BR>Invalid Image Color Space allowed values Up to GRAY[8 bit]",
+		"ISO_WARNING_005": "<BR>Invalid Image Minimum resolution between 500 DPI and 1000 DPI",
+		"ISO_WARNING_006": "<BR>Invalid Image Compression ratio allowed values Up to 15:1 for Auth",
+		"ISO_WARNING_007": "<BR>Invalid Image Aspect ratio allowed values Up to 1:1",
+		"ISO_WARNING_008": "<BR>Invalid Image Color Space allowed values Up to GRAY[8 bit]",
+		"ISO_WARNING_009": "<BR>Invalid Image Minimum resolution between 500 DPI and 1000 DPI",
+		"ISO_WARNING_010": "<BR>Invalid Image Compression ratio allowed values Up to 15:1 for Auth",
+		"ISO_WARNING_011": "<BR>Invalid Image Aspect ratio allowed values Up to 1:1",
+		"ISO_WARNING_012": "<BR>Invalid Image Color Space allowed values Up to RGB[24 bit]",
+		"ISO_WARNING_013": "<BR>Invalid Image Minimum resolution between 500 DPI and 1000 DPI"
 	},
 	"serviceErrors": {
 		"TOOLKIT_SUCCESS_000": "Success",
@@ -1295,7 +1456,7 @@
 		"TOOLKIT_VALIDATION_ERR_003": "Partner Id validation failed",
 		"TOOLKIT_VALIDATION_ERR_004": "Invalid MethodName",
 		"TOOLKIT_TESTDATA_ERR_001": "Testdata has wrong purpose",
-		"TOOLKIT_TESTDATA_ERR_002": "Testdata has invalid gallery file ",
+		"TOOLKIT_TESTDATA_ERR_002": "Testdata has invalid gallery file {} in {} ",
 		"TOOLKIT_TESTDATA_ERR_003": "Testdata folder structure error",
 		"TOOLKIT_TESTDATA_ERR_004": "Testdata has invalid folder",
 		"TOOLKIT_TESTDATA_ERR_005": "Testdata file is invalid",
@@ -1305,11 +1466,10 @@
 		"TOOLKIT_ZIP_FILE_ERR_003": "Too much entries in this archive, can lead to inodes exhaustion of the system.",
 		"TOOLKIT_REQ_ERR_500": "Technical Error",
 		"ABIS_DATA_SHARE_URL_EXCEPTION_001": "Unable to generate data share url",
-		"ABIS_QUEUE_EXCEPTION_002": "Unable to send to queue",
-		"ABIS_QUEUE_EXCEPTION_003": "Unable to read the queue",
 		"TOOLKIT_ABIS_PROJECTS_001": "No matching ABIS project available for the given id",
-		"TOOLKIT_ABIS_PROJECTS_002": "Invalid ABIS Purpose",
-		"TOOLKIT_ABIS_PROJECTS_003": "Invalid ABIS Spec Version",
+		"TOOLKIT_ABIS_PROJECTS_002": "Invalid ABIS Spec Version",
+		"TOOLKIT_ABIS_PROJECTS_003": "ABIS Project unable to add",
+		"TOOLKIT_ABIS_PROJECTS_004": "Invalid ABIS url",
 		"TESTCASE_001": "Please select ateleast one testcase.",
 		"ENCRYPTION_KEY_001": "Unable to get encryption key. Try Again!",
 		"error": "Error"

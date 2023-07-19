@@ -12,6 +12,7 @@ import { DialogComponent } from 'src/app/core/components/dialog/dialog.component
 import { TranslateService } from '@ngx-translate/core';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { BreadcrumbService } from 'xng-breadcrumb';
+import { error } from 'console';
 
 @Component({
   selector: 'app-add-test-data',
@@ -25,14 +26,15 @@ export class AddTestDataComponent implements OnInit {
   allControls: string[];
   subscriptions: Subscription[] = [];
   hidePassword = true;
-  dataLoaded = true;
+  dataLoaded = false;
   allowedFilesExtensions: string = '';
   fileExtension: string = 'zip';
   fileName: string = '';
   fileByteArray: any;
   textDirection: any = this.userProfileService.getTextDirection();
-  buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : null;
+  buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : {'float': 'right'};
   resourceBundleJson: any = {};
+  showSdkPurpose:boolean = true;
   allowedFileTypes = this.appConfigService
     .getConfig()
     ['allowedFileTypes'].split(',');
@@ -51,28 +53,21 @@ export class AddTestDataComponent implements OnInit {
     private userProfileService: UserProfileService
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
+    this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     this.initForm();
     this.initBreadCrumb();
     this.getAllowedFileTypes(this.allowedFileTypes);
-    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
-      (response: any) => {
-        this.resourceBundleJson = response;
-      }
-    );
+    this.dataLoaded = true;
   }
 
   initBreadCrumb() {
-    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
-      (response: any) => {
-        const breadcrumbLabels = response['breadcrumb'];
-        if (breadcrumbLabels) {
-          this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
-          this.breadcrumbService.set('@uploadTestDataBreadCrumb', `${breadcrumbLabels.uploadBiometricTestData}`);
-        }
-      }
-    );
+    const breadcrumbLabels = this.resourceBundleJson['breadcrumb'];
+    if (breadcrumbLabels) {
+      this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
+      this.breadcrumbService.set('@uploadTestDataBreadCrumb', `${breadcrumbLabels.uploadBiometricTestData}`);
+    }
   }
 
   initForm() {
@@ -114,12 +109,25 @@ export class AddTestDataComponent implements OnInit {
     }
   }
 
+  handleProjectTypeChange(projectType: string) {
+    if (projectType == appConstants.ABIS) {
+      this.showSdkPurpose = false;
+      this.testDataForm.controls['purpose'].setValidators(null);
+      this.testDataForm.controls['purpose'].updateValueAndValidity();
+      this.testDataForm.controls['purpose'].setValue(appConstants.ABIS);
+    } else {
+      this.showSdkPurpose = true;
+      this.testDataForm.controls['purpose'].setValidators(Validators.required);
+      this.testDataForm.controls['purpose'].updateValueAndValidity();
+    }
+  }
+
   showToolTip() {
     let title;
     let msg;
     let translatedMsgs = this.resourceBundleJson['addTestData'];
-    translatedMsgs.title ? title = translatedMsgs.title : title;
-    translatedMsgs.msg ? msg = translatedMsgs.msg : msg; 
+    title = translatedMsgs.title ? translatedMsgs.title : title;
+    msg = translatedMsgs.msg ? translatedMsgs.msg : msg; 
     const body = {
       case: 'INFO',
       title: title,
@@ -174,9 +182,16 @@ export class AddTestDataComponent implements OnInit {
               'File size is not allowed more than: ' + size + ' MB'
             );
           } else {
-            this.getBase64(event.target.files[0]).then((data) => {
-              this.saveTestData(event);
-            });
+            this.getBase64(event.target.files[0])
+              .then((data) => {
+                this.saveTestData(event)
+                  .catch((error) => {
+                    console.log(error);
+                  });
+              })
+              .catch((error) => {
+                console.log(error);
+              });
           }
         }
       }
@@ -210,7 +225,10 @@ export class AddTestDataComponent implements OnInit {
               var blob = new Blob([fileByteArray], { type: 'application/zip' });
               var link = document.createElement('a');
               link.href = window.URL.createObjectURL(blob);
-              link.download = `SDK_Sample_Test_Data_${purpose.replace(
+              purpose == appConstants.ABIS ? link.download = `Sample_Test_Data_${purpose.replace(
+                ' ',
+                '_'
+              )}.zip` : link.download = `SDK_Sample_Test_Data_${purpose.replace(
                 ' ',
                 '_'
               )}.zip`;
@@ -275,14 +293,14 @@ export class AddTestDataComponent implements OnInit {
                 info = response[appConstants.RESPONSE]['info'];
               }
               let msg = 'addTestDataSuccessMsg';
-              if (info) {
-                msg += info;
-              }
               let resourceBundle = this.resourceBundleJson.dialogMessages;
               let successMsg = 'success';
-              const dialogRef = Utils.showSuccessMessage(resourceBundle, successMsg, msg, this.dialog);
+              const dialogRef = Utils.showSuccessMessage(resourceBundle, successMsg, msg, this.dialog, info);
               dialogRef.afterClosed().subscribe((res) => {
-                this.showBiometricDashboard();
+                this.showBiometricDashboard()
+                  .catch((error) => {
+                    console.log(error);
+                  });
               });
               resolve(true);
             }
@@ -297,12 +315,12 @@ export class AddTestDataComponent implements OnInit {
     });
   }
 
-  showBiometricDashboard() {
-    this.router.navigate([`toolkit/dashboard/biometric`]);
+  async showBiometricDashboard() {
+    await this.router.navigate([`toolkit/dashboard/biometric`]);
   }
 
-  showDashboard() {
-    this.router.navigate([`toolkit/dashboard`]);
+  async showDashboard() {
+    await this.router.navigate([`toolkit/dashboard`]);
   }
 
   ngOnDestroy(): void {

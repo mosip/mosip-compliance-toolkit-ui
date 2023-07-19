@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../core/services/authservice.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../../../core/services/data-service';
@@ -14,6 +13,8 @@ import { TestRunHistoryModel } from 'src/app/core/models/testrunhistory';
 import { SdkProjectModel } from 'src/app/core/models/sdk-project';
 import { TranslateService } from '@ngx-translate/core';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
+import { AbisProjectModel } from 'src/app/core/models/abis-project';
+import { error } from 'console';
 
 @Component({
   selector: 'app-test-run-history',
@@ -29,9 +30,10 @@ export class TestRunHistoryComponent implements OnInit {
   dataLoaded = false;
   sbiProjectData: SbiProjectModel;
   sdkProjectData: SdkProjectModel;
+  abisProjectData: AbisProjectModel;
   dataSource: MatTableDataSource<TestRunHistoryModel>;
   textDirection: any = this.userProfileService.getTextDirection();
-  buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : null;
+  buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : {'float': 'right'};
   displayedColumns: string[] = [
     'lastRunTime',
     'runStatus',
@@ -63,11 +65,7 @@ export class TestRunHistoryComponent implements OnInit {
 
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
-    this.dataService.getResourceBundle(this.userProfileService.getUserPreferredLanguage()).subscribe(
-      (response: any) => {
-        this.resourceBundleJson = response;
-      }
-    );
+    this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     await this.initAllParams();
     await this.getCollection();
     if (this.projectType == appConstants.SBI) {
@@ -76,6 +74,10 @@ export class TestRunHistoryComponent implements OnInit {
     }
     if (this.projectType == appConstants.SDK) {
       await this.getSdkProjectDetails();
+      this.initBreadCrumb();
+    }
+    if (this.projectType == appConstants.ABIS) {
+      await this.getAbisProjectDetails();
       this.initBreadCrumb();
     }
     await this.getTestRunHistory();
@@ -96,6 +98,12 @@ export class TestRunHistoryComponent implements OnInit {
         this.breadcrumbService.set(
           '@projectBreadCrumb',
           `${this.projectType} ${breadcrumbLabels.project} - ${this.sdkProjectData.name}`
+        );
+      }
+      if (this.abisProjectData) {
+        this.breadcrumbService.set(
+          '@projectBreadCrumb',
+          `${this.projectType} ${breadcrumbLabels.project} - ${this.abisProjectData.name}`
         );
       }
       this.breadcrumbService.set(
@@ -186,16 +194,40 @@ export class TestRunHistoryComponent implements OnInit {
       );
     });
   }
+
+  async getAbisProjectDetails() {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.getAbisProject(this.projectId).subscribe(
+          (response: any) => {
+            //console.log(response);
+            this.abisProjectData = response['response'];
+            resolve(true);
+          },
+          (errors) => {
+            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
+            resolve(false);
+          }
+        )
+      );
+    });
+  }
+  
   async getTestRunHistory() {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
         this.dataService
           .getTestRunHistory(this.collectionId, this.pageIndex, this.pageSize)
           .subscribe(
-            async (response: any) => {
+            (response: any) => {
               console.log(response);
-              await this.populateTableData(response);
-              resolve(true);
+              this.populateTableData(response)
+                .then(() => {
+                  resolve(true);
+                })
+                .catch((error) => {
+                  reject(error);
+                });
             },
             (errors) => {
               Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
@@ -205,8 +237,8 @@ export class TestRunHistoryComponent implements OnInit {
       );
     });
   }
-  backToProject() {
-    this.router.navigate([
+  async backToProject() {
+    await this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}`,
     ]);
   }
@@ -258,8 +290,8 @@ export class TestRunHistoryComponent implements OnInit {
     this.dataLoaded = true;
   }
 
-  viewTestRun(row: any) {
-    this.router.navigate([
+  async viewTestRun(row: any) {
+    await this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}/collection/${this.collectionId}/testrun/${row.runId}`,
     ]);
   }
@@ -269,11 +301,16 @@ export class TestRunHistoryComponent implements OnInit {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
         this.dataService.deleteTestRun(row.runId).subscribe(
-          async (response: any) => {
+          (response: any) => {
             this.dataLoaded = true;
             console.log(response);
-            await this.getTestRunHistory();
-            this.dataLoaded = true;
+            this.getTestRunHistory()
+              .then(() => {
+                this.dataLoaded = true;
+              })
+              .catch((error) => {
+                reject(error);
+              });
           },
           (errors) => {
             this.dataLoaded = true;

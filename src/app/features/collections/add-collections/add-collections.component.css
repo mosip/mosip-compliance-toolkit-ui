@@ -80,6 +80,11 @@
   font-size: smaller;
   word-wrap: break-word;
 }
+@media screen and (max-width:480px) {
+  .add-button{
+    margin-right: 10px;
+  }
+}
 @media screen and (max-width:426px) {
   .collectionNameField{
     margin-left: 40px;
@@ -111,6 +116,9 @@
   }
   .add-button{
     margin-right: 10px;
+  }
+  .collectionNameField {
+    width: 150px;
   }
 }
 @media screen and (max-width:320px) {

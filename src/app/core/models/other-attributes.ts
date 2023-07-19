@@ -17,7 +17,12 @@ export class OtherAttributesModel {
       public keyRotationTestCase: boolean,
       public transactionId: any,
       public invalidRequestAttribute: any,
-      public cbeffFilesCount: any,
-      public referenceTestId: any
+      public bulkInsert: boolean,
+      public insertCount: any,
+      public insertReferenceId: any,
+      public identifyReferenceId: any,
+      public identifyGalleryIds: any,
+      public expectedDuplicateCount: any,
+      public expectedFailureReason: any
     ) {}
   }
