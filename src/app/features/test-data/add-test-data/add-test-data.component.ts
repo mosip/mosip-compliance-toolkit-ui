@@ -293,7 +293,6 @@ export class AddTestDataComponent implements OnInit {
                 info = response[appConstants.RESPONSE]['info'];
               }
               let msg = 'addTestDataSuccessMsg';
-              
               let resourceBundle = this.resourceBundleJson.dialogMessages;
               let successMsg = 'success';
               const dialogRef = Utils.showSuccessMessage(resourceBundle, successMsg, msg, this.dialog, info);
