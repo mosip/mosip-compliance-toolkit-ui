@@ -110,7 +110,7 @@ export class AddProjectComponent implements OnInit {
     });
   }
 
-  handleProjectTypeChange() {
+  async handleProjectTypeChange() {
     const projectType = this.projectForm.controls['projectType'].value;
     if (projectType == appConstants.SDK) {
       appConstants.SDK_CONTROLS.forEach((controlId) => {
@@ -162,15 +162,12 @@ export class AddProjectComponent implements OnInit {
         this.projectForm.controls[controlId].clearValidators();
         this.projectForm.controls[controlId].updateValueAndValidity();
       });
+      await this.getBioTestDataNames(appConstants.ABIS);
     }
   }
 
   async handleSdkPurposeChange() {
     await this.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value);
-  }
-
-  async handleAbisModalityChange() {
-    await this.getBioTestDataNames(appConstants.ABIS);
   }
 
   async saveProject() {
