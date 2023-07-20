@@ -169,6 +169,10 @@ export class AddProjectComponent implements OnInit {
     await this.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value);
   }
 
+  async handleAbisModalityChange() {
+    await this.getBioTestDataNames(appConstants.ABIS);
+  }
+
   async saveProject() {
     appConstants.COMMON_CONTROLS.forEach((controlId) => {
       this.projectForm.controls[controlId].markAsTouched();
