@@ -110,8 +110,8 @@ export class TestRunComponent implements OnInit {
   initBreadCrumb() {
     const breadcrumbLabels = this.resourceBundleJson['breadcrumb'];
     if (breadcrumbLabels) {
-      Utils.initBreadCrumb(this.resourceBundleJson, this.breadcrumbService, 
-        this.sbiProjectData, this.sdkProjectData, this.abisProjectData, 
+      Utils.initBreadCrumb(this.resourceBundleJson, this.breadcrumbService,
+        this.sbiProjectData, this.sdkProjectData, this.abisProjectData,
         this.projectType, this.collectionName);
       if (this.runDetails) {
         this.breadcrumbService.set(
@@ -330,15 +330,39 @@ export class TestRunComponent implements OnInit {
     }
   }
 
+  getProjectName() {
+    let name = "";
+    if (this.sbiProjectData)
+    name = this.sbiProjectData.name;
+    if (this.sdkProjectData)
+    name = this.sdkProjectData.name;
+    if (this.abisProjectData)
+    name = this.abisProjectData.name;
+    return name;
+  }
+
   downloadReport() {
-    const subs = this.dataService.createReport(this.runId).subscribe(
+  
+    let reportrequest = {
+      projectType: this.projectType,
+      projectId: this.projectId,
+      collectionId: this.collectionId,
+      testRunId: this.runId
+    }
+    let request = {
+      id: appConstants.CREATE_REPORT_ID,
+      version: appConstants.VERSION,
+      requesttime: new Date().toISOString(),
+      request: reportrequest,
+    };
+    const subs = this.dataService.createReport(request).subscribe(
       (res: any) => {
         if (res) {
           const fileByteArray = res;
           var blob = new Blob([fileByteArray], { type: 'application/pdf' });
           var link = document.createElement('a');
           link.href = window.URL.createObjectURL(blob);
-          link.download = this.runId;
+          link.download = this.getProjectName();
           link.click();
         } else {
           Utils.showErrorMessage(this.resourceBundleJson,
@@ -348,7 +372,7 @@ export class TestRunComponent implements OnInit {
         }
       },
       (errors) => {
-        Utils.showErrorMessage(this.resourceBundleJson ,errors, this.dialog);
+        Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
       }
     );
     this.subscriptions.push(subs);
