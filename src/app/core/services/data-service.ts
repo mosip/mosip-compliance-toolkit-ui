@@ -257,8 +257,8 @@ export class DataService {
     return this.httpClient.post(url, body);
   }
 
-  createReport(testRunId: string) {
-    let url = `${this.SERVICES_BASE_URL}createReport/${testRunId}`;
-    return this.httpClient.get(url, { responseType: 'blob' });
+  createReport(body: any) {
+    let url = `${this.SERVICES_BASE_URL}createReport`;
+    return this.httpClient.post(url, body, { responseType: 'blob' });
   }
 }
