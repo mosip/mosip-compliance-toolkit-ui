@@ -48,7 +48,7 @@ export class ActiveMqService {
         if (!rxStompService.connected()) {
           rxStompService = this.setUpConfig(abisProjectData);
         }
-        rxStompService.publish({ destination: `${abisProjectData.outboundQueueName}`, body: message });
+        rxStompService.publish({ destination: `${abisProjectData.outboundQueueName}`, body: message, skipContentLengthHeader: true });
         resolve({
           [appConstants.STATUS]: appConstants.SUCCESS
         })
