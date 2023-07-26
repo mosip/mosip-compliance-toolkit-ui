@@ -30,4 +30,117 @@
         <button mat-flat-button color="accent" (click)="closeMe()">{{"dialogMessages.close"|translate}}</button>
     </mat-dialog-actions>
 </div>
+<div *ngIf="input.case === 'UPDATE_PROJECT'" class="updateProject">
+    <h2 mat-dialog-title class="mat-dialog-title">{{"projectDashboard.title"|translate}}</h2>
+    <mat-dialog-content style="white-space: pre-line;">
+        {{"projectDashboard.message"|translate}}
+    </mat-dialog-content>
+    <form [formGroup]="projectForm" *ngIf="dataLoaded">
+        <div class="formContainer">
+            <span *ngIf="projectForm.controls['projectType']?.value == 'SBI'">
+                <div class="fieldWrapper">
+                    <span class="fieldLabel">
+                        <mat-label>{{"viewProject.deviceImages"|translate}}
+                        </mat-label>
+                    </span>
+                    <span class="fieldContainer">
+                        <mat-form-field appearance="legacy" class="fieldContainerBox">
+                            <mat-label>{{"viewProject.deviceImages"|translate}}</mat-label>
+                            <input matInput formControlName="deviceImages" #keyboardRef #input/>
+                            <mat-error *ngIf="projectForm.controls['deviceImages'].hasError('required')">
+                                {{"viewProject.deviceImagesIsRequired"|translate}}
+                            </mat-error>
+                            <mat-error *ngIf="projectForm.controls['deviceImages'].hasError('toBeAddedPattern')">
+                                {{"dialogMessages.deviceImagesIsInvalid"|translate}}
+                            </mat-error>
+                        </mat-form-field>
+                    </span>
+                </div>
+                <div class="fieldWrapper">
+                    <span class="fieldLabel">
+                        <mat-label>{{"viewProject.sbiHash"|translate}}
+                        </mat-label>
+                    </span>
+                    <span class="fieldContainer">
+                        <mat-form-field appearance="legacy" class="fieldContainerBox">
+                            <mat-label>{{"viewProject.sbiHash"|translate}}</mat-label>
+                            <input matInput formControlName="sbiHash" #keyboardRef #input/>
+                            <mat-error *ngIf="projectForm.controls['sbiHash'].hasError('required')">
+                                {{"viewProject.sbiHashIsRequired"|translate}}
+                            </mat-error>
+                            <mat-error *ngIf="projectForm.controls['sbiHash'].hasError('toBeAddedPattern')">
+                                {{"dialogMessages.sbiHashIsInvalid"|translate}}
+                            </mat-error>
+                        </mat-form-field>
+                    </span>
+                </div>
+            </span>
+            <span *ngIf="projectForm.controls['projectType']?.value == 'SDK'">
+                <div class="fieldWrapper">
+                    <span class="fieldLabel">
+                        <mat-label>{{"viewProject.sdkHash"|translate}}
+                        </mat-label>
+                    </span>
+                    <span class="fieldContainer">
+                        <mat-form-field appearance="legacy" class="fieldContainerBox">
+                            <mat-label>{{"viewProject.sdkHash"|translate}}</mat-label>
+                            <input matInput formControlName="sdkHash" #keyboardRef #input/>
+                            <mat-error *ngIf="projectForm.controls['sdkHash'].hasError('required')">
+                                {{"viewProject.sdkHashIsRequired"|translate}}
+                            </mat-error>
+                            <mat-error *ngIf="projectForm.controls['sdkHash'].hasError('toBeAddedPattern')">
+                                {{"dialogMessages.sdkHashIsInvalid"|translate}}
+                            </mat-error>
+                        </mat-form-field>
+                    </span>
+                </div>
+            </span>
+            <span *ngIf="projectForm.controls['projectType']?.value == 'ABIS'">
+                <div class="fieldWrapper">
+                    <span class="fieldLabel">
+                        <mat-label>{{"viewProject.abisHash"|translate}}
+                        </mat-label>
+                    </span>
+                    <span class="fieldContainer">
+                        <mat-form-field appearance="legacy" class="fieldContainerBox">
+                            <mat-label>{{"viewProject.abisHash"|translate}}</mat-label>
+                            <input matInput formControlName="abisHash" #keyboardRef #input/>
+                            <mat-error *ngIf="projectForm.controls['abisHash'].hasError('required')">
+                                {{"viewProject.abisHashIsRequired"|translate}}
+                            </mat-error>
+                            <mat-error *ngIf="projectForm.controls['abisHash'].hasError('toBeAddedPattern')">
+                                {{"dialogMessages.abisHashIsInvalid"|translate}}
+                            </mat-error>
+                        </mat-form-field>
+                    </span>
+                </div>
+            </span>
+            <div class="fieldWrapper">
+                <span class="fieldLabel">
+                    <mat-label>{{"viewProject.websiteUrl"|translate}}
+                    </mat-label>
+                </span>
+                <span class="fieldContainer">
+                    <mat-form-field appearance="legacy" class="fieldContainerBox">
+                        <mat-label>{{"viewProject.websiteUrl"|translate}}</mat-label>
+                        <input matInput formControlName="websiteUrl" #keyboardRef #input />
+                        <mat-error *ngIf="projectForm.controls['websiteUrl'].hasError('required')">
+                            {{"viewProject.websiteUrlIsRequired"|translate}}
+                        </mat-error>
+                        <mat-error *ngIf="projectForm.controls['websiteUrl'].hasError('toBeAddedPattern')">
+                            {{"dialogMessages.websiteUrlIsInvalid"|translate}}
+                        </mat-error>
+                    </mat-form-field>
+                </span>
+            </div>
+        </div>
+    </form>
+    <div class="button-container">
+        <button mat-flat-button color="accent" (click)="closeMe()" class="buttonDiv" align="">{{"dialogMessages.close"|translate}}</button>
+        <button mat-flat-button color="accent" [disabled]="!projectForm.valid" (click)="updateProject()" class="saveBt">
+            <mat-icon>save</mat-icon>
+            {{"dialogMessages.updateProject"|translate}}
+        </button>
+    </div>
+</div>
 </div>

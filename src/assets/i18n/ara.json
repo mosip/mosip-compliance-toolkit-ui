@@ -6,7 +6,13 @@
 		"successMessage": "تم إنشاء المشروع بنجاح",
 		"close": "يغلق",
 		"logout": "تسجيل خروج",
-		"addTestDataSuccessMsg": "تمت إضافة بيانات الاختبار بنجاح."
+		"addTestDataSuccessMsg": "تمت إضافة بيانات الاختبار بنجاح.",
+		"deviceImagesIsInvalid": "صورة الجهاز غير صالحة",
+		"sbiHashIsInvalid": "تجزئة SBI غير صالحة",
+		"sdkHashIsInvalid": "تجزئة SDK غير صالحة",
+		"abisHashIsInvalid": "تجزئة ABIS غير صالحة",
+		"websiteUrlIsInvalid": "عنوان URL لموقع الويب غير صالح",
+		"updateProject": "تحديث المشروع"
 	},
 	"breadcrumb": {
 		"home": "بيت",
@@ -37,7 +43,9 @@
 		"success": "نجاح",
 		"failure": "فشل",
 		"projectRow": "لا توجد مشاريع متاحة.",
-		"tableDescription": "قائمة المشاريع"
+		"tableDescription": "قائمة المشاريع",
+		"title": "تحديث تفاصيل المشروع",
+		"message": "أضف الحقول التالية المطلوبة للمشروع ، للمتابعة."
 	},
 	"biometricDashboard": {
 		"projectDashboard": "لوحة تحكم المشاريع",
@@ -89,7 +97,21 @@
 		"responseQueueName": "اسم قائمة انتظار الاستجابة",
 		"invalidPartnerTypeMsg": "يمكن لشريك ABIS فقط إنشاء مشروع ABIS",
 		"modality": "طريقة",
-		"modalityIsRequired": "طريقة مطلوبة"
+		"modalityIsRequired": "طريقة مطلوبة",
+		"deviceImages": "صور الجهاز:",
+		"deviceImagesIsRequired": "صور الجهاز مطلوبة",
+		"make": "يصنع:",
+		"makeIsRequired": "جعل مطلوب",
+		"model": "نموذج:",
+		"modelIsRequired": "النموذج مطلوب",
+		"sbiHash": "تجزئة SBI:",
+		"sbiHashIsRequired": "مطلوب تجزئة SBI",
+		"websiteUrl": "موقع إلكتروني URL",
+		"websiteUrlIsRequired": "مطلوب عنوان URL لموقع الويب",
+		"sdkHash": "تجزئة SDK:",
+		"sdkHashIsRequired": "مطلوب تجزئة SDK",
+		"abisHash": "تجزئة ABIS:",
+		"abisHashIsRequired": "مطلوب تجزئة ABIS"
 	},
 	"addTestData": {
 		"name": "اسم",
@@ -140,7 +162,21 @@
 		"responseQueueName": "اسم قائمة انتظار الاستجابة",
 		"tableDescription": "قائمة المجموعات",
 		"modality": "طريقة",
-		"modalityIsRequired": "طريقة مطلوبة"
+		"modalityIsRequired": "طريقة مطلوبة",
+		"deviceImages": "صور الجهاز:",
+		"deviceImagesIsRequired": "صور الجهاز مطلوبة",
+		"make": "يصنع:",
+		"makeIsRequired": "جعل مطلوب",
+		"model": "نموذج:",
+		"modelIsRequired": "النموذج مطلوب",
+		"sbiHash": "تجزئة SBI:",
+		"sbiHashIsRequired": "مطلوب تجزئة SBI",
+		"websiteUrl": "موقع إلكتروني URL",
+		"websiteUrlIsRequired": "مطلوب عنوان URL لموقع الويب",
+		"sdkHash": "تجزئة SDK:",
+		"sdkHashIsRequired": "مطلوب تجزئة SDK",
+		"abisHash": "تجزئة ABIS:",
+		"abisHashIsRequired": "مطلوب تجزئة ABIS"
 	},
 	"testRunHistory": {
 		"runDate": "تشغيل التاريخ",
