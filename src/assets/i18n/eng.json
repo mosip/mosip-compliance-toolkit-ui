@@ -6,7 +6,13 @@
 		"successMessage": "Project created successfully",
 		"close": "Close",
 		"logout": "Logout",
-		"addTestDataSuccessMsg": "Test data added successfully."
+		"addTestDataSuccessMsg": "Test data added successfully.",
+		"deviceImagesIsInvalid": "Device Image is Invalid",
+		"sbiHashIsInvalid": "SBI Hash is Invalid",
+		"sdkHashIsInvalid": "SDK Hash is Invalid",
+		"abisHashIsInvalid": "ABIS Hash is Invalid",
+		"websiteUrlIsInvalid": "Website URL is Invalid",
+		"updateProject": "Update Project"
 	},
 	"breadcrumb": {
 		"home": "Home",
@@ -37,7 +43,9 @@
 		"success": "Success",
 		"failure": "Failure",
 		"projectRow": "There are no projects available.",
-		"tableDescription": "List of Projects"
+		"tableDescription": "List of Projects",
+		"title": "Update Project Details",
+		"message": "Add the following fields required for the Project, to proceed."
 	},
 	"biometricDashboard": {
 		"projectDashboard": "Projects Dashboard",
@@ -89,7 +97,21 @@
 		"responseQueueName": "Response Queue Name:",
 		"invalidPartnerTypeMsg": "ABIS partner can only create an ABIS project",
 		"modality": "Modality",
-		"modalityIsRequired": "Modality is required"
+		"modalityIsRequired": "Modality is required",
+		"deviceImages": "Device Images:",
+		"deviceImagesIsRequired": "Device Images is required",
+		"make": "Make:",
+		"makeIsRequired": "Make is required",
+		"model": "Model:",
+		"modelIsRequired": "Model is required",
+		"sbiHash": "SBI Hash:",
+		"sbiHashIsRequired": "SBI Hash is required",
+		"websiteUrl": "Website URL:",
+		"websiteUrlIsRequired": "Website URL is required",
+		"sdkHash": "SDK Hash:",
+		"sdkHashIsRequired": "SDK Hash is required",
+		"abisHash": "ABIS Hash:",
+		"abisHashIsRequired": "ABIS Hash is required"
 	},
 	"addTestData": {
 		"name": "Name:",
@@ -140,7 +162,21 @@
 		"responseQueueName": "Response Queue Name:",
 		"tableDescription": "List of Collections",
 		"modality": "Modality",
-		"modalityIsRequired": "Modality is required"
+		"modalityIsRequired": "Modality is required",
+		"deviceImages": "Device Images:",
+		"deviceImagesIsRequired": "Device Images is required",
+		"make": "Make:",
+		"makeIsRequired": "Make is required",
+		"model": "Model:",
+		"modelIsRequired": "Model is required",
+		"sbiHash": "SBI Hash:",
+		"sbiHashIsRequired": "SBI Hash is required",
+		"websiteUrl": "Website URL:",
+		"websiteUrlIsRequired": "Website URL is required",
+		"sdkHash": "SDK Hash:",
+		"sdkHashIsRequired": "SDK Hash is required",
+		"abisHash": "ABIS Hash:",
+		"abisHashIsRequired": "ABIS Hash is required"
 	},
 	"testRunHistory": {
 		"runDate": "Run Date",

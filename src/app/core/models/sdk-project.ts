@@ -6,6 +6,8 @@ export class SdkProjectModel {
       public sdkVersion: string,
       public url: string,
       public purpose: string,
+      public sdkHash: string,
+      public websiteUrl: string,
       public bioTestDataFileName: string
     ) {}
   }

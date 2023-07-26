@@ -60,6 +60,11 @@ export class DataService {
     return this.httpClient.get(url);
   }
 
+  updateSbiProject(body: any) {
+    let url = `${this.SERVICES_BASE_URL}updateSbiProject`;
+    return this.httpClient.put(url, body);
+  }
+
   updateSdkProject(body: any) {
     let url = `${this.SERVICES_BASE_URL}updateSdkProject`;
     return this.httpClient.put(url, body);

@@ -203,12 +203,16 @@ export class AddProjectComponent implements OnInit {
       console.log('valid');
       if (projectType == appConstants.SBI) {
         const projectData: SbiProjectModel = {
+          id: '',
           name: this.projectForm.controls['name'].value,
           projectType: this.projectForm.controls['projectType'].value,
           sbiVersion: this.projectForm.controls['sbiSpecVersion'].value,
           purpose: this.projectForm.controls['sbiPurpose'].value,
           deviceType: this.projectForm.controls['deviceType'].value,
           deviceSubType: this.projectForm.controls['deviceSubType'].value,
+          deviceImages: this.projectForm.controls['deviceImages'].value,
+          sbiHash: this.projectForm.controls['sbiHash'].value,
+          websiteUrl: this.projectForm.controls['websiteUrl'].value
         };
         let request = {
           id: appConstants.SBI_PROJECT_ADD_ID,
@@ -228,6 +232,8 @@ export class AddProjectComponent implements OnInit {
           sdkVersion: this.projectForm.controls['sdkSpecVersion'].value,
           purpose: this.projectForm.controls['sdkPurpose'].value,
           url: this.projectForm.controls['sdkUrl'].value,
+          sdkHash: this.projectForm.controls['sdkHash'].value,
+          websiteUrl: this.projectForm.controls['websiteUrl'].value,
           bioTestDataFileName: this.projectForm.controls['bioTestData'].value,
         };
         let request = {
@@ -252,6 +258,8 @@ export class AddProjectComponent implements OnInit {
           outboundQueueName:this.projectForm.controls['outboundQueueName'].value,
           inboundQueueName:this.projectForm.controls['inboundQueueName'].value,
           modality:this.projectForm.controls['modality'].value,
+          abisHash:this.projectForm.controls['abisHash'].value,
+          websiteUrl:this.projectForm.controls['websiteUrl'].value,
           bioTestDataFileName: this.projectForm.controls['abisBioTestData'].value,
         };
         let request = {

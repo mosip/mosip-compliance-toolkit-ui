@@ -6,7 +6,13 @@
 		"successMessage": "Projet créé avec succès",
 		"close": "Fermer",
 		"logout": "Se déconnecter",
-		"addTestDataSuccessMsg": "Données de test ajoutées avec succès."
+		"addTestDataSuccessMsg": "Données de test ajoutées avec succès.",
+		"deviceImagesIsInvalid": "L'image de l'appareil n'est pas valide",
+		"sbiHashIsInvalid": "Le hachage SBI n'est pas valide",
+		"sdkHashIsInvalid": "Le hachage SDK n'est pas valide",
+		"abisHashIsInvalid": "Le hachage ABIS n'est pas valide",
+		"websiteUrlIsInvalid": "L'URL du site Web n'est pas valide",
+		"updateProject": "Mettre à jour le projet"
 	},
 	"breadcrumb": {
 		"home": "Maison",
@@ -37,7 +43,9 @@
 		"success": "Succès",
 		"failure": "Échec",
 		"projectRow": "Il n'y a pas de projets disponibles.",
-		"tableDescription": "Liste des projets"
+		"tableDescription": "Liste des projets",
+		"title": "Mettre à jour les détails du projet",
+		"message": "Ajoutez les champs suivants requis pour le projet, pour continuer."
 	},
 	"biometricDashboard": {
 		"projectDashboard": "Tableau de bord des projets",
@@ -89,7 +97,21 @@
 		"responseQueueName": "Nom de la file d'attente de réponses:",
 		"invalidPartnerTypeMsg": "Le partenaire ABIS peut uniquement créer un projet ABIS",
 		"modality": "Modalité",
-		"modalityIsRequired": "La modalité est requise"
+		"modalityIsRequired": "La modalité est requise",
+		"deviceImages": "Images de l'appareil:",
+		"deviceImagesIsRequired": "Les images de l'appareil sont requises",
+		"make": "Faire:",
+		"makeIsRequired": "La marque est requise",
+		"model": "Modèle:",
+		"modelIsRequired": "Le modèle est requis",
+		"sbiHash": "Hachage SBI:",
+		"sbiHashIsRequired": "Le hachage SBI est requis",
+		"websiteUrl": "URL de site web:",
+		"websiteUrlIsRequired": "L'URL du site Web est requise",
+		"sdkHash": "Hachage SDK:",
+		"sdkHashIsRequired": "Le hachage SDK est requis",
+		"abisHash": "Hachage ABIS:",
+		"abisHashIsRequired": "Le hachage ABIS est requis"
 	},
 	"addTestData": {
 		"name": "Nom",
@@ -140,7 +162,21 @@
 		"responseQueueName": "Nom de la file d'attente de réponses:",
 		"tableDescription": "Liste des collections",
 		"modality": "Modalité",
-		"modalityIsRequired": "La modalité est requise"
+		"modalityIsRequired": "La modalité est requise",
+		"deviceImages": "Images de l'appareil:",
+		"deviceImagesIsRequired": "Les images de l'appareil sont requises",
+		"make": "Faire:",
+		"makeIsRequired": "La marque est requise",
+		"model": "Modèle:",
+		"modelIsRequired": "Le modèle est requis",
+		"sbiHash": "Hachage SBI:",
+		"sbiHashIsRequired": "Le hachage SBI est requis",
+		"websiteUrl": "URL de site web:",
+		"websiteUrlIsRequired": "L'URL du site Web est requise",
+		"sdkHash": "Hachage SDK:",
+		"sdkHashIsRequired": "Le hachage SDK est requis",
+		"abisHash": "Hachage ABIS:",
+		"abisHashIsRequired": "Le hachage ABIS est requis"
 	},
 	"testRunHistory": {
 		"runDate": "Date d'exécution",

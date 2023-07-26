@@ -261,6 +261,15 @@ export class ViewProjectComponent implements OnInit {
       this.projectForm.controls['deviceSubType'].setValue(
         this.projectFormData.deviceSubType
       );
+      this.projectForm.controls['deviceImages'].setValue(
+        this.projectFormData.deviceImages
+      );
+      this.projectForm.controls['sbiHash'].setValue(
+        this.projectFormData.sbiHash
+      );
+      this.projectForm.controls['websiteUrl'].setValue(
+        this.projectFormData.websiteUrl
+      );
     }
   }
 
@@ -274,6 +283,12 @@ export class ViewProjectComponent implements OnInit {
       );
       this.projectForm.controls['sdkPurpose'].setValue(
         this.projectFormData.purpose
+      );
+      this.projectForm.controls['sdkHash'].setValue(
+        this.projectFormData.sdkHash
+      );
+      this.projectForm.controls['websiteUrl'].setValue(
+        this.projectFormData.websiteUrl
       );
       this.projectForm.controls['bioTestData'].setValue(
         this.projectFormData.bioTestDataFileName
@@ -293,6 +308,12 @@ export class ViewProjectComponent implements OnInit {
       this.projectForm.controls['modality'].setValue(this.projectFormData.modality);
       this.projectForm.controls['abisSpecVersion'].setValue(
         this.projectFormData.abisVersion
+      );
+      this.projectForm.controls['abisHash'].setValue(
+        this.projectFormData.abisHash
+      );
+      this.projectForm.controls['websiteUrl'].setValue(
+        this.projectFormData.websiteUrl
       );
       this.projectForm.controls['abisBioTestData'].setValue(
         this.projectFormData.bioTestDataFileName
@@ -429,6 +450,8 @@ export class ViewProjectComponent implements OnInit {
           sdkVersion: this.projectForm.controls['sdkSpecVersion'].value,
           purpose: this.projectForm.controls['sdkPurpose'].value,
           url: this.projectForm.controls['sdkUrl'].value,
+          sdkHash: this.projectForm.controls['sdkHash'].value,
+          websiteUrl: this.projectForm.controls['websiteUrl'].value,
           bioTestDataFileName: this.projectForm.controls['bioTestData'].value,
         };
         let request = {
@@ -452,6 +475,8 @@ export class ViewProjectComponent implements OnInit {
           outboundQueueName: this.projectForm.controls['outboundQueueName'].value,
           inboundQueueName: this.projectForm.controls['inboundQueueName'].value,
           modality:this.projectForm.controls['modality'].value,
+          abisHash:this.projectForm.controls['abisHash'].value,
+          websiteUrl:this.projectForm.controls['websiteUrl'].value,
           bioTestDataFileName: this.projectForm.controls['abisBioTestData'].value,
         };
         let request = {
