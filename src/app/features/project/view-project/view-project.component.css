@@ -34,7 +34,6 @@ mat-expansion-panel-header {
 }
 .fieldContainerBox{
   width: 300px;
-  text-overflow: ellipsis;
   white-space: normal;
   overflow: visible;
 }
