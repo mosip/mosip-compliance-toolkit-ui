@@ -34,6 +34,8 @@ mat-expansion-panel-header {
 }
 .fieldContainerBox{
   width: 300px;
+  white-space: normal;
+  overflow: visible;
 }
 .spacer {
   flex: 0.1;
@@ -305,7 +307,7 @@ mat-expansion-panel-header {
     padding: 5px;
   }
   .deviceImgFieldContainer {
-    margin-left: 35px;
+    margin-left: 25px;
   }
   .deviceImgFieldContainerBox {
     width: 300px;
