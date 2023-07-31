@@ -156,10 +156,9 @@ export class ProjectsDashboardComponent implements OnInit {
     }
     if (project.projectType == appConstants.SBI) {
       await this.getSbiProjectDetails(project.id);
-      const deviceImages = this.projectFormData.deviceImages;
       const sbiHash = this.projectFormData.sbiHash;
       const websiteUrl = this.projectFormData.websiteUrl;
-      if (deviceImages == 'To_Be_Added' || sbiHash == 'To_Be_Added' || websiteUrl == 'To_Be_Added') {
+      if (sbiHash == 'To_Be_Added' || websiteUrl == 'To_Be_Added') {
           await this.showUpdateProject(project.id, project.projectType);
       } else {
         await this.router.navigate([

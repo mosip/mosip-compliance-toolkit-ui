@@ -261,9 +261,6 @@ export class ViewProjectComponent implements OnInit {
       this.projectForm.controls['deviceSubType'].setValue(
         this.projectFormData.deviceSubType
       );
-      this.projectForm.controls['deviceImages'].setValue(
-        this.projectFormData.deviceImages
-      );
       this.projectForm.controls['sbiHash'].setValue(
         this.projectFormData.sbiHash
       );

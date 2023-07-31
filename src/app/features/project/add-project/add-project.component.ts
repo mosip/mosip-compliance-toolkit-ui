@@ -15,6 +15,7 @@ import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { AbisProjectModel } from 'src/app/core/models/abis-project';
 import { AppConfigService } from 'src/app/app-config.service';
+import { DialogComponent } from 'src/app/core/components/dialog/dialog.component';
 
 @Component({
   selector: 'app-project',
@@ -35,6 +36,12 @@ export class AddProjectComponent implements OnInit {
   dataSubmitted = false;
   isAbisPartner = this.appConfigService.getConfig()['abisPartnerType'] == "ABIS_PARTNER" ? true : false;
   invalidPartnerType: string = '';
+  deviceImage1: any = null;
+  deviceImage2: any = null;
+  deviceImage3: any = null;
+  deviceImage4: any = null;
+  deviceImage5: any = null;
+
 
   constructor(
     public authService: AuthService,
@@ -210,7 +217,11 @@ export class AddProjectComponent implements OnInit {
           purpose: this.projectForm.controls['sbiPurpose'].value,
           deviceType: this.projectForm.controls['deviceType'].value,
           deviceSubType: this.projectForm.controls['deviceSubType'].value,
-          deviceImages: this.projectForm.controls['deviceImages'].value,
+          deviceImage1: this.deviceImage1,
+          deviceImage2: this.deviceImage2,
+          deviceImage3: this.deviceImage3,
+          deviceImage4: this.deviceImage4,
+          deviceImage5: this.deviceImage5,
           sbiHash: this.projectForm.controls['sbiHash'].value,
           websiteUrl: this.projectForm.controls['websiteUrl'].value
         };
@@ -370,5 +381,41 @@ export class AddProjectComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
+
+  clickOnButton() {
+    this.allControls.forEach((controlId) => {
+      this.projectForm.controls[controlId].markAsTouched();
+    });
+    if (this.projectForm.valid) {
+      const dialogRef = this.dialog.open(DialogComponent, {
+        width: '80%',
+        data: {
+          case: "UPLOAD_DEVICE_IMAGES",
+        },
+      });
+  
+      dialogRef.afterClosed().subscribe((fileNames: string[]) => {
+        if (fileNames && fileNames.length > 0) {
+          for (let i = 0 ; i < fileNames.length; i++) {
+            if (i == 0) {
+              this.deviceImage1 = fileNames[i];
+            }
+            if (i == 1) {
+              this.deviceImage2 = fileNames[i];
+            }
+            if (i == 2) {
+              this.deviceImage3 = fileNames[i];
+            }
+            if (i == 3) {
+              this.deviceImage4 = fileNames[i];
+            }
+            if (i == 4) {
+              this.deviceImage5 = fileNames[i];
+            }
+          }
+        }
+      });
+    }
   }
 }

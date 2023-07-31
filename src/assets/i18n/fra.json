@@ -111,7 +111,8 @@
 		"sdkHash": "Hachage SDK:",
 		"sdkHashIsRequired": "Le hachage SDK est requis",
 		"abisHash": "Hachage ABIS:",
-		"abisHashIsRequired": "Le hachage ABIS est requis"
+		"abisHashIsRequired": "Le hachage ABIS est requis",
+		"upload": "Télécharger"
 	},
 	"addTestData": {
 		"name": "Nom",

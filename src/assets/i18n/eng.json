@@ -111,7 +111,8 @@
 		"sdkHash": "SDK Hash:",
 		"sdkHashIsRequired": "SDK Hash is required",
 		"abisHash": "ABIS Hash:",
-		"abisHashIsRequired": "ABIS Hash is required"
+		"abisHashIsRequired": "ABIS Hash is required",
+		"upload": "Upload"
 	},
 	"addTestData": {
 		"name": "Name:",

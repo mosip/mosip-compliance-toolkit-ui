@@ -15,6 +15,7 @@ import Utils from 'src/app/app.utils';
 import { SbiProjectModel } from '../../models/sbi-project';
 import { AbisProjectModel } from '../../models/abis-project';
 import { SdkProjectModel } from '../../models/sdk-project';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-dialog',
@@ -33,6 +34,13 @@ export class DialogComponent implements OnInit {
   subscriptions: Subscription[] = [];
   resourceBundleJson: any = {};
   dataLoaded = false;
+  selectedImages: File[] = [];
+  progress = 0;
+  deviceImage1: string = '';
+  deviceImage2: string = '';
+  deviceImage3: string = '';
+  deviceImage4: string = '';
+  deviceImage5: string = '';
   constructor(
     private router: Router,
     private dialogRef: MatDialogRef<DialogComponent>,
@@ -40,7 +48,8 @@ export class DialogComponent implements OnInit {
     private dataService: DataService,
     private dialog: MatDialog,
     private translate: TranslateService,
-    private userProfileService: UserProfileService
+    private userProfileService: UserProfileService,
+    private sanitizer: DomSanitizer
   ) {
     dialogRef.disableClose = true;
     
@@ -85,13 +94,13 @@ export class DialogComponent implements OnInit {
         new FormControl({
           value: '',
           disabled:
-            controlId == 'deviceImages' || controlId == 'sbiHash' || controlId == 'websiteUrl' ? false : true,
+            controlId == 'sbiHash' || controlId == 'websiteUrl' ? false : true,
         })
       );
     });
     appConstants.SBI_CONTROLS.forEach((controlId) => {
       this.projectForm.controls[controlId].setValidators(Validators.required);
-      if (controlId == 'deviceImages' || controlId == 'sbiHash' || controlId == 'websiteUrl') {
+      if (controlId == 'sbiHash' || controlId == 'websiteUrl') {
         this.projectForm.controls[controlId].setValidators([
           Validators.required,
           this.toBeAddedPatternValidator,
@@ -226,9 +235,6 @@ export class DialogComponent implements OnInit {
       this.projectForm.controls['deviceSubType'].setValue(
         this.projectFormData.deviceSubType
       );
-      this.projectForm.controls['deviceImages'].setValue(
-        this.projectFormData.deviceImages
-      );
       this.projectForm.controls['sbiHash'].setValue(
         this.projectFormData.sbiHash
       );
@@ -316,7 +322,11 @@ export class DialogComponent implements OnInit {
           purpose: this.projectForm.controls['sbiPurpose'].value,
           deviceType: this.projectForm.controls['deviceType'].value,
           deviceSubType: this.projectForm.controls['deviceSubType'].value,
-          deviceImages: this.projectForm.controls['deviceImages'].value,
+          deviceImage1: this.deviceImage1,
+          deviceImage2: this.deviceImage2,
+          deviceImage3: this.deviceImage3,
+          deviceImage4: this.deviceImage4,
+          deviceImage5: this.deviceImage5,
           sbiHash: this.projectForm.controls['sbiHash'].value,
           websiteUrl: this.projectForm.controls['websiteUrl'].value,
         };
@@ -445,5 +455,47 @@ export class DialogComponent implements OnInit {
   async saveProject() {
     this.dialogRef.close('');
     await this.router.navigate([`toolkit/project/${this.projectType}/${this.projectId}`]);
+  }
+
+  onFileSelect(event: Event): void {
+    const files = (event.target as HTMLInputElement).files;
+    if (files) {
+      const images = Array.from(files).filter((file) => file.type.startsWith('image/'));
+      if (this.selectedImages.length + images.length <= 5) {
+        this.selectedImages.push(...images);
+      } else {
+        Utils.showErrorMessage(this.resourceBundleJson, '', this.dialog, 'More than five photos cannot be added');
+      }
+    }
+  }
+
+  async getProgress(image: File) {
+    this.progress = 0;
+    this.simulateSaveProgress();
+  }
+
+  simulateSaveProgress() {
+    const interval = setInterval(() => {
+      this.progress += 25;
+      if (this.progress >= 100) {
+        clearInterval(interval);
+      }
+    }, 500);
+  }
+
+  getSelectedImageNames(): string {
+    return this.selectedImages.map((image) => image.name).join(', ');
+  }
+
+  getPreviewUrl(image: File): SafeUrl {
+    return this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(image));
+  }
+
+  uploadImages() {
+    const fileNames: string[] = [];
+    for (let i = 0; i < this.selectedImages.length; i++) {
+      fileNames.push(this.selectedImages[i].name);
+    }
+    this.dialogRef.close(fileNames);
   }
 }
