@@ -38,7 +38,7 @@
     <form [formGroup]="projectForm" *ngIf="dataLoaded">
         <div class="formContainer">
             <span *ngIf="projectForm.controls['projectType']?.value == 'SBI'">
-                <div class="fieldWrapper">
+                <!-- <div class="fieldWrapper">
                     <span class="fieldLabel">
                         <mat-label>{{"viewProject.deviceImages"|translate}}
                         </mat-label>
@@ -55,7 +55,7 @@
                             </mat-error>
                         </mat-form-field>
                     </span>
-                </div>
+                </div> -->
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
                         <mat-label>{{"viewProject.sbiHash"|translate}}
@@ -142,5 +142,29 @@
             {{"dialogMessages.updateProject"|translate}}
         </button>
     </div>
+</div>
+<div *ngIf="input.case === 'UPLOAD_DEVICE_IMAGES'" class="uploadImg">
+    <h2 mat-dialog-title class="mat-dialog-title">Upload Device Images</h2>
+    <div mat-dialog-content>
+        <input type="file" accept="image/*" (change)="onFileSelect($event)" #fileInput hidden multiple>
+        <div *ngIf="selectedImages.length < 5">
+          <button mat-raised-button color="accent" (click)="fileInput.click()">Add Images</button>
+        </div>
+        <div *ngIf="selectedImages.length > 5">
+          <p class = "maximumExceededMessage">Maximum 5 images can be added.</p>
+        </div>
+        <div *ngFor="let image of selectedImages">
+          <p>{{ image.name }}</p>
+          <mat-progress-bar mode="determinate" [value]="progress" class="progressBar"></mat-progress-bar>
+        </div>
+        <div *ngIf="selectedImages.length > 0" class="uploadButtonContainer">
+          <button mat-flat-button color="accent" (click)="uploadImages()" class="uploadBt">Save</button>
+        </div>
+        <div *ngIf="selectedImages.length > 0" role="preview" class="preview">
+          <div *ngFor="let image of selectedImages">
+            <img [src]="getPreviewUrl(image)" alt="{{ image.name }}">
+          </div>
+        </div>
+    </div>   
 </div>
 </div>

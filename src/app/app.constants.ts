@@ -49,7 +49,6 @@ export const SBI_CONTROLS = [
   'sbiPurpose',
   'deviceType',
   'deviceSubType',
-  'deviceImages',
   'sbiHash',
   'websiteUrl',
 ];

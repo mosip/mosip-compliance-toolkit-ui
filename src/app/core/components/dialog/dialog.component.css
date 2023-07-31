@@ -49,6 +49,31 @@ width: 300px;
 .saveBt {
     margin-left: 330px;
 }
+button[mat-raised-button] {
+  margin-top: 10px;
+}
+.preview {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+img {
+  max-width: 100px;
+  max-height: 100px;
+  margin: 5px;
+}
+.progressBar {
+  margin-top: 5px;
+}
+.maximumExceededMessage {
+  color: red;
+  margin-top: 5px;
+}
+.uploadButtonContainer {
+  position: relative;
+  float: right;
+  margin-top: 15px;
+}
 @media only screen and (max-width: 426px) {
     .fieldWrapper {
       width: 340px;

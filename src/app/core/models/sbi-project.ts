@@ -7,7 +7,11 @@ export class SbiProjectModel {
     public purpose: string,
     public deviceType: string,
     public deviceSubType: string,
-    public deviceImages: string,
+    public deviceImage1: string,
+    public deviceImage2: string,
+    public deviceImage3: string,
+    public deviceImage4: string,
+    public deviceImage5: string,
     public sbiHash: string,
     public websiteUrl: string
   ) {}
