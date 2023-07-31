@@ -840,6 +840,9 @@ export class ExecuteTestRunComponent implements OnInit {
         if (this.isCombinationAbisTestcase && this.currentAbisMethod !== appConstants.ABIS_METHOD_IDENTIFY) {
           this.abisSentDataSource = abisReq.testDataSource;
         }
+        if (!this.isCombinationAbisTestcase) {
+          this.abisSentDataSource = abisReq.testDataSource;
+        }
         console.log(`this.abisSentDataSource ${this.abisSentDataSource}`);
         this.subscribeToABISQueue(requestId);
         //wait till some message arrives in active mq
