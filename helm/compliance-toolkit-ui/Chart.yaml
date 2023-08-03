@@ -2,7 +2,7 @@ apiVersion: v2
 name: compliance-toolkit-ui
 description: A Helm chart for compliance-toolkit-ui
 type: application
-version: 1.2.0
+version: 1.2.1
 appVersion: ""
 dependencies:
   - name: common
