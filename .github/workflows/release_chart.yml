@@ -6,6 +6,7 @@ on:
       - 1.*
       - 0.*
       - develop
+      - release-1.*
     paths:
       - 'helm/**'
 
