@@ -38,24 +38,16 @@
     <form [formGroup]="projectForm" *ngIf="dataLoaded">
         <div class="formContainer">
             <span *ngIf="projectForm.controls['projectType']?.value == 'SBI'">
-                <!-- <div class="fieldWrapper">
+                <div class="fieldWrapper">
                     <span class="fieldLabel">
-                        <mat-label>{{"viewProject.deviceImages"|translate}}
-                        </mat-label>
+                      <mat-label>{{ "addProject.deviceImages" | translate }}</mat-label>
                     </span>
                     <span class="fieldContainer">
-                        <mat-form-field appearance="legacy" class="fieldContainerBox">
-                            <mat-label>{{"viewProject.deviceImages"|translate}}</mat-label>
-                            <input matInput formControlName="deviceImages" #keyboardRef #input/>
-                            <mat-error *ngIf="projectForm.controls['deviceImages'].hasError('required')">
-                                {{"viewProject.deviceImagesIsRequired"|translate}}
-                            </mat-error>
-                            <mat-error *ngIf="projectForm.controls['deviceImages'].hasError('toBeAddedPattern')">
-                                {{"dialogMessages.deviceImagesIsInvalid"|translate}}
-                            </mat-error>
-                        </mat-form-field>
+                      <button mat-flat-button color="accent" (click)="clickOnButton()" class="fileuploadbtn">
+                        {{"addProject.selectDeviceImages"|translate}}
+                      </button>
                     </span>
-                </div> -->
+                </div>
                 <div class="fieldWrapper">
                     <span class="fieldLabel">
                         <mat-label>{{"viewProject.sbiHash"|translate}}
@@ -143,28 +135,59 @@
         </button>
     </div>
 </div>
-<div *ngIf="input.case === 'UPLOAD_DEVICE_IMAGES'" class="uploadImg">
-    <h2 mat-dialog-title class="mat-dialog-title">Upload Device Images</h2>
-    <div mat-dialog-content>
-        <input type="file" accept="image/*" (change)="onFileSelect($event)" #fileInput hidden multiple>
-        <div *ngIf="selectedImages.length < 5">
-          <button mat-raised-button color="accent" (click)="fileInput.click()">Add Images</button>
+<div *ngIf="input.case === 'UPLOAD_DEVICE_IMAGES'" class="uploadDiv">
+    <h2 mat-dialog-title class="mat-dialog-title">{{"dialogMessages.uploadDeviceImages"|translate}}</h2>
+    <div class="uploadImg">
+        <div *ngFor="let fileIndex of [0, 1, 2, 3]"  class="button-container">
+            <div class="buttons">
+                <input type="file" accept="image/*" (change)="onFileSelect($event, fileIndex)" #fileInput hidden single>
+                <button mat-raised-button (click)="fileInput.click()">
+                    <mat-icon>add</mat-icon>{{"dialogMessages.addImage"|translate}} {{ fileIndex + 1 }}
+                </button>
+            </div>
+            <div>
+                <button mat-icon-button *ngIf="!imagePreviewsVisible[fileIndex] && visibilityState[fileIndex]" (click)="toggleImagePreview(fileIndex)">
+                    <mat-icon class="eyeIcon">{{ imagePreviewsVisible[fileIndex] ? 'visibility_off' : 'visibility' }}</mat-icon>
+                </button>
+            </div>
         </div>
-        <div *ngIf="selectedImages.length > 5">
-          <p class = "maximumExceededMessage">Maximum 5 images can be added.</p>
+        <div class="imagePreview">
+            <span *ngIf="imagePreviewsVisible[0]">
+                <div class="delete-overlay" (click)="deleteImage(0)">
+                    <img [src]="imageUrls[0]" alt="Preview">
+                </div>
+            </span>
+            <span *ngIf="imagePreviewsVisible[1]">
+                <div class="delete-overlay" (click)="deleteImage(1)">
+                    <img [src]="imageUrls[1]" alt="Preview">
+                </div>
+            </span>
+            <span *ngIf="imagePreviewsVisible[2]">
+                <div class="delete-overlay" (click)="deleteImage(2)">
+                    <img [src]="imageUrls[2]" alt="Preview">
+                </div>
+            </span>
+            <span *ngIf="imagePreviewsVisible[3]">
+                <div class="delete-overlay" (click)="deleteImage(3)">
+                    <img [src]="imageUrls[3]" alt="Preview">
+                </div>
+            </span>
         </div>
-        <div *ngFor="let image of selectedImages">
-          <p>{{ image.name }}</p>
-          <mat-progress-bar mode="determinate" [value]="progress" class="progressBar"></mat-progress-bar>
+    </div>  
+    <div>
+        <button mat-flat-button color="accent" (click)="uploadImages()" class="closeBt">{{"dialogMessages.close"|translate}}</button>
+    </div> 
+</div>
+<div *ngIf="input.case === 'DEVICE_IMAGES'">
+    <h2 mat-dialog-title class="mat-dialog-title">{{"dialogMessages.deviceImages"|translate}}</h2>
+    <div mat-dialog-content class="deviceImageBox">
+        <div class="viewImgMsg">{{getImageBase64Urls(input.deviceImagesUrl)}}</div>
+        <div class="viewImages">
+            <img class="viewDeviceImages" *ngFor="let image of input.deviceImagesUrl" [src]="image" alt="Preview">
         </div>
-        <div *ngIf="selectedImages.length > 0" class="uploadButtonContainer">
-          <button mat-flat-button color="accent" (click)="uploadImages()" class="uploadBt">Save</button>
-        </div>
-        <div *ngIf="selectedImages.length > 0" role="preview" class="preview">
-          <div *ngFor="let image of selectedImages">
-            <img [src]="getPreviewUrl(image)" alt="{{ image.name }}">
-          </div>
-        </div>
-    </div>   
+        <mat-dialog-actions align="end">
+            <button mat-flat-button color="accent" (click)="uploadImages()" class="viewImgCloseBtn">{{"dialogMessages.close"|translate}}</button>
+        </mat-dialog-actions>
+    </div>
 </div>
 </div>

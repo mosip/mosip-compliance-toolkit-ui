@@ -10,12 +10,12 @@ import { UserProfileService } from '../../services/user-profile.service';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import * as appConstants from 'src/app/app.constants';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, flatMap } from 'rxjs';
 import Utils from 'src/app/app.utils';
 import { SbiProjectModel } from '../../models/sbi-project';
 import { AbisProjectModel } from '../../models/abis-project';
 import { SdkProjectModel } from '../../models/sdk-project';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { AppConfigService } from 'src/app/app-config.service';
 
 @Component({
   selector: 'app-dialog',
@@ -34,22 +34,29 @@ export class DialogComponent implements OnInit {
   subscriptions: Subscription[] = [];
   resourceBundleJson: any = {};
   dataLoaded = false;
-  selectedImages: File[] = [];
+  selectedImages: (File | undefined)[] = [undefined, undefined, undefined, undefined];
   progress = 0;
   deviceImage1: string = '';
   deviceImage2: string = '';
   deviceImage3: string = '';
   deviceImage4: string = '';
   deviceImage5: string = '';
+  imageUrls: any[] = [null, null, null, null];
+  imagePreviewsVisible: boolean[] = [false, false, false, false];
+  visibilityState: boolean[] = [false, false, false, false];
+  allowedFileNameLegth =
+    this.appConfigService.getConfig()['allowedFileNameLegth'];
+  allowedFileSize = this.appConfigService.getConfig()['allowedFileSize'];
+
   constructor(
     private router: Router,
     private dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
+    private appConfigService: AppConfigService,
     private dataService: DataService,
     private dialog: MatDialog,
     private translate: TranslateService,
-    private userProfileService: UserProfileService,
-    private sanitizer: DomSanitizer
+    private userProfileService: UserProfileService
   ) {
     dialogRef.disableClose = true;
     
@@ -79,6 +86,10 @@ export class DialogComponent implements OnInit {
       this.initAbisProjectForm();
       await this.getAbisProjectDetails();
       this.populateAbisProjectForm();
+    }
+    if (this.data.selectedDeviceImagesUrl) {
+      this.imageUrls = this.data.selectedDeviceImagesUrl;
+      this.getSelectedImageUrl();
     }
     this.dataLoaded = true;
   }
@@ -326,7 +337,6 @@ export class DialogComponent implements OnInit {
           deviceImage2: this.deviceImage2,
           deviceImage3: this.deviceImage3,
           deviceImage4: this.deviceImage4,
-          deviceImage5: this.deviceImage5,
           sbiHash: this.projectForm.controls['sbiHash'].value,
           websiteUrl: this.projectForm.controls['websiteUrl'].value,
         };
@@ -457,45 +467,115 @@ export class DialogComponent implements OnInit {
     await this.router.navigate([`toolkit/project/${this.projectType}/${this.projectId}`]);
   }
 
-  onFileSelect(event: Event): void {
+  getImageBase64Urls(base64Urls: string[]) {
+    return base64Urls.length == 0 ? 'There are no device images for this project': '';
+  }
+
+  onFileSelect(event: Event, fileIndex: number): void {
+    this.imagePreviewsVisible = [false, false, false, false];
     const files = (event.target as HTMLInputElement).files;
-    if (files) {
-      const images = Array.from(files).filter((file) => file.type.startsWith('image/'));
-      if (this.selectedImages.length + images.length <= 5) {
-        this.selectedImages.push(...images);
-      } else {
-        Utils.showErrorMessage(this.resourceBundleJson, '', this.dialog, 'More than five photos cannot be added');
+    if (files && files.length > 0) {
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        if (!file.type.startsWith('image/')) {
+          Utils.showErrorMessage(
+            this.resourceBundleJson,
+            null,
+            this.dialog,
+            'File type is not allowed other than image'
+          );
+        } else {
+          if (file.name.length > this.allowedFileNameLegth) {
+            Utils.showErrorMessage(
+              this.resourceBundleJson,
+              null,
+              this.dialog,
+              'File name is not allowed more than: ' +
+                this.allowedFileNameLegth +
+                ' characters'
+            );
+          } else {
+            if (file.size > this.allowedFileSize) {
+              let size = this.allowedFileSize / 1000000;
+              Utils.showErrorMessage(
+                this.resourceBundleJson,
+                null,
+                this.dialog,
+                'File size is not allowed more than: ' + size + ' MB'
+              );
+            } else {
+              this.selectedImages[fileIndex] = file;
+              this.visibilityState[fileIndex] = true;
+              this.imagePreviewsVisible[fileIndex] = true;
+            }
+          }
+        }
+      }
+    }
+    this.loadPreviewImages(fileIndex);
+  }
+
+  getSelectedImageUrl(){
+    const isAllUrlNull = this.imageUrls.every((value) => value == null);
+    if (!isAllUrlNull) {
+      for (let i = 0; i < this.imageUrls.length; i++) {
+        if (this.imageUrls[i]) {
+          this.visibilityState[i] = true;
+        }
+      }
+    }
+  }
+  
+  loadPreviewImages(fileIndex: number): void {
+    for (let i = 0; i < this.selectedImages.length; i++) {
+      const image = this.selectedImages[i];
+      if (image) {
+        const reader = new FileReader();
+        reader.readAsDataURL(image);
+        reader.onload = () => {
+          if (i == fileIndex) {
+            this.imageUrls[fileIndex] = reader.result as string;
+          }
+        };
       }
     }
   }
 
-  async getProgress(image: File) {
-    this.progress = 0;
-    this.simulateSaveProgress();
-  }
+  toggleImagePreview(fileIndex: number): void {
+    for (let i = 0; i < this.imagePreviewsVisible.length; i++) {
+      this.imagePreviewsVisible[i] = (i == fileIndex);
+    }
+  } 
 
-  simulateSaveProgress() {
-    const interval = setInterval(() => {
-      this.progress += 25;
-      if (this.progress >= 100) {
-        clearInterval(interval);
-      }
-    }, 500);
-  }
-
-  getSelectedImageNames(): string {
-    return this.selectedImages.map((image) => image.name).join(', ');
-  }
-
-  getPreviewUrl(image: File): SafeUrl {
-    return this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(image));
-  }
+  deleteImage(fileIndex: number) {
+    this.selectedImages[fileIndex] = undefined;
+    this.imageUrls[fileIndex] = null;
+    this.visibilityState[fileIndex] = false;
+    this.imagePreviewsVisible[fileIndex] = false;
+    console.log(this.imageUrls);
+}
 
   uploadImages() {
-    const fileNames: string[] = [];
-    for (let i = 0; i < this.selectedImages.length; i++) {
-      fileNames.push(this.selectedImages[i].name);
-    }
-    this.dialogRef.close(fileNames);
+    this.dialogRef.close(this.imageUrls);
+  }
+
+  clickOnButton() {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '450px',
+      height: '360px',
+      data: {
+        case: "UPLOAD_DEVICE_IMAGES",
+        selectedDeviceImagesUrl: this.imageUrls,
+      },
+    });
+    dialogRef.afterClosed().subscribe((base64Url: string[]) => {
+      if (base64Url && base64Url.length > 0) {
+        this.deviceImage1 = base64Url[0];
+        this.deviceImage2 = base64Url[1];
+        this.deviceImage3 = base64Url[2];
+        this.deviceImage4 = base64Url[3];
+      }
+      this.imageUrls = base64Url;
+    });
   }
 }

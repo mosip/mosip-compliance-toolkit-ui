@@ -18,6 +18,7 @@ import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { AbisProjectModel } from 'src/app/core/models/abis-project';
+import { DialogComponent } from 'src/app/core/components/dialog/dialog.component';
 
 export interface CollectionsData {
   collectionId: string;
@@ -65,6 +66,7 @@ export class ViewProjectComponent implements OnInit {
   panelOpenState = false;
   bioTestDataFileNames: string[] = [];
   resourceBundleJson: any = {};
+  deviceImageUrls: string[] = [];
 
   constructor(
     public authService: AuthService,
@@ -85,6 +87,7 @@ export class ViewProjectComponent implements OnInit {
       this.initSbiProjectForm();
       await this.getSbiProjectDetails();
       this.populateSbiProjectForm();
+      this.getDeviceImageUrl();
     }
     if (this.projectType == appConstants.SDK) {
       this.initSdkProjectForm();
@@ -567,5 +570,31 @@ export class ViewProjectComponent implements OnInit {
       this.panelOpenState = true;
       return true;
     }
+  }
+
+  getDeviceImageUrl() {
+    if (this.projectFormData.deviceImage1) {
+      this.deviceImageUrls.push(this.projectFormData.deviceImage1);
+    }
+    if (this.projectFormData.deviceImage2) {
+      this.deviceImageUrls.push(this.projectFormData.deviceImage2);
+    }
+    if (this.projectFormData.deviceImage3) {
+      this.deviceImageUrls.push(this.projectFormData.deviceImage3);
+    }
+    if (this.projectFormData.deviceImage4) {
+      this.deviceImageUrls.push(this.projectFormData.deviceImage4);
+    }
+  }
+
+  clickOnButton() {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '50%',
+      data: {
+        case: "DEVICE_IMAGES",
+        deviceImagesUrl: this.deviceImageUrls,
+      },
+    });
+    dialogRef.afterClosed();
   }
 }

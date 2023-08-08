@@ -11,7 +11,6 @@ export class SbiProjectModel {
     public deviceImage2: string,
     public deviceImage3: string,
     public deviceImage4: string,
-    public deviceImage5: string,
     public sbiHash: string,
     public websiteUrl: string
   ) {}

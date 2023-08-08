@@ -346,14 +346,12 @@
                     </div>
                 </div>
                 <div class="deviceImgFieldWrapper">
-                    <span class="fieldLabel">
-                      <mat-label>{{ "addProject.deviceImages" | translate }}
-                        <span class="required-annotation">*</span>
-                      </mat-label>
+                    <span class="deviceImgFieldLabel">
+                      <mat-label class="deviceImageLabel">{{ "addProject.deviceImages" | translate }}</mat-label>
                     </span>
                     <span class="deviceImgFieldContainer">
                       <button mat-flat-button color="accent" (click)="clickOnButton()" class="fileuploadbtn">
-                        {{"addProject.upload"|translate}}
+                        {{"addProject.selectDeviceImages"|translate}}
                       </button>
                     </span>
                 </div>

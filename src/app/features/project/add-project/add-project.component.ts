@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/authservice.service';
 import { Router } from '@angular/router';
@@ -6,7 +6,7 @@ import { DataService } from '../../../core/services/data-service';
 import * as appConstants from 'src/app/app.constants';
 import { Subscription } from 'rxjs';
 import { SbiProjectModel } from 'src/app/core/models/sbi-project';
-import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import Utils from 'src/app/app.utils';
 import { SdkProjectModel } from 'src/app/core/models/sdk-project';
 import { environment } from 'src/environments/environment';
@@ -41,7 +41,7 @@ export class AddProjectComponent implements OnInit {
   deviceImage3: any = null;
   deviceImage4: any = null;
   deviceImage5: any = null;
-
+  imageUrls: any[] = [null, null, null, null];
 
   constructor(
     public authService: AuthService,
@@ -221,7 +221,6 @@ export class AddProjectComponent implements OnInit {
           deviceImage2: this.deviceImage2,
           deviceImage3: this.deviceImage3,
           deviceImage4: this.deviceImage4,
-          deviceImage5: this.deviceImage5,
           sbiHash: this.projectForm.controls['sbiHash'].value,
           websiteUrl: this.projectForm.controls['websiteUrl'].value
         };
@@ -384,38 +383,31 @@ export class AddProjectComponent implements OnInit {
   }
 
   clickOnButton() {
-    this.allControls.forEach((controlId) => {
-      this.projectForm.controls[controlId].markAsTouched();
+    this.projectForm.controls['name'].clearValidators();
+    this.projectForm.controls['name'].updateValueAndValidity();
+    appConstants.SBI_CONTROLS.forEach((controlId) => {
+      this.projectForm.controls[controlId].clearValidators();
+      this.projectForm.controls[controlId].updateValueAndValidity();
     });
-    if (this.projectForm.valid) {
-      const dialogRef = this.dialog.open(DialogComponent, {
-        width: '80%',
-        data: {
-          case: "UPLOAD_DEVICE_IMAGES",
-        },
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '450px',
+      height: '360px',
+      data: {
+        case: "UPLOAD_DEVICE_IMAGES",
+        selectedDeviceImagesUrl: this.imageUrls,
+      },
+    });
+    dialogRef.afterClosed().subscribe((base64Url: string[]) => {
+      if (base64Url && base64Url.length > 0) {
+        this.deviceImage1 = base64Url[0];
+        this.deviceImage2 = base64Url[1];
+        this.deviceImage3 = base64Url[2];
+        this.deviceImage4 = base64Url[3];
+      }
+      this.imageUrls = base64Url;
+      appConstants.SBI_CONTROLS.forEach((controlId) => {
+        this.projectForm.controls[controlId].setValidators(Validators.required);
       });
-  
-      dialogRef.afterClosed().subscribe((fileNames: string[]) => {
-        if (fileNames && fileNames.length > 0) {
-          for (let i = 0 ; i < fileNames.length; i++) {
-            if (i == 0) {
-              this.deviceImage1 = fileNames[i];
-            }
-            if (i == 1) {
-              this.deviceImage2 = fileNames[i];
-            }
-            if (i == 2) {
-              this.deviceImage3 = fileNames[i];
-            }
-            if (i == 3) {
-              this.deviceImage4 = fileNames[i];
-            }
-            if (i == 4) {
-              this.deviceImage5 = fileNames[i];
-            }
-          }
-        }
-      });
-    }
+    });
   }
 }

@@ -12,7 +12,10 @@
 		"sdkHashIsInvalid": "SDK Hash is Invalid",
 		"abisHashIsInvalid": "ABIS Hash is Invalid",
 		"websiteUrlIsInvalid": "Website URL is Invalid",
-		"updateProject": "Update Project"
+		"updateProject": "Update Project",
+		"deviceImages": "Device Images",
+		"uploadDeviceImages": "Upload Device Images",
+		"addImage": "Add Image"
 	},
 	"breadcrumb": {
 		"home": "Home",
@@ -112,7 +115,7 @@
 		"sdkHashIsRequired": "SDK Hash is required",
 		"abisHash": "ABIS Hash:",
 		"abisHashIsRequired": "ABIS Hash is required",
-		"upload": "Upload"
+		"selectDeviceImages": "Upload Device Images"
 	},
 	"addTestData": {
 		"name": "Name:",
@@ -177,7 +180,8 @@
 		"sdkHash": "SDK Hash:",
 		"sdkHashIsRequired": "SDK Hash is required",
 		"abisHash": "ABIS Hash:",
-		"abisHashIsRequired": "ABIS Hash is required"
+		"abisHashIsRequired": "ABIS Hash is required",
+		"viewDeviceImages": "View Device Images"
 	},
 	"testRunHistory": {
 		"runDate": "Run Date",

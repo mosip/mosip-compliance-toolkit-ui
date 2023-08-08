@@ -12,7 +12,10 @@
 		"sdkHashIsInvalid": "تجزئة SDK غير صالحة",
 		"abisHashIsInvalid": "تجزئة ABIS غير صالحة",
 		"websiteUrlIsInvalid": "عنوان URL لموقع الويب غير صالح",
-		"updateProject": "تحديث المشروع"
+		"updateProject": "تحديث المشروع",
+		"deviceImages": "صور الجهاز",
+		"uploadDeviceImages": "تحميل صور الجهاز",
+		"addImage": "إضافة صورة"
 	},
 	"breadcrumb": {
 		"home": "بيت",
@@ -112,7 +115,7 @@
 		"sdkHashIsRequired": "مطلوب تجزئة SDK",
 		"abisHash": "تجزئة ABIS:",
 		"abisHashIsRequired": "مطلوب تجزئة ABIS",
-		"upload": "رفع"
+		"selectDeviceImages": "تحميل صور الجهاز"
 	},
 	"addTestData": {
 		"name": "اسم",
@@ -177,7 +180,8 @@
 		"sdkHash": "تجزئة SDK:",
 		"sdkHashIsRequired": "مطلوب تجزئة SDK",
 		"abisHash": "تجزئة ABIS:",
-		"abisHashIsRequired": "مطلوب تجزئة ABIS"
+		"abisHashIsRequired": "مطلوب تجزئة ABIS",
+		"viewDeviceImages": "عرض صور الجهاز"
 	},
 	"testRunHistory": {
 		"runDate": "تشغيل التاريخ",
