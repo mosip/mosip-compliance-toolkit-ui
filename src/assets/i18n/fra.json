@@ -12,7 +12,10 @@
 		"sdkHashIsInvalid": "Le hachage SDK n'est pas valide",
 		"abisHashIsInvalid": "Le hachage ABIS n'est pas valide",
 		"websiteUrlIsInvalid": "L'URL du site Web n'est pas valide",
-		"updateProject": "Mettre à jour le projet"
+		"updateProject": "Mettre à jour le projet",
+		"deviceImages": "Images de l'appareil",
+		"uploadDeviceImages": "Télécharger des images de périphérique",
+		"addImage": "Ajouter une image"
 	},
 	"breadcrumb": {
 		"home": "Maison",
@@ -112,7 +115,7 @@
 		"sdkHashIsRequired": "Le hachage SDK est requis",
 		"abisHash": "Hachage ABIS:",
 		"abisHashIsRequired": "Le hachage ABIS est requis",
-		"upload": "Télécharger"
+		"selectDeviceImages": "Télécharger des images de périphérique"
 	},
 	"addTestData": {
 		"name": "Nom",
@@ -177,7 +180,8 @@
 		"sdkHash": "Hachage SDK:",
 		"sdkHashIsRequired": "Le hachage SDK est requis",
 		"abisHash": "Hachage ABIS:",
-		"abisHashIsRequired": "Le hachage ABIS est requis"
+		"abisHashIsRequired": "Le hachage ABIS est requis",
+		"viewDeviceImages": "Afficher les images de l'appareil"
 	},
 	"testRunHistory": {
 		"runDate": "Date d'exécution",

@@ -321,21 +321,17 @@
                                 </span>
                             </div>
                         </div>
-                        <!-- <div class="deviceImgFieldWrapper">
+                        <div class="deviceImgFieldWrapper">
                             <span class="fieldLabel">
-                                <mat-label>{{"viewProject.deviceImages"|translate}}
+                                <mat-label class="deviceImgFieldLabel">{{"viewProject.deviceImages"|translate}}
                                 </mat-label>
                             </span>
                             <span class="deviceImgFieldContainer">
-                                <mat-form-field appearance="legacy" class="deviceImgFieldContainerBox">
-                                    <mat-label>{{"viewProject.deviceImages"|translate}}</mat-label>
-                                    <input matInput formControlName="deviceImages" #keyboardRef #input [readonly]="true"/>
-                                    <mat-error *ngIf="projectForm.controls['deviceImages'].hasError('required')">
-                                        {{"viewProject.deviceImagesIsRequired"|translate}}
-                                    </mat-error>
-                                </mat-form-field>
+                                <button mat-flat-button color="accent" (click)="clickOnButton()" class="viewImgBtn">
+                                    {{"viewProject.viewDeviceImages"|translate}}
+                                </button>
                             </span>
-                        </div> -->
+                        </div>
                     </span>
                     <span *ngIf="projectForm.controls['projectType']?.value == 'ABIS'">
                         <div class="rowContainer">

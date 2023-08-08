@@ -99,14 +99,15 @@ mat-expansion-panel-header {
   color: #ff4081;
 }
 .deviceImgFieldWrapper {
-  align-items: start;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
   padding: 5px;
 }
-.deviceImgFieldContainer {
-  margin-left: 45px;
-}
-.deviceImgFieldContainerBox {
-  width: 300px;
+.deviceImgFieldLabel {
+  width: 60px;
 }
 @media screen and (max-width: 2048px) {
   .encryptionkeyButton{
@@ -300,12 +301,11 @@ mat-expansion-panel-header {
   .scandeviceButtonREG{
     margin-left: 82.5em;
   }
+  .viewImgBtn {
+    margin-left: -100px;
+  }
 }
 @media screen and (min-width:1280px) and (max-width: 1380px) {
-  .deviceImgFieldWrapper {
-    align-items: start;
-    padding: 5px;
-  }
   .deviceImgFieldContainer {
     margin-left: 25px;
   }
@@ -347,6 +347,9 @@ mat-expansion-panel-header {
   .collectionButtonMobile{
     margin-right: 76em;
   }
+  .viewImgBtn {
+    margin-left: -100px;
+  }
 }
 @media screen and (min-width: 1200px) and (max-width: 1279px) {
   .deviceImgFieldContainer {
@@ -369,6 +372,9 @@ mat-expansion-panel-header {
   .scandeviceButtonREG{
     position: absolute;
     margin-left: 60em;
+  }
+  .viewImgBtn {
+    margin-left: -90px;
   }
 }
 @media screen and (min-width: 1420px) and (max-width: 1200px) {
@@ -404,6 +410,9 @@ mat-expansion-panel-header {
   .collections-button2{
     margin-right: 950px;
   }
+  .viewImgBtn {
+    margin-left: -80px;
+  }
 }
 @media screen and (min-width: 1069px) and (max-width: 1140px) {
   .deviceImgFieldContainer {
@@ -430,10 +439,13 @@ mat-expansion-panel-header {
   .collections-button2{
     margin-right: 850px;
   }
+  .viewImgBtn {
+    margin-left: -80px;
+  }
 }
 @media screen and (min-width: 1024px) and (max-width: 1068px) {
-  .deviceImgFieldContainer {
-    margin-left: 10px;
+  .viewImgBtn {
+    margin-left: -70px;
   }
   .collections-button{
     position: absolute;
@@ -467,13 +479,16 @@ mat-expansion-panel-header {
   }
 }
 @media screen and (max-width: 1023px) {
-  .deviceImgFieldContainer {
-    margin-left: 10px;
+  .viewImgBtn {
+    margin-left: -70px;
   }
 }
 @media screen and (max-width: 960px) {
-  .deviceImgFieldContainer {
-    margin-left: 5px;
+  .deviceImgFieldLabel {
+    display: block;
+  }
+  .viewImgBtn {
+    margin-left: -30px;
   }
   .collections-button{
     position: absolute;
@@ -540,6 +555,9 @@ mat-expansion-panel-header {
   }
 }
 @media screen and (min-width: 603px) and (max-width: 684px) {
+  .viewImgBtn {
+    margin-left: 10px;
+  }
   .collections-button{
     position: absolute;
   }
@@ -576,6 +594,9 @@ mat-expansion-panel-header {
   }
 }
 @media screen and (max-width: 600px) {
+  .viewImgBtn {
+    margin-left: 10px;
+  }
   .collections-button{
     position: absolute;
     margin-left: 0em;
@@ -621,10 +642,6 @@ mat-expansion-panel-header {
   }
   .fieldContainerBox {
     width: 240px;
-  }
-  .deviceImgFieldWrapper {
-    width: 340px;
-    display: block;
   }
   .deviceImgFieldContainer {
     width: 80px;
@@ -775,11 +792,6 @@ mat-expansion-panel-header {
   }
   .fieldLabel {
     width: 60px;
-  }
-  .deviceImgFieldWrapper {
-    width: 280px;
-    display: block;
-    padding-left: -5px;
   }
   .deviceImgFieldContainer {
     width: 60px;
@@ -939,11 +951,6 @@ mat-expansion-panel-header {
   .fieldContainerBox {
     width: 100%;
   }
-  .deviceImgFieldWrapper {
-    width: 250px;
-    display: block;
-    padding-bottom: 20px;
-  }
   .deviceImgFieldContainerBox {
     width: 100%;
   }
@@ -964,11 +971,6 @@ mat-expansion-panel-header {
   }
   .fieldContainerBox {
     width: 232px;
-  }
-  .deviceImgFieldWrapper {
-    width: 250px;
-    display: block;
-    padding-bottom: 20px;
   }
   .deviceImgFieldContainerBox {
     width: 232px;
