@@ -443,7 +443,7 @@ export default class Utils {
     });
   }
 
-  static getSbiProjectDetails(projectId:string, dataService: any, resourceBundleJson: any, dialog:any) {
+  static getSbiProjectDetails(projectId:string, dataService: any, resourceBundleJson: any, dialog:MatDialog) {
     return new Promise((resolve, reject) => {
       dataService.getSbiProject(projectId).subscribe(
         (response: any) => {

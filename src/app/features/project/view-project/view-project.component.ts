@@ -85,7 +85,7 @@ export class ViewProjectComponent implements OnInit {
     await this.initProjectIdAndType();
     if (this.projectType == appConstants.SBI) {
       this.initSbiProjectForm();
-      this.projectFormData = await Utils.getSbiProjectDetails(this.projectId,this.dataService,this.resourceBundleJson,this.dialog);
+      this.projectFormData = await Utils.getSbiProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
       this.populateSbiProjectForm();
       this.getDeviceImageUrl();
     }

@@ -69,7 +69,7 @@ export class TestRunHistoryComponent implements OnInit {
     await this.initAllParams();
     await this.getCollection();
     if (this.projectType == appConstants.SBI) {
-      const sbiProjectDetails: any = await Utils.getSbiProjectDetails(this.projectId,this.dataService,this.resourceBundleJson,this.dialog);
+      const sbiProjectDetails: any = await Utils.getSbiProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
       if(sbiProjectDetails) {
         this.sbiProjectData = sbiProjectDetails;
       }

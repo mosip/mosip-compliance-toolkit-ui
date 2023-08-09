@@ -75,7 +75,7 @@ export class DialogComponent implements OnInit {
     this.projectType = this.input.projectType;
     if(this.projectType == appConstants.SBI) {
       this.initSbiProjectForm();
-      this.projectFormData = await Utils.getSbiProjectDetails(this.projectId,this.dataService,this.resourceBundleJson,this.dialog);
+      this.projectFormData = await Utils.getSbiProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
       this.populateSbiProjectForm();
     }
     if (this.projectType == appConstants.SDK) {

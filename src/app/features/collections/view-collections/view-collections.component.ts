@@ -65,7 +65,7 @@ export class ViewCollectionsComponent implements OnInit {
     await this.getCollection();
     this.populateCollection();
     if (this.projectType == appConstants.SBI) {
-      const sbiProjectDetails: any = await Utils.getSbiProjectDetails(this.projectId,this.dataService,this.resourceBundleJson,this.dialog);
+      const sbiProjectDetails: any = await Utils.getSbiProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
       if(sbiProjectDetails) {
         this.sbiProjectData = sbiProjectDetails;
       }

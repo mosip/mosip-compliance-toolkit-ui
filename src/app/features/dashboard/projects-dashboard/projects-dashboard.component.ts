@@ -155,7 +155,7 @@ export class ProjectsDashboardComponent implements OnInit {
       localStorage.removeItem(appConstants.SBI_SCAN_COMPLETE);
     }
     if (project.projectType == appConstants.SBI) {
-      this.projectFormData = await Utils.getSbiProjectDetails(project.id,this.dataService,this.resourceBundleJson,this.dialog);
+      this.projectFormData = await Utils.getSbiProjectDetails(project.id, this.dataService, this.resourceBundleJson, this.dialog);
       const sbiHash = this.projectFormData.sbiHash;
       const websiteUrl = this.projectFormData.websiteUrl;
       if (sbiHash == 'To_Be_Added' || websiteUrl == 'To_Be_Added') {

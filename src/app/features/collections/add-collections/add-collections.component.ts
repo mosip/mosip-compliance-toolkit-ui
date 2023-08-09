@@ -64,7 +64,7 @@ export class AddCollectionsComponent implements OnInit {
     this.initForm();
     await this.initProjectIdAndType();
     if (this.projectType == appConstants.SBI) {
-      const sbiProjectDetails: any = await Utils.getSbiProjectDetails(this.projectId,this.dataService,this.resourceBundleJson,this.dialog);
+      const sbiProjectDetails: any = await Utils.getSbiProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
       if(sbiProjectDetails) {
         this.sbiProjectData = sbiProjectDetails;
       }
