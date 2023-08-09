@@ -75,7 +75,7 @@ export class DialogComponent implements OnInit {
     this.projectType = this.input.projectType;
     if(this.projectType == appConstants.SBI) {
       this.initSbiProjectForm();
-      await this.getSbiProjectDetails();
+      this.projectFormData = await Utils.getSbiProjectDetails(this.projectId,this.dataService,this.resourceBundleJson,this.dialog);
       this.populateSbiProjectForm();
     }
     if (this.projectType == appConstants.SDK) {
@@ -178,23 +178,6 @@ export class DialogComponent implements OnInit {
     const pattern = /^To_Be_Added$/;
     const value = control.value;
     return pattern.test(value) ? { toBeAddedPattern: true } : null;
-  }
-
-  async getSbiProjectDetails() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getSbiProject(this.projectId).subscribe(
-          (response: any) => {
-            this.projectFormData = response['response'];
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
   }
 
   async getSdkProjectDetails() {

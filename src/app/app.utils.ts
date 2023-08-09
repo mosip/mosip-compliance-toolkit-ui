@@ -443,6 +443,21 @@ export default class Utils {
     });
   }
 
+  static getSbiProjectDetails(projectId:string, dataService: any, resourceBundleJson: any, dialog:any) {
+    return new Promise((resolve, reject) => {
+      dataService.getSbiProject(projectId).subscribe(
+        (response: any) => {
+          console.log(response['response']);
+          resolve(response['response']);
+        },
+        (errors: any) => {
+          this.showErrorMessage(resourceBundleJson, errors, dialog);
+          resolve(false);
+        }
+      )
+    });
+  }
+
   static initBreadCrumb(resourceBundleJson: any, breadcrumbService: BreadcrumbService, sbiProjectData: any,
     sdkProjectData: any, abisProjectData: any, projectType: string, collectionName: any) {
     const breadcrumbLabels = resourceBundleJson['breadcrumb'];

@@ -69,7 +69,10 @@ export class TestRunHistoryComponent implements OnInit {
     await this.initAllParams();
     await this.getCollection();
     if (this.projectType == appConstants.SBI) {
-      await this.getSbiProjectDetails();
+      const sbiProjectDetails: any = await Utils.getSbiProjectDetails(this.projectId,this.dataService,this.resourceBundleJson,this.dialog);
+      if(sbiProjectDetails) {
+        this.sbiProjectData = sbiProjectDetails;
+      }
       this.initBreadCrumb();
     }
     if (this.projectType == appConstants.SDK) {
@@ -128,25 +131,6 @@ export class TestRunHistoryComponent implements OnInit {
         this.dataService.getTestRunStatus(runId).subscribe(
           (response: any) => {
             resolve(response['response']['resultStatus']);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
-  async getSbiProjectDetails() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getSbiProject(this.projectId).subscribe(
-          (response: any) => {
-            console.log(response);
-            this.sbiProjectData = response['response'];
-            console.log(this.sbiProjectData);
-            resolve(true);
           },
           (errors) => {
             Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);

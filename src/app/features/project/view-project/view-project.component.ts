@@ -85,7 +85,7 @@ export class ViewProjectComponent implements OnInit {
     await this.initProjectIdAndType();
     if (this.projectType == appConstants.SBI) {
       this.initSbiProjectForm();
-      await this.getSbiProjectDetails();
+      this.projectFormData = await Utils.getSbiProjectDetails(this.projectId,this.dataService,this.resourceBundleJson,this.dialog);
       this.populateSbiProjectForm();
       this.getDeviceImageUrl();
     }
@@ -186,23 +186,6 @@ export class ViewProjectComponent implements OnInit {
         this.dataService.getBioTestDataNames(purpose).subscribe(
           (response: any) => {
             this.bioTestDataFileNames = response[appConstants.RESPONSE];
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
-  async getSbiProjectDetails() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getSbiProject(this.projectId).subscribe(
-          (response: any) => {
-            this.projectFormData = response['response'];
             resolve(true);
           },
           (errors) => {
