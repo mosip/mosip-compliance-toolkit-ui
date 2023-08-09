@@ -64,7 +64,10 @@ export class AddCollectionsComponent implements OnInit {
     this.initForm();
     await this.initProjectIdAndType();
     if (this.projectType == appConstants.SBI) {
-      await this.getSbiProjectDetails();
+      const sbiProjectDetails: any = await Utils.getSbiProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
+      if(sbiProjectDetails) {
+        this.sbiProjectData = sbiProjectDetails;
+      }
       await this.getSbiTestcases();
       Utils.initBreadCrumb(this.resourceBundleJson, this.breadcrumbService, 
         this.sbiProjectData, null, null, this.projectType, null);
@@ -97,25 +100,6 @@ export class AddCollectionsComponent implements OnInit {
         this.projectType = param['projectType'];
       });
       resolve(true);
-    });
-  }
-
-  async getSbiProjectDetails() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getSbiProject(this.projectId).subscribe(
-          (response: any) => {
-            console.log(response);
-            this.sbiProjectData = response['response'];
-            console.log(this.sbiProjectData);
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
     });
   }
 

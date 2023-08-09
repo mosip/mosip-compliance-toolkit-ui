@@ -158,7 +158,10 @@ export class ExecuteTestRunComponent implements OnInit {
         return false;
       }
       if (this.sbiSelectedPort && this.sbiSelectedDevice) {
-        await this.getSbiProjectDetails();
+        const sbiProjectDetails: any = await Utils.getSbiProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
+        if(sbiProjectDetails) {
+          this.sbiProjectData = sbiProjectDetails;
+        }
         const selectedSbiDevice: SbiDiscoverResponseModel = JSON.parse(
           this.sbiSelectedDevice
         );
@@ -192,23 +195,6 @@ export class ExecuteTestRunComponent implements OnInit {
       }
     }
     return true;
-  }
-
-  async getSbiProjectDetails() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getSbiProject(this.projectId).subscribe(
-          (response: any) => {
-            this.sbiProjectData = response['response'];
-            resolve(true);
-          },
-          (errors) => {
-            this.errorsInGettingTestcases = true;
-            resolve(true);
-          }
-        )
-      );
-    });
   }
 
   async getSdkProjectDetails() {

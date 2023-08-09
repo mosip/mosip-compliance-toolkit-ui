@@ -155,7 +155,7 @@ export class ProjectsDashboardComponent implements OnInit {
       localStorage.removeItem(appConstants.SBI_SCAN_COMPLETE);
     }
     if (project.projectType == appConstants.SBI) {
-      await this.getSbiProjectDetails(project.id);
+      this.projectFormData = await Utils.getSbiProjectDetails(project.id, this.dataService, this.resourceBundleJson, this.dialog);
       const sbiHash = this.projectFormData.sbiHash;
       const websiteUrl = this.projectFormData.websiteUrl;
       if (sbiHash == 'To_Be_Added' || websiteUrl == 'To_Be_Added') {
@@ -190,23 +190,6 @@ export class ProjectsDashboardComponent implements OnInit {
         ]);
       }
     }
-  }
-  
-  async getSbiProjectDetails(projectId: any) {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getSbiProject(projectId).subscribe(
-          (response: any) => {
-            this.projectFormData = response['response'];
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
   }
 
   async getSdkProjectDetails(projectId: any) {
