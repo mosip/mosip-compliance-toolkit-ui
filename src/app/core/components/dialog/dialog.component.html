@@ -141,7 +141,7 @@
         <div *ngFor="let fileIndex of [0, 1, 2, 3]"  class="button-container">
             <div class="buttons">
                 <input type="file" accept="image/*" (change)="onFileSelect($event, fileIndex)" #fileInput hidden single>
-                <button mat-raised-button (click)="fileInput.click()">
+                <button mat-raised-button [disabled]="!imageSelected[fileIndex]" (click)="fileInput.click()">
                     <mat-icon>add</mat-icon>{{"dialogMessages.addImage"|translate}} {{ fileIndex + 1 }}
                 </button>
             </div>

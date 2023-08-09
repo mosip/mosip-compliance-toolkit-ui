@@ -44,6 +44,7 @@ export class DialogComponent implements OnInit {
   imageUrls: any[] = [null, null, null, null];
   imagePreviewsVisible: boolean[] = [false, false, false, false];
   visibilityState: boolean[] = [false, false, false, false];
+  imageSelected: boolean[] = [true, false, false, false];
   allowedFileNameLegth =
     this.appConfigService.getConfig()['allowedFileNameLegth'];
   allowedFileSize = this.appConfigService.getConfig()['allowedFileSize'];
@@ -507,6 +508,9 @@ export class DialogComponent implements OnInit {
               this.selectedImages[fileIndex] = file;
               this.visibilityState[fileIndex] = true;
               this.imagePreviewsVisible[fileIndex] = true;
+              if (fileIndex < 3) {
+                this.imageSelected[fileIndex + 1] = true;
+              }
             }
           }
         }
@@ -518,11 +522,14 @@ export class DialogComponent implements OnInit {
   getSelectedImageUrl(){
     const isAllUrlNull = this.imageUrls.every((value) => value == null);
     if (!isAllUrlNull) {
+      this.imageSelected = [true, true, true, true];
       for (let i = 0; i < this.imageUrls.length; i++) {
         if (this.imageUrls[i]) {
           this.visibilityState[i] = true;
         }
       }
+    } else {
+      this.imageSelected = [true, false, false, false]; 
     }
   }
   
