@@ -97,7 +97,7 @@ export class ViewProjectComponent implements OnInit {
     }
     if (this.projectType == appConstants.ABIS) {
       this.initAbisProjectForm();
-      await this.getAbisProjectDetails();
+      this.projectFormData = await Utils.getAbisProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
       this.populateAbisProjectForm();
       await this.getBioTestDataNames(appConstants.ABIS);
     }
@@ -186,23 +186,6 @@ export class ViewProjectComponent implements OnInit {
         this.dataService.getBioTestDataNames(purpose).subscribe(
           (response: any) => {
             this.bioTestDataFileNames = response[appConstants.RESPONSE];
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
-  async getAbisProjectDetails() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getAbisProject(this.projectId).subscribe(
-          (response: any) => {
-            this.projectFormData = response['response'];
             resolve(true);
           },
           (errors) => {

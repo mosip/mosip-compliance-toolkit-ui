@@ -81,7 +81,10 @@ export class ViewCollectionsComponent implements OnInit {
         null, this.sdkProjectData, null, this.projectType, this.collectionName);
     }
     if (this.projectType == appConstants.ABIS) {
-      await this.getAbisProjectDetails();
+      const abisProjectDetails: any = await Utils.getAbisProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
+      if(abisProjectDetails) {
+        this.abisProjectData = abisProjectDetails;
+      }
       Utils.initBreadCrumb(this.resourceBundleJson, this.breadcrumbService, 
         null, null, this.abisProjectData, this.projectType, this.collectionName);
     }
@@ -131,23 +134,6 @@ export class ViewCollectionsComponent implements OnInit {
 
   populateCollection() {
     this.collectionForm.controls['name'].setValue(this.collectionName);
-  }
-
-  async getAbisProjectDetails() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getAbisProject(this.projectId).subscribe(
-          (response: any) => {
-            this.abisProjectData = response['response'];
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
   }
 
   async getTestcasesForCollection() {

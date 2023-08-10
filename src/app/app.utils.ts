@@ -473,6 +473,21 @@ export default class Utils {
     });
   }
 
+  static getAbisProjectDetails(projectId:string, dataService: any, resourceBundleJson: any, dialog:MatDialog) {
+    return new Promise((resolve, reject) => {
+      dataService.getAbisProject(projectId).subscribe(
+        (response: any) => {
+          console.log(response['response']);
+          resolve(response['response']);
+        },
+        (errors: any) => {
+          this.showErrorMessage(resourceBundleJson, errors, dialog);
+          resolve(false);
+        }
+      )
+    });
+  }
+
   static initBreadCrumb(resourceBundleJson: any, breadcrumbService: BreadcrumbService, sbiProjectData: any,
     sdkProjectData: any, abisProjectData: any, projectType: string, collectionName: any) {
     const breadcrumbLabels = resourceBundleJson['breadcrumb'];
