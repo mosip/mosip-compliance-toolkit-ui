@@ -197,23 +197,6 @@ export class ExecuteTestRunComponent implements OnInit {
     return true;
   }
 
-  async getSdkProjectDetails() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getSdkProject(this.projectId).subscribe(
-          (response: any) => {
-            this.sdkProjectData = response['response'];
-            resolve(true);
-          },
-          (errors) => {
-            this.errorsInGettingTestcases = true;
-            resolve(true);
-          }
-        )
-      );
-    });
-  }
-
   async getAbisProjectDetails() {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
@@ -710,8 +693,12 @@ export class ExecuteTestRunComponent implements OnInit {
   }
 
   async executeSDKTestCase(testCase: TestCaseModel) {
-    if (!this.sdkProjectData)
-      await this.getSdkProjectDetails();
+    if (!this.sdkProjectData) {
+      const sdkProjectDetails: any = await Utils.getSdkProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
+      if(sdkProjectDetails) {
+        this.sdkProjectData = sdkProjectDetails;
+      }
+    }
     localStorage.setItem(
       appConstants.SDK_PROJECT_URL,
       this.sdkProjectData ? this.sdkProjectData.url : ''

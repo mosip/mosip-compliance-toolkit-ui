@@ -80,7 +80,7 @@ export class DialogComponent implements OnInit {
     }
     if (this.projectType == appConstants.SDK) {
       this.initSdkProjectForm();
-      await this.getSdkProjectDetails();
+      this.projectFormData = await Utils.getSdkProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
       this.populateSdkProjectForm();
     }
     if (this.projectType == appConstants.ABIS) {
@@ -178,23 +178,6 @@ export class DialogComponent implements OnInit {
     const pattern = /^To_Be_Added$/;
     const value = control.value;
     return pattern.test(value) ? { toBeAddedPattern: true } : null;
-  }
-
-  async getSdkProjectDetails() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getSdkProject(this.projectId).subscribe(
-          (response: any) => {
-            this.projectFormData = response['response'];
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
   }
 
   async getAbisProjectDetails() {

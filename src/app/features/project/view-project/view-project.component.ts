@@ -91,7 +91,7 @@ export class ViewProjectComponent implements OnInit {
     }
     if (this.projectType == appConstants.SDK) {
       this.initSdkProjectForm();
-      await this.getSdkProjectDetails();
+      this.projectFormData = await Utils.getSdkProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
       this.populateSdkProjectForm();
       await this.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value);
     }
@@ -186,23 +186,6 @@ export class ViewProjectComponent implements OnInit {
         this.dataService.getBioTestDataNames(purpose).subscribe(
           (response: any) => {
             this.bioTestDataFileNames = response[appConstants.RESPONSE];
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
-  async getSdkProjectDetails() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getSdkProject(this.projectId).subscribe(
-          (response: any) => {
-            this.projectFormData = response['response'];
             resolve(true);
           },
           (errors) => {
