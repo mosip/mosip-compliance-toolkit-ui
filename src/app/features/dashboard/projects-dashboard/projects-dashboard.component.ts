@@ -167,7 +167,7 @@ export class ProjectsDashboardComponent implements OnInit {
       }
     } 
     if (project.projectType == appConstants.SDK) {
-      await this.getSdkProjectDetails(project.id);
+      this.projectFormData = await Utils.getSdkProjectDetails(project.id, this.dataService, this.resourceBundleJson, this.dialog);
       const sdkHash = this.projectFormData.sdkHash;
       const websiteUrl = this.projectFormData.websiteUrl;
       if (sdkHash == 'To_Be_Added'|| websiteUrl == 'To_Be_Added') {
@@ -190,23 +190,6 @@ export class ProjectsDashboardComponent implements OnInit {
         ]);
       }
     }
-  }
-
-  async getSdkProjectDetails(projectId: any) {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getSdkProject(projectId).subscribe(
-          (response: any) => {
-            this.projectFormData = response['response'];
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
   }
 
   async getAbisProjectDetails(projectId: any) {

@@ -76,7 +76,10 @@ export class TestRunHistoryComponent implements OnInit {
       this.initBreadCrumb();
     }
     if (this.projectType == appConstants.SDK) {
-      await this.getSdkProjectDetails();
+      const sdkProjectDetails: any = await Utils.getSdkProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
+      if(sdkProjectDetails) {
+        this.sdkProjectData = sdkProjectDetails;
+      }
       this.initBreadCrumb();
     }
     if (this.projectType == appConstants.ABIS) {
@@ -131,24 +134,6 @@ export class TestRunHistoryComponent implements OnInit {
         this.dataService.getTestRunStatus(runId).subscribe(
           (response: any) => {
             resolve(response['response']['resultStatus']);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
-  async getSdkProjectDetails() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getSdkProject(this.projectId).subscribe(
-          (response: any) => {
-            //console.log(response);
-            this.sdkProjectData = response['response'];
-            resolve(true);
           },
           (errors) => {
             Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);

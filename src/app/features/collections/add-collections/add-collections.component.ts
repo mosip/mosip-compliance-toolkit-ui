@@ -73,7 +73,10 @@ export class AddCollectionsComponent implements OnInit {
         this.sbiProjectData, null, null, this.projectType, null);
     }
     if (this.projectType == appConstants.SDK) {
-      await this.getSdkProjectDetails();
+      const sdkProjectDetails: any = await Utils.getSdkProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
+      if(sdkProjectDetails) {
+        this.sdkProjectData = sdkProjectDetails;
+      }
       await this.getSdkTestcases();
       Utils.initBreadCrumb(this.resourceBundleJson, this.breadcrumbService, 
         null, this.sdkProjectData, null, this.projectType, null);
@@ -100,23 +103,6 @@ export class AddCollectionsComponent implements OnInit {
         this.projectType = param['projectType'];
       });
       resolve(true);
-    });
-  }
-
-  async getSdkProjectDetails() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getSdkProject(this.projectId).subscribe(
-          (response: any) => {
-            this.sdkProjectData = response['response'];
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
     });
   }
 
