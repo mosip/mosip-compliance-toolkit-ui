@@ -197,23 +197,6 @@ export class ExecuteTestRunComponent implements OnInit {
     return true;
   }
 
-  async getAbisProjectDetails() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getAbisProject(this.projectId).subscribe(
-          (response: any) => {
-            this.abisProjectData = response['response'];
-            resolve(true);
-          },
-          (errors) => {
-            this.errorsInGettingTestcases = true;
-            resolve(true);
-          }
-        )
-      );
-    });
-  }
-
   async getCollection() {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
@@ -722,8 +705,12 @@ export class ExecuteTestRunComponent implements OnInit {
     }
     if (this.abisRecvdMessage == appConstants.BLANK_STRING) {
       this.showLoader = true;
-      if (!this.abisProjectData)
-        await this.getAbisProjectDetails();
+      if (!this.abisProjectData) {
+        const abisProjectDetails: any = await Utils.getAbisProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
+        if(abisProjectDetails) {
+          this.abisProjectData = abisProjectDetails;
+        }
+      }
       //disconnect from queue if already connected
       if (this.rxStompService.connected()) {
         this.rxStompService.deactivate()

@@ -83,7 +83,10 @@ export class TestRunHistoryComponent implements OnInit {
       this.initBreadCrumb();
     }
     if (this.projectType == appConstants.ABIS) {
-      await this.getAbisProjectDetails();
+      const abisProjectDetails: any = await Utils.getAbisProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
+      if(abisProjectDetails) {
+        this.abisProjectData = abisProjectDetails;
+      }
       this.initBreadCrumb();
     }
     await this.getTestRunHistory();
@@ -134,24 +137,6 @@ export class TestRunHistoryComponent implements OnInit {
         this.dataService.getTestRunStatus(runId).subscribe(
           (response: any) => {
             resolve(response['response']['resultStatus']);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
-  async getAbisProjectDetails() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getAbisProject(this.projectId).subscribe(
-          (response: any) => {
-            //console.log(response);
-            this.abisProjectData = response['response'];
-            resolve(true);
           },
           (errors) => {
             Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);

@@ -85,7 +85,7 @@ export class DialogComponent implements OnInit {
     }
     if (this.projectType == appConstants.ABIS) {
       this.initAbisProjectForm();
-      await this.getAbisProjectDetails();
+      this.projectFormData = await Utils.getAbisProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
       this.populateAbisProjectForm();
     }
     if (this.data.selectedDeviceImagesUrl) {
@@ -178,23 +178,6 @@ export class DialogComponent implements OnInit {
     const pattern = /^To_Be_Added$/;
     const value = control.value;
     return pattern.test(value) ? { toBeAddedPattern: true } : null;
-  }
-
-  async getAbisProjectDetails() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getAbisProject(this.projectId).subscribe(
-          (response: any) => {
-            this.projectFormData = response['response'];
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
   }
 
   populateSbiProjectForm() {
