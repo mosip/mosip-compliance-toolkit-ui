@@ -93,13 +93,25 @@ export class ViewProjectComponent implements OnInit {
       this.initSdkProjectForm();
       this.projectFormData = await Utils.getSdkProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
       this.populateSdkProjectForm();
-      await this.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value);
+      const bioTestDataList: any = await Utils.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value, this.dataService,this.resourceBundleJson, this.dialog);
+      if (bioTestDataList && bioTestDataList.length > 0) {
+        this.bioTestDataFileNames = [];
+        for (let name of bioTestDataList) {
+          this.bioTestDataFileNames.push(name);
+        }
+      }
     }
     if (this.projectType == appConstants.ABIS) {
       this.initAbisProjectForm();
       this.projectFormData = await Utils.getAbisProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
       this.populateAbisProjectForm();
-      await this.getBioTestDataNames(appConstants.ABIS);
+      const bioTestDataList: any = await Utils.getBioTestDataNames(appConstants.ABIS, this.dataService,this.resourceBundleJson, this.dialog);
+      if (bioTestDataList && bioTestDataList.length > 0) {
+        this.bioTestDataFileNames = [];
+        for (let name of bioTestDataList) {
+          this.bioTestDataFileNames.push(name);
+        }
+      }
     }
     await this.getCollections();
     this.dataSource.paginator = this.paginator;
@@ -176,23 +188,6 @@ export class ViewProjectComponent implements OnInit {
             controlId == 'abisUrl' || controlId == 'username' || controlId == 'password' || controlId == 'outboundQueueName'
             || controlId == 'inboundQueueName' || controlId == 'abisBioTestData' ? false : true,
         })
-      );
-    });
-  }
-
-  async getBioTestDataNames(purpose: string) {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getBioTestDataNames(purpose).subscribe(
-          (response: any) => {
-            this.bioTestDataFileNames = response[appConstants.RESPONSE];
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
       );
     });
   }
@@ -304,7 +299,13 @@ export class ViewProjectComponent implements OnInit {
   }
 
   async handleSdkPurposeChange() {
-    await this.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value);
+    const bioTestDataList: any = await Utils.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value, this.dataService,this.resourceBundleJson, this.dialog);
+    if (bioTestDataList && bioTestDataList.length > 0) {
+      this.bioTestDataFileNames = [];
+      for (let name of bioTestDataList) {
+        this.bioTestDataFileNames.push(name);
+      }
+    }
   }
 
   async addCollection() {

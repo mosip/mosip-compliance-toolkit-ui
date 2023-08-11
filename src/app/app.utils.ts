@@ -4,6 +4,7 @@ import { SbiDiscoverResponseModel } from './core/models/sbi-discover';
 import { TestCaseModel } from './core/models/testcase';
 import * as appConstants from 'src/app/app.constants';
 import { BreadcrumbService } from 'xng-breadcrumb';
+import { DataService } from './core/services/data-service';
 
 export default class Utils {
   static getCurrentDate() {
@@ -443,11 +444,11 @@ export default class Utils {
     });
   }
 
-  static getSbiProjectDetails(projectId:string, dataService: any, resourceBundleJson: any, dialog:MatDialog) {
+  static getSbiProjectDetails(projectId:string, dataService: DataService, resourceBundleJson: any, dialog:MatDialog) {
     return new Promise((resolve, reject) => {
       dataService.getSbiProject(projectId).subscribe(
         (response: any) => {
-          console.log(response['response']);
+          // console.log(response['response']);
           resolve(response['response']);
         },
         (errors: any) => {
@@ -458,11 +459,11 @@ export default class Utils {
     });
   }
 
-  static getSdkProjectDetails(projectId:string, dataService: any, resourceBundleJson: any, dialog:MatDialog) {
+  static getSdkProjectDetails(projectId:string, dataService: DataService, resourceBundleJson: any, dialog:MatDialog) {
     return new Promise((resolve, reject) => {
       dataService.getSdkProject(projectId).subscribe(
         (response: any) => {
-          console.log(response['response']);
+          // console.log(response['response']);
           resolve(response['response']);
         },
         (errors: any) => {
@@ -473,12 +474,26 @@ export default class Utils {
     });
   }
 
-  static getAbisProjectDetails(projectId:string, dataService: any, resourceBundleJson: any, dialog:MatDialog) {
+  static getAbisProjectDetails(projectId:string, dataService: DataService, resourceBundleJson: any, dialog:MatDialog) {
     return new Promise((resolve, reject) => {
       dataService.getAbisProject(projectId).subscribe(
         (response: any) => {
-          console.log(response['response']);
+          // console.log(response['response']);
           resolve(response['response']);
+        },
+        (errors: any) => {
+          this.showErrorMessage(resourceBundleJson, errors, dialog);
+          resolve(false);
+        }
+      )
+    });
+  }
+
+  static getBioTestDataNames(purpose: string, dataService: DataService, resourceBundleJson: any, dialog: MatDialog) {
+    return new Promise((resolve, reject) => {
+      dataService.getBioTestDataNames(purpose).subscribe(
+        (response: any) => {
+          resolve(response[appConstants.RESPONSE]);
         },
         (errors: any) => {
           this.showErrorMessage(resourceBundleJson, errors, dialog);
