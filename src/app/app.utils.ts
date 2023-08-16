@@ -4,6 +4,7 @@ import { SbiDiscoverResponseModel } from './core/models/sbi-discover';
 import { TestCaseModel } from './core/models/testcase';
 import * as appConstants from 'src/app/app.constants';
 import { BreadcrumbService } from 'xng-breadcrumb';
+import { FormGroup } from '@angular/forms';
 
 export default class Utils {
   static getCurrentDate() {
@@ -208,6 +209,79 @@ export default class Utils {
       data: body,
     });
     return dialogRef;
+  }
+
+  static populateSbiProjectForm(projectFormData: any, projectForm: FormGroup) {
+    if (projectFormData) {
+      projectForm.controls['name'].setValue(projectFormData.name);
+      projectForm.controls['projectType'].setValue(appConstants.SBI);
+      projectForm.controls['sbiSpecVersion'].setValue(
+        projectFormData.sbiVersion
+      );
+      projectForm.controls['sbiPurpose'].setValue(
+        projectFormData.purpose
+      );
+      projectForm.controls['deviceType'].setValue(
+        projectFormData.deviceType
+      );
+      projectForm.controls['deviceSubType'].setValue(
+        projectFormData.deviceSubType
+      );
+      projectForm.controls['sbiHash'].setValue(
+        projectFormData.sbiHash
+      );
+      projectForm.controls['websiteUrl'].setValue(
+        projectFormData.websiteUrl
+      );
+    }
+  }
+
+  static populateSdkProjectForm(projectFormData: any, projectForm: FormGroup) {
+    if (projectFormData) {
+      projectForm.controls['name'].setValue(projectFormData.name);
+      projectForm.controls['projectType'].setValue(appConstants.SDK);
+      projectForm.controls['sdkUrl'].setValue(projectFormData.url);
+      projectForm.controls['sdkSpecVersion'].setValue(
+        projectFormData.sdkVersion
+      );
+      projectForm.controls['sdkPurpose'].setValue(
+        projectFormData.purpose
+      );
+      projectForm.controls['sdkHash'].setValue(
+        projectFormData.sdkHash
+      );
+      projectForm.controls['websiteUrl'].setValue(
+        projectFormData.websiteUrl
+      );
+      projectForm.controls['bioTestData'].setValue(
+        projectFormData.bioTestDataFileName
+      );
+    }
+  }
+
+  static populateAbisProjectForm(projectFormData: any, projectForm: FormGroup) {
+    if (projectFormData) {
+      projectForm.controls['name'].setValue(projectFormData.name);
+      projectForm.controls['projectType'].setValue(appConstants.ABIS);
+      projectForm.controls['abisUrl'].setValue(projectFormData.url);
+      projectForm.controls['inboundQueueName'].setValue(projectFormData.inboundQueueName);
+      projectForm.controls['outboundQueueName'].setValue(projectFormData.outboundQueueName);
+      projectForm.controls['username'].setValue(projectFormData.username);
+      projectForm.controls['password'].setValue(projectFormData.password);
+      projectForm.controls['modality'].setValue(projectFormData.modality);
+      projectForm.controls['abisSpecVersion'].setValue(
+        projectFormData.abisVersion
+      );
+      projectForm.controls['abisHash'].setValue(
+        projectFormData.abisHash
+      );
+      projectForm.controls['websiteUrl'].setValue(
+        projectFormData.websiteUrl
+      );
+      projectForm.controls['abisBioTestData'].setValue(
+        projectFormData.bioTestDataFileName
+      );
+    }
   }
 
   static showErrorMessage(
