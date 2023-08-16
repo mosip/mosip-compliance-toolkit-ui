@@ -248,7 +248,13 @@ export class ViewProjectComponent implements OnInit {
   }
 
   async handleSdkPurposeChange() {
-    await this.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value);
+    const bioTestDataList: any = await Utils.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value, this.dataService,this.resourceBundleJson, this.dialog);
+    if (bioTestDataList && bioTestDataList.length > 0) {
+      this.bioTestDataFileNames = [];
+      for (let name of bioTestDataList) {
+        this.bioTestDataFileNames.push(name);
+      }
+    }
   }
 
   async addCollection() {

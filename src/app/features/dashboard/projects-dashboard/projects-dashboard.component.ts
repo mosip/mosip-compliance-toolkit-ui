@@ -179,7 +179,7 @@ export class ProjectsDashboardComponent implements OnInit {
       }
     }
     if (project.projectType == appConstants.ABIS) {
-      await this.getAbisProjectDetails(project.id);
+      this.projectFormData = await Utils.getAbisProjectDetails(project.id, this.dataService, this.resourceBundleJson, this.dialog);
       const abisHash = this.projectFormData.abisHash;
       const websiteUrl = this.projectFormData.websiteUrl;
       if (abisHash == 'To_Be_Added'|| websiteUrl == 'To_Be_Added') {
@@ -190,23 +190,6 @@ export class ProjectsDashboardComponent implements OnInit {
         ]);
       }
     }
-  }
-
-  async getAbisProjectDetails(projectId: any) {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getAbisProject(projectId).subscribe(
-          (response: any) => {
-            this.projectFormData = response['response'];
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
   }
 
   async showUpdateProject(projectId: any, projectType: any) { 
