@@ -221,118 +221,22 @@ export class SbiTestCaseService {
       //no params
     }
     if (testCase.methodName[0] == appConstants.SBI_METHOD_CAPTURE) {
+      request = Utils.captureRequest(selectedSbiDevice, testCase, previousHash, this.appConfigService);
       request = {
-        env: appConstants.DEVELOPER,
-        purpose: selectedSbiDevice.purpose,
-        specVersion: selectedSbiDevice.specVersion[0],
-        timeout: this.getTimeout(testCase),
-        captureTime: new Date().toISOString(),
-        transactionId: this.getTransactionId(testCase),
-        domainUri: '', //TODO
-        bio: [
-          {
-            type: selectedSbiDevice.digitalIdDecoded.type,
-            count: testCase.otherAttributes.bioCount,
-            requestedScore: testCase.otherAttributes.requestedScore,
-            deviceId: selectedSbiDevice.deviceId,
-            deviceSubId: testCase.otherAttributes.deviceSubId,
-            previousHash: previousHash,
-            bioSubType: this.getBioSubType(testCase.otherAttributes.segments),
-          },
-        ],
+        ...request,
         customOpts: null,
       };
     }
     if (testCase.methodName[0] == appConstants.SBI_METHOD_RCAPTURE) {
+      request = Utils.rcaptureRequest(selectedSbiDevice, testCase, previousHash, this.appConfigService);
       request = {
-        env: appConstants.DEVELOPER,
-        purpose: selectedSbiDevice.purpose,
-        specVersion: selectedSbiDevice.specVersion[0],
-        timeout: this.getTimeout(testCase),
-        captureTime: new Date().toISOString(),
-        transactionId: this.getTransactionId(testCase),
-        bio: [
-          {
-            type: selectedSbiDevice.digitalIdDecoded.type,
-            count: testCase.otherAttributes.bioCount,
-            exception: this.getBioSubType(testCase.otherAttributes.exceptions),
-            requestedScore: testCase.otherAttributes.requestedScore,
-            deviceId: selectedSbiDevice.deviceId,
-            deviceSubId: testCase.otherAttributes.deviceSubId,
-            previousHash: previousHash,
-            bioSubType: this.getBioSubType(testCase.otherAttributes.segments),
-          },
-        ],
+        ...request,
         customOpts: null,
       };
       request = Utils.handleInvalidRequestAttribute(testCase, request);
     }
     return request;
     //return JSON.stringify(request);
-  }
-  getTransactionId(testCase: TestCaseModel) {
-    return testCase.otherAttributes.transactionId
-      ? testCase.otherAttributes.transactionId.toString()
-      : testCase.testId + '-' + new Date().getUTCMilliseconds();
-  }
-  getTimeout(testCase: TestCaseModel) {
-    return testCase.otherAttributes.timeout
-      ? testCase.otherAttributes.timeout.toString()
-      : this.appConfigService.getConfig()['sbiTimeout']
-        ? this.appConfigService.getConfig()['sbiTimeout'].toString()
-        : '10000';
-  }
-  getBioSubType(segments: Array<string>): Array<string> {
-    let bioSubTypes = new Array<string>();
-    segments.forEach((segment) => {
-      let mappedVal = '';
-      switch (segment) {
-        case 'Left':
-          mappedVal = 'Left';
-          break;
-        case 'Right':
-          mappedVal = 'Right';
-          break;
-        case 'RightIndex':
-          mappedVal = 'Right IndexFinger';
-          break;
-        case 'RightMiddle':
-          mappedVal = 'Right MiddleFinger';
-          break;
-        case 'RightRing':
-          mappedVal = 'Right RingFinger';
-          break;
-        case 'RightLittle':
-          mappedVal = 'Right LittleFinger';
-          break;
-        case 'RightThumb':
-          mappedVal = 'Right Thumb';
-          break;
-        case 'LeftIndex':
-          mappedVal = 'Left IndexFinger';
-          break;
-        case 'LeftMiddle':
-          mappedVal = 'Left MiddleFinger';
-          break;
-        case 'LeftRing':
-          mappedVal = 'Left RingFinger';
-          break;
-        case 'LeftLittle':
-          mappedVal = 'Left LittleFinger';
-          break;
-        case 'LeftThumb':
-          mappedVal = 'Left Thumb';
-          break;
-        case 'Face':
-          mappedVal = 'null';
-          break;
-        case 'UNKNOWN':
-          mappedVal = 'UNKNOWN';
-          break;
-      }
-      bioSubTypes.push(mappedVal);
-    });
-    return bioSubTypes;
   }
 
   createDecodedResponse(
@@ -458,7 +362,7 @@ export class SbiTestCaseService {
         certificationType: selectedSbiDevice.certification,
         startExecutionTime: startExecutionTime,
         endExecutionTime: endExecutionTime,
-        timeout: this.getTimeout(testCase),
+        timeout: Utils.getTimeout(testCase, this.appConfigService),
         beforeKeyRotationResp: beforeKeyRotationResp
           ? beforeKeyRotationResp
           : null,
