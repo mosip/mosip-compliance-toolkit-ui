@@ -76,17 +76,17 @@ export class DialogComponent implements OnInit {
     if(this.projectType == appConstants.SBI) {
       this.initSbiProjectForm();
       this.projectFormData = await Utils.getSbiProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
-      this.populateSbiProjectForm();
+      Utils.populateSbiProjectForm(this.projectFormData, this.projectForm);
     }
     if (this.projectType == appConstants.SDK) {
       this.initSdkProjectForm();
       this.projectFormData = await Utils.getSdkProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
-      this.populateSdkProjectForm();
+      Utils.populateSdkProjectForm(this.projectFormData, this.projectForm);
     }
     if (this.projectType == appConstants.ABIS) {
       this.initAbisProjectForm();
       this.projectFormData = await Utils.getAbisProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
-      this.populateAbisProjectForm();
+      Utils.populateAbisProjectForm(this.projectFormData, this.projectForm);
     }
     if (this.data.selectedDeviceImagesUrl) {
       this.imageUrls = this.data.selectedDeviceImagesUrl;
@@ -178,79 +178,6 @@ export class DialogComponent implements OnInit {
     const pattern = /^To_Be_Added$/;
     const value = control.value;
     return pattern.test(value) ? { toBeAddedPattern: true } : null;
-  }
-
-  populateSbiProjectForm() {
-    if (this.projectFormData) {
-      this.projectForm.controls['name'].setValue(this.projectFormData.name);
-      this.projectForm.controls['projectType'].setValue(appConstants.SBI);
-      this.projectForm.controls['sbiSpecVersion'].setValue(
-        this.projectFormData.sbiVersion
-      );
-      this.projectForm.controls['sbiPurpose'].setValue(
-        this.projectFormData.purpose
-      );
-      this.projectForm.controls['deviceType'].setValue(
-        this.projectFormData.deviceType
-      );
-      this.projectForm.controls['deviceSubType'].setValue(
-        this.projectFormData.deviceSubType
-      );
-      this.projectForm.controls['sbiHash'].setValue(
-        this.projectFormData.sbiHash
-      );
-      this.projectForm.controls['websiteUrl'].setValue(
-        this.projectFormData.websiteUrl
-      );
-    }
-  }
-
-  populateSdkProjectForm() {
-    if (this.projectFormData) {
-      this.projectForm.controls['name'].setValue(this.projectFormData.name);
-      this.projectForm.controls['projectType'].setValue(appConstants.SDK);
-      this.projectForm.controls['sdkUrl'].setValue(this.projectFormData.url);
-      this.projectForm.controls['sdkSpecVersion'].setValue(
-        this.projectFormData.sdkVersion
-      );
-      this.projectForm.controls['sdkPurpose'].setValue(
-        this.projectFormData.purpose
-      );
-      this.projectForm.controls['sdkHash'].setValue(
-        this.projectFormData.sdkHash
-      );
-      this.projectForm.controls['websiteUrl'].setValue(
-        this.projectFormData.websiteUrl
-      );
-      this.projectForm.controls['bioTestData'].setValue(
-        this.projectFormData.bioTestDataFileName
-      );
-    }
-  }
-
-  populateAbisProjectForm() {
-    if (this.projectFormData) {
-      this.projectForm.controls['name'].setValue(this.projectFormData.name);
-      this.projectForm.controls['projectType'].setValue(appConstants.ABIS);
-      this.projectForm.controls['abisUrl'].setValue(this.projectFormData.url);
-      this.projectForm.controls['inboundQueueName'].setValue(this.projectFormData.inboundQueueName);
-      this.projectForm.controls['outboundQueueName'].setValue(this.projectFormData.outboundQueueName);
-      this.projectForm.controls['username'].setValue(this.projectFormData.username);
-      this.projectForm.controls['password'].setValue(this.projectFormData.password);
-      this.projectForm.controls['modality'].setValue(this.projectFormData.modality);
-      this.projectForm.controls['abisSpecVersion'].setValue(
-        this.projectFormData.abisVersion
-      );
-      this.projectForm.controls['abisHash'].setValue(
-        this.projectFormData.abisHash
-      );
-      this.projectForm.controls['websiteUrl'].setValue(
-        this.projectFormData.websiteUrl
-      );
-      this.projectForm.controls['abisBioTestData'].setValue(
-        this.projectFormData.bioTestDataFileName
-      );
-    }
   }
 
   async updateProject() {

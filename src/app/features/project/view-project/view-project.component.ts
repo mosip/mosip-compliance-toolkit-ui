@@ -86,32 +86,20 @@ export class ViewProjectComponent implements OnInit {
     if (this.projectType == appConstants.SBI) {
       this.initSbiProjectForm();
       this.projectFormData = await Utils.getSbiProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
-      this.populateSbiProjectForm();
+      Utils.populateSbiProjectForm(this.projectFormData, this.projectForm);
       this.getDeviceImageUrl();
     }
     if (this.projectType == appConstants.SDK) {
       this.initSdkProjectForm();
       this.projectFormData = await Utils.getSdkProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
-      this.populateSdkProjectForm();
-      const bioTestDataList: any = await Utils.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value, this.dataService,this.resourceBundleJson, this.dialog);
-      if (bioTestDataList && bioTestDataList.length > 0) {
-        this.bioTestDataFileNames = [];
-        for (let name of bioTestDataList) {
-          this.bioTestDataFileNames.push(name);
-        }
-      }
+      Utils.populateSdkProjectForm(this.projectFormData, this.projectForm);
+      await this.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value);
     }
     if (this.projectType == appConstants.ABIS) {
       this.initAbisProjectForm();
       this.projectFormData = await Utils.getAbisProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
-      this.populateAbisProjectForm();
-      const bioTestDataList: any = await Utils.getBioTestDataNames(appConstants.ABIS, this.dataService,this.resourceBundleJson, this.dialog);
-      if (bioTestDataList && bioTestDataList.length > 0) {
-        this.bioTestDataFileNames = [];
-        for (let name of bioTestDataList) {
-          this.bioTestDataFileNames.push(name);
-        }
-      }
+      Utils.populateAbisProjectForm(this.projectFormData, this.projectForm);
+      await this.getBioTestDataNames(appConstants.ABIS);
     }
     await this.getCollections();
     this.dataSource.paginator = this.paginator;
@@ -192,77 +180,21 @@ export class ViewProjectComponent implements OnInit {
     });
   }
 
-  populateSbiProjectForm() {
-    if (this.projectFormData) {
-      this.projectForm.controls['name'].setValue(this.projectFormData.name);
-      this.projectForm.controls['projectType'].setValue(appConstants.SBI);
-      this.projectForm.controls['sbiSpecVersion'].setValue(
-        this.projectFormData.sbiVersion
+  async getBioTestDataNames(purpose: string) {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        this.dataService.getBioTestDataNames(purpose).subscribe(
+          (response: any) => {
+            this.bioTestDataFileNames = response[appConstants.RESPONSE];
+            resolve(true);
+          },
+          (errors) => {
+            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
+            resolve(false);
+          }
+        )
       );
-      this.projectForm.controls['sbiPurpose'].setValue(
-        this.projectFormData.purpose
-      );
-      this.projectForm.controls['deviceType'].setValue(
-        this.projectFormData.deviceType
-      );
-      this.projectForm.controls['deviceSubType'].setValue(
-        this.projectFormData.deviceSubType
-      );
-      this.projectForm.controls['sbiHash'].setValue(
-        this.projectFormData.sbiHash
-      );
-      this.projectForm.controls['websiteUrl'].setValue(
-        this.projectFormData.websiteUrl
-      );
-    }
-  }
-
-  populateSdkProjectForm() {
-    if (this.projectFormData) {
-      this.projectForm.controls['name'].setValue(this.projectFormData.name);
-      this.projectForm.controls['projectType'].setValue(appConstants.SDK);
-      this.projectForm.controls['sdkUrl'].setValue(this.projectFormData.url);
-      this.projectForm.controls['sdkSpecVersion'].setValue(
-        this.projectFormData.sdkVersion
-      );
-      this.projectForm.controls['sdkPurpose'].setValue(
-        this.projectFormData.purpose
-      );
-      this.projectForm.controls['sdkHash'].setValue(
-        this.projectFormData.sdkHash
-      );
-      this.projectForm.controls['websiteUrl'].setValue(
-        this.projectFormData.websiteUrl
-      );
-      this.projectForm.controls['bioTestData'].setValue(
-        this.projectFormData.bioTestDataFileName
-      );
-    }
-  }
-
-  populateAbisProjectForm() {
-    if (this.projectFormData) {
-      this.projectForm.controls['name'].setValue(this.projectFormData.name);
-      this.projectForm.controls['projectType'].setValue(appConstants.ABIS);
-      this.projectForm.controls['abisUrl'].setValue(this.projectFormData.url);
-      this.projectForm.controls['inboundQueueName'].setValue(this.projectFormData.inboundQueueName);
-      this.projectForm.controls['outboundQueueName'].setValue(this.projectFormData.outboundQueueName);
-      this.projectForm.controls['username'].setValue(this.projectFormData.username);
-      this.projectForm.controls['password'].setValue(this.projectFormData.password);
-      this.projectForm.controls['modality'].setValue(this.projectFormData.modality);
-      this.projectForm.controls['abisSpecVersion'].setValue(
-        this.projectFormData.abisVersion
-      );
-      this.projectForm.controls['abisHash'].setValue(
-        this.projectFormData.abisHash
-      );
-      this.projectForm.controls['websiteUrl'].setValue(
-        this.projectFormData.websiteUrl
-      );
-      this.projectForm.controls['abisBioTestData'].setValue(
-        this.projectFormData.bioTestDataFileName
-      );
-    }
+    });
   }
 
   async getCollections() {
@@ -299,13 +231,7 @@ export class ViewProjectComponent implements OnInit {
   }
 
   async handleSdkPurposeChange() {
-    const bioTestDataList: any = await Utils.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value, this.dataService,this.resourceBundleJson, this.dialog);
-    if (bioTestDataList && bioTestDataList.length > 0) {
-      this.bioTestDataFileNames = [];
-      for (let name of bioTestDataList) {
-        this.bioTestDataFileNames.push(name);
-      }
-    }
+    await this.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value);
   }
 
   async addCollection() {
