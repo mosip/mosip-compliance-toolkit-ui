@@ -6,6 +6,7 @@ import * as appConstants from 'src/app/app.constants';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { DataService } from './core/services/data-service';
 import { FormGroup } from '@angular/forms';
+import { AppConfigService } from './app-config.service';
 
 export default class Utils {
   static getCurrentDate() {
@@ -428,6 +429,123 @@ export default class Utils {
       }
     }
     return newRequest;
+  }
+
+  static captureRequest(selectedSbiDevice: SbiDiscoverResponseModel, testCase: TestCaseModel, previousHash: string, 
+    appConfigService: AppConfigService) {
+    let request = {
+      env: appConstants.DEVELOPER,
+      purpose: selectedSbiDevice.purpose,
+      specVersion: selectedSbiDevice.specVersion[0],
+      timeout: this.getTimeout(testCase, appConfigService),
+      captureTime: new Date().toISOString(),
+      transactionId: this.getTransactionId(testCase),
+      domainUri: '', //TODO
+      bio: [
+        {
+          type: selectedSbiDevice.digitalIdDecoded.type,
+          count: testCase.otherAttributes.bioCount,
+          requestedScore: testCase.otherAttributes.requestedScore,
+          deviceId: selectedSbiDevice.deviceId,
+          deviceSubId: testCase.otherAttributes.deviceSubId,
+          previousHash: previousHash,
+          bioSubType: this.getBioSubType(testCase.otherAttributes.segments),
+        },
+      ]
+    };
+    return request;
+  }
+
+  static rcaptureRequest(selectedSbiDevice: SbiDiscoverResponseModel, testCase: TestCaseModel, previousHash: string, 
+    appConfigService: AppConfigService) {
+    let request = {
+      env: appConstants.DEVELOPER,
+      purpose: selectedSbiDevice.purpose,
+      specVersion: selectedSbiDevice.specVersion[0],
+      timeout: this.getTimeout(testCase, appConfigService),
+      captureTime: new Date().toISOString(),
+      transactionId: this.getTransactionId(testCase),
+      bio: [
+        {
+          type: selectedSbiDevice.digitalIdDecoded.type,
+          count: testCase.otherAttributes.bioCount,
+          exception: this.getBioSubType(testCase.otherAttributes.exceptions),
+          requestedScore: testCase.otherAttributes.requestedScore,
+          deviceId: selectedSbiDevice.deviceId,
+          deviceSubId: testCase.otherAttributes.deviceSubId,
+          previousHash: previousHash,
+          bioSubType: this.getBioSubType(testCase.otherAttributes.segments),
+        },
+      ]
+    };
+    return request;
+  }
+
+  static getTransactionId(testCase: TestCaseModel) {
+    return testCase.otherAttributes.transactionId
+      ? testCase.otherAttributes.transactionId.toString()
+      : testCase.testId + '-' + new Date().getUTCMilliseconds();
+  }
+
+  static getTimeout(testCase: TestCaseModel, appConfigService: AppConfigService) {
+    return testCase.otherAttributes.timeout
+      ? testCase.otherAttributes.timeout.toString()
+      : appConfigService.getConfig()['sbiTimeout']
+        ? appConfigService.getConfig()['sbiTimeout'].toString()
+        : '10000';
+  }
+  
+  static getBioSubType(segments: Array<string>): Array<string> {
+    let bioSubTypes = new Array<string>();
+    segments.forEach((segment) => {
+      let mappedVal = '';
+      switch (segment) {
+        case 'Left':
+          mappedVal = 'Left';
+          break;
+        case 'Right':
+          mappedVal = 'Right';
+          break;
+        case 'RightIndex':
+          mappedVal = 'Right IndexFinger';
+          break;
+        case 'RightMiddle':
+          mappedVal = 'Right MiddleFinger';
+          break;
+        case 'RightRing':
+          mappedVal = 'Right RingFinger';
+          break;
+        case 'RightLittle':
+          mappedVal = 'Right LittleFinger';
+          break;
+        case 'RightThumb':
+          mappedVal = 'Right Thumb';
+          break;
+        case 'LeftIndex':
+          mappedVal = 'Left IndexFinger';
+          break;
+        case 'LeftMiddle':
+          mappedVal = 'Left MiddleFinger';
+          break;
+        case 'LeftRing':
+          mappedVal = 'Left RingFinger';
+          break;
+        case 'LeftLittle':
+          mappedVal = 'Left LittleFinger';
+          break;
+        case 'LeftThumb':
+          mappedVal = 'Left Thumb';
+          break;
+        case 'Face':
+          mappedVal = 'null';
+          break;
+        case 'UNKNOWN':
+          mappedVal = 'UNKNOWN';
+          break;
+      }
+      bioSubTypes.push(mappedVal);
+    });
+    return bioSubTypes;
   }
 
   static getResourceBundle(lang: any, dataService: any) {
