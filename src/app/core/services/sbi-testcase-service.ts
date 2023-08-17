@@ -6,6 +6,7 @@ import * as appConstants from 'src/app/app.constants';
 import { SbiDiscoverResponseModel } from '../models/sbi-discover';
 import Utils from 'src/app/app.utils';
 import { UserProfileService } from './user-profile.service';
+import SBIHelper from 'src/app/sbi-helper';
 
 @Injectable({
   providedIn: 'root',
@@ -31,9 +32,10 @@ export class SbiTestCaseService {
     try {
       const methodRequest = this.createRequest(testCase, sbiSelectedDevice, previousHash);
       //now validate the method request against the Schema
-      let validationRequest: any = await this.validateRequest(
+      let validationRequest: any = await SBIHelper.validateRequest(
         testCase,
-        methodRequest
+        methodRequest,
+        this.dataService
       );
       if (
         validationRequest &&
@@ -49,7 +51,7 @@ export class SbiTestCaseService {
         );
         let endExecutionTime = new Date().toISOString();
         if (methodResponse) {
-          const decodedMethodResp = Utils.createDecodedResponse(
+          const decodedMethodResp = SBIHelper.createDecodedResponse(
             testCase.methodName[0],
             methodResponse,
             sbiSelectedDevice,
@@ -71,7 +73,7 @@ export class SbiTestCaseService {
           //now validate the method response against all the validators
           let validationResponse: any = {};
           if (performValidations) {
-            validationResponse = await this.validateResponse(
+            validationResponse = await SBIHelper.validateResponse(
               testCase,
               methodRequest,
               decodedMethodResp,
@@ -79,7 +81,9 @@ export class SbiTestCaseService {
               startExecutionTime,
               endExecutionTime,
               beforeKeyRotationResp,
-              previousHash
+              previousHash,
+              this.dataService,
+              this.appConfigService
             );
           }
           const finalResponse = {
@@ -223,14 +227,14 @@ export class SbiTestCaseService {
       //no params
     }
     if (testCase.methodName[0] == appConstants.SBI_METHOD_CAPTURE) {
-      request = Utils.captureRequest(selectedSbiDevice, testCase, previousHash, this.appConfigService);
+      request = SBIHelper.captureRequest(selectedSbiDevice, testCase, previousHash, this.appConfigService);
       request = {
         ...request,
         customOpts: null,
       };
     }
     if (testCase.methodName[0] == appConstants.SBI_METHOD_RCAPTURE) {
-      request = Utils.rcaptureRequest(selectedSbiDevice, testCase, previousHash, this.appConfigService);
+      request = SBIHelper.rcaptureRequest(selectedSbiDevice, testCase, previousHash, this.appConfigService);
       request = {
         ...request,
         customOpts: null,
@@ -239,89 +243,5 @@ export class SbiTestCaseService {
     }
     return request;
     //return JSON.stringify(request);
-  }
-
-  async validateResponse(
-    testCase: TestCaseModel,
-    methodRequest: any,
-    methodResponse: any,
-    sbiSelectedDevice: string,
-    startExecutionTime: string,
-    endExecutionTime: string,
-    beforeKeyRotationResp: any,
-    previousHash: string
-  ) {
-    //console.log("validateResponse");
-    const selectedSbiDevice: SbiDiscoverResponseModel =
-      JSON.parse(sbiSelectedDevice);
-    console.log(`previousHash ${previousHash}`);
-    let validateRequest = {
-      testCaseType: testCase.testCaseType,
-      testName: testCase.testName,
-      specVersion: testCase.specVersion,
-      testDescription: testCase.testDescription,
-      responseSchema: testCase.responseSchema[0],
-      isNegativeTestcase: testCase.isNegativeTestcase
-        ? testCase.isNegativeTestcase
-        : false,
-      methodResponse: JSON.stringify(methodResponse),
-      methodRequest: JSON.stringify(methodRequest),
-      methodName: testCase.methodName[0],
-      extraInfoJson: JSON.stringify({
-        certificationType: selectedSbiDevice.certification,
-        startExecutionTime: startExecutionTime,
-        endExecutionTime: endExecutionTime,
-        timeout: Utils.getTimeout(testCase, this.appConfigService),
-        beforeKeyRotationResp: beforeKeyRotationResp
-          ? beforeKeyRotationResp
-          : null,
-        modality: testCase.otherAttributes.biometricTypes[0],
-        previousHash: previousHash
-      }),
-      validatorDefs: testCase.validatorDefs[0],
-    };
-    let request = {
-      id: appConstants.VALIDATIONS_ADD_ID,
-      version: appConstants.VERSION,
-      requesttime: new Date().toISOString(),
-      request: validateRequest,
-    };
-    return new Promise((resolve, reject) => {
-      this.dataService.validateResponse(request).subscribe(
-        (response) => {
-          resolve(response);
-        },
-        (errors) => {
-          resolve(errors);
-        }
-      );
-    });
-  }
-
-  async validateRequest(testCase: TestCaseModel, methodRequest: any) {
-    let validateRequest = {
-      testCaseType: testCase.testCaseType,
-      testName: testCase.testName,
-      specVersion: testCase.specVersion,
-      testDescription: testCase.testDescription,
-      requestSchema: testCase.requestSchema[0],
-      methodRequest: JSON.stringify(methodRequest),
-    };
-    let request = {
-      id: appConstants.VALIDATIONS_ADD_ID,
-      version: appConstants.VERSION,
-      requesttime: new Date().toISOString(),
-      request: validateRequest,
-    };
-    return new Promise((resolve, reject) => {
-      this.dataService.validateRequest(request).subscribe(
-        (response) => {
-          resolve(response);
-        },
-        (errors) => {
-          resolve(errors);
-        }
-      );
-    });
   }
 }
