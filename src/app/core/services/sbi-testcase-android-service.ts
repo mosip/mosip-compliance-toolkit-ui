@@ -13,6 +13,7 @@ import { UserProfileService } from './user-profile.service';
 })
 export class SbiTestCaseAndroidService {
   resourceBundleJson: any = {};
+  isAndroidApp = true;
   constructor(
     private dataService: DataService,
     private appConfigService: AppConfigService,
@@ -40,10 +41,11 @@ export class SbiTestCaseAndroidService {
     console.log(executeResponse);
     let endExecutionTime = new Date().toISOString();
     if (executeResponse) {
-      const decodedMethodResp = this.createDecodedResponse(
+      const decodedMethodResp = Utils.createDecodedResponse(
         testCase.methodName[0],
         executeResponse.methodResponse,
-        sbiSelectedDevice
+        sbiSelectedDevice,
+        this.isAndroidApp
       );
       let performValidations = true;
       if (
@@ -234,98 +236,6 @@ export class SbiTestCaseAndroidService {
       request = Utils.handleInvalidRequestAttribute(testCase, request);
     }
     return request;
-  }
-
-  createDecodedResponse(
-    testcaseMethodName: string,
-    methodResponse: any,
-    sbiSelectedDevice: string
-  ): any {
-    const selectedSbiDevice: SbiDiscoverResponseModel =
-      JSON.parse(sbiSelectedDevice);
-    if (testcaseMethodName == appConstants.SBI_METHOD_DISCOVER) {
-      let decodedDataArr: SbiDiscoverResponseModel[] = [];
-      const decodedData = Utils.getDecodedDiscoverDevice(methodResponse);
-      if (decodedData != null) {
-        decodedDataArr.push(decodedData);
-      }
-      return decodedDataArr;
-    }
-    if (testcaseMethodName == appConstants.SBI_METHOD_DEVICE_INFO) {
-      let decodedDataArr: any[] = [];
-      methodResponse.forEach((deviceInfoResp: any) => {
-
-        if (deviceInfoResp && !deviceInfoResp.deviceInfo) {
-          decodedDataArr.push(deviceInfoResp);
-        } else if (deviceInfoResp && deviceInfoResp.deviceInfo == '') {
-          decodedDataArr.push(deviceInfoResp);
-        } else {
-          //chk if device is registered
-          let arr = deviceInfoResp.deviceInfo.split('.');
-          if (arr.length >= 3) {
-            //this is registered device
-            const decodedData: any = Utils.getDecodedDeviceInfo(deviceInfoResp);
-            if (
-              Utils.chkDeviceTypeSubTypeForDeviceInfo(
-                decodedData,
-                selectedSbiDevice
-              )
-            ) {
-              decodedDataArr.push(decodedData);
-            }
-          } else {
-            //this is unregistered device
-            const decodedData: any =
-              Utils.getDecodedUnregistetedDeviceInfo(deviceInfoResp);
-            if (
-              Utils.chkDeviceTypeSubTypeForDeviceInfo(
-                decodedData,
-                selectedSbiDevice
-              )
-            ) {
-              decodedDataArr.push(decodedData);
-            }
-          }
-        }
-      });
-      return decodedDataArr;
-    }
-    if (
-      testcaseMethodName == appConstants.SBI_METHOD_CAPTURE ||
-      testcaseMethodName == appConstants.SBI_METHOD_RCAPTURE
-    ) {
-      let decodedDataArr: any[] = [];
-      methodResponse.biometrics.forEach((bioResp: any) => {
-        if (bioResp && bioResp.data == '') {
-          decodedDataArr.push(bioResp);
-        } else {
-          //chk if device is registered
-          let arr = bioResp.data.split('.');
-          if (arr.length >= 3) {
-            //this is registered device
-            const decodedData: any = Utils.getDecodedDataInfo(bioResp);
-            if (
-              Utils.chkDeviceTypeSubTypeForData(decodedData, selectedSbiDevice)
-            ) {
-              decodedDataArr.push(decodedData);
-            }
-          } else {
-            //this is unregistered device
-            const decodedData: any = Utils.getDecodedUnregistetedData(bioResp);
-            if (
-              Utils.chkDeviceTypeSubTypeForData(decodedData, selectedSbiDevice)
-            ) {
-              decodedDataArr.push(decodedData);
-            }
-          }
-        }
-      });
-      return {
-        biometrics: decodedDataArr,
-      };
-    }
-    return methodResponse;
-    //return JSON.stringify(request);
   }
 
   async validateResponse(
