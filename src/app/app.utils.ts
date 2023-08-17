@@ -650,6 +650,92 @@ export default class Utils {
     return methodResponse;
     //return JSON.stringify(request);
   }
+
+  static validateResponse(
+    testCase: TestCaseModel,
+    methodRequest: any,
+    methodResponse: any,
+    sbiSelectedDevice: string,
+    startExecutionTime: string,
+    endExecutionTime: string,
+    beforeKeyRotationResp: any,
+    previousHash: string,
+    dataService: DataService,
+    appConfigService: AppConfigService
+  ) {
+    const selectedSbiDevice: SbiDiscoverResponseModel =
+      JSON.parse(sbiSelectedDevice);
+    console.log(`previousHash ${previousHash}`);  
+    let validateRequest = {
+      testCaseType: testCase.testCaseType,
+      testName: testCase.testName,
+      specVersion: testCase.specVersion,
+      testDescription: testCase.testDescription,
+      responseSchema: testCase.responseSchema[0],
+      isNegativeTestcase: testCase.isNegativeTestcase
+        ? testCase.isNegativeTestcase
+        : false,
+      methodResponse: JSON.stringify(methodResponse),
+      methodRequest: JSON.stringify(methodRequest),
+      methodName: testCase.methodName[0],
+      extraInfoJson: JSON.stringify({
+        certificationType: selectedSbiDevice.certification,
+        startExecutionTime: startExecutionTime,
+        endExecutionTime: endExecutionTime,
+        timeout: Utils.getTimeout(testCase, appConfigService),
+        beforeKeyRotationResp: beforeKeyRotationResp
+          ? beforeKeyRotationResp
+          : null,
+        modality: testCase.otherAttributes.biometricTypes[0],
+        previousHash: previousHash
+      }),
+      validatorDefs: testCase.validatorDefs[0],
+    };
+    let request = {
+      id: appConstants.VALIDATIONS_ADD_ID,
+      version: appConstants.VERSION,
+      requesttime: new Date().toISOString(),
+      request: validateRequest,
+    };
+    return new Promise((resolve, reject) => {
+      dataService.validateResponse(request).subscribe(
+        (response) => {
+          resolve(response);
+        },
+        (errors) => {
+          resolve(errors);
+        }
+      );
+    });
+  }
+
+  static validateRequest(testCase: TestCaseModel, methodRequest: any, dataService: DataService) {
+    let validateRequest = {
+      testCaseType: testCase.testCaseType,
+      testName: testCase.testName,
+      specVersion: testCase.specVersion,
+      testDescription: testCase.testDescription,
+      requestSchema: testCase.requestSchema[0],
+      methodRequest: JSON.stringify(methodRequest),
+    };
+    let request = {
+      id: appConstants.VALIDATIONS_ADD_ID,
+      version: appConstants.VERSION,
+      requesttime: new Date().toISOString(),
+      request: validateRequest,
+    };
+    return new Promise((resolve, reject) => {
+      dataService.validateRequest(request).subscribe(
+        (response) => {
+          resolve(response);
+        },
+        (errors) => {
+          resolve(errors);
+        }
+      );
+    });
+  }
+
   static getResourceBundle(lang: any, dataService: any) {
     return new Promise((resolve, reject) => {
       dataService.getResourceBundle(lang).subscribe(
