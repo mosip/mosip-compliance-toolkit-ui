@@ -6,6 +6,7 @@ import * as appConstants from 'src/app/app.constants';
 import { SbiDiscoverResponseModel } from '../models/sbi-discover';
 import Utils from 'src/app/app.utils';
 import { UserProfileService } from './user-profile.service';
+import SBIHelper from 'src/app/sbi-helper';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +32,7 @@ export class SbiTestCaseService {
     try {
       const methodRequest = this.createRequest(testCase, sbiSelectedDevice, previousHash);
       //now validate the method request against the Schema
-      let validationRequest: any = await Utils.validateRequest(
+      let validationRequest: any = await SBIHelper.validateRequest(
         testCase,
         methodRequest,
         this.dataService
@@ -50,7 +51,7 @@ export class SbiTestCaseService {
         );
         let endExecutionTime = new Date().toISOString();
         if (methodResponse) {
-          const decodedMethodResp = Utils.createDecodedResponse(
+          const decodedMethodResp = SBIHelper.createDecodedResponse(
             testCase.methodName[0],
             methodResponse,
             sbiSelectedDevice,
@@ -72,7 +73,7 @@ export class SbiTestCaseService {
           //now validate the method response against all the validators
           let validationResponse: any = {};
           if (performValidations) {
-            validationResponse = await Utils.validateResponse(
+            validationResponse = await SBIHelper.validateResponse(
               testCase,
               methodRequest,
               decodedMethodResp,
@@ -226,14 +227,14 @@ export class SbiTestCaseService {
       //no params
     }
     if (testCase.methodName[0] == appConstants.SBI_METHOD_CAPTURE) {
-      request = Utils.captureRequest(selectedSbiDevice, testCase, previousHash, this.appConfigService);
+      request = SBIHelper.captureRequest(selectedSbiDevice, testCase, previousHash, this.appConfigService);
       request = {
         ...request,
         customOpts: null,
       };
     }
     if (testCase.methodName[0] == appConstants.SBI_METHOD_RCAPTURE) {
-      request = Utils.rcaptureRequest(selectedSbiDevice, testCase, previousHash, this.appConfigService);
+      request = SBIHelper.rcaptureRequest(selectedSbiDevice, testCase, previousHash, this.appConfigService);
       request = {
         ...request,
         customOpts: null,

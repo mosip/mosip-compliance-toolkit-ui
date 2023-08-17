@@ -7,6 +7,7 @@ import { SbiDiscoverResponseModel } from '../models/sbi-discover';
 import Utils from 'src/app/app.utils';
 import { MosipSbiCapacitorPlugin } from 'mosip-sbi-capacitor-plugin';
 import { UserProfileService } from './user-profile.service';
+import SBIHelper from 'src/app/sbi-helper';
 
 @Injectable({
   providedIn: 'root',
@@ -41,7 +42,7 @@ export class SbiTestCaseAndroidService {
     console.log(executeResponse);
     let endExecutionTime = new Date().toISOString();
     if (executeResponse) {
-      const decodedMethodResp = Utils.createDecodedResponse(
+      const decodedMethodResp = SBIHelper.createDecodedResponse(
         testCase.methodName[0],
         executeResponse.methodResponse,
         sbiSelectedDevice,
@@ -63,7 +64,7 @@ export class SbiTestCaseAndroidService {
       //now validate the method response against all the validators
       let validationResponse: any = {};
       if (performValidations) {
-        validationResponse = await Utils.validateResponse(
+        validationResponse = await SBIHelper.validateResponse(
           testCase,
           methodRequest,
           decodedMethodResp,
@@ -231,10 +232,10 @@ export class SbiTestCaseAndroidService {
       //no params
     }
     if (testCase.methodName[0] == appConstants.SBI_METHOD_CAPTURE) {
-      request = Utils.captureRequest(selectedSbiDevice, testCase, previousHash, this.appConfigService);
+      request = SBIHelper.captureRequest(selectedSbiDevice, testCase, previousHash, this.appConfigService);
     }
     if (testCase.methodName[0] == appConstants.SBI_METHOD_RCAPTURE) {
-      request = Utils.rcaptureRequest(selectedSbiDevice, testCase, previousHash, this.appConfigService);
+      request = SBIHelper.rcaptureRequest(selectedSbiDevice, testCase, previousHash, this.appConfigService);
       request = Utils.handleInvalidRequestAttribute(testCase, request);
     }
     return request;
