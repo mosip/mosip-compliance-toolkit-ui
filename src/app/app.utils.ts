@@ -548,6 +548,108 @@ export default class Utils {
     return bioSubTypes;
   }
 
+  static createDecodedResponse(
+    testCaseMethodName: string,
+    methodResponse: any,
+    sbiSelectedDevice: string,
+    isAndroidApp: boolean
+  ): any {
+    const selectedSbiDevice: SbiDiscoverResponseModel =
+      JSON.parse(sbiSelectedDevice);
+    if (testCaseMethodName == appConstants.SBI_METHOD_DISCOVER) {
+      if (isAndroidApp) {
+        let decodedDataArr: SbiDiscoverResponseModel[] = [];
+        const decodedData = Utils.getDecodedDiscoverDevice(methodResponse);
+        if (decodedData != null) {
+          decodedDataArr.push(decodedData);
+        }
+        return decodedDataArr;
+      } else {
+        let decodedDataArr: SbiDiscoverResponseModel[] = [];
+        methodResponse.forEach((deviceData: any) => {
+          const decodedData = Utils.getDecodedDiscoverDevice(deviceData);
+          if (decodedData != null) {
+            decodedDataArr.push(decodedData);
+          }
+        });
+        return decodedDataArr;
+      }
+    }
+    if (testCaseMethodName == appConstants.SBI_METHOD_DEVICE_INFO) {
+      let decodedDataArr: any[] = [];
+      methodResponse.forEach((deviceInfoResp: any) => {
+        if (deviceInfoResp && !deviceInfoResp.deviceInfo) {
+          decodedDataArr.push(deviceInfoResp);
+        } else if (deviceInfoResp && deviceInfoResp.deviceInfo == '') {
+          decodedDataArr.push(deviceInfoResp);
+        } else {
+          //chk if device is registered
+          let arr = deviceInfoResp.deviceInfo.split('.');
+          if (arr.length >= 3) {
+            //this is registered device
+            const decodedData: any = this.getDecodedDeviceInfo(deviceInfoResp);
+            if (
+              this.chkDeviceTypeSubTypeForDeviceInfo(
+                decodedData,
+                selectedSbiDevice
+              )
+            ) {
+              decodedDataArr.push(decodedData);
+            }
+          } else {
+            //this is unregistered device
+            const decodedData: any =
+              this.getDecodedUnregistetedDeviceInfo(deviceInfoResp);
+            if (
+              this.chkDeviceTypeSubTypeForDeviceInfo(
+                decodedData,
+                selectedSbiDevice
+              )
+            ) {
+              decodedDataArr.push(decodedData);
+            }
+          }
+        }
+      });
+      return decodedDataArr;
+    }
+    if (
+      testCaseMethodName == appConstants.SBI_METHOD_CAPTURE ||
+      testCaseMethodName == appConstants.SBI_METHOD_RCAPTURE
+    ) {
+      let decodedDataArr: any[] = [];
+      methodResponse.biometrics.forEach((dataResp: any) => {
+        if (dataResp && dataResp.data == '') {
+          decodedDataArr.push(dataResp);
+        } else {
+          //chk if device is registered
+          let arr = dataResp.data.split('.');
+          if (arr.length >= 3) {
+            //this is registered device
+            const decodedData: any = this.getDecodedDataInfo(dataResp);
+            if (
+              this.chkDeviceTypeSubTypeForData(decodedData, selectedSbiDevice)
+            ) {
+              decodedDataArr.push(decodedData);
+            }
+          } else {
+            //this is unregistered device
+            const decodedData: any = this.getDecodedUnregistetedData(dataResp);
+            if (
+              this.chkDeviceTypeSubTypeForData(decodedData, selectedSbiDevice)
+            ) {
+              decodedDataArr.push(decodedData);
+            }
+          }
+        }
+      });
+      return {
+        biometrics: decodedDataArr,
+      };
+    }
+    return methodResponse;
+    //return JSON.stringify(request);
+  }
   static getResourceBundle(lang: any, dataService: any) {
     return new Promise((resolve, reject) => {
       dataService.getResourceBundle(lang).subscribe(

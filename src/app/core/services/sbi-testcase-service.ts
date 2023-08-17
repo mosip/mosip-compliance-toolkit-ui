@@ -18,6 +18,7 @@ export class SbiTestCaseService {
   ) { }
   SBI_BASE_URL = this.appConfigService.getConfig()['SBI_BASE_URL'];
   resourceBundleJson: any = {};
+  isAndroidApp = false;
 
   async runTestCase(
     testCase: TestCaseModel,
@@ -48,10 +49,11 @@ export class SbiTestCaseService {
         );
         let endExecutionTime = new Date().toISOString();
         if (methodResponse) {
-          const decodedMethodResp = this.createDecodedResponse(
-            testCase,
+          const decodedMethodResp = Utils.createDecodedResponse(
+            testCase.methodName[0],
             methodResponse,
-            sbiSelectedDevice
+            sbiSelectedDevice,
+            this.isAndroidApp
           );
           let performValidations = true;
           if (
@@ -236,99 +238,6 @@ export class SbiTestCaseService {
       request = Utils.handleInvalidRequestAttribute(testCase, request);
     }
     return request;
-    //return JSON.stringify(request);
-  }
-
-  createDecodedResponse(
-    testCase: TestCaseModel,
-    methodResponse: any,
-    sbiSelectedDevice: string
-  ): any {
-    const selectedSbiDevice: SbiDiscoverResponseModel =
-      JSON.parse(sbiSelectedDevice);
-    if (testCase.methodName[0] == appConstants.SBI_METHOD_DISCOVER) {
-      let decodedDataArr: SbiDiscoverResponseModel[] = [];
-      methodResponse.forEach((deviceData: any) => {
-        const decodedData = Utils.getDecodedDiscoverDevice(deviceData);
-        if (decodedData != null) {
-          decodedDataArr.push(decodedData);
-        }
-      });
-      return decodedDataArr;
-    }
-    if (testCase.methodName[0] == appConstants.SBI_METHOD_DEVICE_INFO) {
-      let decodedDataArr: any[] = [];
-      methodResponse.forEach((deviceInfoResp: any) => {
-        if (deviceInfoResp && !deviceInfoResp.deviceInfo) {
-          decodedDataArr.push(deviceInfoResp);
-        } else if (deviceInfoResp && deviceInfoResp.deviceInfo == '') {
-          decodedDataArr.push(deviceInfoResp);
-        } else {
-          //chk if device is registered
-          let arr = deviceInfoResp.deviceInfo.split('.');
-          if (arr.length >= 3) {
-            //this is registered device
-            const decodedData: any = Utils.getDecodedDeviceInfo(deviceInfoResp);
-            if (
-              Utils.chkDeviceTypeSubTypeForDeviceInfo(
-                decodedData,
-                selectedSbiDevice
-              )
-            ) {
-              decodedDataArr.push(decodedData);
-            }
-          } else {
-            //this is unregistered device
-            const decodedData: any =
-              Utils.getDecodedUnregistetedDeviceInfo(deviceInfoResp);
-            if (
-              Utils.chkDeviceTypeSubTypeForDeviceInfo(
-                decodedData,
-                selectedSbiDevice
-              )
-            ) {
-              decodedDataArr.push(decodedData);
-            }
-          }
-        }
-      });
-      return decodedDataArr;
-    }
-    if (
-      testCase.methodName[0] == appConstants.SBI_METHOD_CAPTURE ||
-      testCase.methodName[0] == appConstants.SBI_METHOD_RCAPTURE
-    ) {
-      let decodedDataArr: any[] = [];
-      methodResponse.biometrics.forEach((dataResp: any) => {
-        if (dataResp && dataResp.data == '') {
-          decodedDataArr.push(dataResp);
-        } else {
-          //chk if device is registered
-          let arr = dataResp.data.split('.');
-          if (arr.length >= 3) {
-            //this is registered device
-            const decodedData: any = Utils.getDecodedDataInfo(dataResp);
-            if (
-              Utils.chkDeviceTypeSubTypeForData(decodedData, selectedSbiDevice)
-            ) {
-              decodedDataArr.push(decodedData);
-            }
-          } else {
-            //this is unregistered device
-            const decodedData: any = Utils.getDecodedUnregistetedData(dataResp);
-            if (
-              Utils.chkDeviceTypeSubTypeForData(decodedData, selectedSbiDevice)
-            ) {
-              decodedDataArr.push(decodedData);
-            }
-          }
-        }
-      });
-      return {
-        biometrics: decodedDataArr,
-      };
-    }
-    return methodResponse;
     //return JSON.stringify(request);
   }
 
