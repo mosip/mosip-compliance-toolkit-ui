@@ -6,7 +6,7 @@ import * as appConstants from 'src/app/app.constants';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { DataService } from './core/services/data-service';
 import { FormGroup } from '@angular/forms';
-import { AppConfigService } from './app-config.service';
+import { Subscription } from 'rxjs';
 
 export default class Utils {
   static getCurrentDate() {
@@ -562,6 +562,26 @@ export default class Utils {
         projectFormData.bioTestDataFileName
       );
     }
+  }
+
+  static getCollection(subscriptions: Subscription[],
+    dataService: DataService,
+    collectionId: string,
+    resourceBundleJson: any,
+    dialog: MatDialog) {
+    return new Promise((resolve, reject) => {
+      subscriptions.push(
+        dataService.getCollection(collectionId).subscribe(
+          (response: any) => {
+            resolve(response);
+          },
+          (errors) => {
+            this.showErrorMessage(resourceBundleJson, errors, dialog);
+            resolve(errors);
+          }
+        )
+      );
+    });
   }
 
   static initBreadCrumb(resourceBundleJson: any, breadcrumbService: BreadcrumbService, sbiProjectData: any,

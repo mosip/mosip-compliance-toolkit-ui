@@ -67,7 +67,13 @@ export class TestRunHistoryComponent implements OnInit {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     await this.initAllParams();
-    await this.getCollection();
+    await Utils.getCollection(this.subscriptions, this.dataService, this.collectionId, this.resourceBundleJson, this.dialog)
+      .then((result: any)=>{
+        this.collectionName = result.response.name;
+      })
+      .catch((error)=>{
+        console.log(error);
+      });
     if (this.projectType == appConstants.SBI) {
       const sbiProjectDetails: any = await Utils.getSbiProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
       if(sbiProjectDetails) {
@@ -111,23 +117,6 @@ export class TestRunHistoryComponent implements OnInit {
         this.collectionId = param['collectionId'];
       });
       resolve(true);
-    });
-  }
-
-  async getCollection() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getCollection(this.collectionId).subscribe(
-          (response: any) => {
-            this.collectionName = response['response']['name'];
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
     });
   }
 
