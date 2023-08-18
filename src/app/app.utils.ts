@@ -564,20 +564,20 @@ export default class Utils {
     }
   }
 
-  static getCollection(subscriptions: Subscription[],
+  static getCollectionName(subscriptions: Subscription[],
     dataService: DataService,
     collectionId: string,
     resourceBundleJson: any,
     dialog: MatDialog) {
-    return new Promise((resolve, reject) => {
+    return new Promise<string>((resolve, reject) => {
       subscriptions.push(
         dataService.getCollection(collectionId).subscribe(
           (response: any) => {
-            resolve(response);
+            resolve(response['response']['name']);
           },
           (errors) => {
             this.showErrorMessage(resourceBundleJson, errors, dialog);
-            resolve(false);
+            resolve(errors);
           }
         )
       );

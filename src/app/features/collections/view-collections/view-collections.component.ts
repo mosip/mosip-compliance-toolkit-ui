@@ -62,8 +62,7 @@ export class ViewCollectionsComponent implements OnInit {
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     this.initForm();
     await this.initAllParams();
-    const collectionDetails:any = await Utils.getCollection(this.subscriptions, this.dataService, this.collectionId, this.resourceBundleJson, this.dialog);
-    this.collectionName = collectionDetails.response['name'];
+    this.collectionName = await Utils.getCollectionName(this.subscriptions, this.dataService, this.collectionId, this.resourceBundleJson, this.dialog);
     this.populateCollection();
     if (this.projectType == appConstants.SBI) {
       const sbiProjectDetails: any = await Utils.getSbiProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
