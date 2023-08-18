@@ -98,7 +98,7 @@ export class TestRunComponent implements OnInit {
       }
       this.initBreadCrumb();
     }
-    await this.getTestcasesForCollection();
+    this.testcasesList = await Utils.getTestcasesForCollection(this.subscriptions, this.dataService, this.collectionId, this.resourceBundleJson, this.dialog);
     await this.getTestRun();
     this.initBreadCrumb();
     this.dataLoaded = true;
@@ -183,39 +183,6 @@ export class TestRunComponent implements OnInit {
               });
             }
             this.dataSource = new MatTableDataSource(tableData);
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
-  async getTestcasesForCollection() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getTestcasesForCollection(this.collectionId).subscribe(
-          (response: any) => {
-            let testcases = response['response']['testcases'];
-            //sort the testcases based on the testId
-            if (testcases && testcases.length > 0) {
-              testcases.sort(function (a: TestCaseModel, b: TestCaseModel) {
-                if (a.testId > b.testId) return 1;
-                if (a.testId < b.testId) return -1;
-                return 0;
-              });
-            }
-            this.testcasesList = testcases;
-            if (this.userProfileService.getUserPreferredLanguage()) {
-              let testcasesListTranslated = [];
-              for (let testcase of this.testcasesList) {
-                testcasesListTranslated.push(Utils.translateTestcase(testcase, this.resourceBundleJson));
-              }
-              this.testcasesList = testcasesListTranslated;
-            }
             resolve(true);
           },
           (errors) => {

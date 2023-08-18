@@ -564,6 +564,49 @@ export default class Utils {
     }
   }
 
+  static updateSdkProject(subscriptions: Subscription[], dataService: DataService, request: any, resourceBundleJson: any, dialog: MatDialog) {
+    return new Promise((resolve, reject) => {
+      subscriptions.push(
+        dataService.updateSdkProject(request).subscribe(
+          (response: any) => {
+            console.log(response);
+            resolve(this.getProjectResponse(response, resourceBundleJson, dialog));
+          },
+          (errors) => {
+            Utils.showErrorMessage(resourceBundleJson, errors, dialog);
+            resolve(false);
+          }
+        )
+      );
+    });
+  }
+
+  static updateAbisProject(subscriptions: Subscription[], dataService: DataService, request: any, resourceBundleJson: any, dialog: MatDialog) {
+    return new Promise((resolve, reject) => {
+      subscriptions.push(
+        dataService.updateAbisProject(request).subscribe(
+          (response: any) => {
+            console.log(response);
+            resolve(this.getProjectResponse(response, resourceBundleJson, dialog));
+          },
+          (errors) => {
+            this.showErrorMessage(resourceBundleJson, errors, dialog);
+            resolve(false);
+          }
+        )
+      );
+    });
+  }
+
+  static getProjectResponse(response: any, resourceBundleJson: any, dialog: MatDialog){
+    if (response.errors && response.errors.length > 0) {
+      this.showErrorMessage(resourceBundleJson, response.errors, dialog);
+      return true;
+    } else {
+      return true;
+    }
+  }
+
   static getCollectionName(subscriptions: Subscription[],
     dataService: DataService,
     collectionId: string,
@@ -574,6 +617,35 @@ export default class Utils {
         dataService.getCollection(collectionId).subscribe(
           (response: any) => {
             resolve(response['response']['name']);
+          },
+          (errors) => {
+            this.showErrorMessage(resourceBundleJson, errors, dialog);
+            resolve(errors);
+          }
+        )
+      );
+    });
+  }
+
+  static getTestcasesForCollection(subscriptions: Subscription[], dataService: DataService, collectionId: string, resourceBundleJson: any, dialog: MatDialog) {
+    return new Promise<any[]>((resolve, reject) => {
+      subscriptions.push(
+        dataService.getTestcasesForCollection(collectionId).subscribe(
+          (response: any) => {
+            let testcases = response['response']['testcases'];
+            let testcaseArr = [];
+            for (let testcase of testcases) {
+              testcaseArr.push(this.translateTestcase(testcase,resourceBundleJson));
+            }
+            //sort the testcases based on the testId
+            if (testcaseArr && testcaseArr.length > 0) {
+              testcaseArr.sort(function (a: TestCaseModel, b: TestCaseModel) {
+                if (a.testId > b.testId) return 1;
+                if (a.testId < b.testId) return -1;
+                return 0;
+              });
+            }
+            resolve(testcaseArr);
           },
           (errors) => {
             this.showErrorMessage(resourceBundleJson, errors, dialog);

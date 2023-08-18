@@ -30,7 +30,6 @@ export class DialogComponent implements OnInit {
   projectForm = new FormGroup({});
   projectFormData: any;
   allControls: string[];
-  updatingAttribute: string;
   subscriptions: Subscription[] = [];
   resourceBundleJson: any = {};
   dataLoaded = false;
@@ -243,7 +242,7 @@ export class DialogComponent implements OnInit {
           requesttime: new Date().toISOString(),
           request: projectData,
         };
-        await this.updateSdkProject(request);
+        await Utils.updateSdkProject(this.subscriptions, this.dataService, request, this.resourceBundleJson, this.dialog);
       }
       if (projectType == appConstants.ABIS) {
         const projectData: AbisProjectModel = {
@@ -267,7 +266,7 @@ export class DialogComponent implements OnInit {
           requesttime: new Date().toISOString(),
           request: projectData,
         };
-        await this.updateAbisProject(request);
+        await Utils.updateAbisProject(this.subscriptions, this.dataService, request, this.resourceBundleJson, this.dialog);
       }
       await this.saveProject()
     }
@@ -279,64 +278,15 @@ export class DialogComponent implements OnInit {
         this.dataService.updateSbiProject(request).subscribe(
           (response: any) => {
             console.log(response);
-            resolve(this.getProjectResponse(response));
+            resolve(Utils.getProjectResponse(response, this.resourceBundleJson, this.dialog));
           },
           (errors) => {
-            this.updatingAttribute = '';
             Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
             resolve(false);
           }
         )
       );
     });
-  }
-
-  async updateSdkProject(request: any) {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.updateSdkProject(request).subscribe(
-          (response: any) => {
-            console.log(response);
-            resolve(this.getProjectResponse(response));
-          },
-          (errors) => {
-            this.updatingAttribute = '';
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
-  async updateAbisProject(request: any) {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.updateAbisProject(request).subscribe(
-          (response: any) => {
-            console.log(response);
-            resolve(this.getProjectResponse(response));
-          },
-          (errors) => {
-            this.updatingAttribute = '';
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
-  getProjectResponse(response: any){
-    if (response.errors && response.errors.length > 0) {
-      this.updatingAttribute = '';
-      Utils.showErrorMessage(this.resourceBundleJson, response.errors, this.dialog);
-      return true;
-    } else {
-      this.updatingAttribute = '';
-      this.panelOpenState = true;
-      return true;
-    }
   }
 
   async saveProject() {
