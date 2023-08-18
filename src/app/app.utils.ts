@@ -577,7 +577,7 @@ export default class Utils {
           },
           (errors) => {
             this.showErrorMessage(resourceBundleJson, errors, dialog);
-            resolve(errors);
+            resolve(false);
           }
         )
       );
