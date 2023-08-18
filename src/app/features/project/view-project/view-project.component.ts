@@ -337,7 +337,8 @@ export class ViewProjectComponent implements OnInit {
           request: projectData,
         };
         this.updatingAttribute = attributeName;
-        await this.updateSdkProject(request, attributeName);
+        await Utils.updateSdkProject(this.subscriptions, this.dataService, request, this.resourceBundleJson, this.dialog);
+        this.panelOpenState = true;
       }
       if (projectType == appConstants.ABIS) {
         const projectData: AbisProjectModel = {
@@ -362,7 +363,8 @@ export class ViewProjectComponent implements OnInit {
           request: projectData,
         };
         this.updatingAttribute = attributeName;
-        await this.updateAbisProject(request, attributeName);
+        await Utils.updateAbisProject(this.subscriptions, this.dataService, request, this.resourceBundleJson, this.dialog);
+        this.panelOpenState = true;
       }
       this.updatingAttribute = '';
     }
@@ -398,54 +400,6 @@ export class ViewProjectComponent implements OnInit {
       }
     );
     this.subscriptions.push(subs);
-  }
-
-  async updateSdkProject(request: any, attributeName: string) {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.updateSdkProject(request).subscribe(
-          (response: any) => {
-            console.log(response);
-            resolve(this.getProjectResponse(response));
-          },
-          (errors) => {
-            this.updatingAttribute = '';
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
-  async updateAbisProject(request: any, attributeName: string) {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.updateAbisProject(request).subscribe(
-          (response: any) => {
-            console.log(response);
-            resolve(this.getProjectResponse(response));
-          },
-          (errors) => {
-            this.updatingAttribute = '';
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
-  getProjectResponse(response: any){
-    if (response.errors && response.errors.length > 0) {
-      this.updatingAttribute = '';
-      Utils.showErrorMessage(this.resourceBundleJson, response.errors, this.dialog);
-      return true;
-    } else {
-      this.updatingAttribute = '';
-      this.panelOpenState = true;
-      return true;
-    }
   }
 
   getDeviceImageUrl() {

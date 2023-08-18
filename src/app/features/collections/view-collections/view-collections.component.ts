@@ -92,7 +92,8 @@ export class ViewCollectionsComponent implements OnInit {
       '@collectionBreadCrumb',
       `${this.collectionName}`
     );
-    await this.getTestcasesForCollection();
+    const testcaseArr = await Utils.getTestcasesForCollection(this.subscriptions, this.dataService, this.collectionId, this.resourceBundleJson, this.dialog);
+    this.dataSource = new MatTableDataSource(testcaseArr);
     this.dataSource.sort = this.sort;
     this.dataLoaded = true;
   }
@@ -119,35 +120,6 @@ export class ViewCollectionsComponent implements OnInit {
     this.collectionForm.controls['name'].setValue(this.collectionName);
   }
 
-  async getTestcasesForCollection() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getTestcasesForCollection(this.collectionId).subscribe(
-          (response: any) => {
-            let testcases = response['response']['testcases'];
-            let testcaseArr = [];
-            for (let testcase of testcases) {
-              testcaseArr.push(Utils.translateTestcase(testcase,this.resourceBundleJson));
-            }
-            //sort the testcases based on the testId
-            if (testcaseArr && testcaseArr.length > 0) {
-              testcaseArr.sort(function (a: TestCaseModel, b: TestCaseModel) {
-                if (a.testId > b.testId) return 1;
-                if (a.testId < b.testId) return -1;
-                return 0;
-              });
-            }
-            this.dataSource = new MatTableDataSource(testcaseArr);
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
   async backToProject() {
     await this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}`,
