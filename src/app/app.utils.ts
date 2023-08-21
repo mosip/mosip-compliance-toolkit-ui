@@ -7,6 +7,9 @@ import { BreadcrumbService } from 'xng-breadcrumb';
 import { DataService } from './core/services/data-service';
 import { FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { SdkProjectModel } from './core/models/sdk-project';
+import { AbisProjectModel } from './core/models/abis-project';
+import { SbiProjectModel } from './core/models/sbi-project';
 
 export default class Utils {
   static getCurrentDate() {
@@ -446,6 +449,22 @@ export default class Utils {
     });
   }
 
+  static getBioTestDataNames(subscriptions: Subscription[], dataService: DataService, purpose: string, resourceBundleJson: any, dialog: MatDialog) {
+    return new Promise<string[]>((resolve, reject) => {
+      subscriptions.push(
+        dataService.getBioTestDataNames(purpose).subscribe(
+          (response: any) => {
+            resolve(response[appConstants.RESPONSE]);
+          },
+          (errors) => {
+            Utils.showErrorMessage(resourceBundleJson, errors, dialog);
+            resolve(errors);
+          }
+        )
+      );
+    });
+  }
+
   static getSbiProjectDetails(projectId:string, dataService: DataService, resourceBundleJson: any, dialog:MatDialog) {
     return new Promise((resolve, reject) => {
       dataService.getSbiProject(projectId).subscribe(
@@ -605,6 +624,60 @@ export default class Utils {
     } else {
       return true;
     }
+  }
+
+  static getSbiProjectData(projectForm: FormGroup, projectId: string, deviceImage1: any, deviceImage2: any,
+    deviceImage3: any, deviceImage4: any) {
+    const projectData: SbiProjectModel = {
+      id: projectId,
+      name: projectForm.controls['name'].value,
+      projectType: projectForm.controls['projectType'].value,
+      sbiVersion: projectForm.controls['sbiSpecVersion'].value,
+      purpose: projectForm.controls['sbiPurpose'].value,
+      deviceType: projectForm.controls['deviceType'].value,
+      deviceSubType: projectForm.controls['deviceSubType'].value,
+      deviceImage1: deviceImage1,
+      deviceImage2: deviceImage2,
+      deviceImage3: deviceImage3,
+      deviceImage4: deviceImage4,
+      sbiHash: projectForm.controls['sbiHash'].value,
+      websiteUrl: projectForm.controls['websiteUrl'].value
+    };
+    return projectData;
+  }
+
+  static getSdkProjectData(projectForm: FormGroup, projectId: string) {
+    const projectData: SdkProjectModel = {
+      id: projectId,
+      name: projectForm.controls['name'].value,
+      projectType: projectForm.controls['projectType'].value,
+      sdkVersion: projectForm.controls['sdkSpecVersion'].value,
+      purpose: projectForm.controls['sdkPurpose'].value,
+      url: projectForm.controls['sdkUrl'].value,
+      sdkHash: projectForm.controls['sdkHash'].value,
+      websiteUrl: projectForm.controls['websiteUrl'].value,
+      bioTestDataFileName: projectForm.controls['bioTestData'].value,
+    };
+    return projectData;
+  }
+
+  static getAbisProjectData(projectForm: FormGroup, projectId: string) {
+    const projectData: AbisProjectModel = {
+      id: projectId,
+      name: projectForm.controls['name'].value,
+      projectType: projectForm.controls['projectType'].value,
+      abisVersion: projectForm.controls['abisSpecVersion'].value,
+      url: projectForm.controls['abisUrl'].value,
+      username: projectForm.controls['username'].value,
+      password: projectForm.controls['password'].value,
+      outboundQueueName: projectForm.controls['outboundQueueName'].value,
+      inboundQueueName: projectForm.controls['inboundQueueName'].value,
+      modality: projectForm.controls['modality'].value,
+      abisHash: projectForm.controls['abisHash'].value,
+      websiteUrl: projectForm.controls['websiteUrl'].value,
+      bioTestDataFileName: projectForm.controls['abisBioTestData'].value,
+    }
+    return projectData;
   }
 
   static getCollectionName(subscriptions: Subscription[],

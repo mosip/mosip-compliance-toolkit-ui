@@ -93,13 +93,13 @@ export class ViewProjectComponent implements OnInit {
       this.initSdkProjectForm();
       this.projectFormData = await Utils.getSdkProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
       Utils.populateSdkProjectForm(this.projectFormData, this.projectForm);
-      await this.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value);
+      this.bioTestDataFileNames = await Utils.getBioTestDataNames(this.subscriptions, this.dataService, this.projectForm.controls['sdkPurpose'].value, this.resourceBundleJson, this.dialog);
     }
     if (this.projectType == appConstants.ABIS) {
       this.initAbisProjectForm();
       this.projectFormData = await Utils.getAbisProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
       Utils.populateAbisProjectForm(this.projectFormData, this.projectForm);
-      await this.getBioTestDataNames(appConstants.ABIS);
+      this.bioTestDataFileNames = await Utils.getBioTestDataNames(this.subscriptions, this.dataService, appConstants.ABIS, this.resourceBundleJson, this.dialog);
     }
     await this.getCollections();
     this.dataSource.paginator = this.paginator;
@@ -180,23 +180,6 @@ export class ViewProjectComponent implements OnInit {
     });
   }
 
-  async getBioTestDataNames(purpose: string) {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getBioTestDataNames(purpose).subscribe(
-          (response: any) => {
-            this.bioTestDataFileNames = response[appConstants.RESPONSE];
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
   async getCollections() {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
@@ -231,7 +214,7 @@ export class ViewProjectComponent implements OnInit {
   }
 
   async handleSdkPurposeChange() {
-    await this.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value);
+    this.bioTestDataFileNames = await Utils.getBioTestDataNames(this.subscriptions, this.dataService, this.projectForm.controls['sdkPurpose'].value, this.resourceBundleJson, this.dialog);
   }
 
   async addCollection() {
@@ -319,48 +302,22 @@ export class ViewProjectComponent implements OnInit {
       //Save the project in db
       console.log('valid');
       if (projectType == appConstants.SDK) {
-        const projectData: SdkProjectModel = {
-          id: this.projectFormData.id,
-          name: this.projectForm.controls['name'].value,
-          projectType: this.projectForm.controls['projectType'].value,
-          sdkVersion: this.projectForm.controls['sdkSpecVersion'].value,
-          purpose: this.projectForm.controls['sdkPurpose'].value,
-          url: this.projectForm.controls['sdkUrl'].value,
-          sdkHash: this.projectForm.controls['sdkHash'].value,
-          websiteUrl: this.projectForm.controls['websiteUrl'].value,
-          bioTestDataFileName: this.projectForm.controls['bioTestData'].value,
-        };
         let request = {
           id: appConstants.SDK_PROJECT_UPDATE_ID,
           version: appConstants.VERSION,
           requesttime: new Date().toISOString(),
-          request: projectData,
+          request: Utils.getSdkProjectData(this.projectForm, this.projectFormData.id),
         };
         this.updatingAttribute = attributeName;
         await Utils.updateSdkProject(this.subscriptions, this.dataService, request, this.resourceBundleJson, this.dialog);
         this.panelOpenState = true;
       }
       if (projectType == appConstants.ABIS) {
-        const projectData: AbisProjectModel = {
-          id: this.projectFormData.id,
-          name: this.projectForm.controls['name'].value,
-          projectType: this.projectForm.controls['projectType'].value,
-          abisVersion: this.projectForm.controls['abisSpecVersion'].value,
-          url: this.projectForm.controls['abisUrl'].value,
-          username: this.projectForm.controls['username'].value,
-          password: this.projectForm.controls['password'].value,
-          outboundQueueName: this.projectForm.controls['outboundQueueName'].value,
-          inboundQueueName: this.projectForm.controls['inboundQueueName'].value,
-          modality:this.projectForm.controls['modality'].value,
-          abisHash:this.projectForm.controls['abisHash'].value,
-          websiteUrl:this.projectForm.controls['websiteUrl'].value,
-          bioTestDataFileName: this.projectForm.controls['abisBioTestData'].value,
-        };
         let request = {
           id: appConstants.ABIS_PROJECT_UPDATE_ID,
           version: appConstants.VERSION,
           requesttime: new Date().toISOString(),
-          request: projectData,
+          request: Utils.getAbisProjectData(this.projectForm, this.projectFormData.id),
         };
         this.updatingAttribute = attributeName;
         await Utils.updateAbisProject(this.subscriptions, this.dataService, request, this.resourceBundleJson, this.dialog);

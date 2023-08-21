@@ -64,10 +64,10 @@ export class AddProjectComponent implements OnInit {
     this.initBreadCrumb();
     const projectType = this.projectForm.controls['projectType'].value;
     if (projectType == appConstants.SDK) {
-      await this.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value);
+      this.bioTestDataFileNames = await Utils.getBioTestDataNames(this.subscriptions, this.dataService, this.projectForm.controls['sdkPurpose'].value, this.resourceBundleJson, this.dialog);
     }
     if (projectType == appConstants.ABIS) {
-      await this.getBioTestDataNames(appConstants.ABIS);
+      this.bioTestDataFileNames = await Utils.getBioTestDataNames(this.subscriptions, this.dataService, appConstants.ABIS, this.resourceBundleJson, this.dialog);
     } 
     this.dataLoaded = true;
   }
@@ -97,23 +97,6 @@ export class AddProjectComponent implements OnInit {
       abisUrl: 'wss://{base_URL}/ws',
       outboundQueueName: 'ctk-to-abis',
       inboundQueueName: 'abis-to-ctk'
-    });
-  }
-
-  async getBioTestDataNames(purpose: string) {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getBioTestDataNames(purpose).subscribe(
-          (response: any) => {
-            this.bioTestDataFileNames = response[appConstants.RESPONSE];
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
     });
   }
 
@@ -169,12 +152,12 @@ export class AddProjectComponent implements OnInit {
         this.projectForm.controls[controlId].clearValidators();
         this.projectForm.controls[controlId].updateValueAndValidity();
       });
-      await this.getBioTestDataNames(appConstants.ABIS);
+      this.bioTestDataFileNames = await Utils.getBioTestDataNames(this.subscriptions, this.dataService, appConstants.ABIS, this.resourceBundleJson, this.dialog);
     }
   }
 
   async handleSdkPurposeChange() {
-    await this.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value);
+    this.bioTestDataFileNames = await Utils.getBioTestDataNames(this.subscriptions, this.dataService, this.projectForm.controls['sdkPurpose'].value, this.resourceBundleJson, this.dialog);
   }
 
   async saveProject() {
@@ -209,74 +192,33 @@ export class AddProjectComponent implements OnInit {
       //Save the project in db
       console.log('valid');
       if (projectType == appConstants.SBI) {
-        const projectData: SbiProjectModel = {
-          id: '',
-          name: this.projectForm.controls['name'].value,
-          projectType: this.projectForm.controls['projectType'].value,
-          sbiVersion: this.projectForm.controls['sbiSpecVersion'].value,
-          purpose: this.projectForm.controls['sbiPurpose'].value,
-          deviceType: this.projectForm.controls['deviceType'].value,
-          deviceSubType: this.projectForm.controls['deviceSubType'].value,
-          deviceImage1: this.deviceImage1,
-          deviceImage2: this.deviceImage2,
-          deviceImage3: this.deviceImage3,
-          deviceImage4: this.deviceImage4,
-          sbiHash: this.projectForm.controls['sbiHash'].value,
-          websiteUrl: this.projectForm.controls['websiteUrl'].value
-        };
         let request = {
           id: appConstants.SBI_PROJECT_ADD_ID,
           version: appConstants.VERSION,
           requesttime: new Date().toISOString(),
-          request: projectData,
+          request: Utils.getSbiProjectData(this.projectForm, '', this.deviceImage1, this.deviceImage2, this.deviceImage3, this.deviceImage4),
         };
         this.dataLoaded = false;
         this.dataSubmitted = true;
         await this.addSbiProject(request);
       }
       if (projectType == appConstants.SDK) {
-        const projectData: SdkProjectModel = {
-          id: '',
-          name: this.projectForm.controls['name'].value,
-          projectType: this.projectForm.controls['projectType'].value,
-          sdkVersion: this.projectForm.controls['sdkSpecVersion'].value,
-          purpose: this.projectForm.controls['sdkPurpose'].value,
-          url: this.projectForm.controls['sdkUrl'].value,
-          sdkHash: this.projectForm.controls['sdkHash'].value,
-          websiteUrl: this.projectForm.controls['websiteUrl'].value,
-          bioTestDataFileName: this.projectForm.controls['bioTestData'].value,
-        };
         let request = {
           id: appConstants.SDK_PROJECT_ADD_ID,
           version: appConstants.VERSION,
           requesttime: new Date().toISOString(),
-          request: projectData,
+          request: Utils.getSdkProjectData(this.projectForm, ''),
         };
         this.dataLoaded = false;
         this.dataSubmitted = true;
         await this.addSdkProject(request);
       }
       if (projectType == appConstants.ABIS) {
-        const projectData: AbisProjectModel = {
-          id: '',
-          name: this.projectForm.controls['name'].value,
-          projectType: this.projectForm.controls['projectType'].value,
-          abisVersion: this.projectForm.controls['abisSpecVersion'].value,
-          url: this.projectForm.controls['abisUrl'].value,
-          username:this.projectForm.controls['username'].value,
-          password:this.projectForm.controls['password'].value,
-          outboundQueueName:this.projectForm.controls['outboundQueueName'].value,
-          inboundQueueName:this.projectForm.controls['inboundQueueName'].value,
-          modality:this.projectForm.controls['modality'].value,
-          abisHash:this.projectForm.controls['abisHash'].value,
-          websiteUrl:this.projectForm.controls['websiteUrl'].value,
-          bioTestDataFileName: this.projectForm.controls['abisBioTestData'].value,
-        };
         let request = {
           id: appConstants.ABIS_PROJECT_ADD_ID,
           version: appConstants.VERSION,
           requesttime: new Date().toISOString(),
-          request: projectData,
+          request: Utils.getAbisProjectData(this.projectForm, ''),
         };
         this.dataLoaded = false;
         this.dataSubmitted = true;
