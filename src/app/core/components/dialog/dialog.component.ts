@@ -201,70 +201,29 @@ export class DialogComponent implements OnInit {
       //Save the project in db
       console.log('valid');
       if (projectType == appConstants.SBI) {
-        const projectData: SbiProjectModel = {
-          id: this.projectFormData.id,
-          name: this.projectForm.controls['name'].value,
-          projectType: this.projectForm.controls['projectType'].value,
-          sbiVersion: this.projectForm.controls['sbiSpecVersion'].value,
-          purpose: this.projectForm.controls['sbiPurpose'].value,
-          deviceType: this.projectForm.controls['deviceType'].value,
-          deviceSubType: this.projectForm.controls['deviceSubType'].value,
-          deviceImage1: this.deviceImage1,
-          deviceImage2: this.deviceImage2,
-          deviceImage3: this.deviceImage3,
-          deviceImage4: this.deviceImage4,
-          sbiHash: this.projectForm.controls['sbiHash'].value,
-          websiteUrl: this.projectForm.controls['websiteUrl'].value,
-        };
         let request = {
           id: appConstants.SBI_PROJECT_UPDATE_ID,
           version: appConstants.VERSION,
           requesttime: new Date().toISOString(),
-          request: projectData,
+          request: Utils.populateSbiProjectData(this.projectForm, this.projectFormData.id, this.deviceImage1, this.deviceImage2, this.deviceImage3, this.deviceImage4),
         };
         await this.updateSbiProject(request);
       }
       if (projectType == appConstants.SDK) {
-        const projectData: SdkProjectModel = {
-          id: this.projectFormData.id,
-          name: this.projectForm.controls['name'].value,
-          projectType: this.projectForm.controls['projectType'].value,
-          sdkVersion: this.projectForm.controls['sdkSpecVersion'].value,
-          purpose: this.projectForm.controls['sdkPurpose'].value,
-          url: this.projectForm.controls['sdkUrl'].value,
-          sdkHash: this.projectForm.controls['sdkHash'].value,
-          websiteUrl: this.projectForm.controls['websiteUrl'].value,
-          bioTestDataFileName: this.projectForm.controls['bioTestData'].value,
-        };
         let request = {
           id: appConstants.SDK_PROJECT_UPDATE_ID,
           version: appConstants.VERSION,
           requesttime: new Date().toISOString(),
-          request: projectData,
+          request: Utils.populateSdkProjectData(this.projectForm, this.projectFormData.id),
         };
         await Utils.updateSdkProject(this.subscriptions, this.dataService, request, this.resourceBundleJson, this.dialog);
       }
       if (projectType == appConstants.ABIS) {
-        const projectData: AbisProjectModel = {
-          id: this.projectFormData.id,
-          name: this.projectForm.controls['name'].value,
-          projectType: this.projectForm.controls['projectType'].value,
-          abisVersion: this.projectForm.controls['abisSpecVersion'].value,
-          url: this.projectForm.controls['abisUrl'].value,
-          username: this.projectForm.controls['username'].value,
-          password: this.projectForm.controls['password'].value,
-          outboundQueueName: this.projectForm.controls['outboundQueueName'].value,
-          inboundQueueName: this.projectForm.controls['inboundQueueName'].value,
-          modality:this.projectForm.controls['modality'].value,
-          abisHash:this.projectForm.controls['abisHash'].value,
-          websiteUrl:this.projectForm.controls['websiteUrl'].value,
-          bioTestDataFileName: this.projectForm.controls['abisBioTestData'].value,
-        };
         let request = {
           id: appConstants.ABIS_PROJECT_UPDATE_ID,
           version: appConstants.VERSION,
           requesttime: new Date().toISOString(),
-          request: projectData,
+          request: Utils.populateAbisProjectData(this.projectForm, this.projectFormData.id),
         };
         await Utils.updateAbisProject(this.subscriptions, this.dataService, request, this.resourceBundleJson, this.dialog);
       }
