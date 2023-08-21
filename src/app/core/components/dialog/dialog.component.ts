@@ -205,7 +205,7 @@ export class DialogComponent implements OnInit {
           id: appConstants.SBI_PROJECT_UPDATE_ID,
           version: appConstants.VERSION,
           requesttime: new Date().toISOString(),
-          request: Utils.getSbiProjectData(this.projectForm, this.projectFormData.id, this.deviceImage1, this.deviceImage2, this.deviceImage3, this.deviceImage4),
+          request: Utils.populateSbiProjectData(this.projectForm, this.projectFormData.id, this.deviceImage1, this.deviceImage2, this.deviceImage3, this.deviceImage4),
         };
         await this.updateSbiProject(request);
       }
@@ -214,7 +214,7 @@ export class DialogComponent implements OnInit {
           id: appConstants.SDK_PROJECT_UPDATE_ID,
           version: appConstants.VERSION,
           requesttime: new Date().toISOString(),
-          request: Utils.getSdkProjectData(this.projectForm, this.projectFormData.id),
+          request: Utils.populateSdkProjectData(this.projectForm, this.projectFormData.id),
         };
         await Utils.updateSdkProject(this.subscriptions, this.dataService, request, this.resourceBundleJson, this.dialog);
       }
@@ -223,7 +223,7 @@ export class DialogComponent implements OnInit {
           id: appConstants.ABIS_PROJECT_UPDATE_ID,
           version: appConstants.VERSION,
           requesttime: new Date().toISOString(),
-          request: Utils.getAbisProjectData(this.projectForm, this.projectFormData.id),
+          request: Utils.populateAbisProjectData(this.projectForm, this.projectFormData.id),
         };
         await Utils.updateAbisProject(this.subscriptions, this.dataService, request, this.resourceBundleJson, this.dialog);
       }

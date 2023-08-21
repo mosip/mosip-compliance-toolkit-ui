@@ -626,7 +626,7 @@ export default class Utils {
     }
   }
 
-  static getSbiProjectData(projectForm: FormGroup, projectId: string, deviceImage1: any, deviceImage2: any,
+  static populateSbiProjectData(projectForm: FormGroup, projectId: string, deviceImage1: any, deviceImage2: any,
     deviceImage3: any, deviceImage4: any) {
     const projectData: SbiProjectModel = {
       id: projectId,
@@ -646,7 +646,7 @@ export default class Utils {
     return projectData;
   }
 
-  static getSdkProjectData(projectForm: FormGroup, projectId: string) {
+  static populateSdkProjectData(projectForm: FormGroup, projectId: string) {
     const projectData: SdkProjectModel = {
       id: projectId,
       name: projectForm.controls['name'].value,
@@ -661,7 +661,7 @@ export default class Utils {
     return projectData;
   }
 
-  static getAbisProjectData(projectForm: FormGroup, projectId: string) {
+  static populateAbisProjectData(projectForm: FormGroup, projectId: string) {
     const projectData: AbisProjectModel = {
       id: projectId,
       name: projectForm.controls['name'].value,

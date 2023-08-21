@@ -196,7 +196,7 @@ export class AddProjectComponent implements OnInit {
           id: appConstants.SBI_PROJECT_ADD_ID,
           version: appConstants.VERSION,
           requesttime: new Date().toISOString(),
-          request: Utils.getSbiProjectData(this.projectForm, '', this.deviceImage1, this.deviceImage2, this.deviceImage3, this.deviceImage4),
+          request: Utils.populateSbiProjectData(this.projectForm, '', this.deviceImage1, this.deviceImage2, this.deviceImage3, this.deviceImage4),
         };
         this.dataLoaded = false;
         this.dataSubmitted = true;
@@ -207,7 +207,7 @@ export class AddProjectComponent implements OnInit {
           id: appConstants.SDK_PROJECT_ADD_ID,
           version: appConstants.VERSION,
           requesttime: new Date().toISOString(),
-          request: Utils.getSdkProjectData(this.projectForm, ''),
+          request: Utils.populateSdkProjectData(this.projectForm, ''),
         };
         this.dataLoaded = false;
         this.dataSubmitted = true;
@@ -218,7 +218,7 @@ export class AddProjectComponent implements OnInit {
           id: appConstants.ABIS_PROJECT_ADD_ID,
           version: appConstants.VERSION,
           requesttime: new Date().toISOString(),
-          request: Utils.getAbisProjectData(this.projectForm, ''),
+          request: Utils.populateAbisProjectData(this.projectForm, ''),
         };
         this.dataLoaded = false;
         this.dataSubmitted = true;

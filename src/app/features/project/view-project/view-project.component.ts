@@ -306,7 +306,7 @@ export class ViewProjectComponent implements OnInit {
           id: appConstants.SDK_PROJECT_UPDATE_ID,
           version: appConstants.VERSION,
           requesttime: new Date().toISOString(),
-          request: Utils.getSdkProjectData(this.projectForm, this.projectFormData.id),
+          request: Utils.populateSdkProjectData(this.projectForm, this.projectFormData.id),
         };
         this.updatingAttribute = attributeName;
         await Utils.updateSdkProject(this.subscriptions, this.dataService, request, this.resourceBundleJson, this.dialog);
@@ -317,7 +317,7 @@ export class ViewProjectComponent implements OnInit {
           id: appConstants.ABIS_PROJECT_UPDATE_ID,
           version: appConstants.VERSION,
           requesttime: new Date().toISOString(),
-          request: Utils.getAbisProjectData(this.projectForm, this.projectFormData.id),
+          request: Utils.populateAbisProjectData(this.projectForm, this.projectFormData.id),
         };
         this.updatingAttribute = attributeName;
         await Utils.updateAbisProject(this.subscriptions, this.dataService, request, this.resourceBundleJson, this.dialog);
