@@ -32,6 +32,11 @@
 		"itemPerPage": "Items per page:",
 		"rangeLabel": "of"
 	},
+	"adminConsole": {
+		"partnersDashboard": "Partners Dashboard",
+		"testcaseDashboard": "Testcase Dashboard",
+		"complianceCollectionsDashboard": "Compliance Collections Dashboard"
+	},
 	"projectDashboard": {
 		"addProject": "Add Project",
 		"biometricData": "Biometric Data",

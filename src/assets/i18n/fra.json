@@ -32,6 +32,11 @@
 		"itemPerPage": "Objets par page:",
 		"rangeLabel": "de"
 	},
+	"adminConsole": {
+		"partnersDashboard": "Tableau de bord des partenaires",
+		"testcaseDashboard": "Tableau de bord du scénario de test",
+		"complianceCollectionsDashboard": "Tableau de bord des recouvrements de conformité"
+	},
 	"projectDashboard": {
 		"addProject": "Ajouter un projet",
 		"biometricData": "Données biométriques",

@@ -32,6 +32,11 @@
 		"itemPerPage": "مواد لكل صفحة:",
 		"rangeLabel": "ل"
 	},
+	"adminConsole": {
+		"partnersDashboard": "لوحة تحكم الشركاء",
+		"testcaseDashboard": "لوحة معلومات حالة الاختبار",
+		"complianceCollectionsDashboard": "لوحة تحكم مجموعات الامتثال"
+	},
 	"projectDashboard": {
 		"addProject": "أضف مشروع",
 		"biometricData": "البيانات البيومترية",

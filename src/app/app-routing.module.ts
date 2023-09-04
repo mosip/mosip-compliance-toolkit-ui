@@ -16,6 +16,13 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       {
+        path: 'admin-console',
+        loadChildren: () =>
+          import('./features/admin/admin.module').then(
+            (m) => m.AdminModule
+          ),
+      },
+      {
         path: 'dashboard',
         data: { breadcrumb: { label: 'dashboard', skip: true } },
         loadChildren: () =>

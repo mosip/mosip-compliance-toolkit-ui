@@ -1,0 +1,32 @@
+<div [dir]="textDirection">
+  <mat-sidenav-container class="example-container" autosize>
+    <mat-sidenav #sidenav class="example-sidenav" mode="side" opened="true">
+      <mat-nav-list>
+        <a
+          mat-list-item
+          class="menu-list-item"
+          routerLink="/toolkit/admin-console/partners"
+          routerLinkActive="list-item-active"
+          >{{ "adminConsole.partnersDashboard" | translate }}</a
+        >
+        <a
+          mat-list-item
+          class="menu-list-item"
+          routerLink="/toolkit/admin-console/testcase"
+          routerLinkActive="list-item-active"
+          >{{ "adminConsole.testcaseDashboard" | translate }}</a
+        >
+        <a
+          mat-list-item
+          class="menu-list-item"
+          routerLink="/toolkit/admin-console/collections"
+          routerLinkActive="list-item-active"
+          >{{ "adminConsole.complianceCollectionsDashboard" | translate }}</a
+        >
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

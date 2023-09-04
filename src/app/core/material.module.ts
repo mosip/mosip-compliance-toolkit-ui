@@ -19,6 +19,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSidenavModule} from '@angular/material/sidenav';
+import { MatListModule} from '@angular/material/list';
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import { I18nModule } from '../i18n.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -44,6 +46,8 @@ import { TranslateModule } from '@ngx-translate/core';
     MatCheckboxModule,
     MatTooltipModule,
     MatProgressBarModule,
+    MatSidenavModule,
+    MatListModule,
     ClipboardModule
   ],
   exports: [
@@ -66,6 +70,8 @@ import { TranslateModule } from '@ngx-translate/core';
     MatCheckboxModule,
     MatTooltipModule,
     MatProgressBarModule,
+    MatSidenavModule,
+    MatListModule,
     ClipboardModule,
     I18nModule
   ],
