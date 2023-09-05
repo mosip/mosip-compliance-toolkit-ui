@@ -19,10 +19,10 @@ import {
   animate,
 } from '@angular/animations';
 import { SdkProjectModel } from 'src/app/core/models/sdk-project';
-import { TestCaseModel } from 'src/app/core/models/testcase';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AbisProjectModel } from 'src/app/core/models/abis-project';
+import { AppConfigService } from 'src/app/app-config.service';
 
 @Component({
   selector: 'app-test-run',
@@ -51,6 +51,7 @@ export class TestRunComponent implements OnInit {
   sbiProjectData: SbiProjectModel;
   sdkProjectData: SdkProjectModel;
   abisProjectData: AbisProjectModel;
+  showDownloadReportBtn = false;
   testcasesList: any;
   dataSource: MatTableDataSource<TestRunModel>;
   displayedColumns: string[] = ['testId', 'testName', 'resultStatus', 'scrollIcon'];
@@ -59,6 +60,7 @@ export class TestRunComponent implements OnInit {
   dataSubmitted = false;
   panelOpenState = false;
   runDetails: any;
+  complianceCollectionName: any = this.appConfigService.getConfig()['complianceCollectionName'];
   textDirection: any = this.userProfileService.getTextDirection();
   resourceBundleJson: any = {};
   langCode = this.userProfileService.getUserPreferredLanguage();
@@ -71,7 +73,8 @@ export class TestRunComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router,
     private userProfileService: UserProfileService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private appConfigService: AppConfigService
   ) { }
 
   async ngOnInit() {
@@ -100,6 +103,10 @@ export class TestRunComponent implements OnInit {
     }
     this.testcasesList = await Utils.getTestcasesForCollection(this.subscriptions, this.dataService, this.collectionId, this.resourceBundleJson, this.dialog);
     await this.getTestRun();
+    //enable download report button only for compliance collection
+    if (this.complianceCollectionName && this.complianceCollectionName == this.collectionName) {
+      this.showDownloadReportBtn = true;
+    }
     this.initBreadCrumb();
     this.dataLoaded = true;
   }
@@ -250,7 +257,7 @@ export class TestRunComponent implements OnInit {
   }
 
   downloadReport() {
-  
+    this.dataLoaded = false;
     let reportrequest = {
       projectType: this.projectType,
       projectId: this.projectId,
@@ -265,6 +272,7 @@ export class TestRunComponent implements OnInit {
     };
     const subs = this.dataService.createReport(request).subscribe(
       (res: any) => {
+        this.dataLoaded = true;
         if (res) {
           const fileByteArray = res;
           var blob = new Blob([fileByteArray], { type: 'application/pdf' });
