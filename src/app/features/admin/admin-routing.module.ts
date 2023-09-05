@@ -14,7 +14,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'partners', pathMatch: 'full' },
       { path: 'partners', component: PartnersDashboardComponent },
       { path: 'testcase', component: TestcaseDashboardComponent },
-      { path: 'collections', component: ComplianceCollectionsDashboardComponent },
+      { path: 'compliance-collections', component: ComplianceCollectionsDashboardComponent },
     ],
   },
 ];
