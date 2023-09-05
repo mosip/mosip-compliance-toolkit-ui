@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminConsoleComponent } from './admin-console/admin-console.component';
 import { PartnersDashboardComponent } from './partners-dashboard/partners-dashboard.component';
 import { TestcaseDashboardComponent } from './testcase-dashboard/testcase-dashboard.component';
-import { CollectionsDashboardComponent } from './collections-dashboard/collections-dashboard.component';
+import { ComplianceCollectionsDashboardComponent } from './compliance-collections-dashboard/compliance-collections-dashboard.component';
 
 const routes: Routes = [
   // { path: '', redirectTo: '', pathMatch: 'full'},
@@ -14,7 +14,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'partners', pathMatch: 'full' },
       { path: 'partners', component: PartnersDashboardComponent },
       { path: 'testcase', component: TestcaseDashboardComponent },
-      { path: 'collections', component: CollectionsDashboardComponent },
+      { path: 'collections', component: ComplianceCollectionsDashboardComponent },
     ],
   },
 ];
