@@ -260,7 +260,7 @@ export class AddTestDataComponent implements OnInit {
     if (testDataName.trim().length === 0) {
       this.testDataForm.controls['name'].setValue(null);
     } else {
-      this.testDataForm.controls['name'].setValue(testDataName);
+      this.testDataForm.controls['name'].setValue(testDataName.trim());
     }
     if (this.testDataForm.valid) {
       const testData = {

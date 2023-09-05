@@ -186,7 +186,7 @@ export class AddProjectComponent implements OnInit {
     if (projectName.trim().length === 0) {
       this.projectForm.controls['name'].setValue(null);
     } else {
-      this.projectForm.controls['name'].setValue(projectName);
+      this.projectForm.controls['name'].setValue(projectName.trim());
     }
     if (this.projectForm.valid) {
       //Save the project in db
