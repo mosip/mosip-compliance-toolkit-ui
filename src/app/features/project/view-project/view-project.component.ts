@@ -310,6 +310,7 @@ export class ViewProjectComponent implements OnInit {
         };
         this.updatingAttribute = attributeName;
         await Utils.updateSdkProject(this.subscriptions, this.dataService, request, this.resourceBundleJson, this.dialog);
+        Utils.populateSdkProjectForm(this.projectFormData, this.projectForm);
         this.panelOpenState = true;
       }
       if (projectType == appConstants.ABIS) {
@@ -321,6 +322,7 @@ export class ViewProjectComponent implements OnInit {
         };
         this.updatingAttribute = attributeName;
         await Utils.updateAbisProject(this.subscriptions, this.dataService, request, this.resourceBundleJson, this.dialog);
+        Utils.populateAbisProjectForm(this.projectFormData, this.projectForm);
         this.panelOpenState = true;
       }
       this.updatingAttribute = '';
