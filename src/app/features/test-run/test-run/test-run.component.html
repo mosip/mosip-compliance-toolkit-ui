@@ -155,11 +155,11 @@
 <p></p>
 &nbsp;
 <div class="button-container">
-    <button mat-flat-button color="accent" (click)="downloadReport()" class="add-button">
-        Download Report
-    </button>
     <button mat-flat-button color="accent" (click)="backToProject()" class="add-button">
         {{"viewTestRun.back"|translate}}
+    </button>
+    <button *ngIf="showDownloadReportBtn" mat-flat-button color="accent" (click)="downloadReport()" class="add-button">
+        Download Report
     </button>
 </div>
 </div>
