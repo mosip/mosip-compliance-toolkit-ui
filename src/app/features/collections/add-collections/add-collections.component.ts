@@ -238,7 +238,7 @@ export class AddCollectionsComponent implements OnInit {
     if (collectionName.trim().length === 0) {
       this.collectionForm.controls['name'].setValue(null);
     } else {
-      this.collectionForm.controls['name'].setValue(collectionName);
+      this.collectionForm.controls['name'].setValue(collectionName.trim());
     }
     if (this.collectionForm.valid) {
       if (this.selection.isEmpty()) {
