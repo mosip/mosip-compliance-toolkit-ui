@@ -563,10 +563,10 @@ export default class Utils {
       projectForm.controls['name'].setValue(projectFormData.name);
       projectForm.controls['projectType'].setValue(appConstants.ABIS);
       projectForm.controls['abisUrl'].setValue(projectFormData.url);
-      projectForm.controls['inboundQueueName'].setValue(projectFormData.inboundQueueName);
-      projectForm.controls['outboundQueueName'].setValue(projectFormData.outboundQueueName);
-      projectForm.controls['username'].setValue(projectFormData.username);
-      projectForm.controls['password'].setValue(projectFormData.password);
+      projectForm.controls['inboundQueueName'].setValue(projectFormData.inboundQueueName.trim());
+      projectForm.controls['outboundQueueName'].setValue(projectFormData.outboundQueueName.trim());
+      projectForm.controls['username'].setValue(projectFormData.username.trim());
+      projectForm.controls['password'].setValue(projectFormData.password.trim());
       projectForm.controls['modality'].setValue(projectFormData.modality);
       projectForm.controls['abisSpecVersion'].setValue(
         projectFormData.abisVersion
@@ -640,8 +640,8 @@ export default class Utils {
       deviceImage2: deviceImage2,
       deviceImage3: deviceImage3,
       deviceImage4: deviceImage4,
-      sbiHash: projectForm.controls['sbiHash'].value,
-      websiteUrl: projectForm.controls['websiteUrl'].value
+      sbiHash: projectForm.controls['sbiHash'].value.trim(),
+      websiteUrl: projectForm.controls['websiteUrl'].value.trim()
     };
     return projectData;
   }
@@ -654,8 +654,8 @@ export default class Utils {
       sdkVersion: projectForm.controls['sdkSpecVersion'].value,
       purpose: projectForm.controls['sdkPurpose'].value,
       url: projectForm.controls['sdkUrl'].value,
-      sdkHash: projectForm.controls['sdkHash'].value,
-      websiteUrl: projectForm.controls['websiteUrl'].value,
+      sdkHash: projectForm.controls['sdkHash'].value.trim(),
+      websiteUrl: projectForm.controls['websiteUrl'].value.trim(),
       bioTestDataFileName: projectForm.controls['bioTestData'].value,
     };
     return projectData;
@@ -668,13 +668,13 @@ export default class Utils {
       projectType: projectForm.controls['projectType'].value,
       abisVersion: projectForm.controls['abisSpecVersion'].value,
       url: projectForm.controls['abisUrl'].value,
-      username: projectForm.controls['username'].value,
-      password: projectForm.controls['password'].value,
-      outboundQueueName: projectForm.controls['outboundQueueName'].value,
-      inboundQueueName: projectForm.controls['inboundQueueName'].value,
+      username: projectForm.controls['username'].value.trim(),
+      password: projectForm.controls['password'].value.trim(),
+      outboundQueueName: projectForm.controls['outboundQueueName'].value.trim(),
+      inboundQueueName: projectForm.controls['inboundQueueName'].value.trim(),
       modality: projectForm.controls['modality'].value,
-      abisHash: projectForm.controls['abisHash'].value,
-      websiteUrl: projectForm.controls['websiteUrl'].value,
+      abisHash: projectForm.controls['abisHash'].value.trim(),
+      websiteUrl: projectForm.controls['websiteUrl'].value.trim(),
       bioTestDataFileName: projectForm.controls['abisBioTestData'].value,
     }
     return projectData;
