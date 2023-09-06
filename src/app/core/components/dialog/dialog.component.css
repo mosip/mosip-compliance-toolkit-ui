@@ -40,9 +40,10 @@ mat-dialog-content {
 .fieldContainerBox{
   width: 200px;
 }
-.spinnerForUpdatingProject {
-  flex-direction: column;
+.spinner {
   display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .button-container + .buttonDiv {
   margin-left: 8px;
