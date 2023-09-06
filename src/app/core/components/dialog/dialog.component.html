@@ -31,7 +31,11 @@
     </mat-dialog-actions>
 </div>
 <div *ngIf="input.case === 'UPDATE_PROJECT'" class="updateProject">
-    <h2 mat-dialog-title class="mat-dialog-title">{{"projectDashboard.title"|translate}}</h2>
+    <div class="spinner" *ngIf="!dataLoaded">
+        <mat-spinner diameter="50"></mat-spinner>
+    </div>
+    <div *ngIf="dataLoaded">
+        <h2 mat-dialog-title class="mat-dialog-title">{{"projectDashboard.title"|translate}}</h2>
     <mat-dialog-content style="white-space: pre-line;">
         {{"projectDashboard.message"|translate}}
     </mat-dialog-content>
@@ -133,6 +137,7 @@
             <mat-icon>save</mat-icon>
             {{"dialogMessages.updateProject"|translate}}
         </button>
+    </div>
     </div>
 </div>
 <div *ngIf="input.case === 'UPLOAD_DEVICE_IMAGES'" class="uploadDiv">
