@@ -38,7 +38,7 @@ jobs:
         echo "NX_APP_IAM_CLIENT_ID=mosip-toolkit-android-client" >> $GITHUB_ENV
         
     - name: Install NPM packages
-      run: npm install
+      run: npm install --ignore-scripts
       
     - name: Build Android app
       run: ng build -c=android
