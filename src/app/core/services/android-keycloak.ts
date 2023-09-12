@@ -2,7 +2,6 @@ import * as Keycloak from 'src/app/lib/keycloak';
 import * as appConstants from 'src/app/app.constants';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { error } from 'console';
 
 @Injectable({
   providedIn: 'root',
