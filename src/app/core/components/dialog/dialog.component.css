@@ -72,7 +72,7 @@ button[mat-icon-button] {
 .buttons {
   display: flex;
 	flex-direction: column;
-  align-items: start;
+  align-items: flex-start;
 }
 .button-container {
   display: flex;
