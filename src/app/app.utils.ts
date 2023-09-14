@@ -102,7 +102,7 @@ export default class Utils {
       }
       let digitalIdDecoded: any;
       if (deviceInfoDecoded && deviceInfoDecoded.digitalId) {
-        digitalIdDecoded = JSON.parse(deviceInfoDecoded.digitalId);
+        digitalIdDecoded = JSON.parse(atob(deviceInfoDecoded.digitalId));
       }
       deviceInfoDecoded = {
         ...deviceInfoDecoded,
