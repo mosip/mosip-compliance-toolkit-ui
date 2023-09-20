@@ -1,4 +1,4 @@
-name: mosip-compliance-toolkit-u build upon a push
+name: mosip-compliance-toolkit-ui build upon a push
 
 on:
   release:
