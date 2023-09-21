@@ -547,12 +547,22 @@ export class ExecuteTestRunComponent implements OnInit {
   }
 
   async updateTestRun() {
+    let isTestRunSuccessful = false;
+    if (this.countOfSuccessTestcases === this.testCasesList.length) {
+      isTestRunSuccessful = true;
+    }
+    let isTestRunComplete = false;
+    if (this.getIndexInList() + 1 === this.testCasesList.length) {
+      isTestRunComplete = true;
+    }
     this.endTestRunDt = new Date().toISOString();
     const testRunRequest = {
       id: this.testRunId,
       collectionId: this.collectionId,
       runDtimes: this.startTestRunDt,
       executionDtimes: this.endTestRunDt,
+      executionStatus: isTestRunComplete? 'complete' : 'incomplete',
+      runStatus: isTestRunSuccessful? 'success':'failure'
     };
     let request = {
       id: appConstants.TEST_RUN_UPDATE_ID,
