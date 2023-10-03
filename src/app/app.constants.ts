@@ -93,3 +93,4 @@ export const AUTHORIZATION = 'Authorization';
 export const REQUEST_ID = 'requestId';
 export const BLANK_STRING = "";
 export const UNDERSCORE = "_";
+export const COMPLIANCE_COLLECTION = "compliance_collection";

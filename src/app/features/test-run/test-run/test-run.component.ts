@@ -42,6 +42,7 @@ import { AppConfigService } from 'src/app/app-config.service';
 export class TestRunComponent implements OnInit {
   collectionId: string;
   collectionName: string;
+  collectionType: string;
   runId: string;
   projectId: string;
   projectType: string;
@@ -60,7 +61,6 @@ export class TestRunComponent implements OnInit {
   dataSubmitted = false;
   panelOpenState = false;
   runDetails: any;
-  complianceCollectionName: any = this.appConfigService.getConfig()['complianceCollectionName'];
   textDirection: any = this.userProfileService.getTextDirection();
   resourceBundleJson: any = {};
   langCode = this.userProfileService.getUserPreferredLanguage();
@@ -81,7 +81,9 @@ export class TestRunComponent implements OnInit {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     await this.initAllParams();
-    this.collectionName = await Utils.getCollectionName(this.subscriptions, this.dataService, this.collectionId, this.resourceBundleJson, this.dialog);
+    const collectionRes = await Utils.getCollectionNameAndType(this.subscriptions, this.dataService, this.collectionId, this.resourceBundleJson, this.dialog);
+    this.collectionName = collectionRes.name;
+    this.collectionType = collectionRes.type;
     if (this.projectType == appConstants.SBI) {
       const sbiProjectDetails: any = await Utils.getSbiProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
       if(sbiProjectDetails) {
@@ -104,7 +106,7 @@ export class TestRunComponent implements OnInit {
     this.testcasesList = await Utils.getTestcasesForCollection(this.subscriptions, this.dataService, this.collectionId, this.resourceBundleJson, this.dialog);
     await this.getTestRun();
     //enable download report button only for compliance collection
-    if (this.complianceCollectionName && this.complianceCollectionName == this.collectionName) {
+    if (appConstants.COMPLIANCE_COLLECTION == this.collectionType) {
       this.showDownloadReportBtn = true;
     }
     this.initBreadCrumb();

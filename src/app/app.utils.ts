@@ -680,16 +680,20 @@ export default class Utils {
     return projectData;
   }
 
-  static getCollectionName(subscriptions: Subscription[],
+  static getCollectionNameAndType(subscriptions: Subscription[],
     dataService: DataService,
     collectionId: string,
     resourceBundleJson: any,
     dialog: MatDialog) {
-    return new Promise<string>((resolve, reject) => {
+    return new Promise<any>((resolve, reject) => {
       subscriptions.push(
         dataService.getCollection(collectionId).subscribe(
           (response: any) => {
-            resolve(response['response']['name']);
+            let collectionRes = {
+              "name": response['response']['name'],
+              "type": response['response']['collectionType']
+            };
+            resolve(collectionRes);
           },
           (errors) => {
             this.showErrorMessage(resourceBundleJson, errors, dialog);
