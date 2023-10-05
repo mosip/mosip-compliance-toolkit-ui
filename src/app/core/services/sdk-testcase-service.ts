@@ -308,7 +308,7 @@ export class SdkTestCaseService {
       testCaseType: testCase.testCaseType,
       testName: testCase.testName,
       specVersion: testCase.specVersion,
-      testDescription: testCase.testDescription,
+      testId: testCase.testId,
       responseSchema: testCase.responseSchema[methodIndex],
       isNegativeTestcase: testCase.isNegativeTestcase
         ? testCase.isNegativeTestcase
@@ -345,7 +345,7 @@ export class SdkTestCaseService {
       testCaseType: testCase.testCaseType,
       testName: testCase.testName,
       specVersion: testCase.specVersion,
-      testDescription: testCase.testDescription,
+      testId: testCase.testId,
       requestSchema: testCase.requestSchema[methodIndex],
       methodRequest: methodRequest,
     };

@@ -247,7 +247,9 @@ export default class SBIHelper {
     beforeKeyRotationResp: any,
     previousHash: string,
     dataService: DataService,
-    appConfigService: AppConfigService
+    appConfigService: AppConfigService,
+    testRunId: string,
+    projectId: string
   ) {
     const selectedSbiDevice: SbiDiscoverResponseModel =
       JSON.parse(sbiSelectedDevice);
@@ -256,7 +258,7 @@ export default class SBIHelper {
       testCaseType: testCase.testCaseType,
       testName: testCase.testName,
       specVersion: testCase.specVersion,
-      testDescription: testCase.testDescription,
+      testId: testCase.testId,
       responseSchema: testCase.responseSchema[0],
       isNegativeTestcase: testCase.isNegativeTestcase
         ? testCase.isNegativeTestcase
@@ -274,6 +276,8 @@ export default class SBIHelper {
           : null,
         modality: testCase.otherAttributes.biometricTypes[0],
         previousHash: previousHash,
+        testRunId: testRunId,
+        projectId: projectId
       }),
       validatorDefs: testCase.validatorDefs[0],
     };
@@ -304,7 +308,7 @@ export default class SBIHelper {
       testCaseType: testCase.testCaseType,
       testName: testCase.testName,
       specVersion: testCase.specVersion,
-      testDescription: testCase.testDescription,
+      testId: testCase.testId,
       requestSchema: testCase.requestSchema[0],
       methodRequest: JSON.stringify(methodRequest),
     };
