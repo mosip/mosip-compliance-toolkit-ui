@@ -27,7 +27,9 @@ export class SbiTestCaseAndroidService {
     callbackId: string,
     sbiSelectedDevice: string,
     beforeKeyRotationResp: any,
-    previousHash: string
+    previousHash: string,
+    testRunId: string,
+    projectId: string
   ) {
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     const methodRequest = this.createRequest(testCase, sbiSelectedDevice, previousHash);
@@ -74,7 +76,9 @@ export class SbiTestCaseAndroidService {
           beforeKeyRotationResp,
           previousHash,
           this.dataService,
-          this.appConfigService
+          this.appConfigService,
+          testRunId,
+          projectId
         );
       }
       const finalResponse = {

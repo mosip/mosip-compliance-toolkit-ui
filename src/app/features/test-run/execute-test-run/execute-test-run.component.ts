@@ -890,7 +890,9 @@ export class ExecuteTestRunComponent implements OnInit {
             this.sbiSelectedPort ? this.sbiSelectedPort : '',
             this.sbiSelectedDevice ? this.sbiSelectedDevice : '',
             null,
-            this.previousHash
+            this.previousHash,
+            this.testRunId,
+            this.projectId
           );
         } else {
           res = await this.sbiTestCaseAndroidService.runTestCase(
@@ -899,7 +901,9 @@ export class ExecuteTestRunComponent implements OnInit {
             this.sbiSelectedPort ? this.sbiSelectedPort : '',
             this.sbiSelectedDevice ? this.sbiSelectedDevice : '',
             null,
-            this.previousHash
+            this.previousHash,
+            this.testRunId,
+            this.projectId
           );
         }
         this.streamingDone = false;
@@ -939,7 +943,9 @@ export class ExecuteTestRunComponent implements OnInit {
             this.sbiSelectedPort ? this.sbiSelectedPort : '',
             this.sbiSelectedDevice ? this.sbiSelectedDevice : '',
             beforeKeyRotationDeviceResp,
-            ""
+            "",
+            this.testRunId,
+            this.projectId
           );
         } else {
           res = await this.sbiTestCaseAndroidService.runTestCase(
@@ -948,7 +954,9 @@ export class ExecuteTestRunComponent implements OnInit {
             this.sbiSelectedPort ? this.sbiSelectedPort : '',
             this.sbiSelectedDevice ? this.sbiSelectedDevice : '',
             beforeKeyRotationDeviceResp,
-            ""
+            "",
+            this.testRunId,
+            this.projectId
           );
         }
         this.beforeKeyRotationResp = null;

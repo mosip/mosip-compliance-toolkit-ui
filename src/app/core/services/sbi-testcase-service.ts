@@ -26,7 +26,9 @@ export class SbiTestCaseService {
     sbiSelectedPort: string,
     sbiSelectedDevice: string,
     beforeKeyRotationResp: any,
-    previousHash: string
+    previousHash: string,
+    testRunId: string,
+    projectId: string
   ) {
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     try {
@@ -83,7 +85,9 @@ export class SbiTestCaseService {
               beforeKeyRotationResp,
               previousHash,
               this.dataService,
-              this.appConfigService
+              this.appConfigService,
+              testRunId,
+              projectId
             );
           }
           const finalResponse = {
