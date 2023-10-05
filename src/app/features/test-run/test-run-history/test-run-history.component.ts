@@ -67,7 +67,8 @@ export class TestRunHistoryComponent implements OnInit {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     await this.initAllParams();
-    this.collectionName = await Utils.getCollectionName(this.subscriptions, this.dataService, this.collectionId, this.resourceBundleJson, this.dialog);
+    const collectionRes = await Utils.getCollectionNameAndType(this.subscriptions, this.dataService, this.collectionId, this.resourceBundleJson, this.dialog);
+    this.collectionName = collectionRes.name;
     if (this.projectType == appConstants.SBI) {
       const sbiProjectDetails: any = await Utils.getSbiProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
       if(sbiProjectDetails) {

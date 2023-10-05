@@ -137,7 +137,7 @@
 }
 @media screen and (max-width: 770px) {
   .button-container {
-    width: 700px;
+    width: 90%;
   }
   .deviceImgFieldContainer {
     margin-left: 30px;
@@ -159,7 +159,7 @@
     width: 240px;
   }
   .button-container {
-    width: 420px;
+    width: 90%;
   }
   .deviceImgFieldContainer {
     margin-left: 45px;
@@ -167,7 +167,7 @@
 }
 @media screen and (max-width: 426px) {
   .button-container{
-    width: 360px;
+    width: 90%;
   }
   .deviceImgFieldContainer {
     margin-left: 12px;
@@ -177,11 +177,7 @@
     margin-left: 20px;
   }
 }
-@media screen and (max-width: 378px) {
-  .button-container{
-    width: 320px;
-  }
-}
+
 @media screen and (max-width: 365px) {
   .formContainer {
     width: 270px;

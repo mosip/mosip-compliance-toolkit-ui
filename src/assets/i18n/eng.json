@@ -822,6 +822,26 @@
 			"testName": "Auth capture - Unknown Finger - Hash Validations",
 			"testDescription": "Test to validate Capture method for a finger<br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place one of your finger on the single fingerprint scanner"
 		},
+		"SBI1108":{
+			"testName": "Quality Assessment for Registration capture - Left Slap - Males - 30 to 40 - labourer",
+			"testDescription": "Quality Assessment Testcase to validate the biometrics captured by RCapture interface for left slap fingerprints for - Males - 30 to 40 - labourer <br><br>Steps:<br>1. Click on Start Streaming button. <br>2. Once streaming is done, click on Inititate Capture button to start the capture.  <br> 3. Place your left slap on the device until the capture completes<br> 4. Repeat above steps , for next person, after clicking on Continue button.",
+			"androidTestDescription": "Quality Assessment Testcase validate the biometrics captured by RCapture interface for left slap fingerprints for - Males - 30 to 40 - labourer <br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place your left slap on the device until the capture completes<br> 3. Repeat above steps, for next person, after clicking on Continue button."
+		},
+		"SBI1109":{
+			"testName": "Quality Assessment for Registration capture - Left Slap - Males - 30 to 40 - farmer",
+			"testDescription": "Quality Assessment Testcase to validate the biometrics captured by RCapture interface for left slap fingerprints for - Males - 30 to 40 - farmer <br><br>Steps:<br>1. Click on Start Streaming button. <br>2. Once streaming is done, click on Inititate Capture button to start the capture.  <br> 3. Place your left slap on the device until the capture completes<br> 4. Repeat above steps , for next person, after clicking on Continue button.",
+			"androidTestDescription": "Quality Assessment Testcase validate the biometrics captured by RCapture interface for left slap fingerprints for - Males - 30 to 40 - farmer <br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place your left slap on the device until the capture completes<br> 3. Repeat above steps, for next person, after clicking on Continue button."
+		},
+		"SBI1110":{
+			"testName": "Quality Assessment for Registration capture - Left Slap - Females - 50 to 60 - labourer",
+			"testDescription": "Quality Assessment Testcase to validate the biometrics captured by RCapture interface for left slap fingerprints for - Females - 50 to 60 - labourer <br><br>Steps:<br>1. Click on Start Streaming button. <br>2. Once streaming is done, click on Inititate Capture button to start the capture.  <br> 3. Place your left slap on the device until the capture completes<br> 4. Repeat above steps , for next person, after clicking on Continue button.",
+		    "androidTestDescription": "Quality Assessment Testcase validate the biometrics captured by RCapture interface for left slap fingerprints for - Females - 50 to 60 - labourer <br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place your left slap on the device until the capture completes<br> 3. Repeat above steps, for next person, after clicking on Continue button."
+		},
+		"SBI1111":{
+			"testName": "Quality Assessment for Registration capture - Left Slap - Females - 50 to 60 - doctor",
+			"testDescription": "Quality Assessment Testcase to validate the biometrics captured by RCapture interface for left slap fingerprints for - Females - 50 to 60 - doctor <br><br>Steps:<br>1. Click on Start Streaming button. <br>2. Once streaming is done, click on Inititate Capture button to start the capture.  <br> 3. Place your left slap on the device until the capture completes<br> 4. Repeat above steps , for next person, after clicking on Continue button.",
+		    "androidTestDescription": "Quality Assessment Testcase validate the biometrics captured by RCapture interface for left slap fingerprints for - Females - 50 to 60 - doctor <br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place your left slap on the device until the capture completes<br> 3. Repeat above steps, for next person, after clicking on Continue button."
+		},
 		"SDK2000": {
 			"testName": "Init Test",
 			"testDescription": "Initialise Bio SDK Services"

@@ -97,6 +97,8 @@ export class ExecuteTestRunComponent implements OnInit {
   currentKeyRotationIndex = 0;
   currentHashValidatorIndex = 0;
   hashValidatorIterations = 2;
+  currentQATestCaseIndex = 1;
+  totalQATestCaseIterations = 0;
   isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
   abisRequestSendFailure = false;
   abisSentMessage: string = appConstants.BLANK_STRING;
@@ -298,6 +300,10 @@ export class ExecuteTestRunComponent implements OnInit {
             ? true
             : false;
         this.currectDeviceSubId = testCase.otherAttributes.deviceSubId;
+        if (testCase.otherAttributes.testCaseRepeatCount) {
+          this.totalQATestCaseIterations = parseInt(testCase.otherAttributes.testCaseRepeatCount);
+        }
+        console.log(` this.totalQATestCaseIterations ${this.totalQATestCaseIterations}`);
         if (!this.initiateCapture) {
           this.checkIfToShowInitiateCaptureBtn(testCase);
         }
@@ -308,10 +314,12 @@ export class ExecuteTestRunComponent implements OnInit {
         const res: any = await this.executeCurrentTestCase(testCase);
         if (res) {
           startingForLoop = this.handleErr(res);
-          //handle key rotation flow
+          //handle key rotation testcase flow
           await this.handleKeyRotationTestCaseFlow(startingForLoop, testCase, res);
-          //handle hash Validation flow
+          //handle hash validation testcase flow
           await this.handleHashValidationTestCaseFlow(startingForLoop, testCase, res);
+          //handle quality assessment testCase flow
+          await this.handleQualityAssessmentTestCaseFlow(startingForLoop, testCase, res);
           //calculate testreults
           this.calculateTestcaseResults(res[appConstants.VALIDATIONS_RESPONSE]);
           //update the test run details in db
@@ -351,6 +359,21 @@ export class ExecuteTestRunComponent implements OnInit {
     res: any) {
     if (testCase.otherAttributes.keyRotationTestCase &&
       this.currentKeyRotationIndex < this.keyRotationIterations) {
+      this.handleContinueBtnFlow(startingForLoop, testCase, res);
+      if (this.showContinueBtn) {
+        const promise = new Promise((resolve, reject) => { });
+        if (await promise) {
+          console.log("done waiting");
+        }
+      }
+    }
+  }
+
+  async handleQualityAssessmentTestCaseFlow(startingForLoop: boolean,
+    testCase: TestCaseModel,
+    res: any) {
+    if (testCase.otherAttributes.qualityAssessmentTestCase &&
+      this.currentQATestCaseIndex < this.totalQATestCaseIterations) {
       this.handleContinueBtnFlow(startingForLoop, testCase, res);
       if (this.showContinueBtn) {
         const promise = new Promise((resolve, reject) => { });
@@ -426,7 +449,8 @@ export class ExecuteTestRunComponent implements OnInit {
       startingForLoop &&
       this.projectType === appConstants.SBI &&
       (testCase.otherAttributes.keyRotationTestCase ||
-        testCase.otherAttributes.hashValidationTestCase)
+        testCase.otherAttributes.hashValidationTestCase ||
+        testCase.otherAttributes.qualityAssessmentTestCase)
     ) {
       let testcaseFailed = false;
       console.log("res");
@@ -465,6 +489,9 @@ export class ExecuteTestRunComponent implements OnInit {
             this.previousHash = hashArr[hashArr.length - 1];
           }
           this.currentHashValidatorIndex++;
+        }
+        if (testCase.otherAttributes.qualityAssessmentTestCase) {
+          this.currentQATestCaseIndex++;
         }
         this.showContinueBtn = true;
         this.showLoader = false;
