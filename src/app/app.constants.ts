@@ -94,3 +94,5 @@ export const REQUEST_ID = 'requestId';
 export const BLANK_STRING = "";
 export const UNDERSCORE = "_";
 export const COMPLIANCE_COLLECTION = "compliance_collection";
+export const INCOMPLETE_STATUS = "incomplete";
+export const COMPLETE_STATUS = "complete";

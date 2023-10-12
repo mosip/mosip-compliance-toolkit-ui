@@ -182,7 +182,7 @@ export class DataService {
       'Content-Type': 'application/json',
       accept: 'application/json',
     });
-    console.log(methodType);
+    //console.log(methodType);
     return this.httpClient.request(methodType, methodUrl, {
       body: requestBody,
       headers: headers,
@@ -199,13 +199,13 @@ export class DataService {
 
   generateRequestForSDK(body: any) {
     let url = `${this.SERVICES_BASE_URL}generateRequestForSDK`;
-    console.log('url:' + url);
+    //console.log('url:' + url);
     return this.httpClient.post(url, body);
   }
 
   generateRequestForSDKFrmBirs(body: any) {
     let url = `${this.SERVICES_BASE_URL}generateRequestForSDKFrmBirs`;
-    console.log('url:' + url);
+    //console.log('url:' + url);
     return this.httpClient.post(url, body);
   }
 
