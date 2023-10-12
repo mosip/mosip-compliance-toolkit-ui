@@ -54,6 +54,7 @@ export class ExecuteTestRunComponent implements OnInit {
   currentTestDescription: string;
   currectDeviceSubId: string;
   currentTestCaseIsRCapture = false;
+  currentMethodId = 'Not_Available';
   errorsInGettingTestcases = false;
   serviceErrors = false;
   errorsInSavingTestRun = false;
@@ -94,12 +95,11 @@ export class ExecuteTestRunComponent implements OnInit {
       ]
     )
     : 0;
-  currentKeyRotationIndex = 0;
-  currentHashValidatorIndex = 0;
-  hashValidatorIterations = 2;
-  currentQATestCaseIndex = 1;
+  currentMethodIndex = 0;
+  hashValidatorIterations = 3;
   totalQATestCaseIterations = 0;
   isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
+  firstMethodRespForSDK: any = null;
   abisRequestSendFailure = false;
   abisSentMessage: string = appConstants.BLANK_STRING;
   abisSentDataSource: string = appConstants.BLANK_STRING;
@@ -161,7 +161,7 @@ export class ExecuteTestRunComponent implements OnInit {
       }
       if (this.sbiSelectedPort && this.sbiSelectedDevice) {
         const sbiProjectDetails: any = await Utils.getSbiProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
-        if(sbiProjectDetails) {
+        if (sbiProjectDetails) {
           this.sbiProjectData = sbiProjectDetails;
         }
         const selectedSbiDevice: SbiDiscoverResponseModel = JSON.parse(
@@ -259,6 +259,7 @@ export class ExecuteTestRunComponent implements OnInit {
     if (!this.errorsInSavingTestRun) {
       await this.runExecuteForLoop(true, false);
     }
+    console.log(`this.currentMethodIndex  ${this.currentMethodIndex}`);
     this.runComplete = true;
     this.basicTimer.stop();
   }
@@ -303,7 +304,6 @@ export class ExecuteTestRunComponent implements OnInit {
         if (testCase.otherAttributes.testCaseRepeatCount) {
           this.totalQATestCaseIterations = parseInt(testCase.otherAttributes.testCaseRepeatCount);
         }
-        console.log(` this.totalQATestCaseIterations ${this.totalQATestCaseIterations}`);
         if (!this.initiateCapture) {
           this.checkIfToShowInitiateCaptureBtn(testCase);
         }
@@ -314,23 +314,35 @@ export class ExecuteTestRunComponent implements OnInit {
         const res: any = await this.executeCurrentTestCase(testCase);
         if (res) {
           startingForLoop = this.handleErr(res);
-          //handle key rotation testcase flow
-          await this.handleKeyRotationTestCaseFlow(startingForLoop, testCase, res);
-          //handle hash validation testcase flow
-          await this.handleHashValidationTestCaseFlow(startingForLoop, testCase, res);
-          //handle quality assessment testCase flow
-          await this.handleQualityAssessmentTestCaseFlow(startingForLoop, testCase, res);
-          //calculate testreults
-          this.calculateTestcaseResults(res[appConstants.VALIDATIONS_RESPONSE]);
-          //update the test run details in db
-          await this.addTestRunDetails(testCase, res);
-          //update the testrun in db with execution time
-          await this.updateTestRun();
-          await this.handleResumeAgainFlow(testCase);
+          
+          let ignoreThisIteration = false;
+          if (this.projectType == appConstants.SBI && testCase.otherAttributes.keyRotationTestCase
+            && this.currentMethodIndex == 0) {
+            ignoreThisIteration = true;
+          }
+          const testCaseComplete = this.checkIfTestCaseExecutionIsDone(testCase);
+          let allValidatorsPassed = this.checkIfAllValidatorsPassed(res[appConstants.VALIDATIONS_RESPONSE]);
+          if (!ignoreThisIteration) {
+            if (testCaseComplete) {
+              //update updateSuccessFailureCount
+              this.updateSuccessFailureCount(allValidatorsPassed, testCase);
+            }
+            //always update the test run details in db
+            await this.addTestRunDetails(testCaseComplete, allValidatorsPassed, res, testCase);
+            //update the testrun in db with execution time
+            await this.updateTestRun();
+          } else {
+            allValidatorsPassed = true;
+          }
+          //handle key rotation, hash validation, quality assessment  testcases
+          await this.handleSBIRepeatMethodFlow(startingForLoop, testCase, allValidatorsPassed, res);
+          await this.handleSBIResumeAgainFlow(startingForLoop, testCase);
+          //for SDK, decide to reset the current testcase or not
+          await this.handleSDKResetCurrentTestCaseFlow(startingForLoop);
           //reset the testcase
           let resetCurrentTestCase = true;
           //for ABIS, decide to reset the current testcase or not
-          resetCurrentTestCase = await this.handleABISResetCurrentTestCaseFlow();
+          resetCurrentTestCase = await this.handleABISResetCurrentTestCaseFlow(startingForLoop);
           if (resetCurrentTestCase) {
             this.currectTestCaseId = '';
             this.currectTestCaseName = '';
@@ -339,6 +351,7 @@ export class ExecuteTestRunComponent implements OnInit {
             this.showLoader = false;
             this.abisSentDataSource = appConstants.BLANK_STRING;
             this.abisRequestSendFailure = false;
+            this.currentMethodIndex = 0;
           }
         }
       }
@@ -354,12 +367,33 @@ export class ExecuteTestRunComponent implements OnInit {
     }
   }
 
-  async handleKeyRotationTestCaseFlow(startingForLoop: boolean,
+  async handleSBIRepeatMethodFlow(startingForLoop: boolean,
     testCase: TestCaseModel,
+    allValidatorsPassed: boolean,
     res: any) {
-    if (testCase.otherAttributes.keyRotationTestCase &&
-      this.currentKeyRotationIndex < this.keyRotationIterations) {
-      this.handleContinueBtnFlow(startingForLoop, testCase, res);
+    let showContinue = false;
+    if (testCase.otherAttributes.keyRotationTestCase) {
+      if (this.currentMethodIndex < (this.keyRotationIterations - 1)) {
+        this.currentMethodIndex++;
+        showContinue = true;
+      }
+    }
+    if (testCase.otherAttributes.qualityAssessmentTestCase) {
+      if (this.currentMethodIndex < (this.totalQATestCaseIterations - 1)) {
+        this.currentMethodIndex++;
+        showContinue = true;
+      }
+    }
+    if (testCase.otherAttributes.hashValidationTestCase) {
+      if (this.currentMethodIndex < (this.hashValidatorIterations - 1)) {
+        this.currentMethodIndex++;
+        showContinue = true;
+      }
+    }
+    console.log(`this.currentMethodIndex ${this.currentMethodIndex}`);
+    if (showContinue) {
+      console.log(`handleContinueBtnFlow`);
+      this.handleContinueBtnFlow(startingForLoop, testCase, allValidatorsPassed, res);
       if (this.showContinueBtn) {
         const promise = new Promise((resolve, reject) => { });
         if (await promise) {
@@ -369,39 +403,16 @@ export class ExecuteTestRunComponent implements OnInit {
     }
   }
 
-  async handleQualityAssessmentTestCaseFlow(startingForLoop: boolean,
-    testCase: TestCaseModel,
-    res: any) {
-    if (testCase.otherAttributes.qualityAssessmentTestCase &&
-      this.currentQATestCaseIndex < this.totalQATestCaseIterations) {
-      this.handleContinueBtnFlow(startingForLoop, testCase, res);
-      if (this.showContinueBtn) {
-        const promise = new Promise((resolve, reject) => { });
-        if (await promise) {
-          console.log("done waiting");
-        }
+  async handleSDKResetCurrentTestCaseFlow(startingForLoop: boolean) {
+    if (this.projectType == appConstants.SDK && startingForLoop) {
+      if (this.currentMethodIndex > 0) {
+        await this.startWithSameTestcase();
       }
     }
   }
-
-  async handleHashValidationTestCaseFlow(startingForLoop: boolean,
-    testCase: TestCaseModel,
-    res: any) {
-    if (testCase.otherAttributes.hashValidationTestCase &&
-      this.currentHashValidatorIndex < this.hashValidatorIterations) {
-      this.handleContinueBtnFlow(startingForLoop, testCase, res);
-      if (this.showContinueBtn) {
-        const promise = new Promise((resolve, reject) => { });
-        if (await promise) {
-          console.log("done waiting");
-        }
-      }
-    }
-  }
-
-  async handleABISResetCurrentTestCaseFlow() {
+  async handleABISResetCurrentTestCaseFlow(startingForLoop: boolean) {
     let resetCurrentTestCase = true;
-    if (this.projectType == appConstants.ABIS) {
+    if (this.projectType == appConstants.ABIS && startingForLoop) {
       // //disconnect from queue if already connected
       if (this.rxStompService && this.rxStompService.connected()) {
         this.rxStompService.deactivate()
@@ -430,8 +441,8 @@ export class ExecuteTestRunComponent implements OnInit {
     return resetCurrentTestCase;
   }
 
-  async handleResumeAgainFlow(testCase: TestCaseModel) {
-    if (testCase.otherAttributes.resumeAgainBtn) {
+  async handleSBIResumeAgainFlow(startingForLoop: boolean, testCase: TestCaseModel) {
+    if (testCase.otherAttributes.resumeAgainBtn && startingForLoop) {
       this.showResumeAgainBtn = true;
       const promise = new Promise((resolve, reject) => { });
       if (await promise) {
@@ -443,6 +454,7 @@ export class ExecuteTestRunComponent implements OnInit {
   handleContinueBtnFlow(
     startingForLoop: boolean,
     testCase: TestCaseModel,
+    allValidatorsPassed: boolean,
     res: any
   ) {
     if (
@@ -452,31 +464,12 @@ export class ExecuteTestRunComponent implements OnInit {
         testCase.otherAttributes.hashValidationTestCase ||
         testCase.otherAttributes.qualityAssessmentTestCase)
     ) {
-      let testcaseFailed = false;
-      console.log("res");
-      console.log(res);
-      if (
-        res &&
-        res[appConstants.VALIDATIONS_RESPONSE] &&
-        res[appConstants.VALIDATIONS_RESPONSE][appConstants.RESPONSE]
-      ) {
-        const validationsList =
-          res[appConstants.VALIDATIONS_RESPONSE][appConstants.RESPONSE][
-          appConstants.VALIDATIONS_LIST
-          ];
-        if (validationsList && validationsList.length > 0) {
-          validationsList.forEach((validationitem: any) => {
-            if (validationitem.status == appConstants.FAILURE) {
-              testcaseFailed = true;
-            }
-          });
-        }
-      }
+      let testcaseFailed = !allValidatorsPassed;
+      console.log(`testcaseFailed ${testcaseFailed}`);
       if (!testcaseFailed) {
         const methodRespJson = JSON.parse(res.methodResponse);
         if (testCase.otherAttributes.keyRotationTestCase) {
           this.beforeKeyRotationResp = methodRespJson;
-          this.currentKeyRotationIndex++;
         }
         if (testCase.otherAttributes.hashValidationTestCase) {
           let hashArr: any[] = [];
@@ -488,13 +481,14 @@ export class ExecuteTestRunComponent implements OnInit {
           if (hashArr.length >= 1) {
             this.previousHash = hashArr[hashArr.length - 1];
           }
-          this.currentHashValidatorIndex++;
-        }
-        if (testCase.otherAttributes.qualityAssessmentTestCase) {
-          this.currentQATestCaseIndex++;
         }
         this.showContinueBtn = true;
         this.showLoader = false;
+      } else {
+        //update updateSuccessFailureCount
+        this.progressDone =
+          this.progressDone + 100 / this.testCasesList.length;
+        this.updateSuccessFailureCount(allValidatorsPassed, testCase);
       }
     }
   }
@@ -588,8 +582,8 @@ export class ExecuteTestRunComponent implements OnInit {
       collectionId: this.collectionId,
       runDtimes: this.startTestRunDt,
       executionDtimes: this.endTestRunDt,
-      executionStatus: isTestRunComplete? 'complete' : 'incomplete',
-      runStatus: isTestRunSuccessful? 'success':'failure'
+      executionStatus: isTestRunComplete ? appConstants.COMPLETE_STATUS : appConstants.INCOMPLETE_STATUS,
+      runStatus: isTestRunSuccessful ? appConstants.SUCCESS : appConstants.FAILURE
     };
     let request = {
       id: appConstants.TEST_RUN_UPDATE_ID,
@@ -616,9 +610,7 @@ export class ExecuteTestRunComponent implements OnInit {
     });
   }
 
-  async addTestRunDetails(testCase: TestCaseModel, res: any) {
-    let resultStatus = appConstants.FAILURE;
-    let countofPassedValidators = 0;
+  async addTestRunDetails(testCaseComplete: boolean, allValidatorsPassed: boolean, res: any, testCase: TestCaseModel) {
     let validations: any = [];
     if (
       res &&
@@ -629,23 +621,18 @@ export class ExecuteTestRunComponent implements OnInit {
         res[appConstants.VALIDATIONS_RESPONSE][appConstants.RESPONSE][
         appConstants.VALIDATIONS_LIST
         ];
-      if (validationsList && validationsList.length > 0) {
-        validationsList.forEach((validationitem: any) => {
-          if (validationitem.status == appConstants.SUCCESS) {
-            countofPassedValidators++;
-          }
-        });
-        if (validationsList.length == countofPassedValidators) {
-          resultStatus = appConstants.SUCCESS;
-        } else {
-          resultStatus = appConstants.FAILURE;
-        }
-        validations = validationsList;
-      }
+      validations = validationsList;
+    }
+    let resultStatus = appConstants.FAILURE;
+    if (allValidatorsPassed) {
+      resultStatus = appConstants.SUCCESS;
+    } else {
+      resultStatus = appConstants.FAILURE;
     }
     const testRunRequest = {
       runId: this.testRunId,
       testcaseId: testCase.testId,
+      methodId: this.currentMethodId,
       methodUrl: res.methodUrl ? res.methodUrl : '',
       methodRequest: res.methodRequest,
       methodResponse: res.methodResponse,
@@ -653,6 +640,7 @@ export class ExecuteTestRunComponent implements OnInit {
       resultDescription: JSON.stringify({
         validationsList: validations,
       }),
+      executionStatus: testCaseComplete ? appConstants.COMPLETE_STATUS : appConstants.INCOMPLETE_STATUS,
       testDataSource: res.testDataSource ? res.testDataSource : '',
     };
     let request = {
@@ -669,12 +657,7 @@ export class ExecuteTestRunComponent implements OnInit {
               this.errorsInSavingTestRun = true;
               resolve(true);
             }
-            if (this.projectType == appConstants.ABIS) {
-              if (this.cbeffFileSuffix == 0 && !this.isCombinationAbisTestcase) {
-                this.progressDone =
-                  this.progressDone + 100 / this.testCasesList.length;
-              }
-            } else {
+            if (testCaseComplete) {
               this.progressDone =
                 this.progressDone + 100 / this.testCasesList.length;
             }
@@ -682,12 +665,7 @@ export class ExecuteTestRunComponent implements OnInit {
           },
           (errors) => {
             this.errorsInSavingTestRun = true;
-            if (this.projectType == appConstants.ABIS) {
-              if (this.cbeffFileSuffix == 0) {
-                this.progressDone =
-                  this.progressDone + 100 / this.testCasesList.length;
-              }
-            } else {
+            if (testCaseComplete) {
               this.progressDone =
                 this.progressDone + 100 / this.testCasesList.length;
             }
@@ -715,7 +693,7 @@ export class ExecuteTestRunComponent implements OnInit {
   async executeSDKTestCase(testCase: TestCaseModel) {
     if (!this.sdkProjectData) {
       const sdkProjectDetails: any = await Utils.getSdkProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
-      if(sdkProjectDetails) {
+      if (sdkProjectDetails) {
         this.sdkProjectData = sdkProjectDetails;
       }
     }
@@ -724,12 +702,53 @@ export class ExecuteTestRunComponent implements OnInit {
       this.sdkProjectData ? this.sdkProjectData.url : ''
     );
     this.showLoader = true;
-    const res = await this.sdkTestCaseService.runTestCase(
-      testCase,
-      this.sdkProjectData.url,
-      this.sdkProjectData.bioTestDataFileName
-    );
-    return res;
+    let isCombinationTestCase = testCase.methodName.length > 1 ? true : false;
+    let res = null;
+    if (isCombinationTestCase) {
+      if (this.currentMethodIndex == 0) {
+        res = await this.sdkTestCaseService.runTestCase(
+          testCase,
+          this.sdkProjectData.url,
+          this.sdkProjectData.bioTestDataFileName,
+          0,
+          null
+        );
+        this.currentMethodId = testCase.methodName[this.currentMethodIndex];
+        this.firstMethodRespForSDK = res;
+        this.currentMethodIndex++;
+        if (this.currentMethodIndex > 1) {
+          this.firstMethodRespForSDK = null;
+          this.currentMethodIndex = 0;
+        }
+        return res;
+      }
+      if (this.currentMethodIndex == 1) {
+        res = await this.sdkTestCaseService.runTestCase(
+          testCase,
+          this.sdkProjectData.url,
+          this.sdkProjectData.bioTestDataFileName,
+          1,
+          this.firstMethodRespForSDK
+        );
+        this.currentMethodId = testCase.methodName[this.currentMethodIndex];
+        this.firstMethodRespForSDK = null;
+        this.currentMethodIndex = 0;
+        return res;
+      }
+    } else {
+      res = await this.sdkTestCaseService.runTestCase(
+        testCase,
+        this.sdkProjectData.url,
+        this.sdkProjectData.bioTestDataFileName,
+        0,
+        null
+      );
+      this.currentMethodId = testCase.methodName[this.currentMethodIndex];
+      this.firstMethodRespForSDK = null;
+      this.currentMethodIndex = 0;
+      return res;
+    }
+
   }
 
   async executeABISTestCase(testCase: TestCaseModel) {
@@ -744,7 +763,7 @@ export class ExecuteTestRunComponent implements OnInit {
       this.showLoader = true;
       if (!this.abisProjectData) {
         const abisProjectDetails: any = await Utils.getAbisProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
-        if(abisProjectDetails) {
+        if (abisProjectDetails) {
           this.abisProjectData = abisProjectDetails;
         }
       }
@@ -826,6 +845,14 @@ export class ExecuteTestRunComponent implements OnInit {
         console.log(`send to queue status ${abisReq[appConstants.STATUS]}`);
       //console.log(abisReq);
       if (abisReq && abisReq[appConstants.STATUS] && abisReq[appConstants.STATUS] == appConstants.SUCCESS) {
+        if (this.cbeffFileSuffix > 0) {
+          this.currentMethodId = this.currentAbisMethod + "-" + this.cbeffFileSuffix;
+        } else {
+          this.currentMethodId = this.currentAbisMethod;
+        }
+        if (testCase.otherAttributes.insertReferenceId) {
+          this.currentMethodId = this.currentAbisMethod;
+        }
         if (insertCount > 1) {
           this.cbeffFileSuffix = this.cbeffFileSuffix + 1;
         }
@@ -911,6 +938,7 @@ export class ExecuteTestRunComponent implements OnInit {
           this.stopStreaming();
         }
         //resolve(res);
+        this.setSBICurrentMethodId(testCase);
         return res;
       }
       else {
@@ -921,7 +949,7 @@ export class ExecuteTestRunComponent implements OnInit {
           return false;
         }
       }
-    } 
+    }
     //discover & deviceInfo flows
     else {
       if (this.showResumeBtn) {
@@ -959,6 +987,7 @@ export class ExecuteTestRunComponent implements OnInit {
             this.projectId
           );
         }
+        this.setSBICurrentMethodId(testCase);
         this.beforeKeyRotationResp = null;
         return res;
       }
@@ -973,7 +1002,22 @@ export class ExecuteTestRunComponent implements OnInit {
     }
   }
 
-  calculateTestcaseResults(res: any) {
+  setSBICurrentMethodId(testCase: TestCaseModel) {
+    if (testCase.otherAttributes.hashValidationTestCase
+      || testCase.otherAttributes.qualityAssessmentTestCase
+    ) {
+      this.currentMethodId = testCase.methodName[0] + "-" + (this.currentMethodIndex + 1);
+    }
+    else if (testCase.otherAttributes.keyRotationTestCase
+    ) {
+      this.currentMethodId = testCase.methodName[0] + "-" + (this.currentMethodIndex);
+    }
+    else {
+      this.currentMethodId = testCase.methodName[0];
+    }
+  }
+
+  checkIfAllValidatorsPassed(res: any) {
     let allValidatorsPassed = false;
     if (res && res[appConstants.RESPONSE]) {
       let countofPassedValidators = 0;
@@ -990,25 +1034,55 @@ export class ExecuteTestRunComponent implements OnInit {
         }
       }
     }
-    let updateCount = false;
+    return allValidatorsPassed;
+  }
+
+  updateSuccessFailureCount(allValidatorsPassed: boolean, testCase: TestCaseModel) {
+    if (allValidatorsPassed) {
+      this.countOfSuccessTestcases++;
+    } else {
+      this.countOfFailedTestcases++;
+    }
+  }
+
+  checkIfTestCaseExecutionIsDone(testCase: TestCaseModel) {
+    let isTestCaseComplete = false;
+    if (this.projectType == appConstants.SBI) {
+      if (testCase.otherAttributes.keyRotationTestCase &&
+        this.currentMethodIndex >= (this.keyRotationIterations - 1)) {
+        isTestCaseComplete = true;
+      }
+      if (testCase.otherAttributes.qualityAssessmentTestCase &&
+        this.currentMethodIndex >= (this.totalQATestCaseIterations - 1)) {
+        isTestCaseComplete = true;
+      }
+      if (testCase.otherAttributes.hashValidationTestCase &&
+        this.currentMethodIndex >= (this.hashValidatorIterations - 1)) {
+        isTestCaseComplete = true;
+      }
+      if (
+        !testCase.otherAttributes.keyRotationTestCase &&
+        !testCase.otherAttributes.qualityAssessmentTestCase &&
+        !testCase.otherAttributes.hashValidationTestCase
+      ) {
+        isTestCaseComplete = true;
+      }
+    }
     if (this.projectType == appConstants.ABIS) {
       if (!this.isCombinationAbisTestcase) {
         if (this.cbeffFileSuffix == 0) {
-          updateCount = true;
+          isTestCaseComplete = true;
         }
       } else if (this.currentAbisMethod == appConstants.ABIS_METHOD_IDENTIFY) {
-        updateCount = true;
-      }
-    } else {
-      updateCount = true;
-    }
-    if (updateCount) {
-      if (allValidatorsPassed) {
-        this.countOfSuccessTestcases++;
-      } else {
-        this.countOfFailedTestcases++;
+        isTestCaseComplete = true;
       }
     }
+    if (this.projectType == appConstants.SDK) {
+      if (this.currentMethodIndex == 0) {
+        isTestCaseComplete = true;
+      }
+    }
+    return isTestCaseComplete;
   }
 
   getAbisSentMessage() {

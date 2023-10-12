@@ -86,19 +86,19 @@ export class TestRunComponent implements OnInit {
     this.collectionType = collectionRes.type;
     if (this.projectType == appConstants.SBI) {
       const sbiProjectDetails: any = await Utils.getSbiProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
-      if(sbiProjectDetails) {
+      if (sbiProjectDetails) {
         this.sbiProjectData = sbiProjectDetails;
       }
     }
     if (this.projectType == appConstants.SDK) {
       const sdkProjectDetails: any = await Utils.getSdkProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
-      if(sdkProjectDetails) {
+      if (sdkProjectDetails) {
         this.sdkProjectData = sdkProjectDetails;
       }
     }
     if (this.projectType == appConstants.ABIS) {
       const abisProjectDetails: any = await Utils.getAbisProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
-      if(abisProjectDetails) {
+      if (abisProjectDetails) {
         this.abisProjectData = abisProjectDetails;
       }
       this.initBreadCrumb();
@@ -147,6 +147,8 @@ export class TestRunComponent implements OnInit {
   }
 
   async getTestRun() {
+    const NO_DATA_AVAILABLE = 'No data available';
+
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
         this.dataService.getTestRunDetails(this.runId).subscribe(
@@ -156,40 +158,70 @@ export class TestRunComponent implements OnInit {
             let tableData = [];
             for (const testCase of this.testcasesList) {
               let testRunData = null;
+              let matchFound = false;
               for (const testRun of list) {
                 if (testRun.testcaseId == testCase.testId) {
+                  matchFound = true;
                   testRunData = testRun;
                 }
+                if (testRunData) {
+                  tableData.push({
+                    testCaseType: testCase.testCaseType,
+                    testName: testCase.testName,
+                    testId: testCase.testId,
+                    testDescription: testCase.testDescription,
+                    methodId: testRunData
+                      ? testRunData.methodId
+                      : testCase.methodId,
+                    methodName: testRunData
+                      ? testRunData.methodName
+                      : testCase.methodName,
+                    methodRequest: testRunData
+                      ? testRunData.methodRequest
+                      : NO_DATA_AVAILABLE,
+                    methodResponse: testRunData
+                      ? testRunData.methodResponse
+                      : NO_DATA_AVAILABLE,
+                    resultStatus: testRunData
+                      ? testRunData.resultStatus
+                      : 'failure',
+                    resultDescription: testRunData
+                      ? testRunData.resultDescription
+                      : '',
+                    testDataSource:
+                      testRunData && testRunData.testDataSource
+                        ? testRunData.testDataSource
+                        : '',
+                    methodUrl:
+                      testRunData && testRunData.methodUrl
+                        ? testRunData.methodUrl
+                        : '',
+                    executionStatus:
+                      testRunData && testRunData.methodUrl
+                        ? testRunData.methodUrl
+                        : '',
+                  });
+                  testRunData = null;
+                }
               }
-              tableData.push({
-                testCaseType: testCase.testCaseType,
-                testName: testCase.testName,
-                testId: testCase.testId,
-                testDescription: testCase.testDescription,
-                methodName: testRunData
-                  ? testRunData.methodName
-                  : testCase.methodName,
-                methodRequest: testRunData
-                  ? testRunData.methodRequest
-                  : 'No data available',
-                methodResponse: testRunData
-                  ? testRunData.methodResponse
-                  : 'No data available',
-                resultStatus: testRunData
-                  ? testRunData.resultStatus
-                  : 'failure',
-                resultDescription: testRunData
-                  ? testRunData.resultDescription
-                  : '',
-                testDataSource:
-                  testRunData && testRunData.testDataSource
-                    ? testRunData.testDataSource
-                    : '',
-                methodUrl:
-                  testRunData && testRunData.methodUrl
-                    ? testRunData.methodUrl
-                    : '',
-              });
+              if (!matchFound) {
+                tableData.push({
+                  testCaseType: testCase.testCaseType,
+                  testName: testCase.testName,
+                  testId: testCase.testId,
+                  testDescription: testCase.testDescription,
+                  methodName: testCase.methodName,
+                  methodId: '',
+                  methodRequest: NO_DATA_AVAILABLE,
+                  methodResponse: NO_DATA_AVAILABLE,
+                  resultStatus: appConstants.FAILURE,
+                  resultDescription: '',
+                  testDataSource: '',
+                  methodUrl: '',
+                  executionStatus:
+                    appConstants.FAILURE,
+                });
+              }
             }
             this.dataSource = new MatTableDataSource(tableData);
             resolve(true);
@@ -250,11 +282,11 @@ export class TestRunComponent implements OnInit {
   getProjectName() {
     let name = "";
     if (this.sbiProjectData)
-    name = this.sbiProjectData.name;
+      name = this.sbiProjectData.name;
     if (this.sdkProjectData)
-    name = this.sdkProjectData.name;
+      name = this.sdkProjectData.name;
     if (this.abisProjectData)
-    name = this.abisProjectData.name;
+      name = this.abisProjectData.name;
     return name;
   }
 
