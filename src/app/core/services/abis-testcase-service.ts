@@ -32,7 +32,7 @@ export class AbisTestCaseService {
     cbeffFileSuffix: number,
     testRunId: string
   ) {
-    console.log(`abisProjectData.bioTestDataFileName: ${abisProjectData.bioTestDataFileName}`);
+    //console.log(`abisProjectData.bioTestDataFileName: ${abisProjectData.bioTestDataFileName}`);
     let dataShareResp: any = null;
     //create a datashare URL but only for Insert
     if (methodName == appConstants.ABIS_METHOD_INSERT) {
@@ -127,8 +127,8 @@ export class AbisTestCaseService {
       methodUrl: abisProjectData.url,
       testDataSource: testDataSource
     };
-    console.log('finalResponse');
-    console.log(finalResponse);
+    //console.log('finalResponse');
+    //console.log(finalResponse);
 
     return finalResponse;
   }
