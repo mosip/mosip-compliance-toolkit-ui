@@ -202,7 +202,7 @@
 		"id": "بطاقة تعريف",
 		"name": "اسم",
 		"status": "حالة",
-		"success": "حالة حالة الاختبار",
+		"success": "نجاح",
 		"failure": "فشل",
 		"methodRequest": "طلب طريقة:",
 		"methodResponse": "طريقة الاستجابة:",
@@ -212,9 +212,10 @@
 		"testDataSource": "مصدر بيانات الاختبار",
 		"back": "يعود",
 		"tableDescription": "تفاصيل اختبار التشغيل",
-		"executionStatus": "حالة الاختبار كاملة",
+		"executionStatus": "حالة التنفيذ",
 		"complete": "مكتمل",
-		"incomplete": "غير مكتمل"
+		"incomplete": "غير مكتمل",
+		"testRunExecutionStatus": "حالة التنفيذ"
 	},
 	"addCollections": {
 		"collectionName": "اسم المجموعة:",

@@ -132,9 +132,24 @@ export class TestRunComponent implements OnInit {
         this.sbiProjectData, this.sdkProjectData, this.abisProjectData,
         this.projectType, this.collectionName);
       if (this.runDetails) {
+        let runStatus = this.runDetails.runStatus;
+        if (runStatus == appConstants.SUCCESS) {
+          runStatus = this.resourceBundleJson["viewTestRun"]["success"];
+        }
+        if (runStatus == appConstants.FAILURE) {
+          runStatus = this.resourceBundleJson["viewTestRun"]["failure"];
+        }       
+        let execStatus = this.runDetails.executionStatus;
+        if (execStatus == appConstants.COMPLETE_STATUS) {
+          execStatus = this.resourceBundleJson["viewTestRun"]["complete"];
+        }
+        if (execStatus == appConstants.INCOMPLETE_STATUS) {
+          execStatus = this.resourceBundleJson["viewTestRun"]["incomplete"];
+        }
+        const runDetails = `${breadcrumbLabels.testRun} - (${new Date(this.runDetails.runDtimes).toLocaleString()} - ${runStatus} - ${execStatus})`;
         this.breadcrumbService.set(
           '@testrunBreadCrumb',
-          `${breadcrumbLabels.testRun} - (${new Date(this.runDetails.runDtimes).toLocaleString()})`
+          runDetails
         );
       } else {
         this.breadcrumbService.set(
