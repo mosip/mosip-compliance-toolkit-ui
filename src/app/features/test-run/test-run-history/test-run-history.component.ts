@@ -189,9 +189,13 @@ export class TestRunHistoryComponent implements OnInit {
       let tableData = [];
       for (let row of dataArr) {
         let runStatus = await this.getTestRunStatus(row.runId);
+        const testCaseCount = row.testCaseCount;
+        const passCaseCount = row.passCaseCount;
+        const failCaseCount = testCaseCount - passCaseCount;
         tableData.push({
           ...row,
           runStatus: runStatus,
+          failCaseCount: failCaseCount
         });
       }
       this.dataSource = new MatTableDataSource(tableData);
