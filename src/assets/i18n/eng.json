@@ -201,7 +201,7 @@
 		"testRunDetailsAreNotAvailable": "Test Run Details are not available",
 		"id": "Id",
 		"name": "Name",
-		"status": "Status",
+		"status": "Test Case Status",
 		"success": "Success",
 		"failure": "Failure",
 		"methodRequest": "Method Request:",
@@ -211,7 +211,10 @@
 		"methodUrl": "Method URL",
 		"testDataSource": "Test Data Source",
 		"back": "Back",
-		"tableDescription": "Test Run Details"
+		"tableDescription": "Test Run Details",
+		"executionStatus": "Test Case Complete",
+		"complete": "Complete",
+		"incomplete": "Incomplete"
 	},
 	"addCollections": {
 		"collectionName": "Collection Name:",

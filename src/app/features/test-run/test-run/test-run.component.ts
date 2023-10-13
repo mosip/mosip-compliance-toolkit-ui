@@ -55,7 +55,7 @@ export class TestRunComponent implements OnInit {
   showDownloadReportBtn = false;
   testcasesList: any;
   dataSource: MatTableDataSource<TestRunModel>;
-  displayedColumns: string[] = ['testId', 'testName', 'resultStatus', 'scrollIcon'];
+  displayedColumns: string[] = ['testId', 'testName', 'resultStatus', 'executionStatus', 'scrollIcon'];
   columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
   expandedElement: TestRunModel | null;
   dataSubmitted = false;
@@ -184,7 +184,7 @@ export class TestRunComponent implements OnInit {
                       : NO_DATA_AVAILABLE,
                     resultStatus: testRunData
                       ? testRunData.resultStatus
-                      : 'failure',
+                      : appConstants.FAILURE,
                     resultDescription: testRunData
                       ? testRunData.resultDescription
                       : '',
@@ -197,9 +197,9 @@ export class TestRunComponent implements OnInit {
                         ? testRunData.methodUrl
                         : '',
                     executionStatus:
-                      testRunData && testRunData.methodUrl
-                        ? testRunData.methodUrl
-                        : '',
+                      testRunData && testRunData.executionStatus
+                        ? testRunData.executionStatus
+                        : appConstants.INCOMPLETE_STATUS,
                   });
                   testRunData = null;
                 }
@@ -219,7 +219,7 @@ export class TestRunComponent implements OnInit {
                   testDataSource: '',
                   methodUrl: '',
                   executionStatus:
-                    appConstants.FAILURE,
+                    appConstants.INCOMPLETE_STATUS,
                 });
               }
             }

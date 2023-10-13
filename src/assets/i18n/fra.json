@@ -201,7 +201,7 @@
 		"testRunDetailsAreNotAvailable": "Les détails de l'exécution du test ne sont pas disponibles",
 		"id": "Identifiant",
 		"name": "Nom",
-		"status": "Statut",
+		"status": "Statut du scénario de test",
 		"success": "Succès",
 		"failure": "Échec",
 		"methodRequest": "Demande de méthode:",
@@ -211,7 +211,10 @@
 		"methodUrl": "URL de la méthode",
 		"testDataSource": "Tester la source de données",
 		"back": "retour",
-		"tableDescription": "Détails de l'exécution du test"
+		"tableDescription": "Détails de l'exécution du test",
+		"executionStatus": "Scénario de test terminé",
+		"complete": "Complète",
+		"incomplete": "Incomplet"
 	},
 	"addCollections": {
 		"collectionName": "Nom de la collection:",
