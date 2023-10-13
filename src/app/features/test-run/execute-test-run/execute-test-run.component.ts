@@ -259,7 +259,6 @@ export class ExecuteTestRunComponent implements OnInit {
     if (!this.errorsInSavingTestRun) {
       await this.runExecuteForLoop(true, false);
     }
-    console.log(`this.currentMethodIndex  ${this.currentMethodIndex}`);
     this.runComplete = true;
     this.basicTimer.stop();
   }
@@ -310,7 +309,7 @@ export class ExecuteTestRunComponent implements OnInit {
         if (!this.streamingDone) {
           this.checkIfToShowStreamBtn(testCase);
         }
-        console.log(`this.currectTestCaseId: ${this.currectTestCaseId}`);
+        console.log(`currectTestCaseId: ${this.currectTestCaseId}`);
         const res: any = await this.executeCurrentTestCase(testCase);
         if (res) {
           startingForLoop = this.handleErr(res);
@@ -390,9 +389,7 @@ export class ExecuteTestRunComponent implements OnInit {
         showContinue = true;
       }
     }
-    console.log(`this.currentMethodIndex ${this.currentMethodIndex}`);
     if (showContinue) {
-      console.log(`handleContinueBtnFlow`);
       this.handleContinueBtnFlow(startingForLoop, testCase, allValidatorsPassed, res);
       if (this.showContinueBtn) {
         const promise = new Promise((resolve, reject) => { });
@@ -407,6 +404,10 @@ export class ExecuteTestRunComponent implements OnInit {
     if (this.projectType == appConstants.SDK && startingForLoop) {
       if (this.currentMethodIndex > 0) {
         await this.startWithSameTestcase();
+        const promise = new Promise((resolve, reject) => { });
+        if (await promise) {
+          console.log("done waiting");
+        }
       }
     }
   }
@@ -465,7 +466,6 @@ export class ExecuteTestRunComponent implements OnInit {
         testCase.otherAttributes.qualityAssessmentTestCase)
     ) {
       let testcaseFailed = !allValidatorsPassed;
-      console.log(`testcaseFailed ${testcaseFailed}`);
       if (!testcaseFailed) {
         const methodRespJson = JSON.parse(res.methodResponse);
         if (testCase.otherAttributes.keyRotationTestCase) {
@@ -691,6 +691,7 @@ export class ExecuteTestRunComponent implements OnInit {
   }
 
   async executeSDKTestCase(testCase: TestCaseModel) {
+    //console.log(`executeSDKTestCase`);
     if (!this.sdkProjectData) {
       const sdkProjectDetails: any = await Utils.getSdkProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
       if (sdkProjectDetails) {
@@ -867,7 +868,7 @@ export class ExecuteTestRunComponent implements OnInit {
         if (!this.isCombinationAbisTestcase) {
           this.abisSentDataSource = abisReq.testDataSource;
         }
-        console.log(`this.abisSentDataSource ${this.abisSentDataSource}`);
+        //console.log(`this.abisSentDataSource ${this.abisSentDataSource}`);
         this.subscribeToABISQueue(requestId);
         //wait till some message arrives in active mq
         const promise = new Promise((resolve, reject) => { });
@@ -886,6 +887,7 @@ export class ExecuteTestRunComponent implements OnInit {
         return true;
       }
     } else {
+      console.log("run validations on resp");
       this.showLoader = true;
       //run validations
       let methodIndex = 0;
@@ -1253,7 +1255,6 @@ export class ExecuteTestRunComponent implements OnInit {
     console.log(`recvdRequestId: ${recvdRequestId}`);
     if (sentRequestId == recvdRequestId) {
       this.abisRecvdMessage = message.body;
-      //console.log(this.abisRecvdMessage);
       await this.runExecuteForLoop(false, false);
       this.runComplete = true;
       this.basicTimer.stop();
