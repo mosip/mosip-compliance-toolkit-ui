@@ -516,87 +516,87 @@
 			"androidTestDescription": "Test pour valider la non-concordance du nombre de bio pour le visage d'enregistrement<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée"
 		},
 		"SBI1040": {
-			"testName": "Capture d'enregistrement - Visage - Délai d'attente",
+			"testName": "Capture d'enregistrement - Visage - Délai d'attente (sans aucune contribution)",
 			"testDescription": "Test pour valider le temps libre du visage<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Ne placez pas votre visage devant la caméra et attendez que la capture expire",
 			"androidTestDescription": "Test pour valider le temps libre du visage<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Ne placez pas votre visage devant la caméra et attendez que la capture expire"
 		},
 		"SBI1041": {
-			"testName": "Capture d'enregistrement - Double Iris - Délai d'attente",
+			"testName": "Capture d'enregistrement - Double Iris - Délai d'attente (sans aucune contribution)",
 			"testDescription": "Test pour valider le délai d'expiration de l'iris<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Ne placez pas votre iris sur le scanner d'iris et attendez que la capture expire",
 			"androidTestDescription": "Test pour valider le délai d'expiration de l'iris<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Ne placez pas votre iris sur le scanner d'iris et attendez que la capture expire"
 		},
 		"SBI1042": {
-			"testName": "Capture d'enregistrement - Claque Gauche - Délai d'attente",
+			"testName": "Capture d'enregistrement - Claque Gauche - Délai d'attente (sans aucune contribution)",
 			"testDescription": "Test pour valider le délai d'expiration de du claque gauche<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Ne placez pas vos doigts sur le scanner claque et attendez que la capture expire",
 			"androidTestDescription": "Test pour valider le délai d'expiration de du claque gauche<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Ne placez pas vos doigts sur le scanner claque et attendez que la capture expire"
 		},
 		"SBI1043": {
-			"testName": "Capture d'enregistrement - Claque Droit - Délai d'expiration",
+			"testName": "Capture d'enregistrement - Claque Droit - Délai d'expiration (sans aucune contribution)",
 			"testDescription": "Test pour valider le délai d'expiration de du bon claque<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Ne placez pas vos doigts sur le scanner claque et attendez que la capture expire",
 			"androidTestDescription": "Test pour valider le délai d'expiration de du bon claque<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Ne placez pas vos doigts sur le scanner claque et attendez que la capture expire"
 		},
 		"SBI1044": {
-			"testName": "Capture d'enregistrement - Deux pouces - Délai d'expiration",
+			"testName": "Capture d'enregistrement - Deux pouces - Délai d'expiration (sans aucune contribution)",
 			"testDescription": "Test pour valider le délai d'expiration de du pouce<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Ne placez pas vos doigts sur le scanner claque et attendez que la capture expire",
 			"androidTestDescription": "Test pour valider le délai d'expiration de du pouce<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Ne placez pas vos doigts sur le scanner claque et attendez que la capture expire"
 		},
 		"SBI1045": {
-			"testName": "Capture d'enregistrement - Photo d'exception - Délai d'expiration",
+			"testName": "Capture d'enregistrement - Photo d'exception - Délai d'expiration (sans aucune contribution)",
 			"testDescription": "Test pour valider le délai d'expiration de la photo d'exception<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Ne placez pas votre visage devant la caméra et attendez que la capture expire",
 			"androidTestDescription": "Test pour valider le délai d'expiration de la photo d'exception<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Ne placez pas votre visage devant la caméra et attendez que la capture expire"
 		},
 		"SBI1046": {
-			"testName": "Capture d'authentification - Visage - Délai d'expiration",
+			"testName": "Capture d'authentification - Visage - Délai d'expiration (sans aucune contribution)",
 			"testDescription": "Test pour valider le délai d'expiration de du visage<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Ne placez pas votre visage devant la caméra et attendez que la capture expire"
 		},
 		"SBI1047": {
-			"testName": "Capture d'authentification - Iris unique - Iris inconnu - Délai d'expiration",
+			"testName": "Capture d'authentification - Iris unique - Iris inconnu - Délai d'expiration (sans aucune contribution)",
 			"testDescription": "Test pour valider le délai d'expiration de l'iris<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Ne placez pas vos yeux sur le scanner d'iris et attendez que la capture expire"
 		},
 		"SBI1048": {
-			"testName": "Capture d'authentification - Doigt inconnu - Délai d'expiration",
+			"testName": "Capture d'authentification - Doigt inconnu - Délai d'expiration (sans aucune contribution)",
 			"testDescription": "Test pour valider le délai d'expiration de du doigt<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Ne placez pas votre doigt sur le lecteur d'empreintes et attendez que la capture expire"
 		},
 		"SBI1049": {
-			"testName": "Capture d'enregistrement - Visage - Capture de force",
-			"testDescription": "Forcer la validation de la capture pour la demande de capture d'enregistrement pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre visage devant la caméra et attendez la capture",
-			"androidTestDescription": "Forcer la validation de la capture pour la demande de capture d'enregistrement pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre visage devant la caméra et attendez la capture"
+			"testName": "Capture d'enregistrement - Visage - Délai d'expiration (avec entrée de l'utilisateur)",
+			"testDescription": "Validation du délai d'attente pour la demande de capture d'enregistrement pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre visage devant la caméra et attendez la capture",
+			"androidTestDescription": "Validation du délai d'attente pour la demande de capture d'enregistrement pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre visage devant la caméra et attendez la capture"
 		},
 		"SBI1050": {
-			"testName": "Capture d'enregistrement - Double Iris - Capture de force",
-			"testDescription": "Forcer la validation de la capture pour la demande de capture d'enregistrement pour le double iris<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre iris devant la caméra et attendez la capture",
-			"androidTestDescription": "Forcer la validation de la capture pour la demande de capture d'enregistrement pour le double iris<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre iris devant la caméra et attendez la capture"
+			"testName": "Capture d'enregistrement - Double Iris - Délai d'expiration (avec entrée de l'utilisateur)",
+			"testDescription": "Validation du délai d'attente pour la demande de capture d'enregistrement pour le double iris<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre iris devant la caméra et attendez la capture",
+			"androidTestDescription": "Validation du délai d'attente pour la demande de capture d'enregistrement pour le double iris<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre iris devant la caméra et attendez la capture"
 		},
 		"SBI1051": {
-			"testName": "Capture d'enregistrement - Claque Gauche - Capture de force",
-			"testDescription": "Forcer la validation de la capture pour la demande de capture d'enregistrement pour claque gauche<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre claque gauche sur l'appareil et attendez la capture",
-			"androidTestDescription": "Forcer la validation de la capture pour la demande de capture d'enregistrement pour claque gauche<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre claque gauche sur l'appareil et attendez la capture"
+			"testName": "Capture d'enregistrement - Claque Gauche - Délai d'expiration (avec entrée de l'utilisateur)",
+			"testDescription": "Validation du délai d'attente pour la demande de capture d'enregistrement pour claque gauche<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre claque gauche sur l'appareil et attendez la capture",
+			"androidTestDescription": "Validation du délai d'attente pour la demande de capture d'enregistrement pour claque gauche<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre claque gauche sur l'appareil et attendez la capture"
 		},
 		"SBI1052": {
-			"testName": "Capture d'enregistrement - Claque Droit - Capture de force",
-			"testDescription": "Forcer la validation de la capture pour la demande de capture d'enregistrement pour claque droite<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre claque droite sur l'appareil et attendez la capture",
-			"androidTestDescription": "Forcer la validation de la capture pour la demande de capture d'enregistrement pour claque droite<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre claque droite sur l'appareil et attendez la capture"
+			"testName": "Capture d'enregistrement - Claque Droit - Délai d'expiration (avec entrée de l'utilisateur)",
+			"testDescription": "Validation du délai d'attente pour la demande de capture d'enregistrement pour claque droite<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre claque droite sur l'appareil et attendez la capture",
+			"androidTestDescription": "Validation du délai d'attente pour la demande de capture d'enregistrement pour claque droite<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre claque droite sur l'appareil et attendez la capture"
 		},
 		"SBI1053": {
-			"testName": "Capture d'enregistrement - Deux pouces - Capture de force",
-			"testDescription": "Forcer la validation de la capture pour la demande de capture d'inscription pour Deux pouces<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez vos deux pouces sur l'appareil et attendez la capture",
-			"androidTestDescription": "Forcer la validation de la capture pour la demande de capture d'inscription pour Deux pouces<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez vos deux pouces sur l'appareil et attendez la capture"
+			"testName": "Capture d'enregistrement - Deux pouces - Délai d'expiration (avec entrée de l'utilisateur)",
+			"testDescription": "Validation du délai d'attente pour la demande de capture d'inscription pour Deux pouces<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez vos deux pouces sur l'appareil et attendez la capture",
+			"androidTestDescription": "Validation du délai d'attente pour la demande de capture d'inscription pour Deux pouces<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez vos deux pouces sur l'appareil et attendez la capture"
 		},
 		"SBI1054": {
-			"testName": "Capture d'inscription - Photo d'exception - Forcer la capture",
-			"testDescription": "Forcer la validation de la capture pour la valeur d'exception du type d'appareil Visage auriculaire gauche ou tout autre donnera une photo d'exception"
+			"testName": "Capture d'inscription - Photo d'exception - Délai d'expiration (avec entrée de l'utilisateur)",
+			"testDescription": "Validation du délai d'attente pour la valeur d'exception du type d'appareil Visage auriculaire gauche ou tout autre donnera une photo d'exception"
 		},
 		"SBI1055": {
-			"testName": "Capture d'authentification - Visage - Capture de force",
-			"testDescription": "Forcer la validation de la capture pour la demande de capture d'authentification uniquement pour le visage"
+			"testName": "Capture d'authentification - Visage - Délai d'expiration (avec entrée de l'utilisateur)",
+			"testDescription": "Validation du délai d'attente pour la demande de capture d'authentification uniquement pour le visage"
 		},
 		"SBI1056": {
-			"testName": "Capture d'authentification - Iris unique - Iris inconnu - Forcer la capture",
-			"testDescription": "Forcer la validation de la capture pour la demande de capture d'authentification pour l'iris inconnu"
+			"testName": "Capture d'authentification - Iris unique - Iris inconnu - Délai d'expiration (avec entrée de l'utilisateur)",
+			"testDescription": "Validation du délai d'attente pour la demande de capture d'authentification pour l'iris inconnu"
 		},
 		"SBI1057": {
-			"testName": "Capture d'authentification - Doigt inconnu - Forcer la capture",
-			"testDescription": "Forcer la validation de la capture pour la demande de capture d'authentification pour un doigt inconnu"
+			"testName": "Capture d'authentification - Doigt inconnu - Délai d'expiration (avec entrée de l'utilisateur)",
+			"testDescription": "Validation du délai d'attente pour la demande de capture d'authentification pour un doigt inconnu"
 		},
 		"SBI1058": {
 			"testName": "Capture d'authentification - 10 doigts",
