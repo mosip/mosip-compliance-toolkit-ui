@@ -307,7 +307,7 @@
 	"validators": {
 		"SchemaValidator": "Validates the response for mandatory attributes and correct values",
 		"SignatureValidator": "Validates the response signature",
-		"ResponseMismatchValidator": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request",
+		"ResponseMismatchValidator": "Validates the response to check if  bioCount, exceptions, segments and transactionId match the ones set in request",
 		"TransactionIdValidator": "Validates the methodRequest and methodResponse transactionId are same",
 		"KeyRotationValidator": "Validator to validate the device key rotation",
 		"TimeoutValidator": "Validates if response is received within the given timeout period or not",
@@ -1303,11 +1303,12 @@
 	"validatorMessages": {
 		"BR_TAG": "<br>",
 		"SCHEMA_VALIDATOR_001": "JSON is as expected. All mandatory values are available and they all have valid expected values.",
-		"RESPONSE_MISMATCH_VALIDATOR_001": "The bioCount, segments and exceptions in response match the request.",
+		"RESPONSE_MISMATCH_VALIDATOR_001": "The bioCount, segments, exceptions and transactionId in response match the request.",
 		"RESPONSE_MISMATCH_VALIDATOR_002": "ResponseMismatchValidator failed due to biocount mismatch. In request, bioCount = {} and in response, bioCount = {}",
 		"RESPONSE_MISMATCH_VALIDATOR_003": "ResponseMismatchValidator failed due to purpose mismatch. In request, purpose = {} and in response, purpose = {}",
 		"RESPONSE_MISMATCH_VALIDATOR_004": "ResponseMismatchValidator failed, due to invalid Response BioSubType.",
 		"RESPONSE_MISMATCH_VALIDATOR_005": "ResponseMismatchValidator failed due to exception, biosubtype = {} is not valid",
+		"RESPONSE_MISMATCH_VALIDATOR_006": "ResponseMismatchValidator failed due to transactionId mismatch. In request, transactionId = {} and in response, transactionId = {}",
 		"TRANSACTIONID_VALIDATOR_001": "Transaction Id validation is successful",
 		"TRANSACTIONID_VALIDATOR_002": "Transaction Id validation failed.",
 		"KEY_ROTATION_VALIDATOR_001": "Key Rotation validations are successful.",

@@ -306,7 +306,7 @@
 	"validators": {
 		"SchemaValidator": "Valide la réponse pour les attributs obligatoires et les valeurs correctes",
 		"SignatureValidator": "Valide la signature de la réponse",
-		"ResponseMismatchValidator": "Valide la réponse pour vérifier si bioCount, les exceptions et les segments correspondent à ceux définis dans la demande",
+		"ResponseMismatchValidator": "Valide la réponse pour vérifier si bioCount, les exceptions, les segments et transactionId correspondent à ceux définis dans la demande",
 		"TransactionIdValidator": "Valide que methodRequest et methodResponse transactionId sont identiques",
 		"KeyRotationValidator": "Validateur pour valider la rotation de la clé de l'appareil",
 		"TimeoutValidator": "Valide si la réponse est reçue dans le délai imparti ou non",
@@ -1301,11 +1301,12 @@
 	"validatorMessages": {
 		"BR_TAG": "<br>",
 		"SCHEMA_VALIDATOR_001": "Valide la réponse pour les attributs obligatoires et les valeurs correctes",
-		"RESPONSE_MISMATCH_VALIDATOR_001": "Le bioCount, les segments et les exceptions en réponse correspondent à la requête.",
+		"RESPONSE_MISMATCH_VALIDATOR_001": "Le bioCount, les segments, les exceptions et le transactionId en réponse correspondent à la demande.",
 		"RESPONSE_MISMATCH_VALIDATOR_002": "ResponseMismatchValidator a échoué en raison d'une incompatibilité de biocompte. En requête, bioCount = {} et en réponse, bioCount = {}",
 		"RESPONSE_MISMATCH_VALIDATOR_003": "ResponseMismatchValidator a échoué en raison d'une incompatibilité d'objectif. En requête, purpose = {} et en réponse, purpose = {}",
 		"RESPONSE_MISMATCH_VALIDATOR_004": "Échec de ResponseMismatchValidator en raison d'un biosous-type de réponse non valide.",
 		"RESPONSE_MISMATCH_VALIDATOR_005": "ResponseMismatchValidator a échoué en raison d'une exception, biosubtype = {} n'est pas valide",
+		"RESPONSE_MISMATCH_VALIDATOR_006": "ResponseMismatchValidator a échoué en raison d'une incompatibilité d'ID de transaction. En requête, transactionId = {} et en réponse, transactionId = {}",
 		"TRANSACTIONID_VALIDATOR_001": "La validation de l'identifiant de transaction a réussi",
 		"TRANSACTIONID_VALIDATOR_002": "La validation de l'ID de transaction a échoué.",
 		"KEY_ROTATION_VALIDATOR_001": "Les validations de la rotation des clés sont réussies.",
