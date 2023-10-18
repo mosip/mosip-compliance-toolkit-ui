@@ -1,4 +1,4 @@
-[![Maven Package upon a push](https://github.com/mosip/mosip-compliance-toolkit-ui/actions/workflows/push_trigger.yml/badge.svg?branch=develop)](https://github.com/mosip/mosip-compliance-toolkit-ui/actions/workflows/push_trigger.yml)
+[![Maven Package upon a push](https://github.com/mosip/mosip-compliance-toolkit-ui/actions/workflows/push_trigger.yml/badge.svg?branch=release-1.3.0)](https://github.com/mosip/mosip-compliance-toolkit-ui/actions/workflows/push_trigger.yml)
 
 # Compliance-Toolkit Portal
 
