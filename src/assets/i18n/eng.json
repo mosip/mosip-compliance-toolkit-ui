@@ -847,6 +847,26 @@
 			"testDescription": "Quality Assessment Testcase to validate the biometrics captured by RCapture interface for left slap fingerprints for - Females - 50 to 60 - doctor <br><br>Steps:<br>1. Click on Start Streaming button. <br>2. Once streaming is done, click on Inititate Capture button to start the capture.  <br> 3. Place your left slap on the device until the capture completes<br> 4. Repeat above steps , for next person, after clicking on Continue button.",
 		    "androidTestDescription": "Quality Assessment Testcase validate the biometrics captured by RCapture interface for left slap fingerprints for - Females - 50 to 60 - doctor <br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place your left slap on the device until the capture completes<br> 3. Repeat above steps, for next person, after clicking on Continue button."
 		},
+		"SBI1112": {
+			"testName": "Registration capture - Left Slap - Invalid Transaction Id",
+			"testDescription": "Test to validate transactionId of RCapture method for Left Slap Fingerprints<br><br>Steps:<br>1. Click on Start Streaming button. <br>2. Once streaming is done, click on Inititate Capture button to start the capture.  <br> 3. Place your left slap on the device until the capture completes",
+			"androidTestDescription": "Test to validate transactionId of RCapture method for Left Slap Fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place your left slap on the device until the capture completes"
+		},
+		"SBI1113": {
+			"testName": "Registration capture - Right Slap - Invalid Transaction Id",
+			"testDescription": "Test to validate transactionId of RCapture method for Right Slap Fingerprints<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your right slap on the device until the capture completes",
+			"androidTestDescription": "Test to validate transactionId of RCapture method for Right Slap Fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right slap on the device until the capture completes"
+		},
+		"SBI1114": {
+			"testName": "Registration capture - Double Iris - Invalid Transaction Id",
+			"testDescription": "Test to validate transactionId of RCapture method for Two Iris<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place both your iris on the device until the capture completes",
+			"androidTestDescription": "Test to validate transactionId of RCapture method for Two Iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place both your iris on the device until the capture completes"
+		},
+		"SBI1115": {
+			"testName": "Registration capture - Face - Invalid Transaction Id",
+			"testDescription": "Test to validate transactionId of RCapture method for face<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your face infront of the camera until the capture completes",
+			"androidTestDescription": "Test to validate transactionId of RCapture method for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera until the capture completes"
+		},
 		"SDK2000": {
 			"testName": "Init Test",
 			"testDescription": "Initialise Bio SDK Services"

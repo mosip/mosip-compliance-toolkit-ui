@@ -846,6 +846,26 @@
 			"testDescription": "Test d'évaluation de la qualité pour valider les données biométriques capturées par l'interface RCapture pour les empreintes digitales de gifle gauche pour - Femmes - 50 à 60 ans - médecin <br><br>Étapes :<br>1. Cliquez sur le bouton Démarrer la diffusion. <br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 3. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée.<br> 4. Répétez les étapes ci-dessus, pour la personne suivante, après avoir cliqué sur le bouton Continuer.",
 		    "androidTestDescription": "Le test d'évaluation de la qualité valide les données biométriques capturées par l'interface RCapture pour les empreintes digitales de gifle gauche pour - Femmes - 50 à 60 - médecin <br><br>Étapes :<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 2. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée.<br> 3. Répétez les étapes ci-dessus, pour la personne suivante, après avoir cliqué sur le bouton Continuer."
 		},
+		"SBI1112": {
+			"testName": "Capture d'enregistrement - Claque gauche - Identifiant de transaction invalide",
+			"testDescription": "Test pour valider l'ID de transaction de la méthode RCapture pour les empreintes digitales de claque gauche<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 3. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider l'ID de transaction de la méthode RCapture pour les empreintes digitales de claque gauche<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture.  <br> 2. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée"
+		},
+		"SBI1113": {
+			"testName": "Capture d'enregistrement - Claque Droit - Identifiant de transaction invalide",
+			"testDescription": "Test pour valider l'ID de transaction de la méthode RCapture pour la claque droite<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre claque droite sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider l'ID de transaction de la méthode RCapture pour la claque droite<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre claque droite sur l'appareil jusqu'à ce que la capture soit terminée"
+		},
+		"SBI1114": {
+			"testName": "Capture d'enregistrement - Double Iris - Identifiant de transaction invalide",
+			"testDescription": "Test pour valider l'ID de transaction de la méthode RCapture pour deux iris<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez vos deux iris sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider l'ID de transaction de la méthode RCapture pour deux iris<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez vos deux iris sur l'appareil jusqu'à ce que la capture soit terminée"
+		},
+		"SBI1115": {
+			"testName": "Capture d'enregistrement - Visage - Identifiant de transaction invalide",
+			"testDescription": "Test pour valider l'ID de transaction de la méthode RCapture pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider l'ID de transaction de la méthode RCapture pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée"
+		},
 		"SDK2000": {
 			"testName": "Test d'initialisation",
 			"testDescription": "Initialise Bio SDK Services"
