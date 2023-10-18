@@ -13,6 +13,13 @@
   /* height: 50px;
   width: 340px; */
 }
+.rowContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+}
 .fieldLabel {
   width: 20%;
 }
@@ -59,6 +66,23 @@
   font-size: smaller;
   width: 100%;
 }
+.deviceImgFieldWrapper {
+  display: flex;
+  flex: 1;
+  justify-content: first baseline;
+  align-items: center;
+  padding: 5px;
+}
+.deviceImgFieldLabel {
+  width: 60px;
+}
+.deviceImgFieldContainer {
+  margin-left: 30px;
+}
+.fileuploadbtn {
+  width: 200px;
+  margin-left: 30px;
+}
 @media screen and (max-width: 2560px) {
   .fieldContainerBox {
     width: 250px;
@@ -68,10 +92,60 @@
     width: 250px;
     padding-left: 10px;
   }
+  .deviceImgFieldWrapper {
+    align-items: start;
+    padding: 5px;
+  }
+  .deviceImgFieldContainer {
+    margin-left: 40px;
+  }
+  .fileuploadbtn {
+    width: 200px;
+    margin-left: 30px;
+  }
+}
+@media screen and (max-width: 1440px) {
+  .deviceImgFieldContainer {
+    margin-left: 70px;
+  }
+}
+@media screen and (min-width: 1200px) and (max-width: 1300px) {
+  .deviceImgFieldContainer {
+    margin-left: 60px;
+  }
+}
+@media screen and (max-width: 1200px) {
+  .fileuploadbtn {
+    width: 200px;
+    margin-left: 7px;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .deviceImgFieldContainer {
+    margin-left: 50px;
+  }
+  .fileuploadbtn {
+    width: 200px;
+    margin-left: 4px;
+  }
+}
+@media screen and (max-width: 900px) {
+  .fileuploadbtn {
+    width: 200px;
+    margin-left: 1px;
+  }
 }
 @media screen and (max-width: 770px) {
   .button-container {
-    width: 700px;
+    width: 90%;
+  }
+  .deviceImgFieldContainer {
+    margin-left: 30px;
+  }
+}
+@media screen and (max-width: 680px) {
+  .deviceImgFieldContainer {
+    margin-left: 90px;
   }
 }
 @media screen and (max-width: 480px) {
@@ -85,19 +159,25 @@
     width: 240px;
   }
   .button-container {
-    width: 420px;
+    width: 90%;
+  }
+  .deviceImgFieldContainer {
+    margin-left: 45px;
   }
 }
 @media screen and (max-width: 426px) {
   .button-container{
-    width: 360px;
+    width: 90%;
+  }
+  .deviceImgFieldContainer {
+    margin-left: 12px;
+  }
+  .fileuploadbtn {
+    width: 240px;
+    margin-left: 20px;
   }
 }
-@media screen and (max-width: 378px) {
-  .button-container{
-    width: 320px;
-  }
-}
+
 @media screen and (max-width: 365px) {
   .formContainer {
     width: 270px;
@@ -105,6 +185,11 @@
     overflow-x: auto;
   }
   .fieldWrapper {
+    width: 250px;
+    display: block;
+    padding-bottom: 20px;
+  }
+  .deviceImgFieldWrapper {
     width: 250px;
     display: block;
     padding-bottom: 20px;
@@ -121,5 +206,11 @@
   }
   .button-container {
     width: 270px;
+  }
+  .fileuploadbtn {
+    width: 232px;
+  }
+  .deviceImgFieldContainer {
+    margin-left: -5px;
   }
 }

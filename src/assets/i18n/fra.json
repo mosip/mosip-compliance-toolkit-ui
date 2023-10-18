@@ -6,7 +6,16 @@
 		"successMessage": "Projet créé avec succès",
 		"close": "Fermer",
 		"logout": "Se déconnecter",
-		"addTestDataSuccessMsg": "Données de test ajoutées avec succès."
+		"addTestDataSuccessMsg": "Données de test ajoutées avec succès.",
+		"deviceImagesIsInvalid": "L'image de l'appareil n'est pas valide",
+		"sbiHashIsInvalid": "Le hachage SBI n'est pas valide",
+		"sdkHashIsInvalid": "Le hachage SDK n'est pas valide",
+		"abisHashIsInvalid": "Le hachage ABIS n'est pas valide",
+		"websiteUrlIsInvalid": "L'URL du site Web n'est pas valide",
+		"updateProject": "Mettre à jour le projet",
+		"deviceImages": "Images de l'appareil",
+		"uploadDeviceImages": "Télécharger des images de périphérique",
+		"addImage": "Ajouter une image"
 	},
 	"breadcrumb": {
 		"home": "Maison",
@@ -37,7 +46,9 @@
 		"success": "Succès",
 		"failure": "Échec",
 		"projectRow": "Il n'y a pas de projets disponibles.",
-		"tableDescription": "Liste des projets"
+		"tableDescription": "Liste des projets",
+		"title": "Mettre à jour les détails du projet",
+		"message": "Ajoutez les champs suivants requis pour le projet, pour continuer."
 	},
 	"biometricDashboard": {
 		"projectDashboard": "Tableau de bord des projets",
@@ -87,7 +98,24 @@
 		"activeMqUrl": "Actif MQ URL:",
 		"requestQueueName": "Nom de la file d'attente des requêtes:",
 		"responseQueueName": "Nom de la file d'attente de réponses:",
-		"invalidPartnerTypeMsg": "Le partenaire ABIS peut uniquement créer un projet ABIS"
+		"invalidPartnerTypeMsg": "Le partenaire ABIS peut uniquement créer un projet ABIS",
+		"modality": "Modalité",
+		"modalityIsRequired": "La modalité est requise",
+		"deviceImages": "Images de l'appareil:",
+		"deviceImagesIsRequired": "Les images de l'appareil sont requises",
+		"make": "Faire:",
+		"makeIsRequired": "La marque est requise",
+		"model": "Modèle:",
+		"modelIsRequired": "Le modèle est requis",
+		"sbiHash": "Hachage SBI:",
+		"sbiHashIsRequired": "Le hachage SBI est requis",
+		"websiteUrl": "URL de site web:",
+		"websiteUrlIsRequired": "L'URL du site Web est requise",
+		"sdkHash": "Hachage SDK:",
+		"sdkHashIsRequired": "Le hachage SDK est requis",
+		"abisHash": "Hachage ABIS:",
+		"abisHashIsRequired": "Le hachage ABIS est requis",
+		"selectDeviceImages": "Télécharger des images de périphérique"
 	},
 	"addTestData": {
 		"name": "Nom",
@@ -136,7 +164,24 @@
 		"activeMqUrl": "Actif MQ URL:",
 		"requestQueueName": "Nom de la file d'attente des requêtes:",
 		"responseQueueName": "Nom de la file d'attente de réponses:",
-		"tableDescription": "Liste des collections"
+		"tableDescription": "Liste des collections",
+		"modality": "Modalité",
+		"modalityIsRequired": "La modalité est requise",
+		"deviceImages": "Images de l'appareil:",
+		"deviceImagesIsRequired": "Les images de l'appareil sont requises",
+		"make": "Faire:",
+		"makeIsRequired": "La marque est requise",
+		"model": "Modèle:",
+		"modelIsRequired": "Le modèle est requis",
+		"sbiHash": "Hachage SBI:",
+		"sbiHashIsRequired": "Le hachage SBI est requis",
+		"websiteUrl": "URL de site web:",
+		"websiteUrlIsRequired": "L'URL du site Web est requise",
+		"sdkHash": "Hachage SDK:",
+		"sdkHashIsRequired": "Le hachage SDK est requis",
+		"abisHash": "Hachage ABIS:",
+		"abisHashIsRequired": "Le hachage ABIS est requis",
+		"viewDeviceImages": "Afficher les images de l'appareil"
 	},
 	"testRunHistory": {
 		"runDate": "Date d'exécution",
@@ -166,7 +211,11 @@
 		"methodUrl": "URL de la méthode",
 		"testDataSource": "Tester la source de données",
 		"back": "retour",
-		"tableDescription": "Détails de l'exécution du test"
+		"tableDescription": "Détails de l'exécution du test",
+		"executionStatus": "Statut d'exécution",
+		"complete": "Complète",
+		"incomplete": "Incomplet",
+		"testRunExecutionStatus": "Statut d'exécution"
 	},
 	"addCollections": {
 		"collectionName": "Nom de la collection:",
@@ -257,13 +306,14 @@
 	"validators": {
 		"SchemaValidator": "Valide la réponse pour les attributs obligatoires et les valeurs correctes",
 		"SignatureValidator": "Valide la signature de la réponse",
-		"ResponseMismatchValidator": "Valide la réponse pour vérifier si bioCount, les exceptions et les segments correspondent à ceux définis dans la demande",
+		"ResponseMismatchValidator": "Valide la réponse pour vérifier si bioCount, les exceptions, les segments et transactionId correspondent à ceux définis dans la demande",
 		"TransactionIdValidator": "Valide que methodRequest et methodResponse transactionId sont identiques",
 		"KeyRotationValidator": "Validateur pour valider la rotation de la clé de l'appareil",
 		"TimeoutValidator": "Valide si la réponse est reçue dans le délai imparti ou non",
 		"ISOStandardsValidator": "Valide que la 'bioValeur' est conforme aux normes ISO définies.",
 		"BiometricsQualityCheckValidator": "Vérifie la qualité de la biométrie à l'aide de tous les services SDK configurés",
 		"TimeCheckValidator": "Valide si la réponse est reçue dans l'intervalle d'horodatage donné ou non",
+		"HashValidator": "Valide la 'valeur de hachage' reçue dans la réponse correspond au 'hachage précédent' dans la demande",
 		"QualityCheckValidator": "Vérifie le score de qualité de la modalité",
 		"QualityCheckInvalidDataValidator": "Valide le code d'état pour les données invalides",
 		"QualityCheckNoDataValidator": "Valide le code d'état pour aucune donnée",
@@ -282,7 +332,8 @@
 		"ConvertNoInputDataValidator": "Valide si aucune donnée BDB d'entrée n'est présente dans la sonde",
 		"ExpectedFailureReasonValidator": "Valide la raison de l'échec pour correspondre à la valeur attendue",
 		"IdentifyDuplicateFoundValidator": "Valide le nombre de doublons trouvés par ABIS pour le referenceId donné",
-		"ExpectedDuplicateCountValidator": "Valide les doublons trouvés pour correspondre à la valeur attendue"
+		"ExpectedDuplicateCountValidator": "Valide les doublons trouvés pour correspondre à la valeur attendue",
+		"ABISTokenValidator": "Valide qu'ABIS ne génère pas de nouveau jeton pour chaque demande d'insertion, sauf si le jeton a expiré"
 	},
 	"testcases": {
 		"SBI1000": {
@@ -465,87 +516,87 @@
 			"androidTestDescription": "Test pour valider la non-concordance du nombre de bio pour le visage d'enregistrement<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée"
 		},
 		"SBI1040": {
-			"testName": "Capture d'enregistrement - Visage - Délai d'attente",
+			"testName": "Capture d'enregistrement - Visage - Délai d'attente (sans aucune contribution)",
 			"testDescription": "Test pour valider le temps libre du visage<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Ne placez pas votre visage devant la caméra et attendez que la capture expire",
 			"androidTestDescription": "Test pour valider le temps libre du visage<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Ne placez pas votre visage devant la caméra et attendez que la capture expire"
 		},
 		"SBI1041": {
-			"testName": "Capture d'enregistrement - Double Iris - Délai d'attente",
+			"testName": "Capture d'enregistrement - Double Iris - Délai d'attente (sans aucune contribution)",
 			"testDescription": "Test pour valider le délai d'expiration de l'iris<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Ne placez pas votre iris sur le scanner d'iris et attendez que la capture expire",
 			"androidTestDescription": "Test pour valider le délai d'expiration de l'iris<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Ne placez pas votre iris sur le scanner d'iris et attendez que la capture expire"
 		},
 		"SBI1042": {
-			"testName": "Capture d'enregistrement - Claque Gauche - Délai d'attente",
+			"testName": "Capture d'enregistrement - Claque Gauche - Délai d'attente (sans aucune contribution)",
 			"testDescription": "Test pour valider le délai d'expiration de du claque gauche<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Ne placez pas vos doigts sur le scanner claque et attendez que la capture expire",
 			"androidTestDescription": "Test pour valider le délai d'expiration de du claque gauche<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Ne placez pas vos doigts sur le scanner claque et attendez que la capture expire"
 		},
 		"SBI1043": {
-			"testName": "Capture d'enregistrement - Claque Droit - Délai d'expiration",
+			"testName": "Capture d'enregistrement - Claque Droit - Délai d'expiration (sans aucune contribution)",
 			"testDescription": "Test pour valider le délai d'expiration de du bon claque<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Ne placez pas vos doigts sur le scanner claque et attendez que la capture expire",
 			"androidTestDescription": "Test pour valider le délai d'expiration de du bon claque<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Ne placez pas vos doigts sur le scanner claque et attendez que la capture expire"
 		},
 		"SBI1044": {
-			"testName": "Capture d'enregistrement - Deux pouces - Délai d'expiration",
+			"testName": "Capture d'enregistrement - Deux pouces - Délai d'expiration (sans aucune contribution)",
 			"testDescription": "Test pour valider le délai d'expiration de du pouce<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Ne placez pas vos doigts sur le scanner claque et attendez que la capture expire",
 			"androidTestDescription": "Test pour valider le délai d'expiration de du pouce<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Ne placez pas vos doigts sur le scanner claque et attendez que la capture expire"
 		},
 		"SBI1045": {
-			"testName": "Capture d'enregistrement - Photo d'exception - Délai d'expiration",
+			"testName": "Capture d'enregistrement - Photo d'exception - Délai d'expiration (sans aucune contribution)",
 			"testDescription": "Test pour valider le délai d'expiration de la photo d'exception<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Ne placez pas votre visage devant la caméra et attendez que la capture expire",
 			"androidTestDescription": "Test pour valider le délai d'expiration de la photo d'exception<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Ne placez pas votre visage devant la caméra et attendez que la capture expire"
 		},
 		"SBI1046": {
-			"testName": "Capture d'authentification - Visage - Délai d'expiration",
+			"testName": "Capture d'authentification - Visage - Délai d'expiration (sans aucune contribution)",
 			"testDescription": "Test pour valider le délai d'expiration de du visage<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Ne placez pas votre visage devant la caméra et attendez que la capture expire"
 		},
 		"SBI1047": {
-			"testName": "Capture d'authentification - Iris unique - Iris inconnu - Délai d'expiration",
+			"testName": "Capture d'authentification - Iris unique - Iris inconnu - Délai d'expiration (sans aucune contribution)",
 			"testDescription": "Test pour valider le délai d'expiration de l'iris<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Ne placez pas vos yeux sur le scanner d'iris et attendez que la capture expire"
 		},
 		"SBI1048": {
-			"testName": "Capture d'authentification - Doigt inconnu - Délai d'expiration",
+			"testName": "Capture d'authentification - Doigt inconnu - Délai d'expiration (sans aucune contribution)",
 			"testDescription": "Test pour valider le délai d'expiration de du doigt<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Ne placez pas votre doigt sur le lecteur d'empreintes et attendez que la capture expire"
 		},
 		"SBI1049": {
-			"testName": "Capture d'enregistrement - Visage - Capture de force",
-			"testDescription": "Forcer la validation de la capture pour la demande de capture d'enregistrement pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre visage devant la caméra et attendez la capture",
-			"androidTestDescription": "Forcer la validation de la capture pour la demande de capture d'enregistrement pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre visage devant la caméra et attendez la capture"
+			"testName": "Capture d'enregistrement - Visage - Délai d'expiration (avec entrée de l'utilisateur)",
+			"testDescription": "Validation du délai d'attente pour la demande de capture d'enregistrement pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre visage devant la caméra et attendez la capture",
+			"androidTestDescription": "Validation du délai d'attente pour la demande de capture d'enregistrement pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre visage devant la caméra et attendez la capture"
 		},
 		"SBI1050": {
-			"testName": "Capture d'enregistrement - Double Iris - Capture de force",
-			"testDescription": "Forcer la validation de la capture pour la demande de capture d'enregistrement pour le double iris<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre iris devant la caméra et attendez la capture",
-			"androidTestDescription": "Forcer la validation de la capture pour la demande de capture d'enregistrement pour le double iris<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre iris devant la caméra et attendez la capture"
+			"testName": "Capture d'enregistrement - Double Iris - Délai d'expiration (avec entrée de l'utilisateur)",
+			"testDescription": "Validation du délai d'attente pour la demande de capture d'enregistrement pour le double iris<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre iris devant la caméra et attendez la capture",
+			"androidTestDescription": "Validation du délai d'attente pour la demande de capture d'enregistrement pour le double iris<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre iris devant la caméra et attendez la capture"
 		},
 		"SBI1051": {
-			"testName": "Capture d'enregistrement - Claque Gauche - Capture de force",
-			"testDescription": "Forcer la validation de la capture pour la demande de capture d'enregistrement pour claque gauche<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre claque gauche sur l'appareil et attendez la capture",
-			"androidTestDescription": "Forcer la validation de la capture pour la demande de capture d'enregistrement pour claque gauche<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre claque gauche sur l'appareil et attendez la capture"
+			"testName": "Capture d'enregistrement - Claque Gauche - Délai d'expiration (avec entrée de l'utilisateur)",
+			"testDescription": "Validation du délai d'attente pour la demande de capture d'enregistrement pour claque gauche<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre claque gauche sur l'appareil et attendez la capture",
+			"androidTestDescription": "Validation du délai d'attente pour la demande de capture d'enregistrement pour claque gauche<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre claque gauche sur l'appareil et attendez la capture"
 		},
 		"SBI1052": {
-			"testName": "Capture d'enregistrement - Claque Droit - Capture de force",
-			"testDescription": "Forcer la validation de la capture pour la demande de capture d'enregistrement pour claque droite<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre claque droite sur l'appareil et attendez la capture",
-			"androidTestDescription": "Forcer la validation de la capture pour la demande de capture d'enregistrement pour claque droite<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre claque droite sur l'appareil et attendez la capture"
+			"testName": "Capture d'enregistrement - Claque Droit - Délai d'expiration (avec entrée de l'utilisateur)",
+			"testDescription": "Validation du délai d'attente pour la demande de capture d'enregistrement pour claque droite<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre claque droite sur l'appareil et attendez la capture",
+			"androidTestDescription": "Validation du délai d'attente pour la demande de capture d'enregistrement pour claque droite<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre claque droite sur l'appareil et attendez la capture"
 		},
 		"SBI1053": {
-			"testName": "Capture d'enregistrement - Deux pouces - Capture de force",
-			"testDescription": "Forcer la validation de la capture pour la demande de capture d'inscription pour Deux pouces<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez vos deux pouces sur l'appareil et attendez la capture",
-			"androidTestDescription": "Forcer la validation de la capture pour la demande de capture d'inscription pour Deux pouces<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez vos deux pouces sur l'appareil et attendez la capture"
+			"testName": "Capture d'enregistrement - Deux pouces - Délai d'expiration (avec entrée de l'utilisateur)",
+			"testDescription": "Validation du délai d'attente pour la demande de capture d'inscription pour Deux pouces<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez vos deux pouces sur l'appareil et attendez la capture",
+			"androidTestDescription": "Validation du délai d'attente pour la demande de capture d'inscription pour Deux pouces<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez vos deux pouces sur l'appareil et attendez la capture"
 		},
 		"SBI1054": {
-			"testName": "Capture d'inscription - Photo d'exception - Forcer la capture",
-			"testDescription": "Forcer la validation de la capture pour la valeur d'exception du type d'appareil Visage auriculaire gauche ou tout autre donnera une photo d'exception"
+			"testName": "Capture d'inscription - Photo d'exception - Délai d'expiration (avec entrée de l'utilisateur)",
+			"testDescription": "Validation du délai d'attente pour la valeur d'exception du type d'appareil Visage auriculaire gauche ou tout autre donnera une photo d'exception"
 		},
 		"SBI1055": {
-			"testName": "Capture d'authentification - Visage - Capture de force",
-			"testDescription": "Forcer la validation de la capture pour la demande de capture d'authentification uniquement pour le visage"
+			"testName": "Capture d'authentification - Visage - Délai d'expiration (avec entrée de l'utilisateur)",
+			"testDescription": "Validation du délai d'attente pour la demande de capture d'authentification uniquement pour le visage"
 		},
 		"SBI1056": {
-			"testName": "Capture d'authentification - Iris unique - Iris inconnu - Forcer la capture",
-			"testDescription": "Forcer la validation de la capture pour la demande de capture d'authentification pour l'iris inconnu"
+			"testName": "Capture d'authentification - Iris unique - Iris inconnu - Délai d'expiration (avec entrée de l'utilisateur)",
+			"testDescription": "Validation du délai d'attente pour la demande de capture d'authentification pour l'iris inconnu"
 		},
 		"SBI1057": {
-			"testName": "Capture d'authentification - Doigt inconnu - Forcer la capture",
-			"testDescription": "Forcer la validation de la capture pour la demande de capture d'authentification pour un doigt inconnu"
+			"testName": "Capture d'authentification - Doigt inconnu - Délai d'expiration (avec entrée de l'utilisateur)",
+			"testDescription": "Validation du délai d'attente pour la demande de capture d'authentification pour un doigt inconnu"
 		},
 		"SBI1058": {
 			"testName": "Capture d'authentification - 10 doigts",
@@ -742,6 +793,78 @@
 			"testName": "Capture d'enregistrement - Photo d'exception - Requête Json non valide (mauvais nom d'attribut deviceSubIdXXX)",
 			"testDescription": "Testez pour valider la demande non valide json dans la méthode RCapture pour la photo d'exception<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>3. Levez les mains pendant la capture",
 			"androidTestDescription": "Testez pour valider la demande non valide json dans la méthode RCapture pour la photo d'exception<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Levez les mains pendant la capture"
+		},
+		"SBI1101": {
+			"testName": "Capture d'inscription - Left Slap - Hash Validations",
+			"testDescription": "Testez pour valider l'interface RCapture pour les empreintes digitales Left Slap<br><br>Étapes :<br>1. Cliquez sur le bouton Démarrer la diffusion. <br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 3. Placez votre tape gauche sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Testez pour valider l'interface RCapture pour les empreintes digitales Left Slap<br><br>Étapes :<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 2. Placez votre tape gauche sur l'appareil jusqu'à ce que la capture soit terminée"
+		},
+		"SBI1102": {
+			"testName": "Capture d'inscription - Visage - Validations de hachage",
+			"testDescription": "Testez pour valider l'interface RCapture pour le visage<br>Étapes :<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Testez pour valider l'interface RCapture pour le visage<br>Étapes :<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée"
+		},
+		"SBI1103":{
+			"testName": "Capture d'enregistrement - Right Slap - Hash Validations",
+			"testDescription": "Testez pour valider l'interface RCapture pour les empreintes digitales Right Slap<br>Étapes :<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>3. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre claque droite sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Testez pour valider l'interface RCapture pour les empreintes digitales Right Slap<br>Étapes :<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre claque droite sur l'appareil jusqu'à ce que la capture soit terminée"
+		},
+		"SBI1104":{
+			"testName": "Capture d'enregistrement - Double Iris - Validations de hachage",
+			"testDescription": "Test pour valider l'interface RCapture pour Two Iris<br>Étapes :<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez vos deux iris sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider l'interface RCapture pour Two Iris<br>Étapes :<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez vos deux iris sur l'appareil jusqu'à ce que la capture soit terminée"
+		},
+		"SBI1105":{
+			"testName": "Capture d'authentification - Visage - Validations de hachage",
+			"testDescription": "Testez pour valider la méthode de capture pour le visage<br>Étapes :<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée"
+		},
+		"SBI1106":{
+			"testName": "Capture d'authentification - Iris unique - Iris inconnu - Validations de hachage",
+			"testDescription": "Testez pour valider la méthode de capture pour un seul iris<br>Étapes :<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez l'un de vos iris devant le scanner d'iris"
+		},
+		"SBI1107":{
+			"testName": "Capture d'authentification - Doigt inconnu - Validations de hachage",
+			"testDescription": "Testez pour valider la méthode Capture pour un doigt<br>Étapes :<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture <br>2. Placez un doigt sur le lecteur d'empreintes digitales unique"
+		},
+		"SBI1108":{
+			"testName": "Évaluation de la qualité pour la capture d'enregistrement - Gifle gauche - Mâles - 30 à 40 ans - ouvrier",
+			"testDescription": "Cas de test d'évaluation de la qualité pour valider les données biométriques capturées par l'interface RCapture pour les empreintes digitales de gifle gauche pour - Hommes - 30 à 40 - ouvrier <br><br>Étapes :<br>1. Cliquez sur le bouton Démarrer la diffusion. <br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 3. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée.<br> 4. Répétez les étapes ci-dessus, pour la personne suivante, après avoir cliqué sur le bouton Continuer.",
+			"androidTestDescription": "Le test d'évaluation de la qualité valide les données biométriques capturées par l'interface RCapture pour les empreintes digitales de gifle gauche pour - Hommes - 30 à 40 - ouvrier <br><br>Étapes :<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 2. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée.<br> 3. Répétez les étapes ci-dessus, pour la personne suivante, après avoir cliqué sur le bouton Continuer."
+		},
+		"SBI1109":{
+			"testName": "Évaluation de la qualité pour la capture d'enregistrement - Claque gauche - Mâles - 30 à 40 - Agriculteur",
+			"testDescription": "Cas de test d'évaluation de la qualité pour valider les données biométriques capturées par l'interface RCapture pour les empreintes digitales de gifle gauche pour - Hommes - 30 à 40 - Agriculteur <br><br>Étapes :<br>1. Cliquez sur le bouton Démarrer la diffusion. <br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 3. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée.<br> 4. Répétez les étapes ci-dessus, pour la personne suivante, après avoir cliqué sur le bouton Continuer.",
+			"androidTestDescription": "Le test d'évaluation de la qualité valide les données biométriques capturées par l'interface RCapture pour les empreintes digitales de gifle gauche pour - Hommes - 30 à 40 - Agriculteur <br><br>Étapes :<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 2. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée.<br> 3. Répétez les étapes ci-dessus, pour la personne suivante, après avoir cliqué sur le bouton Continuer."
+		},
+		"SBI1110":{
+			"testName": "Évaluation de la qualité pour la capture d'enregistrement - Gifle gauche - Femelles - 50 à 60 ans - Ouvrier",
+			"testDescription": "Cas de test d'évaluation de la qualité pour valider les données biométriques capturées par l'interface RCapture pour les empreintes digitales de gifle gauche pour - Femmes - 50 à 60 - ouvrier <br><br>Étapes :<br>1. Cliquez sur le bouton Démarrer la diffusion. <br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 3. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée.<br> 4. Répétez les étapes ci-dessus, pour la personne suivante, après avoir cliqué sur le bouton Continuer.",
+		    "androidTestDescription": "Le test d'évaluation de la qualité valide les données biométriques capturées par l'interface RCapture pour les empreintes digitales de gifle gauche pour - Femmes - 50 à 60 - ouvrier <br><br>Étapes :<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 2. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée.<br> 3. Répétez les étapes ci-dessus, pour la personne suivante, après avoir cliqué sur le bouton Continuer."
+		},
+		"SBI1111":{
+			"testName": "Évaluation de la qualité pour la capture d'enregistrement - Gifle gauche - Femmes - 50 à 60 ans - médecin",
+			"testDescription": "Test d'évaluation de la qualité pour valider les données biométriques capturées par l'interface RCapture pour les empreintes digitales de gifle gauche pour - Femmes - 50 à 60 ans - médecin <br><br>Étapes :<br>1. Cliquez sur le bouton Démarrer la diffusion. <br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 3. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée.<br> 4. Répétez les étapes ci-dessus, pour la personne suivante, après avoir cliqué sur le bouton Continuer.",
+		    "androidTestDescription": "Le test d'évaluation de la qualité valide les données biométriques capturées par l'interface RCapture pour les empreintes digitales de gifle gauche pour - Femmes - 50 à 60 - médecin <br><br>Étapes :<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 2. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée.<br> 3. Répétez les étapes ci-dessus, pour la personne suivante, après avoir cliqué sur le bouton Continuer."
+		},
+		"SBI1112": {
+			"testName": "Capture d'enregistrement - Claque gauche - Identifiant de transaction invalide",
+			"testDescription": "Test pour valider l'ID de transaction de la méthode RCapture pour les empreintes digitales de claque gauche<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 3. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider l'ID de transaction de la méthode RCapture pour les empreintes digitales de claque gauche<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture.  <br> 2. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée"
+		},
+		"SBI1113": {
+			"testName": "Capture d'enregistrement - Claque Droit - Identifiant de transaction invalide",
+			"testDescription": "Test pour valider l'ID de transaction de la méthode RCapture pour la claque droite<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre claque droite sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider l'ID de transaction de la méthode RCapture pour la claque droite<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre claque droite sur l'appareil jusqu'à ce que la capture soit terminée"
+		},
+		"SBI1114": {
+			"testName": "Capture d'enregistrement - Double Iris - Identifiant de transaction invalide",
+			"testDescription": "Test pour valider l'ID de transaction de la méthode RCapture pour deux iris<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez vos deux iris sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider l'ID de transaction de la méthode RCapture pour deux iris<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez vos deux iris sur l'appareil jusqu'à ce que la capture soit terminée"
+		},
+		"SBI1115": {
+			"testName": "Capture d'enregistrement - Visage - Identifiant de transaction invalide",
+			"testDescription": "Test pour valider l'ID de transaction de la méthode RCapture pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider l'ID de transaction de la méthode RCapture pour le visage<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée"
 		},
 		"SDK2000": {
 			"testName": "Test d'initialisation",
@@ -1165,16 +1288,25 @@
 		"ABIS3029": {
 			"testName": "Identifier - doublon introuvable pour le referenceId contre la galerie",
 			"testDescription": "Identifier - doublon introuvable pour le referenceId contre la galerie"
+		},
+		"ABIS3030": {
+			"testName": "Vérifiez si ABIS ne génère pas de nouveaux jetons pour chaque demande d'insertion",
+			"testDescription": "Vérifiez si ABIS ne génère pas de nouveaux jetons pour chaque demande d'insertion"
+		},
+		"ABIS3031": {
+			"testName": "Vérifiez si ABIS est capable de générer un nouveau jeton lorsqu'il a expiré sans renvoyer une réponse d'erreur dans la file d'attente",
+			"testDescription": "Vérifiez si ABIS est capable de générer un nouveau jeton lorsqu'il a expiré sans renvoyer une réponse d'erreur dans la file d'attente"
 		}
 	},
 	"validatorMessages": {
 		"BR_TAG": "<br>",
 		"SCHEMA_VALIDATOR_001": "Valide la réponse pour les attributs obligatoires et les valeurs correctes",
-		"RESPONSE_MISMATCH_VALIDATOR_001": "Le bioCount, les segments et les exceptions en réponse correspondent à la requête.",
+		"RESPONSE_MISMATCH_VALIDATOR_001": "Le bioCount, les segments, les exceptions et le transactionId en réponse correspondent à la demande.",
 		"RESPONSE_MISMATCH_VALIDATOR_002": "ResponseMismatchValidator a échoué en raison d'une incompatibilité de biocompte. En requête, bioCount = {} et en réponse, bioCount = {}",
 		"RESPONSE_MISMATCH_VALIDATOR_003": "ResponseMismatchValidator a échoué en raison d'une incompatibilité d'objectif. En requête, purpose = {} et en réponse, purpose = {}",
 		"RESPONSE_MISMATCH_VALIDATOR_004": "Échec de ResponseMismatchValidator en raison d'un biosous-type de réponse non valide.",
 		"RESPONSE_MISMATCH_VALIDATOR_005": "ResponseMismatchValidator a échoué en raison d'une exception, biosubtype = {} n'est pas valide",
+		"RESPONSE_MISMATCH_VALIDATOR_006": "ResponseMismatchValidator a échoué en raison d'une incompatibilité d'ID de transaction. En requête, transactionId = {} et en réponse, transactionId = {}",
 		"TRANSACTIONID_VALIDATOR_001": "La validation de l'identifiant de transaction a réussi",
 		"TRANSACTIONID_VALIDATOR_002": "La validation de l'ID de transaction a échoué.",
 		"KEY_ROTATION_VALIDATOR_001": "Les validations de la rotation des clés sont réussies.",
@@ -1201,17 +1333,13 @@
 		"TIMECHECK_VALIDATOR_002": "La validation de la vérification de l'heure a échoué. Intervalle d'horodatage donné : {} m. Réponse reçue dans : {} m",
 		"EXTRACT_TEMPLATE_VALIDATOR_001": "La validation du modèle d'extraction est réussie",
 		"EXTRACT_TEMPLATE_VALIDATOR_002": "Échec de l'extraction du code d'état du modèle, reçu : {}",
-		"EXTRACT_TEMPLATE_NO_INPUT_DATA_VALIDATOR_001": "Pour les données non valides, code d'état attendu reçu : {}",
-		"EXTRACT_TEMPLATE_NO_INPUT_DATA_VALIDATOR_002": "Pour les données non valides, code d'état inattendu reçu : {}",
-		"EXTRACT_TEMPLATE_INVALID_DATA_VALIDATOR_001": "Pour les données non valides, code d'état attendu reçu : {}",
-		"EXTRACT_TEMPLATE_INVALID_DATA_VALIDATOR_002": "Pour les données non valides, code d'état inattendu reçu : {}",
+		"INVALID_DATA_VALIDATOR_001": "Pour les données non valides, code d'état attendu reçu : {}",
+		"INVALID_DATA_VALIDATOR_002": "Pour les données non valides, code d'état inattendu reçu : {}",
 		"MATCH_VALIDATOR_001": "Correspondance positive pour ",
 		"MATCH_VALIDATOR_002": " est un succès pour la gallery",
 		"MATCH_VALIDATOR_003": "Correspondance négative pour ",
 		"MATCH_VALIDATOR_004": " échec pour la gallery",
 		"MATCH_VALIDATOR_005": "Échec du code d'état de correspondance, reçu : {}",
-		"MATCH_INVALID_DATA_VALIDATOR_001": "Pour les données non valides, code d'état attendu reçu : {}",
-		"MATCH_INVALID_DATA_VALIDATOR_002": "Pour les données non valides, code d'état inattendu reçu : {}",
 		"MATCH_NO_DATA_VALIDATOR_001": "Aucune donnée pour Match, code d'état attendu reçu : {}",
 		"MATCH_NO_DATA_VALIDATOR_002": "Aucune donnée pour Match, code d'état inattendu reçu : {}",
 		"QUALITY_CHECK_001": "Échec du contrôle qualité, modalité non valide : {}",
@@ -1228,16 +1356,8 @@
 		"CONVERT_DATA_VALIDATOR_001": "La validation de la conversion est réussie",
 		"CONVERT_DATA_VALIDATOR_002": "La validation de la conversion a échoué pour SourceCode [ {} ] pour TargetCode [ {} ]",
 		"CONVERT_DATA_VALIDATOR_003": "Échec de la conversion du code d'état, reçu : {}",
-		"CONVERT_INVALID_DATA_VALIDATOR_001": "Pour les données non valides, code d'état attendu reçu : {}",
-		"CONVERT_INVALID_DATA_VALIDATOR_002": "Pour les données non valides, code d'état inattendu reçu : {}",
-		"CONVERT_NO_INPUT_DATA_VALIDATOR_001": "Pour les données non valides, code d'état attendu reçu : {}",
-		"CONVERT_NO_INPUT_DATA_VALIDATOR_002": "Pour les données non valides, code d'état inattendu reçu : {}",
 		"SEGMENT_VALIDATOR_001": "La validation du segment est réussie",
 		"SEGMENT_VALIDATOR_002": "Échec du code d'état du segment, reçu : {}",
-		"SEGMENT_INVALID_DATA_VALIDATOR_001": "Pour les données non valides, code d'état attendu reçu : {}",
-		"SEGMENT_INVALID_DATA_VALIDATOR_002": "Pour les données non valides, code d'état inattendu reçu : {}",
-		"SEGMENT_NO_INPUT_DATA_VALIDATOR_001": "Pour les données non valides, code d'état attendu reçu : {}",
-		"SEGMENT_NO_INPUT_DATA_VALIDATOR_002": "Pour les données non valides, code d'état inattendu reçu : {}",
 		"BIOMETRIC_QUALITY_CHECK_001": "Les validations BiometricsQualityCheckValidator échouent.",
 		"BIOMETRIC_QUALITY_CHECK_002": "Les validations BiometricsQualityCheckValidator sont réussies.",
 		"BIOMETRIC_QUALITY_CHECK_003": "Impossible de se connecter",
@@ -1379,7 +1499,13 @@
 		"ISO_WARNING_010": "<BR>Taux de compression d'image invalide Valeurs autorisées Jusqu'à 15:1 pour Auth",
 		"ISO_WARNING_011": "<BR>Valeurs autorisées du rapport hauteur/largeur de l'image jusqu'à 1:1",
 		"ISO_WARNING_012": "<BR>Valeurs autorisées pour l'espace colorimétrique de l'image non valide Jusqu'à RVB [24 bits]",
-		"ISO_WARNING_013": "<BR>Image non valide Résolution minimale entre 500 DPI et 1 000 DPI"
+		"ISO_WARNING_013": "<BR>Image non valide Résolution minimale entre 500 DPI et 1 000 DPI",
+		"HASH_VALIDATOR_001": "La validation de la chaîne de hachage est réussie sur plusieurs captures",
+		"HASH_VALIDATOR_002": "La validation de la chaîne de hachage a échoué sur plusieurs captures. Le hachage précédent pour la dernière requête était {}, le hachage généré par le validateur est {} et le hachage reçu est {}",
+		"HASH_VALIDATOR_003": "Échec de la validation du hachage en raison de : {}",
+		"ABIS_TOKEN_VALIDATOR_001": "La validation du jeton est réussie. Vérifié qu'ABIS ne génère pas de nouveaux jetons pour chaque demande d'insertion.",
+		"ABIS_TOKEN_VALIDATOR_002": "La validation du jeton a échoué, ABIS génère de NOUVEAUX jetons pour chaque demande d'insertion.",
+		"ABIS_TOKEN_VALIDATOR_003": "Échec de la validation du jeton, car aucune donnée correspondante n'est disponible dans le tableau pour l'ID de cas de test : {}, testRunId : {} et partnerId : {}"
 	},
 	"serviceErrors": {
 		"TOOLKIT_SUCCESS_000": "Succès",

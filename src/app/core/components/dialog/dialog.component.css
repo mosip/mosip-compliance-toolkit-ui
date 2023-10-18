@@ -1,18 +1,276 @@
 mat-dialog-content {
-    height: 750 px;
-    text-align: left;
-    word-wrap: break-word;
+  height: 750 px;
+  text-align: left;
+  word-wrap: break-word;
 }
 .mat-dialog-title {
-    color: #fd518c;
-    font-size: 16px;
-    text-transform: uppercase;
-    border-bottom: 1px solid #fd518c;
+  color: #fd518c;
+  font-size: 16px;
+  text-transform: uppercase;
+  border-bottom: 1px solid #fd518c;
 }
 .subHeader {
-    color: black;
-    font-size: larger;
+  color: black;
+  font-size: larger;
 }
 .custom-class mat-icon {
   vertical-align: middle;
+}
+.formContainer {
+  background-color: white;
+  margin-top: 10px;
+}
+.fieldWrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 5px;
+  /* height: 50px; */
+}
+.fieldLabel {
+  width: 20%;
+}
+.fieldContainer {
+  width: 80%;
+  align-items: center;
+  margin-left: 45px;
+}
+.fieldContainerBox{
+  width: 200px;
+}
+.spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.button-container + .buttonDiv {
+  margin-left: 8px;
+}
+.saveBt {
+  margin-left: 330px;
+}
+.uploadImg {
+  display: flex;
+  flex-direction: column;
+  height: 240px;
+}
+.closeBt {
+  position: relative;
+  float: right;
+  margin-bottom: 5px;
+}
+button[mat-raised-button] {
+  background-color: #f1f1f1;
+  margin: 5px;
+}
+button[mat-icon-button] {
+  margin-top: 5px;
+  margin-left: 20px;
+}
+.buttons {
+  display: flex;
+	flex-direction: column;
+  align-items: flex-start;
+}
+.button-container {
+  display: flex;
+  align-items: center;
+}
+.viewImages {
+  margin-left: 10px;
+}
+.imagePreview {
+  flex: 0.5;
+  position: absolute;
+  margin-left: 240px;
+}
+img {
+  width: 150px;
+  height: 150px;
+  margin: 5px;
+  margin-top: 20px;
+}
+.successMsg {
+  margin-left: 50px;
+}
+.deviceImageBox {
+  overflow: hidden;
+}
+.delete-overlay {
+  position: relative;
+  display: inline-block;
+}
+
+.delete-overlay::after {
+  content: "X";
+  position: absolute;
+  top: 20px;
+  right: 5px;
+  background-color: rgba(255, 0, 0, 0.7);
+  color: white;
+  font-size: 18px;
+  padding: 3px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.fileuploadbtn {
+  width: 200px;
+}
+.viewImgMsg {
+  margin-top: 7px;
+}
+.viewDeviceImages {
+  width: 120px;
+  height: 120px;
+  margin: 5px;
+}
+@media screen and (max-width: 750px) {
+  .fieldContainer {
+    margin-left: 60px;
+  }
+  .saveBt {
+    margin-left: 290px;
+  }
+}
+@media screen and (min-width: 650px) and (max-width: 750px) {
+  .saveBt {
+    margin-left: 270px;
+  }
+}
+@media only screen and (max-width: 650px) {
+  .viewDeviceImages {
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+  }
+  .imagePreview {
+    margin-left: 220px;
+  }
+  .saveBt {
+    margin-left: 240px;
+  }
+}
+@media only screen and (max-width: 525px) {
+  .viewDeviceImages {
+    width: 80px;
+    height: 80px;
+    margin: 5px;
+  }
+  .imagePreview {
+    margin-left: 200px;
+  }
+  button[mat-icon-button] {
+    margin-left: 10px;
+  }
+  .saveBt {
+    margin-left: 150px;
+  }
+}
+@media only screen and (max-width: 426px) {
+  .fieldWrapper {
+    width: 340px;
+  }
+  .fieldLabel {
+    width: 80px;
+  }
+  .fieldContainerBox {
+    width: 240px;
+  }
+  .viewDeviceImages {
+    width: 70px;
+    height: 70px;
+    margin: 5px;
+  }
+  .viewImgCloseBtn {
+    margin-top: 30px;
+  }
+  img {
+    width: 120px;
+    height: 120px;
+    margin: 5px;
+    margin-top: 30px;
+  }
+  .delete-overlay::after {
+    top: 30px;
+  }
+  button[mat-raised-button] {
+    font-size: 10px;
+    padding: 1px 4px;
+    margin: 5px;
+  }
+  .imagePreview {
+    margin-left: 160px;
+  }
+  .saveBt {
+    margin-left: 80px;
+    font-size: small;
+    display: block;
+  }
+}
+@media screen and (max-width: 402px) {
+  .fieldWrapper {
+    width: 330px;
+    padding-left: -5px;
+  }
+  .fieldLabel {
+    width: 60px;
+  }
+  .button-container {
+      width: 270px;
+  }
+  button[mat-raised-button] {
+    font-size: 8px;
+    padding: 0.5px 3px;
+    margin: 5px;
+  }
+  button[mat-icon-button] {
+    margin-left: 5px;
+  }
+  .imagePreview {
+    margin-left: 130px;
+  }
+  .saveBt {
+    margin-left: 80px;
+    font-size: smaller;
+    display: block;
+  }
+}
+@media screen and (max-width: 374px) {
+  .fieldWrapper {
+    width: 250px;
+    display: block;
+    padding-bottom: 20px;
+  }
+  .fieldContainerBox {
+    width: 190px;
+    padding-left: 5px;
+  }
+  .fileuploadbtn {
+    width: 190px;
+  }
+  button[mat-raised-button] {
+    font-size:x-small;
+    padding: 0px 0px;
+    margin: 5px;
+  }
+  button[mat-icon-button] {
+    margin-left: 2px;
+    font-size: xx-small;
+  }
+  .imagePreview {
+    position: relative;
+    margin-left: 20px;
+  }
+  .closeBt {
+    position: relative;
+    float: right;
+    margin-top: 50px;
+  }
+  .saveBt {
+    margin-left: 40px;
+    font-size: smaller;
+    display: block;
+  }
 }

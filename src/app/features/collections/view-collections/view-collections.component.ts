@@ -62,54 +62,41 @@ export class ViewCollectionsComponent implements OnInit {
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     this.initForm();
     await this.initAllParams();
-    await this.getCollection();
+    const collectionRes = await Utils.getCollectionNameAndType(this.subscriptions, this.dataService, this.collectionId, this.resourceBundleJson, this.dialog);
+    this.collectionName = collectionRes.name;
     this.populateCollection();
     if (this.projectType == appConstants.SBI) {
-      await this.getSbiProjectDetails();
-      this.initBreadCrumb();
+      const sbiProjectDetails: any = await Utils.getSbiProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
+      if(sbiProjectDetails) {
+        this.sbiProjectData = sbiProjectDetails;
+      }
+      Utils.initBreadCrumb(this.resourceBundleJson, this.breadcrumbService, 
+        this.sbiProjectData, null, null, this.projectType, this.collectionName);
     }
     if (this.projectType == appConstants.SDK) {
-      await this.getSdkProjectDetails();
-      this.initBreadCrumb();
+      const sdkProjectDetails: any = await Utils.getSdkProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
+      if(sdkProjectDetails) {
+        this.sdkProjectData = sdkProjectDetails;
+      }
+      Utils.initBreadCrumb(this.resourceBundleJson, this.breadcrumbService, 
+        null, this.sdkProjectData, null, this.projectType, this.collectionName);
     }
     if (this.projectType == appConstants.ABIS) {
-      await this.getAbisProjectDetails();
-      this.initBreadCrumb();
+      const abisProjectDetails: any = await Utils.getAbisProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
+      if(abisProjectDetails) {
+        this.abisProjectData = abisProjectDetails;
+      }
+      Utils.initBreadCrumb(this.resourceBundleJson, this.breadcrumbService, 
+        null, null, this.abisProjectData, this.projectType, this.collectionName);
     }
-    await this.getTestcasesForCollection();
+    this.breadcrumbService.set(
+      '@collectionBreadCrumb',
+      `${this.collectionName}`
+    );
+    const testcaseArr = await Utils.getTestcasesForCollection(this.subscriptions, this.dataService, this.collectionId, this.resourceBundleJson, this.dialog);
+    this.dataSource = new MatTableDataSource(testcaseArr);
     this.dataSource.sort = this.sort;
     this.dataLoaded = true;
-  }
-
-  initBreadCrumb() {
-    const breadcrumbLabels = this.resourceBundleJson['breadcrumb'];
-    if (breadcrumbLabels) {
-      this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
-      if (this.sbiProjectData) {
-        this.breadcrumbService.set(
-          '@projectBreadCrumb',
-          `${this.projectType} ${breadcrumbLabels.project} - ${this.sbiProjectData.name}`
-        );
-      }
-      if (this.sdkProjectData) {
-        this.breadcrumbService.set(
-          '@projectBreadCrumb',
-          `${this.projectType} ${breadcrumbLabels.project} - ${this.sdkProjectData.name}`
-        );
-       
-      }
-      if (this.abisProjectData) {
-        this.breadcrumbService.set(
-          '@projectBreadCrumb',
-          `${this.projectType} ${breadcrumbLabels.project} - ${this.abisProjectData.name}`
-        );
-      }
-      this.breadcrumbService.set(
-        '@collectionBreadCrumb',
-        `${this.collectionName}`
-      );
-
-    }
   }
 
   initForm() {
@@ -130,108 +117,10 @@ export class ViewCollectionsComponent implements OnInit {
     });
   }
 
-  async getCollection() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getCollection(this.collectionId).subscribe(
-          (response: any) => {
-            this.collectionName = response['response']['name'];
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
   populateCollection() {
     this.collectionForm.controls['name'].setValue(this.collectionName);
   }
 
-  async getSbiProjectDetails() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getSbiProject(this.projectId).subscribe(
-          (response: any) => {
-            console.log(response);
-            this.sbiProjectData = response['response'];
-            console.log(this.sbiProjectData);
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-  async getSdkProjectDetails() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getSdkProject(this.projectId).subscribe(
-          (response: any) => {
-            this.sdkProjectData = response['response'];
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
-  async getAbisProjectDetails() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getAbisProject(this.projectId).subscribe(
-          (response: any) => {
-            this.abisProjectData = response['response'];
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
-  async getTestcasesForCollection() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getTestcasesForCollection(this.collectionId).subscribe(
-          (response: any) => {
-            let testcases = response['response']['testcases'];
-            let testcaseArr = [];
-            for (let testcase of testcases) {
-              testcaseArr.push(Utils.translateTestcase(testcase,this.resourceBundleJson));
-            }
-            //sort the testcases based on the testId
-            if (testcaseArr && testcaseArr.length > 0) {
-              testcaseArr.sort(function (a: TestCaseModel, b: TestCaseModel) {
-                if (a.testId > b.testId) return 1;
-                if (a.testId < b.testId) return -1;
-                return 0;
-              });
-            }
-            this.dataSource = new MatTableDataSource(testcaseArr);
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
   async backToProject() {
     await this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}`,

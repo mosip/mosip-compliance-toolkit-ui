@@ -60,6 +60,11 @@ export class DataService {
     return this.httpClient.get(url);
   }
 
+  updateSbiProject(body: any) {
+    let url = `${this.SERVICES_BASE_URL}updateSbiProject`;
+    return this.httpClient.put(url, body);
+  }
+
   updateSdkProject(body: any) {
     let url = `${this.SERVICES_BASE_URL}updateSdkProject`;
     return this.httpClient.put(url, body);
@@ -177,7 +182,7 @@ export class DataService {
       'Content-Type': 'application/json',
       accept: 'application/json',
     });
-    console.log(methodType);
+    //console.log(methodType);
     return this.httpClient.request(methodType, methodUrl, {
       body: requestBody,
       headers: headers,
@@ -194,13 +199,13 @@ export class DataService {
 
   generateRequestForSDK(body: any) {
     let url = `${this.SERVICES_BASE_URL}generateRequestForSDK`;
-    console.log('url:' + url);
+    //console.log('url:' + url);
     return this.httpClient.post(url, body);
   }
 
   generateRequestForSDKFrmBirs(body: any) {
     let url = `${this.SERVICES_BASE_URL}generateRequestForSDKFrmBirs`;
-    console.log('url:' + url);
+    //console.log('url:' + url);
     return this.httpClient.post(url, body);
   }
 
@@ -255,5 +260,10 @@ export class DataService {
   expireDataShareUrl(body: any) {
     let url = `${this.SERVICES_BASE_URL}expireDataShareUrl`;
     return this.httpClient.post(url, body);
+  }
+
+  createReport(body: any) {
+    let url = `${this.SERVICES_BASE_URL}createReport`;
+    return this.httpClient.post(url, body, { responseType: 'blob' });
   }
 }

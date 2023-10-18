@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/authservice.service';
 import { Router } from '@angular/router';
@@ -6,7 +6,7 @@ import { DataService } from '../../../core/services/data-service';
 import * as appConstants from 'src/app/app.constants';
 import { Subscription } from 'rxjs';
 import { SbiProjectModel } from 'src/app/core/models/sbi-project';
-import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import Utils from 'src/app/app.utils';
 import { SdkProjectModel } from 'src/app/core/models/sdk-project';
 import { environment } from 'src/environments/environment';
@@ -15,6 +15,7 @@ import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { AbisProjectModel } from 'src/app/core/models/abis-project';
 import { AppConfigService } from 'src/app/app-config.service';
+import { DialogComponent } from 'src/app/core/components/dialog/dialog.component';
 
 @Component({
   selector: 'app-project',
@@ -35,6 +36,12 @@ export class AddProjectComponent implements OnInit {
   dataSubmitted = false;
   isAbisPartner = this.appConfigService.getConfig()['abisPartnerType'] == "ABIS_PARTNER" ? true : false;
   invalidPartnerType: string = '';
+  deviceImage1: any = null;
+  deviceImage2: any = null;
+  deviceImage3: any = null;
+  deviceImage4: any = null;
+  deviceImage5: any = null;
+  imageUrls: any[] = [null, null, null, null];
 
   constructor(
     public authService: AuthService,
@@ -57,10 +64,10 @@ export class AddProjectComponent implements OnInit {
     this.initBreadCrumb();
     const projectType = this.projectForm.controls['projectType'].value;
     if (projectType == appConstants.SDK) {
-      await this.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value);
+      this.bioTestDataFileNames = await Utils.getBioTestDataNames(this.subscriptions, this.dataService, this.projectForm.controls['sdkPurpose'].value, this.resourceBundleJson, this.dialog);
     }
     if (projectType == appConstants.ABIS) {
-      await this.getBioTestDataNames(appConstants.ABIS);
+      this.bioTestDataFileNames = await Utils.getBioTestDataNames(this.subscriptions, this.dataService, appConstants.ABIS, this.resourceBundleJson, this.dialog);
     } 
     this.dataLoaded = true;
   }
@@ -93,24 +100,7 @@ export class AddProjectComponent implements OnInit {
     });
   }
 
-  async getBioTestDataNames(purpose: string) {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getBioTestDataNames(purpose).subscribe(
-          (response: any) => {
-            this.bioTestDataFileNames = response[appConstants.RESPONSE];
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
-  handleProjectTypeChange() {
+  async handleProjectTypeChange() {
     const projectType = this.projectForm.controls['projectType'].value;
     if (projectType == appConstants.SDK) {
       appConstants.SDK_CONTROLS.forEach((controlId) => {
@@ -162,11 +152,12 @@ export class AddProjectComponent implements OnInit {
         this.projectForm.controls[controlId].clearValidators();
         this.projectForm.controls[controlId].updateValueAndValidity();
       });
+      this.bioTestDataFileNames = await Utils.getBioTestDataNames(this.subscriptions, this.dataService, appConstants.ABIS, this.resourceBundleJson, this.dialog);
     }
   }
 
   async handleSdkPurposeChange() {
-    await this.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value);
+    this.bioTestDataFileNames = await Utils.getBioTestDataNames(this.subscriptions, this.dataService, this.projectForm.controls['sdkPurpose'].value, this.resourceBundleJson, this.dialog);
   }
 
   async saveProject() {
@@ -191,66 +182,43 @@ export class AddProjectComponent implements OnInit {
         this.projectForm.controls[controlId].markAsTouched();
       });
     }
+    const projectName = this.projectForm.controls['name'].value;
+    if (projectName.trim().length === 0) {
+      this.projectForm.controls['name'].setValue(null);
+    } else {
+      this.projectForm.controls['name'].setValue(projectName.trim());
+    }
     if (this.projectForm.valid) {
       //Save the project in db
       console.log('valid');
       if (projectType == appConstants.SBI) {
-        const projectData: SbiProjectModel = {
-          name: this.projectForm.controls['name'].value,
-          projectType: this.projectForm.controls['projectType'].value,
-          sbiVersion: this.projectForm.controls['sbiSpecVersion'].value,
-          purpose: this.projectForm.controls['sbiPurpose'].value,
-          deviceType: this.projectForm.controls['deviceType'].value,
-          deviceSubType: this.projectForm.controls['deviceSubType'].value,
-        };
         let request = {
           id: appConstants.SBI_PROJECT_ADD_ID,
           version: appConstants.VERSION,
           requesttime: new Date().toISOString(),
-          request: projectData,
+          request: Utils.populateSbiProjectData(this.projectForm, '', this.deviceImage1, this.deviceImage2, this.deviceImage3, this.deviceImage4),
         };
         this.dataLoaded = false;
         this.dataSubmitted = true;
         await this.addSbiProject(request);
       }
       if (projectType == appConstants.SDK) {
-        const projectData: SdkProjectModel = {
-          id: '',
-          name: this.projectForm.controls['name'].value,
-          projectType: this.projectForm.controls['projectType'].value,
-          sdkVersion: this.projectForm.controls['sdkSpecVersion'].value,
-          purpose: this.projectForm.controls['sdkPurpose'].value,
-          url: this.projectForm.controls['sdkUrl'].value,
-          bioTestDataFileName: this.projectForm.controls['bioTestData'].value,
-        };
         let request = {
           id: appConstants.SDK_PROJECT_ADD_ID,
           version: appConstants.VERSION,
           requesttime: new Date().toISOString(),
-          request: projectData,
+          request: Utils.populateSdkProjectData(this.projectForm, ''),
         };
         this.dataLoaded = false;
         this.dataSubmitted = true;
         await this.addSdkProject(request);
       }
       if (projectType == appConstants.ABIS) {
-        const projectData: AbisProjectModel = {
-          id: '',
-          name: this.projectForm.controls['name'].value,
-          projectType: this.projectForm.controls['projectType'].value,
-          abisVersion: this.projectForm.controls['abisSpecVersion'].value,
-          url: this.projectForm.controls['abisUrl'].value,
-          username:this.projectForm.controls['username'].value,
-          password:this.projectForm.controls['password'].value,
-          outboundQueueName:this.projectForm.controls['outboundQueueName'].value,
-          inboundQueueName:this.projectForm.controls['inboundQueueName'].value,
-          bioTestDataFileName: this.projectForm.controls['abisBioTestData'].value,
-        };
         let request = {
           id: appConstants.ABIS_PROJECT_ADD_ID,
           version: appConstants.VERSION,
           requesttime: new Date().toISOString(),
-          request: projectData,
+          request: Utils.populateAbisProjectData(this.projectForm, ''),
         };
         this.dataLoaded = false;
         this.dataSubmitted = true;
@@ -354,5 +322,34 @@ export class AddProjectComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
+
+  clickOnButton() {
+    this.projectForm.controls['name'].clearValidators();
+    this.projectForm.controls['name'].updateValueAndValidity();
+    appConstants.SBI_CONTROLS.forEach((controlId) => {
+      this.projectForm.controls[controlId].clearValidators();
+      this.projectForm.controls[controlId].updateValueAndValidity();
+    });
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '450px',
+      height: '360px',
+      data: {
+        case: "UPLOAD_DEVICE_IMAGES",
+        selectedDeviceImagesUrl: this.imageUrls,
+      },
+    });
+    dialogRef.afterClosed().subscribe((base64Url: string[]) => {
+      if (base64Url && base64Url.length > 0) {
+        this.deviceImage1 = base64Url[0];
+        this.deviceImage2 = base64Url[1];
+        this.deviceImage3 = base64Url[2];
+        this.deviceImage4 = base64Url[3];
+      }
+      this.imageUrls = base64Url;
+      appConstants.SBI_CONTROLS.forEach((controlId) => {
+        this.projectForm.controls[controlId].setValidators(Validators.required);
+      });
+    });
   }
 }

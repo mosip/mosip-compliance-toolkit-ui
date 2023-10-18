@@ -67,17 +67,27 @@ export class TestRunHistoryComponent implements OnInit {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     await this.initAllParams();
-    await this.getCollection();
+    const collectionRes = await Utils.getCollectionNameAndType(this.subscriptions, this.dataService, this.collectionId, this.resourceBundleJson, this.dialog);
+    this.collectionName = collectionRes.name;
     if (this.projectType == appConstants.SBI) {
-      await this.getSbiProjectDetails();
+      const sbiProjectDetails: any = await Utils.getSbiProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
+      if(sbiProjectDetails) {
+        this.sbiProjectData = sbiProjectDetails;
+      }
       this.initBreadCrumb();
     }
     if (this.projectType == appConstants.SDK) {
-      await this.getSdkProjectDetails();
+      const sdkProjectDetails: any = await Utils.getSdkProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
+      if(sdkProjectDetails) {
+        this.sdkProjectData = sdkProjectDetails;
+      }
       this.initBreadCrumb();
     }
     if (this.projectType == appConstants.ABIS) {
-      await this.getAbisProjectDetails();
+      const abisProjectDetails: any = await Utils.getAbisProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
+      if(abisProjectDetails) {
+        this.abisProjectData = abisProjectDetails;
+      }
       this.initBreadCrumb();
     }
     await this.getTestRunHistory();
@@ -87,29 +97,9 @@ export class TestRunHistoryComponent implements OnInit {
   initBreadCrumb() {
     const breadcrumbLabels = this.resourceBundleJson['breadcrumb'];
     if (breadcrumbLabels) {
-      this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
-      if (this.sbiProjectData) {
-        this.breadcrumbService.set(
-          '@projectBreadCrumb',
-          `${this.projectType} ${breadcrumbLabels.project} - ${this.sbiProjectData.name}`
-        );
-      }
-      if (this.sdkProjectData) {
-        this.breadcrumbService.set(
-          '@projectBreadCrumb',
-          `${this.projectType} ${breadcrumbLabels.project} - ${this.sdkProjectData.name}`
-        );
-      }
-      if (this.abisProjectData) {
-        this.breadcrumbService.set(
-          '@projectBreadCrumb',
-          `${this.projectType} ${breadcrumbLabels.project} - ${this.abisProjectData.name}`
-        );
-      }
-      this.breadcrumbService.set(
-        '@collectionBreadCrumb',
-        `${this.collectionName}`
-      );
+      Utils.initBreadCrumb(this.resourceBundleJson, this.breadcrumbService, 
+        this.sbiProjectData, this.sdkProjectData, this.abisProjectData, 
+        this.projectType, this.collectionName);
       this.breadcrumbService.set('@testrunBreadCrumb', `${breadcrumbLabels.testRunHistory}`);
     }
   }
@@ -125,84 +115,12 @@ export class TestRunHistoryComponent implements OnInit {
     });
   }
 
-  async getCollection() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getCollection(this.collectionId).subscribe(
-          (response: any) => {
-            this.collectionName = response['response']['name'];
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
   async getTestRunStatus(runId: string) {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
         this.dataService.getTestRunStatus(runId).subscribe(
           (response: any) => {
             resolve(response['response']['resultStatus']);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
-  async getSbiProjectDetails() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getSbiProject(this.projectId).subscribe(
-          (response: any) => {
-            console.log(response);
-            this.sbiProjectData = response['response'];
-            console.log(this.sbiProjectData);
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
-  async getSdkProjectDetails() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getSdkProject(this.projectId).subscribe(
-          (response: any) => {
-            //console.log(response);
-            this.sdkProjectData = response['response'];
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
-  async getAbisProjectDetails() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getAbisProject(this.projectId).subscribe(
-          (response: any) => {
-            //console.log(response);
-            this.abisProjectData = response['response'];
-            resolve(true);
           },
           (errors) => {
             Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
@@ -271,9 +189,13 @@ export class TestRunHistoryComponent implements OnInit {
       let tableData = [];
       for (let row of dataArr) {
         let runStatus = await this.getTestRunStatus(row.runId);
+        const testCaseCount = row.testCaseCount;
+        const passCaseCount = row.passCaseCount;
+        const failCaseCount = testCaseCount - passCaseCount;
         tableData.push({
           ...row,
           runStatus: runStatus,
+          failCaseCount: failCaseCount
         });
       }
       this.dataSource = new MatTableDataSource(tableData);

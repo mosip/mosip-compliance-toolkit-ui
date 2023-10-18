@@ -64,47 +64,33 @@ export class AddCollectionsComponent implements OnInit {
     this.initForm();
     await this.initProjectIdAndType();
     if (this.projectType == appConstants.SBI) {
-      await this.getSbiProjectDetails();
+      const sbiProjectDetails: any = await Utils.getSbiProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
+      if(sbiProjectDetails) {
+        this.sbiProjectData = sbiProjectDetails;
+      }
       await this.getSbiTestcases();
-      this.initBreadCrumb();
+      Utils.initBreadCrumb(this.resourceBundleJson, this.breadcrumbService, 
+        this.sbiProjectData, null, null, this.projectType, null);
     }
     if (this.projectType == appConstants.SDK) {
-      await this.getSdkProjectDetails();
+      const sdkProjectDetails: any = await Utils.getSdkProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
+      if(sdkProjectDetails) {
+        this.sdkProjectData = sdkProjectDetails;
+      }
       await this.getSdkTestcases();
-      this.initBreadCrumb();
+      Utils.initBreadCrumb(this.resourceBundleJson, this.breadcrumbService, 
+        null, this.sdkProjectData, null, this.projectType, null);
     }
     if (this.projectType == appConstants.ABIS) {
-      await this.getAbisProjectDetails();
+      const abisProjectDetails: any = await Utils.getAbisProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
+      if(abisProjectDetails) {
+        this.abisProjectData = abisProjectDetails;
+      }
       await this.getAbisTestcases();
-      this.initBreadCrumb();
+      Utils.initBreadCrumb(this.resourceBundleJson, this.breadcrumbService, 
+        null, null, this.abisProjectData, this.projectType, null);
     }
     this.dataLoaded = true;
-  }
-
-  initBreadCrumb() {
-    const breadcrumbLabels = this.resourceBundleJson['breadcrumb'];
-    if (breadcrumbLabels) {
-      this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
-      if (this.sbiProjectData) {
-        this.breadcrumbService.set(
-          '@projectBreadCrumb',
-          `${this.projectType} ${breadcrumbLabels.project} - ${this.sbiProjectData.name}`
-        );
-      }
-      if (this.sdkProjectData) {
-        this.breadcrumbService.set(
-          '@projectBreadCrumb',
-          `${this.projectType} ${breadcrumbLabels.project} - ${this.sdkProjectData.name}`
-        );
-      }
-      if (this.abisProjectData) {
-        this.breadcrumbService.set(
-          '@projectBreadCrumb',
-          `${this.projectType} ${breadcrumbLabels.project} - ${this.abisProjectData.name}`
-        );
-      }
-      this.breadcrumbService.set('@collectionBreadCrumb', `${breadcrumbLabels.add}`);
-    }
   }
 
   initForm() {
@@ -120,59 +106,6 @@ export class AddCollectionsComponent implements OnInit {
         this.projectType = param['projectType'];
       });
       resolve(true);
-    });
-  }
-
-  async getSbiProjectDetails() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getSbiProject(this.projectId).subscribe(
-          (response: any) => {
-            console.log(response);
-            this.sbiProjectData = response['response'];
-            console.log(this.sbiProjectData);
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson,errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
-  async getSdkProjectDetails() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getSdkProject(this.projectId).subscribe(
-          (response: any) => {
-            this.sdkProjectData = response['response'];
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
-  async getAbisProjectDetails() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getAbisProject(this.projectId).subscribe(
-          (response: any) => {
-            this.abisProjectData = response['response'];
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
     });
   }
 
@@ -301,6 +234,12 @@ export class AddCollectionsComponent implements OnInit {
 
   async saveCollection() {
     this.collectionForm.controls['name'].markAsTouched();
+    const collectionName = this.collectionForm.controls['name'].value;
+    if (collectionName.trim().length === 0) {
+      this.collectionForm.controls['name'].setValue(null);
+    } else {
+      this.collectionForm.controls['name'].setValue(collectionName.trim());
+    }
     if (this.collectionForm.valid) {
       if (this.selection.isEmpty()) {
         const err = {

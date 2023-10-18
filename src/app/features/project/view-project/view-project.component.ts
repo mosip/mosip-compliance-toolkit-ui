@@ -18,6 +18,7 @@ import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { AbisProjectModel } from 'src/app/core/models/abis-project';
+import { DialogComponent } from 'src/app/core/components/dialog/dialog.component';
 
 export interface CollectionsData {
   collectionId: string;
@@ -65,6 +66,7 @@ export class ViewProjectComponent implements OnInit {
   panelOpenState = false;
   bioTestDataFileNames: string[] = [];
   resourceBundleJson: any = {};
+  deviceImageUrls: string[] = [];
 
   constructor(
     public authService: AuthService,
@@ -83,20 +85,21 @@ export class ViewProjectComponent implements OnInit {
     await this.initProjectIdAndType();
     if (this.projectType == appConstants.SBI) {
       this.initSbiProjectForm();
-      await this.getSbiProjectDetails();
-      this.populateSbiProjectForm();
+      this.projectFormData = await Utils.getSbiProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
+      Utils.populateSbiProjectForm(this.projectFormData, this.projectForm);
+      this.getDeviceImageUrl();
     }
     if (this.projectType == appConstants.SDK) {
       this.initSdkProjectForm();
-      await this.getSdkProjectDetails();
-      this.populateSdkProjectForm();
-      await this.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value);
+      this.projectFormData = await Utils.getSdkProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
+      Utils.populateSdkProjectForm(this.projectFormData, this.projectForm);
+      this.bioTestDataFileNames = await Utils.getBioTestDataNames(this.subscriptions, this.dataService, this.projectForm.controls['sdkPurpose'].value, this.resourceBundleJson, this.dialog);
     }
     if (this.projectType == appConstants.ABIS) {
       this.initAbisProjectForm();
-      await this.getAbisProjectDetails();
-      this.populateAbisProjectForm();
-      await this.getBioTestDataNames(appConstants.ABIS);
+      this.projectFormData = await Utils.getAbisProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
+      Utils.populateAbisProjectForm(this.projectFormData, this.projectForm);
+      this.bioTestDataFileNames = await Utils.getBioTestDataNames(this.subscriptions, this.dataService, appConstants.ABIS, this.resourceBundleJson, this.dialog);
     }
     await this.getCollections();
     this.dataSource.paginator = this.paginator;
@@ -177,128 +180,6 @@ export class ViewProjectComponent implements OnInit {
     });
   }
 
-  async getBioTestDataNames(purpose: string) {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getBioTestDataNames(purpose).subscribe(
-          (response: any) => {
-            this.bioTestDataFileNames = response[appConstants.RESPONSE];
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
-  async getSbiProjectDetails() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getSbiProject(this.projectId).subscribe(
-          (response: any) => {
-            this.projectFormData = response['response'];
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
-  async getSdkProjectDetails() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getSdkProject(this.projectId).subscribe(
-          (response: any) => {
-            this.projectFormData = response['response'];
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
-  async getAbisProjectDetails() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getAbisProject(this.projectId).subscribe(
-          (response: any) => {
-            this.projectFormData = response['response'];
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
-  populateSbiProjectForm() {
-    if (this.projectFormData) {
-      this.projectForm.controls['name'].setValue(this.projectFormData.name);
-      this.projectForm.controls['projectType'].setValue(appConstants.SBI);
-      this.projectForm.controls['sbiSpecVersion'].setValue(
-        this.projectFormData.sbiVersion
-      );
-      this.projectForm.controls['sbiPurpose'].setValue(
-        this.projectFormData.purpose
-      );
-      this.projectForm.controls['deviceType'].setValue(
-        this.projectFormData.deviceType
-      );
-      this.projectForm.controls['deviceSubType'].setValue(
-        this.projectFormData.deviceSubType
-      );
-    }
-  }
-
-  populateSdkProjectForm() {
-    if (this.projectFormData) {
-      this.projectForm.controls['name'].setValue(this.projectFormData.name);
-      this.projectForm.controls['projectType'].setValue(appConstants.SDK);
-      this.projectForm.controls['sdkUrl'].setValue(this.projectFormData.url);
-      this.projectForm.controls['sdkSpecVersion'].setValue(
-        this.projectFormData.sdkVersion
-      );
-      this.projectForm.controls['sdkPurpose'].setValue(
-        this.projectFormData.purpose
-      );
-      this.projectForm.controls['bioTestData'].setValue(
-        this.projectFormData.bioTestDataFileName
-      );
-    }
-  }
-
-  populateAbisProjectForm() {
-    if (this.projectFormData) {
-      this.projectForm.controls['name'].setValue(this.projectFormData.name);
-      this.projectForm.controls['projectType'].setValue(appConstants.ABIS);
-      this.projectForm.controls['abisUrl'].setValue(this.projectFormData.url);
-      this.projectForm.controls['inboundQueueName'].setValue(this.projectFormData.inboundQueueName);
-      this.projectForm.controls['outboundQueueName'].setValue(this.projectFormData.outboundQueueName);
-      this.projectForm.controls['username'].setValue(this.projectFormData.username);
-      this.projectForm.controls['password'].setValue(this.projectFormData.password);
-      this.projectForm.controls['abisSpecVersion'].setValue(
-        this.projectFormData.abisVersion
-      );
-      this.projectForm.controls['abisBioTestData'].setValue(
-        this.projectFormData.bioTestDataFileName
-      );
-    }
-  }
-
   async getCollections() {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
@@ -333,7 +214,7 @@ export class ViewProjectComponent implements OnInit {
   }
 
   async handleSdkPurposeChange() {
-    await this.getBioTestDataNames(this.projectForm.controls['sdkPurpose'].value);
+    this.bioTestDataFileNames = await Utils.getBioTestDataNames(this.subscriptions, this.dataService, this.projectForm.controls['sdkPurpose'].value, this.resourceBundleJson, this.dialog);
   }
 
   async addCollection() {
@@ -421,45 +302,28 @@ export class ViewProjectComponent implements OnInit {
       //Save the project in db
       console.log('valid');
       if (projectType == appConstants.SDK) {
-        const projectData: SdkProjectModel = {
-          id: this.projectFormData.id,
-          name: this.projectForm.controls['name'].value,
-          projectType: this.projectForm.controls['projectType'].value,
-          sdkVersion: this.projectForm.controls['sdkSpecVersion'].value,
-          purpose: this.projectForm.controls['sdkPurpose'].value,
-          url: this.projectForm.controls['sdkUrl'].value,
-          bioTestDataFileName: this.projectForm.controls['bioTestData'].value,
-        };
         let request = {
           id: appConstants.SDK_PROJECT_UPDATE_ID,
           version: appConstants.VERSION,
           requesttime: new Date().toISOString(),
-          request: projectData,
+          request: Utils.populateSdkProjectData(this.projectForm, this.projectFormData.id),
         };
         this.updatingAttribute = attributeName;
-        await this.updateSdkProject(request, attributeName);
+        await Utils.updateSdkProject(this.subscriptions, this.dataService, request, this.resourceBundleJson, this.dialog);
+        Utils.populateSdkProjectForm(this.projectFormData, this.projectForm);
+        this.panelOpenState = true;
       }
       if (projectType == appConstants.ABIS) {
-        const projectData: AbisProjectModel = {
-          id: this.projectFormData.id,
-          name: this.projectForm.controls['name'].value,
-          projectType: this.projectForm.controls['projectType'].value,
-          abisVersion: this.projectForm.controls['abisSpecVersion'].value,
-          url: this.projectForm.controls['abisUrl'].value,
-          username: this.projectForm.controls['username'].value,
-          password: this.projectForm.controls['password'].value,
-          outboundQueueName: this.projectForm.controls['outboundQueueName'].value,
-          inboundQueueName: this.projectForm.controls['inboundQueueName'].value,
-          bioTestDataFileName: this.projectForm.controls['abisBioTestData'].value,
-        };
         let request = {
           id: appConstants.ABIS_PROJECT_UPDATE_ID,
           version: appConstants.VERSION,
           requesttime: new Date().toISOString(),
-          request: projectData,
+          request: Utils.populateAbisProjectData(this.projectForm, this.projectFormData.id),
         };
         this.updatingAttribute = attributeName;
-        await this.updateAbisProject(request, attributeName);
+        await Utils.updateAbisProject(this.subscriptions, this.dataService, request, this.resourceBundleJson, this.dialog);
+        Utils.populateAbisProjectForm(this.projectFormData, this.projectForm);
+        this.panelOpenState = true;
       }
       this.updatingAttribute = '';
     }
@@ -497,51 +361,29 @@ export class ViewProjectComponent implements OnInit {
     this.subscriptions.push(subs);
   }
 
-  async updateSdkProject(request: any, attributeName: string) {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.updateSdkProject(request).subscribe(
-          (response: any) => {
-            console.log(response);
-            resolve(this.getProjectResponse(response));
-          },
-          (errors) => {
-            this.updatingAttribute = '';
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
-  async updateAbisProject(request: any, attributeName: string) {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.updateAbisProject(request).subscribe(
-          (response: any) => {
-            console.log(response);
-            resolve(this.getProjectResponse(response));
-          },
-          (errors) => {
-            this.updatingAttribute = '';
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
-  getProjectResponse(response: any){
-    if (response.errors && response.errors.length > 0) {
-      this.updatingAttribute = '';
-      Utils.showErrorMessage(this.resourceBundleJson, response.errors, this.dialog);
-      return true;
-    } else {
-      this.updatingAttribute = '';
-      this.panelOpenState = true;
-      return true;
+  getDeviceImageUrl() {
+    if (this.projectFormData.deviceImage1) {
+      this.deviceImageUrls.push(this.projectFormData.deviceImage1);
     }
+    if (this.projectFormData.deviceImage2) {
+      this.deviceImageUrls.push(this.projectFormData.deviceImage2);
+    }
+    if (this.projectFormData.deviceImage3) {
+      this.deviceImageUrls.push(this.projectFormData.deviceImage3);
+    }
+    if (this.projectFormData.deviceImage4) {
+      this.deviceImageUrls.push(this.projectFormData.deviceImage4);
+    }
+  }
+
+  clickOnButton() {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '50%',
+      data: {
+        case: "DEVICE_IMAGES",
+        deviceImagesUrl: this.deviceImageUrls,
+      },
+    });
+    dialogRef.afterClosed();
   }
 }

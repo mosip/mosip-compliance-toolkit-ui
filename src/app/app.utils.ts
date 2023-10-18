@@ -3,6 +3,13 @@ import { DialogComponent } from './core/components/dialog/dialog.component';
 import { SbiDiscoverResponseModel } from './core/models/sbi-discover';
 import { TestCaseModel } from './core/models/testcase';
 import * as appConstants from 'src/app/app.constants';
+import { BreadcrumbService } from 'xng-breadcrumb';
+import { DataService } from './core/services/data-service';
+import { FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { SdkProjectModel } from './core/models/sdk-project';
+import { AbisProjectModel } from './core/models/abis-project';
+import { SbiProjectModel } from './core/models/sbi-project';
 
 export default class Utils {
   static getCurrentDate() {
@@ -281,7 +288,7 @@ export default class Utils {
     const COLON_SEPARATOR = '::', SEMI_COLON_SEPARATOR = ';', JSON_PLACEHOLDER = '{}';
 
     messageKey = messageKey.trim();
-    console.log(messageKey);
+    //console.log(messageKey);
     if (messageKey != '') {
       let translatedMsg = '';
       //check if the messageKey is having any rutime attributes
@@ -440,5 +447,324 @@ export default class Utils {
         }
       )
     });
+  }
+
+  static getBioTestDataNames(subscriptions: Subscription[], dataService: DataService, purpose: string, resourceBundleJson: any, dialog: MatDialog) {
+    return new Promise<string[]>((resolve, reject) => {
+      subscriptions.push(
+        dataService.getBioTestDataNames(purpose).subscribe(
+          (response: any) => {
+            resolve(response[appConstants.RESPONSE]);
+          },
+          (errors) => {
+            Utils.showErrorMessage(resourceBundleJson, errors, dialog);
+            resolve(errors);
+          }
+        )
+      );
+    });
+  }
+
+  static getSbiProjectDetails(projectId:string, dataService: DataService, resourceBundleJson: any, dialog:MatDialog) {
+    return new Promise((resolve, reject) => {
+      dataService.getSbiProject(projectId).subscribe(
+        (response: any) => {
+          // console.log(response['response']);
+          resolve(response['response']);
+        },
+        (errors: any) => {
+          this.showErrorMessage(resourceBundleJson, errors, dialog);
+          resolve(false);
+        }
+      )
+    });
+  }
+
+  static getSdkProjectDetails(projectId:string, dataService: DataService, resourceBundleJson: any, dialog:MatDialog) {
+    return new Promise((resolve, reject) => {
+      dataService.getSdkProject(projectId).subscribe(
+        (response: any) => {
+          // console.log(response['response']);
+          resolve(response['response']);
+        },
+        (errors: any) => {
+          this.showErrorMessage(resourceBundleJson, errors, dialog);
+          resolve(false);
+        }
+      )
+    });
+  }
+
+  static getAbisProjectDetails(projectId:string, dataService: DataService, resourceBundleJson: any, dialog:MatDialog) {
+    return new Promise((resolve, reject) => {
+      dataService.getAbisProject(projectId).subscribe(
+        (response: any) => {
+          // console.log(response['response']);
+          resolve(response['response']);
+        },
+        (errors: any) => {
+          this.showErrorMessage(resourceBundleJson, errors, dialog);
+          resolve(false);
+        }
+      )
+    });
+  }
+
+  static populateSbiProjectForm(projectFormData: any, projectForm: FormGroup) {
+    if (projectFormData) {
+      projectForm.controls['name'].setValue(projectFormData.name);
+      projectForm.controls['projectType'].setValue(appConstants.SBI);
+      projectForm.controls['sbiSpecVersion'].setValue(
+        projectFormData.sbiVersion
+      );
+      projectForm.controls['sbiPurpose'].setValue(
+        projectFormData.purpose
+      );
+      projectForm.controls['deviceType'].setValue(
+        projectFormData.deviceType
+      );
+      projectForm.controls['deviceSubType'].setValue(
+        projectFormData.deviceSubType
+      );
+      projectForm.controls['sbiHash'].setValue(
+        projectFormData.sbiHash
+      );
+      projectForm.controls['websiteUrl'].setValue(
+        projectFormData.websiteUrl
+      );
+    }
+  }
+
+  static populateSdkProjectForm(projectFormData: any, projectForm: FormGroup) {
+    if (projectFormData) {
+      projectForm.controls['name'].setValue(projectFormData.name);
+      projectForm.controls['projectType'].setValue(appConstants.SDK);
+      projectForm.controls['sdkUrl'].setValue(projectFormData.url);
+      projectForm.controls['sdkSpecVersion'].setValue(
+        projectFormData.sdkVersion
+      );
+      projectForm.controls['sdkPurpose'].setValue(
+        projectFormData.purpose
+      );
+      projectForm.controls['sdkHash'].setValue(
+        projectFormData.sdkHash
+      );
+      projectForm.controls['websiteUrl'].setValue(
+        projectFormData.websiteUrl
+      );
+      projectForm.controls['bioTestData'].setValue(
+        projectFormData.bioTestDataFileName
+      );
+    }
+  }
+
+  static populateAbisProjectForm(projectFormData: any, projectForm: FormGroup) {
+    if (projectFormData) {
+      projectForm.controls['name'].setValue(projectFormData.name);
+      projectForm.controls['projectType'].setValue(appConstants.ABIS);
+      projectForm.controls['abisUrl'].setValue(projectFormData.url);
+      projectForm.controls['inboundQueueName'].setValue(projectFormData.inboundQueueName.trim());
+      projectForm.controls['outboundQueueName'].setValue(projectFormData.outboundQueueName.trim());
+      projectForm.controls['username'].setValue(projectFormData.username.trim());
+      projectForm.controls['password'].setValue(projectFormData.password.trim());
+      projectForm.controls['modality'].setValue(projectFormData.modality);
+      projectForm.controls['abisSpecVersion'].setValue(
+        projectFormData.abisVersion
+      );
+      projectForm.controls['abisHash'].setValue(
+        projectFormData.abisHash
+      );
+      projectForm.controls['websiteUrl'].setValue(
+        projectFormData.websiteUrl
+      );
+      projectForm.controls['abisBioTestData'].setValue(
+        projectFormData.bioTestDataFileName
+      );
+    }
+  }
+
+  static updateSdkProject(subscriptions: Subscription[], dataService: DataService, request: any, resourceBundleJson: any, dialog: MatDialog) {
+    return new Promise((resolve, reject) => {
+      subscriptions.push(
+        dataService.updateSdkProject(request).subscribe(
+          (response: any) => {
+            console.log(response);
+            resolve(this.getProjectResponse(response, resourceBundleJson, dialog));
+          },
+          (errors) => {
+            Utils.showErrorMessage(resourceBundleJson, errors, dialog);
+            resolve(false);
+          }
+        )
+      );
+    });
+  }
+
+  static updateAbisProject(subscriptions: Subscription[], dataService: DataService, request: any, resourceBundleJson: any, dialog: MatDialog) {
+    return new Promise((resolve, reject) => {
+      subscriptions.push(
+        dataService.updateAbisProject(request).subscribe(
+          (response: any) => {
+            console.log(response);
+            resolve(this.getProjectResponse(response, resourceBundleJson, dialog));
+          },
+          (errors) => {
+            this.showErrorMessage(resourceBundleJson, errors, dialog);
+            resolve(false);
+          }
+        )
+      );
+    });
+  }
+
+  static getProjectResponse(response: any, resourceBundleJson: any, dialog: MatDialog){
+    if (response.errors && response.errors.length > 0) {
+      this.showErrorMessage(resourceBundleJson, response.errors, dialog);
+      return true;
+    } else {
+      return true;
+    }
+  }
+
+  static populateSbiProjectData(projectForm: FormGroup, projectId: string, deviceImage1: any, deviceImage2: any,
+    deviceImage3: any, deviceImage4: any) {
+    const projectData: SbiProjectModel = {
+      id: projectId,
+      name: projectForm.controls['name'].value,
+      projectType: projectForm.controls['projectType'].value,
+      sbiVersion: projectForm.controls['sbiSpecVersion'].value,
+      purpose: projectForm.controls['sbiPurpose'].value,
+      deviceType: projectForm.controls['deviceType'].value,
+      deviceSubType: projectForm.controls['deviceSubType'].value,
+      deviceImage1: deviceImage1,
+      deviceImage2: deviceImage2,
+      deviceImage3: deviceImage3,
+      deviceImage4: deviceImage4,
+      sbiHash: projectForm.controls['sbiHash'].value.trim(),
+      websiteUrl: projectForm.controls['websiteUrl'].value.trim()
+    };
+    return projectData;
+  }
+
+  static populateSdkProjectData(projectForm: FormGroup, projectId: string) {
+    const projectData: SdkProjectModel = {
+      id: projectId,
+      name: projectForm.controls['name'].value,
+      projectType: projectForm.controls['projectType'].value,
+      sdkVersion: projectForm.controls['sdkSpecVersion'].value,
+      purpose: projectForm.controls['sdkPurpose'].value,
+      url: projectForm.controls['sdkUrl'].value,
+      sdkHash: projectForm.controls['sdkHash'].value.trim(),
+      websiteUrl: projectForm.controls['websiteUrl'].value.trim(),
+      bioTestDataFileName: projectForm.controls['bioTestData'].value,
+    };
+    return projectData;
+  }
+
+  static populateAbisProjectData(projectForm: FormGroup, projectId: string) {
+    const projectData: AbisProjectModel = {
+      id: projectId,
+      name: projectForm.controls['name'].value,
+      projectType: projectForm.controls['projectType'].value,
+      abisVersion: projectForm.controls['abisSpecVersion'].value,
+      url: projectForm.controls['abisUrl'].value,
+      username: projectForm.controls['username'].value.trim(),
+      password: projectForm.controls['password'].value.trim(),
+      outboundQueueName: projectForm.controls['outboundQueueName'].value.trim(),
+      inboundQueueName: projectForm.controls['inboundQueueName'].value.trim(),
+      modality: projectForm.controls['modality'].value,
+      abisHash: projectForm.controls['abisHash'].value.trim(),
+      websiteUrl: projectForm.controls['websiteUrl'].value.trim(),
+      bioTestDataFileName: projectForm.controls['abisBioTestData'].value,
+    }
+    return projectData;
+  }
+
+  static getCollectionNameAndType(subscriptions: Subscription[],
+    dataService: DataService,
+    collectionId: string,
+    resourceBundleJson: any,
+    dialog: MatDialog) {
+    return new Promise<any>((resolve, reject) => {
+      subscriptions.push(
+        dataService.getCollection(collectionId).subscribe(
+          (response: any) => {
+            let collectionRes = {
+              "name": response['response']['name'],
+              "type": response['response']['collectionType']
+            };
+            resolve(collectionRes);
+          },
+          (errors) => {
+            this.showErrorMessage(resourceBundleJson, errors, dialog);
+            resolve(errors);
+          }
+        )
+      );
+    });
+  }
+
+  static getTestcasesForCollection(subscriptions: Subscription[], dataService: DataService, collectionId: string, resourceBundleJson: any, dialog: MatDialog) {
+    return new Promise<any[]>((resolve, reject) => {
+      subscriptions.push(
+        dataService.getTestcasesForCollection(collectionId).subscribe(
+          (response: any) => {
+            let testcases = response['response']['testcases'];
+            let testcaseArr = [];
+            for (let testcase of testcases) {
+              testcaseArr.push(this.translateTestcase(testcase,resourceBundleJson));
+            }
+            //sort the testcases based on the testId
+            if (testcaseArr && testcaseArr.length > 0) {
+              testcaseArr.sort(function (a: TestCaseModel, b: TestCaseModel) {
+                if (a.testId > b.testId) return 1;
+                if (a.testId < b.testId) return -1;
+                return 0;
+              });
+            }
+            resolve(testcaseArr);
+          },
+          (errors) => {
+            this.showErrorMessage(resourceBundleJson, errors, dialog);
+            resolve(errors);
+          }
+        )
+      );
+    });
+  }
+
+  static initBreadCrumb(resourceBundleJson: any, breadcrumbService: BreadcrumbService, sbiProjectData: any,
+    sdkProjectData: any, abisProjectData: any, projectType: string, collectionName: any) {
+    const breadcrumbLabels = resourceBundleJson['breadcrumb'];
+    if (breadcrumbLabels) {
+      breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
+      if (sbiProjectData) {
+        breadcrumbService.set(
+          '@projectBreadCrumb',
+          `${projectType} ${breadcrumbLabels.project} - ${sbiProjectData.name}`
+        );
+      }
+      if (sdkProjectData) {
+        breadcrumbService.set(
+          '@projectBreadCrumb',
+          `${projectType} ${breadcrumbLabels.project} - ${sdkProjectData.name}`
+        );
+      }
+      if (abisProjectData) {
+        breadcrumbService.set(
+          '@projectBreadCrumb',
+          `${projectType} ${breadcrumbLabels.project} - ${abisProjectData.name}`
+        );
+      }
+      if (collectionName) {
+        breadcrumbService.set(
+          '@collectionBreadCrumb',
+          `${collectionName}`
+        );
+      } else {
+        breadcrumbService.set('@collectionBreadCrumb', `${breadcrumbLabels.add}`);
+      }
+
+    }
   }
 }

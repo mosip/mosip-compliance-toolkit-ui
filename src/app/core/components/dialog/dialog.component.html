@@ -30,4 +30,169 @@
         <button mat-flat-button color="accent" (click)="closeMe()">{{"dialogMessages.close"|translate}}</button>
     </mat-dialog-actions>
 </div>
+<div *ngIf="input.case === 'UPDATE_PROJECT'" class="updateProject">
+    <div class="spinner" *ngIf="!dataLoaded">
+        <mat-spinner diameter="50"></mat-spinner>
+    </div>
+    <div *ngIf="dataLoaded">
+        <h2 mat-dialog-title class="mat-dialog-title">{{"projectDashboard.title"|translate}}</h2>
+    <mat-dialog-content style="white-space: pre-line;">
+        {{"projectDashboard.message"|translate}}
+    </mat-dialog-content>
+    <form [formGroup]="projectForm" *ngIf="dataLoaded">
+        <div class="formContainer">
+            <span *ngIf="projectForm.controls['projectType']?.value == 'SBI'">
+                <div class="fieldWrapper">
+                    <span class="fieldLabel">
+                      <mat-label>{{ "addProject.deviceImages" | translate }}</mat-label>
+                    </span>
+                    <span class="fieldContainer">
+                      <button mat-flat-button color="accent" (click)="clickOnButton()" class="fileuploadbtn">
+                        {{"addProject.selectDeviceImages"|translate}}
+                      </button>
+                    </span>
+                </div>
+                <div class="fieldWrapper">
+                    <span class="fieldLabel">
+                        <mat-label>{{"viewProject.sbiHash"|translate}}
+                        </mat-label>
+                    </span>
+                    <span class="fieldContainer">
+                        <mat-form-field appearance="legacy" class="fieldContainerBox">
+                            <mat-label>{{"viewProject.sbiHash"|translate}}</mat-label>
+                            <input matInput formControlName="sbiHash" #keyboardRef #input/>
+                            <mat-error *ngIf="projectForm.controls['sbiHash'].hasError('required')">
+                                {{"viewProject.sbiHashIsRequired"|translate}}
+                            </mat-error>
+                            <mat-error *ngIf="projectForm.controls['sbiHash'].hasError('toBeAddedPattern')">
+                                {{"dialogMessages.sbiHashIsInvalid"|translate}}
+                            </mat-error>
+                        </mat-form-field>
+                    </span>
+                </div>
+            </span>
+            <span *ngIf="projectForm.controls['projectType']?.value == 'SDK'">
+                <div class="fieldWrapper">
+                    <span class="fieldLabel">
+                        <mat-label>{{"viewProject.sdkHash"|translate}}
+                        </mat-label>
+                    </span>
+                    <span class="fieldContainer">
+                        <mat-form-field appearance="legacy" class="fieldContainerBox">
+                            <mat-label>{{"viewProject.sdkHash"|translate}}</mat-label>
+                            <input matInput formControlName="sdkHash" #keyboardRef #input/>
+                            <mat-error *ngIf="projectForm.controls['sdkHash'].hasError('required')">
+                                {{"viewProject.sdkHashIsRequired"|translate}}
+                            </mat-error>
+                            <mat-error *ngIf="projectForm.controls['sdkHash'].hasError('toBeAddedPattern')">
+                                {{"dialogMessages.sdkHashIsInvalid"|translate}}
+                            </mat-error>
+                        </mat-form-field>
+                    </span>
+                </div>
+            </span>
+            <span *ngIf="projectForm.controls['projectType']?.value == 'ABIS'">
+                <div class="fieldWrapper">
+                    <span class="fieldLabel">
+                        <mat-label>{{"viewProject.abisHash"|translate}}
+                        </mat-label>
+                    </span>
+                    <span class="fieldContainer">
+                        <mat-form-field appearance="legacy" class="fieldContainerBox">
+                            <mat-label>{{"viewProject.abisHash"|translate}}</mat-label>
+                            <input matInput formControlName="abisHash" #keyboardRef #input/>
+                            <mat-error *ngIf="projectForm.controls['abisHash'].hasError('required')">
+                                {{"viewProject.abisHashIsRequired"|translate}}
+                            </mat-error>
+                            <mat-error *ngIf="projectForm.controls['abisHash'].hasError('toBeAddedPattern')">
+                                {{"dialogMessages.abisHashIsInvalid"|translate}}
+                            </mat-error>
+                        </mat-form-field>
+                    </span>
+                </div>
+            </span>
+            <div class="fieldWrapper">
+                <span class="fieldLabel">
+                    <mat-label>{{"viewProject.websiteUrl"|translate}}
+                    </mat-label>
+                </span>
+                <span class="fieldContainer">
+                    <mat-form-field appearance="legacy" class="fieldContainerBox">
+                        <mat-label>{{"viewProject.websiteUrl"|translate}}</mat-label>
+                        <input matInput formControlName="websiteUrl" #keyboardRef #input />
+                        <mat-error *ngIf="projectForm.controls['websiteUrl'].hasError('required')">
+                            {{"viewProject.websiteUrlIsRequired"|translate}}
+                        </mat-error>
+                        <mat-error *ngIf="projectForm.controls['websiteUrl'].hasError('toBeAddedPattern')">
+                            {{"dialogMessages.websiteUrlIsInvalid"|translate}}
+                        </mat-error>
+                    </mat-form-field>
+                </span>
+            </div>
+        </div>
+    </form>
+    <div class="button-container">
+        <button mat-flat-button color="accent" (click)="closeMe()" class="buttonDiv" align="">{{"dialogMessages.close"|translate}}</button>
+        <button mat-flat-button color="accent" [disabled]="!projectForm.valid" (click)="updateProject()" class="saveBt">
+            <mat-icon>save</mat-icon>
+            {{"dialogMessages.updateProject"|translate}}
+        </button>
+    </div>
+    </div>
+</div>
+<div *ngIf="input.case === 'UPLOAD_DEVICE_IMAGES'" class="uploadDiv">
+    <h2 mat-dialog-title class="mat-dialog-title">{{"dialogMessages.uploadDeviceImages"|translate}}</h2>
+    <div class="uploadImg">
+        <div *ngFor="let fileIndex of [0, 1, 2, 3]"  class="button-container">
+            <div class="buttons">
+                <input type="file" accept="image/*" (change)="onFileSelect($event, fileIndex)" #fileInput hidden single>
+                <button mat-raised-button [disabled]="!imageSelected[fileIndex]" (click)="fileInput.click()">
+                    <mat-icon>add</mat-icon>{{"dialogMessages.addImage"|translate}} {{ fileIndex + 1 }}
+                </button>
+            </div>
+            <div>
+                <button mat-icon-button *ngIf="!imagePreviewsVisible[fileIndex] && visibilityState[fileIndex]" (click)="toggleImagePreview(fileIndex)">
+                    <mat-icon class="eyeIcon">{{ imagePreviewsVisible[fileIndex] ? 'visibility_off' : 'visibility' }}</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="imagePreview">
+            <span *ngIf="imagePreviewsVisible[0]">
+                <div class="delete-overlay" (click)="deleteImage(0)">
+                    <img [src]="imageUrls[0]" alt="Preview">
+                </div>
+            </span>
+            <span *ngIf="imagePreviewsVisible[1]">
+                <div class="delete-overlay" (click)="deleteImage(1)">
+                    <img [src]="imageUrls[1]" alt="Preview">
+                </div>
+            </span>
+            <span *ngIf="imagePreviewsVisible[2]">
+                <div class="delete-overlay" (click)="deleteImage(2)">
+                    <img [src]="imageUrls[2]" alt="Preview">
+                </div>
+            </span>
+            <span *ngIf="imagePreviewsVisible[3]">
+                <div class="delete-overlay" (click)="deleteImage(3)">
+                    <img [src]="imageUrls[3]" alt="Preview">
+                </div>
+            </span>
+        </div>
+    </div>  
+    <div>
+        <button mat-flat-button color="accent" (click)="uploadImages()" class="closeBt">{{"dialogMessages.close"|translate}}</button>
+    </div> 
+</div>
+<div *ngIf="input.case === 'DEVICE_IMAGES'">
+    <h2 mat-dialog-title class="mat-dialog-title">{{"dialogMessages.deviceImages"|translate}}</h2>
+    <div mat-dialog-content class="deviceImageBox">
+        <div class="viewImgMsg">{{getImageBase64Urls(input.deviceImagesUrl)}}</div>
+        <div class="viewImages">
+            <img class="viewDeviceImages" *ngFor="let image of input.deviceImagesUrl" [src]="image" alt="Preview">
+        </div>
+        <mat-dialog-actions align="end">
+            <button mat-flat-button color="accent" (click)="uploadImages()" class="viewImgCloseBtn">{{"dialogMessages.close"|translate}}</button>
+        </mat-dialog-actions>
+    </div>
+</div>
 </div>

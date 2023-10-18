@@ -12,6 +12,7 @@ import Utils from 'src/app/app.utils';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { environment } from 'src/environments/environment';
 import { BreadcrumbService } from 'xng-breadcrumb';
+import { DialogComponent } from 'src/app/core/components/dialog/dialog.component';
 
 export interface ProjectData {
   id: string;
@@ -41,6 +42,7 @@ export class ProjectsDashboardComponent implements OnInit {
     'actions',
   ];
   dataLoaded = false;
+  projectFormData: any;
   subscriptions: Subscription[] = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -152,11 +154,57 @@ export class ProjectsDashboardComponent implements OnInit {
       localStorage.removeItem(appConstants.SBI_SCAN_DATA);
       localStorage.removeItem(appConstants.SBI_SCAN_COMPLETE);
     }
-    await this.router.navigate([
-      `toolkit/project/${project.projectType}/${project.id}`,
-    ]);
+    if (project.projectType == appConstants.SBI) {
+      this.projectFormData = await Utils.getSbiProjectDetails(project.id, this.dataService, this.resourceBundleJson, this.dialog);
+      const sbiHash = this.projectFormData.sbiHash;
+      const websiteUrl = this.projectFormData.websiteUrl;
+      if (sbiHash == 'To_Be_Added' || websiteUrl == 'To_Be_Added') {
+          await this.showUpdateProject(project.id, project.projectType);
+      } else {
+        await this.router.navigate([
+          `toolkit/project/${project.projectType}/${project.id}`,
+        ]);
+      }
+    } 
+    if (project.projectType == appConstants.SDK) {
+      this.projectFormData = await Utils.getSdkProjectDetails(project.id, this.dataService, this.resourceBundleJson, this.dialog);
+      const sdkHash = this.projectFormData.sdkHash;
+      const websiteUrl = this.projectFormData.websiteUrl;
+      if (sdkHash == 'To_Be_Added'|| websiteUrl == 'To_Be_Added') {
+        await this.showUpdateProject(project.id, project.projectType);
+      } else {
+        await this.router.navigate([
+          `toolkit/project/${project.projectType}/${project.id}`,
+        ]);
+      }
+    }
+    if (project.projectType == appConstants.ABIS) {
+      this.projectFormData = await Utils.getAbisProjectDetails(project.id, this.dataService, this.resourceBundleJson, this.dialog);
+      const abisHash = this.projectFormData.abisHash;
+      const websiteUrl = this.projectFormData.websiteUrl;
+      if (abisHash == 'To_Be_Added'|| websiteUrl == 'To_Be_Added') {
+        await this.showUpdateProject(project.id, project.projectType);
+      } else {
+        await this.router.navigate([
+          `toolkit/project/${project.projectType}/${project.id}`,
+        ]);
+      }
+    }
   }
-  
+
+  async showUpdateProject(projectId: any, projectType: any) { 
+    const body = {
+      case: 'UPDATE_PROJECT',
+      id: projectId,
+      projectType: projectType
+    };
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '600px',
+      data: body,
+    });
+    dialogRef.disableClose = false;
+  }
+
   async showBiometricDashboard() {
     await this.router.navigate([`toolkit/dashboard/biometric`]);
   }
@@ -166,13 +214,25 @@ export class ProjectsDashboardComponent implements OnInit {
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    console.log(filterValue);
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.dataSource.filter = filterValue;
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+    this.dataSource.filterPredicate = this.customFilterPredicate;
   }
+
+  customFilterPredicate(data: ProjectData, filter: string): boolean {
+    const formattedDate = new Date(filter);
+    const crDate = new Date(data.crDate);
+
+    const nameMatch = data.name.trim().toLowerCase().includes(filter);
+    const typeMatch = data.projectType.trim().toLowerCase().includes(filter);
+    const dateMatch = crDate.toDateString() === formattedDate.toDateString();
+
+    return nameMatch || typeMatch || dateMatch;
+  }
+
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }

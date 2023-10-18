@@ -29,16 +29,19 @@ export class AbisTestCaseService {
     requestId: string,
     referenceId: string,
     galleryIds: any[],
-    cbeffFileSuffix: number
+    cbeffFileSuffix: number,
+    testRunId: string
   ) {
-    console.log(`abisProjectData.bioTestDataFileName: ${abisProjectData.bioTestDataFileName}`);
+    //console.log(`abisProjectData.bioTestDataFileName: ${abisProjectData.bioTestDataFileName}`);
     let dataShareResp: any = null;
     //create a datashare URL but only for Insert
     if (methodName == appConstants.ABIS_METHOD_INSERT) {
       dataShareResp = await this.createDataShareUrl(
         testCase,
         abisProjectData.bioTestDataFileName,
-        cbeffFileSuffix
+        abisProjectData.modality,
+        cbeffFileSuffix,
+        testRunId
       );
       if (!dataShareResp) {
         const finalResponse = {
@@ -105,7 +108,8 @@ export class AbisTestCaseService {
     methodRequest: string,
     methodResponse: string,
     testDataSource: string,
-    methodIndex: number
+    methodIndex: number,
+    testRunId: string
   ) {
     // now validate the method response against all the validators
     let validationResponse = await this.validateResponse(
@@ -113,7 +117,8 @@ export class AbisTestCaseService {
       methodRequest,
       methodResponse,
       methodName,
-      methodIndex
+      methodIndex,
+      testRunId
     );
     const finalResponse = {
       methodResponse: methodResponse,
@@ -122,8 +127,8 @@ export class AbisTestCaseService {
       methodUrl: abisProjectData.url,
       testDataSource: testDataSource
     };
-    console.log('finalResponse');
-    console.log(finalResponse);
+    //console.log('finalResponse');
+    //console.log(finalResponse);
 
     return finalResponse;
   }
@@ -131,7 +136,9 @@ export class AbisTestCaseService {
   createDataShareUrl(
     testCase: TestCaseModel,
     selectedBioTestDataName: string,
-    cbeffFileIndex: number
+    modality: string,
+    cbeffFileIndex: number,
+    testRunId: string
   ): any {
     let incorrectPartnerId;
     if (testCase && testCase.otherAttributes.invalidRequestAttribute == 'incorrectPartnerId') {
@@ -140,8 +147,10 @@ export class AbisTestCaseService {
     let dataShareRequestDto = {
       testcaseId: testCase.testId,
       bioTestDataName: selectedBioTestDataName,
+      abisProjectModality: modality,
       cbeffFileSuffix: cbeffFileIndex,
-      incorrectPartnerId: incorrectPartnerId ? incorrectPartnerId : ''
+      incorrectPartnerId: incorrectPartnerId ? incorrectPartnerId : '',
+      testRunId: testRunId
     };
     let request = {
       id: appConstants.DATASHARE_ID,
@@ -241,20 +250,23 @@ export class AbisTestCaseService {
     methodRequest: any,
     methodResponse: any,
     method: string,
-    methodIndex: number
+    methodIndex: number,
+    testRunId: string
   ) {
     let validateRequest = {
       testCaseType: testCase.testCaseType,
       testName: testCase.testName,
       specVersion: testCase.specVersion,
-      testDescription: testCase.testDescription,
+      testId: testCase.testId,
       responseSchema: testCase.responseSchema[methodIndex],
       isNegativeTestcase: testCase.isNegativeTestcase
         ? testCase.isNegativeTestcase
         : false,
       extraInfoJson: JSON.stringify({
         expectedFailureReason: testCase.otherAttributes.expectedFailureReason,
-        expectedDuplicateCount: testCase.otherAttributes.expectedDuplicateCount
+        expectedDuplicateCount: testCase.otherAttributes.expectedDuplicateCount,
+        testcaseId: testCase.testId,
+        testRunId: testRunId
       }),
       methodResponse: methodResponse,
       methodRequest: methodRequest,
@@ -288,7 +300,7 @@ export class AbisTestCaseService {
       testCaseType: testCase.testCaseType,
       testName: testCase.testName,
       specVersion: testCase.specVersion,
-      testDescription: testCase.testDescription,
+      testId: testCase.testId,
       requestSchema: testCase.requestSchema[methodIndex],
       methodRequest: methodRequest,
     };

@@ -19,71 +19,62 @@ export class SdkTestCaseService {
   async runTestCase(
     testCase: TestCaseModel,
     sdkUrl: string,
-    selectedBioTestDataName: string
+    selectedBioTestDataName: string,
+    methodIndex: number,
+    firstMethodRespForSDK: any
   ): Promise<any> {
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     let isCombinationTestCase = testCase.methodName.length > 1 ? true : false;
-    const methodsArr = testCase.methodName;
-    let methodIndex = 0;
-    let firstResponse: any = null;
-    //only 2 methods are allowed in a testcase
-    for (const method of methodsArr) {
-      console.log('EXECUTING METHOD: ' + method);
-      if (methodIndex == 0) {
-        firstResponse = await this.runTestCaseMethod(
-          testCase,
-          sdkUrl,
-          selectedBioTestDataName,
-          method,
-          methodIndex,
-          null
-        );
-        console.log('done: ' + method);
-        if (!isCombinationTestCase) {
-          return firstResponse;
-        }
-        methodIndex++;
-      } else {
+    const method = testCase.methodName[methodIndex];
+    //console.log('EXECUTING METHOD: ' + method);
+    if (methodIndex == 0) {
+      const firstResponse = await this.runTestCaseMethod(
+        testCase,
+        sdkUrl,
+        selectedBioTestDataName,
+        method,
+        methodIndex,
+        null
+      );
+      //console.log('done: ' + method);
+      return firstResponse;
+    } else {
+      if (
+        firstMethodRespForSDK &&
+        !firstMethodRespForSDK.errors &&
+        firstMethodRespForSDK.methodResponse
+      ) {
+        let firstMethodResponse = JSON.parse(firstMethodRespForSDK.methodResponse);
         if (
-          firstResponse &&
-          !firstResponse.errors &&
-          firstResponse.methodResponse
+          firstMethodResponse &&
+          firstMethodResponse.response &&
+          firstMethodResponse.response.response &&
+          firstMethodResponse.response.response.segments
         ) {
-          let firstMethodResponse = JSON.parse(firstResponse.methodResponse);
-          if (
-            firstMethodResponse &&
-            firstMethodResponse.response &&
-            firstMethodResponse.response.response &&
+          let secondMethodResponse = await this.runTestCaseMethod(
+            testCase,
+            sdkUrl,
+            selectedBioTestDataName,
+            method,
+            methodIndex,
             firstMethodResponse.response.response.segments
-          ) {
-            let secondMethodResponse = await this.runTestCaseMethod(
-              testCase,
-              sdkUrl,
-              selectedBioTestDataName,
-              method,
-              methodIndex,
-              firstMethodResponse.response.response.segments
-            );
-            return secondMethodResponse;
-          } else {
-            const finalResponse = {
-              errors: [
-                {
-                  errorCode: this.resourceBundleJson.executeTestRun['failure']
-                    ? this.resourceBundleJson.executeTestRun['failure']
-                    : 'Failure',
-                  message: this.resourceBundleJson.executeTestRun['unableToGenerateRequest']
-                    ? this.resourceBundleJson.executeTestRun['unableToGenerateRequest'] + method
-                    : 'Unable to generate request to SDK service: ' + method,
-                },
-              ],
-            }
-            return finalResponse;
-          }
-        } else {
-          return firstResponse;
+          );
+          return secondMethodResponse;
         }
       }
+      const errResponse = {
+        errors: [
+          {
+            errorCode: this.resourceBundleJson.executeTestRun['failure']
+              ? this.resourceBundleJson.executeTestRun['failure']
+              : 'Failure',
+            message: this.resourceBundleJson.executeTestRun['unableToGenerateRequest']
+              ? this.resourceBundleJson.executeTestRun['unableToGenerateRequest'] + method
+              : 'Unable to generate request to SDK service: ' + method,
+          },
+        ],
+      }
+      return errResponse;
     }
   }
 
@@ -147,6 +138,7 @@ export class SdkTestCaseService {
             methodRequest: methodRequest,
             validationResponse: validationResponse,
             methodUrl: url,
+            methodId: testCase.methodName[methodIndex],
             testDataSource: testDataSource
           };
           return finalResponse;
@@ -202,7 +194,7 @@ export class SdkTestCaseService {
     return new Promise((resolve, reject) => {
       this.dataService.callSDKMethod(sdkUrl, methodRequest).subscribe(
         (response) => {
-          console.log(response);
+          //console.log(response);
           //return response;
           resolve(response);
         },
@@ -261,7 +253,7 @@ export class SdkTestCaseService {
     selectedBioTestDataName: string,
     firstMethodResponse: any
   ): any {
-    console.log(firstMethodResponse);
+    //console.log(firstMethodResponse);
     let sdkRequestDto = {
       methodName: testCase.methodName.join(','),
       testcaseId: testCase.testId,
@@ -275,7 +267,7 @@ export class SdkTestCaseService {
       requesttime: new Date().toISOString(),
       request: sdkRequestDto,
     };
-    console.log(request);
+    //console.log(request);
     return new Promise((resolve, reject) => {
       this.dataService.generateRequestForSDKFrmBirs(request).subscribe(
         (response: any) => {
@@ -308,7 +300,7 @@ export class SdkTestCaseService {
       testCaseType: testCase.testCaseType,
       testName: testCase.testName,
       specVersion: testCase.specVersion,
-      testDescription: testCase.testDescription,
+      testId: testCase.testId,
       responseSchema: testCase.responseSchema[methodIndex],
       isNegativeTestcase: testCase.isNegativeTestcase
         ? testCase.isNegativeTestcase
@@ -345,7 +337,7 @@ export class SdkTestCaseService {
       testCaseType: testCase.testCaseType,
       testName: testCase.testName,
       specVersion: testCase.specVersion,
-      testDescription: testCase.testDescription,
+      testId: testCase.testId,
       requestSchema: testCase.requestSchema[methodIndex],
       methodRequest: methodRequest,
     };

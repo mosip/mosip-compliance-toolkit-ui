@@ -4,6 +4,7 @@ export const AUTH_ERROR_CODE = ['KER-ATH-007', 'KER-ATH-006'];
 export const SBI_PROJECT_ADD_ID = 'mosip.toolkit.sbi.project.add';
 export const SDK_PROJECT_ADD_ID = 'mosip.toolkit.sdk.project.add';
 export const ABIS_PROJECT_ADD_ID = 'mosip.toolkit.abis.project.add';
+export const SBI_PROJECT_UPDATE_ID = 'mosip.toolkit.sbi.project.update';
 export const SDK_PROJECT_UPDATE_ID = 'mosip.toolkit.sdk.project.update';
 export const ABIS_PROJECT_UPDATE_ID = 'mosip.toolkit.abis.project.update';
 export const VALIDATIONS_ADD_ID = 'mosip.toolkit.api.id.validations';
@@ -21,6 +22,7 @@ export const ABIS_READ_FROM_QUEUE = 'mosip.toolkit.abis.read';
 export const ABIS_INSERT_ID = "mosip.abis.insert";
 export const ABIS_IDENTIFY_ID = "mosip.abis.identify";
 export const ABIS_VERSION = "1.1";
+export const CREATE_REPORT_ID = 'mosip.toolkit.create.report.post';
 
 export const VERSION = '1.0';
 
@@ -41,14 +43,16 @@ export const SDK = 'SDK';
 export const SBI = 'SBI';
 export const ABIS = 'ABIS';
 export const COMMON_CONTROLS = ['name', 'projectType'];
-export const SDK_CONTROLS = ['sdkSpecVersion','sdkUrl', 'sdkPurpose', 'bioTestData'];
+export const SDK_CONTROLS = ['sdkSpecVersion','sdkUrl', 'sdkPurpose', 'sdkHash', 'websiteUrl', 'bioTestData'];
 export const SBI_CONTROLS = [
   'sbiSpecVersion',
   'sbiPurpose',
   'deviceType',
   'deviceSubType',
+  'sbiHash',
+  'websiteUrl',
 ];
-export const ABIS_CONTROLS = ['abisUrl', 'username', 'password', 'outboundQueueName','inboundQueueName', 'abisSpecVersion','abisBioTestData'];
+export const ABIS_CONTROLS = ['abisUrl', 'username', 'password', 'outboundQueueName','inboundQueueName', 'modality', 'abisSpecVersion', 'abisHash', 'websiteUrl', 'abisBioTestData'];
 export const TEST_DATA_CONTROLS= ['name', 'type', 'purpose'];
 export const SBI_KEY_ROTATION_ITERATIONS = 'keyRotationIterations';
 //SBI methods related constants
@@ -89,3 +93,6 @@ export const AUTHORIZATION = 'Authorization';
 export const REQUEST_ID = 'requestId';
 export const BLANK_STRING = "";
 export const UNDERSCORE = "_";
+export const COMPLIANCE_COLLECTION = "compliance_collection";
+export const INCOMPLETE_STATUS = "incomplete";
+export const COMPLETE_STATUS = "complete";

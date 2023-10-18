@@ -19,10 +19,10 @@ import {
   animate,
 } from '@angular/animations';
 import { SdkProjectModel } from 'src/app/core/models/sdk-project';
-import { TestCaseModel } from 'src/app/core/models/testcase';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AbisProjectModel } from 'src/app/core/models/abis-project';
+import { AppConfigService } from 'src/app/app-config.service';
 
 @Component({
   selector: 'app-test-run',
@@ -42,6 +42,7 @@ import { AbisProjectModel } from 'src/app/core/models/abis-project';
 export class TestRunComponent implements OnInit {
   collectionId: string;
   collectionName: string;
+  collectionType: string;
   runId: string;
   projectId: string;
   projectType: string;
@@ -51,9 +52,10 @@ export class TestRunComponent implements OnInit {
   sbiProjectData: SbiProjectModel;
   sdkProjectData: SdkProjectModel;
   abisProjectData: AbisProjectModel;
+  showDownloadReportBtn = false;
   testcasesList: any;
   dataSource: MatTableDataSource<TestRunModel>;
-  displayedColumns: string[] = ['testId', 'testName', 'resultStatus', 'scrollIcon'];
+  displayedColumns: string[] = ['testId', 'testName', 'resultStatus', 'executionStatus', 'scrollIcon'];
   columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
   expandedElement: TestRunModel | null;
   dataSubmitted = false;
@@ -71,26 +73,42 @@ export class TestRunComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router,
     private userProfileService: UserProfileService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private appConfigService: AppConfigService
   ) { }
 
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     await this.initAllParams();
-    await this.getCollection();
+    const collectionRes = await Utils.getCollectionNameAndType(this.subscriptions, this.dataService, this.collectionId, this.resourceBundleJson, this.dialog);
+    this.collectionName = collectionRes.name;
+    this.collectionType = collectionRes.type;
     if (this.projectType == appConstants.SBI) {
-      await this.getSbiProjectDetails();
+      const sbiProjectDetails: any = await Utils.getSbiProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
+      if (sbiProjectDetails) {
+        this.sbiProjectData = sbiProjectDetails;
+      }
     }
     if (this.projectType == appConstants.SDK) {
-      await this.getSdkProjectDetails();
+      const sdkProjectDetails: any = await Utils.getSdkProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
+      if (sdkProjectDetails) {
+        this.sdkProjectData = sdkProjectDetails;
+      }
     }
     if (this.projectType == appConstants.ABIS) {
-      await this.getAbisProjectDetails();
+      const abisProjectDetails: any = await Utils.getAbisProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
+      if (abisProjectDetails) {
+        this.abisProjectData = abisProjectDetails;
+      }
       this.initBreadCrumb();
     }
-    await this.getTestcasesForCollection();
+    this.testcasesList = await Utils.getTestcasesForCollection(this.subscriptions, this.dataService, this.collectionId, this.resourceBundleJson, this.dialog);
     await this.getTestRun();
+    //enable download report button only for compliance collection
+    if (appConstants.COMPLIANCE_COLLECTION == this.collectionType) {
+      this.showDownloadReportBtn = true;
+    }
     this.initBreadCrumb();
     this.dataLoaded = true;
   }
@@ -110,33 +128,28 @@ export class TestRunComponent implements OnInit {
   initBreadCrumb() {
     const breadcrumbLabels = this.resourceBundleJson['breadcrumb'];
     if (breadcrumbLabels) {
-      this.breadcrumbService.set('@homeBreadCrumb', `${breadcrumbLabels.home}`);
-      if (this.sbiProjectData) {
-        this.breadcrumbService.set(
-          '@projectBreadCrumb',
-          `${this.projectType} ${breadcrumbLabels.project} - ${this.sbiProjectData.name}`
-        );
-      }
-      if (this.sdkProjectData) {
-        this.breadcrumbService.set(
-          '@projectBreadCrumb',
-          `${this.projectType} ${breadcrumbLabels.project} - ${this.sdkProjectData.name}`
-        );
-      }
-      if (this.abisProjectData) {
-        this.breadcrumbService.set(
-          '@projectBreadCrumb',
-          `${this.projectType} ${breadcrumbLabels.project} - ${this.abisProjectData.name}`
-        );
-      }
-      this.breadcrumbService.set(
-        '@collectionBreadCrumb',
-        `${this.collectionName}`
-      );
+      Utils.initBreadCrumb(this.resourceBundleJson, this.breadcrumbService,
+        this.sbiProjectData, this.sdkProjectData, this.abisProjectData,
+        this.projectType, this.collectionName);
       if (this.runDetails) {
+        let runStatus = this.runDetails.runStatus;
+        if (runStatus == appConstants.SUCCESS) {
+          runStatus = this.resourceBundleJson["viewTestRun"]["success"];
+        }
+        if (runStatus == appConstants.FAILURE) {
+          runStatus = this.resourceBundleJson["viewTestRun"]["failure"];
+        }       
+        let execStatus = this.runDetails.executionStatus;
+        if (execStatus == appConstants.COMPLETE_STATUS) {
+          execStatus = this.resourceBundleJson["viewTestRun"]["complete"];
+        }
+        if (execStatus == appConstants.INCOMPLETE_STATUS) {
+          execStatus = this.resourceBundleJson["viewTestRun"]["incomplete"];
+        }
+        const runDetails = `${breadcrumbLabels.testRun} - (${new Date(this.runDetails.runDtimes).toLocaleString()} - ${runStatus} - ${execStatus})`;
         this.breadcrumbService.set(
           '@testrunBreadCrumb',
-          `${breadcrumbLabels.testRun} - (${new Date(this.runDetails.runDtimes).toLocaleString()})`
+          runDetails
         );
       } else {
         this.breadcrumbService.set(
@@ -144,11 +157,13 @@ export class TestRunComponent implements OnInit {
           `${breadcrumbLabels.testRun}`
         );
       }
-      
+
     }
   }
 
   async getTestRun() {
+    const NO_DATA_AVAILABLE = 'No data available';
+
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
         this.dataService.getTestRunDetails(this.runId).subscribe(
@@ -158,143 +173,72 @@ export class TestRunComponent implements OnInit {
             let tableData = [];
             for (const testCase of this.testcasesList) {
               let testRunData = null;
+              let matchFound = false;
               for (const testRun of list) {
                 if (testRun.testcaseId == testCase.testId) {
+                  matchFound = true;
                   testRunData = testRun;
                 }
+                if (testRunData) {
+                  tableData.push({
+                    testCaseType: testCase.testCaseType,
+                    testName: testCase.testName,
+                    testId: testCase.testId,
+                    testDescription: testCase.testDescription,
+                    methodId: testRunData
+                      ? testRunData.methodId
+                      : testCase.methodId,
+                    methodName: testRunData
+                      ? testRunData.methodName
+                      : testCase.methodName,
+                    methodRequest: testRunData
+                      ? testRunData.methodRequest
+                      : NO_DATA_AVAILABLE,
+                    methodResponse: testRunData
+                      ? testRunData.methodResponse
+                      : NO_DATA_AVAILABLE,
+                    resultStatus: testRunData
+                      ? testRunData.resultStatus
+                      : appConstants.FAILURE,
+                    resultDescription: testRunData
+                      ? testRunData.resultDescription
+                      : '',
+                    testDataSource:
+                      testRunData && testRunData.testDataSource
+                        ? testRunData.testDataSource
+                        : '',
+                    methodUrl:
+                      testRunData && testRunData.methodUrl
+                        ? testRunData.methodUrl
+                        : '',
+                    executionStatus:
+                      testRunData && testRunData.executionStatus
+                        ? testRunData.executionStatus
+                        : appConstants.INCOMPLETE_STATUS,
+                  });
+                  testRunData = null;
+                }
               }
-              tableData.push({
-                testCaseType: testCase.testCaseType,
-                testName: testCase.testName,
-                testId: testCase.testId,
-                testDescription: testCase.testDescription,
-                methodName: testRunData
-                  ? testRunData.methodName
-                  : testCase.methodName,
-                methodRequest: testRunData
-                  ? testRunData.methodRequest
-                  : 'No data available',
-                methodResponse: testRunData
-                  ? testRunData.methodResponse
-                  : 'No data available',
-                resultStatus: testRunData
-                  ? testRunData.resultStatus
-                  : 'failure',
-                resultDescription: testRunData
-                  ? testRunData.resultDescription
-                  : '',
-                testDataSource:
-                  testRunData && testRunData.testDataSource
-                    ? testRunData.testDataSource
-                    : '',
-                methodUrl:
-                  testRunData && testRunData.methodUrl
-                    ? testRunData.methodUrl
-                    : '',
-              });
+              if (!matchFound) {
+                tableData.push({
+                  testCaseType: testCase.testCaseType,
+                  testName: testCase.testName,
+                  testId: testCase.testId,
+                  testDescription: testCase.testDescription,
+                  methodName: testCase.methodName,
+                  methodId: '',
+                  methodRequest: NO_DATA_AVAILABLE,
+                  methodResponse: NO_DATA_AVAILABLE,
+                  resultStatus: appConstants.FAILURE,
+                  resultDescription: '',
+                  testDataSource: '',
+                  methodUrl: '',
+                  executionStatus:
+                    appConstants.INCOMPLETE_STATUS,
+                });
+              }
             }
             this.dataSource = new MatTableDataSource(tableData);
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
-  async getCollection() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getCollection(this.collectionId).subscribe(
-          (response: any) => {
-            this.collectionName = response['response']['name'];
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
-  async getTestcasesForCollection() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getTestcasesForCollection(this.collectionId).subscribe(
-          (response: any) => {
-            let testcases = response['response']['testcases'];
-            //sort the testcases based on the testId
-            if (testcases && testcases.length > 0) {
-              testcases.sort(function (a: TestCaseModel, b: TestCaseModel) {
-                if (a.testId > b.testId) return 1;
-                if (a.testId < b.testId) return -1;
-                return 0;
-              });
-            }
-            this.testcasesList = testcases;
-            if (this.userProfileService.getUserPreferredLanguage()) {
-              let testcasesListTranslated = [];
-              for (let testcase of this.testcasesList) {
-                testcasesListTranslated.push(Utils.translateTestcase(testcase, this.resourceBundleJson));
-              }
-              this.testcasesList = testcasesListTranslated;
-            }
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
-  async getSbiProjectDetails() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getSbiProject(this.projectId).subscribe(
-          (response: any) => {
-            this.sbiProjectData = response['response'];
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
-  async getSdkProjectDetails() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getSdkProject(this.projectId).subscribe(
-          (response: any) => {
-            this.sdkProjectData = response['response'];
-            resolve(true);
-          },
-          (errors: any) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
-  }
-
-  async getAbisProjectDetails() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService.getAbisProject(this.projectId).subscribe(
-          (response: any) => {
-            this.abisProjectData = response['response'];
             resolve(true);
           },
           (errors) => {
@@ -329,8 +273,8 @@ export class TestRunComponent implements OnInit {
     }
   }
   getValidatorDetails(item: any) {
-    return this.resourceBundleJson.validators[item.validatorName] 
-      ? `${item.validatorName} (${this.resourceBundleJson.validators[item.validatorName]})` 
+    return this.resourceBundleJson.validators[item.validatorName]
+      ? `${item.validatorName} (${this.resourceBundleJson.validators[item.validatorName]})`
       : `${item.validatorName} (${item.validatorDescription})`;
   }
 
@@ -348,6 +292,55 @@ export class TestRunComponent implements OnInit {
     } else {
       return "";
     }
+  }
+
+  getProjectName() {
+    let name = "";
+    if (this.sbiProjectData)
+      name = this.sbiProjectData.name;
+    if (this.sdkProjectData)
+      name = this.sdkProjectData.name;
+    if (this.abisProjectData)
+      name = this.abisProjectData.name;
+    return name;
+  }
+
+  downloadReport() {
+    this.dataLoaded = false;
+    let reportrequest = {
+      projectType: this.projectType,
+      projectId: this.projectId,
+      collectionId: this.collectionId,
+      testRunId: this.runId
+    }
+    let request = {
+      id: appConstants.CREATE_REPORT_ID,
+      version: appConstants.VERSION,
+      requesttime: new Date().toISOString(),
+      request: reportrequest,
+    };
+    const subs = this.dataService.createReport(request).subscribe(
+      (res: any) => {
+        this.dataLoaded = true;
+        if (res) {
+          const fileByteArray = res;
+          var blob = new Blob([fileByteArray], { type: 'application/pdf' });
+          var link = document.createElement('a');
+          link.href = window.URL.createObjectURL(blob);
+          link.download = this.getProjectName();
+          link.click();
+        } else {
+          Utils.showErrorMessage(this.resourceBundleJson,
+            null,
+            this.dialog,
+            'Unable to download PDF file. Try Again!');
+        }
+      },
+      (errors) => {
+        Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
+      }
+    );
+    this.subscriptions.push(subs);
   }
 
   async backToProject() {

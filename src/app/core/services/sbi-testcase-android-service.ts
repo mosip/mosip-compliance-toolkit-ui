@@ -7,13 +7,14 @@ import { SbiDiscoverResponseModel } from '../models/sbi-discover';
 import Utils from 'src/app/app.utils';
 import { MosipSbiCapacitorPlugin } from 'mosip-sbi-capacitor-plugin';
 import { UserProfileService } from './user-profile.service';
-import { error } from 'console';
+import SBIHelper from 'src/app/sbi-helper';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SbiTestCaseAndroidService {
   resourceBundleJson: any = {};
+  isAndroidApp = true;
   constructor(
     private dataService: DataService,
     private appConfigService: AppConfigService,
@@ -25,10 +26,13 @@ export class SbiTestCaseAndroidService {
     sbiDeviceType: string,
     callbackId: string,
     sbiSelectedDevice: string,
-    beforeKeyRotationResp: any
+    beforeKeyRotationResp: any,
+    previousHash: string,
+    testRunId: string,
+    projectId: string
   ) {
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
-    const methodRequest = this.createRequest(testCase, sbiSelectedDevice);
+    const methodRequest = this.createRequest(testCase, sbiSelectedDevice, previousHash);
     let startExecutionTime = new Date().toISOString();
     let executeResponse: any = await this.executeMethod(
       testCase,
@@ -40,10 +44,11 @@ export class SbiTestCaseAndroidService {
     console.log(executeResponse);
     let endExecutionTime = new Date().toISOString();
     if (executeResponse) {
-      const decodedMethodResp = this.createDecodedResponse(
+      const decodedMethodResp = SBIHelper.createDecodedResponse(
         testCase.methodName[0],
         executeResponse.methodResponse,
-        sbiSelectedDevice
+        sbiSelectedDevice,
+        this.isAndroidApp
       );
       let performValidations = true;
       if (
@@ -61,14 +66,19 @@ export class SbiTestCaseAndroidService {
       //now validate the method response against all the validators
       let validationResponse: any = {};
       if (performValidations) {
-        validationResponse = await this.validateResponse(
+        validationResponse = await SBIHelper.validateResponse(
           testCase,
           methodRequest,
           decodedMethodResp,
           sbiSelectedDevice,
           startExecutionTime,
           endExecutionTime,
-          beforeKeyRotationResp
+          beforeKeyRotationResp,
+          previousHash,
+          this.dataService,
+          this.appConfigService,
+          testRunId,
+          projectId
         );
       }
       const finalResponse = {
@@ -214,7 +224,8 @@ export class SbiTestCaseAndroidService {
   }
 
 
-  createRequest(testCase: TestCaseModel, sbiSelectedDevice: string): any {
+  createRequest(testCase: TestCaseModel, sbiSelectedDevice: string, 
+    previousHash: string): any {
     const selectedSbiDevice: SbiDiscoverResponseModel =
       JSON.parse(sbiSelectedDevice);
     let request: any = {};
@@ -225,284 +236,12 @@ export class SbiTestCaseAndroidService {
       //no params
     }
     if (testCase.methodName[0] == appConstants.SBI_METHOD_CAPTURE) {
-      request = {
-        env: appConstants.DEVELOPER,
-        purpose: selectedSbiDevice.purpose,
-        specVersion: selectedSbiDevice.specVersion[0],
-        timeout: this.getTimeout(testCase),
-        captureTime: new Date().toISOString(),
-        transactionId: testCase.testId + '-' + new Date().getUTCMilliseconds(),
-        domainUri: '', //TODO
-        bio: [
-          {
-            type: selectedSbiDevice.digitalIdDecoded.type,
-            count: testCase.otherAttributes.bioCount,
-            requestedScore: testCase.otherAttributes.requestedScore,
-            deviceId: selectedSbiDevice.deviceId,
-            deviceSubId: testCase.otherAttributes.deviceSubId,
-            previousHash: '',
-            bioSubType: this.getBioSubType(testCase.otherAttributes.segments),
-          },
-        ],
-        //customOpts: null,
-      };
+      request = SBIHelper.captureRequest(selectedSbiDevice, testCase, previousHash, this.appConfigService);
     }
     if (testCase.methodName[0] == appConstants.SBI_METHOD_RCAPTURE) {
-      request = {
-        env: appConstants.DEVELOPER,
-        purpose: selectedSbiDevice.purpose,
-        specVersion: selectedSbiDevice.specVersion[0],
-        timeout: this.getTimeout(testCase),
-        captureTime: new Date().toISOString(),
-        transactionId: testCase.testId + '-' + new Date().getUTCMilliseconds(),
-        bio: [
-          {
-            type: selectedSbiDevice.digitalIdDecoded.type,
-            count: testCase.otherAttributes.bioCount,
-            exception: this.getBioSubType(testCase.otherAttributes.exceptions),
-            requestedScore: testCase.otherAttributes.requestedScore,
-            deviceId: selectedSbiDevice.deviceId,
-            deviceSubId: testCase.otherAttributes.deviceSubId,
-            previousHash: '',
-            bioSubType: this.getBioSubType(testCase.otherAttributes.segments),
-          },
-        ],
-        //customOpts: null,
-      };
+      request = SBIHelper.rcaptureRequest(selectedSbiDevice, testCase, previousHash, this.appConfigService);
       request = Utils.handleInvalidRequestAttribute(testCase, request);
     }
     return request;
-  }
-
-  getTimeout(testCase: TestCaseModel) {
-    return testCase.otherAttributes.timeout
-      ? testCase.otherAttributes.timeout.toString()
-      : this.appConfigService.getConfig()['sbiTimeout']
-        ? this.appConfigService.getConfig()['sbiTimeout'].toString()
-        : '10000';
-  }
-  getBioSubType(segments: Array<string>): Array<string> {
-    let bioSubTypes = new Array<string>();
-    segments.forEach((segment) => {
-      let mappedVal = '';
-      switch (segment) {
-        case 'Left':
-          mappedVal = 'Left';
-          break;
-        case 'Right':
-          mappedVal = 'Right';
-          break;
-        case 'RightIndex':
-          mappedVal = 'Right IndexFinger';
-          break;
-        case 'RightMiddle':
-          mappedVal = 'Right MiddleFinger';
-          break;
-        case 'RightRing':
-          mappedVal = 'Right RingFinger';
-          break;
-        case 'RightLittle':
-          mappedVal = 'Right LittleFinger';
-          break;
-        case 'RightThumb':
-          mappedVal = 'Right Thumb';
-          break;
-        case 'LeftIndex':
-          mappedVal = 'Left IndexFinger';
-          break;
-        case 'LeftMiddle':
-          mappedVal = 'Left MiddleFinger';
-          break;
-        case 'LeftRing':
-          mappedVal = 'Left RingFinger';
-          break;
-        case 'LeftLittle':
-          mappedVal = 'Left LittleFinger';
-          break;
-        case 'LeftThumb':
-          mappedVal = 'Left Thumb';
-          break;
-        case 'Face':
-          mappedVal = 'null';
-          break;
-        case 'UNKNOWN':
-          mappedVal = 'UNKNOWN';
-          break;
-      }
-      bioSubTypes.push(mappedVal);
-    });
-    return bioSubTypes;
-  }
-
-  createDecodedResponse(
-    testcaseMethodName: string,
-    methodResponse: any,
-    sbiSelectedDevice: string
-  ): any {
-    const selectedSbiDevice: SbiDiscoverResponseModel =
-      JSON.parse(sbiSelectedDevice);
-    if (testcaseMethodName == appConstants.SBI_METHOD_DISCOVER) {
-      let decodedDataArr: SbiDiscoverResponseModel[] = [];
-      const decodedData = Utils.getDecodedDiscoverDevice(methodResponse);
-      if (decodedData != null) {
-        decodedDataArr.push(decodedData);
-      }
-      return decodedDataArr;
-    }
-    if (testcaseMethodName == appConstants.SBI_METHOD_DEVICE_INFO) {
-      let decodedDataArr: any[] = [];
-      methodResponse.forEach((deviceInfoResp: any) => {
-
-        if (deviceInfoResp && !deviceInfoResp.deviceInfo) {
-          decodedDataArr.push(deviceInfoResp);
-        } else if (deviceInfoResp && deviceInfoResp.deviceInfo == '') {
-          decodedDataArr.push(deviceInfoResp);
-        } else {
-          //chk if device is registered
-          let arr = deviceInfoResp.deviceInfo.split('.');
-          if (arr.length >= 3) {
-            //this is registered device
-            const decodedData: any = Utils.getDecodedDeviceInfo(deviceInfoResp);
-            if (
-              Utils.chkDeviceTypeSubTypeForDeviceInfo(
-                decodedData,
-                selectedSbiDevice
-              )
-            ) {
-              decodedDataArr.push(decodedData);
-            }
-          } else {
-            //this is unregistered device
-            const decodedData: any =
-              Utils.getDecodedUnregistetedDeviceInfo(deviceInfoResp);
-            if (
-              Utils.chkDeviceTypeSubTypeForDeviceInfo(
-                decodedData,
-                selectedSbiDevice
-              )
-            ) {
-              decodedDataArr.push(decodedData);
-            }
-          }
-        }
-      });
-      return decodedDataArr;
-    }
-    if (
-      testcaseMethodName == appConstants.SBI_METHOD_CAPTURE ||
-      testcaseMethodName == appConstants.SBI_METHOD_RCAPTURE
-    ) {
-      let decodedDataArr: any[] = [];
-      methodResponse.biometrics.forEach((bioResp: any) => {
-        if (bioResp && bioResp.data == '') {
-          decodedDataArr.push(bioResp);
-        } else {
-          //chk if device is registered
-          let arr = bioResp.data.split('.');
-          if (arr.length >= 3) {
-            //this is registered device
-            const decodedData: any = Utils.getDecodedDataInfo(bioResp);
-            if (
-              Utils.chkDeviceTypeSubTypeForData(decodedData, selectedSbiDevice)
-            ) {
-              decodedDataArr.push(decodedData);
-            }
-          } else {
-            //this is unregistered device
-            const decodedData: any = Utils.getDecodedUnregistetedData(bioResp);
-            if (
-              Utils.chkDeviceTypeSubTypeForData(decodedData, selectedSbiDevice)
-            ) {
-              decodedDataArr.push(decodedData);
-            }
-          }
-        }
-      });
-      return {
-        biometrics: decodedDataArr,
-      };
-    }
-    return methodResponse;
-    //return JSON.stringify(request);
-  }
-
-  async validateResponse(
-    testCase: TestCaseModel,
-    methodRequest: any,
-    methodResponse: any,
-    sbiSelectedDevice: string,
-    startExecutionTime: string,
-    endExecutionTime: string,
-    beforeKeyRotationResp: any
-  ) {
-    const selectedSbiDevice: SbiDiscoverResponseModel =
-      JSON.parse(sbiSelectedDevice);
-    let validateRequest = {
-      testCaseType: testCase.testCaseType,
-      testName: testCase.testName,
-      specVersion: testCase.specVersion,
-      testDescription: testCase.testDescription,
-      responseSchema: testCase.responseSchema[0],
-      isNegativeTestcase: testCase.isNegativeTestcase
-        ? testCase.isNegativeTestcase
-        : false,
-      methodResponse: JSON.stringify(methodResponse),
-      methodRequest: JSON.stringify(methodRequest),
-      methodName: testCase.methodName[0],
-      extraInfoJson: JSON.stringify({
-        certificationType: selectedSbiDevice.certification,
-        startExecutionTime: startExecutionTime,
-        endExecutionTime: endExecutionTime,
-        timeout: this.getTimeout(testCase),
-        beforeKeyRotationResp: beforeKeyRotationResp
-          ? beforeKeyRotationResp
-          : null,
-        modality: testCase.otherAttributes.biometricTypes[0],
-      }),
-      validatorDefs: testCase.validatorDefs[0],
-    };
-    let request = {
-      id: appConstants.VALIDATIONS_ADD_ID,
-      version: appConstants.VERSION,
-      requesttime: new Date().toISOString(),
-      request: validateRequest,
-    };
-    return new Promise((resolve, reject) => {
-      this.dataService.validateResponse(request).subscribe(
-        (response) => {
-          resolve(response);
-        },
-        (errors) => {
-          resolve(errors);
-        }
-      );
-    });
-  }
-
-  async validateRequest(testCase: TestCaseModel, methodRequest: any) {
-    let validateRequest = {
-      testCaseType: testCase.testCaseType,
-      testName: testCase.testName,
-      specVersion: testCase.specVersion,
-      testDescription: testCase.testDescription,
-      requestSchema: testCase.requestSchema[0],
-      methodRequest: JSON.stringify(methodRequest),
-    };
-    let request = {
-      id: appConstants.VALIDATIONS_ADD_ID,
-      version: appConstants.VERSION,
-      requesttime: new Date().toISOString(),
-      request: validateRequest,
-    };
-    return new Promise((resolve, reject) => {
-      this.dataService.validateRequest(request).subscribe(
-        (response) => {
-          resolve(response);
-        },
-        (errors) => {
-          resolve(errors);
-        }
-      );
-    });
   }
 }

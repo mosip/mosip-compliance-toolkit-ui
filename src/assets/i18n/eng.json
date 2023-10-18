@@ -6,7 +6,16 @@
 		"successMessage": "Project created successfully",
 		"close": "Close",
 		"logout": "Logout",
-		"addTestDataSuccessMsg": "Test data added successfully."
+		"addTestDataSuccessMsg": "Test data added successfully.",
+		"deviceImagesIsInvalid": "Device Image is Invalid",
+		"sbiHashIsInvalid": "SBI Hash is Invalid",
+		"sdkHashIsInvalid": "SDK Hash is Invalid",
+		"abisHashIsInvalid": "ABIS Hash is Invalid",
+		"websiteUrlIsInvalid": "Website URL is Invalid",
+		"updateProject": "Update Project",
+		"deviceImages": "Device Images",
+		"uploadDeviceImages": "Upload Device Images",
+		"addImage": "Add Image"
 	},
 	"breadcrumb": {
 		"home": "Home",
@@ -37,7 +46,9 @@
 		"success": "Success",
 		"failure": "Failure",
 		"projectRow": "There are no projects available.",
-		"tableDescription": "List of Projects"
+		"tableDescription": "List of Projects",
+		"title": "Update Project Details",
+		"message": "Add the following fields required for the Project, to proceed."
 	},
 	"biometricDashboard": {
 		"projectDashboard": "Projects Dashboard",
@@ -87,7 +98,24 @@
 		"activeMqUrl": "Active MQ URL:",
 		"requestQueueName": "Request Queue Name:",
 		"responseQueueName": "Response Queue Name:",
-		"invalidPartnerTypeMsg": "ABIS partner can only create an ABIS project"
+		"invalidPartnerTypeMsg": "ABIS partner can only create an ABIS project",
+		"modality": "Modality",
+		"modalityIsRequired": "Modality is required",
+		"deviceImages": "Device Images:",
+		"deviceImagesIsRequired": "Device Images is required",
+		"make": "Make:",
+		"makeIsRequired": "Make is required",
+		"model": "Model:",
+		"modelIsRequired": "Model is required",
+		"sbiHash": "SBI Hash:",
+		"sbiHashIsRequired": "SBI Hash is required",
+		"websiteUrl": "Website URL:",
+		"websiteUrlIsRequired": "Website URL is required",
+		"sdkHash": "SDK Hash:",
+		"sdkHashIsRequired": "SDK Hash is required",
+		"abisHash": "ABIS Hash:",
+		"abisHashIsRequired": "ABIS Hash is required",
+		"selectDeviceImages": "Upload Device Images"
 	},
 	"addTestData": {
 		"name": "Name:",
@@ -136,7 +164,24 @@
 		"activeMqUrl": "Active MQ URL:",
 		"requestQueueName": "Request Queue Name:",
 		"responseQueueName": "Response Queue Name:",
-		"tableDescription": "List of Collections"
+		"tableDescription": "List of Collections",
+		"modality": "Modality",
+		"modalityIsRequired": "Modality is required",
+		"deviceImages": "Device Images:",
+		"deviceImagesIsRequired": "Device Images is required",
+		"make": "Make:",
+		"makeIsRequired": "Make is required",
+		"model": "Model:",
+		"modelIsRequired": "Model is required",
+		"sbiHash": "SBI Hash:",
+		"sbiHashIsRequired": "SBI Hash is required",
+		"websiteUrl": "Website URL:",
+		"websiteUrlIsRequired": "Website URL is required",
+		"sdkHash": "SDK Hash:",
+		"sdkHashIsRequired": "SDK Hash is required",
+		"abisHash": "ABIS Hash:",
+		"abisHashIsRequired": "ABIS Hash is required",
+		"viewDeviceImages": "View Device Images"
 	},
 	"testRunHistory": {
 		"runDate": "Run Date",
@@ -166,7 +211,12 @@
 		"methodUrl": "Method URL",
 		"testDataSource": "Test Data Source",
 		"back": "Back",
-		"tableDescription": "Test Run Details"
+		"tableDescription": "Test Run Details",
+		"executionStatus": "Execution Status",
+		"complete": "Complete",
+		"incomplete": "Incomplete",
+		"testRunStatus": "Test Run Status",
+		"testRunExecutionStatus": "Execution Status"
 	},
 	"addCollections": {
 		"collectionName": "Collection Name:",
@@ -257,13 +307,14 @@
 	"validators": {
 		"SchemaValidator": "Validates the response for mandatory attributes and correct values",
 		"SignatureValidator": "Validates the response signature",
-		"ResponseMismatchValidator": "Validates the response to check if  bioCount, exceptions and segments match the ones set in request",
+		"ResponseMismatchValidator": "Validates the response to check if  bioCount, exceptions, segments and transactionId match the ones set in request",
 		"TransactionIdValidator": "Validates the methodRequest and methodResponse transactionId are same",
 		"KeyRotationValidator": "Validator to validate the device key rotation",
 		"TimeoutValidator": "Validates if response is received within the given timeout period or not",
 		"ISOStandardsValidator": "Validates that the 'bioValue' is as per the defined ISO standards.",
 		"BiometricsQualityCheckValidator": "Checks the quality of biometrics using all configured SDK services",
 		"TimeCheckValidator": "Validates if response is received within the given timestamp interval or not",
+		"HashValidator": "Validates the 'hash value' received in the response matches 'previous hash' in request",
 		"QualityCheckValidator": "Checks the quality score of the modality",
 		"QualityCheckInvalidDataValidator": "Validates the status code for invalid data",
 		"QualityCheckNoDataValidator": "Validates the status code for no data",
@@ -282,7 +333,8 @@
 		"ConvertNoInputDataValidator": "Validates if no input BDB data present in the Probe",
 		"ExpectedFailureReasonValidator": "Validates the failure reason to match the expected value",
 		"IdentifyDuplicateFoundValidator": "Validates the count of duplicates found by ABIS for the given referenceId",
-		"ExpectedDuplicateCountValidator": "Validates the duplicates found to match the expected value"
+		"ExpectedDuplicateCountValidator": "Validates the duplicates found to match the expected value",
+		"ABISTokenValidator": "Validates that ABIS is not generating a new token for every insert request, unless token has expired"
 	},
 	"testcases": {
 		"SBI1000": {
@@ -465,87 +517,87 @@
 			"androidTestDescription": "Test to validate bio count mismatch for registration both iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place both your iris on the device until the capture completes"
 		},
 		"SBI1040": {
-			"testName": "Registration capture - Face - Timeout",
+			"testName": "Registration capture - Face - Timeout (without any input)",
 			"testDescription": "Test to validate face timeout<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Donot place your face infront of the camera and wait for capture to timeout",
 			"androidTestDescription": "Test to validate face timeout<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Do not place your face infront of the camera and wait for capture to timeout"
 		},
 		"SBI1041": {
-			"testName": "Registration capture - Double Iris - Timeout",
+			"testName": "Registration capture - Double Iris - Timeout (without any input)",
 			"testDescription": "Test to validate iris timeout<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Do not place your iris on the iris scanner and wait for capture to timeout",
 			"androidTestDescription": "Test to validate iris timeout<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Do not place your iris on the iris scanner and wait for capture to timeout"
 		},
 		"SBI1042": {
-			"testName": "Registration capture - Left Slap - Timeout",
+			"testName": "Registration capture - Left Slap - Timeout (without any input)",
 			"testDescription": "Test to validate left slap timeout<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Do not place your fingers on the slap scanner and wait for capture to timeout",
 			"androidTestDescription": "Test to validate left slap timeout<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Do not place your fingers on the slap scanner and wait for capture to timeout"
 		},
 		"SBI1043": {
-			"testName": "Registration capture - Right Slap - Timeout",
+			"testName": "Registration capture - Right Slap - Timeout (without any input)",
 			"testDescription": "Test to validate right slap timeout<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Do not place your fingers on the slap scanner and wait for capture to timeout",
 			"androidTestDescription": "Test to validate right slap timeout<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Do not place your fingers on the slap scanner and wait for capture to timeout"
 		},
 		"SBI1044": {
-			"testName": "Registration capture - Two Thumbs - Timeout",
+			"testName": "Registration capture - Two Thumbs - Timeout (without any input)",
 			"testDescription": "Test to validate thumb timeout<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Do not place your fingers on the slap scanner and wait for capture to timeout",
 			"androidTestDescription": "Test to validate thumb timeout<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Do not place your fingers on the slap scanner and wait for capture to timeout"
 		},
 		"SBI1045": {
-			"testName": "Registration capture - Exception Photo - Timeout",
+			"testName": "Registration capture - Exception Photo - Timeout (without any input)",
 			"testDescription": "Test to validate exception photo timeout<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Do not place your face infront of the camera and wait for capture to timeout",
 			"androidTestDescription": "Test to validate exception photo timeout<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Do not place your face infront of the camera and wait for capture to timeout"
 		},
 		"SBI1046": {
-			"testName": "Auth capture - Face - Timeout",
+			"testName": "Auth capture - Face - Timeout (without any input)",
 			"testDescription": "Test to validate face timeout<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Do not place your face infront of the camera and wait for capture to timeout"
 		},
 		"SBI1047": {
-			"testName": "Auth capture - Single Iris - Unknown Iris - Timeout",
+			"testName": "Auth capture - Single Iris - Unknown Iris - Timeout (without any input)",
 			"testDescription": "Test to validate iris timeout<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Donot place your iris on ths iris scanner and wait for capture to timeout"
 		},
 		"SBI1048": {
-			"testName": "Auth capture - Unknown Finger - Timeout",
+			"testName": "Auth capture - Unknown Finger - Timeout (without any input)",
 			"testDescription": "Test to validate finger timeout<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Donot place your finger on the finger scanner and wait for capture to timeout"
 		},
 		"SBI1049": {
-			"testName": "Registration capture - Face - Force Capture",
-			"testDescription": "Force Capture validation for registration capture request for face<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your face infront of the camera and wait for capture",
-			"androidTestDescription": "Force Capture validation for registration capture request for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera and wait for capture"
+			"testName": "Registration capture - Face - Timeout (with user input)",
+			"testDescription": "Timeout validation for registration capture request for face<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your face infront of the camera and wait for capture",
+			"androidTestDescription": "Timeout validation for registration capture request for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera and wait for capture"
 		},
 		"SBI1050": {
-			"testName": "Registration capture - Double Iris - Force Capture",
-			"testDescription": "Force Capture validation for registration capture request for double iris<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your iris infront of the camera and wait for capture",
-			"androidTestDescription": "Force Capture validation for registration capture request for double iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your iris infront of the camera and wait for capture"
+			"testName": "Registration capture - Double Iris - Timeout (with user input)",
+			"testDescription": "Timeout validation for registration capture request for double iris<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your iris infront of the camera and wait for capture",
+			"androidTestDescription": "Timeout validation for registration capture request for double iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your iris infront of the camera and wait for capture"
 		},
 		"SBI1051": {
-			"testName": "Registration capture - Left Slap - Force Capture",
-			"testDescription": "Force Capture validation for registration capture request for Left Slap<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your left slap on device and wait for capture",
-			"androidTestDescription": "Force Capture validation for registration capture request for Left Slap<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your left slap on device and wait for capture"
+			"testName": "Registration capture - Left Slap - Timeout (with user input)",
+			"testDescription": "Timeout validation for registration capture request for Left Slap<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your left slap on device and wait for capture",
+			"androidTestDescription": "Timeout validation for registration capture request for Left Slap<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your left slap on device and wait for capture"
 		},
 		"SBI1052": {
-			"testName": "Registration capture - Right Slap - Force Capture",
-			"testDescription": "Force Capture validation for registration capture request for Right Slap<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your right slap on device and wait for capture",
-			"androidTestDescription": "Force Capture validation for registration capture request for Right Slap<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right slap on device and wait for capture"
+			"testName": "Registration capture - Right Slap - Timeout (with user input)",
+			"testDescription": "Timeout validation for registration capture request for Right Slap<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your right slap on device and wait for capture",
+			"androidTestDescription": "Timeout validation for registration capture request for Right Slap<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right slap on device and wait for capture"
 		},
 		"SBI1053": {
-			"testName": "Registration capture - Two Thumbs - Force Capture",
-			"testDescription": "Force Capture validation for registration capture request for Two Thumbs<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your two thumbs on device and wait for capture",
-			"androidTestDescription": "Force Capture validation for registration capture request for Two Thumbs<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your two thumbs on device and wait for capture"
+			"testName": "Registration capture - Two Thumbs - Timeout (with user input)",
+			"testDescription": "Timeout validation for registration capture request for Two Thumbs<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your two thumbs on device and wait for capture",
+			"androidTestDescription": "Timeout validation for registration capture request for Two Thumbs<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your two thumbs on device and wait for capture"
 		},
 		"SBI1054": {
-			"testName": "Registration capture - Exception Photo - Force Capture",
-			"testDescription": "Force Capture validation for Face device type exception value left little finger or any will give Exception photo "
+			"testName": "Registration capture - Exception Photo - Timeout (with user input)",
+			"testDescription": "Timeout validation for Face device type exception value left little finger or any will give Exception photo "
 		},
 		"SBI1055": {
-			"testName": "Auth capture - Face - Force Capture",
-			"testDescription": "Force Capture validation for Auth capture Request only for Face"
+			"testName": "Auth capture - Face - Timeout (with user input)",
+			"testDescription": "Timeout validation for Auth capture Request only for Face"
 		},
 		"SBI1056": {
-			"testName": "Auth capture - Single Iris - Unknown Iris - Force Capture",
-			"testDescription": "Force Capture validation for Auth capture Request for Unknown iris"
+			"testName": "Auth capture - Single Iris - Unknown Iris - Timeout (with user input)",
+			"testDescription": "Timeout validation for Auth capture Request for Unknown iris"
 		},
 		"SBI1057": {
-			"testName": "Auth capture - Unknown Finger - Force Capture",
-			"testDescription": "Force Capture validation for Auth capture Request for Unknown Finger"
+			"testName": "Auth capture - Unknown Finger - Timeout (with user input)",
+			"testDescription": "Timeout validation for Auth capture Request for Unknown Finger"
 		},
 		"SBI1058": {
 			"testName": "Auth capture - 10 Fingers",
@@ -742,6 +794,78 @@
 			"testName": "Registration capture - Exception Photo - Invalid Request Json (wrong attribute name deviceSubIdXXX)",
 			"testDescription": "Test to validate invalid request json in RCapture method for exception photo<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Raise your hands during capture",
 			"androidTestDescription": "Test to validate invalid request json in RCapture method for exception photo<br><br>Steps:<br><br>1. Click on Inititate Capture button to start the capture <br>2. Raise your hands during capture"
+		},
+		"SBI1101": {
+			"testName": "Registration capture - Left Slap - Hash Validations",
+			"testDescription": "Test to validate the RCapture interface for Left Slap Fingerprints<br><br>Steps:<br>1. Click on Start Streaming button. <br>2. Once streaming is done, click on Inititate Capture button to start the capture.  <br> 3. Place your left slap on the device until the capture completes",
+			"androidTestDescription": "Test to validate the RCapture interface for Left Slap Fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place your left slap on the device until the capture completes"
+		},
+		"SBI1102": {
+			"testName": "Registration capture - Face - Hash Validations",
+			"testDescription": "Test to validate RCapture interface for face<br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your face infront of the camera until the capture completes",
+			"androidTestDescription": "Test to validate RCapture interface for face<br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera until the capture completes"
+		},
+		"SBI1103":{
+			"testName": "Registration capture - Right Slap - Hash Validations",
+			"testDescription": "Test to validate RCapture interface for Right Slap Fingerprints<br>Steps:<br>1. Click on Start Streaming button.<br>3. Once streaming is done, click on Inititate Capture button to start the capture <br>2. Place your right slap on the device until the capture completes",
+			"androidTestDescription": "Test to validate RCapture interface for Right Slap Fingerprints<br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right slap on the device until the capture completes"
+		},
+		"SBI1104":{
+			"testName": "Registration capture - Double Iris- Hash Validations",
+			"testDescription": "Test to validate RCapture interface for Two Iris<br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place both your iris on the device until the capture completes",
+			"androidTestDescription": "Test to validate RCapture interface for Two Iris<br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place both your iris on the device until the capture completes"
+		},
+		"SBI1105":{
+			"testName": "Auth capture - Face - Hash Validations",
+			"testDescription": "Test to validate Capture method for face<br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera until the capture completes"
+		},
+		"SBI1106":{
+			"testName": "Auth capture - Single Iris - Unknown Iris - Hash Validations",
+			"testDescription": "Test to validate Capture method for a single iris<br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place one of your iris infront of the iris scanner"
+		},
+		"SBI1107":{
+			"testName": "Auth capture - Unknown Finger - Hash Validations",
+			"testDescription": "Test to validate Capture method for a finger<br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place one of your finger on the single fingerprint scanner"
+		},
+		"SBI1108":{
+			"testName": "Quality Assessment for Registration capture - Left Slap - Males - 30 to 40 - labourer",
+			"testDescription": "Quality Assessment Testcase to validate the biometrics captured by RCapture interface for left slap fingerprints for - Males - 30 to 40 - labourer <br><br>Steps:<br>1. Click on Start Streaming button. <br>2. Once streaming is done, click on Inititate Capture button to start the capture.  <br> 3. Place your left slap on the device until the capture completes<br> 4. Repeat above steps , for next person, after clicking on Continue button.",
+			"androidTestDescription": "Quality Assessment Testcase validate the biometrics captured by RCapture interface for left slap fingerprints for - Males - 30 to 40 - labourer <br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place your left slap on the device until the capture completes<br> 3. Repeat above steps, for next person, after clicking on Continue button."
+		},
+		"SBI1109":{
+			"testName": "Quality Assessment for Registration capture - Left Slap - Males - 30 to 40 - farmer",
+			"testDescription": "Quality Assessment Testcase to validate the biometrics captured by RCapture interface for left slap fingerprints for - Males - 30 to 40 - farmer <br><br>Steps:<br>1. Click on Start Streaming button. <br>2. Once streaming is done, click on Inititate Capture button to start the capture.  <br> 3. Place your left slap on the device until the capture completes<br> 4. Repeat above steps , for next person, after clicking on Continue button.",
+			"androidTestDescription": "Quality Assessment Testcase validate the biometrics captured by RCapture interface for left slap fingerprints for - Males - 30 to 40 - farmer <br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place your left slap on the device until the capture completes<br> 3. Repeat above steps, for next person, after clicking on Continue button."
+		},
+		"SBI1110":{
+			"testName": "Quality Assessment for Registration capture - Left Slap - Females - 50 to 60 - labourer",
+			"testDescription": "Quality Assessment Testcase to validate the biometrics captured by RCapture interface for left slap fingerprints for - Females - 50 to 60 - labourer <br><br>Steps:<br>1. Click on Start Streaming button. <br>2. Once streaming is done, click on Inititate Capture button to start the capture.  <br> 3. Place your left slap on the device until the capture completes<br> 4. Repeat above steps , for next person, after clicking on Continue button.",
+		    "androidTestDescription": "Quality Assessment Testcase validate the biometrics captured by RCapture interface for left slap fingerprints for - Females - 50 to 60 - labourer <br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place your left slap on the device until the capture completes<br> 3. Repeat above steps, for next person, after clicking on Continue button."
+		},
+		"SBI1111":{
+			"testName": "Quality Assessment for Registration capture - Left Slap - Females - 50 to 60 - doctor",
+			"testDescription": "Quality Assessment Testcase to validate the biometrics captured by RCapture interface for left slap fingerprints for - Females - 50 to 60 - doctor <br><br>Steps:<br>1. Click on Start Streaming button. <br>2. Once streaming is done, click on Inititate Capture button to start the capture.  <br> 3. Place your left slap on the device until the capture completes<br> 4. Repeat above steps , for next person, after clicking on Continue button.",
+		    "androidTestDescription": "Quality Assessment Testcase validate the biometrics captured by RCapture interface for left slap fingerprints for - Females - 50 to 60 - doctor <br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place your left slap on the device until the capture completes<br> 3. Repeat above steps, for next person, after clicking on Continue button."
+		},
+		"SBI1112": {
+			"testName": "Registration capture - Left Slap - Invalid Transaction Id",
+			"testDescription": "Test to validate transactionId of RCapture method for Left Slap Fingerprints<br><br>Steps:<br>1. Click on Start Streaming button. <br>2. Once streaming is done, click on Inititate Capture button to start the capture.  <br> 3. Place your left slap on the device until the capture completes",
+			"androidTestDescription": "Test to validate transactionId of RCapture method for Left Slap Fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place your left slap on the device until the capture completes"
+		},
+		"SBI1113": {
+			"testName": "Registration capture - Right Slap - Invalid Transaction Id",
+			"testDescription": "Test to validate transactionId of RCapture method for Right Slap Fingerprints<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your right slap on the device until the capture completes",
+			"androidTestDescription": "Test to validate transactionId of RCapture method for Right Slap Fingerprints<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right slap on the device until the capture completes"
+		},
+		"SBI1114": {
+			"testName": "Registration capture - Double Iris - Invalid Transaction Id",
+			"testDescription": "Test to validate transactionId of RCapture method for Two Iris<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place both your iris on the device until the capture completes",
+			"androidTestDescription": "Test to validate transactionId of RCapture method for Two Iris<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place both your iris on the device until the capture completes"
+		},
+		"SBI1115": {
+			"testName": "Registration capture - Face - Invalid Transaction Id",
+			"testDescription": "Test to validate transactionId of RCapture method for face<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place your face infront of the camera until the capture completes",
+			"androidTestDescription": "Test to validate transactionId of RCapture method for face<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your face infront of the camera until the capture completes"
 		},
 		"SDK2000": {
 			"testName": "Init Test",
@@ -1166,16 +1290,25 @@
 		"ABIS3029": {
 			"testName": "Identify - duplicate not found for the referenceId against gallery",
 			"testDescription": "Identify - duplicate not found for the referenceId against gallery"
+		},
+		"ABIS3030": {
+			"testName": "Verify if ABIS is not generating new tokens for every insert request",
+			"testDescription": "Verify if ABIS is not generating new tokens for every insert request"
+		},
+		"ABIS3031": {
+			"testName": "Verify if ABIS is able to generate a new token when one has expired without sending an error response back in the queue",
+			"testDescription": "Verify if ABIS is able to generate a new token when one has expired without sending an error response back in the queue"
 		}
 	},
 	"validatorMessages": {
 		"BR_TAG": "<br>",
 		"SCHEMA_VALIDATOR_001": "JSON is as expected. All mandatory values are available and they all have valid expected values.",
-		"RESPONSE_MISMATCH_VALIDATOR_001": "The bioCount, segments and exceptions in response match the request.",
+		"RESPONSE_MISMATCH_VALIDATOR_001": "The bioCount, segments, exceptions and transactionId in response match the request.",
 		"RESPONSE_MISMATCH_VALIDATOR_002": "ResponseMismatchValidator failed due to biocount mismatch. In request, bioCount = {} and in response, bioCount = {}",
 		"RESPONSE_MISMATCH_VALIDATOR_003": "ResponseMismatchValidator failed due to purpose mismatch. In request, purpose = {} and in response, purpose = {}",
 		"RESPONSE_MISMATCH_VALIDATOR_004": "ResponseMismatchValidator failed, due to invalid Response BioSubType.",
 		"RESPONSE_MISMATCH_VALIDATOR_005": "ResponseMismatchValidator failed due to exception, biosubtype = {} is not valid",
+		"RESPONSE_MISMATCH_VALIDATOR_006": "ResponseMismatchValidator failed due to transactionId mismatch. In request, transactionId = {} and in response, transactionId = {}",
 		"TRANSACTIONID_VALIDATOR_001": "Transaction Id validation is successful",
 		"TRANSACTIONID_VALIDATOR_002": "Transaction Id validation failed.",
 		"KEY_ROTATION_VALIDATOR_001": "Key Rotation validations are successful.",
@@ -1203,17 +1336,13 @@
 		"TIMECHECK_VALIDATOR_002": "Time Check validation failed. Timestamp interval given: {} m. Response received in: {} m",
 		"EXTRACT_TEMPLATE_VALIDATOR_001": "Extract Template validation is successful",
 		"EXTRACT_TEMPLATE_VALIDATOR_002": "Extract Template status code failed, received: {}",
-		"EXTRACT_TEMPLATE_NO_INPUT_DATA_VALIDATOR_001": "For invalid data, expected status code received: {}",
-		"EXTRACT_TEMPLATE_NO_INPUT_DATA_VALIDATOR_002": "For invalid data, unexpected status code received: {}",
-		"EXTRACT_TEMPLATE_INVALID_DATA_VALIDATOR_001": "For invalid data, expected status code received: {}",
-		"EXTRACT_TEMPLATE_INVALID_DATA_VALIDATOR_002": "For invalid data, unexpected status code received: {}",
+		"INVALID_DATA_VALIDATOR_001": "For invalid data, expected status code received: {}",
+		"INVALID_DATA_VALIDATOR_002": "For invalid data, unexpected status code received: {}",
 		"MATCH_VALIDATOR_001": "Positive Match for ",
 		"MATCH_VALIDATOR_002": " is successful for gallery",
 		"MATCH_VALIDATOR_003": "Negative Match for ",
 		"MATCH_VALIDATOR_004": " failed for gallery",
 		"MATCH_VALIDATOR_005": "Match status code failed, received: {}",
-		"MATCH_INVALID_DATA_VALIDATOR_001": "For invalid data, expected status code received: {}",
-		"MATCH_INVALID_DATA_VALIDATOR_002": "For invalid data, unexpected status code received: {}",
 		"MATCH_NO_DATA_VALIDATOR_001": "No data for Match, expected status code received: {}",
 		"MATCH_NO_DATA_VALIDATOR_002": "No data for Match, unexpected status code received: {}",
 		"QUALITY_CHECK_001": "Quality Check failed, invalid modality: {}",
@@ -1230,16 +1359,8 @@
 		"CONVERT_DATA_VALIDATOR_001": "Convert validation is successful",
 		"CONVERT_DATA_VALIDATOR_002": "Convert validation failed for SourceCode [ {} ] to TargetCode [ {} ]",
 		"CONVERT_DATA_VALIDATOR_003": "Convert status code failed, received: {}",
-		"CONVERT_INVALID_DATA_VALIDATOR_001": "For invalid data, expected status code received: {}",
-		"CONVERT_INVALID_DATA_VALIDATOR_002": "For invalid data, unexpected status code received: {}",
-		"CONVERT_NO_INPUT_DATA_VALIDATOR_001": "For invalid data, expected status code received: {}",
-		"CONVERT_NO_INPUT_DATA_VALIDATOR_002": "For invalid data, unexpected status code received: {}",
 		"SEGMENT_VALIDATOR_001": "Segment validation is successful",
 		"SEGMENT_VALIDATOR_002": "Segment status code failed, received: {}",
-		"SEGMENT_INVALID_DATA_VALIDATOR_001": "For invalid data, expected status code received: {}",
-		"SEGMENT_INVALID_DATA_VALIDATOR_002": "For invalid data, unexpected status code received: {}",
-		"SEGMENT_NO_INPUT_DATA_VALIDATOR_001": "For invalid data, expected status code received: {}",
-		"SEGMENT_NO_INPUT_DATA_VALIDATOR_002": "For invalid data, unexpected status code received: {}",
 		"BIOMETRIC_QUALITY_CHECK_001": "BiometricsQualityCheckValidator validations are not successful.",
 		"BIOMETRIC_QUALITY_CHECK_002": "BiometricsQualityCheckValidator validations are successful.",
 		"BIOMETRIC_QUALITY_CHECK_003": "Unable to connect",
@@ -1381,7 +1502,13 @@
 		"ISO_WARNING_010": "<BR>Invalid Image Compression ratio allowed values Up to 15:1 for Auth",
 		"ISO_WARNING_011": "<BR>Invalid Image Aspect ratio allowed values Up to 1:1",
 		"ISO_WARNING_012": "<BR>Invalid Image Color Space allowed values Up to RGB[24 bit]",
-		"ISO_WARNING_013": "<BR>Invalid Image Minimum resolution between 500 DPI and 1000 DPI"
+		"ISO_WARNING_013": "<BR>Invalid Image Minimum resolution between 500 DPI and 1000 DPI",
+		"HASH_VALIDATOR_001": "Validation of hash chain is successful across multiple captures",
+		"HASH_VALIDATOR_002": "Validation of hash chain failed across multiple captures. Previous Hash for last request was {}, hash generated  by validator is {} and hash received is {}",
+		"HASH_VALIDATOR_003": "Hash validation failure due to: {}",
+		"ABIS_TOKEN_VALIDATOR_001": "Token validation is successful. Verified that ABIS is not generating new tokens for every insert request.",
+		"ABIS_TOKEN_VALIDATOR_002": "Token validation failed, ABIS is generating NEW tokens for every insert request.",
+		"ABIS_TOKEN_VALIDATOR_003": "Token validation failed, since no matching data is available in table for testcase id: {}, testRunId: {} and partnerId: {}"
 	},
 	"serviceErrors": {
 		"TOOLKIT_SUCCESS_000": "Success",

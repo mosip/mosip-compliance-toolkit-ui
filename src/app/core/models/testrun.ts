@@ -7,10 +7,12 @@ export class TestRunModel {
     public testDescription: string,
     public methodUrl: string,
     public methodName: any,
+    public methodId: string,
     public methodRequest: string,
     public methodResponse: string,
     public resultStatus: string,
     public resultDescription: string,
-    public testDataSource: string
+    public testDataSource: string,
+    public executionStatus: string
   ) {}
 }

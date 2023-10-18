@@ -34,6 +34,8 @@ mat-expansion-panel-header {
 }
 .fieldContainerBox{
   width: 300px;
+  white-space: normal;
+  overflow: visible;
 }
 .spacer {
   flex: 0.1;
@@ -96,6 +98,17 @@ mat-expansion-panel-header {
   cursor: pointer;
   color: #ff4081;
 }
+.deviceImgFieldWrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 5px;
+}
+.deviceImgFieldLabel {
+  width: 60px;
+}
 @media screen and (max-width: 2048px) {
   .encryptionkeyButton{
     margin-left: 800px;
@@ -108,9 +121,6 @@ mat-expansion-panel-header {
   }
   .collectionButtonMobile{
     margin-right: 1400px;
-  }
-  .scandeviceButtonREG{
-    margin-left: 1500px;
   }
   .collections-button2{
     position: absolute;
@@ -159,7 +169,7 @@ mat-expansion-panel-header {
   }
   .scandeviceButtonREG{
     float: right;
-    margin-left: 88em;
+    margin-left: 100em;
   }
   .collections-button{
     position: absolute;
@@ -242,7 +252,7 @@ mat-expansion-panel-header {
     margin-right: 45em;
   }
   .scandeviceButtonREG{
-    margin-left: 80em;
+    margin-left: 85em;
   }
   .collectionButtonMobile{
     margin-right: 90em;
@@ -288,8 +298,17 @@ mat-expansion-panel-header {
   .scandeviceButtonREG{
     margin-left: 82.5em;
   }
+  .viewImgBtn {
+    margin-left: -100px;
+  }
 }
 @media screen and (min-width:1280px) and (max-width: 1380px) {
+  .deviceImgFieldContainer {
+    margin-left: 25px;
+  }
+  .deviceImgFieldContainerBox {
+    width: 300px;
+  }
   .actionsHeader{
     width: 2em;
   }
@@ -317,7 +336,7 @@ mat-expansion-panel-header {
     margin-left: 60em;
   }
   .scandeviceButtonREG{
-    margin-left: 74em;
+    margin-left: 77em;
   }
   .collections-button2{
     position: absolute;
@@ -325,11 +344,14 @@ mat-expansion-panel-header {
   .collectionButtonMobile{
     margin-right: 76em;
   }
-  .scandeviceButton-android{
-    margin-left: 60em;
+  .viewImgBtn {
+    margin-left: -100px;
   }
 }
 @media screen and (min-width: 1200px) and (max-width: 1279px) {
+  .deviceImgFieldContainer {
+    margin-left: 30px;
+  }
   .actionsHeader{
     width: 2em;
   }
@@ -345,17 +367,16 @@ mat-expansion-panel-header {
     margin-left: 70em;
   }
   .scandeviceButtonREG{
-    position: absolute;
-    margin-left: 60em;
+    margin-left: 70em;
+  }
+  .viewImgBtn {
+    margin-left: -90px;
   }
 }
-@media screen and (min-width: 1420px) and (max-width: 1200px) {
-  .scandeviceButtonREG{
-    position: absolute;
-    margin-left: 75em;
+@media screen and (min-width: 1139px) and (max-width: 1199px) {
+  .deviceImgFieldContainer {
+    margin-left: 20px;
   }
-}
-@media screen and (min-width: 1140px) and (max-width: 1190px) {
   .collections-button{
     position: absolute;
   }
@@ -374,13 +395,19 @@ mat-expansion-panel-header {
     margin-right: 69em;
   }
   .scandeviceButtonREG{
-    margin-left: 40em;
+    margin-left:68em;
   }
   .collections-button2{
     margin-right: 950px;
   }
+  .viewImgBtn {
+    margin-left: -80px;
+  }
 }
 @media screen and (min-width: 1069px) and (max-width: 1140px) {
+  .deviceImgFieldContainer {
+    margin-left: 15px;
+  }
   .collections-button{
     position: absolute;
     margin-left: 0em;
@@ -395,6 +422,9 @@ mat-expansion-panel-header {
   .scandeviceButton{
     margin-left: 61em;
   }
+  .scandeviceButtonREG{
+    margin-left:62em;
+  }
   .scandeviceButton-mobile{
     position: absolute;
     margin-right: 64em;
@@ -402,8 +432,14 @@ mat-expansion-panel-header {
   .collections-button2{
     margin-right: 850px;
   }
+  .viewImgBtn {
+    margin-left: -80px;
+  }
 }
 @media screen and (min-width: 1024px) and (max-width: 1068px) {
+  .viewImgBtn {
+    margin-left: -70px;
+  }
   .collections-button{
     position: absolute;
   }
@@ -431,11 +467,26 @@ mat-expansion-panel-header {
     position: absolute;
     margin-right: 600px;
   }
+  
   .collections-button2{
     margin-right: 820px;
   }
 }
+@media screen and (max-width: 1023px) {
+  .viewImgBtn {
+    margin-left: -70px;
+  }
+  .scandeviceButtonREG{
+    margin-left: 55em;
+  }
+}
 @media screen and (max-width: 960px) {
+  .deviceImgFieldLabel {
+    display: block;
+  }
+  .viewImgBtn {
+    margin-left: -30px;
+  }
   .collections-button{
     position: absolute;
     margin-left: 0em;
@@ -448,7 +499,7 @@ mat-expansion-panel-header {
     margin-left: 51em;
   }
   .scandeviceButtonREG{
-    margin-left: 610px;
+    margin-left: 44em;
   }
   .scandeviceButton-android{
     margin-left: 610px;
@@ -479,7 +530,7 @@ mat-expansion-panel-header {
     position: absolute;
   }
 }
-@media screen and (min-width: 685px) and (max-width: 763px) {
+@media screen and (min-width: 685px) and (max-width: 762px) {
   .collections-button{
     position: absolute;
     width: 150px;
@@ -494,13 +545,16 @@ mat-expansion-panel-header {
     margin-left: 18em;
   }
   .scandeviceButtonREG{
-    margin-left: 340px;
+    margin-left: 35em;
   }
   .scandeviceButton-android{
     margin-left: 340px;
   }
 }
-@media screen and (min-width: 603px) and (max-width: 684px) {
+@media screen and (min-width: 601px) and (max-width: 684px) {
+  .viewImgBtn {
+    margin-left: 10px;
+  }
   .collections-button{
     position: absolute;
   }
@@ -518,7 +572,7 @@ mat-expansion-panel-header {
     margin-left: 250px;
   }
   .scandeviceButtonREG{
-    margin-left: 260px;
+    margin-left: 29em;
   }
   .testCaseCell{
     padding-left: 20px;
@@ -537,6 +591,49 @@ mat-expansion-panel-header {
   }
 }
 @media screen and (max-width: 600px) {
+  .viewImgBtn {
+    margin-left: 10px;
+  }
+  .collections-button{
+    position: absolute;
+    margin-left: 0em;
+  }
+  .encryptionkeyButton{
+    position: absolute;
+    margin-left: 14em;
+  }
+  a{
+    width: 60px; display: inline-block; overflow-wrap: break-word;
+  }
+  .scandeviceButton{
+    margin-left: 25em;
+  }
+  .scandeviceButtonREG{
+    margin-left: 23em;
+  }
+  .testCaseCell{
+    padding-left: 20px;
+  }
+  .crDateHeader{
+    padding-left: 15px;
+  }
+  .lastRunHeader{
+    padding-left: 10px;
+  }
+  .runHeader{
+    padding-left: 30px;
+  }
+  .runCell{
+    padding-left: 10px;
+  }
+  .scandeviceButton-android{
+    margin-left: 250px;
+  }
+}
+@media screen and (max-width: 515px) {
+  .viewImgBtn {
+    margin-left: 10px;
+  }
   .collections-button{
     position: absolute;
     margin-left: 0em;
@@ -583,6 +680,12 @@ mat-expansion-panel-header {
   .fieldContainerBox {
     width: 240px;
   }
+  .deviceImgFieldContainer {
+    width: 80px;
+  }
+  .deviceImgFieldContainerBox {
+    width: 240px;
+  }
   .projectTypeBt {
     width: 240px;
   }
@@ -601,9 +704,14 @@ mat-expansion-panel-header {
   .encryptionkeyButton-mobile{
     margin-right: 2em;
   }
+  .collections-button-mobile{
+    position: absolute;
+    margin-left: 12em;
+    margin-right: 10px;
+  }
   .scandeviceButton-mobile{
     position: absolute;
-    margin-right: -11.5em;
+    margin-right: -6em;
   }
   .encryptionkeyButton{
     width: 160px;
@@ -618,7 +726,7 @@ mat-expansion-panel-header {
     position: absolute;
   }
   .scandeviceButton-android{
-    margin-left: 80px;
+    margin-left: 10px;
   }
   .collectionicon{
     margin-left: -20px;
@@ -705,12 +813,11 @@ mat-expansion-panel-header {
     padding-left: 0px;
     width: 10px
   }
-}
-@media screen and (max-width: 385px){
-  .scandeviceButtonREG{
-    width: 150px;
+  .projectNameHeader{
+    font-size: small;
   }
 }
+
 @media screen and (max-width: 402px) {
   .fieldWrapper {
     width: 330px;
@@ -719,11 +826,17 @@ mat-expansion-panel-header {
   .fieldLabel {
     width: 60px;
   }
+  .deviceImgFieldContainer {
+    width: 60px;
+  }
   .collections-button{
     width: 120px;
   }
+  .collections-button-mobile{
+    margin-right: 5px;
+  }
   .scandeviceButton-android{
-    margin-left: 60px;
+    margin-left: 5px;
   }
   .collections-button2{
     margin-left: 60px;
@@ -743,6 +856,11 @@ mat-expansion-panel-header {
     width: 200px;
     margin-right: 70px;
     margin-top: 60px;
+  }
+}
+@media screen and (max-width: 385px){
+  .scandeviceButtonREG{
+    width: 200px;
   }
 }
 @media screen and (max-width: 375px) {
@@ -770,8 +888,11 @@ mat-expansion-panel-header {
     margin-top: -80px;
     position: absolute;
   }
+  .collections-button-mobile{
+    margin-right: 5px;
+  }
   .scandeviceButton-android{
-    margin-left: 30px;
+    margin-left: 5px;
   }
   .collectionicon{
     margin-left: -15px;
@@ -868,10 +989,16 @@ mat-expansion-panel-header {
   .fieldContainerBox {
     width: 100%;
   }
+  .deviceImgFieldContainerBox {
+    width: 100%;
+  }
   .runHeader{
     opacity: 100%;
     padding-left: 5px;
     width: 75px;
+  }
+  .projectNameHeader{
+    font-size: smaller;
   }
 }
 @media screen and (max-width: 320px) {
@@ -881,6 +1008,9 @@ mat-expansion-panel-header {
     padding-bottom: 20px;
   }
   .fieldContainerBox {
+    width: 232px;
+  }
+  .deviceImgFieldContainerBox {
     width: 232px;
   }
   .projectTypeBt {
@@ -911,8 +1041,11 @@ mat-expansion-panel-header {
     margin-top: -80px;
     position: absolute;
   }
+  .collections-button-mobile{
+    margin-right: 5px;
+  }
   .scandeviceButton-android{
-    margin-left: 10px;
+    margin-left: 5px;
   }
   .collectionButtonMobile{
     width: 120px;
@@ -1004,6 +1137,6 @@ mat-expansion-panel-header {
     margin-left: -20px;
   }
   .projectNameHeader{
-    font-size: small;
+    font-size: x-small;
   }
 }

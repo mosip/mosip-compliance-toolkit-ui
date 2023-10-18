@@ -256,6 +256,12 @@ export class AddTestDataComponent implements OnInit {
     this.allControls.forEach((controlId) => {
       this.testDataForm.controls[controlId].markAsTouched();
     });
+    const testDataName = this.testDataForm.controls['name'].value;
+    if (testDataName.trim().length === 0) {
+      this.testDataForm.controls['name'].setValue(null);
+    } else {
+      this.testDataForm.controls['name'].setValue(testDataName.trim());
+    }
     if (this.testDataForm.valid) {
       const testData = {
         name: this.testDataForm.controls['name'].value,
@@ -293,6 +299,7 @@ export class AddTestDataComponent implements OnInit {
                 info = response[appConstants.RESPONSE]['info'];
               }
               let msg = 'addTestDataSuccessMsg';
+              
               let resourceBundle = this.resourceBundleJson.dialogMessages;
               let successMsg = 'success';
               const dialogRef = Utils.showSuccessMessage(resourceBundle, successMsg, msg, this.dialog, info);
