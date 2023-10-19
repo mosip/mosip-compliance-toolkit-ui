@@ -20,7 +20,6 @@
   display: inline-block;
   vertical-align: top;
 }
-
 .mosip-logo .mosip-text {
   font-size: 16px;
   opacity: 1;
@@ -30,16 +29,16 @@
 .mosip-logo img {
   max-width: 100%;
   max-height: 100%;
-  width: 40px;
-  height: 40px;
 }
 
 .version-txt {
-  font-size: 12px;
+  font-size: 11px;
   font-family: "Roboto", sans-serif;
   font-weight: 100;
   display: block;
-  margin-top: -15px;
+  position: absolute;
+  left: 55px;
+  bottom: -30px;
 }
 
 [dir*="rtl"] .profile {
