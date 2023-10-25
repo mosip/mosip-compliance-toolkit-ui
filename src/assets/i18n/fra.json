@@ -466,7 +466,7 @@
 		},
 		"SBI1029": {
 			"testName": "Vérifier l'état de l'appareil - Non enregistré",
-			"testDescription": "Test pour valider si l'appareil est dans l'état Non enregistré<br><br>Pas:<br>1. <b>Se désinscrire</b> le dispositif <br>2. Cliquer sur <b>Reprendre</b> bouton<br>3. Une fois l'exécution du test terminée, <b>enregistrer</b> l'appareil et cliquez sur <b>Reprendre Suivant</b> bouton"
+			"testDescription": "Vérifiez la réponse d'un appareil non enregistré.<br><br>Pas:<br>1. Assurez-vous que vous effectuez le test avec un appareil <b>Non enregistré</b><br>2. Cliquez sur le bouton <b>Reprendre</b><br>3. Une fois l'exécution du test terminée, <b>enregistrez</b> l'appareil et cliquez sur le bouton <b>Reprendre suivant</b>."
 		},
 		"SBI1030": {
 			"testName": "Capture d'authentification - Empreinte digitale - Incompatibilité de nombre de bio",
