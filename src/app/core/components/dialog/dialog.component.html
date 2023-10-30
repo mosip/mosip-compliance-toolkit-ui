@@ -141,46 +141,51 @@
     </div>
 </div>
 <div *ngIf="input.case === 'UPLOAD_DEVICE_IMAGES'" class="uploadDiv">
-    <h2 mat-dialog-title class="mat-dialog-title">{{"dialogMessages.uploadDeviceImages"|translate}}</h2>
-    <div class="uploadImg">
-        <div *ngFor="let fileIndex of [0, 1, 2, 3]"  class="button-container">
-            <div class="buttons">
-                <input type="file" accept="image/*" (change)="onFileSelect($event, fileIndex)" #fileInput hidden single>
-                <button mat-raised-button [disabled]="!imageSelected[fileIndex]" (click)="fileInput.click()">
-                    <mat-icon>add</mat-icon>{{"dialogMessages.addImage"|translate}} {{ fileIndex + 1 }}
-                </button>
+    <div class="spinnerForUploadImg" *ngIf="!dataLoaded">
+        <mat-spinner diameter="50"></mat-spinner>
+    </div>
+    <div *ngIf="dataLoaded">
+        <h2 mat-dialog-title class="mat-dialog-title">{{"dialogMessages.uploadDeviceImages"|translate}}</h2>
+        <div class="uploadImg">
+            <div *ngFor="let fileIndex of [0, 1, 2, 3]"  class="button-container">
+                <div class="buttons">
+                    <input type="file" accept="image/*" (change)="onFileSelect($event, fileIndex)" #fileInput hidden single>
+                    <button mat-raised-button [disabled]="!imageSelected[fileIndex]" (click)="fileInput.click()">
+                        <mat-icon>add</mat-icon>{{"dialogMessages.addImage"|translate}} {{ fileIndex + 1 }}
+                    </button>
+                </div>
+                <div>
+                    <button mat-icon-button *ngIf="!imagePreviewsVisible[fileIndex] && visibilityState[fileIndex]" (click)="toggleImagePreview(fileIndex)">
+                        <mat-icon class="eyeIcon">{{ imagePreviewsVisible[fileIndex] ? 'visibility_off' : 'visibility' }}</mat-icon>
+                    </button>
+                </div>
             </div>
-            <div>
-                <button mat-icon-button *ngIf="!imagePreviewsVisible[fileIndex] && visibilityState[fileIndex]" (click)="toggleImagePreview(fileIndex)">
-                    <mat-icon class="eyeIcon">{{ imagePreviewsVisible[fileIndex] ? 'visibility_off' : 'visibility' }}</mat-icon>
-                </button>
+            <div class="imagePreview">
+                <span *ngIf="imagePreviewsVisible[0]">
+                    <div class="delete-overlay" (click)="deleteImage(0)">
+                        <img [src]="imageUrls[0]" alt="Preview">
+                    </div>
+                </span>
+                <span *ngIf="imagePreviewsVisible[1]">
+                    <div class="delete-overlay" (click)="deleteImage(1)">
+                        <img [src]="imageUrls[1]" alt="Preview">
+                    </div>
+                </span>
+                <span *ngIf="imagePreviewsVisible[2]">
+                    <div class="delete-overlay" (click)="deleteImage(2)">
+                        <img [src]="imageUrls[2]" alt="Preview">
+                    </div>
+                </span>
+                <span *ngIf="imagePreviewsVisible[3]">
+                    <div class="delete-overlay" (click)="deleteImage(3)">
+                        <img [src]="imageUrls[3]" alt="Preview">
+                    </div>
+                </span>
             </div>
+        </div>  
+        <div>
+            <button mat-flat-button color="accent" (click)="uploadImages()" class="closeBt">{{"dialogMessages.close"|translate}}</button>
         </div>
-        <div class="imagePreview">
-            <span *ngIf="imagePreviewsVisible[0]">
-                <div class="delete-overlay" (click)="deleteImage(0)">
-                    <img [src]="imageUrls[0]" alt="Preview">
-                </div>
-            </span>
-            <span *ngIf="imagePreviewsVisible[1]">
-                <div class="delete-overlay" (click)="deleteImage(1)">
-                    <img [src]="imageUrls[1]" alt="Preview">
-                </div>
-            </span>
-            <span *ngIf="imagePreviewsVisible[2]">
-                <div class="delete-overlay" (click)="deleteImage(2)">
-                    <img [src]="imageUrls[2]" alt="Preview">
-                </div>
-            </span>
-            <span *ngIf="imagePreviewsVisible[3]">
-                <div class="delete-overlay" (click)="deleteImage(3)">
-                    <img [src]="imageUrls[3]" alt="Preview">
-                </div>
-            </span>
-        </div>
-    </div>  
-    <div>
-        <button mat-flat-button color="accent" (click)="uploadImages()" class="closeBt">{{"dialogMessages.close"|translate}}</button>
     </div> 
 </div>
 <div *ngIf="input.case === 'DEVICE_IMAGES'">
