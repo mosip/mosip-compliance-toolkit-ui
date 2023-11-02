@@ -144,6 +144,9 @@ mat-expansion-panel-header {
   padding-left: 20px;
   z-index: 1;
 }
+.testCaseCell{
+  padding-left: 12px;
+}
 @media screen and (max-width: 2048px) {
   .scandeviceButton{
     margin-left: 732px;
@@ -467,6 +470,15 @@ mat-expansion-panel-header {
   }
   .scandeviceButtonREG{
     margin-left: 33.5rem;
+  }
+  .testCaseCell{
+    text-align: center;
+  }
+  .lastRunCell{
+    padding-left: 3px;
+  }
+  .lastRunHeader{
+    padding-left: 3px;
   }
   .scandeviceButton-android{
     margin-left: 33.5rem;
@@ -862,10 +874,10 @@ mat-expansion-panel-header {
     width:70px; display: inline-block; overflow-wrap: break-word;
   }
   .testCaseHeader{
-    padding-left: 140px;
+    padding-left: 10px;
   }
   .testCaseCell{
-    padding-left: 160px;
+    padding-left: 24px;
   }
   .crDateHeader{
     padding-left: 20px;
