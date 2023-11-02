@@ -10,6 +10,8 @@
   justify-content: first baseline;
   align-items: center;
   padding: 5px;
+  margin-right: 10px;
+  min-width: 350px;
   /* height: 50px;
   width: 340px; */
 }
@@ -73,9 +75,6 @@
   align-items: center;
   padding: 5px;
 }
-.deviceImgFieldLabel {
-  width: 60px;
-}
 .deviceImgFieldContainer {
   margin-left: 30px;
 }
@@ -132,20 +131,18 @@
 @media screen and (max-width: 900px) {
   .fileuploadbtn {
     width: 200px;
-    margin-left: 1px;
+    margin-left: 21px;
+  }
+}
+@media screen and (max-width: 815px) {
+  .fileuploadbtn {
+    width: 200px;
+    margin-left: 4px;
   }
 }
 @media screen and (max-width: 770px) {
   .button-container {
     width: 90%;
-  }
-  .deviceImgFieldContainer {
-    margin-left: 30px;
-  }
-}
-@media screen and (max-width: 680px) {
-  .deviceImgFieldContainer {
-    margin-left: 90px;
   }
 }
 @media screen and (max-width: 480px) {
@@ -177,7 +174,6 @@
     margin-left: 20px;
   }
 }
-
 @media screen and (max-width: 365px) {
   .formContainer {
     width: 270px;

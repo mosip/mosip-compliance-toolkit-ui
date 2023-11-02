@@ -5,6 +5,26 @@ mat-expansion-panel-header {
 .formContainer {
   background-color: white;
 }
+.authContainer{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 2px;
+}
+.authButtons{
+  margin: 2px;
+}
+.regsbicontainer{
+    width: 100%;
+    justify-content: space-between;
+    display: flex;
+    flex-wrap: wrap;
+}
+.sbiregbuttons{
+  min-width: 150px;
+  margin: 2px;
+}
 .mat-header-cell{
   background-color: rgba(119, 136, 153, 0.26);
   color: black;
@@ -23,7 +43,8 @@ mat-expansion-panel-header {
   justify-content: flex-start;
   align-items: center;
   padding: 5px;
-  /* height: 50px; */
+  margin-right: 20px;
+  min-width: 360px;
 }
 .fieldLabel {
   width: 20%;
@@ -39,6 +60,16 @@ mat-expansion-panel-header {
 }
 .spacer {
   flex: 0.1;
+}
+.reg-container{
+  width: 100%;
+}
+
+.projectTypeRadioBt{
+  display: flex;
+  flex-wrap: nowrap;
+  margin-right: 75px;
+  width: 100%;
 }
 .mat-radio-button ~ .mat-radio-button {
   margin-left: 35px;
@@ -109,10 +140,11 @@ mat-expansion-panel-header {
 .deviceImgFieldLabel {
   width: 60px;
 }
+.runHeader{
+  padding-left: 20px;
+  z-index: 1;
+}
 @media screen and (max-width: 2048px) {
-  .encryptionkeyButton{
-    margin-left: 800px;
-  }
   .scandeviceButton{
     margin-left: 732px;
   }
@@ -137,13 +169,6 @@ mat-expansion-panel-header {
     position: absolute;
     margin-right: 130em;
   }
-  .encryptionkeyButton{
-    position: absolute;
-    margin-left: 65em;
-  }
-  .encryptionkeyButton-mobile{
-    margin-right: 65em;
-  }
   .scandeviceButtonREG{
     margin-left: 125em;
   }
@@ -159,13 +184,6 @@ mat-expansion-panel-header {
   .scandeviceButton-mobile{
     position: absolute;
     margin-right: 100em;
-  }
-  .encryptionkeyButton{
-    position: absolute;
-    margin-left: 50em;
-  }
-  .encryptionkeyButton-mobile{
-    margin-right: 50em;
   }
   .scandeviceButtonREG{
     float: right;
@@ -183,13 +201,6 @@ mat-expansion-panel-header {
   .scandeviceButton-mobile{
     position: absolute;
     margin-right: 96em;
-  }
-  .encryptionkeyButton{
-    position: absolute;
-    margin-left: 45em;
-  }
-  .encryptionkeyButton-mobile{
-    margin-right: 45em;
   }
   .scandeviceButtonREG{
     float: right;
@@ -214,13 +225,6 @@ mat-expansion-panel-header {
     position: absolute;
     margin-right: 92em;
   }
-  .encryptionkeyButton{
-    position: absolute;
-    margin-left: 45em;
-  }
-  .encryptionkeyButton-mobile{
-    margin-right: 44em;
-  }
   .scandeviceButtonREG{
     float: right;
     margin-left: 88em;
@@ -244,13 +248,6 @@ mat-expansion-panel-header {
     position: absolute;
     margin-right: 90em;
   }
-  .encryptionkeyButton{
-    position: absolute;
-    margin-left: 44em;
-  }
-  .encryptionkeyButton-mobile{
-    margin-right: 45em;
-  }
   .scandeviceButtonREG{
     margin-left: 85em;
   }
@@ -268,16 +265,6 @@ mat-expansion-panel-header {
   }
   .collections-button{
     position: absolute;
-  }
-  .buttonspan{
-    margin-left: 12rem;
-  }
-  .encryptionkeyButton{
-    position: absolute;
-    margin-left: 30em;
-  }
-  .encryptionkeyButton-mobile{
-    margin-right: 43em;
   }
   .scandeviceButton{
     margin-left: 67em;
@@ -318,13 +305,6 @@ mat-expansion-panel-header {
   .collections-button-mobile{
     margin-right: 0em;
   }
-  .encryptionkeyButton{
-    position: absolute;
-    margin-left: 40em;
-  }
-  .encryptionkeyButton-mobile{
-    margin-right: 40em;
-  }
   .scandeviceButton{
     margin-left: 73em;
   }
@@ -359,10 +339,6 @@ mat-expansion-panel-header {
     position: absolute;
     margin-left: 0em;
   }
-  .encryptionkeyButton{
-    position: absolute;
-    margin-left: 35em;
-  }
   .scandeviceButton{
     margin-left: 70em;
   }
@@ -379,13 +355,6 @@ mat-expansion-panel-header {
   }
   .collections-button{
     position: absolute;
-  }
-  .encryptionkeyButton{
-    position: absolute;
-    margin-left: 34em;
-  }
-  .encryptionkeyButton-mobile{
-    margin-right: 34em;
   }
   .scandeviceButton{
     margin-left: 66em;
@@ -412,13 +381,6 @@ mat-expansion-panel-header {
     position: absolute;
     margin-left: 0em;
   }
-  .encryptionkeyButton{
-    position: absolute;
-    margin-left: 32em;
-  }
-  .encryptionkeyButton-mobile{
-    margin-right: 32em;
-  }
   .scandeviceButton{
     margin-left: 61em;
   }
@@ -442,13 +404,6 @@ mat-expansion-panel-header {
   }
   .collections-button{
     position: absolute;
-  }
-  .encryptionkeyButton{
-    position: absolute;
-    margin-left: 30em;
-  }
-  .encryptionkeyButton-mobile{
-    margin-right: 30em;
   }
   .scandeviceButtonREG{
     margin-left: 59em;
@@ -485,15 +440,11 @@ mat-expansion-panel-header {
     display: block;
   }
   .viewImgBtn {
-    margin-left: -30px;
+    margin-left: -9px;
   }
   .collections-button{
     position: absolute;
     margin-left: 0em;
-  }
-  .encryptionkeyButton{
-    position: absolute;
-    margin-left: 28em;
   }
   .scandeviceButton{
     margin-left: 51em;
@@ -513,11 +464,6 @@ mat-expansion-panel-header {
   .scandeviceButton{
     margin-left: 37em;
     width: 11rem;
-  }
-  .encryptionkeyButton{
-    position: absolute;
-    width: 11rem;
-    margin-left: 16rem;
   }
   .scandeviceButtonREG{
     margin-left: 33.5rem;
@@ -539,11 +485,6 @@ mat-expansion-panel-header {
     margin-left: 33em;
     width: 150px;
   }
-  .encryptionkeyButton{
-    position: absolute;
-    width: 150px;
-    margin-left: 18em;
-  }
   .scandeviceButtonREG{
     margin-left: 35em;
   }
@@ -553,14 +494,10 @@ mat-expansion-panel-header {
 }
 @media screen and (min-width: 601px) and (max-width: 684px) {
   .viewImgBtn {
-    margin-left: 10px;
+    margin-left: 5px;
   }
   .collections-button{
     position: absolute;
-  }
-  .encryptionkeyButton{
-    position: absolute;
-    margin-left: 14.5em;
   }
   a{
     width: 60px; display: inline-block; overflow-wrap: break-word;
@@ -598,10 +535,6 @@ mat-expansion-panel-header {
     position: absolute;
     margin-left: 0em;
   }
-  .encryptionkeyButton{
-    position: absolute;
-    margin-left: 14em;
-  }
   a{
     width: 60px; display: inline-block; overflow-wrap: break-word;
   }
@@ -638,36 +571,74 @@ mat-expansion-panel-header {
     position: absolute;
     margin-left: 0em;
   }
-  .encryptionkeyButton{
-    position: absolute;
-    margin-left: 14em;
-  }
   a{
     width: 60px; display: inline-block; overflow-wrap: break-word;
   }
-  .scandeviceButton{
-    margin-left: 25em;
+  .authContainer{
+    flex-direction: column;
+    align-items: center;
   }
-  .scandeviceButtonREG{
-    margin-left: 250px;
+  .authButtons{
+    min-width: 150px;
+  }
+  .nameHeader{
+    padding: 1px;
+    width: 20px;
+  }
+  .nameCell{
+    padding: 1px;
+    width:40px; 
+  }
+  a{
+    width:70px; display: inline-block; overflow-wrap: break-word;
+  }
+  .testCaseHeader{
+    padding: 1px;
   }
   .testCaseCell{
-    padding-left: 20px;
+    padding: 27px;
   }
   .crDateHeader{
-    padding-left: 15px;
+    padding: 1px;
+    width: 90px;
+  }
+  .crDateCell{
+    padding: 1px;
+    width: 90px;
   }
   .lastRunHeader{
-    padding-left: 10px;
+    padding: 1px;
+    width: 120px;
+  }
+  .lastRunCell{
+    padding: 1px;
+    width: 120px;
   }
   .runHeader{
-    padding-left: 30px;
+    padding: 1px;
+    width: 10px;
+    text-align: center;
   }
   .runCell{
-    padding-left: 10px;
+    padding: 1px;
+    width: 10px;
   }
-  .scandeviceButton-android{
-    margin-left: 250px;
+  .actionsHeader{
+    padding: 1px;
+    width: 10px
+  }
+  .actionsCell{
+    padding-left: 0px;
+    width: 10px
+  }
+  .projectNameHeader{
+    font-size: small;
+  }
+  th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type {
+    padding-right: 0px;
+  }
+  th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+    padding-left: 10px;
   }
 }
 @media only screen and (max-width: 426px) {
@@ -676,6 +647,9 @@ mat-expansion-panel-header {
   }
   .fieldLabel {
     width: 80px;
+  }
+  .authButtons{
+    min-width: 140px;
   }
   .fieldContainerBox {
     width: 240px;
@@ -692,41 +666,16 @@ mat-expansion-panel-header {
   .tablediv{
     overflow-x: auto;
   }
-  .collections-table{
-    width: 800px;
-  }
   .collections-button{
     position: relative;
     margin-left: 0em;
     width: 11.5em;
     float: left;
   }
-  .encryptionkeyButton-mobile{
-    margin-right: 2em;
-  }
   .collections-button-mobile{
     position: absolute;
     margin-left: 12em;
     margin-right: 10px;
-  }
-  .scandeviceButton-mobile{
-    position: absolute;
-    margin-right: -6em;
-  }
-  .encryptionkeyButton{
-    width: 160px;
-    margin-top: -40px;
-    margin-left: 3em;
-    position: absolute;
-  }
-  .scandeviceButton{
-    width: 160px;
-    margin-top: -40px;
-    margin-left: -160px;
-    position: absolute;
-  }
-  .scandeviceButton-android{
-    margin-left: 10px;
   }
   .collectionicon{
     margin-left: -20px;
@@ -747,7 +696,7 @@ mat-expansion-panel-header {
     float: left;
   }
   .collectionButtonMobile{
-    margin-right: 180px;
+    margin-right: 180px; 
     position: absolute;
     width: 170px;
     height: 40px;
@@ -757,11 +706,6 @@ mat-expansion-panel-header {
     margin-left: 180px;
     width: 170px;
     height: 40px;
-  }
-  .buttonspan{
-    margin-top: 45px;
-    width: 100%;
-    float: left;
   }
   .collections-header-container{
     width: 100%;
@@ -798,11 +742,11 @@ mat-expansion-panel-header {
     width: 120px;
   }
   .runHeader{
-    padding-left: 10px;
+    padding-left: 27px;
     width: 10px;
   }
   .runCell{
-    padding-left: 0px;
+    padding-left: 15px;
     width: 10px;
   }
   .actionsHeader{
@@ -858,29 +802,15 @@ mat-expansion-panel-header {
     margin-top: 60px;
   }
 }
-@media screen and (max-width: 385px){
-  .scandeviceButtonREG{
-    width: 200px;
-  }
-}
 @media screen and (max-width: 375px) {
   .tablediv{
     overflow-x: auto;
-  }
-  .collections-table{
-    width: 800px;
   }
   .collections-button{
     position: relative;
     margin-left: 0px;
     width: 140px;
     float: left;
-  }
-  .encryptionkeyButton{
-    width: 140px;
-    margin-top: -40px;
-    margin-left: -140px;
-    position: absolute;
   }
   .scandeviceButton{
     width: 140px;
@@ -918,11 +848,6 @@ mat-expansion-panel-header {
     margin-left: 60px;
     width: 180px;
     height: 40px;
-  }
-  .buttonspan{
-    margin-top: 45px;
-    width: 100%;
-    float: left;
   }
   .collections-header-container{
     width: 100%;
@@ -986,6 +911,10 @@ mat-expansion-panel-header {
     display: block;
     padding-bottom: 20px;
   }
+  .regsbicontainer{
+    flex-direction: column;
+    align-items: center;
+  }
   .fieldContainerBox {
     width: 100%;
   }
@@ -1010,6 +939,10 @@ mat-expansion-panel-header {
   .fieldContainerBox {
     width: 232px;
   }
+  .regsbicontainer{
+    flex-direction: column;
+    align-items: center;
+  }
   .deviceImgFieldContainerBox {
     width: 232px;
   }
@@ -1028,12 +961,6 @@ mat-expansion-panel-header {
     margin-left: 0px;
     width: 130px;
     float: left;
-  }
-  .encryptionkeyButton{
-    width: 130px;
-    margin-top: -40px;
-    margin-left: -130px;
-    position: absolute;
   }
   .scandeviceButton{
     width: 130px;
@@ -1075,11 +1002,6 @@ mat-expansion-panel-header {
     margin-left: 40px;
     width: 180px;
     height: 40px;
-  }
-  .buttonspan{
-    margin-top: 45px;
-    width: 100%;
-    float: left;
   }
   .collections-header-container{
     width: 100%;
