@@ -32,7 +32,7 @@
                             </span>
                             <span class="fieldContainer">
                                 <div class="projectTypeBt">
-                                    <mat-radio-group aria-label="Select an option" formControlName="projectType"
+                                    <mat-radio-group aria-label="Select an option" formControlName="projectType" class="projectTypeRadioBt"
                                         appearance="legacy">
                                         <mat-radio-button value="SBI">SBI</mat-radio-button>
                                         <mat-radio-button value="SDK">SDK</mat-radio-button>
@@ -573,47 +573,37 @@
                     {{"viewProject.addCollection"|translate}}
                 </button>
             </div>
-            <div *ngIf="projectForm.controls['sbiPurpose']?.value == 'Auth'">
-                <button mat-flat-button color="accent" (click)="addCollection()" class="isMobileButton ? collections-button-mobile : collections-button" [ngStyle]="buttonPosition">
+            <div *ngIf="projectForm.controls['sbiPurpose']?.value == 'Auth'" class="authContainer">
+                <button mat-flat-button color="accent" (click)="addCollection()" class="authButtons" [ngStyle]="buttonPosition">
                     <mat-icon class="collectionicon">add</mat-icon>
                     {{"viewProject.addCollection"|translate}}
                 </button>
-                <span align="end" class="buttonspan" 
-                *ngIf="!isAndroidAppMode" >
-                    <button mat-flat-button color="accent" (click)="downloadEncryptionKey()"
-                        title="Click to download encryption key for Auth devices" class="isMobileButton ? encryptionkeyButton-mobile : encryptionkeyButton"
-                        [ngStyle]="buttonPosition">
-                        <mat-icon class="encrypticon">save</mat-icon>
-                        {{"viewProject.encryptionKey"|translate}}
-                    </button>
-                    &nbsp;&nbsp;&nbsp;
-                    <button mat-flat-button color="accent" (click)="scanDevice()" class="isMobileButton ? scandeviceButton-mobile : scandeviceButton" [ngStyle]="buttonPosition">
-                        <mat-icon *ngIf="isScanComplete" class="scandeviceicon">check_circle</mat-icon>
-                        <mat-icon *ngIf="!isScanComplete" class="scandeviceicon2">radio_button_unchecked</mat-icon>
-                        {{"viewProject.scanDevice"|translate}}
-                    </button>
-                </span>
-                <button mat-flat-button color="accent" (click)="scanDevice()" class="scandeviceButton-android"
-                *ngIf="isAndroidAppMode">
+                <button mat-flat-button color="accent" (click)="downloadEncryptionKey()" *ngIf="!isAndroidAppMode"
+                    title="Click to download encryption key for Auth devices" class="authButtons"
+                    [ngStyle]="buttonPosition">
+                    <mat-icon class="encrypticon">save</mat-icon>
+                    {{"viewProject.encryptionKey"|translate}}
+                </button>
+                <button mat-flat-button color="accent" (click)="scanDevice()" class="authButtons">
                     <mat-icon *ngIf="isScanComplete" class="scandeviceicon">check_circle</mat-icon>
                     <mat-icon *ngIf="!isScanComplete" class="scandeviceicon2">radio_button_unchecked</mat-icon>
                     {{"viewProject.scanDevice"|translate}}
                 </button>
             </div>
-        <div *ngIf="projectForm.controls['sbiPurpose']?.value == 'Registration'">
-            <button mat-flat-button color="accent" (click)="addCollection()" class="isMobileButton ? collectionButtonMobile : collections-button2" [ngStyle]="buttonPosition">
-                <mat-icon class="collectionicon">add</mat-icon>
-                {{"viewProject.addCollection"|translate}}
-            </button>
-            <button mat-flat-button color="accent" (click)="scanDevice()" class="isMobileButton ? scandeviceButtonREGMobile : scandeviceButtonREG" [ngStyle]="buttonPosition">
-                <mat-icon *ngIf="isScanComplete">check_circle</mat-icon>
-                <mat-icon *ngIf="!isScanComplete">radio_button_unchecked</mat-icon>
-                {{"viewProject.scanDevice"|translate}}
-            </button>
+            <div *ngIf="projectForm.controls['sbiPurpose']?.value == 'Registration'" class="regsbicontainer">
+                <button mat-flat-button color="accent" (click)="addCollection()" class="sbiregbuttons" [ngStyle]="buttonPosition">
+                    <mat-icon class="collectionicon">add</mat-icon>
+                    {{"viewProject.addCollection"|translate}}
+                </button>
+                <button mat-flat-button color="accent" (click)="scanDevice()" class="sbiregbuttons" [ngStyle]="buttonPosition">
+                    <mat-icon *ngIf="isScanComplete">check_circle</mat-icon>
+                    <mat-icon *ngIf="!isScanComplete">radio_button_unchecked</mat-icon>
+                    {{"viewProject.scanDevice"|translate}}
+                </button>
+            </div>
         </div>
-        </div>
-        <mat-paginator [pageSizeOptions]="[5, 10, 25, 50, 100]" aria-label="Select page of users"></mat-paginator>
         <div class="tablediv">
+         <mat-paginator [pageSizeOptions]="[5, 10, 25, 50, 100]" aria-label="Select page of users"></mat-paginator>
         <table mat-table [dataSource]="dataSource" matSort class="collections-table">
             <caption>{{ "viewProject.tableDescription" | translate }}</caption>
             <!--- Note that these columns can be defined in any order.
