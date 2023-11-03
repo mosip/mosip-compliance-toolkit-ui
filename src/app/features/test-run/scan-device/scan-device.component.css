@@ -58,7 +58,7 @@ mat-dialog-actions {
     position: fixed;
   }
   .selectdevice{
-    width: 280px;
+    width: 100%;
   }
   .deviceoptions{
     display: inline-block;
@@ -172,7 +172,7 @@ mat-dialog-actions {
     margin-right: -5px;
   }
   .selectdevice{
-    width: 200px;
+    width: 100%;
   }
   .deviceoptions{
     display: inline-block;
