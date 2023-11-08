@@ -22,7 +22,7 @@
   justify-content: flex-start;
   align-items: center;
 }
-.add-button1{
+.back-button{
   background-color: var(--secondary-color);
   color: var(--button-font-color);
 }
@@ -55,7 +55,7 @@
   border-top: 1px solid #ddd;
 }
 
-.button-container + .add-button + .add-button1 {
+.button-container + .add-button + .back-button {
   margin-left: 8px;
 }
 ::ng-deep.mat-select-value {

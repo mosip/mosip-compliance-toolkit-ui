@@ -14,11 +14,11 @@
   background-color: rgba(119, 136, 153, 0.26);
   color: black;
 }
-.add-button1{
+.back-button{
   background-color: var(--secondary-color);
   color: var(--button-font-color);
 }
-.button-container + .add-button + .add-button1{
+.button-container + .add-button + .back-button{
   margin-left: 8px;
 }
 .spinner {

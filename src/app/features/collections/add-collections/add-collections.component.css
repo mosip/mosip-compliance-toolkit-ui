@@ -16,7 +16,7 @@
   color: #fd518c;
   padding: 5px;
 }
-.add-button1{
+.back-button{
   background-color: var(--secondary-color);
   color: var(--button-font-color);
 }
@@ -51,7 +51,7 @@
   background-color: white;
   border-top: 1px solid #ddd;
 }
-.button-container + .add-button + .add-button1 {
+.button-container + .add-button + .back-button {
   margin-left: 8px;
 }
 .spinner {
@@ -88,7 +88,7 @@
   .add-button{
     margin-right: 10px;
   }
-  .add-button1{
+  .back-button{
     margin-right: 10px;
   }
 }
@@ -124,7 +124,7 @@
   .add-button{
     margin-right: 10px;
   }
-  .add-button1{
+  .back-button{
     margin-right: 10px;
   }
   .collectionNameField {
@@ -138,7 +138,7 @@
   .add-button{
     margin-right: 10px;
   }
-  .add-button1{
+  .back-button{
     margin-right: 10px;
   }
 }
