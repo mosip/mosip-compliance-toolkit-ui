@@ -12,6 +12,10 @@
   padding: 5px;
   height: 50px;
 }
+.add-button{
+  background-color: var(--secondary-color);
+  color: var(--button-font-color);
+}
 .fieldLabel {
   flex: 0.2;
 }
