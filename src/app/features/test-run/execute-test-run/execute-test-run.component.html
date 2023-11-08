@@ -120,7 +120,7 @@
 <mat-dialog-actions align="end">
     <button *ngIf="!scanComplete || (scanComplete && errorsInGettingTestcases) 
     || (scanComplete && !errorsInGettingTestcases && !runComplete) 
-    || (scanComplete && !errorsInGettingTestcases && runComplete)" mat-flat-button color="accent"
+    || (scanComplete && !errorsInGettingTestcases && runComplete)" mat-flat-button class="add-button"
         (click)="close()">{{ "executeTestRun.close" | translate }}</button>
     <div class="spacer" *ngIf="scanComplete"></div>
     <!-- <button *ngIf="!scanComplete || (scanComplete && !runComplete && showResumeBtn)" mat-flat-button color="accent"
