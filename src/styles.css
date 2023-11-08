@@ -2,3 +2,8 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+:root {
+    --secondary-color: rgb(189, 189, 189);
+    --button-font-color: rgb(54, 46, 46);
+}

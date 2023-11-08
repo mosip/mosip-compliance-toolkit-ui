@@ -91,7 +91,7 @@
 <p></p>
 &nbsp;
 <div class="button-container" *ngIf="dataLoaded">
-    <button mat-flat-button color="accent" (click)="backToProject()" class="add-button">
+    <button mat-flat-button (click)="backToProject()" class="back-button">
         {{ "addCollections.back" | translate }}
     </button>
     <button mat-flat-button color="accent" [disabled]="dataSubmitted" (click)="saveCollection()" class="add-button">

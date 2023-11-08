@@ -575,8 +575,8 @@
     </div>
 </div>
 <div class="button-container">
-    <button mat-flat-button color="accent" (click)="showDashboard()" class="add-button">
-        <mat-icon>home</mat-icon>
+    <button mat-flat-button (click)="showDashboard()" class="back-button">
+        <mat-icon class="icon-button">home</mat-icon>
         {{"addProject.dashboard"|translate}}
     </button>
     <button mat-flat-button color="accent" [disabled]="dataSubmitted" (click)="saveProject()" class="add-button">
