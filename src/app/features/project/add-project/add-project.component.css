@@ -22,6 +22,13 @@
   justify-content: flex-start;
   align-items: center;
 }
+.add-button1{
+  background-color: var(--secondary-color);
+  color: var(--button-font-color);
+}
+.icon-button{
+  font-size: 22px;
+}
 .fieldLabel {
   width: 20%;
 }
@@ -48,7 +55,7 @@
   border-top: 1px solid #ddd;
 }
 
-.button-container + .add-button {
+.button-container + .add-button + .add-button1 {
   margin-left: 8px;
 }
 ::ng-deep.mat-select-value {

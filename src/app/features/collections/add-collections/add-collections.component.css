@@ -16,6 +16,10 @@
   color: #fd518c;
   padding: 5px;
 }
+.add-button1{
+  background-color: var(--secondary-color);
+  color: var(--button-font-color);
+}
 .fieldWrapper {
   display: flex;
   flex: 1;
@@ -47,7 +51,7 @@
   background-color: white;
   border-top: 1px solid #ddd;
 }
-.button-container + .add-button {
+.button-container + .add-button + .add-button1 {
   margin-left: 8px;
 }
 .spinner {
@@ -84,6 +88,9 @@
   .add-button{
     margin-right: 10px;
   }
+  .add-button1{
+    margin-right: 10px;
+  }
 }
 @media screen and (max-width:426px) {
   .collectionNameField{
@@ -117,6 +124,9 @@
   .add-button{
     margin-right: 10px;
   }
+  .add-button1{
+    margin-right: 10px;
+  }
   .collectionNameField {
     width: 150px;
   }
@@ -126,6 +136,9 @@
     width: 120px;
   }
   .add-button{
+    margin-right: 10px;
+  }
+  .add-button1{
     margin-right: 10px;
   }
 }

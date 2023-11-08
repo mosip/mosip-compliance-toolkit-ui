@@ -11,6 +11,10 @@
   margin-top: 5vw;
   display: flex;
 }
+.add-button{
+  background-color: var(--secondary-color);
+  color: var(--button-font-color);
+}
 .spacer {
   flex: 1 1 auto;
 }
