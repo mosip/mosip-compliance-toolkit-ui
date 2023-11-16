@@ -319,7 +319,7 @@ export class TestRunComponent implements OnInit {
       requesttime: new Date().toISOString(),
       request: reportrequest,
     };
-    const subs = this.dataService.createReport(request).subscribe(
+    const subs = this.dataService.createDraftReport(request).subscribe(
       (res: any) => {
         this.dataLoaded = true;
         if (res) {
