@@ -23,6 +23,7 @@ import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AbisProjectModel } from 'src/app/core/models/abis-project';
 import { AppConfigService } from 'src/app/app-config.service';
+import { DialogComponent } from 'src/app/core/components/dialog/dialog.component';
 
 @Component({
   selector: 'app-test-run',
@@ -329,6 +330,13 @@ export class TestRunComponent implements OnInit {
           link.href = window.URL.createObjectURL(blob);
           link.download = this.getProjectName();
           link.click();
+          const dialogRef = this.dialog.open(DialogComponent, {
+            width: '600px',
+            data: {
+              case: "DRAFT_REPORT_REVIEW",
+            },
+          });
+          dialogRef.afterClosed();
         } else {
           Utils.showErrorMessage(this.resourceBundleJson,
             null,

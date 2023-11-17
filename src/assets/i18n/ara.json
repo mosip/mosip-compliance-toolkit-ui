@@ -15,7 +15,14 @@
 		"updateProject": "تحديث المشروع",
 		"deviceImages": "صور الجهاز",
 		"uploadDeviceImages": "تحميل صور الجهاز",
-		"addImage": "إضافة صورة"
+		"addImage": "إضافة صورة",
+		"sendForReview": "إرسال للمراجعة",
+		"reviewMessage1": "يرجى التحقق من مسودة التقرير التي تم تنزيلها.",
+		"reviewMessage2": "إذا كانت كافة التفاصيل صحيحة، يمكنك تقديمها للمراجعة.",
+		"reviewMessage3": "بمجرد إرسالها، لا يمكن إعادة تشغيل مجموعة التوافق لهذا المشروع.",
+		"reviewMessage4": "سيقوم مسؤول CTK بمراجعة التقرير والموافقة عليه أو رفضه.",
+		"comment": "(تعليقات اختيارية)",
+		"checkBox": "جاهز للإرسال للمراجعة"
 	},
 	"breadcrumb": {
 		"home": "بيت",
@@ -215,7 +222,8 @@
 		"executionStatus": "حالة التنفيذ",
 		"complete": "مكتمل",
 		"incomplete": "غير مكتمل",
-		"testRunExecutionStatus": "حالة التنفيذ"
+		"testRunExecutionStatus": "حالة التنفيذ",
+		"generateDraftReport": "إنشاء مسودة تقرير"
 	},
 	"addCollections": {
 		"collectionName": "اسم المجموعة:",

@@ -15,7 +15,14 @@
 		"updateProject": "Update Project",
 		"deviceImages": "Device Images",
 		"uploadDeviceImages": "Upload Device Images",
-		"addImage": "Add Image"
+		"addImage": "Add Image",
+		"sendForReview": "Send For Review",
+		"reviewMessage1": "Please check the downloaded draft report.",
+		"reviewMessage2": "If all details are correct, you can submit it for review.",
+		"reviewMessage3": "Once submitted, the compliance collection cannot be rerun for this project.",
+		"reviewMessage4": "CTK admin will review the report and approve or reject the same.",
+		"comment": "(Optional comments)",
+		"checkBox": "Ready to send for review"
 	},
 	"breadcrumb": {
 		"home": "Home",
@@ -216,7 +223,8 @@
 		"complete": "Complete",
 		"incomplete": "Incomplete",
 		"testRunStatus": "Test Run Status",
-		"testRunExecutionStatus": "Execution Status"
+		"testRunExecutionStatus": "Execution Status",
+		"generateDraftReport": "Generate Draft Report"
 	},
 	"addCollections": {
 		"collectionName": "Collection Name:",

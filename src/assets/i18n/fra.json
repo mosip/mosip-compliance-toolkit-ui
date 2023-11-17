@@ -15,7 +15,14 @@
 		"updateProject": "Mettre à jour le projet",
 		"deviceImages": "Images de l'appareil",
 		"uploadDeviceImages": "Télécharger des images de périphérique",
-		"addImage": "Ajouter une image"
+		"addImage": "Ajouter une image",
+		"sendForReview": "Envoyer pour examen",
+		"reviewMessage1": "Veuillez vérifier le projet de rapport téléchargé.",
+		"reviewMessage2": "Si tous les détails sont corrects, vous pouvez le soumettre pour examen.",
+		"reviewMessage3": "Une fois soumise, la collecte de conformité ne peut pas être réexécutée pour ce projet.",
+		"reviewMessage4": "L'administrateur CTK examinera le rapport et l'approuvera ou le rejettera.",
+		"comment": "(Commentaires facultatifs)",
+		"checkBox": "Prêt à envoyer pour examen"
 	},
 	"breadcrumb": {
 		"home": "Maison",
@@ -215,7 +222,8 @@
 		"executionStatus": "Statut d'exécution",
 		"complete": "Complète",
 		"incomplete": "Incomplet",
-		"testRunExecutionStatus": "Statut d'exécution"
+		"testRunExecutionStatus": "Statut d'exécution",
+		"generateDraftReport": "Générer un brouillon de rapport"
 	},
 	"addCollections": {
 		"collectionName": "Nom de la collection:",

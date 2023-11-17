@@ -200,4 +200,30 @@
         </mat-dialog-actions>
     </div>
 </div>
+<div *ngIf="input.case === 'DRAFT_REPORT_REVIEW'">
+    <h2 mat-dialog-title class="mat-dialog-title">{{"dialogMessages.sendForReview"|translate}}</h2>
+    <div mat-dialog-content class="sendForReview">
+        <ul class="reviewMessage">
+            <li>{{"dialogMessages.reviewMessage1"|translate}}</li>
+            <li>{{"dialogMessages.reviewMessage2"|translate}}</li>
+            <li>{{"dialogMessages.reviewMessage3"|translate}}</li>
+            <li>{{"dialogMessages.reviewMessage4"|translate}}</li>
+        </ul>
+        <mat-checkbox [(ngModel)]="sendForReview" class="checkbox-margin">{{"dialogMessages.checkBox"|translate}}</mat-checkbox>
+        <div *ngIf="sendForReview">
+            <span class="fieldContainer">
+                <mat-form-field appearance="legacy" class="formField">
+                    <input matInput [(ngModel)]="reviewComment" #keyboardRef #input />
+                </mat-form-field>
+            </span>
+            <span class="fieldLabel">
+                <mat-label>{{ "dialogMessages.comment" | translate }}</mat-label>
+            </span>
+        </div>
+    </div>
+    <div class="button-container">
+        <button mat-flat-button (click)="closeMe()" class="back-button">{{"dialogMessages.close"|translate}}</button>
+        <button mat-flat-button color="accent" [disabled]="!sendForReview" (click)="closeMe()" class="saveBt">{{"dialogMessages.sendForReview"|translate}}</button>
+    </div>
+</div>
 </div>
