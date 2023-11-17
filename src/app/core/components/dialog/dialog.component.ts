@@ -47,6 +47,8 @@ export class DialogComponent implements OnInit {
   allowedFileNameLegth =
     this.appConfigService.getConfig()['allowedFileNameLegth'];
   allowedFileSize = this.appConfigService.getConfig()['allowedFileSize'];
+  sendForReview: boolean = false;
+  reviewComment: string = '';
 
   constructor(
     private router: Router,
