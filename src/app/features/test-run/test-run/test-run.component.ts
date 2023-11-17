@@ -333,7 +333,7 @@ export class TestRunComponent implements OnInit {
           const dialogRef = this.dialog.open(DialogComponent, {
             width: '600px',
             data: {
-              case: "DRAFT_REPORT_REVIEW",
+              case: "SEND_FOR_REVIEW",
             },
           });
           dialogRef.afterClosed();
