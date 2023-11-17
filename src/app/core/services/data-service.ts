@@ -266,4 +266,19 @@ export class DataService {
     let url = `${this.SERVICES_BASE_URL}generateDraftReport`;
     return this.httpClient.post(url, body, { responseType: 'blob' });
   }
+
+  getSubmittedReport(body: any) {
+    let url = `${this.SERVICES_BASE_URL}getSubmittedReport`;
+    return this.httpClient.post(url, body, { responseType: 'blob' });
+  }
+
+  isReportAlreadySubmitted(body: any) {
+    let url = `${this.SERVICES_BASE_URL}isReportAlreadySubmitted`;
+    return this.httpClient.post(url, body);
+  }
+
+  submitReportForReview(body: any) {
+    let url = `${this.SERVICES_BASE_URL}submitReportForReview`;
+    return this.httpClient.post(url, body);
+  }
 }

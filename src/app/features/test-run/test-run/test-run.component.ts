@@ -53,7 +53,8 @@ export class TestRunComponent implements OnInit {
   sbiProjectData: SbiProjectModel;
   sdkProjectData: SdkProjectModel;
   abisProjectData: AbisProjectModel;
-  showDownloadReportBtn = false;
+  showGenerateReportBtn = false;
+  showSubmittedReportBtn = false;
   testcasesList: any;
   dataSource: MatTableDataSource<TestRunModel>;
   displayedColumns: string[] = ['testId', 'testName', 'resultStatus', 'executionStatus', 'scrollIcon'];
@@ -108,7 +109,12 @@ export class TestRunComponent implements OnInit {
     await this.getTestRun();
     //enable download report button only for compliance collection
     if (appConstants.COMPLIANCE_COLLECTION == this.collectionType) {
-      this.showDownloadReportBtn = true;
+      let isReportAlreadySubmitted = await Utils.isReportAlreadySubmitted(this.projectType, this.projectId, this.collectionId, this.dataService, this.resourceBundleJson, this.dialog);
+      if (!isReportAlreadySubmitted) {
+        this.showGenerateReportBtn = true;
+      } else {
+        this.showSubmittedReportBtn = true;
+      }
     }
     this.initBreadCrumb();
     this.dataLoaded = true;
@@ -139,7 +145,7 @@ export class TestRunComponent implements OnInit {
         }
         if (runStatus == appConstants.FAILURE) {
           runStatus = this.resourceBundleJson["viewTestRun"]["failure"];
-        }       
+        }
         let execStatus = this.runDetails.executionStatus;
         if (execStatus == appConstants.COMPLETE_STATUS) {
           execStatus = this.resourceBundleJson["viewTestRun"]["complete"];
@@ -306,7 +312,7 @@ export class TestRunComponent implements OnInit {
     return name;
   }
 
-  downloadReport() {
+  downloadGeneratedReport() {
     this.dataLoaded = false;
     let reportrequest = {
       projectType: this.projectType,
@@ -318,7 +324,7 @@ export class TestRunComponent implements OnInit {
       id: appConstants.PARTNER_REPORT_ID,
       version: appConstants.VERSION,
       requesttime: new Date().toISOString(),
-      request: reportrequest,
+      request: reportrequest
     };
     const subs = this.dataService.generateDraftReport(request).subscribe(
       (res: any) => {
@@ -330,13 +336,60 @@ export class TestRunComponent implements OnInit {
           link.href = window.URL.createObjectURL(blob);
           link.download = this.getProjectName();
           link.click();
+          let submitRequest = {
+            id: appConstants.PARTNER_REPORT_ID,
+            version: appConstants.VERSION,
+            requesttime: new Date().toISOString(),
+            request: reportrequest
+          };
           const dialogRef = this.dialog.open(DialogComponent, {
             width: '600px',
             data: {
               case: "SEND_FOR_REVIEW",
+              submitRequest: submitRequest
             },
           });
           dialogRef.afterClosed();
+
+        } else {
+          Utils.showErrorMessage(this.resourceBundleJson,
+            null,
+            this.dialog,
+            'Unable to download PDF file. Try Again!');
+        }
+      },
+      (errors) => {
+        Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
+      }
+    );
+    this.subscriptions.push(subs);
+
+  }
+
+  downloadSubmittedReport() {
+    this.dataLoaded = false;
+    let reportrequest = {
+      projectType: this.projectType,
+      projectId: this.projectId,
+      collectionId: this.collectionId,
+      testRunId: null
+    }
+    let request = {
+      id: appConstants.PARTNER_REPORT_ID,
+      version: appConstants.VERSION,
+      requesttime: new Date().toISOString(),
+      request: reportrequest,
+    };
+    const subs = this.dataService.getSubmittedReport(request).subscribe(
+      (res: any) => {
+        this.dataLoaded = true;
+        if (res) {
+          const fileByteArray = res;
+          var blob = new Blob([fileByteArray], { type: 'application/pdf' });
+          var link = document.createElement('a');
+          link.href = window.URL.createObjectURL(blob);
+          link.download = this.getProjectName();
+          link.click();
         } else {
           Utils.showErrorMessage(this.resourceBundleJson,
             null,
@@ -351,9 +404,27 @@ export class TestRunComponent implements OnInit {
     this.subscriptions.push(subs);
   }
 
+  createPdf(res: any) {
+    const fileByteArray = res;
+    var blob = new Blob([fileByteArray], { type: 'application/pdf' });
+    var link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = this.getProjectName();
+    link.click();
+    if (this.showGenerateReportBtn) {
+      const dialogRef = this.dialog.open(DialogComponent, {
+        width: '600px',
+        data: {
+          case: "SEND_FOR_REVIEW",
+        },
+      });
+      dialogRef.afterClosed();
+    }
+  }
   async backToProject() {
     await this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}`,
     ]);
   }
+
 }

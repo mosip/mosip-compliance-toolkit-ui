@@ -223,7 +223,7 @@
     </div>
     <div class="button-container">
         <button mat-flat-button (click)="closeMe()" class="back-button">{{"dialogMessages.close"|translate}}</button>
-        <button mat-flat-button color="accent" [disabled]="!sendForReview" (click)="closeMe()" class="saveBt">{{"dialogMessages.sendForReview"|translate}}</button>
+        <button mat-flat-button color="accent" [disabled]="!sendForReview" (click)="submitReportForReview()" class="saveBt">{{"dialogMessages.sendForReview"|translate}}</button>
     </div>
 </div>
 </div>
