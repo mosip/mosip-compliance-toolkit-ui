@@ -262,8 +262,8 @@ export class DataService {
     return this.httpClient.post(url, body);
   }
 
-  createDraftReport(body: any) {
-    let url = `${this.SERVICES_BASE_URL}createDraftReport`;
+  generateDraftReport(body: any) {
+    let url = `${this.SERVICES_BASE_URL}generateDraftReport`;
     return this.httpClient.post(url, body, { responseType: 'blob' });
   }
 }
