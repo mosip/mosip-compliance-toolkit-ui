@@ -315,12 +315,12 @@ export class TestRunComponent implements OnInit {
       testRunId: this.runId
     }
     let request = {
-      id: appConstants.CREATE_REPORT_ID,
+      id: appConstants.PARTNER_REPORT_ID,
       version: appConstants.VERSION,
       requesttime: new Date().toISOString(),
       request: reportrequest,
     };
-    const subs = this.dataService.createDraftReport(request).subscribe(
+    const subs = this.dataService.generateDraftReport(request).subscribe(
       (res: any) => {
         this.dataLoaded = true;
         if (res) {
