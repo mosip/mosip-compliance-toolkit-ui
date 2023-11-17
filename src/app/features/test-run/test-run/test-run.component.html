@@ -1,5 +1,6 @@
 <div [dir]="textDirection">
-    <p><xng-breadcrumb *ngIf="dataLoaded"></xng-breadcrumb></p><p></p>
+    <p><xng-breadcrumb *ngIf="dataLoaded"></xng-breadcrumb></p>
+    <p></p>
     <div class="spinner" *ngIf="!dataLoaded">
         <mat-spinner diameter="50"></mat-spinner>
     </div>
@@ -174,9 +175,14 @@
         <button mat-flat-button (click)="backToProject()" class="back-button">
             {{"viewTestRun.back"|translate}}
         </button>
-        <button *ngIf="dataLoaded && showDownloadReportBtn" mat-flat-button color="accent" (click)="downloadReport()"
-            class="add-button">
+        <button *ngIf="dataLoaded" [disabled]="!showGenerateReportBtn && showSubmittedReportBtn" mat-flat-button
+            color="accent" (click)="downloadGeneratedReport()" class="add-button">
             {{"viewTestRun.generateDraftReport"|translate}}
         </button>
+        <div *ngIf="dataLoaded && showSubmittedReportBtn">
+            <button mat-flat-button color="accent" (click)="downloadSubmittedReport()" class="add-button">
+                View Submitted Report
+            </button>
+        </div>
     </div>
 </div>

@@ -12,9 +12,6 @@ import * as appConstants from 'src/app/app.constants';
 import { Router } from '@angular/router';
 import { Subscription, flatMap } from 'rxjs';
 import Utils from 'src/app/app.utils';
-import { SbiProjectModel } from '../../models/sbi-project';
-import { AbisProjectModel } from '../../models/abis-project';
-import { SdkProjectModel } from '../../models/sdk-project';
 import { AppConfigService } from 'src/app/app-config.service';
 
 @Component({
@@ -371,5 +368,26 @@ export class DialogComponent implements OnInit {
       }
       this.imageUrls = base64Url;
     });
+  }
+
+  submitReportForReview() {
+    const subs = this.dataService.submitReportForReview(this.input.submitRequest).subscribe(
+      (res: any) => {
+        this.dataLoaded = true;
+        if (res) {
+          this.closeMe();
+          window.location.reload();
+        } else {
+          Utils.showErrorMessage(this.resourceBundleJson,
+            null,
+            this.dialog,
+            'Unable to submit report for review. Try Again!');
+        }
+      },
+      (errors) => {
+        Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
+      }
+    );
+    this.subscriptions.push(subs);
   }
 }
