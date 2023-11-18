@@ -1,12 +1,46 @@
 .dashboard-table {
   width: 100%;
 }
-
+.button-container{
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
 .mat-header-cell {
   background-color: rgba(119, 136, 153, 0.26);
   color: black;
 }
+.tabs{
+  box-shadow: black;
+}
+::ng-deep .mat-tab-labels{
+  background-color: rgb(246, 247, 247);
+  border-radius: 10px;
+}
+::ng-deep .mat-tab-group.mat-primary .mat-ink-bar{
+    background-color: white;
+    z-index: -1;
+}
+::ng-deep .mat-tab-header {
+  border-bottom: none !important;
+}
+::ng-deep .mat-tab-label {
+  background-color: transparent; 
+}
+::ng-deep .mat-tab-group.mat-primary {
+  border-bottom: none !important;
+}
+::ng-deep .mat-tab-label.mat-tab-label-active {
+  background-color: white; 
+  opacity: 1;
+  color: black;
+  border: 1px solid rgb(212, 205, 205);
+  border-radius: 10px;
+}
 
+::ng-deep .mat-tab-label {
+  transition: background-color 0.3s ease-in-out;
+}
 .dashboard-button-first-container {
   /* padding-bottom: 16px; */
   float: right;

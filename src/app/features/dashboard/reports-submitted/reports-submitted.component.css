@@ -1,0 +1,29 @@
+.dashboard-table {
+    width: 100%;
+}
+
+.mat-header-cell {
+    background-color: rgba(119, 136, 153, 0.26);
+    color: black;
+}
+
+.center-header-cell {
+    text-align: center !important;
+}
+
+.filter-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.text-container {
+    width: 100%;
+    text-align: center;
+}
+
+.text-container mat-icon {
+    vertical-align: middle;
+    margin-right: 4px;
+    font-size: 22px;
+}

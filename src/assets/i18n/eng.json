@@ -271,6 +271,27 @@
 		"deviceType": "Device Type",
 		"deviceSubType": "Device Sub Type"
 	},
+	"adminDashboard": {
+		"tableDescription": "List of Partners",
+		"partnerName": "Partner Name",
+		"orgName": "Organization Name",
+		"projectType": "Project Type",
+		"creationDate": "Creation Date",
+		"projectName": "Project Name",
+		"downloadReport": "Download Report",
+		"status": "Approve/Reject",
+		"collectionName": "Collection Name",
+		"projectRow": "There are no projects available."
+	},
+	"reportsSubmitted": {
+		"orgName": "Organization Name",
+		"projectType": "Project Type",
+		"creationDate": "Creation Date",
+		"projectName": "Project Name",
+		"status": "Review Status",
+		"collectionName": "Collection Name",
+		"projectRow": "There are no reports available."
+	},
 	"executeTestRun": {
 		"title": "Executing Test Run",
 		"noDeviceSelected": "No device selected. Please scan device first.",

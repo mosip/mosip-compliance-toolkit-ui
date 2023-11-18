@@ -50,6 +50,7 @@ export class ProjectsDashboardComponent implements OnInit {
   textDirection: any = this.userProfileService.getTextDirection();
   buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : {'float': 'right'};
   resourceBundleJson: any = {};
+  isAdmin: boolean = false;
 
   constructor(
     private router: Router,
@@ -64,6 +65,7 @@ export class ProjectsDashboardComponent implements OnInit {
 
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
+    this.isAdmin = this.userProfileService.hasRole('CTK_ADMIN');
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     this.paginatorIntl.itemsPerPageLabel = this.resourceBundleJson.paginationLabel['itemPerPage'];
     this.paginatorIntl.getRangeLabel = (page: number, pageSize: number, length: number) => {

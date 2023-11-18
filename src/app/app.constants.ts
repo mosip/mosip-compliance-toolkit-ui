@@ -23,6 +23,7 @@ export const ABIS_INSERT_ID = "mosip.abis.insert";
 export const ABIS_IDENTIFY_ID = "mosip.abis.identify";
 export const ABIS_VERSION = "1.1";
 export const PARTNER_REPORT_ID = 'mosip.toolkit.partner.report.post';
+export const ADMIN_REPORT_ID = 'mosip.toolkit.admin.report.post';
 
 export const VERSION = '1.0';
 

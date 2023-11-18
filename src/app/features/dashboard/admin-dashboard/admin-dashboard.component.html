@@ -1,0 +1,86 @@
+<div class="mat-elevation-z8">
+    <div class="filter-container">
+        <mat-form-field appearance="legacy" class="filter">
+            <mat-label>{{ "projectDashboard.filter" | translate }}</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Search columns" #input>
+        </mat-form-field>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25,50,100]" aria-label="Select page of partners"></mat-paginator>
+
+    </div>
+
+    <table mat-table [dataSource]="dataSource" matSort class="dashboard-table">
+
+        <ng-container matColumnDef="partnerName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "adminDashboard.partnerName" | translate }} </th>
+            <td mat-cell *matCellDef="let element"> {{element.partnerName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="orgName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "adminDashboard.orgName" | translate }} </th>
+            <td mat-cell *matCellDef="let element"> {{element.orgName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="projectType">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "adminDashboard.projectType" | translate }} </th>
+            <td mat-cell *matCellDef="let element"> {{element.projectType}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="collectionName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "adminDashboard.collectionName" | translate }}
+            </th>
+            <td mat-cell *matCellDef="let element"> {{element.collectionName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="projectName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "adminDashboard.projectName" | translate }} </th>
+            <td mat-cell *matCellDef="let element"> {{element.projectName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="updDtimes">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "adminDashboard.creationDate" | translate }} </th>
+            <td mat-cell *matCellDef="let element"> {{element.updDtimes | date: 'short'}} </td>
+        </ng-container>
+        <ng-container matColumnDef="downloadButton">
+            <th mat-header-cell *matHeaderCellDef class="center-header-cell"> {{ "adminDashboard.downloadReport" |
+                translate }} </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="download-button-container">
+                    <button mat-flat-button (click)="fetchPartnerReport(element)" class="view-draft-button">
+                        View Draft Report
+                    </button>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="approveOrRejectButton">
+            <th mat-header-cell *matHeaderCellDef class="center-header-cell">
+                {{ "adminDashboard.status" | translate }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="button-container" *ngIf="!element.isApproved && !element.isRejected">
+                    <button mat-flat-button class="approve-button" (click)="approvePartnerReport(element)">
+                        <mat-icon [ngStyle]="{color: 'green'}">check_circle</mat-icon>Approve
+                    </button>
+                    <button mat-flat-button class="reject-button" (click)="rejectPartnerReport(element)">
+                        <mat-icon [ngStyle]="{color: 'red'}">cancel</mat-icon>Reject
+                    </button>
+                </div>
+                <div class="text-container">
+                    <div *ngIf="element.isApproved">
+                        <p><mat-icon [ngStyle]="{color: 'green'}">check_circle</mat-icon>Approved</p>
+                    </div>
+                    <div *ngIf="element.isRejected">
+                        <p><mat-icon [ngStyle]="{color: 'red'}">cancel</mat-icon>Rejected</p>
+                    </div>
+                </div>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="8">
+                {{ "adminDashboard.projectRow" | translate }}
+            </td>
+        </tr>
+    </table>
+</div>

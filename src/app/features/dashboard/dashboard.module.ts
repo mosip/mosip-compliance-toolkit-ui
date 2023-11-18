@@ -8,12 +8,16 @@ import { MaterialModule } from '../../core/material.module';
 import { I18nModule } from '../../i18n.module';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BiometricDashboardComponent } from './biometric-dashboard/biometric-dashboard.component';
-
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import { ReportsSubmittedComponent } from './reports-submitted/reports-submitted.component';
 
 @NgModule({
   declarations: [
     ProjectsDashboardComponent,
-    BiometricDashboardComponent
+    BiometricDashboardComponent,
+    AdminDashboardComponent,
+    ReportsSubmittedComponent,
   ],
   imports: [
     CommonModule,
@@ -22,7 +26,8 @@ import { BiometricDashboardComponent } from './biometric-dashboard/biometric-das
     MaterialModule,
     FormsModule,
     I18nModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTabsModule
   ],
   providers: [BreadcrumbService]
 })

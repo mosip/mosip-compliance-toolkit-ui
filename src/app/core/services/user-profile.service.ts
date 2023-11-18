@@ -31,6 +31,11 @@ export class UserProfileService {
     return x.join(', ').replace(/_/g, ' ');
   }
 
+  hasRole(role: string): boolean {
+    const rolesArray = this.roles.split(',');
+    return rolesArray.includes(role);
+  }
+
   getRoleCodes(): string {
     return this.roles;
   }

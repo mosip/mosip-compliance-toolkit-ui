@@ -281,4 +281,34 @@ export class DataService {
     let url = `${this.SERVICES_BASE_URL}submitReportForReview`;
     return this.httpClient.post(url, body);
   }
+
+  getPartnerReportList(reportStatus: string) {
+    let url;
+    url = `${this.SERVICES_BASE_URL}getPartnerReportList/${reportStatus}`;
+    return this.httpClient.get(url);
+  }
+  
+  getSubmittedReportList() {
+    let url;
+    url = `${this.SERVICES_BASE_URL}getSubmittedReportList`;
+    return this.httpClient.get(url);
+  }
+
+  getPartnerReport(partnerId: String,body: any) {
+    let url;
+    url = `${this.SERVICES_BASE_URL}getPartnerReport/${partnerId}`;
+    return this.httpClient.post(url,body, { responseType: 'blob' });
+  }
+
+  approvePartnerReport(partnerId: String,body: any) {
+    let url;
+    url = `${this.SERVICES_BASE_URL}approvePartnerReport/${partnerId}`;
+    return this.httpClient.post(url,body);
+  }
+
+  rejectPartnerReport(partnerId: String,body: any) {
+    let url;
+    url = `${this.SERVICES_BASE_URL}rejectPartnerReport/${partnerId}`;
+    return this.httpClient.post(url,body);
+  }
 }
