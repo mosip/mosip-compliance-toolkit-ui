@@ -175,7 +175,7 @@
         <button mat-flat-button (click)="backToProject()" class="back-button">
             {{"viewTestRun.back"|translate}}
         </button>
-        <button *ngIf="dataLoaded" [disabled]="!showGenerateReportBtn && showSubmittedReportBtn" mat-flat-button
+        <button *ngIf="dataLoaded" [disabled]="!showGenerateReportBtn || showSubmittedReportBtn" mat-flat-button
             color="accent" (click)="downloadGeneratedReport()" class="add-button">
             {{"viewTestRun.generateDraftReport"|translate}}
         </button>
