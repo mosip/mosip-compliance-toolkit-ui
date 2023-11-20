@@ -271,6 +271,34 @@
 		"deviceType": "Device Type",
 		"deviceSubType": "Device Sub Type"
 	},
+	"partnerReport": {
+		"tableDescription": "List of Reports Under Review",
+		"partnerName": "Partner Name",
+		"orgName": "Organization Name",
+		"projectType": "Project Type",
+		"creationDate": "Creation Date",
+		"projectName": "Project Name",
+		"downloadReport": "Download Report",
+		"status": "Approve/Reject",
+		"collectionName": "Collection Name",
+		"viewReport": "View Report",
+		"approveReport": "Approve",
+		"rejectReport": "Reject",
+		"projectRow": "There are no reports available."
+	},
+	"myReports": {
+		"tableDescription": "List of My Reports",
+		"orgName": "Organization Name",
+		"projectType": "Project Type",
+		"reviewDtimes": "Review Date",
+		"approveRejectDtimes": "Approve /Reject Date",
+		"projectName": "Project Name",
+		"status": "Report Status",
+		"collectionName": "Collection Name",
+		"partnerComments": "Your comments",
+		"adminComments": "Admin comments",
+		"projectRow": "There are no reports available."
+	},
 	"executeTestRun": {
 		"title": "Executing Test Run",
 		"noDeviceSelected": "No device selected. Please scan device first.",

@@ -404,23 +404,6 @@ export class TestRunComponent implements OnInit {
     this.subscriptions.push(subs);
   }
 
-  createPdf(res: any) {
-    const fileByteArray = res;
-    var blob = new Blob([fileByteArray], { type: 'application/pdf' });
-    var link = document.createElement('a');
-    link.href = window.URL.createObjectURL(blob);
-    link.download = this.getProjectName();
-    link.click();
-    if (this.showGenerateReportBtn) {
-      const dialogRef = this.dialog.open(DialogComponent, {
-        width: '600px',
-        data: {
-          case: "SEND_FOR_REVIEW",
-        },
-      });
-      dialogRef.afterClosed();
-    }
-  }
   async backToProject() {
     await this.router.navigate([
       `toolkit/project/${this.projectType}/${this.projectId}`,

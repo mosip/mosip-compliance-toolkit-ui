@@ -1,0 +1,83 @@
+.dashboard-table {
+    width: 100%;
+}
+
+.mat-header-cell {
+    background-color: rgba(119, 136, 153, 0.26);
+    color: black;
+}
+
+.approve-button {
+    margin-right: 3px;
+    background-color: rgb(205, 230, 200);
+    border-radius: 25px;
+    width: 105px;
+    height: 36px;
+    padding: 1px;
+    padding-right: 4px;
+}
+
+.reject-button {
+    background-color: rgba(212, 189, 189, 0.85);
+    border-radius: 25px;
+    width: 94px;
+    height: 36px;
+    padding: 1px;
+    padding-right: 4px;
+
+}
+.view-draft-button {
+    background-color: rgb(179, 205, 225);
+    width: 140px;
+    height: 36px;
+    border-radius: 20px;
+}
+
+.center-header-cell {
+    text-align: center;
+}
+
+.download-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.filter-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.text-container{
+    width: 100%;
+    text-align: center;
+}
+.text-container mat-icon{
+    vertical-align: middle;
+    margin-right: 4px;
+    font-size: 22px;
+}
+.button-container mat-icon{
+    vertical-align: middle;
+    margin-right: 4px;
+    font-size: 22px;
+}
+td , th {
+    white-space: normal;
+    word-wrap: break-word;
+    max-width: 150px;
+}
+
+.spinner {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 18vw;
+    display: flex;
+  }
