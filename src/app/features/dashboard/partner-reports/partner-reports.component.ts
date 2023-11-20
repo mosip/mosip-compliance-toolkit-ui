@@ -3,7 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { DataService } from 'src/app/core/services/data-service';
 import { TranslateService } from '@ngx-translate/core';
-import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import * as appConstants from 'src/app/app.constants';
@@ -17,7 +17,7 @@ import { AppConfigService } from 'src/app/app-config.service';
   templateUrl: './partner-reports.component.html',
   styleUrls: ['./partner-reports.component.css'],
 })
-export class PartnerReportsComponent implements AfterViewInit {
+export class PartnerReportsComponent implements OnInit {
 
 
   constructor(
@@ -25,20 +25,22 @@ export class PartnerReportsComponent implements AfterViewInit {
     private translate: TranslateService,
     private dialog: MatDialog,
     private userProfileService: UserProfileService,
-    private dataService: DataService,
-    private paginatorIntl: MatPaginatorIntl
+    private dataService: DataService
   ) { }
 
   displayedColumns: string[] = [
     'partnerId',
+    'orgName',
     'projectType',
     'projectName',
     'collectionName',
+    'reviewDtimes',
     'reportStatus',
     'partnerComments',
-    'reviewDtimes',
+    'approveRejectDtimes',
     'downloadButton',
-    'approveOrRejectButton',
+    'approveButton',
+    'rejectButton'
   ];
   dataSource = new MatTableDataSource<ReportModel>();
   dataLoaded = false;
@@ -60,24 +62,8 @@ export class PartnerReportsComponent implements AfterViewInit {
       this.userProfileService.getUserPreferredLanguage(),
       this.dataService
     );
-    this.paginatorIntl.itemsPerPageLabel =
-      this.resourceBundleJson.paginationLabel['itemPerPage'];
-    this.paginatorIntl.getRangeLabel = (
-      page: number,
-      pageSize: number,
-      length: number
-    ) => {
-      const from = page * pageSize + 1;
-      const to = Math.min((page + 1) * pageSize, length);
-      return `${from} - ${to} ${this.resourceBundleJson.paginationLabel['rangeLabel']} ${length}`;
-    };
-    await this.getPartnerReportList('review');
+    await this.getPartnerReportList();
     this.dataLoaded = true;
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
-  ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -96,26 +82,44 @@ export class PartnerReportsComponent implements AfterViewInit {
   customFilterPredicate(data: ReportModel, filter: string): boolean {
     const formattedDate = new Date(filter);
     const rvDate = new Date(data.reviewDtimes);
-    const projectNameMatch = data.projectName ? data.projectName.trim().toLowerCase().includes(filter): false;
-    const collectionNameMatch = data.collectionName ? data.collectionName.trim().toLowerCase().includes(filter): false;
+    const appRejDate = new Date(data.approveRejectDtimes);
 
+    const projectNameMatch = data.projectName ? data.projectName.trim().toLowerCase().includes(filter) : false;
+    const collectionNameMatch = data.collectionName ? data.collectionName.trim().toLowerCase().includes(filter) : false;
     const partnerIdMatch = data.partnerId.trim().toLowerCase().includes(filter);
     const projectTypeMatch = data.projectType.trim().toLowerCase().includes(filter);
     const reviewDtMatch = rvDate.toDateString() === formattedDate.toDateString();
-    //const dateMatch1 = appRejDate.toDateString() === formattedDate.toDateString();
+    const reportStatusMatch = data.reportStatus ? data.reportStatus.trim().toLowerCase().includes(filter) : false;
+    const orgNameMatch = data.orgName ? data.orgName.trim().toLowerCase().includes(filter) : false;
+    const appRejDateMatch = appRejDate.toDateString() === formattedDate.toDateString();
 
-    return partnerIdMatch || projectTypeMatch || projectNameMatch || collectionNameMatch || reviewDtMatch;
+    return partnerIdMatch || appRejDateMatch || projectTypeMatch || projectNameMatch || collectionNameMatch || reviewDtMatch || reportStatusMatch || orgNameMatch;
   }
 
-  async getPartnerReportList(reportStatus: string) {
+  async getPartnerReportList() {
+    let allReports = [];
+    const reviewDataArr = await this.fetchPartnerReportList(appConstants.REPORT_STATUS_REVIEW);
+    const approvedDataArr = await this.fetchPartnerReportList(appConstants.REPORT_STATUS_APPROVED);
+    const rejectedDataArr = await this.fetchPartnerReportList(appConstants.REPORT_STATUS_REJECTED);
+    if (reviewDataArr && Array.isArray(reviewDataArr)) {
+      allReports.push(...reviewDataArr);
+    }
+    if (approvedDataArr && Array.isArray(approvedDataArr)) {
+      allReports.push(...approvedDataArr);
+    }
+    if (rejectedDataArr && Array.isArray(rejectedDataArr)) {
+      allReports.push(...rejectedDataArr);
+    }
+    this.dataSource = new MatTableDataSource<ReportModel>(allReports);
+  }
+
+  async fetchPartnerReportList(reportStatus: string) {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
         this.dataService.getPartnerReportList(reportStatus).subscribe(
           (response: any) => {
             const dataArr = response['response'] as ReportModel[];
-            this.dataSource = new MatTableDataSource<ReportModel>(dataArr);
-            this.dataSource.sort = this.sort;
-            resolve(true);
+            resolve(dataArr);
           },
           (errors) => {
             Utils.showErrorMessage(
@@ -130,49 +134,8 @@ export class PartnerReportsComponent implements AfterViewInit {
     });
   }
 
-  fetchPartnerReport(element: any) {
-    this.dataLoaded = false;
-    let reportrequest = {
-      projectType: element.projectType,
-      projectId: element.projectId,
-      collectionId: element.collectionId,
-      testRunId: element.runId,
-      adminComments: element.adminComments,
-      partnerComments: element.adminComments,
-    };
-
-    let request = {
-      id: appConstants.ADMIN_REPORT_ID,
-      version: appConstants.VERSION,
-      requesttime: new Date().toISOString(),
-      request: reportrequest,
-    };
-
-    const subs = this.dataService
-      .getPartnerReport(element.partnerId, request)
-      .subscribe(
-        (res: any) => {
-          this.dataLoaded = true;
-          if (res) {
-            const fileByteArray = res;
-            var blob = new Blob([fileByteArray], { type: 'application/pdf' });
-            var link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.download = element.partnerId;
-            link.click();
-          } else {
-            Utils.showErrorMessage(this.resourceBundleJson,
-              null,
-              this.dialog,
-              'Unable to download PDF file. Try Again!');
-          }
-        },
-        (errors) => {
-          Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-        }
-      );
-
-    this.subscriptions.push(subs);
+  async fetchPartnerReport(element: any) {
+    await Utils.getReport(true, this.dataLoaded, element, this.dataService, this.resourceBundleJson, this.dialog);
   }
 
   approvePartnerReport(element: any) {
@@ -198,7 +161,7 @@ export class PartnerReportsComponent implements AfterViewInit {
         async (res: any) => {
           this.dataLoaded = true;
           if (res) {
-            await this.getPartnerReportList('review');
+            await this.getPartnerReportList();
             this.dataLoaded = true;
           } else {
             Utils.showErrorMessage(
@@ -241,7 +204,7 @@ export class PartnerReportsComponent implements AfterViewInit {
         async (res: any) => {
           this.dataLoaded = true;
           if (res) {
-            await this.getPartnerReportList('review');
+            await this.getPartnerReportList();
             this.dataLoaded = true;
           } else {
             Utils.showErrorMessage(

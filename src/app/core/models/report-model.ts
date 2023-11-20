@@ -1,7 +1,7 @@
 export interface ReportModel {
   partnerId: string;
-  orgName: String;
-  projectType: String;
+  orgName: string;
+  projectType: string;
   collectionId: string;
   projectId: string;
   reviewDtimes: Date;
@@ -9,6 +9,8 @@ export interface ReportModel {
   reportStatus: string;
   adminComments: string;
   partnerComments: string;
-  collectionName: String;
-  projectName: String;
+  collectionName: string;
+  projectName: string;
+  updDtimes: Date;
+  updBy: string;
 }

@@ -10,11 +10,14 @@
 .center-header-cell {
     text-align: center !important;
 }
-td , th {
+
+td,
+th {
     white-space: normal;
     word-wrap: break-word;
-    max-width: 100px;
+    max-width: 90px;
 }
+
 .filter-container {
     display: flex;
     justify-content: space-between;
@@ -38,4 +41,10 @@ td , th {
     align-items: center;
     margin-top: 18vw;
     display: flex;
-  }
+}
+
+.view-draft-button {
+    background-color: rgb(179, 205, 225);
+    height: 36px;
+    border-radius: 20px;
+}
