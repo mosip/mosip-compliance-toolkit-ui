@@ -1,6 +1,6 @@
 import { OnInit, Component, ViewChild } from '@angular/core';
 import { TranslateService } from "@ngx-translate/core";
-import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortable } from '@angular/material/sort';
 import { Router} from '@angular/router';
 import { DataService } from 'src/app/core/services/data-service';
@@ -59,8 +59,7 @@ export class ProjectsDashboardComponent implements OnInit {
     private breadcrumbService: BreadcrumbService,
     private dialog: MatDialog,
     private userProfileService: UserProfileService,
-    private dataService: DataService,
-    private paginatorIntl: MatPaginatorIntl
+    private dataService: DataService
   ) {
   }
 
@@ -70,12 +69,6 @@ export class ProjectsDashboardComponent implements OnInit {
     const adminRole = this.appConfigService.getConfig()['adminPartnerReportRole'];
     this.isAdmin = this.userProfileService.hasRole(adminRole);
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
-    this.paginatorIntl.itemsPerPageLabel = this.resourceBundleJson.paginationLabel['itemPerPage'];
-    this.paginatorIntl.getRangeLabel = (page: number, pageSize: number, length: number) => {
-      const from = (page) * pageSize + 1;
-      const to = Math.min((page + 1) * pageSize, length);
-      return `${from} - ${to} ${this.resourceBundleJson.paginationLabel['rangeLabel']} ${length}`;
-    };
     await this.getProjects();
     this.initBreadCrumb();
     this.dataLoaded = true;

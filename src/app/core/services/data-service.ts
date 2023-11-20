@@ -294,9 +294,13 @@ export class DataService {
     return this.httpClient.get(url);
   }
 
-  getPartnerReport(partnerId: String, body: any) {
+  getReport(isAdmin: boolean, partnerId: String, body: any) {
     let url;
-    url = `${this.SERVICES_BASE_URL}getPartnerReport/${partnerId}`;
+    if (isAdmin) {
+      url = `${this.SERVICES_BASE_URL}getPartnerReport/${partnerId}`;
+    } else {
+      url = `${this.SERVICES_BASE_URL}getSubmittedReport`;
+    }
     return this.httpClient.post(url, body, { responseType: 'blob' });
   }
 

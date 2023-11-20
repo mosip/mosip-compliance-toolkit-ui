@@ -11,7 +11,6 @@
     margin-right: 3px;
     background-color: rgb(205, 230, 200);
     border-radius: 25px;
-    width: 105px;
     height: 36px;
     padding: 1px;
     padding-right: 4px;
@@ -20,7 +19,6 @@
 .reject-button {
     background-color: rgba(212, 189, 189, 0.85);
     border-radius: 25px;
-    width: 94px;
     height: 36px;
     padding: 1px;
     padding-right: 4px;
@@ -28,7 +26,6 @@
 }
 .view-draft-button {
     background-color: rgb(179, 205, 225);
-    width: 140px;
     height: 36px;
     border-radius: 20px;
 }
@@ -72,7 +69,7 @@
 td , th {
     white-space: normal;
     word-wrap: break-word;
-    max-width: 150px;
+    max-width: 80px;
 }
 
 .spinner {

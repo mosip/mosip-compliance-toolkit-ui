@@ -793,4 +793,46 @@ export default class Utils {
       )
     });
   }
+
+  static getReport(isAdmin: boolean, dataLoaded: boolean, element: any,
+    dataService: DataService, resourceBundleJson: any, dialog: MatDialog) {
+    dataLoaded = false;
+    let reportrequest = {
+      projectType: element.projectType,
+      projectId: element.projectId,
+      collectionId: element.collectionId,
+      testRunId: element.runId
+    };
+
+    let request = {
+      id: isAdmin ? appConstants.ADMIN_REPORT_ID : appConstants.PARTNER_REPORT_ID,
+      version: appConstants.VERSION,
+      requesttime: new Date().toISOString(),
+      request: reportrequest,
+    };
+
+    dataService
+      .getReport(isAdmin, element.partnerId, request)
+      .subscribe(
+        (res: any) => {
+          dataLoaded = true;
+          if (res) {
+            const fileByteArray = res;
+            var blob = new Blob([fileByteArray], { type: 'application/pdf' });
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = element.projectName;
+            link.click();
+          } else {
+            Utils.showErrorMessage(resourceBundleJson,
+              null,
+              dialog,
+              'Unable to download PDF file. Try Again!');
+          }
+        },
+        (errors) => {
+          Utils.showErrorMessage(resourceBundleJson, errors, dialog);
+        }
+      );
+  }
 }

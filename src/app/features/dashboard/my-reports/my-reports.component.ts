@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import Utils from 'src/app/app.utils';
 import { TranslateService } from '@ngx-translate/core';
-import { MatPaginatorIntl } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from 'src/app/core/services/data-service';
@@ -26,8 +26,11 @@ export class MyReportsComponent implements OnInit {
     'partnerComments',
     'reviewDtimes',
     'approveRejectDtimes',
-    'adminComments'
+    'adminComments',
+    'downloadButton'
   ];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   dataSource = new MatTableDataSource<ReportModel>();
   textDirection: any = this.userProfileService.getTextDirection();
   buttonPosition: any =
@@ -36,16 +39,11 @@ export class MyReportsComponent implements OnInit {
   dataLoaded = false;
   subscriptions: Subscription[] = [];
   
-  @ViewChild(MatSort) sort: MatSort;
   constructor(
-    private router: Router,
     private translate: TranslateService,
-    private route: ActivatedRoute,
-    private breadcrumbService: BreadcrumbService,
     private dialog: MatDialog,
     private userProfileService: UserProfileService,
-    private dataService: DataService,
-    private paginatorIntl: MatPaginatorIntl
+    private dataService: DataService
   ) {}
 
   async ngOnInit() {
@@ -57,6 +55,7 @@ export class MyReportsComponent implements OnInit {
     );
     await this.getSubmittedReportList();
     this.dataLoaded = true;
+    this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
   applyFilter(event: Event) {
@@ -82,6 +81,10 @@ export class MyReportsComponent implements OnInit {
     const dateMatch1 = appRejDate.toDateString() === formattedDate.toDateString();
 
     return projectNameMatch || collectionNameMatch || typeMatch || dateMatch || dateMatch1 || reportStatusMatch;
+  }
+
+  async fetchPartnerReport(element: any) {
+    await Utils.getReport(false, this.dataLoaded, element, this.dataService, this.resourceBundleJson, this.dialog);
   }
 
   async getSubmittedReportList(): Promise<boolean> {
