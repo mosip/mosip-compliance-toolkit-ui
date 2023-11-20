@@ -80,7 +80,9 @@ export class ProjectsDashboardComponent implements OnInit {
     this.initBreadCrumb();
     this.dataLoaded = true;
     this.dataSource.paginator = this.paginator;
-    this.sort.sort(({ id: 'lastRunDt', start: 'desc'}) as MatSortable);
+    if (this.sort) {
+      this.sort.sort(({ id: 'lastRunDt', start: 'desc'}) as MatSortable);
+    }
     this.dataSource.sort = this.sort;
     
   }
