@@ -23,6 +23,7 @@ export const ABIS_INSERT_ID = "mosip.abis.insert";
 export const ABIS_IDENTIFY_ID = "mosip.abis.identify";
 export const ABIS_VERSION = "1.1";
 export const PARTNER_REPORT_ID = 'mosip.toolkit.partner.report.post';
+export const ADMIN_REPORT_ID = 'mosip.toolkit.admin.report.post';
 
 export const VERSION = '1.0';
 
@@ -43,7 +44,7 @@ export const SDK = 'SDK';
 export const SBI = 'SBI';
 export const ABIS = 'ABIS';
 export const COMMON_CONTROLS = ['name', 'projectType'];
-export const SDK_CONTROLS = ['sdkSpecVersion','sdkUrl', 'sdkPurpose', 'sdkHash', 'websiteUrl', 'bioTestData'];
+export const SDK_CONTROLS = ['sdkSpecVersion', 'sdkUrl', 'sdkPurpose', 'sdkHash', 'websiteUrl', 'bioTestData'];
 export const SBI_CONTROLS = [
   'sbiSpecVersion',
   'sbiPurpose',
@@ -52,8 +53,8 @@ export const SBI_CONTROLS = [
   'sbiHash',
   'websiteUrl',
 ];
-export const ABIS_CONTROLS = ['abisUrl', 'username', 'password', 'outboundQueueName','inboundQueueName', 'modality', 'abisSpecVersion', 'abisHash', 'websiteUrl', 'abisBioTestData'];
-export const TEST_DATA_CONTROLS= ['name', 'type', 'purpose'];
+export const ABIS_CONTROLS = ['abisUrl', 'username', 'password', 'outboundQueueName', 'inboundQueueName', 'modality', 'abisSpecVersion', 'abisHash', 'websiteUrl', 'abisBioTestData'];
+export const TEST_DATA_CONTROLS = ['name', 'type', 'purpose'];
 export const SBI_KEY_ROTATION_ITERATIONS = 'keyRotationIterations';
 //SBI methods related constants
 export const BIOMETRIC_DEVICE = 'Biometric Device';
@@ -96,3 +97,7 @@ export const UNDERSCORE = "_";
 export const COMPLIANCE_COLLECTION = "compliance_collection";
 export const INCOMPLETE_STATUS = "incomplete";
 export const COMPLETE_STATUS = "complete";
+export const REPORT_STATUS_DRAFT = "draft";
+export const REPORT_STATUS_REVIEW = "review";
+export const REPORT_STATUS_APPROVED = "approved";
+export const REPORT_STATUS_REJECTED = "rejected";

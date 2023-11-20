@@ -15,10 +15,10 @@ export class DataService {
   constructor(
     private httpClient: HttpClient,
     private appConfigService: AppConfigService
-  ) {}
+  ) { }
 
   SERVICES_BASE_URL = this.appConfigService.getConfig()['SERVICES_BASE_URL'];
-  
+
   getProjects(type: string) {
     let url;
     if (type != "") {
@@ -241,9 +241,9 @@ export class DataService {
 
   createDataShareUrl(body: any) {
     let url = `${this.SERVICES_BASE_URL}createDataShareUrl`;
-     return this.httpClient.post(url, body);
+    return this.httpClient.post(url, body);
   }
-  
+
   sendToQueue(body: any) {
     let url = `${this.SERVICES_BASE_URL}sendToQueue`;
     return this.httpClient.post(url, body);
@@ -279,6 +279,36 @@ export class DataService {
 
   submitReportForReview(body: any) {
     let url = `${this.SERVICES_BASE_URL}submitReportForReview`;
+    return this.httpClient.post(url, body);
+  }
+
+  getPartnerReportList(reportStatus: string) {
+    let url;
+    url = `${this.SERVICES_BASE_URL}getPartnerReportList/${reportStatus}`;
+    return this.httpClient.get(url);
+  }
+
+  getSubmittedReportList() {
+    let url;
+    url = `${this.SERVICES_BASE_URL}getSubmittedReportList`;
+    return this.httpClient.get(url);
+  }
+
+  getPartnerReport(partnerId: String, body: any) {
+    let url;
+    url = `${this.SERVICES_BASE_URL}getPartnerReport/${partnerId}`;
+    return this.httpClient.post(url, body, { responseType: 'blob' });
+  }
+
+  approvePartnerReport(partnerId: String, body: any) {
+    let url;
+    url = `${this.SERVICES_BASE_URL}approvePartnerReport/${partnerId}`;
+    return this.httpClient.post(url, body);
+  }
+
+  rejectPartnerReport(partnerId: String, body: any) {
+    let url;
+    url = `${this.SERVICES_BASE_URL}rejectPartnerReport/${partnerId}`;
     return this.httpClient.post(url, body);
   }
 }
