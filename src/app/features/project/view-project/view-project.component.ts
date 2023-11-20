@@ -103,7 +103,9 @@ export class ViewProjectComponent implements OnInit {
     }
     await this.getCollections();
     this.dataSource.paginator = this.paginator;
-    this.sort.sort(({ id: 'runDtimes', start: 'desc' }) as MatSortable);
+    if (this.sort) {
+      this.sort.sort(({ id: 'runDtimes', start: 'desc' }) as MatSortable);
+    }
     this.dataSource.sort = this.sort;
     this.initBreadCrumb();
     this.dataLoaded = true;

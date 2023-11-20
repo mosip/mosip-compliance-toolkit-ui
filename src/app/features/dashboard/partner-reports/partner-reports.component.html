@@ -1,7 +1,7 @@
-<div class="mat-elevation-z8">
-    <div class="spinner" *ngIf="!dataLoaded">
-        <mat-spinner diameter="50"></mat-spinner>
-    </div>
+<div class="spinner" *ngIf="!dataLoaded">
+    <mat-spinner diameter="50"></mat-spinner>
+</div>
+<div class="mat-elevation-z8"  *ngIf="dataLoaded">
     <div class="filter-container">
         <mat-form-field appearance="legacy" class="filter">
             <mat-label>{{ "projectDashboard.filter" | translate }}</mat-label>
