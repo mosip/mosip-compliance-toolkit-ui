@@ -51,7 +51,7 @@ export class TestRunHistoryComponent implements OnInit {
   pageSizeOptions: number[] = [5, 10, 15, 20];
   dataSubmitted = false;
   resourceBundleJson: any = {};
-
+  deleteAllowed = true;
   constructor(
     public authService: AuthService,
     private activatedRoute: ActivatedRoute,
@@ -69,6 +69,10 @@ export class TestRunHistoryComponent implements OnInit {
     await this.initAllParams();
     const collectionRes = await Utils.getCollectionNameAndType(this.subscriptions, this.dataService, this.collectionId, this.resourceBundleJson, this.dialog);
     this.collectionName = collectionRes.name;
+    const collectionType = collectionRes.type;
+    if (appConstants.COMPLIANCE_COLLECTION == collectionType) {
+      this.deleteAllowed = false;
+    }  
     if (this.projectType == appConstants.SBI) {
       const sbiProjectDetails: any = await Utils.getSbiProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
       if(sbiProjectDetails) {
@@ -189,12 +193,14 @@ export class TestRunHistoryComponent implements OnInit {
       let tableData = [];
       for (let row of dataArr) {
         let runStatus = await this.getTestRunStatus(row.runId);
-        const testCaseCount = row.testCaseCount;
+        const testcasesList = await Utils.getTestcasesForCollection(this.subscriptions, this.dataService, this.collectionId, this.resourceBundleJson, this.dialog);
+        const testCaseCount = testcasesList.length;
         const passCaseCount = row.passCaseCount;
         const failCaseCount = testCaseCount - passCaseCount;
         tableData.push({
           ...row,
           runStatus: runStatus,
+          testCaseCount: testCaseCount,
           failCaseCount: failCaseCount
         });
       }
