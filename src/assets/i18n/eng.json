@@ -32,7 +32,7 @@
 		"rejectMessage2": "Ensure all details are accurate before rejecting the report.",
 		"rejectMessage3": "Rejecting the report is irreversible. Please proceed with caution.",
 		"approveCheckBox": "Confirm approval after reviewing report.",
-		"rejectCheckBox": "Confirm approval after reviewing report."
+		"rejectCheckBox": "Confirmation of an existing rejection decision."
 	},
 	"breadcrumb": {
 		"home": "Home",
