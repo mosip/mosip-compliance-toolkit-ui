@@ -213,7 +213,7 @@
         <div *ngIf="sendForReview">
             <span class="fieldContainer">
                 <mat-form-field appearance="legacy" class="formField">
-                    <input matInput [(ngModel)]="reviewComment" #keyboardRef #input />
+                    <input matInput maxlength="100" [(ngModel)]="reviewComment" #keyboardRef #input />
                 </mat-form-field>
             </span>
             <span class="fieldLabel">
@@ -223,7 +223,63 @@
     </div>
     <div class="button-container">
         <button mat-flat-button (click)="closeMe()" class="back-button">{{"dialogMessages.close"|translate}}</button>
-        <button mat-flat-button color="accent" [disabled]="!sendForReview" (click)="submitReportForReview()" class="saveBt">{{"dialogMessages.sendForReview"|translate}}</button>
+        <button mat-flat-button color="accent" [disabled]="!sendForReview" (click)="submitReportForReview(reviewComment)" class="saveBt">{{"dialogMessages.sendForReview"|translate}}</button>
+    </div>
+</div>
+<div *ngIf="input.case === 'ADMIN_APPROVE_REPORT'">
+    <h2 mat-dialog-title class="mat-dialog-title">{{"dialogMessages.approveReport"|translate}}</h2>
+    <div mat-dialog-content class="sendForReview">
+        <ul class="reviewMessage">
+            <li>{{"dialogMessages.approveMessage1"|translate}}</li>
+            <li>{{"dialogMessages.approveMessage2"|translate}}</li>
+            <li>{{"dialogMessages.approveMessage3"|translate}}</li>
+        </ul>
+        <mat-checkbox [(ngModel)]="approveReport"
+            class="checkbox-margin">{{"dialogMessages.approveCheckBox"|translate}}</mat-checkbox>
+        <div *ngIf="approveReport">
+            <span class="fieldContainer">
+                <mat-form-field appearance="legacy" class="formField">
+                    <input matInput  maxlength="100" [(ngModel)]="adminApproveComments" #keyboardRef #input />
+                </mat-form-field>
+            </span>
+            <span class="fieldLabel">
+                <mat-label>{{ "dialogMessages.comment" | translate }}</mat-label>
+            </span>
+        </div>
+    </div>
+    <div class="button-container">
+        <button mat-flat-button (click)="closeMe()" class="back-button">{{"dialogMessages.close"|translate}}</button>
+        <button mat-flat-button color="accent" [disabled]="!approveReport"
+            (click)="approvePartnerReport(adminApproveComments)"
+            class="saveBt">{{"dialogMessages.approveReport"|translate}}</button>
+    </div>
+</div>
+<div *ngIf="input.case === 'ADMIN_REJECT_REPORT'">
+    <h2 mat-dialog-title class="mat-dialog-title">{{"dialogMessages.rejectReport"|translate}}</h2>
+    <div mat-dialog-content class="sendForReview">
+        <ul class="reviewMessage">
+            <li>{{"dialogMessages.rejectMessage1"|translate}}</li>
+            <li>{{"dialogMessages.rejectMessage2"|translate}}</li>
+            <li>{{"dialogMessages.rejectMessage3"|translate}}</li>
+        </ul>
+        <mat-checkbox [(ngModel)]="rejectReport"
+            class="checkbox-margin">{{"dialogMessages.rejectCheckBox"|translate}}</mat-checkbox>
+        <div *ngIf="rejectReport">
+            <span class="fieldContainer">
+                <mat-form-field appearance="legacy" class="formField">
+                    <input matInput  maxlength="100" [(ngModel)]="adminRejectComments" #keyboardRef #input />
+                </mat-form-field>
+            </span>
+            <span class="fieldLabel">
+                <mat-label>{{ "dialogMessages.comment" | translate }}</mat-label>
+            </span>
+        </div>
+    </div>
+    <div class="button-container">
+        <button mat-flat-button (click)="closeMe()" class="back-button">{{"dialogMessages.close"|translate}}</button>
+        <button mat-flat-button color="accent" [disabled]="!rejectReport"
+            (click)="rejectPartnerReport(adminRejectComments)"
+            class="saveBt">{{"dialogMessages.rejectReport"|translate}}</button>
     </div>
 </div>
 </div>

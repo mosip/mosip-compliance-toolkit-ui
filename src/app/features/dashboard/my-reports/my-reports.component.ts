@@ -2,14 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import Utils from 'src/app/app.utils';
 import { TranslateService } from '@ngx-translate/core';
-import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from 'src/app/core/services/data-service';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
-import { BreadcrumbService } from 'xng-breadcrumb';
 import { ReportModel } from 'src/app/core/models/report-model';
 
 @Component({
@@ -22,12 +20,12 @@ export class MyReportsComponent implements OnInit {
     'projectType',
     'projectName',
     'collectionName',
-    'reportStatus',
     'partnerComments',
     'reviewDtimes',
     'approveRejectDtimes',
     'adminComments',
-    'downloadButton'
+    'downloadButton',
+    'reportStatus'
   ];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -84,7 +82,9 @@ export class MyReportsComponent implements OnInit {
   }
 
   async fetchPartnerReport(element: any) {
-    await Utils.getReport(false, this.dataLoaded, element, this.dataService, this.resourceBundleJson, this.dialog);
+    this.dataLoaded = false;
+    await Utils.getReport(false, element, this.dataService, this.resourceBundleJson, this.dialog);
+    this.dataLoaded = true;
   }
 
   async getSubmittedReportList(): Promise<boolean> {

@@ -24,6 +24,7 @@
     padding-right: 4px;
 
 }
+
 .view-draft-button {
     background-color: rgb(179, 205, 225);
     height: 36px;
@@ -52,24 +53,28 @@
     justify-content: space-between;
     align-items: center;
 }
-.text-container{
+
+.text-container {
     width: 100%;
     text-align: center;
 }
-.text-container mat-icon{
+
+.text-container mat-icon {
     vertical-align: middle;
     margin-right: 4px;
     font-size: 22px;
 }
-.button-container mat-icon{
+
+.button-container mat-icon {
     vertical-align: middle;
     margin-right: 4px;
     font-size: 22px;
 }
-td , th {
+
+td,
+th {
     white-space: normal;
     word-wrap: break-word;
-    max-width: 80px;
 }
 
 .spinner {
@@ -77,4 +82,13 @@ td , th {
     align-items: center;
     margin-top: 18vw;
     display: flex;
+}
+
+.custom-class mat-icon {
+    vertical-align: middle;
+    margin: 2px;
+    font-size: 22px;
+}
+.mat-cell {
+    padding: 5px;
   }
