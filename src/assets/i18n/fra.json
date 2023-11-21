@@ -22,7 +22,17 @@
 		"reviewMessage3": "Une fois soumise, la collecte de conformité ne peut pas être réexécutée pour ce projet.",
 		"reviewMessage4": "L'administrateur CTK examinera le rapport et l'approuvera ou le rejettera.",
 		"comment": "(Commentaires facultatifs)",
-		"checkBox": "Prêt à envoyer pour examen"
+		"checkBox": "Prêt à envoyer pour examen.",
+		"approveMessage1": "Veuillez vérifier le projet de rapport téléchargé.",
+		"approveMessage2": "Assurez-vous que tous les détails sont exacts avant de confirmer l’approbation.",
+		"approveMessage3": "L'approbation du rapport est irréversible. Veuillez procéder avec prudence.",
+		"approveReport" : "Approuver le rapport",
+		"rejectReport" : "Rejeter le rapport",
+		"rejectMessage1": "Veuillez vérifier le projet de rapport téléchargé.",
+		"rejectMessage2": "Assurez-vous que tous les détails sont exacts avant de rejeter le rapport.",
+		"rejectMessage3": "Le rejet du rapport est irréversible. Veuillez procéder avec prudence.",
+		"approveCheckBox": "Confirmez l'approbation après avoir examiné le rapport.",
+		"rejectCheckBox": "Confirmation d'une décision de rejet existante"
 	},
 	"breadcrumb": {
 		"home": "Maison",
@@ -222,6 +232,7 @@
 		"executionStatus": "Statut d'exécution",
 		"complete": "Complète",
 		"incomplete": "Incomplet",
+		"testRunStatus": "État du test",
 		"testRunExecutionStatus": "Statut d'exécution",
 		"generateDraftReport": "Générer un brouillon de rapport"
 	},
@@ -269,6 +280,34 @@
 		"purpose": "But",
 		"deviceType": "Type d'appareil",
 		"deviceSubType": "Sous-type de périphérique"
+	},
+	"partnerReport": {
+		"tableDescription": "Liste des rapports partenaires",
+		"partnerName": "Nom du partenaire",
+		"orgName": "nom de l'organisation",
+		"projectType": "Type de projet",
+		"creationDate": "Date de création",
+		"projectName": "nom du projet",
+		"downloadReport": "Télécharger le rapport",
+		"approveButton": "Approuver",
+		"rejectButton": "Rejeter",
+		"collectionName": "Nom de la collection",
+		"viewReport": "Voir le rapport",
+		"approveReport": "Approuver",
+		"partnerComments": "Commentaires des partenaires",
+		"adminComments": "Commentaires de l'administrateur",
+		"rejectReport": "Rejeter",
+		"projectRow": "Aucun rapport n'est disponible.",
+		"approved": "Approuvé",
+		"review": "Revoir",
+		"rejected": "Rejeté",
+		"reviewDtimes": "Date de soumission de l'avis",
+		"approveRejectDtimes": "Date d'approbation/rejet",
+		"status": "Statut du rapport"
+	},
+	"myReports": {
+		"tableDescription": "Liste de mes rapports",
+		"partnerComments": "Vos commentaires"
 	},
 	"executeTestRun": {
 		"title": "Exécution du test de fonctionnement",
@@ -1281,7 +1320,8 @@
 		"ABIS3025": {
 			"testName": "Demande d'identification non valide - format d'heure de demande non valide",
 			"testDescription": "Demande d'identification non valide - format d'heure de demande non valide"
-		},"ABIS3026": {
+		},
+		"ABIS3026": {
 			"testName": "Identifier - doublon trouvé pour le referenceId (galerie ignorée). <b>Effacez le cache ABIS avant d'exécuter ce cas de test.</b>",
 			"testDescription": "Insérez deux fois les mêmes données biométriques, puis testez si un doublon est trouvé pour le referenceId, (galerie ignorée)"
 		},
@@ -1327,6 +1367,7 @@
 		"KEY_ROTATION_VALIDATOR_008": "L'appareil n'est pas enregistré.",
 		"TIMEOUT_VALIDATOR_001": "La validation du délai d'attente est réussie",
 		"TIMEOUT_VALIDATOR_002": "La validation du délai d'attente a échoué. Délai d'attente donné : {} ms. Réponse reçue en : {} ms",
+		"SIGNATURE_VALIDATOR_001": "Méthode non prise en charge",
 		"SIGNATURE_VALIDATOR_002": "La réponse est vide",
 		"SIGNATURE_VALIDATOR_003": "Échec de la validation de l'ID numérique non signé",
 		"SIGNATURE_VALIDATOR_004": "La validation de l'ID numérique non signé a réussi",

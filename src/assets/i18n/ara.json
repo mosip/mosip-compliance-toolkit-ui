@@ -22,7 +22,17 @@
 		"reviewMessage3": "بمجرد إرسالها، لا يمكن إعادة تشغيل مجموعة التوافق لهذا المشروع.",
 		"reviewMessage4": "سيقوم مسؤول CTK بمراجعة التقرير والموافقة عليه أو رفضه.",
 		"comment": "(تعليقات اختيارية)",
-		"checkBox": "جاهز للإرسال للمراجعة"
+		"checkBox": "جاهز للإرسال للمراجعة",
+		"approveMessage1": "يرجى التحقق من مسودة التقرير التي تم تنزيلها.",
+		"approveMessage2": "التأكد من دقة جميع التفاصيل قبل تأكيد الموافقة.",
+		"approveMessage3": "الموافقة على التقرير لا رجعة فيها. يرجى المضي قدما بحذر.",
+		"approveReport" : "الموافقة على التقرير",
+		"rejectReport" : "رفض التقرير",
+		"rejectMessage1": "يرجى التحقق من مسودة التقرير التي تم تنزيلها.",
+		"rejectMessage2": "تأكد من دقة كافة التفاصيل قبل رفض التقرير.",
+		"rejectMessage3": "إن رفض التقرير لا رجعة فيه. يرجى المضي قدما بحذر.",
+		"approveCheckBox": "تأكيد الموافقة بعد مراجعة التقرير.",
+		"rejectCheckBox": "تأكيد قرار الرفض القائم"
 	},
 	"breadcrumb": {
 		"home": "بيت",
@@ -222,6 +232,7 @@
 		"executionStatus": "حالة التنفيذ",
 		"complete": "مكتمل",
 		"incomplete": "غير مكتمل",
+		"testRunStatus": "حالة تشغيل الاختبار",
 		"testRunExecutionStatus": "حالة التنفيذ",
 		"generateDraftReport": "إنشاء مسودة تقرير"
 	},
@@ -269,6 +280,34 @@
 		"purpose": "غاية",
 		"deviceType": "نوع الجهاز",
 		"deviceSubType": "نوع الجهاز الفرعي"
+	},
+	"partnerReport": {
+		"tableDescription": "قائمة تقارير الشركاء",
+		"partnerName": "اسم شريك",
+		"orgName": "اسم المنظمة",
+		"projectType": "نوع المشروع",
+		"creationDate": "تاريخ الإنشاء",
+		"projectName": "اسم المشروع",
+		"downloadReport": "تنزيل التقرير",
+		"approveButton": "يعتمد",
+		"rejectButton": "يرفض",
+		"collectionName": "اسم المجموعة",
+		"viewReport": "عرض التقرير",
+		"approveReport": "يعتمد",
+		"partnerComments": "تعليقات الشركاء",
+		"adminComments": "تعليقات المشرف",
+		"rejectReport": "يرفض",
+		"projectRow": "لا توجد تقارير متاحة.",
+		"approved": "موافقة",
+		"review": "مراجعة",
+		"rejected": "مرفوض",
+		"reviewDtimes": "مراجعة تاريخ الإرسال",
+		"approveRejectDtimes": "الموافقة/الرفض التاريخ",
+		"status": "وضع تقرير"
+	},
+	"myReports": {
+		"tableDescription": "قائمة تقاريري",
+		"partnerComments": "تعليقاتك"
 	},
 	"executeTestRun": {
 		"title": "تنفيذ التشغيل التجريبي",
@@ -1281,7 +1320,8 @@
 		"ABIS3025": {
 			"testName": "طلب تعريف غير صالح - تنسيق وقت الطلب غير صالح",
 			"testDescription": "طلب تعريف غير صالح - تنسيق وقت الطلب غير صالح"
-		},"ABIS3026": {
+		},
+		"ABIS3026": {
 			"testName": "تحديد - تم العثور على نسخة طبق الأصل للمرجع (تم تخطي المعرض).<b>امسح ذاكرة التخزين المؤقت ABIS قبل تشغيل حقيبة الاختبار هذه.</b>",
 			"testDescription": "أدخل نفس القياسات الحيوية مرتين ، ثم اختبر ما إذا تم العثور على نسخة طبق الأصل للمعرّف المرجعي ، (تم تخطي المعرض)"
 		},
