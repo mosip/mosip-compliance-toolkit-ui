@@ -11,6 +11,7 @@ import Utils from 'src/app/app.utils';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { ReportModel } from 'src/app/core/models/report-model';
 import { AppConfigService } from 'src/app/app-config.service';
+import { DialogComponent } from 'src/app/core/components/dialog/dialog.component';
 
 @Component({
   selector: 'app-partner-reports',
@@ -135,91 +136,60 @@ export class PartnerReportsComponent implements OnInit {
   }
 
   async fetchPartnerReport(element: any) {
-    await Utils.getReport(true, this.dataLoaded, element, this.dataService, this.resourceBundleJson, this.dialog);
+    this.dataLoaded = false;
+    await Utils.getReport(true, element, this.dataService, this.resourceBundleJson, this.dialog);
+    this.dataLoaded = true;
   }
 
   approvePartnerReport(element: any) {
-    this.dataLoaded = false;
-    let approverequest = {
+    let approveRequest = {
       projectType: element.projectType,
       projectId: element.projectId,
       collectionId: element.collectionId,
       testRunId: element.runId,
-      adminComments: element.adminComments
     };
-
-    let request = {
-      id: appConstants.ADMIN_REPORT_ID,
-      version: appConstants.VERSION,
-      requesttime: new Date().toISOString(),
-      request: approverequest,
-    };
-
-    const subs = this.dataService
-      .approvePartnerReport(element.partnerId, request)
-      .subscribe(
-        async (res: any) => {
-          this.dataLoaded = true;
-          if (res) {
-            await this.getPartnerReportList();
-            this.dataLoaded = true;
-          } else {
-            Utils.showErrorMessage(
-              this.resourceBundleJson,
-              null,
-              this.dialog,
-              'Unable to approve report. Try Again!'
-            );
-          }
-        },
-        (errors) => {
-          Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-        }
-      );
-
-    this.subscriptions.push(subs);
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '600px',
+      data: {
+        case: "ADMIN_APPROVE_REPORT",
+        partnerId: element.partnerId,
+        approveRequest: approveRequest
+      },
+    });
+    dialogRef.afterClosed().subscribe(
+      async () => {
+        this.dataLoaded = false;
+        await this.getPartnerReportList();
+        this.dataLoaded = true;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }
+    );
   }
 
   rejectPartnerReport(element: any) {
-    this.dataLoaded = false;
-    let approverequest = {
+    let rejectRequest = {
       projectType: element.projectType,
       projectId: element.projectId,
       collectionId: element.collectionId,
-      testRunId: element.runId,
-      adminComments: element.adminComments,
-      partnerComments: element.adminComments,
+      testRunId: element.runId
     };
-
-    let request = {
-      id: appConstants.ADMIN_REPORT_ID,
-      version: appConstants.VERSION,
-      requesttime: new Date().toISOString(),
-      request: approverequest,
-    };
-
-    const subs = this.dataService
-      .rejectPartnerReport(element.partnerId, request)
-      .subscribe(
-        async (res: any) => {
-          this.dataLoaded = true;
-          if (res) {
-            await this.getPartnerReportList();
-            this.dataLoaded = true;
-          } else {
-            Utils.showErrorMessage(
-              this.resourceBundleJson,
-              null,
-              this.dialog,
-              'Unable to reject report. Try Again!'
-            );
-          }
-        },
-        (errors) => {
-          Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-        }
-      );
-
-    this.subscriptions.push(subs);
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '600px',
+      data: {
+        case: "ADMIN_REJECT_REPORT",
+        partnerId: element.partnerId,
+        rejectRequest: rejectRequest
+      },
+    });
+    dialogRef.afterClosed().subscribe(
+      async () => {
+        this.dataLoaded = false;
+        await this.getPartnerReportList();
+        this.dataLoaded = true;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }
+    );
   }
 }

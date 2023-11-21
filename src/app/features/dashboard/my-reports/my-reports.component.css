@@ -1,5 +1,6 @@
 .dashboard-table {
     width: 100%;
+    
 }
 
 .mat-header-cell {
@@ -15,7 +16,7 @@ td,
 th {
     white-space: normal;
     word-wrap: break-word;
-    max-width: 90px;
+    max-width: 70px;
 }
 
 .filter-container {
@@ -48,3 +49,13 @@ th {
     height: 36px;
     border-radius: 20px;
 }
+
+.custom-class mat-icon {
+    vertical-align: middle;
+    margin: 2px;
+    font-size: 22px;
+}
+
+.mat-cell {
+    padding: 5px;
+  }

@@ -794,9 +794,8 @@ export default class Utils {
     });
   }
 
-  static getReport(isAdmin: boolean, dataLoaded: boolean, element: any,
+  static async getReport(isAdmin: boolean, element: any,
     dataService: DataService, resourceBundleJson: any, dialog: MatDialog) {
-    dataLoaded = false;
     let reportrequest = {
       projectType: element.projectType,
       projectId: element.projectId,
@@ -810,29 +809,31 @@ export default class Utils {
       requesttime: new Date().toISOString(),
       request: reportrequest,
     };
-
-    dataService
-      .getReport(isAdmin, element.partnerId, request)
-      .subscribe(
-        (res: any) => {
-          dataLoaded = true;
-          if (res) {
-            const fileByteArray = res;
-            var blob = new Blob([fileByteArray], { type: 'application/pdf' });
-            var link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.download = element.projectName;
-            link.click();
-          } else {
-            Utils.showErrorMessage(resourceBundleJson,
-              null,
-              dialog,
-              'Unable to download PDF file. Try Again!');
+    return new Promise((resolve, reject) => {
+      dataService
+        .getReport(isAdmin, element.partnerId, request)
+        .subscribe(
+          (res: any) => {
+            if (res) {
+              const fileByteArray = res;
+              var blob = new Blob([fileByteArray], { type: 'application/pdf' });
+              var link = document.createElement('a');
+              link.href = window.URL.createObjectURL(blob);
+              link.download = element.projectName;
+              link.click();
+            } else {
+              Utils.showErrorMessage(resourceBundleJson,
+                null,
+                dialog,
+                'Unable to download PDF file. Try Again!');
+            }
+            resolve(true);
+          },
+          (errors) => {
+            Utils.showErrorMessage(resourceBundleJson, errors, dialog);
+            resolve(false);
           }
-        },
-        (errors) => {
-          Utils.showErrorMessage(resourceBundleJson, errors, dialog);
-        }
-      );
+        );
+    });
   }
 }

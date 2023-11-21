@@ -71,13 +71,13 @@ export class ProjectsDashboardComponent implements OnInit {
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     await this.getProjects();
     this.initBreadCrumb();
-    this.dataLoaded = true;
+    
     this.dataSource.paginator = this.paginator;
     if (this.sort) {
       this.sort.sort(({ id: 'lastRunDt', start: 'desc'}) as MatSortable);
     }
     this.dataSource.sort = this.sort;
-    
+    this.dataLoaded = true;
   }
 
   initBreadCrumb() {

@@ -314,7 +314,7 @@ export class TestRunComponent implements OnInit {
 
   downloadGeneratedReport() {
     this.dataLoaded = false;
-    let reportrequest = {
+    let reportRequest = {
       projectType: this.projectType,
       projectId: this.projectId,
       collectionId: this.collectionId,
@@ -324,7 +324,7 @@ export class TestRunComponent implements OnInit {
       id: appConstants.PARTNER_REPORT_ID,
       version: appConstants.VERSION,
       requesttime: new Date().toISOString(),
-      request: reportrequest
+      request: reportRequest
     };
     const subs = this.dataService.generateDraftReport(request).subscribe(
       (res: any) => {
@@ -336,17 +336,11 @@ export class TestRunComponent implements OnInit {
           link.href = window.URL.createObjectURL(blob);
           link.download = this.getProjectName();
           link.click();
-          let submitRequest = {
-            id: appConstants.PARTNER_REPORT_ID,
-            version: appConstants.VERSION,
-            requesttime: new Date().toISOString(),
-            request: reportrequest
-          };
           const dialogRef = this.dialog.open(DialogComponent, {
             width: '600px',
             data: {
               case: "SEND_FOR_REVIEW",
-              submitRequest: submitRequest
+              reviewRequest: reportRequest
             },
           });
           dialogRef.afterClosed();
