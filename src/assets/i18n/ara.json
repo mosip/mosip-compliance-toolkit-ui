@@ -198,7 +198,9 @@
 		"sdkHashIsRequired": "مطلوب تجزئة SDK",
 		"abisHash": "تجزئة ABIS:",
 		"abisHashIsRequired": "مطلوب تجزئة ABIS",
-		"viewDeviceImages": "عرض صور الجهاز"
+		"viewDeviceImages": "عرض صور الجهاز",
+		"viewReport": "عرض التقرير المقدم",
+		"submittedMsg": "** تم بالفعل تقديم تقرير هذا المشروع للمراجعة. تحقق من الحالة في لوحة المعلومات ضمن علامة التبويب تقاريري."
 	},
 	"testRunHistory": {
 		"runDate": "تشغيل التاريخ",
@@ -234,7 +236,8 @@
 		"incomplete": "غير مكتمل",
 		"testRunStatus": "حالة تشغيل الاختبار",
 		"testRunExecutionStatus": "حالة التنفيذ",
-		"generateDraftReport": "إنشاء مسودة تقرير"
+		"generateDraftReport": "إنشاء مسودة تقرير",
+		"viewSubmittedReport": "عرض التقرير المقدم"
 	},
 	"addCollections": {
 		"collectionName": "اسم المجموعة:",

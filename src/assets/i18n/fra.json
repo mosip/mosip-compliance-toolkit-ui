@@ -198,7 +198,9 @@
 		"sdkHashIsRequired": "Le hachage SDK est requis",
 		"abisHash": "Hachage ABIS:",
 		"abisHashIsRequired": "Le hachage ABIS est requis",
-		"viewDeviceImages": "Afficher les images de l'appareil"
+		"viewDeviceImages": "Afficher les images de l'appareil",
+		"viewReport": "Afficher le rapport soumis",
+		"submittedMsg": "** Le rapport de ce projet est déjà soumis pour examen. Vérifiez le statut de celui-ci dans le tableau de bord sous l'onglet Mes rapports."
 	},
 	"testRunHistory": {
 		"runDate": "Date d'exécution",
@@ -234,7 +236,8 @@
 		"incomplete": "Incomplet",
 		"testRunStatus": "État du test",
 		"testRunExecutionStatus": "Statut d'exécution",
-		"generateDraftReport": "Générer un brouillon de rapport"
+		"generateDraftReport": "Générer un brouillon de rapport",
+		"viewSubmittedReport": "Afficher le rapport soumis"
 	},
 	"addCollections": {
 		"collectionName": "Nom de la collection:",

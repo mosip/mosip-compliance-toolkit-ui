@@ -198,7 +198,9 @@
 		"sdkHashIsRequired": "SDK Hash is required",
 		"abisHash": "ABIS Hash:",
 		"abisHashIsRequired": "ABIS Hash is required",
-		"viewDeviceImages": "View Device Images"
+		"viewDeviceImages": "View Device Images",
+		"viewReport": "View Submitted Report",
+		"submittedMsg": "** Report for this project is already submitted for Review. Check the status for the same in Dashboard under My Reports tab."
 	},
 	"testRunHistory": {
 		"runDate": "Run Date",
@@ -234,7 +236,8 @@
 		"incomplete": "Incomplete",
 		"testRunStatus": "Test Run Status",
 		"testRunExecutionStatus": "Execution Status",
-		"generateDraftReport": "Generate Draft Report"
+		"generateDraftReport": "Generate Draft Report",
+		"viewSubmittedReport": "View Submitted Report"
 	},
 	"addCollections": {
 		"collectionName": "Collection Name:",
