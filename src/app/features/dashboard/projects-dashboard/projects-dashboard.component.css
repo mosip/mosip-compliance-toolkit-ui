@@ -51,17 +51,12 @@
   /* padding-bottom: 16px; */
   float: right;
 }
-.dashboard-button-second-container {
-  /* padding-bottom: 16px; */
-}
-
 .dashboard-button + .dashboard-button {
   margin-left: 8px;
 }
 .spinner {
   flex-direction: column;
   align-items: center;
-  margin-top: 18vw;
   display: flex;
 }
 

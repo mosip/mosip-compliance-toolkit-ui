@@ -19,7 +19,6 @@ export class MyReportsComponent implements OnInit {
   displayedColumns: string[] = [
     'projectType',
     'projectName',
-    'collectionName',
     'partnerComments',
     'reviewDtimes',
     'approveRejectDtimes',
@@ -82,12 +81,11 @@ export class MyReportsComponent implements OnInit {
   }
 
   async fetchPartnerReport(element: any) {
-    this.dataLoaded = false;
     await Utils.getReport(false, element, this.dataService, this.resourceBundleJson, this.dialog);
-    this.dataLoaded = true;
   }
 
   async getSubmittedReportList(): Promise<boolean> {
+    this.dataSource = new MatTableDataSource();
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
         this.dataService.getSubmittedReportList().subscribe(
