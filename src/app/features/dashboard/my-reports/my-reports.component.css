@@ -47,7 +47,9 @@ th {
     align-items: center;
     display: flex;
 }
-
+.nameCell{
+    width: 80px;
+  }
 .view-draft-button {
     background-color: rgb(179, 205, 225);
     height: 36px;
