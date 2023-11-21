@@ -34,14 +34,14 @@ export class PartnerReportsComponent implements OnInit {
     'orgName',
     'projectType',
     'projectName',
-    'collectionName',
+    'partnerComments',
     'reviewDtimes',
     'reportStatus',
-    'partnerComments',
-    'approveRejectDtimes',
     'downloadButton',
     'approveButton',
-    'rejectButton'
+    'rejectButton',
+    'adminComments',
+    'approveRejectDtimes'
   ];
   dataSource = new MatTableDataSource<ReportModel>();
   dataLoaded = false;
@@ -98,6 +98,7 @@ export class PartnerReportsComponent implements OnInit {
   }
 
   async getPartnerReportList() {
+    this.dataSource = new MatTableDataSource<ReportModel>();
     let allReports = [];
     const reviewDataArr = await this.fetchPartnerReportList(appConstants.REPORT_STATUS_REVIEW);
     const approvedDataArr = await this.fetchPartnerReportList(appConstants.REPORT_STATUS_APPROVED);
@@ -136,9 +137,7 @@ export class PartnerReportsComponent implements OnInit {
   }
 
   async fetchPartnerReport(element: any) {
-    this.dataLoaded = false;
     await Utils.getReport(true, element, this.dataService, this.resourceBundleJson, this.dialog);
-    this.dataLoaded = true;
   }
 
   approvePartnerReport(element: any) {

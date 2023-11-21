@@ -300,20 +300,14 @@
 		"projectRow": "There are no reports available.",
 		"approved": "Approved",
 		"review": "Review",
-		"rejected": "Rejected"
+		"rejected": "Rejected",
+		"reviewDtimes": "Review Submitted Date",
+		"approveRejectDtimes": "Approve /Reject Date",
+		"status": "Report Status"
 	},
 	"myReports": {
 		"tableDescription": "List of My Reports",
-		"orgName": "Organization Name",
-		"projectType": "Project Type",
-		"reviewDtimes": "Review Date",
-		"approveRejectDtimes": "Approve /Reject Date",
-		"projectName": "Project Name",
-		"status": "Report Status",
-		"collectionName": "Collection Name",
-		"partnerComments": "Your comments",
-		"adminComments": "Admin comments",
-		"projectRow": "There are no reports available."
+		"partnerComments": "Your comments"
 	},
 	"executeTestRun": {
 		"title": "Executing Test Run",
