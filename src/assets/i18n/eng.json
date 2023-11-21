@@ -1643,8 +1643,14 @@
 		"TOOLKIT_ABIS_PROJECTS_002": "Invalid ABIS Spec Version",
 		"TOOLKIT_ABIS_PROJECTS_003": "ABIS Project unable to add",
 		"TOOLKIT_ABIS_PROJECTS_004": "Invalid ABIS url",
-		"TESTCASE_001": "Please select ateleast one testcase.",
+		"TESTCASE_001": "Please select atleast one testcase.",
 		"ENCRYPTION_KEY_001": "Unable to get encryption key. Try Again!",
+		"TOOLKIT_REPORT_001": "Error during report generation",
+		"TOOLKIT_REPORT_002": "Report Data is not available. Try with correct values for partner id, project type, project id, collection id and test run id.",
+		"TOOLKIT_REPORT_003": "Report status cannot be updated to new value since currently it is :",
+		"TOOLKIT_REPORT_004": "Error while changing report status",
+		"TOOLKIT_REPORT_005": "Error while fetching list of reports",
+		"TOOLKIT_REPORT_006": "Error while fetching list of reports. Invalid report status: ",
 		"error": "Error"
 	}
 }
