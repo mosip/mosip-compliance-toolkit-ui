@@ -20,6 +20,10 @@ mat-dialog-content {
   background-color: white;
   margin-top: 10px;
 }
+::ng-deep .white-snackbar {
+  background-color: white;
+  color: black; 
+}
 .fieldWrapper {
   flex: 1;
   display: flex;

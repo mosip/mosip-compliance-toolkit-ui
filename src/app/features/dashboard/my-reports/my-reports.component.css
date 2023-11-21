@@ -48,3 +48,8 @@ th {
     height: 36px;
     border-radius: 20px;
 }
+.report-status-container mat-icon{
+    vertical-align: middle;
+    margin: 2px;
+    font-size: 22px;
+}

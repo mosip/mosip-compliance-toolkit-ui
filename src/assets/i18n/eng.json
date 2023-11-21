@@ -22,7 +22,17 @@
 		"reviewMessage3": "Once submitted, the compliance collection cannot be rerun for this project.",
 		"reviewMessage4": "CTK admin will review the report and approve or reject the same.",
 		"comment": "(Optional comments)",
-		"checkBox": "Ready to send for review"
+		"checkBox": "Ready to send for review",
+		"approveMessage1": "Please check the downloaded draft report.",
+		"approveMessage2": "Ensure all details are accurate before confirming the approval.",
+		"approveMessage3": "Approving the report is irreversible. Please proceed with caution.",
+		"approveReport" : "Approve Report",
+		"rejectReport" : "Reject Report",
+		"rejectMessage1": "Please check the downloaded draft report.",
+		"rejectMessage2": "Ensure all details are accurate before rejecting the report.",
+		"rejectMessage3": "Rejecting the report is irreversible. Please proceed with caution.",
+		"approveCheckBox": "Confirm approval after reviewing report.",
+		"rejectCheckBox": "Confirm approval after reviewing report."
 	},
 	"breadcrumb": {
 		"home": "Home",

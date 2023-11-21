@@ -54,9 +54,13 @@
         </ng-container>
 
         <ng-container matColumnDef="reportStatus">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="center-header-cell"
-                style="text-align: center;"> {{ "myReports.status" | translate }} </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="center-header-cell">
+                {{ "myReports.status" | translate }}
+            </th>
+            <td mat-cell *matCellDef="let element" class="report-status-container">
+                <mat-icon *ngIf="element.reportStatus === 'approved'" [ngStyle]="{ color: 'green' }">check_circle</mat-icon>
+                <mat-icon *ngIf="element.reportStatus === 'review'" [ngStyle]="{ color: 'orange' }">find_in_page</mat-icon>
+                <mat-icon *ngIf="element.reportStatus === 'rejected'" [ngStyle]="{ color: 'red' }">cancel</mat-icon>
                 {{ element.reportStatus }}
             </td>
         </ng-container>

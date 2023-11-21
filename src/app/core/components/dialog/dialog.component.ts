@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
 import { Subscription, flatMap } from 'rxjs';
 import Utils from 'src/app/app.utils';
 import { AppConfigService } from 'src/app/app-config.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import { Console } from 'console';
 
 @Component({
   selector: 'app-dialog',
@@ -46,6 +48,11 @@ export class DialogComponent implements OnInit {
   allowedFileSize = this.appConfigService.getConfig()['allowedFileSize'];
   sendForReview: boolean = false;
   reviewComment: string = '';
+  approveReport: boolean = false;
+  adminApproveComments: string = '';
+  adminRejectComments: string = '';
+  rejectReport: boolean = false;
+  partnerComments: string = '';
 
   constructor(
     private router: Router,
@@ -55,7 +62,8 @@ export class DialogComponent implements OnInit {
     private dataService: DataService,
     private dialog: MatDialog,
     private translate: TranslateService,
-    private userProfileService: UserProfileService
+    private userProfileService: UserProfileService,
+    @Inject(MatSnackBar) private snackBar: MatSnackBar
   ) {
     dialogRef.disableClose = true;
     
@@ -382,6 +390,60 @@ export class DialogComponent implements OnInit {
             null,
             this.dialog,
             'Unable to submit report for review. Try Again!');
+        }
+      },
+      (errors) => {
+        Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
+      }
+    );
+    this.subscriptions.push(subs);
+  }
+  approvePartnerReport(adminApproveComments: String) {
+    let adminApproveRequest = this.input.approveRequest;
+    adminApproveRequest.request.adminComments = this.adminApproveComments;
+    const subs = this.dataService.approvePartnerReport(this.input.partnerId, adminApproveRequest).subscribe(
+      (res: any) => {
+        this.dataLoaded = true;
+        if (res) {
+          this.closeMe();
+          window.location.reload();
+          this.snackBar.open('Approval successful!', 'Close', {
+            panelClass: ['white-snackbar'],
+            verticalPosition: 'top',
+            duration: 2000
+          });
+        } else {
+          Utils.showErrorMessage(this.resourceBundleJson,
+            null,
+            this.dialog,
+            'Unable to approve report. Try Again!');
+        }
+      },
+      (errors) => {
+        Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
+      }
+    );
+    this.subscriptions.push(subs);
+  }
+  rejectPartnerReport(adminRejectComments: String) {
+    let adminRejectRequest = this.input.rejectRequest;
+    adminRejectRequest.request.adminComments = this.adminRejectComments;
+    const subs = this.dataService.rejectPartnerReport(this.input.partnerId, adminRejectRequest).subscribe(
+      (res: any) => {
+        this.dataLoaded = true;
+        if (res) {
+          this.closeMe();
+          window.location.reload();
+          this.snackBar.open('Rejection successful!', 'Close', {
+            panelClass: ['white-snackbar'],
+            verticalPosition: 'top',
+            duration: 2000
+          });
+        } else {
+          Utils.showErrorMessage(this.resourceBundleJson,
+            null,
+            this.dialog,
+            'Unable to reject report. Try Again!');
         }
       },
       (errors) => {

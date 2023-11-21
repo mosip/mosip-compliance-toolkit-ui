@@ -10,6 +10,7 @@ import { MaterialModule } from './core/material.module';
 import { CookieService } from 'ngx-cookie-service';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import {MatTabsModule} from '@angular/material/tabs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const appInitialization = (appConfig: AppConfigService) => {
   return () => {
@@ -33,6 +34,7 @@ const appInitialization = (appConfig: AppConfigService) => {
   providers: [
     CookieService,
     AppConfigService,
+    MatSnackBar,
     {
       provide: APP_INITIALIZER,
       useFactory: appInitialization,

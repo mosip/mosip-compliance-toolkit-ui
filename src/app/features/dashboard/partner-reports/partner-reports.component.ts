@@ -11,6 +11,7 @@ import Utils from 'src/app/app.utils';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { ReportModel } from 'src/app/core/models/report-model';
 import { AppConfigService } from 'src/app/app-config.service';
+import { DialogComponent } from 'src/app/core/components/dialog/dialog.component';
 
 @Component({
   selector: 'app-partner-reports',
@@ -155,71 +156,44 @@ export class PartnerReportsComponent implements OnInit {
       request: approverequest,
     };
 
-    const subs = this.dataService
-      .approvePartnerReport(element.partnerId, request)
-      .subscribe(
-        async (res: any) => {
-          this.dataLoaded = true;
-          if (res) {
-            await this.getPartnerReportList();
-            this.dataLoaded = true;
-          } else {
-            Utils.showErrorMessage(
-              this.resourceBundleJson,
-              null,
-              this.dialog,
-              'Unable to approve report. Try Again!'
-            );
-          }
-        },
-        (errors) => {
-          Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-        }
-      );
-
-    this.subscriptions.push(subs);
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '600px',
+      data: {
+        case: "ADMIN_APPROVE_REPORT",
+        partnerId: element.partnerId,
+        approveRequest: request
+      },
+    });
+    dialogRef.afterClosed();
   }
 
   rejectPartnerReport(element: any) {
     this.dataLoaded = false;
-    let approverequest = {
+    let rejectrequest = {
       projectType: element.projectType,
       projectId: element.projectId,
       collectionId: element.collectionId,
       testRunId: element.runId,
       adminComments: element.adminComments,
-      partnerComments: element.adminComments,
+      partnerComments: element.partnerComments,
     };
 
     let request = {
       id: appConstants.ADMIN_REPORT_ID,
       version: appConstants.VERSION,
       requesttime: new Date().toISOString(),
-      request: approverequest,
+      request: rejectrequest,
     };
+    console.log(request)
 
-    const subs = this.dataService
-      .rejectPartnerReport(element.partnerId, request)
-      .subscribe(
-        async (res: any) => {
-          this.dataLoaded = true;
-          if (res) {
-            await this.getPartnerReportList();
-            this.dataLoaded = true;
-          } else {
-            Utils.showErrorMessage(
-              this.resourceBundleJson,
-              null,
-              this.dialog,
-              'Unable to reject report. Try Again!'
-            );
-          }
-        },
-        (errors) => {
-          Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-        }
-      );
-
-    this.subscriptions.push(subs);
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '600px',
+      data: {
+        case: "ADMIN_REJECT_REPORT",
+        partnerId: element.partnerId,
+        rejectRequest: request
+      },
+    });
+    dialogRef.afterClosed();
   }
 }
