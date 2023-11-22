@@ -294,7 +294,7 @@
 		"projectType": "Type de projet",
 		"creationDate": "Date de création",
 		"projectName": "nom du projet",
-		"downloadReport": "Télécharger le rapport",
+		"downloadReport": "Afficher le rapport soumis",
 		"approveButton": "Approuver",
 		"rejectButton": "Rejeter",
 		"collectionName": "Nom de la collection",
@@ -309,7 +309,8 @@
 		"rejected": "Rejeté",
 		"reviewDtimes": "Date de soumission de l'avis",
 		"approveRejectDtimes": "Date d'approbation/rejet",
-		"status": "Statut du rapport"
+		"status": "Statut du rapport",
+		"runId": "Copier l'ID d'exécution du test"
 	},
 	"myReports": {
 		"tableDescription": "Liste de mes rapports",

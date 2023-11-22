@@ -1092,8 +1092,3 @@ mat-expansion-panel-header {
   justify-content: start;
   align-items: center;
 }
-.view-draft-button {
-  background-color: rgb(179, 205, 225);
-  height: 36px;
-  border-radius: 20px;
-}
