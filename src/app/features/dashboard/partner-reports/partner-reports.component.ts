@@ -41,7 +41,8 @@ export class PartnerReportsComponent implements OnInit {
     'approveButton',
     'rejectButton',
     'adminComments',
-    'approveRejectDtimes'
+    'approveRejectDtimes',
+    'runId'
   ];
   dataSource = new MatTableDataSource<ReportModel>();
   dataLoaded = false;
@@ -190,5 +191,9 @@ export class PartnerReportsComponent implements OnInit {
         this.dataSource.sort = this.sort;
       }
     );
+  }
+
+  copy(element: any) {
+    alert(element.runId);
   }
 }

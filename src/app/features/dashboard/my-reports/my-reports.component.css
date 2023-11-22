@@ -1,18 +1,20 @@
 .dashboard-table {
     width: 100%;
-    
+
 }
 
 .mat-header-cell {
     background-color: rgba(119, 136, 153, 0.26);
     color: black;
 }
+
 .mat-elevation-z8 {
     box-shadow:
         0 -1px 1px -1px rgba(0, 0, 0, 0.25),
         0 1px 2px 0px rgba(0, 0, 0, 0.5),
         0 1px 2px 0px rgba(0, 0, 0, 0.12)
 }
+
 .center-header-cell {
     text-align: center !important;
 }
@@ -47,9 +49,11 @@ th {
     align-items: center;
     display: flex;
 }
-.nameCell{
+
+.nameCell {
     width: 80px;
-  }
+}
+
 .view-draft-button {
     background-color: rgb(179, 205, 225);
     height: 36px;
@@ -64,11 +68,15 @@ th {
 
 .mat-cell {
     padding: 5px;
-  }
-  .nameCell{
-    width: 80px;
-  }
-  .link {
+}
+
+.download-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.link {
     cursor: pointer;
     color: #ff4081;
-  }
+}

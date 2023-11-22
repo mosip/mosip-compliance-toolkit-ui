@@ -294,7 +294,7 @@
 		"projectType": "Project Type",
 		"creationDate": "Creation Date",
 		"projectName": "Project Name",
-		"downloadReport": "Download Report",
+		"downloadReport": "View Submitted Report",
 		"approveButton": "Approve",
 		"rejectButton": "Reject",
 		"collectionName": "Collection Name",
@@ -309,7 +309,8 @@
 		"rejected": "Rejected",
 		"reviewDtimes": "Review Submitted Date",
 		"approveRejectDtimes": "Approve /Reject Date",
-		"status": "Report Status"
+		"status": "Report Status",
+		"runId": "Copy Test Run Id"
 	},
 	"myReports": {
 		"tableDescription": "List of My Reports",

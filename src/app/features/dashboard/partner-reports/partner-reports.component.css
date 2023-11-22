@@ -7,30 +7,6 @@
     color: black;
 }
 
-.approve-button {
-    margin-right: 3px;
-    background-color: rgb(205, 230, 200);
-    border-radius: 25px;
-    height: 36px;
-    padding: 1px;
-    padding-right: 4px;
-}
-
-.reject-button {
-    background-color: rgba(212, 189, 189, 0.85);
-    border-radius: 25px;
-    height: 36px;
-    padding: 1px;
-    padding-right: 4px;
-
-}
-
-.view-draft-button {
-    background-color: rgb(179, 205, 225);
-    height: 36px;
-    border-radius: 20px;
-}
-
 .center-header-cell {
     text-align: center;
 }
@@ -47,12 +23,14 @@
     align-items: center;
     padding: 10px;
 }
+
 .mat-elevation-z8 {
     box-shadow:
         0 -1px 1px -1px rgba(0, 0, 0, 0.25),
         0 1px 2px 0px rgba(0, 0, 0, 0.5),
         0 1px 2px 0px rgba(0, 0, 0, 0.12)
 }
+
 .button-container {
     display: flex;
     justify-content: space-between;
@@ -93,6 +71,17 @@ th {
     margin: 2px;
     font-size: 22px;
 }
+
 .mat-cell {
     padding: 5px;
-  }
+}
+
+.nameCell {
+    width: 0px;
+}
+
+.link {
+    text-decoration: underline;
+    cursor: pointer;
+    color: #ff4081;
+}

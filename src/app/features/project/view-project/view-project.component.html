@@ -659,9 +659,8 @@
                     translate }} </th>
                 <td mat-cell *matCellDef="let row">
                    <div class="download-button-container" *ngIf="!row.disableReportBtn">
-                        <button mat-flat-button (click)="fetchPartnerReport(row)"
-                            class="view-draft-button">
-                            {{ "viewProject.viewReport" | translate }}
+                        <button mat-flat-button (click)="fetchPartnerReport(row)">
+                            <mat-icon [ngStyle]="{color: 'grey'}">cloud_download</mat-icon>
                         </button>
                     </div>
                 </td>

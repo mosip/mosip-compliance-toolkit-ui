@@ -294,7 +294,7 @@
 		"projectType": "نوع المشروع",
 		"creationDate": "تاريخ الإنشاء",
 		"projectName": "اسم المشروع",
-		"downloadReport": "تنزيل التقرير",
+		"downloadReport": "عرض التقرير المقدم",
 		"approveButton": "يعتمد",
 		"rejectButton": "يرفض",
 		"collectionName": "اسم المجموعة",
@@ -309,7 +309,8 @@
 		"rejected": "مرفوض",
 		"reviewDtimes": "مراجعة تاريخ الإرسال",
 		"approveRejectDtimes": "الموافقة/الرفض التاريخ",
-		"status": "وضع تقرير"
+		"status": "وضع تقرير",
+		"runId": "نسخ معرف تشغيل الاختبار"
 	},
 	"myReports": {
 		"tableDescription": "قائمة تقاريري",
