@@ -1,10 +1,9 @@
 import { OnInit, Component, ViewChild } from '@angular/core';
 import { TranslateService } from "@ngx-translate/core";
-import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortable } from '@angular/material/sort';
-import { ActivatedRoute, Router} from '@angular/router';
+import { Router} from '@angular/router';
 import { DataService } from 'src/app/core/services/data-service';
-import { Subscription } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import * as appConstants from 'src/app/app.constants';
@@ -13,6 +12,8 @@ import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { environment } from 'src/environments/environment';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { DialogComponent } from 'src/app/core/components/dialog/dialog.component';
+import { AppConfigService } from 'src/app/app-config.service';
+import { Subscription } from 'rxjs';
 
 export interface ProjectData {
   id: string;
@@ -50,33 +51,33 @@ export class ProjectsDashboardComponent implements OnInit {
   textDirection: any = this.userProfileService.getTextDirection();
   buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : {'float': 'right'};
   resourceBundleJson: any = {};
-
+  isAdmin: boolean = false;
   constructor(
+    private appConfigService: AppConfigService,
     private router: Router,
     private translate: TranslateService,
-    private route: ActivatedRoute,
     private breadcrumbService: BreadcrumbService,
     private dialog: MatDialog,
     private userProfileService: UserProfileService,
-    private dataService: DataService,
-    private paginatorIntl: MatPaginatorIntl
-  ) {}
+    private dataService: DataService
+  ) {
+  }
 
   async ngOnInit() {
+
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
+    const adminRole = this.appConfigService.getConfig()['adminPartnerReportRole'];
+    this.isAdmin = this.userProfileService.hasRole(adminRole);
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
-    this.paginatorIntl.itemsPerPageLabel = this.resourceBundleJson.paginationLabel['itemPerPage'];
-    this.paginatorIntl.getRangeLabel = (page: number, pageSize: number, length: number) => {
-      const from = (page) * pageSize + 1;
-      const to = Math.min((page + 1) * pageSize, length);
-      return `${from} - ${to} ${this.resourceBundleJson.paginationLabel['rangeLabel']} ${length}`;
-    };
     await this.getProjects();
     this.initBreadCrumb();
-    this.dataLoaded = true;
+    
     this.dataSource.paginator = this.paginator;
-    this.sort.sort(({ id: 'lastRunDt', start: 'desc'}) as MatSortable);
+    if (this.sort) {
+      this.sort.sort(({ id: 'lastRunDt', start: 'desc'}) as MatSortable);
+    }
     this.dataSource.sort = this.sort;
+    this.dataLoaded = true;
   }
 
   initBreadCrumb() {

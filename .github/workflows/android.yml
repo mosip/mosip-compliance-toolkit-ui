@@ -27,7 +27,7 @@ jobs:
         version: 14
         
     - name: Install Angular CLI
-      run: npm install -g @angular/cli
+      run: npm install -g @angular/cli@13.0.0
 
     - name: Set environment variables
       run: |

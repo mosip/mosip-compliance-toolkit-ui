@@ -12,9 +12,6 @@ import * as appConstants from 'src/app/app.constants';
 import { Router } from '@angular/router';
 import { Subscription, flatMap } from 'rxjs';
 import Utils from 'src/app/app.utils';
-import { SbiProjectModel } from '../../models/sbi-project';
-import { AbisProjectModel } from '../../models/abis-project';
-import { SdkProjectModel } from '../../models/sdk-project';
 import { AppConfigService } from 'src/app/app-config.service';
 
 @Component({
@@ -47,6 +44,12 @@ export class DialogComponent implements OnInit {
   allowedFileNameLegth =
     this.appConfigService.getConfig()['allowedFileNameLegth'];
   allowedFileSize = this.appConfigService.getConfig()['allowedFileSize'];
+  sendForReview: boolean = false;
+  reviewComment: string = '';
+  approveReport: boolean = false;
+  adminApproveComments: string = '';
+  adminRejectComments: string = '';
+  rejectReport: boolean = false;
 
   constructor(
     private router: Router,
@@ -59,7 +62,7 @@ export class DialogComponent implements OnInit {
     private userProfileService: UserProfileService
   ) {
     dialogRef.disableClose = true;
-    
+
   }
   textDirection: any = this.userProfileService.getTextDirection();
   public closeMe() {
@@ -72,7 +75,7 @@ export class DialogComponent implements OnInit {
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     this.projectId = this.input.id;
     this.projectType = this.input.projectType;
-    if(this.projectType == appConstants.SBI) {
+    if (this.projectType == appConstants.SBI) {
       this.initSbiProjectForm();
       this.projectFormData = await Utils.getSbiProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
       Utils.populateSbiProjectForm(this.projectFormData, this.projectForm);
@@ -157,7 +160,7 @@ export class DialogComponent implements OnInit {
         new FormControl({
           value: '',
           disabled:
-            controlId == 'abisHash' || controlId == 'websiteUrl'  ? false : true,
+            controlId == 'abisHash' || controlId == 'websiteUrl' ? false : true,
         })
       );
     });
@@ -254,7 +257,7 @@ export class DialogComponent implements OnInit {
   }
 
   getImageBase64Urls(base64Urls: string[]) {
-    return base64Urls.length == 0 ? 'There are no device images for this project': '';
+    return base64Urls.length == 0 ? 'There are no device images for this project' : '';
   }
 
   onFileSelect(event: Event, fileIndex: number): void {
@@ -277,8 +280,8 @@ export class DialogComponent implements OnInit {
               null,
               this.dialog,
               'File name is not allowed more than: ' +
-                this.allowedFileNameLegth +
-                ' characters'
+              this.allowedFileNameLegth +
+              ' characters'
             );
           } else {
             if (file.size > this.allowedFileSize) {
@@ -304,7 +307,7 @@ export class DialogComponent implements OnInit {
     this.loadPreviewImages(fileIndex);
   }
 
-  getSelectedImageUrl(){
+  getSelectedImageUrl() {
     const isAllUrlNull = this.imageUrls.every((value) => value == null);
     if (!isAllUrlNull) {
       this.imageSelected = [true, true, true, true];
@@ -314,10 +317,10 @@ export class DialogComponent implements OnInit {
         }
       }
     } else {
-      this.imageSelected = [true, false, false, false]; 
+      this.imageSelected = [true, false, false, false];
     }
   }
-  
+
   loadPreviewImages(fileIndex: number): void {
     for (let i = 0; i < this.selectedImages.length; i++) {
       const image = this.selectedImages[i];
@@ -337,7 +340,7 @@ export class DialogComponent implements OnInit {
     for (let i = 0; i < this.imagePreviewsVisible.length; i++) {
       this.imagePreviewsVisible[i] = (i == fileIndex);
     }
-  } 
+  }
 
   deleteImage(fileIndex: number) {
     this.selectedImages[fileIndex] = undefined;
@@ -345,7 +348,7 @@ export class DialogComponent implements OnInit {
     this.visibilityState[fileIndex] = false;
     this.imagePreviewsVisible[fileIndex] = false;
     console.log(this.imageUrls);
-}
+  }
 
   uploadImages() {
     this.dialogRef.close(this.imageUrls);
@@ -369,5 +372,94 @@ export class DialogComponent implements OnInit {
       }
       this.imageUrls = base64Url;
     });
+  }
+
+  submitReportForReview(reviewComment: string) {
+    let newRequest = {
+      ...this.input.reviewRequest,
+      partnerComments: reviewComment
+    }
+    let submitRequest = {
+      id: appConstants.PARTNER_REPORT_ID,
+      version: appConstants.VERSION,
+      requesttime: new Date().toISOString(),
+      request: newRequest
+    };
+    const subs = this.dataService.submitReportForReview(submitRequest).subscribe(
+      (res: any) => {
+        this.dataLoaded = true;
+        if (res) {
+          this.closeMe();
+          window.location.reload();
+        } else {
+          Utils.showErrorMessage(this.resourceBundleJson,
+            null,
+            this.dialog,
+            'Unable to submit report for review. Try Again!');
+        }
+      },
+      (errors) => {
+        Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
+      }
+    );
+    this.subscriptions.push(subs);
+  }
+  approvePartnerReport(adminApproveComments: String) {
+    let newRequest = {
+      ...this.input.approveRequest,
+      adminComments: adminApproveComments
+    }
+    let approveRequest = {
+      id: appConstants.ADMIN_REPORT_ID,
+      version: appConstants.VERSION,
+      requesttime: new Date().toISOString(),
+      request: newRequest
+    };
+    const subs = this.dataService.approvePartnerReport(this.input.partnerId, approveRequest).subscribe(
+      (res: any) => {
+        this.dataLoaded = true;
+        if (res) {
+          this.closeMe();
+        } else {
+          Utils.showErrorMessage(this.resourceBundleJson,
+            null,
+            this.dialog,
+            'Unable to approve report. Try Again!');
+        }
+      },
+      (errors) => {
+        Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
+      }
+    );
+    this.subscriptions.push(subs);
+  }
+  rejectPartnerReport(adminRejectComments: String) {
+    let newRequest = {
+      ...this.input.rejectRequest,
+      adminComments: adminRejectComments
+    }
+    let rejectRequest = {
+      id: appConstants.ADMIN_REPORT_ID,
+      version: appConstants.VERSION,
+      requesttime: new Date().toISOString(),
+      request: newRequest
+    };
+    const subs = this.dataService.rejectPartnerReport(this.input.partnerId, rejectRequest).subscribe(
+      (res: any) => {
+        this.dataLoaded = true;
+        if (res) {
+          this.closeMe();
+        } else {
+          Utils.showErrorMessage(this.resourceBundleJson,
+            null,
+            this.dialog,
+            'Unable to reject report. Try Again!');
+        }
+      },
+      (errors) => {
+        Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
+      }
+    );
+    this.subscriptions.push(subs);
   }
 }

@@ -1,78 +1,88 @@
 <div class="outerdiv" [dir]="textDirection">
-<p *ngIf="dataLoaded">
-    <xng-breadcrumb></xng-breadcrumb>
-</p>
-<div class="dashboard-button-first-container"  *ngIf="dataLoaded" [ngStyle]="buttonPosition">
-    <button mat-flat-button color="accent" (click)="showProjectsDashboard()" class="dashboard-button">
-        {{ "biometricDashboard.projectDashboard" | translate }} >>
-    </button>
-</div>
-<div class="dashboard-button-second-container" *ngIf="dataLoaded">
-    <button mat-flat-button color="accent" (click)="addTestData()" class="dashboard-button">
-        <mat-icon>add</mat-icon>
-        {{ "biometricDashboard.addBiometric" | translate }}
-    </button>
-</div>
-<div class="spinner" *ngIf="!dataLoaded">
-    <mat-spinner diameter="50"></mat-spinner>
-</div>
-<mat-menu #appMenu="matMenu">
-    <ng-template matMenuContent let-myobject="myobject">
-        <button mat-menu-item (click)="downloadTestDataFile(myobject)">{{ "biometricDashboard.downloadZip" | translate }}</button>
-        <!-- <button mat-menu-item (click)="deleteProject(myobject)">Delete</button> -->
-    </ng-template>
-</mat-menu>
-<mat-form-field appearance="legacy" *ngIf="dataLoaded">
-    <mat-label>{{ "biometricDashboard.filter" | translate }}</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Search columns" #input>
-</mat-form-field>
-
-<div class="mat-elevation-z8" >
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 50, 100]" aria-label="Select page of users"></mat-paginator>
-    <div class="table-scroll">
-    <table mat-table [dataSource]="dataSource" matSort class="dashboard-table" *ngIf="dataLoaded">
-        <caption>{{ "biometricDashboard.tableDescription" | translate }}</caption>
-        <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
-        <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="nameheader"> {{ "biometricDashboard.name" | translate }} </th>
-            <td mat-cell *matCellDef="let element" class="namecell">
-                <a class="link" (click)="downloadTestDataFile(element)">{{element.name}}</a>
-            </td>
-        </ng-container>
-        <ng-container matColumnDef="type">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="typeheader"> {{ "biometricDashboard.type" | translate }} </th>
-            <td mat-cell *matCellDef="let element" class="typecell"> {{element.type}} </td>
-        </ng-container>
-        <ng-container matColumnDef="purpose">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="purposeheader"> {{ "biometricDashboard.purpose" | translate }} </th>
-            <td mat-cell *matCellDef="let element" class="purposecell"> {{element.purpose}} </td>
-        </ng-container>
-        <ng-container matColumnDef="fileId">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="fileheader"> {{ "biometricDashboard.fileName" | translate }} </th>
-            <td mat-cell *matCellDef="let element" class="filecell"> {{element.fileId}} </td>
-        </ng-container>
-        <ng-container matColumnDef="crDate">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="crdateheader"> {{ "biometricDashboard.creationDate" | translate }} </th>
-            <td mat-cell *matCellDef="let element" class="crdatecell"> {{element.crDate | date: 'short' }} </td>
-        </ng-container>
-        <ng-container matColumnDef="actions" stickyEnd>
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="actionsheader"> </th>
-            <td mat-cell *matCellDef="let element" class="actionscell">
-                <button mat-icon-button [matMenuTriggerFor]="appMenu" [matMenuTriggerData]="{myobject: element}">
-                    <mat-icon>more_vert</mat-icon>
+    <p *ngIf="dataLoaded">
+        <xng-breadcrumb></xng-breadcrumb>
+    </p>
+    <div class="spinner" *ngIf="!dataLoaded">
+        <mat-spinner diameter="50"></mat-spinner>
+    </div>
+    <mat-menu #appMenu="matMenu">
+        <ng-template matMenuContent let-myobject="myobject">
+            <button mat-menu-item (click)="downloadTestDataFile(myobject)">{{ "biometricDashboard.downloadZip" |
+                translate }}</button>
+            <!-- <button mat-menu-item (click)="deleteProject(myobject)">Delete</button> -->
+        </ng-template>
+    </mat-menu>
+    <div class="mat-elevation-z8">
+        <div class="button-container">
+            <div class="dashboard-button-first-container" *ngIf="dataLoaded" [ngStyle]="buttonPosition">
+                <button mat-flat-button color="accent" (click)="showProjectsDashboard()" class="dashboard-button">
+                    {{ "biometricDashboard.projectDashboard" | translate }} >>
                 </button>
-            </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        <!-- Row shown when there is no matching data. -->
-        <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" colspan="6">
-                {{ "biometricDashboard.biometricRecord" | translate }}
-            </td>
-        </tr>
-    </table>
-</div>
-</div>
+            </div>
+            <div class="dashboard-button-second-container" *ngIf="dataLoaded">
+                <button mat-flat-button color="accent" (click)="addTestData()" class="dashboard-button">
+                    <mat-icon>add</mat-icon>
+                    {{ "biometricDashboard.addBiometric" | translate }}
+                </button>
+            </div>
+        </div>
+        <div class="filter-container">
+            <mat-form-field appearance="legacy" *ngIf="dataLoaded">
+                <mat-label>{{ "biometricDashboard.filter" | translate }}</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Search columns" #input>
+            </mat-form-field>
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 50, 100]" aria-label="Select page of users"></mat-paginator>
+        </div>
+        <div class="table-scroll">
+            <table mat-table [dataSource]="dataSource" matSort class="dashboard-table" *ngIf="dataLoaded">
+                <caption>{{ "biometricDashboard.tableDescription" | translate }}</caption>
+                <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="nameheader"> {{
+                        "biometricDashboard.name" | translate }} </th>
+                    <td mat-cell *matCellDef="let element" class="namecell">
+                        <a class="link" (click)="downloadTestDataFile(element)">{{element.name}}</a>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="typeheader"> {{
+                        "biometricDashboard.type" | translate }} </th>
+                    <td mat-cell *matCellDef="let element" class="typecell"> {{element.type}} </td>
+                </ng-container>
+                <ng-container matColumnDef="purpose">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="purposeheader"> {{
+                        "biometricDashboard.purpose" | translate }} </th>
+                    <td mat-cell *matCellDef="let element" class="purposecell"> {{element.purpose}} </td>
+                </ng-container>
+                <ng-container matColumnDef="fileId">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="fileheader"> {{
+                        "biometricDashboard.fileName" | translate }} </th>
+                    <td mat-cell *matCellDef="let element" class="filecell"> {{element.fileId}} </td>
+                </ng-container>
+                <ng-container matColumnDef="crDate">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="crdateheader"> {{
+                        "biometricDashboard.creationDate" | translate }} </th>
+                    <td mat-cell *matCellDef="let element" class="crdatecell"> {{element.crDate | date: 'short' }} </td>
+                </ng-container>
+                <ng-container matColumnDef="actions" stickyEnd>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="actionsheader"> </th>
+                    <td mat-cell *matCellDef="let element" class="actionscell">
+                        <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                            [matMenuTriggerData]="{myobject: element}">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="6">
+                        {{ "biometricDashboard.biometricRecord" | translate }}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </div>

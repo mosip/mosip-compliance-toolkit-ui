@@ -1,0 +1,87 @@
+.dashboard-table {
+    width: 100%;
+}
+
+.mat-header-cell {
+    background-color: rgba(119, 136, 153, 0.26);
+    color: black;
+}
+
+.center-header-cell {
+    text-align: center;
+}
+
+.download-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.filter-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.mat-elevation-z8 {
+    box-shadow:
+        0 -1px 1px -1px rgba(0, 0, 0, 0.25),
+        0 1px 2px 0px rgba(0, 0, 0, 0.5),
+        0 1px 2px 0px rgba(0, 0, 0, 0.12)
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.text-container {
+    width: 100%;
+    text-align: center;
+}
+
+.text-container mat-icon {
+    vertical-align: middle;
+    margin-right: 4px;
+    font-size: 22px;
+}
+
+.button-container mat-icon {
+    vertical-align: middle;
+    margin-right: 4px;
+    font-size: 22px;
+}
+
+td,
+th {
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+.spinner {
+    flex-direction: column;
+    align-items: center;
+    display: flex;
+}
+
+.custom-class mat-icon {
+    vertical-align: middle;
+    margin: 2px;
+    font-size: 22px;
+}
+
+.mat-cell {
+    padding: 5px;
+}
+
+.nameCell {
+    width: 0px;
+}
+
+.link {
+    text-decoration: underline;
+    cursor: pointer;
+    color: #ff4081;
+}

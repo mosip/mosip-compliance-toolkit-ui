@@ -9,6 +9,7 @@ import { CoreModule } from './core/core.module';
 import { MaterialModule } from './core/material.module';
 import { CookieService } from 'ngx-cookie-service';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import {MatTabsModule} from '@angular/material/tabs';
 
 const appInitialization = (appConfig: AppConfigService) => {
   return () => {
@@ -26,7 +27,8 @@ const appInitialization = (appConfig: AppConfigService) => {
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    I18nModule
+    I18nModule,
+    MatTabsModule
   ],
   providers: [
     CookieService,

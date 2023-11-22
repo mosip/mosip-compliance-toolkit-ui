@@ -465,7 +465,7 @@ export default class Utils {
     });
   }
 
-  static getSbiProjectDetails(projectId:string, dataService: DataService, resourceBundleJson: any, dialog:MatDialog) {
+  static getSbiProjectDetails(projectId: string, dataService: DataService, resourceBundleJson: any, dialog: MatDialog) {
     return new Promise((resolve, reject) => {
       dataService.getSbiProject(projectId).subscribe(
         (response: any) => {
@@ -480,7 +480,7 @@ export default class Utils {
     });
   }
 
-  static getSdkProjectDetails(projectId:string, dataService: DataService, resourceBundleJson: any, dialog:MatDialog) {
+  static getSdkProjectDetails(projectId: string, dataService: DataService, resourceBundleJson: any, dialog: MatDialog) {
     return new Promise((resolve, reject) => {
       dataService.getSdkProject(projectId).subscribe(
         (response: any) => {
@@ -495,7 +495,7 @@ export default class Utils {
     });
   }
 
-  static getAbisProjectDetails(projectId:string, dataService: DataService, resourceBundleJson: any, dialog:MatDialog) {
+  static getAbisProjectDetails(projectId: string, dataService: DataService, resourceBundleJson: any, dialog: MatDialog) {
     return new Promise((resolve, reject) => {
       dataService.getAbisProject(projectId).subscribe(
         (response: any) => {
@@ -617,7 +617,7 @@ export default class Utils {
     });
   }
 
-  static getProjectResponse(response: any, resourceBundleJson: any, dialog: MatDialog){
+  static getProjectResponse(response: any, resourceBundleJson: any, dialog: MatDialog) {
     if (response.errors && response.errors.length > 0) {
       this.showErrorMessage(resourceBundleJson, response.errors, dialog);
       return true;
@@ -712,7 +712,7 @@ export default class Utils {
             let testcases = response['response']['testcases'];
             let testcaseArr = [];
             for (let testcase of testcases) {
-              testcaseArr.push(this.translateTestcase(testcase,resourceBundleJson));
+              testcaseArr.push(this.translateTestcase(testcase, resourceBundleJson));
             }
             //sort the testcases based on the testId
             if (testcaseArr && testcaseArr.length > 0) {
@@ -767,4 +767,74 @@ export default class Utils {
 
     }
   }
+
+  static isReportAlreadySubmitted(projectType: string, projectId: string, collectionId: string, dataService: DataService, resourceBundleJson: any, dialog: MatDialog) {
+    let reqBody = {
+      id: appConstants.PARTNER_REPORT_ID,
+      version: appConstants.VERSION,
+      requesttime: new Date().toISOString(),
+      request: {
+        projectType: projectType,
+        projectId: projectId,
+        collectionId: collectionId,
+        testRunId: null //this is not required to check if report is previously submitted
+      },
+    };
+    return new Promise((resolve, reject) => {
+      dataService.isReportAlreadySubmitted(reqBody).subscribe(
+        (response: any) => {
+          // console.log(response['response']);
+          resolve(response['response']);
+        },
+        (errors: any) => {
+          this.showErrorMessage(resourceBundleJson, errors, dialog);
+          resolve(false);
+        }
+      )
+    });
+  }
+
+  static async getReport(isAdmin: boolean, element: any,
+    dataService: DataService, resourceBundleJson: any, dialog: MatDialog) {
+    let reportrequest = {
+      projectType: element.projectType,
+      projectId: element.projectId,
+      collectionId: element.collectionId,
+      testRunId: element.runId
+    };
+
+    let request = {
+      id: isAdmin ? appConstants.ADMIN_REPORT_ID : appConstants.PARTNER_REPORT_ID,
+      version: appConstants.VERSION,
+      requesttime: new Date().toISOString(),
+      request: reportrequest,
+    };
+    return new Promise((resolve, reject) => {
+      dataService
+        .getReport(isAdmin, element.partnerId, request)
+        .subscribe(
+          (res: any) => {
+            if (res) {
+              const fileByteArray = res;
+              var blob = new Blob([fileByteArray], { type: 'application/pdf' });
+              var link = document.createElement('a');
+              link.href = window.URL.createObjectURL(blob);
+              link.download = element.projectName;
+              link.click();
+            } else {
+              Utils.showErrorMessage(resourceBundleJson,
+                null,
+                dialog,
+                'Unable to download PDF file. Try Again!');
+            }
+            resolve(true);
+          },
+          (errors) => {
+            Utils.showErrorMessage(resourceBundleJson, errors, dialog);
+            resolve(false);
+          }
+        );
+    });
+  }
+
 }
