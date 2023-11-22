@@ -50,6 +50,9 @@
 		"rangeLabel": "ل"
 	},
 	"projectDashboard": {
+		"myProjects": "مشاريعي",
+		"partnerReports": "تقارير الشركاء",
+		"myReports": "تقاريري",
 		"addProject": "أضف مشروع",
 		"biometricData": "البيانات البيومترية",
 		"view": "منظر",

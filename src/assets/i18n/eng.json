@@ -50,6 +50,9 @@
 		"rangeLabel": "of"
 	},
 	"projectDashboard": {
+		"myProjects": "My Projects",
+		"partnerReports": "Partner Reports",
+		"myReports": "My Reports",
 		"addProject": "Add Project",
 		"biometricData": "Biometric Data",
 		"view": "View",
