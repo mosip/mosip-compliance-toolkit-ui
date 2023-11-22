@@ -65,3 +65,10 @@ th {
 .mat-cell {
     padding: 5px;
   }
+  .nameCell{
+    width: 80px;
+  }
+  .link {
+    cursor: pointer;
+    color: #ff4081;
+  }

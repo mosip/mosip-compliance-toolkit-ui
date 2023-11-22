@@ -1,6 +1,7 @@
 <div class="outerdiv" [dir]="textDirection">
     <mat-tab-group color="accent" class="tabs">
-        <mat-tab label="My Projects">
+        <mat-tab
+            [label]="resourceBundleJson ? resourceBundleJson['projectDashboard'] ? resourceBundleJson['projectDashboard']['myProjects'] : 'My Projects' : 'My Projects'">
             <div class="tabcontent">
                 <mat-menu #appMenu="matMenu">
                     <ng-template matMenuContent let-myobject="myobject">
@@ -114,13 +115,13 @@
             </div>
         </mat-tab>
         <div *ngIf="isAdmin" style="margin-top: 10px;">
-            <mat-tab label="Partner Reports">
+            <mat-tab [label]="resourceBundleJson ? resourceBundleJson['projectDashboard'] ? resourceBundleJson['projectDashboard']['partnerReports'] : 'Partner Reports' : 'Partner Reports'">
                 <ng-template matTabContent>
                     <div class="tabcontent"><app-partner-reports></app-partner-reports></div>
                 </ng-template>
             </mat-tab>
         </div>
-        <mat-tab label="My Reports">
+        <mat-tab [label]="resourceBundleJson ? resourceBundleJson['projectDashboard'] ? resourceBundleJson['projectDashboard']['myReports'] : 'My Reports' : 'My Reports'">
             <ng-template matTabContent>
                 <div class="tabcontent"><app-my-reports></app-my-reports></div>
             </ng-template></mat-tab>

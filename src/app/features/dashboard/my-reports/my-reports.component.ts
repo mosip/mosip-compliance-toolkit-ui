@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { ReportModel } from 'src/app/core/models/report-model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-reports',
@@ -38,6 +39,7 @@ export class MyReportsComponent implements OnInit {
   
   constructor(
     private translate: TranslateService,
+    private router: Router,
     private dialog: MatDialog,
     private userProfileService: UserProfileService,
     private dataService: DataService
@@ -82,6 +84,12 @@ export class MyReportsComponent implements OnInit {
 
   async fetchPartnerReport(element: any) {
     await Utils.getReport(false, element, this.dataService, this.resourceBundleJson, this.dialog);
+  }
+
+  async viewProject(row: any) {
+    await this.router.navigate([
+      `toolkit/project/${row.projectType}/${row.projectId}`,
+    ]);
   }
 
   async getSubmittedReportList(): Promise<boolean> {

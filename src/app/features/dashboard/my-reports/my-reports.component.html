@@ -20,7 +20,9 @@
         <ng-container matColumnDef="projectName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "partnerReport.projectName" | translate }}
             </th>
-            <td mat-cell *matCellDef="let element"> {{element.projectName}} </td>
+            <td mat-cell *matCellDef="let element" class="nameCell">
+                <a class="link" (click)="viewProject(element)">{{element.projectName}}</a>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="collectionName">

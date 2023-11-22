@@ -50,6 +50,9 @@
 		"rangeLabel": "de"
 	},
 	"projectDashboard": {
+		"myProjects": "Mes projets",
+		"partnerReports": "Rapports des partenaires",
+		"myReports": "Mes rapports",
 		"addProject": "Ajouter un projet",
 		"biometricData": "Données biométriques",
 		"view": "Voir",
