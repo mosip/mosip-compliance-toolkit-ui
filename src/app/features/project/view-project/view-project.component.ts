@@ -13,11 +13,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { ScanDeviceComponent } from '../../test-run/scan-device/scan-device.component';
 import { ExecuteTestRunComponent } from '../../test-run/execute-test-run/execute-test-run.component';
 import Utils from 'src/app/app.utils';
-import { SdkProjectModel } from 'src/app/core/models/sdk-project';
 import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
-import { AbisProjectModel } from 'src/app/core/models/abis-project';
 import { DialogComponent } from 'src/app/core/components/dialog/dialog.component';
 
 export interface CollectionsData {
@@ -47,11 +45,12 @@ export class ViewProjectComponent implements OnInit {
     'crDtimes',
     'runDtimes',
     'actions',
+    'downloadButton',
     'actionsMore'
   ];
   isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
   textDirection: any = this.userProfileService.getTextDirection();
-  buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : {'float': 'right'};
+  buttonPosition: any = this.textDirection == 'rtl' ? { 'float': 'left' } : { 'float': 'right' };
   isMobileButton: any = this.textDirection == 'rtl' ? true : false;
   isScanComplete =
     localStorage.getItem(appConstants.SBI_SCAN_COMPLETE) == 'true'
@@ -67,7 +66,7 @@ export class ViewProjectComponent implements OnInit {
   bioTestDataFileNames: string[] = [];
   resourceBundleJson: any = {};
   deviceImageUrls: string[] = [];
-
+  isReportAlreadySubmitted = false;
   constructor(
     public authService: AuthService,
     private dataService: DataService,
@@ -76,7 +75,7 @@ export class ViewProjectComponent implements OnInit {
     private breadcrumbService: BreadcrumbService,
     private activatedRoute: ActivatedRoute,
     private userProfileService: UserProfileService,
-    private translate:TranslateService
+    private translate: TranslateService
   ) { }
 
   async ngOnInit() {
@@ -103,7 +102,9 @@ export class ViewProjectComponent implements OnInit {
     }
     await this.getCollections();
     this.dataSource.paginator = this.paginator;
-    this.sort.sort(({ id: 'runDtimes', start: 'desc' }) as MatSortable);
+    if (this.sort) {
+      this.sort.sort(({ id: 'runDtimes', start: 'desc' }) as MatSortable);
+    }
     this.dataSource.sort = this.sort;
     this.initBreadCrumb();
     this.dataLoaded = true;
@@ -174,7 +175,7 @@ export class ViewProjectComponent implements OnInit {
           value: '',
           disabled:
             controlId == 'abisUrl' || controlId == 'username' || controlId == 'password' || controlId == 'outboundQueueName'
-            || controlId == 'inboundQueueName' || controlId == 'abisBioTestData' ? false : true,
+              || controlId == 'inboundQueueName' || controlId == 'abisBioTestData' ? false : true,
         })
       );
     });
@@ -186,9 +187,25 @@ export class ViewProjectComponent implements OnInit {
         this.dataService
           .getCollections(this.projectId, this.projectType)
           .subscribe(
-            (response: any) => {
+            async (response: any) => {
+              const respArr = response[appConstants.RESPONSE]['collections'];
+              let tableData = [];
+              for (let item of respArr) {
+                let disableReportBtn = true;
+                if (appConstants.COMPLIANCE_COLLECTION == item.collectionType) {
+                  let check = await Utils.isReportAlreadySubmitted(this.projectType, this.projectId, item.collectionId, this.dataService, this.resourceBundleJson, this.dialog);
+                  if (check) {
+                    disableReportBtn = false;
+                    this.isReportAlreadySubmitted = true;
+                  }
+                }
+                tableData.push({
+                  ...item,
+                  disableReportBtn: disableReportBtn
+                });  
+              }
               this.dataSource = new MatTableDataSource(
-                response[appConstants.RESPONSE]['collections']
+                tableData
               );
               resolve(true);
             },
@@ -374,6 +391,17 @@ export class ViewProjectComponent implements OnInit {
     if (this.projectFormData.deviceImage4) {
       this.deviceImageUrls.push(this.projectFormData.deviceImage4);
     }
+  }
+
+  async fetchPartnerReport(row: any) {
+    let reportrequest = {
+      projectType: this.projectType,
+      projectId: this.projectId,
+      collectionId: row.collectionId,
+      testRunId: row.runId,
+      projectName: this.projectFormData.name
+    };
+    await Utils.getReport(false, reportrequest, this.dataService, this.resourceBundleJson, this.dialog);
   }
 
   clickOnButton() {

@@ -22,10 +22,10 @@ import { HeaderComponent } from './components/header/header.component';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { AbisTestCaseService } from './services/abis-testcase-service';
 import { ActiveMqService } from './services/activemq-service';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  imports: [CommonModule, MaterialModule, RouterModule, HttpClientModule, ReactiveFormsModule],
+  imports: [CommonModule, MaterialModule, RouterModule, HttpClientModule, ReactiveFormsModule, FormsModule],
   declarations: [HomeComponent, MainLayoutComponent, HeaderComponent, DialogComponent],
   exports: [
     HomeComponent,

@@ -15,7 +15,24 @@
 		"updateProject": "Mettre à jour le projet",
 		"deviceImages": "Images de l'appareil",
 		"uploadDeviceImages": "Télécharger des images de périphérique",
-		"addImage": "Ajouter une image"
+		"addImage": "Ajouter une image",
+		"sendForReview": "Envoyer pour examen",
+		"reviewMessage1": "Veuillez vérifier le projet de rapport téléchargé.",
+		"reviewMessage2": "Si tous les détails sont corrects, vous pouvez le soumettre pour examen.",
+		"reviewMessage3": "Une fois soumise, la collecte de conformité ne peut pas être réexécutée pour ce projet.",
+		"reviewMessage4": "L'administrateur CTK examinera le rapport et l'approuvera ou le rejettera.",
+		"comment": "(Commentaires facultatifs)",
+		"checkBox": "Prêt à envoyer pour examen.",
+		"approveMessage1": "Veuillez vérifier le projet de rapport téléchargé.",
+		"approveMessage2": "Assurez-vous que tous les détails sont exacts avant de confirmer l’approbation.",
+		"approveMessage3": "L'approbation du rapport est irréversible. Veuillez procéder avec prudence.",
+		"approveReport" : "Approuver le rapport",
+		"rejectReport" : "Rejeter le rapport",
+		"rejectMessage1": "Veuillez vérifier le projet de rapport téléchargé.",
+		"rejectMessage2": "Assurez-vous que tous les détails sont exacts avant de rejeter le rapport.",
+		"rejectMessage3": "Le rejet du rapport est irréversible. Veuillez procéder avec prudence.",
+		"approveCheckBox": "Confirmez l'approbation après avoir examiné le rapport.",
+		"rejectCheckBox": "Confirmation d'une décision de rejet existante"
 	},
 	"breadcrumb": {
 		"home": "Maison",
@@ -33,6 +50,9 @@
 		"rangeLabel": "de"
 	},
 	"projectDashboard": {
+		"myProjects": "Mes projets",
+		"partnerReports": "Rapports des partenaires",
+		"myReports": "Mes rapports",
 		"addProject": "Ajouter un projet",
 		"biometricData": "Données biométriques",
 		"view": "Voir",
@@ -181,7 +201,9 @@
 		"sdkHashIsRequired": "Le hachage SDK est requis",
 		"abisHash": "Hachage ABIS:",
 		"abisHashIsRequired": "Le hachage ABIS est requis",
-		"viewDeviceImages": "Afficher les images de l'appareil"
+		"viewDeviceImages": "Afficher les images de l'appareil",
+		"viewReport": "Afficher le rapport soumis",
+		"submittedMsg": "** Le rapport de ce projet est déjà soumis pour examen. Vérifiez le statut de celui-ci dans le tableau de bord sous l'onglet Mes rapports."
 	},
 	"testRunHistory": {
 		"runDate": "Date d'exécution",
@@ -215,7 +237,10 @@
 		"executionStatus": "Statut d'exécution",
 		"complete": "Complète",
 		"incomplete": "Incomplet",
-		"testRunExecutionStatus": "Statut d'exécution"
+		"testRunStatus": "État du test",
+		"testRunExecutionStatus": "Statut d'exécution",
+		"generateDraftReport": "Générer un brouillon de rapport",
+		"viewSubmittedReport": "Afficher le rapport soumis"
 	},
 	"addCollections": {
 		"collectionName": "Nom de la collection:",
@@ -261,6 +286,35 @@
 		"purpose": "But",
 		"deviceType": "Type d'appareil",
 		"deviceSubType": "Sous-type de périphérique"
+	},
+	"partnerReport": {
+		"tableDescription": "Liste des rapports partenaires",
+		"partnerName": "Nom du partenaire",
+		"orgName": "nom de l'organisation",
+		"projectType": "Type de projet",
+		"creationDate": "Date de création",
+		"projectName": "nom du projet",
+		"downloadReport": "Afficher le rapport soumis",
+		"approveButton": "Approuver",
+		"rejectButton": "Rejeter",
+		"collectionName": "Nom de la collection",
+		"viewReport": "Voir le rapport",
+		"approveReport": "Approuver",
+		"partnerComments": "Commentaires des partenaires",
+		"adminComments": "Commentaires de l'administrateur",
+		"rejectReport": "Rejeter",
+		"projectRow": "Aucun rapport n'est disponible.",
+		"approved": "Approuvé",
+		"review": "Revoir",
+		"rejected": "Rejeté",
+		"reviewDtimes": "Date de soumission de l'avis",
+		"approveRejectDtimes": "Date d'approbation/rejet",
+		"status": "Statut du rapport",
+		"runId": "Copier l'ID d'exécution du test"
+	},
+	"myReports": {
+		"tableDescription": "Liste de mes rapports",
+		"partnerComments": "Vos commentaires"
 	},
 	"executeTestRun": {
 		"title": "Exécution du test de fonctionnement",
@@ -1273,7 +1327,8 @@
 		"ABIS3025": {
 			"testName": "Demande d'identification non valide - format d'heure de demande non valide",
 			"testDescription": "Demande d'identification non valide - format d'heure de demande non valide"
-		},"ABIS3026": {
+		},
+		"ABIS3026": {
 			"testName": "Identifier - doublon trouvé pour le referenceId (galerie ignorée). <b>Effacez le cache ABIS avant d'exécuter ce cas de test.</b>",
 			"testDescription": "Insérez deux fois les mêmes données biométriques, puis testez si un doublon est trouvé pour le referenceId, (galerie ignorée)"
 		},
@@ -1319,6 +1374,7 @@
 		"KEY_ROTATION_VALIDATOR_008": "L'appareil n'est pas enregistré.",
 		"TIMEOUT_VALIDATOR_001": "La validation du délai d'attente est réussie",
 		"TIMEOUT_VALIDATOR_002": "La validation du délai d'attente a échoué. Délai d'attente donné : {} ms. Réponse reçue en : {} ms",
+		"SIGNATURE_VALIDATOR_001": "Méthode non prise en charge",
 		"SIGNATURE_VALIDATOR_002": "La réponse est vide",
 		"SIGNATURE_VALIDATOR_003": "Échec de la validation de l'ID numérique non signé",
 		"SIGNATURE_VALIDATOR_004": "La validation de l'ID numérique non signé a réussi",
@@ -1594,8 +1650,14 @@
 		"TOOLKIT_ABIS_PROJECTS_002": "Objectif ABIS invalide",
 		"TOOLKIT_ABIS_PROJECTS_003": "Projet ABIS impossible d'ajouter",
 		"TOOLKIT_ABIS_PROJECTS_004": "URL ABIS invalide",
-		"TESTCASE_001": "Veuillez sélectionner au moins un cas de test.",
+		"TESTCASE_001": "Veuillez sélectionner au moins un scénario de test.",
 		"ENCRYPTION_KEY_001": "Impossible d'obtenir la clé de chiffrement. Essayer à nouveau!",
+		"TOOLKIT_REPORT_001": "Erreur lors de la génération du rapport",
+		"TOOLKIT_REPORT_002": "Les données du rapport ne sont pas disponibles. Essayez avec des valeurs correctes pour l'identifiant du partenaire, le type de projet, l'identifiant du projet, l'identifiant de la collection et l'identifiant de l'exécution du test.",
+		"TOOLKIT_REPORT_003": "L'état du rapport ne peut pas être mis à jour vers une nouvelle valeur car il s'agit actuellement de :",
+		"TOOLKIT_REPORT_004": "Erreur lors de la modification de l'état du rapport",
+		"TOOLKIT_REPORT_005": "Erreur lors de la récupération de la liste des rapports.",
+		"TOOLKIT_REPORT_006": "Erreur lors de la récupération de la liste des rapports. Statut du rapport invalide : ",
 		"error": "Errorerreur"
 	}
 }

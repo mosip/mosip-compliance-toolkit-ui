@@ -15,7 +15,24 @@
 		"updateProject": "Update Project",
 		"deviceImages": "Device Images",
 		"uploadDeviceImages": "Upload Device Images",
-		"addImage": "Add Image"
+		"addImage": "Add Image",
+		"sendForReview": "Send For Review",
+		"reviewMessage1": "Please check the downloaded draft report.",
+		"reviewMessage2": "If all details are correct, you can submit it for review.",
+		"reviewMessage3": "Once submitted, the compliance collection cannot be rerun for this project.",
+		"reviewMessage4": "CTK admin will review the report and approve or reject the same.",
+		"comment": "(Optional comments)",
+		"checkBox": "Ready to send for review",
+		"approveMessage1": "Please check the downloaded draft report.",
+		"approveMessage2": "Ensure all details are accurate before confirming the approval.",
+		"approveMessage3": "Approving the report is irreversible. Please proceed with caution.",
+		"approveReport" : "Approve Report",
+		"rejectReport" : "Reject Report",
+		"rejectMessage1": "Please check the downloaded draft report.",
+		"rejectMessage2": "Ensure all details are accurate before rejecting the report.",
+		"rejectMessage3": "Rejecting the report is irreversible. Please proceed with caution.",
+		"approveCheckBox": "Confirm approval after reviewing report.",
+		"rejectCheckBox": "Confirmation of an existing rejection decision."
 	},
 	"breadcrumb": {
 		"home": "Home",
@@ -33,6 +50,9 @@
 		"rangeLabel": "of"
 	},
 	"projectDashboard": {
+		"myProjects": "My Projects",
+		"partnerReports": "Partner Reports",
+		"myReports": "My Reports",
 		"addProject": "Add Project",
 		"biometricData": "Biometric Data",
 		"view": "View",
@@ -181,7 +201,9 @@
 		"sdkHashIsRequired": "SDK Hash is required",
 		"abisHash": "ABIS Hash:",
 		"abisHashIsRequired": "ABIS Hash is required",
-		"viewDeviceImages": "View Device Images"
+		"viewDeviceImages": "View Device Images",
+		"viewReport": "View Submitted Report",
+		"submittedMsg": "** Report for this project is already submitted for Review. Check the status for the same in Dashboard under My Reports tab."
 	},
 	"testRunHistory": {
 		"runDate": "Run Date",
@@ -216,7 +238,9 @@
 		"complete": "Complete",
 		"incomplete": "Incomplete",
 		"testRunStatus": "Test Run Status",
-		"testRunExecutionStatus": "Execution Status"
+		"testRunExecutionStatus": "Execution Status",
+		"generateDraftReport": "Generate Draft Report",
+		"viewSubmittedReport": "View Submitted Report"
 	},
 	"addCollections": {
 		"collectionName": "Collection Name:",
@@ -262,6 +286,35 @@
 		"purpose": "Purpose",
 		"deviceType": "Device Type",
 		"deviceSubType": "Device Sub Type"
+	},
+	"partnerReport": {
+		"tableDescription": "List of Partner Reports",
+		"partnerName": "Partner Name",
+		"orgName": "Organization Name",
+		"projectType": "Project Type",
+		"creationDate": "Creation Date",
+		"projectName": "Project Name",
+		"downloadReport": "View Submitted Report",
+		"approveButton": "Approve",
+		"rejectButton": "Reject",
+		"collectionName": "Collection Name",
+		"viewReport": "View Report",
+		"approveReport": "Approve",
+		"partnerComments": "Partner comments",
+		"adminComments": "Admin comments",
+		"rejectReport": "Reject",
+		"projectRow": "There are no reports available.",
+		"approved": "Approved",
+		"review": "Review",
+		"rejected": "Rejected",
+		"reviewDtimes": "Review Submitted Date",
+		"approveRejectDtimes": "Approve /Reject Date",
+		"status": "Report Status",
+		"runId": "Copy Test Run Id"
+	},
+	"myReports": {
+		"tableDescription": "List of My Reports",
+		"partnerComments": "Your comments"
 	},
 	"executeTestRun": {
 		"title": "Executing Test Run",
@@ -1597,8 +1650,14 @@
 		"TOOLKIT_ABIS_PROJECTS_002": "Invalid ABIS Spec Version",
 		"TOOLKIT_ABIS_PROJECTS_003": "ABIS Project unable to add",
 		"TOOLKIT_ABIS_PROJECTS_004": "Invalid ABIS url",
-		"TESTCASE_001": "Please select ateleast one testcase.",
+		"TESTCASE_001": "Please select atleast one testcase.",
 		"ENCRYPTION_KEY_001": "Unable to get encryption key. Try Again!",
+		"TOOLKIT_REPORT_001": "Error during report generation",
+		"TOOLKIT_REPORT_002": "Report Data is not available. Try with correct values for partner id, project type, project id, collection id and test run id.",
+		"TOOLKIT_REPORT_003": "Report status cannot be updated to new value since currently it is :",
+		"TOOLKIT_REPORT_004": "Error while changing report status",
+		"TOOLKIT_REPORT_005": "Error while fetching list of reports",
+		"TOOLKIT_REPORT_006": "Error while fetching list of reports. Invalid report status: ",
 		"error": "Error"
 	}
 }

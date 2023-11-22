@@ -54,7 +54,7 @@
                         {{"testRunHistory.view"|translate}}
                     </button>
                     &nbsp; &nbsp;
-                    <button mat-flat-button color="accent" (click)="deleteTestRun(row)" class="deletetestrunbutton">
+                    <button *ngIf="deleteAllowed" mat-flat-button color="accent" (click)="deleteTestRun(row)" class="deletetestrunbutton">
                         {{"testRunHistory.delete"|translate}}
                     </button>
                 </td>

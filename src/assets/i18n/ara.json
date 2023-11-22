@@ -15,7 +15,24 @@
 		"updateProject": "تحديث المشروع",
 		"deviceImages": "صور الجهاز",
 		"uploadDeviceImages": "تحميل صور الجهاز",
-		"addImage": "إضافة صورة"
+		"addImage": "إضافة صورة",
+		"sendForReview": "إرسال للمراجعة",
+		"reviewMessage1": "يرجى التحقق من مسودة التقرير التي تم تنزيلها.",
+		"reviewMessage2": "إذا كانت كافة التفاصيل صحيحة، يمكنك تقديمها للمراجعة.",
+		"reviewMessage3": "بمجرد إرسالها، لا يمكن إعادة تشغيل مجموعة التوافق لهذا المشروع.",
+		"reviewMessage4": "سيقوم مسؤول CTK بمراجعة التقرير والموافقة عليه أو رفضه.",
+		"comment": "(تعليقات اختيارية)",
+		"checkBox": "جاهز للإرسال للمراجعة",
+		"approveMessage1": "يرجى التحقق من مسودة التقرير التي تم تنزيلها.",
+		"approveMessage2": "التأكد من دقة جميع التفاصيل قبل تأكيد الموافقة.",
+		"approveMessage3": "الموافقة على التقرير لا رجعة فيها. يرجى المضي قدما بحذر.",
+		"approveReport" : "الموافقة على التقرير",
+		"rejectReport" : "رفض التقرير",
+		"rejectMessage1": "يرجى التحقق من مسودة التقرير التي تم تنزيلها.",
+		"rejectMessage2": "تأكد من دقة كافة التفاصيل قبل رفض التقرير.",
+		"rejectMessage3": "إن رفض التقرير لا رجعة فيه. يرجى المضي قدما بحذر.",
+		"approveCheckBox": "تأكيد الموافقة بعد مراجعة التقرير.",
+		"rejectCheckBox": "تأكيد قرار الرفض القائم"
 	},
 	"breadcrumb": {
 		"home": "بيت",
@@ -33,6 +50,9 @@
 		"rangeLabel": "ل"
 	},
 	"projectDashboard": {
+		"myProjects": "مشاريعي",
+		"partnerReports": "تقارير الشركاء",
+		"myReports": "تقاريري",
 		"addProject": "أضف مشروع",
 		"biometricData": "البيانات البيومترية",
 		"view": "منظر",
@@ -181,7 +201,9 @@
 		"sdkHashIsRequired": "مطلوب تجزئة SDK",
 		"abisHash": "تجزئة ABIS:",
 		"abisHashIsRequired": "مطلوب تجزئة ABIS",
-		"viewDeviceImages": "عرض صور الجهاز"
+		"viewDeviceImages": "عرض صور الجهاز",
+		"viewReport": "عرض التقرير المقدم",
+		"submittedMsg": "** تم بالفعل تقديم تقرير هذا المشروع للمراجعة. تحقق من الحالة في لوحة المعلومات ضمن علامة التبويب تقاريري."
 	},
 	"testRunHistory": {
 		"runDate": "تشغيل التاريخ",
@@ -215,7 +237,10 @@
 		"executionStatus": "حالة التنفيذ",
 		"complete": "مكتمل",
 		"incomplete": "غير مكتمل",
-		"testRunExecutionStatus": "حالة التنفيذ"
+		"testRunStatus": "حالة تشغيل الاختبار",
+		"testRunExecutionStatus": "حالة التنفيذ",
+		"generateDraftReport": "إنشاء مسودة تقرير",
+		"viewSubmittedReport": "عرض التقرير المقدم"
 	},
 	"addCollections": {
 		"collectionName": "اسم المجموعة:",
@@ -261,6 +286,35 @@
 		"purpose": "غاية",
 		"deviceType": "نوع الجهاز",
 		"deviceSubType": "نوع الجهاز الفرعي"
+	},
+	"partnerReport": {
+		"tableDescription": "قائمة تقارير الشركاء",
+		"partnerName": "اسم شريك",
+		"orgName": "اسم المنظمة",
+		"projectType": "نوع المشروع",
+		"creationDate": "تاريخ الإنشاء",
+		"projectName": "اسم المشروع",
+		"downloadReport": "عرض التقرير المقدم",
+		"approveButton": "يعتمد",
+		"rejectButton": "يرفض",
+		"collectionName": "اسم المجموعة",
+		"viewReport": "عرض التقرير",
+		"approveReport": "يعتمد",
+		"partnerComments": "تعليقات الشركاء",
+		"adminComments": "تعليقات المشرف",
+		"rejectReport": "يرفض",
+		"projectRow": "لا توجد تقارير متاحة.",
+		"approved": "موافقة",
+		"review": "مراجعة",
+		"rejected": "مرفوض",
+		"reviewDtimes": "مراجعة تاريخ الإرسال",
+		"approveRejectDtimes": "الموافقة/الرفض التاريخ",
+		"status": "وضع تقرير",
+		"runId": "نسخ معرف تشغيل الاختبار"
+	},
+	"myReports": {
+		"tableDescription": "قائمة تقاريري",
+		"partnerComments": "تعليقاتك"
 	},
 	"executeTestRun": {
 		"title": "تنفيذ التشغيل التجريبي",
@@ -1273,7 +1327,8 @@
 		"ABIS3025": {
 			"testName": "طلب تعريف غير صالح - تنسيق وقت الطلب غير صالح",
 			"testDescription": "طلب تعريف غير صالح - تنسيق وقت الطلب غير صالح"
-		},"ABIS3026": {
+		},
+		"ABIS3026": {
 			"testName": "تحديد - تم العثور على نسخة طبق الأصل للمرجع (تم تخطي المعرض).<b>امسح ذاكرة التخزين المؤقت ABIS قبل تشغيل حقيبة الاختبار هذه.</b>",
 			"testDescription": "أدخل نفس القياسات الحيوية مرتين ، ثم اختبر ما إذا تم العثور على نسخة طبق الأصل للمعرّف المرجعي ، (تم تخطي المعرض)"
 		},
@@ -1595,8 +1650,14 @@
 		"TOOLKIT_ABIS_PROJECTS_002": "إصدار مواصفات ABIS غير صالح",
 		"TOOLKIT_ABIS_PROJECTS_003": "مشروع ABIS غير قادر على الإضافة",
 		"TOOLKIT_ABIS_PROJECTS_004": "عنوان url الخاص بـ ABIS غير صالح",
-		"TESTCASE_001": "الرجاء تحديد حقيبة اختبار واحدة على الأقل.",
+		"TESTCASE_001": "الرجاء تحديد حالة اختبار واحدة على الأقل.",
 		"ENCRYPTION_KEY_001": "تعذر الحصول على مفتاح التشفير. حاول ثانية!",
+		"TOOLKIT_REPORT_001": "حدث خطأ أثناء إنشاء التقرير",
+		"TOOLKIT_REPORT_002": "بيانات التقرير غير متوفرة. حاول باستخدام القيم الصحيحة لمعرف الشريك ونوع المشروع ومعرف المشروع ومعرف المجموعة ومعرف التشغيل الاختباري.",
+		"TOOLKIT_REPORT_003": "لا يمكن تحديث حالة التقرير إلى قيمة جديدة نظرًا لأنها حاليًا:",
+		"TOOLKIT_REPORT_004": "حدث خطأ أثناء تغيير حالة التقرير",
+		"TOOLKIT_REPORT_005": "حدث خطأ أثناء جلب قائمة التقارير.",
+		"TOOLKIT_REPORT_006": "حدث خطأ أثناء جلب قائمة التقارير. حالة التقرير غير صالحة: ",
 		"error": "خطأ"
 	}
 }
