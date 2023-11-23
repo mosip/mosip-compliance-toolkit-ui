@@ -80,3 +80,11 @@ th {
     cursor: pointer;
     color: #ff4081;
 }
+@media screen and (max-width: 1040px) {
+    .table-scroll{
+      overflow-x:auto;
+    }
+    .dashboard-table{
+      width: 100%;
+    }
+}
