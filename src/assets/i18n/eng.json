@@ -310,7 +310,7 @@
 		"reviewDtimes": "Review Submitted Date",
 		"approveRejectDtimes": "Approve /Reject Date",
 		"status": "Report Status",
-		"runId": "Copy Test Run Id"
+		"viewTestRun": "View Test Run"
 	},
 	"myReports": {
 		"tableDescription": "List of My Reports",

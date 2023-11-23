@@ -310,7 +310,7 @@
 		"reviewDtimes": "مراجعة تاريخ الإرسال",
 		"approveRejectDtimes": "الموافقة/الرفض التاريخ",
 		"status": "وضع تقرير",
-		"runId": "نسخ معرف تشغيل الاختبار"
+		"viewTestRun": "عرض تشغيل الاختبار"
 	},
 	"myReports": {
 		"tableDescription": "قائمة تقاريري",

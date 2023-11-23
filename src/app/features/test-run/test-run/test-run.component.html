@@ -1,5 +1,5 @@
 <div [dir]="textDirection">
-    <p><xng-breadcrumb *ngIf="dataLoaded"></xng-breadcrumb></p>
+    <p><xng-breadcrumb *ngIf="!isAdmin && dataLoaded"></xng-breadcrumb></p>
     <p></p>
     <div class="spinner" *ngIf="!dataLoaded">
         <mat-spinner diameter="50"></mat-spinner>

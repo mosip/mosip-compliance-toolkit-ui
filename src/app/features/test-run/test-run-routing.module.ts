@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { ScanDeviceComponent } from './scan-device/scan-device.component';
 import { ExecuteTestRunComponent } from './execute-test-run/execute-test-run.component';
 import { TestRunComponent } from './test-run/test-run.component';
-import { TestRunHistoryComponent } from './test-run-history/test-run-history.component';
 
 const routes: Routes = [
   {
@@ -18,6 +17,15 @@ const routes: Routes = [
   },
   {
     path: ':runId',
+    data: {
+      breadcrumb: {
+        alias: 'testrunBreadCrumb',
+      },
+    },
+    component: TestRunComponent,
+  },
+  {
+    path: ':runId/:partnerId',
     data: {
       breadcrumb: {
         alias: 'testrunBreadCrumb',

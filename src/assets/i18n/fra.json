@@ -310,7 +310,7 @@
 		"reviewDtimes": "Date de soumission de l'avis",
 		"approveRejectDtimes": "Date d'approbation/rejet",
 		"status": "Statut du rapport",
-		"runId": "Copier l'ID d'exécution du test"
+		"viewTestRun": "Afficher l'exécution du test"
 	},
 	"myReports": {
 		"tableDescription": "Liste de mes rapports",
