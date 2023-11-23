@@ -12,6 +12,7 @@ import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { ReportModel } from 'src/app/core/models/report-model';
 import { AppConfigService } from 'src/app/app-config.service';
 import { DialogComponent } from 'src/app/core/components/dialog/dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-partner-reports',
@@ -22,6 +23,7 @@ export class PartnerReportsComponent implements OnInit {
 
 
   constructor(
+    private router: Router,
     private appConfigService: AppConfigService,
     private translate: TranslateService,
     private dialog: MatDialog,
@@ -38,11 +40,11 @@ export class PartnerReportsComponent implements OnInit {
     'reviewDtimes',
     'reportStatus',
     'downloadButton',
+    'runId',
     'approveButton',
     'rejectButton',
     'adminComments',
-    'approveRejectDtimes',
-    'runId'
+    'approveRejectDtimes'
   ];
   dataSource = new MatTableDataSource<ReportModel>();
   dataLoaded = false;
@@ -193,7 +195,9 @@ export class PartnerReportsComponent implements OnInit {
     );
   }
 
-  copy(element: any) {
-    alert(element.runId);
+  async viewPartnerTestRun(row: any) {
+    await this.router.navigate([
+      `toolkit/project/${row.projectType}/${row.projectId}/collection/${row.collectionId}/testrun/${row.runId}/${row.partnerId}`,
+    ]);
   }
 }
