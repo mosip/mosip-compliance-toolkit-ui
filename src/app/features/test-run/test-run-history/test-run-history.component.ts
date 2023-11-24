@@ -193,7 +193,8 @@ export class TestRunHistoryComponent implements OnInit {
       let tableData = [];
       for (let row of dataArr) {
         let runStatus = await this.getTestRunStatus(row.runId);
-        const testcasesList = await Utils.getTestcasesForCollection(this.subscriptions, this.dataService, this.collectionId, this.resourceBundleJson, this.dialog);
+        const testcasesList = await Utils.getTestcasesForCollection(this.subscriptions, this.dataService, false, '',
+          this.collectionId, this.resourceBundleJson, this.dialog);
         const testCaseCount = testcasesList.length;
         const passCaseCount = row.passCaseCount;
         const failCaseCount = testCaseCount - passCaseCount;

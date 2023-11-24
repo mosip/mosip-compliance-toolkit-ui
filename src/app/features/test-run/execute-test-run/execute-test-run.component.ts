@@ -224,7 +224,7 @@ export class ExecuteTestRunComponent implements OnInit {
   async getTestcasesForCollection() {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
-        this.dataService.getTestcasesForCollection(this.collectionId).subscribe(
+        this.dataService.getTestcasesForCollection(false, '', this.collectionId).subscribe(
           (response: any) => {
             if (response.errors && response.errors.length > 0) {
               this.errorsInGettingTestcases = true;

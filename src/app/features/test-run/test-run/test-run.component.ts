@@ -47,6 +47,8 @@ export class TestRunComponent implements OnInit {
   runId: string;
   projectId: string;
   projectType: string;
+  partnerId: string;
+  isAdmin = false;
   collectionForm = new FormGroup({});
   subscriptions: Subscription[] = [];
   dataLoaded = false;
@@ -82,30 +84,35 @@ export class TestRunComponent implements OnInit {
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
+    const adminRole = this.appConfigService.getConfig()['adminPartnerReportRole'];
+    this.isAdmin = this.userProfileService.hasRole(adminRole);
     await this.initAllParams();
-    const collectionRes = await Utils.getCollectionNameAndType(this.subscriptions, this.dataService, this.collectionId, this.resourceBundleJson, this.dialog);
-    this.collectionName = collectionRes.name;
-    this.collectionType = collectionRes.type;
-    if (this.projectType == appConstants.SBI) {
-      const sbiProjectDetails: any = await Utils.getSbiProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
-      if (sbiProjectDetails) {
-        this.sbiProjectData = sbiProjectDetails;
+    if (!this.isAdmin) {
+      const collectionRes = await Utils.getCollectionNameAndType(this.subscriptions, this.dataService, this.collectionId, this.resourceBundleJson, this.dialog);
+      this.collectionName = collectionRes.name;
+      this.collectionType = collectionRes.type;
+      if (this.projectType == appConstants.SBI) {
+        const sbiProjectDetails: any = await Utils.getSbiProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
+        if (sbiProjectDetails) {
+          this.sbiProjectData = sbiProjectDetails;
+        }
+      }
+      if (this.projectType == appConstants.SDK) {
+        const sdkProjectDetails: any = await Utils.getSdkProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
+        if (sdkProjectDetails) {
+          this.sdkProjectData = sdkProjectDetails;
+        }
+      }
+      if (this.projectType == appConstants.ABIS) {
+        const abisProjectDetails: any = await Utils.getAbisProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
+        if (abisProjectDetails) {
+          this.abisProjectData = abisProjectDetails;
+        }
+        this.initBreadCrumb();
       }
     }
-    if (this.projectType == appConstants.SDK) {
-      const sdkProjectDetails: any = await Utils.getSdkProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
-      if (sdkProjectDetails) {
-        this.sdkProjectData = sdkProjectDetails;
-      }
-    }
-    if (this.projectType == appConstants.ABIS) {
-      const abisProjectDetails: any = await Utils.getAbisProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
-      if (abisProjectDetails) {
-        this.abisProjectData = abisProjectDetails;
-      }
-      this.initBreadCrumb();
-    }
-    this.testcasesList = await Utils.getTestcasesForCollection(this.subscriptions, this.dataService, this.collectionId, this.resourceBundleJson, this.dialog);
+    this.testcasesList = await Utils.getTestcasesForCollection(this.subscriptions, this.dataService, 
+      this.isAdmin, this.partnerId, this.collectionId, this.resourceBundleJson, this.dialog);
     await this.getTestRun();
     //enable download report button only for compliance collection
     if (appConstants.COMPLIANCE_COLLECTION == this.collectionType) {
@@ -127,6 +134,11 @@ export class TestRunComponent implements OnInit {
         this.projectId = param['projectId'];
         this.collectionId = param['collectionId'];
         this.runId = param['runId'];
+        if (this.isAdmin) {
+          this.partnerId = param['partnerId'];
+        } else {
+          this.partnerId = '';
+        }
       });
       resolve(true);
     });
@@ -173,7 +185,7 @@ export class TestRunComponent implements OnInit {
 
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
-        this.dataService.getTestRunDetails(this.runId).subscribe(
+        this.dataService.getTestRunDetails(this.isAdmin, this.partnerId, this.runId).subscribe(
           (response: any) => {
             this.runDetails = response['response'];
             let list: any[] = response['response']['testRunDetailsList'];
@@ -399,9 +411,18 @@ export class TestRunComponent implements OnInit {
   }
 
   async backToProject() {
-    await this.router.navigate([
-      `toolkit/project/${this.projectType}/${this.projectId}`,
-    ]);
+    if (this.isAdmin) {
+      if (this.authService.isAuthenticated()) {
+        await this.router.navigate([`toolkit/dashboard`]);
+      } else {
+        await this.router.navigate([``]);
+      }
+    } else {
+      await this.router.navigate([
+        `toolkit/project/${this.projectType}/${this.projectId}`,
+      ]);
+    }
+    
   }
 
 }

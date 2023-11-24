@@ -95,8 +95,11 @@ export class DataService {
     return this.httpClient.post(url, body);
   }
 
-  getTestcasesForCollection(collectionId: string) {
+  getTestcasesForCollection(isAdmin: boolean, partnerId: string, collectionId: string) {
     let url = `${this.SERVICES_BASE_URL}getTestCasesForCollection/${collectionId}`;
+    if (isAdmin) {
+      url = `${this.SERVICES_BASE_URL}getPartnerTestCasesForCollection/${partnerId}/${collectionId}`;
+    }
     return this.httpClient.get(url);
   }
 
@@ -151,9 +154,11 @@ export class DataService {
     return this.httpClient.post(url, body);
   }
 
-  getTestRunDetails(runId: string) {
+  getTestRunDetails(isAdmin: boolean, partnerId: string, runId: string) {
     let url = `${this.SERVICES_BASE_URL}getTestRunDetails/${runId}`;
-
+    if (isAdmin) {
+      url = `${this.SERVICES_BASE_URL}getPartnerTestRunDetails/${partnerId}/${runId}`;
+    }
     return this.httpClient.get(url);
   }
 

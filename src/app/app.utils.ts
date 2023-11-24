@@ -704,10 +704,11 @@ export default class Utils {
     });
   }
 
-  static getTestcasesForCollection(subscriptions: Subscription[], dataService: DataService, collectionId: string, resourceBundleJson: any, dialog: MatDialog) {
+  static getTestcasesForCollection(subscriptions: Subscription[], dataService: DataService, isAdmin: boolean, 
+    partnerId: string, collectionId: string, resourceBundleJson: any, dialog: MatDialog) {
     return new Promise<any[]>((resolve, reject) => {
       subscriptions.push(
-        dataService.getTestcasesForCollection(collectionId).subscribe(
+        dataService.getTestcasesForCollection(isAdmin, partnerId, collectionId).subscribe(
           (response: any) => {
             let testcases = response['response']['testcases'];
             let testcaseArr = [];
