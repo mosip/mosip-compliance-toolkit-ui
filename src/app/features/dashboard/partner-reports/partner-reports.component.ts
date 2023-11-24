@@ -13,6 +13,7 @@ import { ReportModel } from 'src/app/core/models/report-model';
 import { AppConfigService } from 'src/app/app-config.service';
 import { DialogComponent } from 'src/app/core/components/dialog/dialog.component';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-partner-reports',
@@ -49,6 +50,7 @@ export class PartnerReportsComponent implements OnInit {
   dataSource = new MatTableDataSource<ReportModel>();
   dataLoaded = false;
   projectFormData: any;
+  isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
   subscriptions: Subscription[] = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -140,7 +142,7 @@ export class PartnerReportsComponent implements OnInit {
   }
 
   async fetchPartnerReport(element: any) {
-    await Utils.getReport(true, element, this.dataService, this.resourceBundleJson, this.dialog);
+    await Utils.getReport(this.isAndroidAppMode, true, element, this.dataService, this.resourceBundleJson, this.dialog);
   }
 
   approvePartnerReport(element: any) {
