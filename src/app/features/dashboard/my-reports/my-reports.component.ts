@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { ReportModel } from 'src/app/core/models/report-model';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-my-reports',
@@ -36,7 +37,7 @@ export class MyReportsComponent implements OnInit {
   resourceBundleJson: any = {};
   dataLoaded = false;
   subscriptions: Subscription[] = [];
-  
+  isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
   constructor(
     private translate: TranslateService,
     private router: Router,
@@ -83,7 +84,7 @@ export class MyReportsComponent implements OnInit {
   }
 
   async fetchPartnerReport(element: any) {
-    await Utils.getReport(false, element, this.dataService, this.resourceBundleJson, this.dialog);
+    await Utils.getReport(this.isAndroidAppMode, false, element, this.dataService, this.resourceBundleJson, this.dialog);
   }
 
   async viewProject(row: any) {

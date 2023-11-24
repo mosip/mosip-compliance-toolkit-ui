@@ -24,6 +24,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { AbisProjectModel } from 'src/app/core/models/abis-project';
 import { AppConfigService } from 'src/app/app-config.service';
 import { DialogComponent } from 'src/app/core/components/dialog/dialog.component';
+import { environment } from 'src/environments/environment';
+import { Directory, Filesystem } from '@capacitor/filesystem';
+import { Toast } from '@capacitor/toast';
 
 @Component({
   selector: 'app-test-run',
@@ -49,6 +52,7 @@ export class TestRunComponent implements OnInit {
   projectType: string;
   partnerId: string;
   isAdmin = false;
+  isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
   collectionForm = new FormGroup({});
   subscriptions: Subscription[] = [];
   dataLoaded = false;
@@ -113,7 +117,7 @@ export class TestRunComponent implements OnInit {
         this.initBreadCrumb();
       }
     }
-    this.testcasesList = await Utils.getTestcasesForCollection(this.subscriptions, this.dataService, 
+    this.testcasesList = await Utils.getTestcasesForCollection(this.subscriptions, this.dataService,
       this.isAdmin, this.partnerId, this.collectionId, this.resourceBundleJson, this.dialog);
     await this.getTestRun();
     //enable download report button only for compliance collection
@@ -344,15 +348,32 @@ export class TestRunComponent implements OnInit {
       request: reportRequest
     };
     const subs = this.dataService.generateDraftReport(request).subscribe(
-      (res: any) => {
+      async (res: any) => {
         this.dataLoaded = true;
         if (res) {
           const fileByteArray = res;
           var blob = new Blob([fileByteArray], { type: 'application/pdf' });
-          var link = document.createElement('a');
-          link.href = window.URL.createObjectURL(blob);
-          link.download = this.getProjectName();
-          link.click();
+          console.log('isAndroidAppMode' + this.isAndroidAppMode);
+          if (this.isAndroidAppMode) {
+            let fileName = this.getProjectName() + ".pdf";
+            console.log('ready to download');
+            const base64 = await Utils.convertBlobToBase64(blob) as string;
+            await Filesystem.writeFile({
+              path: fileName,
+              data: base64,
+              directory: Directory.Documents
+            });
+            Toast.show({
+              text: 'File has been downloaded to Documents folder: ' + fileName,
+            }).catch((error) => {
+              console.log(error);
+            });
+          } else {
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = this.getProjectName();
+            link.click();
+          }
           const dialogRef = this.dialog.open(DialogComponent, {
             width: '600px',
             data: {
@@ -377,42 +398,17 @@ export class TestRunComponent implements OnInit {
 
   }
 
-  downloadSubmittedReport() {
+  async downloadSubmittedReport() {
     this.dataLoaded = false;
     let reportrequest = {
       projectType: this.projectType,
       projectId: this.projectId,
       collectionId: this.collectionId,
-      testRunId: null
-    }
-    let request = {
-      id: appConstants.PARTNER_REPORT_ID,
-      version: appConstants.VERSION,
-      requesttime: new Date().toISOString(),
-      request: reportrequest,
+      testRunId: null,
+      projectName: this.getProjectName()
     };
-    const subs = this.dataService.getSubmittedReport(request).subscribe(
-      (res: any) => {
-        this.dataLoaded = true;
-        if (res) {
-          const fileByteArray = res;
-          var blob = new Blob([fileByteArray], { type: 'application/pdf' });
-          var link = document.createElement('a');
-          link.href = window.URL.createObjectURL(blob);
-          link.download = this.getProjectName();
-          link.click();
-        } else {
-          Utils.showErrorMessage(this.resourceBundleJson,
-            null,
-            this.dialog,
-            'Unable to download PDF file. Try Again!');
-        }
-      },
-      (errors) => {
-        Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-      }
-    );
-    this.subscriptions.push(subs);
+    await Utils.getReport(this.isAndroidAppMode, false, reportrequest, this.dataService, this.resourceBundleJson, this.dialog);
+    this.dataLoaded = true;
   }
 
   async backToProject() {
@@ -427,7 +423,7 @@ export class TestRunComponent implements OnInit {
         `toolkit/project/${this.projectType}/${this.projectId}`,
       ]);
     }
-    
+
   }
 
 }
