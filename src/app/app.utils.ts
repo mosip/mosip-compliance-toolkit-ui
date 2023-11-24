@@ -10,6 +10,8 @@ import { Subscription } from 'rxjs';
 import { SdkProjectModel } from './core/models/sdk-project';
 import { AbisProjectModel } from './core/models/abis-project';
 import { SbiProjectModel } from './core/models/sbi-project';
+import { Directory, Encoding, Filesystem } from '@capacitor/filesystem';
+import { Toast } from '@capacitor/toast';
 
 export default class Utils {
   static getCurrentDate() {
@@ -795,7 +797,16 @@ export default class Utils {
     });
   }
 
-  static async getReport(isAdmin: boolean, element: any,
+  static convertBlobToBase64 = (blob :Blob)=>new Promise ((resolve,reject) =>{
+    const reader = new FileReader;
+    reader.onerror = reject;
+    reader.onload = () =>{
+      resolve(reader.result);
+    };
+    reader.readAsDataURL(blob);
+  });
+
+  static async getReport(isAndroidAppMode: boolean, isAdmin: boolean, element: any,
     dataService: DataService, resourceBundleJson: any, dialog: MatDialog) {
     let reportrequest = {
       projectType: element.projectType,
@@ -814,14 +825,31 @@ export default class Utils {
       dataService
         .getReport(isAdmin, element.partnerId, request)
         .subscribe(
-          (res: any) => {
+          async (res: any) => {
             if (res) {
+              console.log('isAndroidAppMode' + isAndroidAppMode);
               const fileByteArray = res;
               var blob = new Blob([fileByteArray], { type: 'application/pdf' });
-              var link = document.createElement('a');
-              link.href = window.URL.createObjectURL(blob);
-              link.download = element.projectName;
-              link.click();
+              if (isAndroidAppMode) {
+                let fileName = element.projectName + ".pdf";
+                console.log('ready to download');
+                const base64 = await this.convertBlobToBase64(blob) as string;
+                await Filesystem.writeFile({
+                  path: fileName,
+                  data: base64,
+                  directory: Directory.Documents
+                });
+                Toast.show({
+                  text: 'File has been downloaded to Documents folder: ' + fileName,
+                }).catch((error) => { 
+                  console.log(error); 
+                });
+              } else {
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = element.projectName;
+                link.click();
+              }
             } else {
               Utils.showErrorMessage(resourceBundleJson,
                 null,
