@@ -93,7 +93,8 @@ export class ViewCollectionsComponent implements OnInit {
       '@collectionBreadCrumb',
       `${this.collectionName}`
     );
-    const testcaseArr = await Utils.getTestcasesForCollection(this.subscriptions, this.dataService, this.collectionId, this.resourceBundleJson, this.dialog);
+    const testcaseArr = await Utils.getTestcasesForCollection(this.subscriptions, this.dataService, false, '', 
+      this.collectionId, this.resourceBundleJson, this.dialog);
     this.dataSource = new MatTableDataSource(testcaseArr);
     this.dataSource.sort = this.sort;
     this.dataLoaded = true;
