@@ -17,6 +17,8 @@ import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { DialogComponent } from 'src/app/core/components/dialog/dialog.component';
+import { Directory, Filesystem } from '@capacitor/filesystem';
+import { Toast } from '@capacitor/toast';
 
 export interface CollectionsData {
   collectionId: string;
@@ -348,15 +350,32 @@ export class ViewProjectComponent implements OnInit {
 
   downloadEncryptionKey() {
     const subs = this.dataService.getEncryptionKey().subscribe(
-      (res: any) => {
+      async (res: any) => {
         if (res) {
           let obj = res[appConstants.RESPONSE];
           if (obj) {
+            console.log('isAndroidAppMode' + this.isAndroidAppMode);
             var blob = new Blob([obj], { type: 'application/json' });
-            var link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.download = `key.cer`;
-            link.click();
+            if (this.isAndroidAppMode) {
+              let fileName = "key.txt";
+              console.log('ready to download');
+              const base64 = await Utils.convertBlobToBase64(blob) as string;
+              await Filesystem.writeFile({
+                path: fileName,
+                data: base64,
+                directory: Directory.Documents
+              });
+              Toast.show({
+                text: 'Encryption key has been downloaded to Documents folder: ' + fileName,
+              }).catch((error) => { 
+                console.log(error); 
+              });
+            } else {
+              var link = document.createElement('a');
+              link.href = window.URL.createObjectURL(blob);
+              link.download = `key.cer`;
+              link.click();  
+            }  
           }
         } else {
           const err = {
@@ -401,7 +420,7 @@ export class ViewProjectComponent implements OnInit {
       testRunId: row.runId,
       projectName: this.projectFormData.name
     };
-    await Utils.getReport(false, reportrequest, this.dataService, this.resourceBundleJson, this.dialog);
+    await Utils.getReport(this.isAndroidAppMode, false, reportrequest, this.dataService, this.resourceBundleJson, this.dialog);
   }
 
   clickOnButton() {
