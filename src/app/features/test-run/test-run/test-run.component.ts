@@ -87,7 +87,9 @@ export class TestRunComponent implements OnInit {
     const adminRole = this.appConfigService.getConfig()['adminPartnerReportRole'];
     this.isAdmin = this.userProfileService.hasRole(adminRole);
     await this.initAllParams();
-    if (!this.isAdmin) {
+    console.log(`this.isAdmin ${this.isAdmin}`);
+    console.log(`this.partnerId ${this.partnerId}`);
+    if (!this.isAdmin && !this.partnerId) {
       const collectionRes = await Utils.getCollectionNameAndType(this.subscriptions, this.dataService, this.collectionId, this.resourceBundleJson, this.dialog);
       this.collectionName = collectionRes.name;
       this.collectionType = collectionRes.type;
@@ -136,6 +138,9 @@ export class TestRunComponent implements OnInit {
         this.runId = param['runId'];
         if (this.isAdmin) {
           this.partnerId = param['partnerId'];
+          if (!this.partnerId) {
+            this.isAdmin = false;
+          }
         } else {
           this.partnerId = '';
         }
