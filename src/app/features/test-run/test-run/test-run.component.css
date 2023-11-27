@@ -105,13 +105,69 @@ mat-panel-title {
   .testcases-table{
     width: 100%;
   }
+  .testIDHeader{
+    width: 100px;
+  }
+  .testIDCell{
+    width: 100px;
+  }
+  .testNameHeader{
+    width: 400px;
+  }
+  .testNameCell{
+    width: 400px
+  }
+  .resultStatusHeader{
+    width: 100px;
+    padding-left: 10px;
+  }
+  .resultStatusCell{
+    width: 100px;
+  }
+  .executionStatusHeader{
+    padding-left: 30px;
+  }
+  .executionStatusCell{
+    padding-left: 40px;
+  }
+  .expandHeader{
+    width: 50px;
+  }
+  .expandCell{
+    width: 50px;
+  }
 }
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 810px) {
   .testcases-table{
     width: 100%;
   }
   .table-container{
     overflow-x: auto;
+  }
+  testIDHeader{
+    width: 80px;
+  }
+  .testIDCell{
+    width: 80px;
+  }
+  .testNameHeader{
+    width: 300px;
+  }
+  .testNameCell{
+    width: 300px
+  }
+  .resultStatusHeader{
+    width: 80px;
+    padding-left: 10px;
+  }
+  .resultStatusCell{
+    width: 80px;
+  }
+  .expandHeader{
+    width: 20px;
+  }
+  .expandCell{
+    width: 20px; 
   }
 }
 @media screen and (max-width: 604px) {
@@ -159,6 +215,12 @@ mat-panel-title {
   .resultStatusCell{
       padding-left: 20px;
   }
+  .executionStatusHeader{
+    padding-left: 20px;
+  }
+  .executionStatusCell{
+      padding-left: 20px;
+  }
   .expandHeader{
     width: 20px;
   }
@@ -199,6 +261,12 @@ mat-panel-title {
     padding-left: 20px;
   }
   .resultStatusCell{
+      padding-left: 20px;
+  }
+  .executionStatusHeader{
+    padding-left: 20px;
+  }
+  .executionStatusCell{
       padding-left: 20px;
   }
   .expandHeader{
