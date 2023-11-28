@@ -118,6 +118,7 @@ export class PartnerReportsComponent implements OnInit {
         break;
     }
     this.dataSource = new MatTableDataSource<ReportModel>(reports);
+    this.dataSource.paginator = this.paginator;
   }
 
   async fetchPartnerReportList(reportStatus: string) {
