@@ -104,6 +104,7 @@ export class PartnerReportsComponent implements OnInit {
   }
 
   async getPartnerReportList() {
+    this.dataSource = new MatTableDataSource<ReportModel>();
     let reports: ReportModel[] = [];
     switch (this.selectedReportStatus) {
       case 'approved':
