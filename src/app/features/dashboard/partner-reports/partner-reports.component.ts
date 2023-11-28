@@ -60,7 +60,6 @@ export class PartnerReportsComponent implements OnInit {
   resourceBundleJson: any = {};
   isAdmin: boolean = false;
   selectedReportStatus = appConstants.REPORT_STATUS_REVIEW;
-  allReports: ReportModel[] = [];
 
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
@@ -71,7 +70,6 @@ export class PartnerReportsComponent implements OnInit {
       this.dataService
     );
     await this.getPartnerReportList();
-    await this.applyReportFilter();
     this.dataLoaded = true;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -106,38 +104,19 @@ export class PartnerReportsComponent implements OnInit {
   }
 
   async getPartnerReportList() {
-    this.dataSource = new MatTableDataSource<ReportModel>();
-    const reviewDataArr = await this.fetchPartnerReportList(appConstants.REPORT_STATUS_REVIEW);
-    const approvedDataArr = await this.fetchPartnerReportList(appConstants.REPORT_STATUS_APPROVED);
-    const rejectedDataArr = await this.fetchPartnerReportList(appConstants.REPORT_STATUS_REJECTED);
-    if (reviewDataArr && Array.isArray(reviewDataArr)) {
-      this.allReports.push(...reviewDataArr);
-    }
-    if (approvedDataArr && Array.isArray(approvedDataArr)) {
-      this.allReports.push(...approvedDataArr);
-    }
-    if (rejectedDataArr && Array.isArray(rejectedDataArr)) {
-      this.allReports.push(...rejectedDataArr);
-    }
-  }
-
-  async applyReportFilter() {
-    let filteredReports: ReportModel[] = [];
+    let reports: ReportModel[] = [];
     switch (this.selectedReportStatus) {
-      case 'review':
-        filteredReports = this.allReports.filter(report => report.reportStatus === appConstants.REPORT_STATUS_REVIEW);
-        break;
       case 'approved':
-        filteredReports = this.allReports.filter(report => report.reportStatus === appConstants.REPORT_STATUS_APPROVED);
+        reports = await this.fetchPartnerReportList(appConstants.REPORT_STATUS_APPROVED) as ReportModel[];
         break;
       case 'rejected':
-        filteredReports = this.allReports.filter(report => report.reportStatus === appConstants.REPORT_STATUS_REJECTED);
+        reports = await this.fetchPartnerReportList(appConstants.REPORT_STATUS_REJECTED) as ReportModel[];
         break;
       default:
-        filteredReports = this.allReports;
+        reports = await this.fetchPartnerReportList(appConstants.REPORT_STATUS_REVIEW) as ReportModel[];
         break;
     }
-    this.dataSource = new MatTableDataSource<ReportModel>(filteredReports);
+    this.dataSource = new MatTableDataSource<ReportModel>(reports);
   }
 
   async fetchPartnerReportList(reportStatus: string) {
