@@ -59,6 +59,7 @@ export class PartnerReportsComponent implements OnInit {
     this.textDirection == 'rtl' ? { float: 'left' } : { float: 'right' };
   resourceBundleJson: any = {};
   isAdmin: boolean = false;
+  selectedReportStatus = appConstants.REPORT_STATUS_REVIEW;
 
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
@@ -103,21 +104,19 @@ export class PartnerReportsComponent implements OnInit {
   }
 
   async getPartnerReportList() {
-    this.dataSource = new MatTableDataSource<ReportModel>();
-    let allReports = [];
-    const reviewDataArr = await this.fetchPartnerReportList(appConstants.REPORT_STATUS_REVIEW);
-    const approvedDataArr = await this.fetchPartnerReportList(appConstants.REPORT_STATUS_APPROVED);
-    const rejectedDataArr = await this.fetchPartnerReportList(appConstants.REPORT_STATUS_REJECTED);
-    if (reviewDataArr && Array.isArray(reviewDataArr)) {
-      allReports.push(...reviewDataArr);
+    let reports: ReportModel[] = [];
+    switch (this.selectedReportStatus) {
+      case 'approved':
+        reports = await this.fetchPartnerReportList(appConstants.REPORT_STATUS_APPROVED) as ReportModel[];
+        break;
+      case 'rejected':
+        reports = await this.fetchPartnerReportList(appConstants.REPORT_STATUS_REJECTED) as ReportModel[];
+        break;
+      default:
+        reports = await this.fetchPartnerReportList(appConstants.REPORT_STATUS_REVIEW) as ReportModel[];
+        break;
     }
-    if (approvedDataArr && Array.isArray(approvedDataArr)) {
-      allReports.push(...approvedDataArr);
-    }
-    if (rejectedDataArr && Array.isArray(rejectedDataArr)) {
-      allReports.push(...rejectedDataArr);
-    }
-    this.dataSource = new MatTableDataSource<ReportModel>(allReports);
+    this.dataSource = new MatTableDataSource<ReportModel>(reports);
   }
 
   async fetchPartnerReportList(reportStatus: string) {
