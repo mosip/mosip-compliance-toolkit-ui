@@ -161,15 +161,15 @@ export class PartnerReportsComponent implements OnInit {
         approveRequest: approveRequest
       },
     });
-    dialogRef.afterClosed().subscribe(() => {
-      (async () => {
+    dialogRef.afterClosed().subscribe(
+      async () => {
         this.dataLoaded = false;
         await this.getPartnerReportList();
         this.dataLoaded = true;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-      })();
-    });
+      }
+    );
   }
 
   rejectPartnerReport(element: any) {
