@@ -1,8 +1,19 @@
 <div class="mat-elevation-z8">
     <div class="spinner" *ngIf="!dataLoaded">
         <mat-spinner diameter="50"></mat-spinner>
-    </div>    
+    </div> 
+    
     <div class="filter-container">
+        <div class="filter-label">
+            {{ "partnerReport.status" | translate }}: 
+            <mat-form-field appearance="legacy" class="filter-reportstatus">
+                <mat-select [(ngModel)]="selectedReportStatus" (ngModelChange)="applyReportFilter()" class="report-status-dropdown">
+                    <mat-option value="review">{{ "partnerReport.review" | translate }}</mat-option>
+                    <mat-option value="rejected">{{ "partnerReport.rejected" | translate }}</mat-option>
+                    <mat-option value="approved">{{ "partnerReport.approved" | translate }}</mat-option>
+                </mat-select>
+            </mat-form-field> 
+        </div>
         <mat-form-field appearance="legacy" class="filter">
             <mat-label>{{ "projectDashboard.filter" | translate }}</mat-label>
             <input matInput (keyup)="applyFilter($event)" placeholder="Search columns" #input>
