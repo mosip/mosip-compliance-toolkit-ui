@@ -124,21 +124,21 @@ export class PartnerReportsComponent implements OnInit {
   async applyReportFilter() {
     let filteredReports: ReportModel[] = [];
     switch (this.selectedReportStatus) {
-        case 'review':
-            filteredReports = this.allReports.filter(report => report.reportStatus === appConstants.REPORT_STATUS_REVIEW);
-            break;
-        case 'approved':
-            filteredReports = this.allReports.filter(report => report.reportStatus === appConstants.REPORT_STATUS_APPROVED);
-            break;
-        case 'rejected':
-            filteredReports = this.allReports.filter(report => report.reportStatus === appConstants.REPORT_STATUS_REJECTED);
-            break;
-        default:
-            filteredReports = this.allReports;
-            break;
+      case 'review':
+        filteredReports = this.allReports.filter(report => report.reportStatus === appConstants.REPORT_STATUS_REVIEW);
+        break;
+      case 'approved':
+        filteredReports = this.allReports.filter(report => report.reportStatus === appConstants.REPORT_STATUS_APPROVED);
+        break;
+      case 'rejected':
+        filteredReports = this.allReports.filter(report => report.reportStatus === appConstants.REPORT_STATUS_REJECTED);
+        break;
+      default:
+        filteredReports = this.allReports;
+        break;
     }
     this.dataSource = new MatTableDataSource<ReportModel>(filteredReports);
-}
+  }
 
   async fetchPartnerReportList(reportStatus: string) {
     return new Promise((resolve, reject) => {
