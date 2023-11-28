@@ -105,17 +105,22 @@ mat-panel-title {
   .testcases-table{
     width: 100%;
   }
+  .expanded-details{
+    width: 800px;
+  }
   .testIDHeader{
-    width: 100px;
+    width: 150px;
   }
   .testIDCell{
-    width: 100px;
+    width: 150px;
   }
   .testNameHeader{
     width: 400px;
+    padding-left: 35px;
   }
   .testNameCell{
-    width: 400px
+    width: 400px;
+    padding-left: 10px;
   }
   .resultStatusHeader{
     width: 100px;
@@ -125,10 +130,10 @@ mat-panel-title {
     width: 100px;
   }
   .executionStatusHeader{
-    padding-left: 30px;
+    padding-left: 10px;
   }
   .executionStatusCell{
-    padding-left: 40px;
+    padding-left: 20px;
   }
   .expandHeader{
     width: 50px;
@@ -137,12 +142,31 @@ mat-panel-title {
     width: 50px;
   }
 }
+@media screen and (min-width: 810px) and (max-width: 890px) {
+  .expanded-details{
+    width: 750px;
+  }
+  .executionStatusCell{
+    padding-left: 0px;
+  }
+}
+@media screen and (min-width: 810px) and (max-width: 840px) {
+  .expanded-details{
+    width: 700px;
+  }
+  .executionStatusCell{
+    padding-left: 0px;
+  }
+}
 @media screen and (max-width: 810px) {
   .testcases-table{
     width: 100%;
   }
   .table-container{
     overflow-x: auto;
+  }
+  .expanded-details{
+    width: 700px;
   }
   testIDHeader{
     width: 80px;
@@ -163,11 +187,42 @@ mat-panel-title {
   .resultStatusCell{
     width: 80px;
   }
+  .executionStatusHeader{
+    padding-left: 20px;
+  }
   .expandHeader{
     width: 20px;
   }
   .expandCell{
     width: 20px; 
+  }
+}
+@media screen and (min-width: 740px) and (max-width: 785px) {
+  .expanded-details{
+    width: 650px;
+  }
+  .executionStatusCell{
+    padding-left: 0px;
+  }
+  testIDHeader{
+    width: 80px;
+  }
+  .testIDCell{
+    width: 80px;
+  }
+}
+@media screen and (min-width: 700px) and (max-width: 740px) {
+  .expanded-details{
+    width: 600px;
+  }
+  .executionStatusCell{
+    padding-left: 0px;
+  }
+  testIDHeader{
+    width: 80px;
+  }
+  .testIDCell{
+    width: 80px;
   }
 }
 @media screen and (max-width: 604px) {
