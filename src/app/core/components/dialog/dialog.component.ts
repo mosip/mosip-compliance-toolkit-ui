@@ -66,7 +66,7 @@ export class DialogComponent implements OnInit {
   }
   textDirection: any = this.userProfileService.getTextDirection();
   public closeMe() {
-    this.dialogRef.close();
+    this.dialogRef.close(true);
   }
 
   async ngOnInit(): Promise<void> {
@@ -419,7 +419,7 @@ export class DialogComponent implements OnInit {
       (res: any) => {
         this.dataLoaded = true;
         if (res) {
-          this.closeMe();
+          this.dialogRef.close(false);
         } else {
           Utils.showErrorMessage(this.resourceBundleJson,
             null,
@@ -448,7 +448,7 @@ export class DialogComponent implements OnInit {
       (res: any) => {
         this.dataLoaded = true;
         if (res) {
-          this.closeMe();
+          this.dialogRef.close(false);
         } else {
           Utils.showErrorMessage(this.resourceBundleJson,
             null,
