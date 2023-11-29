@@ -32,21 +32,7 @@ export class PartnerReportsComponent implements OnInit {
     private dataService: DataService
   ) { }
 
-  displayedColumns: string[] = [
-    'partnerId',
-    'orgName',
-    'projectType',
-    'projectName',
-    'partnerComments',
-    'reviewDtimes',
-    'reportStatus',
-    'downloadButton',
-    'runId',
-    'approveButton',
-    'rejectButton',
-    'adminComments',
-    'approveRejectDtimes'
-  ];
+  displayedColumns: string[] = [];
   dataSource = new MatTableDataSource<ReportModel>();
   dataLoaded = false;
   projectFormData: any;
@@ -60,6 +46,7 @@ export class PartnerReportsComponent implements OnInit {
   resourceBundleJson: any = {};
   isAdmin: boolean = false;
   selectedReportStatus = appConstants.REPORT_STATUS_REVIEW;
+  selectedFilter: '';
 
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
@@ -104,22 +91,59 @@ export class PartnerReportsComponent implements OnInit {
   }
 
   async getPartnerReportList() {
+    this.dataLoaded = false;
+    this.displayedColumns = [];
     this.dataSource = new MatTableDataSource<ReportModel>();
     let reports: ReportModel[] = [];
+    let hideActions = false;
+    this.selectedFilter = '';
     switch (this.selectedReportStatus) {
       case 'approved':
+        hideActions = true;
         reports = await this.fetchPartnerReportList(appConstants.REPORT_STATUS_APPROVED) as ReportModel[];
         break;
       case 'rejected':
+        hideActions = true;
         reports = await this.fetchPartnerReportList(appConstants.REPORT_STATUS_REJECTED) as ReportModel[];
         break;
       default:
         reports = await this.fetchPartnerReportList(appConstants.REPORT_STATUS_REVIEW) as ReportModel[];
         break;
     }
+    if (hideActions) {
+      this.displayedColumns = [
+        'partnerId',
+        'orgName',
+        'projectType',
+        'projectName',
+        'partnerComments',
+        'reviewDtimes',
+        'reportStatus',
+        'downloadButton',
+        'runId',
+        'adminComments',
+        'approveRejectDtimes'
+      ];
+    } 
+    else {
+      this.displayedColumns = [
+        'partnerId',
+        'orgName',
+        'projectType',
+        'projectName',
+        'partnerComments',
+        'reviewDtimes',
+        'reportStatus',
+        'downloadButton',
+        'runId',
+        'approveButton',
+        'rejectButton'
+      ];
+    }
     this.dataSource = new MatTableDataSource<ReportModel>(reports);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.dataLoaded = true;
   }
 
   async fetchPartnerReportList(reportStatus: string) {
@@ -164,12 +188,13 @@ export class PartnerReportsComponent implements OnInit {
       },
     });
     dialogRef.afterClosed().subscribe(
-      async () => {
-        this.dataLoaded = false;
-        await this.getPartnerReportList();
-        this.dataLoaded = true;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+      async (closeBtn: boolean) => {
+        if (!closeBtn) {
+          this.dataLoaded = false;
+          await this.fetchPartnerReport(element);
+          await this.getPartnerReportList();
+          this.dataLoaded = true;
+        }
       }
     );
   }
@@ -191,12 +216,13 @@ export class PartnerReportsComponent implements OnInit {
       },
     });
     dialogRef.afterClosed().subscribe(
-      async () => {
-        this.dataLoaded = false;
-        await this.getPartnerReportList();
-        this.dataLoaded = true;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+      async (closeBtn: boolean) => {
+        if (!closeBtn) {
+          this.dataLoaded = false;
+          await this.fetchPartnerReport(element);
+          await this.getPartnerReportList();
+          this.dataLoaded = true;
+        }
       }
     );
   }
