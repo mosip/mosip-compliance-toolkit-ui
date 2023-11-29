@@ -212,7 +212,7 @@
         <mat-checkbox [(ngModel)]="sendForReview" class="checkbox-margin">{{"dialogMessages.checkBox"|translate}}</mat-checkbox>
         <div *ngIf="sendForReview" class="comment-section">
             <label for="reviewComment">{{"dialogMessages.comment"|translate}}:</label>
-            <textarea id="reviewComment" class="commentBox" [(ngModel)]="reviewComment" rows="4" cols="50"></textarea>
+            <textarea id="reviewComment" maxlength="100" class="commentBox" [(ngModel)]="reviewComment" rows="4" cols="50"></textarea>
         </div>
     </div>
     <div class="button-container">
@@ -236,7 +236,7 @@
             class="checkbox-margin">{{"dialogMessages.approveCheckBox"|translate}}</mat-checkbox>
         <div *ngIf="approveReport" class="comment-section">
             <label for="adminApproveComments">{{"dialogMessages.comment"|translate}}:</label>
-            <textarea id="adminApproveComments" class="commentBox" [(ngModel)]="adminApproveComments" rows="4" cols="50"></textarea>
+            <textarea id="adminApproveComments" maxlength="100" class="commentBox" [(ngModel)]="adminApproveComments" rows="4" cols="50"></textarea>
         </div>
     </div>
     <div class="button-container">
@@ -262,7 +262,7 @@
             class="checkbox-margin">{{"dialogMessages.rejectCheckBox"|translate}}</mat-checkbox>
         <div *ngIf="rejectReport" class="comment-section">
             <label for="adminRejectComments">{{"dialogMessages.mandatoryComment"|translate}}:</label>
-            <textarea id="adminRejectComments" class="commentBox" [(ngModel)]="adminRejectComments" rows="4" cols="50"></textarea>
+            <textarea id="adminRejectComments" maxlength="100" class="commentBox" [(ngModel)]="adminRejectComments" rows="4" cols="50"></textarea>
         </div>
     </div>
     <div class="button-container">
