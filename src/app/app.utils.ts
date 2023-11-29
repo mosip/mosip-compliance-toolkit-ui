@@ -806,64 +806,66 @@ export default class Utils {
     reader.readAsDataURL(blob);
   });
 
-  static async getReport(isAndroidAppMode: boolean, isAdmin: boolean, element: any,
-    dataService: DataService, resourceBundleJson: any, dialog: MatDialog) {
+  static getReport(isAndroidAppMode: boolean, isAdmin: boolean, element: any,
+    dataService: DataService, resourceBundleJson: any, dialog: MatDialog): Promise<boolean> {
     let reportrequest = {
       projectType: element.projectType,
       projectId: element.projectId,
       collectionId: element.collectionId,
       testRunId: element.runId
     };
-
     let request = {
       id: isAdmin ? appConstants.ADMIN_REPORT_ID : appConstants.PARTNER_REPORT_ID,
       version: appConstants.VERSION,
       requesttime: new Date().toISOString(),
       request: reportrequest,
     };
-    return new Promise((resolve, reject) => {
-      dataService
-        .getReport(isAdmin, element.partnerId, request)
-        .subscribe(
-          async (res: any) => {
-            if (res) {
-              console.log('isAndroidAppMode' + isAndroidAppMode);
-              const fileByteArray = res;
-              var blob = new Blob([fileByteArray], { type: 'application/pdf' });
-              if (isAndroidAppMode) {
-                let fileName = element.projectName + ".pdf";
-                console.log('ready to download');
-                const base64 = await this.convertBlobToBase64(blob) as string;
-                await Filesystem.writeFile({
-                  path: fileName,
-                  data: base64,
-                  directory: Directory.Documents
-                });
-                Toast.show({
-                  text: 'File has been downloaded to Documents folder: ' + fileName,
-                }).catch((error) => { 
-                  console.log(error); 
-                });
-              } else {
-                var link = document.createElement('a');
-                link.href = window.URL.createObjectURL(blob);
-                link.download = element.projectName;
-                link.click();
-              }
-            } else {
-              Utils.showErrorMessage(resourceBundleJson,
-                null,
-                dialog,
-                'Unable to download PDF file. Try Again!');
-            }
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(resourceBundleJson, errors, dialog);
-            resolve(false);
+
+    return (async () => {
+      try {
+        const res: any = await new Promise((resolve, reject) => {
+          dataService
+            .getReport(isAdmin, element.partnerId, request)
+            .subscribe(
+              (response: any) => resolve(response),
+              (error: any) => reject(error)
+            );
+        });
+
+        if (res) {
+          console.log('isAndroidAppMode' + isAndroidAppMode);
+          const fileByteArray = res;
+          var blob = new Blob([fileByteArray], { type: 'application/pdf' });
+          if (isAndroidAppMode) {
+            let fileName = element.projectName + ".pdf";
+            console.log('ready to download');
+            const base64 = await this.convertBlobToBase64(blob) as string;
+            await Filesystem.writeFile({
+              path: fileName,
+              data: base64,
+              directory: Directory.Documents
+            });
+            Toast.show({
+              text: 'File has been downloaded to Documents folder: ' + fileName,
+            }).catch((error) => {
+              console.log(error);
+            });
+          } else {
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = element.projectName;
+            link.click();
           }
-        );
-    });
+          return true;
+        } else {
+          Utils.showErrorMessage(resourceBundleJson, null, dialog, 'Unable to download PDF file. Try Again!');
+          return false;
+        }
+      } catch (error) {
+        Utils.showErrorMessage(resourceBundleJson, error, dialog);
+        return false;
+      }
+    })();
   }
 
 }
