@@ -21,7 +21,8 @@
 		"reviewMessage2": "Si tous les détails sont corrects, vous pouvez le soumettre pour examen.",
 		"reviewMessage3": "Une fois soumise, la collecte de conformité ne peut pas être réexécutée pour ce projet.",
 		"reviewMessage4": "L'administrateur CTK examinera le rapport et l'approuvera ou le rejettera.",
-		"comment": "(Commentaires facultatifs)",
+		"comment": "Commentaires facultatifs",
+		"mandatoryComment": "Commentaires obligatoires",
 		"checkBox": "Prêt à envoyer pour examen.",
 		"approveMessage1": "Veuillez vérifier le projet de rapport téléchargé.",
 		"approveMessage2": "Assurez-vous que tous les détails sont exacts avant de confirmer l’approbation.",
@@ -31,8 +32,10 @@
 		"rejectMessage1": "Veuillez vérifier le projet de rapport téléchargé.",
 		"rejectMessage2": "Assurez-vous que tous les détails sont exacts avant de rejeter le rapport.",
 		"rejectMessage3": "Le rejet du rapport est irréversible. Veuillez procéder avec prudence.",
-		"approveCheckBox": "Confirmez l'approbation après avoir examiné le rapport.",
-		"rejectCheckBox": "Confirmation d'une décision de rejet existante"
+		"approveCheckBox": "Voulez-vous approuver ce rapport?",
+		"rejectCheckBox": "Voulez-vous rejeter ce rapport?",
+		"partnerName": "Nom du partenaire",
+		"projectName": "nom du projet"
 	},
 	"breadcrumb": {
 		"home": "Maison",

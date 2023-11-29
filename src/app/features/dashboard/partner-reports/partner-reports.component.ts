@@ -159,6 +159,7 @@ export class PartnerReportsComponent implements OnInit {
       data: {
         case: "ADMIN_APPROVE_REPORT",
         partnerId: element.partnerId,
+        projectName: element.projectName,
         approveRequest: approveRequest
       },
     });
@@ -185,6 +186,7 @@ export class PartnerReportsComponent implements OnInit {
       data: {
         case: "ADMIN_REJECT_REPORT",
         partnerId: element.partnerId,
+        projectName: element.projectName,
         rejectRequest: rejectRequest
       },
     });
