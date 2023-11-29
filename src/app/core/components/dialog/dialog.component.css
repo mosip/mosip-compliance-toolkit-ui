@@ -83,6 +83,7 @@ button[mat-icon-button] {
 .button-container {
   display: flex;
   align-items: center;
+  padding-top: 10px;
 }
 .viewImages {
   margin-left: 10px;
@@ -148,6 +149,21 @@ img {
 }
 .formField {
   margin-left: -30px;
+}
+.commentBox{
+  display: flex;
+  align-items: center;
+}
+.comment-section label {
+  margin-right: 10px;
+}
+ul.reviewMessage {
+  list-style-type: none;
+}
+
+ul.reviewMessage li:before {
+  content: "*";
+  margin-right: 5px;
 }
 @media screen and (max-width: 750px) {
   .fieldContainer {
