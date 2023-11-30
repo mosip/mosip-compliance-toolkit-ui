@@ -168,7 +168,7 @@ mat-panel-title {
   .expanded-details{
     width: 700px;
   }
-  testIDHeader{
+  .testIDHeader{
     width: 80px;
   }
   .testIDCell{
@@ -204,7 +204,7 @@ mat-panel-title {
   .executionStatusCell{
     padding-left: 0px;
   }
-  testIDHeader{
+  .testIDHeader{
     width: 80px;
   }
   .testIDCell{
@@ -218,7 +218,7 @@ mat-panel-title {
   .executionStatusCell{
     padding-left: 0px;
   }
-  testIDHeader{
+  .testIDHeader{
     width: 80px;
   }
   .testIDCell{
