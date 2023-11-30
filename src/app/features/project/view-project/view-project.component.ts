@@ -184,40 +184,34 @@ export class ViewProjectComponent implements OnInit {
   }
 
   async getCollections() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        this.dataService
-          .getCollections(this.projectId, this.projectType)
-          .subscribe(
-            async (response: any) => {
-              const respArr = response[appConstants.RESPONSE]['collections'];
-              let tableData = [];
-              for (let item of respArr) {
-                let disableReportBtn = true;
-                if (appConstants.COMPLIANCE_COLLECTION == item.collectionType) {
-                  let check = await Utils.isReportAlreadySubmitted(this.projectType, this.projectId, item.collectionId, this.dataService, this.resourceBundleJson, this.dialog);
-                  if (check) {
-                    disableReportBtn = false;
-                    this.isReportAlreadySubmitted = true;
-                  }
-                }
-                tableData.push({
-                  ...item,
-                  disableReportBtn: disableReportBtn
-                });  
-              }
-              this.dataSource = new MatTableDataSource(
-                tableData
-              );
-              resolve(true);
-            },
-            (errors) => {
-              Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-              resolve(false);
+    try {
+      const response: any = await this.dataService.getCollections(this.projectId, this.projectType).toPromise();
+      const respArr = response[appConstants.RESPONSE]['collections'];
+      let tableData = [];
+      for (let item of respArr) {
+        let disableReportBtn = true;
+        if (appConstants.COMPLIANCE_COLLECTION == item.collectionType) {
+          try {
+            let check = await Utils.isReportAlreadySubmitted(this.projectType, this.projectId, item.collectionId, this.dataService, this.resourceBundleJson, this.dialog);
+            if (check) {
+              disableReportBtn = false;
+              this.isReportAlreadySubmitted = true;
             }
-          )
-      );
-    });
+          } catch (error) {
+            console.error('Error checking report submission:', error);
+          }
+        }
+        tableData.push({
+          ...item,
+          disableReportBtn: disableReportBtn
+        });
+      }
+      this.dataSource = new MatTableDataSource(tableData);
+      return true;
+    } catch (errors) {
+      Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
+      return false;
+    }
   }
 
   ngOnDestroy(): void {
@@ -348,53 +342,58 @@ export class ViewProjectComponent implements OnInit {
     }
   }
 
-  downloadEncryptionKey() {
-    const subs = this.dataService.getEncryptionKey().subscribe(
-      async (res: any) => {
-        if (res) {
-          let obj = res[appConstants.RESPONSE];
-          if (obj) {
-            console.log('isAndroidAppMode' + this.isAndroidAppMode);
-            var blob = new Blob([obj], { type: 'application/json' });
-            if (this.isAndroidAppMode) {
-              let fileName = "key.txt";
-              console.log('ready to download');
-              const base64 = await Utils.convertBlobToBase64(blob) as string;
-              await Filesystem.writeFile({
-                path: fileName,
-                data: base64,
-                directory: Directory.Documents
-              });
-              Toast.show({
-                text: 'Encryption key has been downloaded to Documents folder: ' + fileName,
-              }).catch((error) => { 
-                console.log(error); 
-              });
-            } else {
-              var link = document.createElement('a');
-              link.href = window.URL.createObjectURL(blob);
-              link.download = `key.cer`;
-              link.click();  
-            }  
+  async downloadEncryptionKey() {
+    try {
+      const res: any = await this.dataService.getEncryptionKey().toPromise();
+
+      if (res) {
+        let obj = res[appConstants.RESPONSE];
+
+        if (obj) {
+          console.log('isAndroidAppMode' + this.isAndroidAppMode);
+
+          var blob = new Blob([obj], { type: 'application/json' });
+
+          if (this.isAndroidAppMode) {
+            const fileName = "key.txt";
+            console.log('ready to download');
+
+            const base64 = await Utils.convertBlobToBase64(blob) as string;
+
+            await Filesystem.writeFile({
+              path: fileName,
+              data: base64,
+              directory: Directory.Documents
+            });
+
+            Toast.show({
+              text: 'Encryption key has been downloaded to Documents folder: ' + fileName,
+            }).catch((error) => {
+              console.log(error);
+            });
+          } else {
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = `key.cer`;
+            link.click();
           }
-        } else {
-          const err = {
-            errorCode: 'ENCRYPTION_KEY_001',
-            message: ''
-          }
-          Utils.showErrorMessage(
-            this.resourceBundleJson,
-            [err],
-            this.dialog,
-            'Unable to get encryption key. Try Again!'
-          );
         }
-      },
-      (errors) => {
-        Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
+      } else {
+        const err = {
+          errorCode: 'ENCRYPTION_KEY_001',
+          message: ''
+        };
+
+        Utils.showErrorMessage(
+          this.resourceBundleJson,
+          [err],
+          this.dialog,
+          'Unable to get encryption key. Try Again!'
+        );
       }
-    );
-    this.subscriptions.push(subs);
+    } catch (errors) {
+      Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
+    }
   }
 
   getDeviceImageUrl() {
