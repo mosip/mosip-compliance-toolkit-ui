@@ -348,7 +348,7 @@ export class TestRunComponent implements OnInit {
       request: reportRequest
     };
     const subs = this.dataService.generateDraftReport(request).subscribe(
-      async (res: any) => {
+      (res: any) => {
         this.dataLoaded = true;
         if (res) {
           const fileByteArray = res;
@@ -357,16 +357,17 @@ export class TestRunComponent implements OnInit {
           if (this.isAndroidAppMode) {
             let fileName = this.getProjectName() + ".pdf";
             console.log('ready to download');
-            const base64 = await Utils.convertBlobToBase64(blob) as string;
-            await Filesystem.writeFile({
-              path: fileName,
-              data: base64,
-              directory: Directory.Documents
-            });
-            Toast.show({
-              text: 'File has been downloaded to Documents folder: ' + fileName,
-            }).catch((error) => {
-              console.log(error);
+            Utils.convertBlobToBase64(blob).then(async (base64) => {
+              await Filesystem.writeFile({
+                path: fileName,
+                data: base64 as string,
+                directory: Directory.Documents
+              });
+              Toast.show({
+                text: 'File has been downloaded to Documents folder: ' + fileName,
+              }).catch((error) => {
+                console.log(error);
+              });
             });
           } else {
             var link = document.createElement('a');

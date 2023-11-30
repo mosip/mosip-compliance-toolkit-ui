@@ -10,8 +10,9 @@ import { Subscription } from 'rxjs';
 import { SdkProjectModel } from './core/models/sdk-project';
 import { AbisProjectModel } from './core/models/abis-project';
 import { SbiProjectModel } from './core/models/sbi-project';
-import { Directory, Encoding, Filesystem } from '@capacitor/filesystem';
+import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Toast } from '@capacitor/toast';
+import { sha256 } from 'js-sha256';
 
 export default class Utils {
   static getCurrentDate() {
@@ -706,7 +707,7 @@ export default class Utils {
     });
   }
 
-  static getTestcasesForCollection(subscriptions: Subscription[], dataService: DataService, isAdmin: boolean, 
+  static getTestcasesForCollection(subscriptions: Subscription[], dataService: DataService, isAdmin: boolean,
     partnerId: string, collectionId: string, resourceBundleJson: any, dialog: MatDialog) {
     return new Promise<any[]>((resolve, reject) => {
       subscriptions.push(
@@ -797,14 +798,28 @@ export default class Utils {
     });
   }
 
-  static convertBlobToBase64 = (blob :Blob)=>new Promise ((resolve,reject) =>{
+  static convertBlobToBase64 = (blob: Blob) => new Promise((resolve, reject) => {
     const reader = new FileReader;
     reader.onerror = reject;
-    reader.onload = () =>{
+    reader.onload = () => {
       resolve(reader.result);
     };
     reader.readAsDataURL(blob);
   });
+
+  static getReportFromDb(isAdmin: boolean, element: any, request: any, dataService: any) {
+    return new Promise((resolve, reject) => {
+      dataService.getReport(isAdmin, element.partnerId, request).subscribe(
+        (response: any) => {
+          resolve(response);
+        },
+        (errors: any) => {
+          console.log(errors);
+          resolve(false);
+        }
+      )
+    });
+  }
 
   static async getReport(isAndroidAppMode: boolean, isAdmin: boolean, element: any,
     dataService: DataService, resourceBundleJson: any, dialog: MatDialog) {
@@ -821,49 +836,40 @@ export default class Utils {
       requesttime: new Date().toISOString(),
       request: reportrequest,
     };
-    return new Promise((resolve, reject) => {
-      dataService
-        .getReport(isAdmin, element.partnerId, request)
-        .subscribe(
-          async (res: any) => {
-            if (res) {
-              console.log('isAndroidAppMode' + isAndroidAppMode);
-              const fileByteArray = res;
-              var blob = new Blob([fileByteArray], { type: 'application/pdf' });
-              if (isAndroidAppMode) {
-                let fileName = element.projectName + ".pdf";
-                console.log('ready to download');
-                const base64 = await this.convertBlobToBase64(blob) as string;
-                await Filesystem.writeFile({
-                  path: fileName,
-                  data: base64,
-                  directory: Directory.Documents
-                });
-                Toast.show({
-                  text: 'File has been downloaded to Documents folder: ' + fileName,
-                }).catch((error) => { 
-                  console.log(error); 
-                });
-              } else {
-                var link = document.createElement('a');
-                link.href = window.URL.createObjectURL(blob);
-                link.download = element.projectName;
-                link.click();
-              }
-            } else {
-              Utils.showErrorMessage(resourceBundleJson,
-                null,
-                dialog,
-                'Unable to download PDF file. Try Again!');
-            }
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(resourceBundleJson, errors, dialog);
-            resolve(false);
-          }
-        );
-    });
+    let res: any = await this.getReportFromDb(isAdmin, element, request, dataService);
+    if (res) {
+      console.log('isAndroidAppMode' + isAndroidAppMode);
+      const fileByteArray = res;
+      var blob = new Blob([fileByteArray], { type: 'application/pdf' });
+      const base64 = await this.convertBlobToBase64(blob) as string;
+      const hash = sha256(base64);
+      console.log(hash.toString());
+      if (isAndroidAppMode) {
+        //let fileName = element.projectName + ".pdf";
+        let fileName = hash + ".pdf";
+        console.log('ready to download');
+        await Filesystem.writeFile({
+          path: fileName,
+          data: base64,
+          directory: Directory.Documents
+        });
+        Toast.show({
+          text: 'File has been downloaded to Documents folder: ' + fileName,
+        }).catch((error) => {
+          console.log(error);
+        });
+      } else {
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = hash;
+        link.click();
+      }
+    } else {
+      Utils.showErrorMessage(resourceBundleJson,
+        null,
+        dialog,
+        'Unable to download PDF file. Try Again!');
+    }
   }
 
 }
