@@ -191,8 +191,8 @@ export class PartnerReportsComponent implements OnInit {
       async (closeBtn: boolean) => {
         if (!closeBtn) {
           this.dataLoaded = false;
-          await this.fetchPartnerReport(element);
           await this.getPartnerReportList();
+          await this.fetchPartnerReport(element);
           this.dataLoaded = true;
         }
       }
@@ -219,8 +219,8 @@ export class PartnerReportsComponent implements OnInit {
       async (closeBtn: boolean) => {
         if (!closeBtn) {
           this.dataLoaded = false;
-          await this.fetchPartnerReport(element);
           await this.getPartnerReportList();
+          await this.fetchPartnerReport(element);
           this.dataLoaded = true;
         }
       }
