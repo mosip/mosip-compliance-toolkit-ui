@@ -807,8 +807,22 @@ export default class Utils {
     reader.readAsDataURL(blob);
   });
 
+  static getReportFromDb(isAdmin: boolean, element: any, request: any, dataService: any) {
+    return new Promise((resolve, reject) => {
+      dataService.getReport(isAdmin, element.partnerId, request).subscribe(
+        (response: any) => {
+          resolve(response);
+        },
+        (errors: any) => {
+          console.log(errors);
+          resolve(false);
+        }
+      )
+    });
+  }
+
   static async getReport(isAndroidAppMode: boolean, isAdmin: boolean, element: any,
-    dataService: DataService, resourceBundleJson: any, dialog: MatDialog): Promise<boolean> {
+    dataService: DataService, resourceBundleJson: any, dialog: MatDialog) {
     let reportrequest = {
       projectType: element.projectType,
       projectId: element.projectId,
@@ -822,52 +836,40 @@ export default class Utils {
       requesttime: new Date().toISOString(),
       request: reportrequest,
     };
-    return new Promise((resolve, reject) => {
-      dataService
-        .getReport(isAdmin, element.partnerId, request)
-        .subscribe(
-          async (res: any) => {
-            if (res) {
-              console.log('isAndroidAppMode' + isAndroidAppMode);
-              const fileByteArray = res;
-              var blob = new Blob([fileByteArray], { type: 'application/pdf' });
-              const base64 = await this.convertBlobToBase64(blob) as string;
-              const hash = sha256(base64);
-              console.log(hash.toString());
-              if (isAndroidAppMode) {
-                 //let fileName = element.projectName + ".pdf";
-                 let fileName = hash + ".pdf";
-                console.log('ready to download');
-                await Filesystem.writeFile({
-                  path: fileName,
-                  data: base64,
-                  directory: Directory.Documents
-                });
-                Toast.show({
-                  text: 'File has been downloaded to Documents folder: ' + fileName,
-                }).catch((error) => {
-                  console.log(error);
-                });
-              } else {
-                var link = document.createElement('a');
-                link.href = window.URL.createObjectURL(blob);
-                link.download = hash;
-                link.click();
-              }
-            } else {
-              Utils.showErrorMessage(resourceBundleJson,
-                null,
-                dialog,
-                'Unable to download PDF file. Try Again!');
-            }
-            resolve(true);
-          },
-          (errors) => {
-            Utils.showErrorMessage(resourceBundleJson, errors, dialog);
-            resolve(false);
-          }
-        );
-    });
+    let res: any = await this.getReportFromDb(isAdmin, element, request, dataService);
+    if (res) {
+      console.log('isAndroidAppMode' + isAndroidAppMode);
+      const fileByteArray = res;
+      var blob = new Blob([fileByteArray], { type: 'application/pdf' });
+      const base64 = await this.convertBlobToBase64(blob) as string;
+      const hash = sha256(base64);
+      console.log(hash.toString());
+      if (isAndroidAppMode) {
+        //let fileName = element.projectName + ".pdf";
+        let fileName = hash + ".pdf";
+        console.log('ready to download');
+        await Filesystem.writeFile({
+          path: fileName,
+          data: base64,
+          directory: Directory.Documents
+        });
+        Toast.show({
+          text: 'File has been downloaded to Documents folder: ' + fileName,
+        }).catch((error) => {
+          console.log(error);
+        });
+      } else {
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = hash;
+        link.click();
+      }
+    } else {
+      Utils.showErrorMessage(resourceBundleJson,
+        null,
+        dialog,
+        'Unable to download PDF file. Try Again!');
+    }
   }
 
 }
