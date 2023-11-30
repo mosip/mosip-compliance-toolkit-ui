@@ -707,7 +707,7 @@ export default class Utils {
     });
   }
 
-  static getTestcasesForCollection(subscriptions: Subscription[], dataService: DataService, isAdmin: boolean, 
+  static getTestcasesForCollection(subscriptions: Subscription[], dataService: DataService, isAdmin: boolean,
     partnerId: string, collectionId: string, resourceBundleJson: any, dialog: MatDialog) {
     return new Promise<any[]>((resolve, reject) => {
       subscriptions.push(
@@ -798,17 +798,17 @@ export default class Utils {
     });
   }
 
-  static convertBlobToBase64 = (blob :Blob)=>new Promise ((resolve,reject) =>{
+  static convertBlobToBase64 = (blob: Blob) => new Promise((resolve, reject) => {
     const reader = new FileReader;
     reader.onerror = reject;
-    reader.onload = () =>{
+    reader.onload = () => {
       resolve(reader.result);
     };
     reader.readAsDataURL(blob);
   });
 
   static async getReport(isAndroidAppMode: boolean, isAdmin: boolean, element: any,
-    dataService: DataService, resourceBundleJson: any, dialog: MatDialog) {
+    dataService: DataService, resourceBundleJson: any, dialog: MatDialog): Promise<boolean> {
     let reportrequest = {
       projectType: element.projectType,
       projectId: element.projectId,
@@ -835,8 +835,8 @@ export default class Utils {
               const hash = sha256(base64);
               console.log(hash.toString());
               if (isAndroidAppMode) {
-                //let fileName = element.projectName + ".pdf";
-                let fileName = hash + ".pdf";
+                 //let fileName = element.projectName + ".pdf";
+                 let fileName = hash + ".pdf";
                 console.log('ready to download');
                 await Filesystem.writeFile({
                   path: fileName,
@@ -845,8 +845,8 @@ export default class Utils {
                 });
                 Toast.show({
                   text: 'File has been downloaded to Documents folder: ' + fileName,
-                }).catch((error) => { 
-                  console.log(error); 
+                }).catch((error) => {
+                  console.log(error);
                 });
               } else {
                 var link = document.createElement('a');

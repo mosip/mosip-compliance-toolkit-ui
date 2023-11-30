@@ -188,13 +188,15 @@ export class PartnerReportsComponent implements OnInit {
       },
     });
     dialogRef.afterClosed().subscribe(
-      async (closeBtn: boolean) => {
-        if (!closeBtn) {
-          this.dataLoaded = false;
-          await this.getPartnerReportList();
-          await this.fetchPartnerReport(element);
-          this.dataLoaded = true;
-        }
+      (closeBtn: boolean) => {
+        (async () => {
+          if (!closeBtn) {
+            this.dataLoaded = false;
+            await this.getPartnerReportList();
+            await this.fetchPartnerReport(element);
+            this.dataLoaded = true;
+          }
+        })();
       }
     );
   }
@@ -216,13 +218,15 @@ export class PartnerReportsComponent implements OnInit {
       },
     });
     dialogRef.afterClosed().subscribe(
-      async (closeBtn: boolean) => {
-        if (!closeBtn) {
-          this.dataLoaded = false;
-          await this.getPartnerReportList();
-          await this.fetchPartnerReport(element);
-          this.dataLoaded = true;
-        }
+      (closeBtn: boolean) => {
+        (async () => {
+          if (!closeBtn) {
+            this.dataLoaded = false;
+            await this.getPartnerReportList();
+            await this.fetchPartnerReport(element);
+            this.dataLoaded = true;
+          }
+        })();
       }
     );
   }
