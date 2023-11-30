@@ -10,8 +10,9 @@ import { Subscription } from 'rxjs';
 import { SdkProjectModel } from './core/models/sdk-project';
 import { AbisProjectModel } from './core/models/abis-project';
 import { SbiProjectModel } from './core/models/sbi-project';
-import { Directory, Encoding, Filesystem } from '@capacitor/filesystem';
+import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Toast } from '@capacitor/toast';
+import { sha256 } from 'js-sha256';
 
 export default class Utils {
   static getCurrentDate() {
@@ -830,10 +831,13 @@ export default class Utils {
               console.log('isAndroidAppMode' + isAndroidAppMode);
               const fileByteArray = res;
               var blob = new Blob([fileByteArray], { type: 'application/pdf' });
+              const base64 = await this.convertBlobToBase64(blob) as string;
+              const hash = sha256(base64);
+              console.log(hash.toString());
               if (isAndroidAppMode) {
-                let fileName = element.projectName + ".pdf";
+                //let fileName = element.projectName + ".pdf";
+                let fileName = hash + ".pdf";
                 console.log('ready to download');
-                const base64 = await this.convertBlobToBase64(blob) as string;
                 await Filesystem.writeFile({
                   path: fileName,
                   data: base64,
@@ -847,7 +851,7 @@ export default class Utils {
               } else {
                 var link = document.createElement('a');
                 link.href = window.URL.createObjectURL(blob);
-                link.download = element.projectName;
+                link.download = hash;
                 link.click();
               }
             } else {
