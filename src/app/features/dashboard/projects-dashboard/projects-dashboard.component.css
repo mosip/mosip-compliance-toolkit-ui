@@ -174,9 +174,32 @@
     padding-left: 0px;
   }
 }
+@media screen and (max-width: 635px) {
+  .filter-container {
+    flex-direction: column;
+  }
+
+  ::ng-deep .mat-paginator-container {
+    justify-content: center !important;
+  }
+
+  ::ng-deep .mat-paginator-page-size {
+    margin-right: 2px !important;
+  }
+
+  ::ng-deep .mat-paginator-range-actions {
+    margin-right: 12px !important;
+  }
+}
+
+
+@media screen and (max-width: 442px) {
+  ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+    width: 150px;
+  }
+}
 @media screen and (max-width: 321px){
   .dashboard-button-first-container {
-    /* padding-bottom: 16px; */
     float: right;
     margin-right: -160px;
   }
