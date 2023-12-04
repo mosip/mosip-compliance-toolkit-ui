@@ -178,10 +178,6 @@ img {
   color: var(--button-font-color);
 }
 
-.sendForReview {
-  overflow: hidden;
-}
-
 .checkbox-margin {
   margin-bottom: 10px;
   margin-left: 10px;
@@ -197,6 +193,7 @@ img {
 
 .commentBox {
   align-items: center;
+
 }
 
 .comment-section label {
