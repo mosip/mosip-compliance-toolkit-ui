@@ -11,9 +11,16 @@
   align-items: center;
   padding: 5px;
   margin-right: 10px;
+  margin-left: 27px;
   min-width: 350px;
   /* height: 50px;
   width: 340px; */
+}
+::ng-deep .span .mat-radio-button:nth-child(2) {
+  margin-left: 0;
+}
+.android-sdk{
+  margin-left: 36px !important;
 }
 .rowContainer {
   display: flex;
@@ -43,7 +50,10 @@
     0 1px 2px 0px rgba(0, 0, 0, 0.12)
 }
 .mat-radio-button ~ .mat-radio-button {
-  margin-left: 35px;
+  margin-left: 0px;
+}
+.mat-radio-button ~ .mat-radio-button ~ .mat-radio-button {
+  margin-left: 40px; 
 }
 .required-annotation {
   color: red;
@@ -87,13 +97,17 @@
   justify-content: first baseline;
   align-items: center;
   padding: 5px;
+  margin-left: 26px;
 }
 .deviceImgFieldContainer {
-  margin-left: 30px;
+  margin-left: 8px;
 }
 .fileuploadbtn {
   width: 200px;
-  margin-left: 30px;
+  margin-left: 29px;
+}
+.deviceImgFieldWrapper{
+  width: 30%;
 }
 @media screen and (max-width: 2560px) {
   .fieldContainerBox {
@@ -108,54 +122,80 @@
     align-items: start;
     padding: 5px;
   }
-  .deviceImgFieldContainer {
-    margin-left: 40px;
-  }
   .fileuploadbtn {
     width: 200px;
-    margin-left: 30px;
-  }
-}
-@media screen and (max-width: 1440px) {
-  .deviceImgFieldContainer {
-    margin-left: 70px;
   }
 }
 @media screen and (min-width: 1200px) and (max-width: 1300px) {
-  .deviceImgFieldContainer {
-    margin-left: 60px;
+  .fileuploadbtn {
+    margin-left: 19px;
   }
 }
 @media screen and (max-width: 1200px) {
   .fileuploadbtn {
     width: 200px;
-    margin-left: 7px;
   }
 }
 @media screen and (max-width: 1024px) {
   .deviceImgFieldContainer {
-    margin-left: 50px;
   }
   .fileuploadbtn {
     width: 200px;
-    margin-left: 4px;
   }
 }
 @media screen and (max-width: 900px) {
   .fileuploadbtn {
     width: 200px;
-    margin-left: 21px;
+  }
+}
+@media screen and (max-width: 846px) {
+  .deviceImgFieldWrapper{
+    width: 50% !important;
+  }
+  .fileuploadbtn {
+    width: 200px;
+    margin-left: 53px;
+  }
+}
+@media screen and (min-width: 844px) and (max-width: 846px) {
+  .deviceImgFieldWrapper{
+    width: 30% !important;
+  }
+  .fileuploadbtn {
+    width: 200px;
+    margin-left: 23px;
   }
 }
 @media screen and (max-width: 815px) {
+  .deviceImgFieldWrapper{
+    width: 50% !important;
+  }
   .fileuploadbtn {
     width: 200px;
-    margin-left: 4px;
+    margin-left: 45px;
+  }
+}
+@media screen and (max-width: 722px) {
+  .deviceImgFieldWrapper{
+    width: 52% !important;
+  }
+  .fileuploadbtn {
+    width: 200px;
+    margin-left: 10%;
   }
 }
 @media screen and (max-width: 770px) {
   .button-container {
     width: 90%;
+  }
+}
+@media screen and (max-width: 625px) {
+  .deviceImgFieldWrapper{
+    width: 60% !important;
+  }
+  .fileuploadbtn {
+    width: 200px;
+    margin-left: 10%;
   }
 }
 @media screen and (max-width: 480px) {
@@ -167,31 +207,48 @@
   }
   .projectTypeBt {
     width: 240px;
+    margin-top: 12px;
+    margin-bottom: 12px;
   }
   .button-container {
     width: 90%;
   }
   .deviceImgFieldContainer {
-    margin-left: 45px;
   }
 }
 @media screen and (max-width: 426px) {
   .button-container{
     width: 90%;
   }
-  .deviceImgFieldContainer {
-    margin-left: 12px;
+  .fieldWrapper{
+    display: block;
+  }
+  .fieldLabel{
+    margin-right: 45px;
+  }
+  .deviceImgFieldWrapper {
+    display: block;
   }
   .fileuploadbtn {
     width: 240px;
-    margin-left: 20px;
+    margin: 0;
+    margin-top: 10px;
+  }
+  .projectTypeBt{
+    padding: 0;
+  }
+  .fieldContainerBox{
+    padding: 0;
+  }
+  .deviceImgFieldContainer{
+    margin-left: 0 !important;
   }
 }
 @media screen and (max-width: 365px) {
   .formContainer {
     width: 270px;
     height: 450px;
-    overflow-x: auto;
+    overflow-y: auto;
   }
   .fieldWrapper {
     width: 250px;
@@ -205,12 +262,13 @@
   }
   .fieldLabel {
     width: 20px;
+    margin-right: 65px;
   }
   .fieldContainerBox {
     width: 232px;
   }
   .projectTypeBt {
-    width: 232px;
+    width: 240px;
     padding-top: 20px;
   }
   .button-container {
@@ -220,6 +278,6 @@
     width: 232px;
   }
   .deviceImgFieldContainer {
-    margin-left: -5px;
+    /* margin-left: -5px; */
   }
 }
