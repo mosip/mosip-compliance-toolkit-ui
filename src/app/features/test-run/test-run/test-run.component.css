@@ -241,6 +241,18 @@ mat-panel-title {
     width: 50px;
   }
 }
+@media screen and (max-width: 430px) {
+  .button-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .add-button,
+  .back-button {
+    width: 168px !important;
+    margin-top: 3px;
+  }
+}
 @media screen and (min-width: 389px) and (max-width: 430px) {
   .table-container{
     overflow-x: auto;

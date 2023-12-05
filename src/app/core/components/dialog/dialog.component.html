@@ -144,19 +144,22 @@
     <div class="spinnerForUploadImg" *ngIf="!dataLoaded">
         <mat-spinner diameter="50"></mat-spinner>
     </div>
-    <div *ngIf="dataLoaded">
+    <div *ngIf="dataLoaded" class="upload-img-container">
         <h2 mat-dialog-title class="mat-dialog-title">{{"dialogMessages.uploadDeviceImages"|translate}}</h2>
         <div class="uploadImg">
-            <div *ngFor="let fileIndex of [0, 1, 2, 3]"  class="button-container">
+            <div *ngFor="let fileIndex of [0, 1, 2, 3]" class="button-container">
                 <div class="buttons">
-                    <input type="file" accept="image/*" (change)="onFileSelect($event, fileIndex)" #fileInput hidden single>
+                    <input type="file" accept="image/*" (change)="onFileSelect($event, fileIndex)" #fileInput hidden
+                        single>
                     <button mat-raised-button [disabled]="!imageSelected[fileIndex]" (click)="fileInput.click()">
                         <mat-icon>add</mat-icon>{{"dialogMessages.addImage"|translate}} {{ fileIndex + 1 }}
                     </button>
                 </div>
                 <div>
-                    <button mat-icon-button *ngIf="!imagePreviewsVisible[fileIndex] && visibilityState[fileIndex]" (click)="toggleImagePreview(fileIndex)">
-                        <mat-icon class="eyeIcon">{{ imagePreviewsVisible[fileIndex] ? 'visibility_off' : 'visibility' }}</mat-icon>
+                    <button mat-icon-button *ngIf="!imagePreviewsVisible[fileIndex] && visibilityState[fileIndex]"
+                        (click)="toggleImagePreview(fileIndex)">
+                        <mat-icon class="eyeIcon">{{ imagePreviewsVisible[fileIndex] ? 'visibility_off' : 'visibility'
+                            }}</mat-icon>
                     </button>
                 </div>
             </div>
@@ -182,11 +185,12 @@
                     </div>
                 </span>
             </div>
-        </div>  
-        <div>
-            <button mat-flat-button color="accent" (click)="uploadImages()" class="closeBt">{{"dialogMessages.close"|translate}}</button>
+            <div class="close-button-container">
+                <button mat-flat-button color="accent" (click)="uploadImages()"
+                    class="closeBt">{{"dialogMessages.close"|translate}}</button>
+            </div>
         </div>
-    </div> 
+    </div>
 </div>
 <div *ngIf="input.case === 'DEVICE_IMAGES'">
     <h2 mat-dialog-title class="mat-dialog-title">{{"dialogMessages.deviceImages"|translate}}</h2>
@@ -215,9 +219,9 @@
             <textarea id="reviewComment" maxlength="600" class="commentBox" [(ngModel)]="reviewComment" rows="4" cols="50"></textarea>
         </div>
     </div>
-    <div class="button-container">
+    <div class="button-container-box">
         <button mat-flat-button (click)="closeMe()" class="back-button">{{"dialogMessages.close"|translate}}</button>
-        <button mat-flat-button color="accent" [disabled]="!sendForReview" (click)="submitReportForReview(reviewComment)" class="saveBt">{{"dialogMessages.sendForReview"|translate}}</button>
+        <button mat-flat-button color="accent" [disabled]="!sendForReview" (click)="submitReportForReview(reviewComment)">{{"dialogMessages.sendForReview"|translate}}</button>
     </div>
 </div>
 <div *ngIf="input.case === 'ADMIN_APPROVE_REPORT'">
@@ -239,11 +243,11 @@
             <textarea id="adminApproveComments" maxlength="600" class="commentBox" [(ngModel)]="adminApproveComments" rows="4" cols="50"></textarea>
         </div>
     </div>
-    <div class="button-container">
+    <div class="button-container-box">
         <button mat-flat-button (click)="closeMe()" class="back-button">{{"dialogMessages.close"|translate}}</button>
         <button mat-flat-button color="accent" [disabled]="!approveReport"
             (click)="approvePartnerReport(adminApproveComments)"
-            class="saveBt">{{"dialogMessages.approveReport"|translate}}</button>
+        >{{"dialogMessages.approveReport"|translate}}</button>
     </div>
 </div>
 <div *ngIf="input.case === 'ADMIN_REJECT_REPORT'">
@@ -265,11 +269,11 @@
             <textarea id="adminRejectComments" maxlength="600" class="commentBox" [(ngModel)]="adminRejectComments" rows="4" cols="50"></textarea>
         </div>
     </div>
-    <div class="button-container">
+    <div class="button-container-box">
         <button mat-flat-button (click)="closeMe()" class="back-button">{{"dialogMessages.close"|translate}}</button>
         <button mat-flat-button color="accent" [disabled]="!adminRejectComments"
             (click)="rejectPartnerReport(adminRejectComments)"
-            class="saveBt">{{"dialogMessages.rejectReport"|translate}}</button>
+        >{{"dialogMessages.rejectReport"|translate}}</button>
     </div>
 </div>
 </div>
