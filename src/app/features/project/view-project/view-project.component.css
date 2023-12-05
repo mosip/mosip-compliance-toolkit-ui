@@ -52,6 +52,10 @@ mat-expansion-panel-header {
 .fieldContainer {
   width: 80%;
   align-items: center;
+  margin-left: 5px;
+}
+.deviceImgLabel{
+  width: 10%;
 }
 .fieldContainerBox{
   width: 300px;
@@ -301,14 +305,8 @@ mat-expansion-panel-header {
   .scandeviceButtonREG{
     margin-left: 82.5em;
   }
-  .viewImgBtn {
-    margin-left: -100px;
-  }
 }
 @media screen and (min-width:1280px) and (max-width: 1380px) {
-  .deviceImgFieldContainer {
-    margin-left: 25px;
-  }
   .deviceImgFieldContainerBox {
     width: 300px;
   }
@@ -340,14 +338,8 @@ mat-expansion-panel-header {
   .collectionButtonMobile{
     margin-right: 76em;
   }
-  .viewImgBtn {
-    margin-left: -100px;
-  }
 }
 @media screen and (min-width: 1200px) and (max-width: 1279px) {
-  .deviceImgFieldContainer {
-    margin-left: 30px;
-  }
   .actionsHeader{
     width: 2em;
   }
@@ -361,14 +353,8 @@ mat-expansion-panel-header {
   .scandeviceButtonREG{
     margin-left: 70em;
   }
-  .viewImgBtn {
-    margin-left: -90px;
-  }
 }
 @media screen and (min-width: 1139px) and (max-width: 1199px) {
-  .deviceImgFieldContainer {
-    margin-left: 20px;
-  }
   .collections-button{
     position: absolute;
   }
@@ -385,14 +371,8 @@ mat-expansion-panel-header {
   .collections-button2{
     margin-right: 950px;
   }
-  .viewImgBtn {
-    margin-left: -80px;
-  }
 }
 @media screen and (min-width: 1069px) and (max-width: 1140px) {
-  .deviceImgFieldContainer {
-    margin-left: 15px;
-  }
   .collections-button{
     position: absolute;
     margin-left: 0em;
@@ -410,16 +390,13 @@ mat-expansion-panel-header {
   .collections-button2{
     margin-right: 850px;
   }
-  .viewImgBtn {
-    margin-left: -80px;
-  }
 }
-@media screen and (min-width: 1024px) and (max-width: 1068px) {
-  .viewImgBtn {
-    margin-left: -70px;
-  }
+@media screen and (min-width: 1024px) and (max-width: 1069px) {
   .collections-button{
     position: absolute;
+  }
+  .deviceImgLabel{
+    width: 10%;
   }
   .scandeviceButtonREG{
     margin-left: 59em;
@@ -444,9 +421,6 @@ mat-expansion-panel-header {
   }
 }
 @media screen and (max-width: 1023px) {
-  .viewImgBtn {
-    margin-left: -70px;
-  }
   .scandeviceButtonREG{
     margin-left: 55em;
   }
@@ -470,6 +444,11 @@ mat-expansion-panel-header {
   }
   .scandeviceButton-android{
     margin-left: 610px;
+  }
+}
+@media screen and (max-width: 868px) {
+  .deviceImgLabel{
+    width: 20%;
   }
 }
 @media screen and (min-width: 763px) and (max-width: 801px) {
@@ -588,6 +567,11 @@ mat-expansion-panel-header {
     margin-left: 250px;
   }
 }
+@media screen and (max-width: 558px) {
+  .tablediv {
+      overflow-x: auto;
+    }
+  }
 @media screen and (max-width: 515px) {
   .viewImgBtn {
     margin-left: 10px;
@@ -942,6 +926,17 @@ mat-expansion-panel-header {
   }
   .fieldContainerBox {
     width: 100%;
+  }
+  .deviceImgFieldWrapper{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .deviceImgLabel{
+    width: 100%;
+  }
+  .deviceImgFieldLabel{
+    width: 100%;
+    margin-bottom: 5px;
   }
   .deviceImgFieldContainerBox {
     width: 100%;

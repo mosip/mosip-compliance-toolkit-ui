@@ -14,11 +14,15 @@
                 </mat-select>
             </mat-form-field>
         </div>
-        <mat-form-field appearance="legacy" class="filter">
-            <mat-label>{{ "projectDashboard.filter" | translate }}</mat-label>
-            <input matInput [(ngModel)]="selectedFilter" (keyup)="applyFilter($event)" placeholder="Search columns" #input>
-        </mat-form-field>
-        <mat-paginator [pageSizeOptions]="[5, 10, 25,50,100]" aria-label="Select page of partnerreports"></mat-paginator>
+        <div class="filter-box">
+            <mat-form-field appearance="legacy" class="filter">
+                <mat-label>{{ "projectDashboard.filter" | translate }}</mat-label>
+                <input matInput [(ngModel)]="selectedFilter" (keyup)="applyFilter($event)" placeholder="Search columns" #input>
+            </mat-form-field>
+        </div>
+        <div class="paginator-box">
+            <mat-paginator [pageSizeOptions]="[5, 10, 25,50,100]" aria-label="Select page of partnerreports"></mat-paginator>
+        </div>
     </div>
     <div class="table-scroll">
         <table mat-table [dataSource]="dataSource" matSort class="dashboard-table" >

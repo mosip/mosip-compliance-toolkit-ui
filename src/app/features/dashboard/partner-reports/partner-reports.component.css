@@ -183,4 +183,37 @@ th {
     .dashboard-table{
       width: 100%;
     }
+@media screen and (max-width: 802px) {
+    ::ng-deep .mat-paginator-page-size {
+        margin-right: 10px !important;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .filter-container {
+        flex-direction: column;
+    }
+
+    .filter-box {
+        align-items: center;
+        margin-right: 24px;
+    }
+
+    .paginator-box {
+        display: flex;
+        align-items: center;
+    }
+
+    ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+        width: 168px;
+    }
+
+    ::ng-deep .mat-paginator-container {
+        justify-content: center;
+    }
+
+    ::ng-deep .mat-paginator-page-size {
+        margin-right: 1px !important;
+    }
+}
 }

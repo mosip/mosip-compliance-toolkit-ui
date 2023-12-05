@@ -88,3 +88,16 @@ th {
       width: 100%;
     }
 }
+@media screen and (max-width: 625px) {
+    .filter-container {
+        flex-direction: column;
+    }
+
+    ::ng-deep .mat-paginator-container {
+        justify-content: center;
+    }
+
+    .mat-paginator-page-size {
+        margin-right: -5px;
+    }
+}
