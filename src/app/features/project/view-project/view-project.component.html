@@ -137,12 +137,16 @@
                                 <span class="fieldContainer">
                                     <mat-form-field appearance="legacy" class="fieldContainerBox">
                                         <mat-label>{{"viewProject.sdkHash"|translate}}</mat-label>
-                                        <input matInput formControlName="sdkHash" #keyboardRef #input [readonly]="true"/>
+                                        <input matInput formControlName="sdkHash" #keyboardRef #input 
+                                            (change)="updateProject('sdkHash')"/>
                                         <mat-error *ngIf="projectForm.controls['sdkHash'].hasError('required')">
                                             {{"viewProject.sdkHashIsRequired"|translate}}
                                         </mat-error>
                                     </mat-form-field>
                                 </span>
+                                <div class="spinnerForUpdatingProject" *ngIf="updatingAttribute == 'sdkHash'">
+                                    <mat-spinner diameter="25"></mat-spinner>
+                                </div>
                             </div>
                         </div>
                         <div class="rowContainer">
@@ -298,12 +302,16 @@
                                 <span class="fieldContainer">
                                     <mat-form-field appearance="legacy" class="fieldContainerBox">
                                         <mat-label>{{"viewProject.sbiHash"|translate}}</mat-label>
-                                        <input matInput formControlName="sbiHash" #keyboardRef #input [readonly]="true"/>
+                                        <input matInput formControlName="sbiHash" #keyboardRef #input 
+                                            (change)="updateProject('sbiHash')"/>
                                         <mat-error *ngIf="projectForm.controls['sbiHash'].hasError('required')">
                                             {{"viewProject.sbiHashIsRequired"|translate}}
                                         </mat-error>
                                     </mat-form-field>
                                 </span>
+                                <div class="spinnerForUpdatingProject" *ngIf="updatingAttribute == 'sbiHash'">
+                                    <mat-spinner diameter="25"></mat-spinner>
+                                </div>
                             </div>
                             <div class="fieldWrapper">
                                 <span class="fieldLabel">
@@ -484,12 +492,16 @@
                                 <span class="fieldContainer">
                                     <mat-form-field appearance="legacy" class="fieldContainerBox">
                                         <mat-label>{{"viewProject.abisHash"|translate}}</mat-label>
-                                        <input matInput formControlName="abisHash" #keyboardRef #input [readonly]="true"/>
+                                        <input matInput formControlName="abisHash" #keyboardRef #input 
+                                            (change)="updateProject('abisHash')"/>
                                         <mat-error *ngIf="projectForm.controls['abisHash'].hasError('required')">
                                             {{"viewProject.abisHashIsRequired"|translate}}
                                         </mat-error>
                                     </mat-form-field>
                                 </span>
+                                <div class="spinnerForUpdatingProject" *ngIf="updatingAttribute == 'abisHash'">
+                                    <mat-spinner diameter="25"></mat-spinner>
+                                </div>
                             </div>
                             <div class="fieldWrapper">
                                 <span class="fieldLabel">
