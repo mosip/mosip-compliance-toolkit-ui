@@ -35,7 +35,10 @@
 		"approveCheckBox": "Voulez-vous approuver ce rapport?",
 		"rejectCheckBox": "Voulez-vous rejeter ce rapport?",
 		"partnerName": "Nom du partenaire",
-		"projectName": "nom du projet"
+		"projectName": "nom du projet",
+		"addProject": "Ajouter un projet",
+		"verifyMessage": "Vérifiez les valeurs de hachage et de site Web avant de continuer. Si les valeurs sont correctes, enregistrez le projet.",
+		"saveBtn":  "Sauvegarder"
 	},
 	"breadcrumb": {
 		"home": "Maison",
