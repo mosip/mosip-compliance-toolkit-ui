@@ -143,7 +143,11 @@ export class ViewProjectComponent implements OnInit {
     this.allControls.forEach((controlId) => {
       this.projectForm.addControl(
         controlId,
-        new FormControl({ value: '', disabled: true })
+        new FormControl({ 
+          value: '', 
+          disabled: 
+          controlId == 'sbiHash' ? false : true,
+        })
       );
     });
   }
@@ -159,7 +163,7 @@ export class ViewProjectComponent implements OnInit {
         new FormControl({
           value: '',
           disabled:
-            controlId == 'sdkUrl' || controlId == 'bioTestData' ? false : true,
+            controlId == 'sdkUrl' || controlId == 'bioTestData' || controlId == 'sdkHash' ? false : true,
         })
       );
     });
@@ -177,7 +181,7 @@ export class ViewProjectComponent implements OnInit {
           value: '',
           disabled:
             controlId == 'abisUrl' || controlId == 'username' || controlId == 'password' || controlId == 'outboundQueueName'
-              || controlId == 'inboundQueueName' || controlId == 'abisBioTestData' ? false : true,
+              || controlId == 'inboundQueueName' || controlId == 'abisBioTestData' || controlId == 'abisHash' ? false : true,
         })
       );
     });
@@ -301,6 +305,11 @@ export class ViewProjectComponent implements OnInit {
     this.projectForm.controls['projectType'].markAsTouched();
     const projectType = this.projectForm.controls['projectType'].value;
     console.log(`updateProject for type: ${projectType}`);
+    if (projectType == appConstants.SBI) {
+      appConstants.SBI_CONTROLS.forEach((controlId) => {
+        this.projectForm.controls[controlId].markAsTouched();
+      });
+    }
     if (projectType == appConstants.SDK) {
       appConstants.SDK_CONTROLS.forEach((controlId) => {
         this.projectForm.controls[controlId].markAsTouched();
@@ -314,28 +323,43 @@ export class ViewProjectComponent implements OnInit {
     if (this.projectForm.valid) {
       //Save the project in db
       console.log('valid');
+      if (projectType == appConstants.SBI) {
+        const projectData = Utils.populateSbiProjectData(this.projectForm, this.projectFormData.id, this.projectFormData.deviceImage1, this.projectFormData.deviceImage2, this.projectFormData.deviceImage3, this.projectFormData.deviceImage4);
+        let request = {
+          id: appConstants.SBI_PROJECT_UPDATE_ID,
+          version: appConstants.VERSION,
+          requesttime: new Date().toISOString(),
+          request: projectData,
+        };
+        this.updatingAttribute = attributeName;
+        await Utils.updateSbiProject(this.subscriptions, this.dataService, request, this.resourceBundleJson, this.dialog);
+        Utils.populateSbiProjectForm(projectData, this.projectForm);
+        this.panelOpenState = true;
+      }
       if (projectType == appConstants.SDK) {
+        const projectData = Utils.populateSdkProjectData(this.projectForm, this.projectFormData.id);
         let request = {
           id: appConstants.SDK_PROJECT_UPDATE_ID,
           version: appConstants.VERSION,
           requesttime: new Date().toISOString(),
-          request: Utils.populateSdkProjectData(this.projectForm, this.projectFormData.id),
+          request: projectData,
         };
         this.updatingAttribute = attributeName;
         await Utils.updateSdkProject(this.subscriptions, this.dataService, request, this.resourceBundleJson, this.dialog);
-        Utils.populateSdkProjectForm(this.projectFormData, this.projectForm);
+        Utils.populateSdkProjectForm(projectData, this.projectForm);
         this.panelOpenState = true;
       }
       if (projectType == appConstants.ABIS) {
+        const projectData = Utils.populateAbisProjectData(this.projectForm, this.projectFormData.id);
         let request = {
           id: appConstants.ABIS_PROJECT_UPDATE_ID,
           version: appConstants.VERSION,
           requesttime: new Date().toISOString(),
-          request: Utils.populateAbisProjectData(this.projectForm, this.projectFormData.id),
+          request: projectData,
         };
         this.updatingAttribute = attributeName;
         await Utils.updateAbisProject(this.subscriptions, this.dataService, request, this.resourceBundleJson, this.dialog);
-        Utils.populateAbisProjectForm(this.projectFormData, this.projectForm);
+        Utils.populateAbisProjectForm(projectData, this.projectForm);
         this.panelOpenState = true;
       }
       this.updatingAttribute = '';

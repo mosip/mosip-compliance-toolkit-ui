@@ -586,6 +586,23 @@ export default class Utils {
     }
   }
 
+  static updateSbiProject(subscriptions: Subscription[], dataService: DataService, request: any, resourceBundleJson: any, dialog: MatDialog) {
+    return new Promise((resolve, reject) => {
+      subscriptions.push(
+        dataService.updateSbiProject(request).subscribe(
+          (response: any) => {
+            console.log(response);
+            resolve(this.getProjectResponse(response, resourceBundleJson, dialog));
+          },
+          (errors) => {
+            Utils.showErrorMessage(resourceBundleJson, errors, dialog);
+            resolve(false);
+          }
+        )
+      );
+    });
+  }
+
   static updateSdkProject(subscriptions: Subscription[], dataService: DataService, request: any, resourceBundleJson: any, dialog: MatDialog) {
     return new Promise((resolve, reject) => {
       subscriptions.push(
