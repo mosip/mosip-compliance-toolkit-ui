@@ -161,6 +161,8 @@ export class AddProjectComponent implements OnInit {
   }
 
   async saveProject() {
+    let hash = '';
+    let websiteUrl = '';
     appConstants.COMMON_CONTROLS.forEach((controlId) => {
       this.projectForm.controls[controlId].markAsTouched();
     });
@@ -171,16 +173,22 @@ export class AddProjectComponent implements OnInit {
       appConstants.SDK_CONTROLS.forEach((controlId) => {
         this.projectForm.controls[controlId].markAsTouched();
       });
+      hash = this.projectForm.controls['sdkHash'].value;
+      websiteUrl = this.projectForm.controls['websiteUrl'].value;
     }
     if (projectType == appConstants.SBI) {
       appConstants.SBI_CONTROLS.forEach((controlId) => {
         this.projectForm.controls[controlId].markAsTouched();
       });
+      hash = this.projectForm.controls['sbiHash'].value;
+      websiteUrl = this.projectForm.controls['websiteUrl'].value;
     }
     if (projectType == appConstants.ABIS) {
       appConstants.ABIS_CONTROLS.forEach((controlId) => {
         this.projectForm.controls[controlId].markAsTouched();
       });
+      hash = this.projectForm.controls['abisHash'].value;
+      websiteUrl = this.projectForm.controls['websiteUrl'].value;
     }
     const projectName = this.projectForm.controls['name'].value;
     if (projectName.trim().length === 0) {
@@ -191,39 +199,56 @@ export class AddProjectComponent implements OnInit {
     if (this.projectForm.valid) {
       //Save the project in db
       console.log('valid');
-      if (projectType == appConstants.SBI) {
-        let request = {
-          id: appConstants.SBI_PROJECT_ADD_ID,
-          version: appConstants.VERSION,
-          requesttime: new Date().toISOString(),
-          request: Utils.populateSbiProjectData(this.projectForm, '', this.deviceImage1, this.deviceImage2, this.deviceImage3, this.deviceImage4),
-        };
-        this.dataLoaded = false;
-        this.dataSubmitted = true;
-        await this.addSbiProject(request);
-      }
-      if (projectType == appConstants.SDK) {
-        let request = {
-          id: appConstants.SDK_PROJECT_ADD_ID,
-          version: appConstants.VERSION,
-          requesttime: new Date().toISOString(),
-          request: Utils.populateSdkProjectData(this.projectForm, ''),
-        };
-        this.dataLoaded = false;
-        this.dataSubmitted = true;
-        await this.addSdkProject(request);
-      }
-      if (projectType == appConstants.ABIS) {
-        let request = {
-          id: appConstants.ABIS_PROJECT_ADD_ID,
-          version: appConstants.VERSION,
-          requesttime: new Date().toISOString(),
-          request: Utils.populateAbisProjectData(this.projectForm, ''),
-        };
-        this.dataLoaded = false;
-        this.dataSubmitted = true;
-        await this.addAbisProject(request);
-      }
+      const dialogRef = this.dialog.open(DialogComponent, {
+        width: '600px',
+        data: {
+          case: "ADD_PROJECT",
+          hash: hash,
+          websiteUrl: websiteUrl,
+          projectType: projectType
+        },
+      });
+      dialogRef.afterClosed().subscribe(
+        (closeBtn: boolean) => {
+          (async () => {
+            if (!closeBtn) {
+              if (projectType == appConstants.SBI) {
+                let request = {
+                  id: appConstants.SBI_PROJECT_ADD_ID,
+                  version: appConstants.VERSION,
+                  requesttime: new Date().toISOString(),
+                  request: Utils.populateSbiProjectData(this.projectForm, '', this.deviceImage1, this.deviceImage2, this.deviceImage3, this.deviceImage4),
+                };
+                this.dataLoaded = false;
+                this.dataSubmitted = true;
+                await this.addSbiProject(request);
+              }
+              if (projectType == appConstants.SDK) {
+                let request = {
+                  id: appConstants.SDK_PROJECT_ADD_ID,
+                  version: appConstants.VERSION,
+                  requesttime: new Date().toISOString(),
+                  request: Utils.populateSdkProjectData(this.projectForm, ''),
+                };
+                this.dataLoaded = false;
+                this.dataSubmitted = true;
+                await this.addSdkProject(request);
+              }
+              if (projectType == appConstants.ABIS) {
+                let request = {
+                  id: appConstants.ABIS_PROJECT_ADD_ID,
+                  version: appConstants.VERSION,
+                  requesttime: new Date().toISOString(),
+                  request: Utils.populateAbisProjectData(this.projectForm, ''),
+                };
+                this.dataLoaded = false;
+                this.dataSubmitted = true;
+                await this.addAbisProject(request);
+              }
+            }
+          })();
+        }
+      );
     }
   }
 
