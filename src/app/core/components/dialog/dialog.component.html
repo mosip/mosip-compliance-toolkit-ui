@@ -276,4 +276,33 @@
         >{{"dialogMessages.rejectReport"|translate}}</button>
     </div>
 </div>
+<div *ngIf="input.case === 'ADD_PROJECT'">
+    <div class="spinner" *ngIf="!dataLoaded">
+        <mat-spinner diameter="50"></mat-spinner>
+    </div>
+    <div *ngIf="dataLoaded">
+        <h2 mat-dialog-title class="mat-dialog-title">{{"dialogMessages.addProject"|translate}}</h2>
+        <div mat-dialog-content class="sendForReview">
+            <p>{{"dialogMessages.verifyMessage"|translate}}</p>
+            <div>
+                <span *ngIf="projectType =='SBI'">
+                    <p><strong>{{"viewProject.sbiHash"|translate}}</strong> {{input.hash}}</p>
+                </span>
+                <span *ngIf="projectType =='SDK'">
+                    <p><strong>{{"viewProject.sdkHash"|translate}}</strong> {{input.hash}}</p>
+                </span>
+                <span *ngIf="projectType =='ABIS'">
+                    <p><strong>{{"viewProject.abisHash"|translate}}</strong> {{input.hash}}</p>
+                </span>
+                <div>
+                    <p><strong>{{"viewProject.websiteUrl"|translate}}</strong> {{input.websiteUrl}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="button-container-box">
+            <button mat-flat-button (click)="closeMe()" class="back-button">{{"dialogMessages.close"|translate}}</button>
+            <button mat-flat-button color="accent" (click)="checkHashAndWebsiteUrl()">{{"dialogMessages.saveBtn"|translate}}</button>
+        </div>
+    </div>
+</div>
 </div>

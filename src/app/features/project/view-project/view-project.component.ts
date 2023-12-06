@@ -84,6 +84,7 @@ export class ViewProjectComponent implements OnInit {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     await this.initProjectIdAndType();
+    await this.getCollections();
     if (this.projectType == appConstants.SBI) {
       this.initSbiProjectForm();
       this.projectFormData = await Utils.getSbiProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
@@ -102,7 +103,6 @@ export class ViewProjectComponent implements OnInit {
       Utils.populateAbisProjectForm(this.projectFormData, this.projectForm);
       this.bioTestDataFileNames = await Utils.getBioTestDataNames(this.subscriptions, this.dataService, appConstants.ABIS, this.resourceBundleJson, this.dialog);
     }
-    await this.getCollections();
     this.dataSource.paginator = this.paginator;
     if (this.sort) {
       this.sort.sort(({ id: 'runDtimes', start: 'desc' }) as MatSortable);
@@ -146,7 +146,7 @@ export class ViewProjectComponent implements OnInit {
         new FormControl({ 
           value: '', 
           disabled: 
-          controlId == 'sbiHash' ? false : true,
+          (controlId == 'sbiHash' && !this.isReportAlreadySubmitted) ? false : true,
         })
       );
     });
@@ -163,7 +163,7 @@ export class ViewProjectComponent implements OnInit {
         new FormControl({
           value: '',
           disabled:
-            controlId == 'sdkUrl' || controlId == 'bioTestData' || controlId == 'sdkHash' ? false : true,
+            controlId == 'sdkUrl' || controlId == 'bioTestData' || (controlId == 'sdkHash' && !this.isReportAlreadySubmitted) ? false : true,
         })
       );
     });
@@ -181,7 +181,7 @@ export class ViewProjectComponent implements OnInit {
           value: '',
           disabled:
             controlId == 'abisUrl' || controlId == 'username' || controlId == 'password' || controlId == 'outboundQueueName'
-              || controlId == 'inboundQueueName' || controlId == 'abisBioTestData' || controlId == 'abisHash' ? false : true,
+              || controlId == 'inboundQueueName' || controlId == 'abisBioTestData' || (controlId == 'abisHash' && !this.isReportAlreadySubmitted) ? false : true,
         })
       );
     });

@@ -35,7 +35,10 @@
 		"approveCheckBox": "هل تريد الموافقة على هذا التقرير؟",
 		"rejectCheckBox": "هل تريد رفض هذا التقرير؟",
 		"partnerName": "اسم شريك",
-		"projectName": "اسم المشروع"
+		"projectName": "اسم المشروع",
+		"addProject": "أضف المشروع",
+		"verifyMessage": "تحقق من قيم التجزئة وموقع الويب قبل المتابعة. إذا كانت القيم صحيحة، فاحفظ المشروع.",
+		"saveBtn":  "يحفظ"
 	},
 	"breadcrumb": {
 		"home": "بيت",

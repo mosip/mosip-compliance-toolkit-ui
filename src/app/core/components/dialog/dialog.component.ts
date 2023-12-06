@@ -462,4 +462,8 @@ export class DialogComponent implements OnInit {
     );
     this.subscriptions.push(subs);
   }
+
+  checkHashAndWebsiteUrl() {
+    this.dialogRef.close(false);
+  }
 }

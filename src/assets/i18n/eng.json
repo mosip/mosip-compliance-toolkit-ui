@@ -35,7 +35,10 @@
 		"approveCheckBox": "Do you want to Approve this Report?",
 		"rejectCheckBox": "Do you want to Reject this Report?",
 		"partnerName": "Partner Name",
-		"projectName": "Project Name"
+		"projectName": "Project Name",
+		"addProject": "Add Project",
+		"verifyMessage": "Verify the Hash and Website values before proceeding. If the values are correct, save the project.",
+		"saveBtn":  "Save"
 	},
 	"breadcrumb": {
 		"home": "Home",
