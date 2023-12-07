@@ -1573,6 +1573,7 @@
 		"TOOLKIT_SUCCESS_000": "Success",
 		"TOOLKIT_PROJECTS_001": "No project found for the user",
 		"TOOLKIT_PROJECTS_002": "No matching SBI project available for the given id",
+		"TOOLKIT_PROJECTS_003": "Project report has already been submitted, so unable to update project details",
 		"TOOLKIT_COLLECTIONS_001": "No matching Collection available for the given project",
 		"TOOLKIT_COLLECTIONS_002": "Unable to add a Collection",
 		"TOOLKIT_COLLECTIONS_003": "No matching Testcases available for the given collection id",

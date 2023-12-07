@@ -145,8 +145,7 @@ export class ViewProjectComponent implements OnInit {
         controlId,
         new FormControl({ 
           value: '', 
-          disabled: 
-          (controlId == 'sbiHash' && !this.isReportAlreadySubmitted) ? false : true,
+          disabled: this.isControlDisabled(controlId),
         })
       );
     });
@@ -162,8 +161,7 @@ export class ViewProjectComponent implements OnInit {
         controlId,
         new FormControl({
           value: '',
-          disabled:
-            controlId == 'sdkUrl' || controlId == 'bioTestData' || (controlId == 'sdkHash' && !this.isReportAlreadySubmitted) ? false : true,
+          disabled: this.isControlDisabled(controlId),
         })
       );
     });
@@ -179,12 +177,19 @@ export class ViewProjectComponent implements OnInit {
         controlId,
         new FormControl({
           value: '',
-          disabled:
-            controlId == 'abisUrl' || controlId == 'username' || controlId == 'password' || controlId == 'outboundQueueName'
-              || controlId == 'inboundQueueName' || controlId == 'abisBioTestData' || (controlId == 'abisHash' && !this.isReportAlreadySubmitted) ? false : true,
+          disabled: this.isControlDisabled(controlId),
         })
       );
     });
+  }
+
+  isControlDisabled(controlId: string) {
+    const disabledControls = ['sbiHash', 'sdkUrl', 'bioTestData', 'sdkHash','abisUrl', 'username', 'password', 'outboundQueueName', 'inboundQueueName', 'abisBioTestData','abisHash'];
+    if (disabledControls.includes(controlId)) {
+      return this.isReportAlreadySubmitted ? true: false;
+    } else {
+      return true;
+    }
   }
 
   async getCollections() {
