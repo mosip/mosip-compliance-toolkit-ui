@@ -146,7 +146,7 @@ export class ViewProjectComponent implements OnInit {
         new FormControl({ 
           value: '', 
           disabled: 
-          (controlId == 'sbiHash' && !this.isReportAlreadySubmitted) ? false : true,
+          (controlId == 'sbiHash' && !this.isReportAlreadySubmitted) || (controlId == 'websiteUrl' && !this.isReportAlreadySubmitted) ? false : true,
         })
       );
     });
@@ -163,7 +163,8 @@ export class ViewProjectComponent implements OnInit {
         new FormControl({
           value: '',
           disabled:
-            controlId == 'sdkUrl' || controlId == 'bioTestData' || (controlId == 'sdkHash' && !this.isReportAlreadySubmitted) ? false : true,
+            controlId == 'sdkUrl' || controlId == 'bioTestData' || (controlId == 'sdkHash' && !this.isReportAlreadySubmitted)
+              || (controlId == 'websiteUrl' && !this.isReportAlreadySubmitted) ? false : true,
         })
       );
     });
@@ -181,7 +182,8 @@ export class ViewProjectComponent implements OnInit {
           value: '',
           disabled:
             controlId == 'abisUrl' || controlId == 'username' || controlId == 'password' || controlId == 'outboundQueueName'
-              || controlId == 'inboundQueueName' || controlId == 'abisBioTestData' || (controlId == 'abisHash' && !this.isReportAlreadySubmitted) ? false : true,
+              || controlId == 'inboundQueueName' || controlId == 'abisBioTestData' || (controlId == 'abisHash' && !this.isReportAlreadySubmitted) 
+              || (controlId == 'websiteUrl' && !this.isReportAlreadySubmitted)? false : true,
         })
       );
     });

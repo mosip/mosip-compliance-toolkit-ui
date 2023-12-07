@@ -1573,6 +1573,7 @@
 		"TOOLKIT_SUCCESS_000": "Succès",
 		"TOOLKIT_PROJECTS_001": "Aucun projet trouvé pour l'utilisateur",
 		"TOOLKIT_PROJECTS_002": "Aucun projet SBI correspondant disponible pour l'identifiant donné",
+		"TOOLKIT_PROJECTS_003": "Le rapport de projet a déjà été soumis. Impossible donc de mettre à jour les détails du projet.",
 		"TOOLKIT_COLLECTIONS_001": "Aucune collection correspondante disponible pour le projet donné",
 		"TOOLKIT_COLLECTIONS_002": "Impossible d'ajouter une collection",
 		"TOOLKIT_COLLECTIONS_003": "Aucun cas de test correspondant disponible pour l'identifiant de collection donné",
