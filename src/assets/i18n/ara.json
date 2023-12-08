@@ -246,7 +246,9 @@
 		"testRunStatus": "حالة تشغيل الاختبار",
 		"testRunExecutionStatus": "حالة التنفيذ",
 		"generateDraftReport": "إنشاء مسودة تقرير",
-		"viewSubmittedReport": "عرض التقرير المقدم"
+		"viewSubmittedReport": "عرض التقرير المقدم",
+		"noDataAvailable": "لا تتوافر بيانات",
+		"loading": "تحميل البيانات.."
 	},
 	"addCollections": {
 		"collectionName": "اسم المجموعة:",
