@@ -4,11 +4,15 @@
     <div class="spinner" *ngIf="!dataLoaded">
         <mat-spinner diameter="50"></mat-spinner>
     </div>
-    <div class="mat-elevation-z8" *ngIf="dataLoaded">
-        <div *ngIf="dataSource.data.length <= 0" [ngStyle]="{color: 'red', padding: '30px'}">
+    <div class="mat-elevation-z8">
+        <div class="filter-container">
+            <mat-paginator class="paginator" [pageSizeOptions]="[10,20,30]"
+                aria-label="Select page of projects"></mat-paginator>
+        </div>
+        <div *ngIf="dataSource && dataSource.data && dataSource.data.length <= 0" [ngStyle]="{color: 'red', padding: '30px'}">
             {{"viewTestRun.testRunDetailsAreNotAvailable"|translate}}
         </div>
-        <div class="table-container" *ngIf="dataSource.data.length > 0">
+        <div class="table-container">
             <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="testcases-table">
                 <caption>{{ "viewTestRun.tableDescription" | translate }}</caption>
                 <!--- Note that these columns can be defined in any order.
@@ -69,7 +73,7 @@
                         <div class="expanded-details"
                             [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
                             <mat-accordion>
-                                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                                <mat-expansion-panel (opened)="panelOpenState = true;getMethodDetails(element);" (closed)="panelOpenState = false">
                                     <mat-expansion-panel-header>
                                         <mat-panel-title>{{"viewTestRun.methodRequest"|translate}}</mat-panel-title>
                                     </mat-expansion-panel-header>
@@ -78,13 +82,19 @@
                                             <mat-icon>content_copy</mat-icon>
                                         </button>
                                     </span>
-                                    <div class="json-content">
+                                    <div *ngIf="element.methodRequest == 'loading'">
+                                        {{"viewTestRun.loading"|translate}}
+                                    </div>
+                                    <div *ngIf="element.methodRequest == 'no_data_available'">
+                                        {{"viewTestRun.noDataAvailable"|translate}}
+                                    </div>
+                                    <div class="json-content" *ngIf="element.methodRequest != 'loading' && element.methodRequest != 'no_data_available'">
                                         <code class="prettyprint">{{element.methodRequest}}</code>
                                     </div>
                                 </mat-expansion-panel>
                             </mat-accordion>
                             <mat-accordion>
-                                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                                <mat-expansion-panel (opened)="panelOpenState = true;getMethodDetails(element);" (closed)="panelOpenState = false">
                                     <mat-expansion-panel-header>
                                         <mat-panel-title>{{"viewTestRun.methodResponse"|translate}}</mat-panel-title>
                                     </mat-expansion-panel-header>
@@ -93,13 +103,19 @@
                                             <mat-icon>content_copy</mat-icon>
                                         </button>
                                     </span>
-                                    <div class="json-content">
+                                    <div *ngIf="element.methodResponse == 'loading'">
+                                        {{"viewTestRun.loading"|translate}}
+                                    </div>
+                                    <div *ngIf="element.methodResponse == 'no_data_available'">
+                                        {{"viewTestRun.noDataAvailable"|translate}}
+                                    </div>
+                                    <div class="json-content" *ngIf="element.methodResponse != 'loading' && element.methodResponse != 'no_data_available'">
                                         <code class="prettyprint">{{element.methodResponse}}</code>
                                     </div>
                                 </mat-expansion-panel>
                             </mat-accordion>
                             <mat-accordion>
-                                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                                <mat-expansion-panel (opened)="panelOpenState = true;getMethodDetails(element);" (closed)="panelOpenState = false">
                                     <mat-expansion-panel-header>
                                         <mat-panel-title>{{"viewTestRun.resultStatus"|translate}}
                                             <span>
@@ -114,7 +130,13 @@
                                             </span>
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
-                                    <div>
+                                    <div *ngIf="element.resultDescription == 'loading'">
+                                        {{"viewTestRun.loading"|translate}}
+                                    </div>
+                                    <div *ngIf="element.resultDescription == 'no_data_available'">
+                                        {{"viewTestRun.noDataAvailable"|translate}}
+                                    </div>
+                                    <div *ngIf="element.resultDescription != 'loading' && element.resultDescription != 'no_data_available'">
                                         <div *ngFor="let item of getValidationsList(element)">
                                             <div class="json-content-table">
                                                 <span>
@@ -124,7 +146,9 @@
                                                     <span class="custom-class" *ngIf="item.status == 'failure'">
                                                         <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon>
                                                     </span>&nbsp;
-                                                    {{getValidatorDetails(item)}}
+                                                    <span class="custom-class" *ngIf="item.status != 'loading'">
+                                                        {{getValidatorDetails(item)}}
+                                                    </span>
                                                 </span>
                                                 <span *ngIf="item.status== 'success'" [ngStyle]="{color: 'green'}">
                                                     <div [innerHTML]="getValidatorMessage(item)"></div>

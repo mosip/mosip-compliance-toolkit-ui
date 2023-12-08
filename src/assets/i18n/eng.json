@@ -246,7 +246,9 @@
 		"testRunStatus": "Test Run Status",
 		"testRunExecutionStatus": "Execution Status",
 		"generateDraftReport": "Generate Draft Report",
-		"viewSubmittedReport": "View Submitted Report"
+		"viewSubmittedReport": "View Submitted Report",
+		"noDataAvailable": "No data available",
+		"loading": "Loading data.."
 	},
 	"addCollections": {
 		"collectionName": "Collection Name:",
@@ -1361,6 +1363,7 @@
 	},
 	"validatorMessages": {
 		"BR_TAG": "<br>",
+		"noDataAvailable": "No data available",
 		"SCHEMA_VALIDATOR_001": "JSON is as expected. All mandatory values are available and they all have valid expected values.",
 		"RESPONSE_MISMATCH_VALIDATOR_001": "The bioCount, segments, exceptions and transactionId in response match the request.",
 		"RESPONSE_MISMATCH_VALIDATOR_002": "ResponseMismatchValidator failed due to biocount mismatch. In request, bioCount = {} and in response, bioCount = {}",
