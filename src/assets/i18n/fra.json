@@ -246,7 +246,9 @@
 		"testRunStatus": "État du test",
 		"testRunExecutionStatus": "Statut d'exécution",
 		"generateDraftReport": "Générer un brouillon de rapport",
-		"viewSubmittedReport": "Afficher le rapport soumis"
+		"viewSubmittedReport": "Afficher le rapport soumis",
+		"noDataAvailable": "Pas de données disponibles",
+		"loading": "Chargement des données.."
 	},
 	"addCollections": {
 		"collectionName": "Nom de la collection:",

@@ -246,7 +246,9 @@
 		"testRunStatus": "Test Run Status",
 		"testRunExecutionStatus": "Execution Status",
 		"generateDraftReport": "Generate Draft Report",
-		"viewSubmittedReport": "View Submitted Report"
+		"viewSubmittedReport": "View Submitted Report",
+		"noDataAvailable": "No data available",
+		"loading": "Loading data.."
 	},
 	"addCollections": {
 		"collectionName": "Collection Name:",

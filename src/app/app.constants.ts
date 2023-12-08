@@ -101,3 +101,5 @@ export const REPORT_STATUS_DRAFT = "draft";
 export const REPORT_STATUS_REVIEW = "review";
 export const REPORT_STATUS_APPROVED = "approved";
 export const REPORT_STATUS_REJECTED = "rejected";
+export const NO_DATA_AVAILABLE = 'no_data_available';
+export const LOADING = 'loading';
