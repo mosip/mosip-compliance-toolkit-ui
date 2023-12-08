@@ -28,6 +28,7 @@ import { environment } from 'src/environments/environment';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Toast } from '@capacitor/toast';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-test-run',
@@ -74,7 +75,7 @@ export class TestRunComponent implements OnInit {
   resourceBundleJson: any = {};
   langCode = this.userProfileService.getUserPreferredLanguage();
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  
+  @ViewChild(MatSort) sort: MatSort;
   constructor(
     public authService: AuthService,
     private activatedRoute: ActivatedRoute,
@@ -267,6 +268,7 @@ export class TestRunComponent implements OnInit {
             }
             this.dataSource = new MatTableDataSource(tableData);
             this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
             resolve(true);
           },
           (errors) => {
