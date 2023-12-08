@@ -162,6 +162,14 @@ export class DataService {
     return this.httpClient.get(url);
   }
 
+  getMethodDetails(isAdmin: boolean, partnerId: string, runId: string, testcaseId: string, methodId: string) {
+    let url = `${this.SERVICES_BASE_URL}getMethodDetails/${runId}/${testcaseId}/${methodId}`;
+    if (isAdmin) {
+      url = `${this.SERVICES_BASE_URL}getPartnerMethodDetails/${partnerId}/${runId}/${testcaseId}/${methodId}`;
+    }
+    return this.httpClient.get(url);
+  }
+
   getTestCase(testId: string) {
     let url = `${this.SERVICES_BASE_URL}getTestCase/${testId}`;
 

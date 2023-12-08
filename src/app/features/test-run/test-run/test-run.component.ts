@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { AuthService } from '../../../core/services/authservice.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -27,6 +27,8 @@ import { DialogComponent } from 'src/app/core/components/dialog/dialog.component
 import { environment } from 'src/environments/environment';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Toast } from '@capacitor/toast';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-test-run',
@@ -72,7 +74,8 @@ export class TestRunComponent implements OnInit {
   textDirection: any = this.userProfileService.getTextDirection();
   resourceBundleJson: any = {};
   langCode = this.userProfileService.getUserPreferredLanguage();
-
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   constructor(
     public authService: AuthService,
     private activatedRoute: ActivatedRoute,
@@ -91,8 +94,6 @@ export class TestRunComponent implements OnInit {
     const adminRole = this.appConfigService.getConfig()['adminPartnerReportRole'];
     this.isAdmin = this.userProfileService.hasRole(adminRole);
     await this.initAllParams();
-    console.log(`this.isAdmin ${this.isAdmin}`);
-    console.log(`this.partnerId ${this.partnerId}`);
     if (!this.isAdmin && !this.partnerId) {
       const collectionRes = await Utils.getCollectionNameAndType(this.subscriptions, this.dataService, this.collectionId, this.resourceBundleJson, this.dialog);
       this.collectionName = collectionRes.name;
@@ -190,7 +191,6 @@ export class TestRunComponent implements OnInit {
   }
 
   async getTestRun() {
-    const NO_DATA_AVAILABLE = 'No data available';
 
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
@@ -213,24 +213,24 @@ export class TestRunComponent implements OnInit {
                     testName: testCase.testName,
                     testId: testCase.testId,
                     testDescription: testCase.testDescription,
-                    methodId: testRunData
+                    methodId: testRunData && testRunData.methodId
                       ? testRunData.methodId
-                      : testCase.methodId,
-                    methodName: testRunData
+                      : '',
+                    methodName: testRunData && testRunData.methodName
                       ? testRunData.methodName
                       : testCase.methodName,
-                    methodRequest: testRunData
+                    methodRequest: testRunData && testRunData.methodRequest
                       ? testRunData.methodRequest
-                      : NO_DATA_AVAILABLE,
-                    methodResponse: testRunData
+                      : appConstants.LOADING,
+                    methodResponse: testRunData && testRunData.methodResponse
                       ? testRunData.methodResponse
-                      : NO_DATA_AVAILABLE,
-                    resultStatus: testRunData
+                      : appConstants.LOADING,
+                    resultStatus: testRunData && testRunData.resultStatus
                       ? testRunData.resultStatus
                       : appConstants.FAILURE,
-                    resultDescription: testRunData
+                    resultDescription: testRunData && testRunData.resultDescription
                       ? testRunData.resultDescription
-                      : '',
+                      : appConstants.LOADING,
                     testDataSource:
                       testRunData && testRunData.testDataSource
                         ? testRunData.testDataSource
@@ -255,10 +255,10 @@ export class TestRunComponent implements OnInit {
                   testDescription: testCase.testDescription,
                   methodName: testCase.methodName,
                   methodId: '',
-                  methodRequest: NO_DATA_AVAILABLE,
-                  methodResponse: NO_DATA_AVAILABLE,
+                  methodRequest: appConstants.NO_DATA_AVAILABLE,
+                  methodResponse: appConstants.NO_DATA_AVAILABLE,
                   resultStatus: appConstants.FAILURE,
-                  resultDescription: '',
+                  resultDescription: appConstants.NO_DATA_AVAILABLE,
                   testDataSource: '',
                   methodUrl: '',
                   executionStatus:
@@ -267,6 +267,8 @@ export class TestRunComponent implements OnInit {
               }
             }
             this.dataSource = new MatTableDataSource(tableData);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
             resolve(true);
           },
           (errors) => {
@@ -278,8 +280,43 @@ export class TestRunComponent implements OnInit {
     });
   }
 
+  async getMethodDetails(row: any) {
+
+    let fetchData = false;
+    if (row.methodRequest == appConstants.LOADING ||
+      row.methodResponse == appConstants.LOADING ||
+      row.resultDescription == appConstants.LOADING) {
+      fetchData = true;
+    }
+    if (fetchData && row.methodId != '') {
+      fetchData = true;
+    } else {
+      fetchData = false;
+    }
+    if (fetchData) {
+      return new Promise((resolve, reject) => {
+        this.subscriptions.push(
+          this.dataService.getMethodDetails(this.isAdmin, this.partnerId, this.runId, row.testId, row.methodId).subscribe(
+            (response: any) => {
+              const methodDetails = response[appConstants.RESPONSE];
+              row.methodRequest = methodDetails["methodRequest"];
+              row.methodResponse = methodDetails["methodResponse"];
+              row.resultDescription = methodDetails["resultDescription"];
+              resolve(true);
+            },
+            (errors) => {
+              resolve(true);
+            }
+          )
+        );
+      });
+    } else {
+      return true;
+    }
+  }
+
   getValidationsList(row: any): any[] {
-    if (row.resultDescription != '') {
+    if (row.resultDescription != appConstants.NO_DATA_AVAILABLE && row.resultDescription != '') {
       let jsonData = JSON.parse(row.resultDescription);
       let list = jsonData['validationsList'];
       return list;
@@ -288,11 +325,12 @@ export class TestRunComponent implements OnInit {
       for (const testcase of this.testcasesList) {
         if (testcase.testId == row.testId) {
           for (const validator of testcase.validatorDefs) {
+            const item = validator[0];
             data.push({
-              validatorName: validator.name,
-              validatorDescription: validator.description,
-              status: 'failure',
-              description: 'No data available',
+              validatorName: item.name,
+              validatorDescription: item.description,
+              status: appConstants.FAILURE,
+              description: appConstants.NO_DATA_AVAILABLE,
             });
           }
         }
@@ -340,7 +378,7 @@ export class TestRunComponent implements OnInit {
       projectId: this.projectId,
       collectionId: this.collectionId,
       testRunId: this.runId
-    }
+    };
     let request = {
       id: appConstants.PARTNER_REPORT_ID,
       version: appConstants.VERSION,
