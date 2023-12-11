@@ -246,7 +246,7 @@
 		"testRunStatus": "Test Run Status",
 		"testRunExecutionStatus": "Execution Status",
 		"generateDraftReport": "Generate Draft Report",
-		"viewSubmittedReport": "View Submitted Report",
+		"viewSubmittedReport": "Download Submitted Report",
 		"noDataAvailable": "No data available",
 		"loading": "Loading data.."
 	},
