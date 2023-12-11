@@ -246,7 +246,7 @@
 		"testRunStatus": "حالة تشغيل الاختبار",
 		"testRunExecutionStatus": "حالة التنفيذ",
 		"generateDraftReport": "إنشاء مسودة تقرير",
-		"viewSubmittedReport": "عرض التقرير المقدم",
+		"viewSubmittedReport": "تنزيل التقرير المقدم",
 		"noDataAvailable": "لا تتوافر بيانات",
 		"loading": "تحميل البيانات.."
 	},
