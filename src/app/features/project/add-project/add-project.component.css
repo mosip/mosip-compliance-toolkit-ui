@@ -104,7 +104,7 @@
 }
 .fileuploadbtn {
   width: 200px;
-  margin-left: 29px;
+  margin-left: 42px;
 }
 .deviceImgFieldWrapper{
   width: 30%;
@@ -181,7 +181,7 @@
   }
   .fileuploadbtn {
     width: 200px;
-    margin-left: 10%;
+    margin-left: 16%;
   }
 }
 @media screen and (max-width: 770px) {
@@ -195,7 +195,7 @@
   }
   .fileuploadbtn {
     width: 200px;
-    margin-left: 10%;
+    margin-left: 16%;
   }
 }
 @media screen and (max-width: 480px) {

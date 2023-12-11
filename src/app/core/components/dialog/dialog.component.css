@@ -85,7 +85,6 @@ mat-dialog-content {
 .uploadImg {
   display: flex;
   flex-direction: column;
-  height: 240px;
 }
 
 .closeBt {
@@ -225,7 +224,7 @@ ul.reviewMessage li:before {
   }
 }
 
-@media only screen and (max-width: 650px) {
+@media only screen and (max-width: 649px) {
   .viewDeviceImages {
     width: 100px;
     height: 100px;
@@ -261,8 +260,8 @@ ul.reviewMessage li:before {
   }
 }
 
-@media only screen and (max-width: 492px) {
-  .close-button-container {
+@media only screen and (max-width: 505px) {
+  ::ng-deep .close-button-container {
     width: 135%;
     height: 40px;
     display: flex;
@@ -270,7 +269,10 @@ ul.reviewMessage li:before {
     margin-top: 15px;
     margin-bottom: 3px;
   }
-
+  ::ng-deep .mat-dialog-container{
+    display: flex;
+    justify-content: center;
+  }
   .upload-img-container {
     display: flex;
     flex-direction: column;
@@ -354,7 +356,7 @@ ul.reviewMessage li:before {
 
   .button-container {
     width: 270px;
-    margin-left: 15%;
+    margin-left: 25%;
   }
 
   .close-button-container {
@@ -365,7 +367,7 @@ ul.reviewMessage li:before {
     font-size: 8px;
     padding: 0.5px 3px;
     margin: 5px;
-    min-width: 200px;
+    min-width: 124px;
   }
 
   button[mat-icon-button] {
