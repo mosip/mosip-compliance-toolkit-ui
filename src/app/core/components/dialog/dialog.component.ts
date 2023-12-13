@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { Subscription, flatMap } from 'rxjs';
 import Utils from 'src/app/app.utils';
 import { AppConfigService } from 'src/app/app-config.service';
+import { LogoutService } from '../../services/logout.service';
 
 @Component({
   selector: 'app-dialog',
@@ -59,7 +60,8 @@ export class DialogComponent implements OnInit {
     private dataService: DataService,
     private dialog: MatDialog,
     private translate: TranslateService,
-    private userProfileService: UserProfileService
+    private userProfileService: UserProfileService,
+    private logoutservice: LogoutService
   ) {
     dialogRef.disableClose = true;
 
@@ -465,5 +467,9 @@ export class DialogComponent implements OnInit {
 
   checkHashAndWebsiteUrl() {
     this.dialogRef.close(false);
+  }
+  onOkClick(): void {
+    this.dialogRef.close();
+    this.logoutservice.logout();
   }
 }
