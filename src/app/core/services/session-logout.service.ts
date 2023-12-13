@@ -120,9 +120,9 @@ export class SessionLogoutService {
     this.dialogref.close();
     this.dialog.closeAll();
     this.popUpPostLogOut();
+    this.userIdle.stopWatching();
 
     setTimeout(() => {
-      this.userIdle.stopWatching();
       this.logoutservice.logout();
     }, 5000);
   }
