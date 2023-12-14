@@ -23,26 +23,12 @@ export class AppConfigService {
       (response: any) => {
         //console.log(response);
         this.appConfig = { ...this.appConfig, ...response["response"] };
-        this.setConfig(this.appConfig);
         //console.log(this.appConfig);
       },
       (error) => {
         console.log(error);
       }
     );
-  }
-
-  public setConfig(configJson: any) {
-    localStorage.setItem('config', JSON.stringify(configJson));
-  }
-
-  public getConfigByKey(key: string) {
-    const configString = localStorage.getItem('config');
-    if (configString) {
-      const config = JSON.parse(configString);
-      return config[key];
-    }
-    return null;
   }
 
   getConfig() {

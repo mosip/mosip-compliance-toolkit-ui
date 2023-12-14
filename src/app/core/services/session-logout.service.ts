@@ -21,12 +21,12 @@ export class SessionLogoutService {
   private messageAutoLogout = new BehaviorSubject({});
   currentMessageAutoLogout = this.messageAutoLogout.asObservable();
   isActive = false;
-  timer = new UserIdleConfig();
+  userIdleTimer = new UserIdleConfig();
   isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
 
-  idle: number;
-  timeout: number;
-  ping: number;
+  idleTimeout: number;
+  idleTimer: number;
+  idlePing: number;
   dialogref: any;
   dialogreflogout: any;
 
@@ -43,14 +43,15 @@ export class SessionLogoutService {
    */
   getValues() {
     //  Convert minutes to seconds for idle, timeout, and use the ping value as it is in seconds.
-    (this.idle = Number(
-      this.configservice.getConfigByKey(appConstants.SESSION_LOGOUT_IDLE) * 60
+    let config = this.configservice.getConfig();
+    (this.idleTimeout = Number(
+       config[appConstants.SESSION_IDLE_TIMEOUT] * 60
     )),
-      (this.timeout = Number(
-        this.configservice.getConfigByKey(appConstants.SESSION_LOGOUT_TIMEOUT) * 60
+      (this.idleTimer = Number(
+        config[appConstants.SESSION_IDLE_TIMER] * 60
       )),
-      (this.ping = Number(
-        this.configservice.getConfigByKey(appConstants.SESSION_LOGOUT_PING)
+      (this.idlePing = Number(
+        config[appConstants.SESSION_IDLE_PING]
       ));
   }
 
@@ -70,10 +71,10 @@ export class SessionLogoutService {
    */
   setValues() {
     this.userIdle.stopWatching();
-    this.timer.idle = this.idle;
-    this.timer.ping = this.ping;
-    this.timer.timeout = this.timeout;
-    this.userIdle.setConfigValues(this.timer);
+    this.userIdleTimer.idle = this.idleTimeout;
+    this.userIdleTimer.ping = this.idlePing;
+    this.userIdleTimer.timeout = this.idleTimer;
+    this.userIdle.setConfigValues(this.userIdleTimer);
   }
 
   /**
@@ -104,7 +105,6 @@ export class SessionLogoutService {
 
     this.userIdle.onTimeout().subscribe(() => {
       if (!this.isActive) {
-        console.log(this.isAndroidAppMode);
         if (!this.isAndroidAppMode) {
           this.onLogOut();
         } else {
