@@ -105,6 +105,6 @@ export const NO_DATA_AVAILABLE = 'no_data_available';
 export const LOADING = 'loading';
 
 //session idle values from config
-export const SESSION_LOGOUT_IDLE = "sessionLogoutIdle";
-export const SESSION_LOGOUT_TIMEOUT = 'sessionLogoutTimer';
-export const SESSION_LOGOUT_PING = 'sessionLogoutPing';
+export const SESSION_LOGOUT_IDLE = "sessionIdleTimeout";
+export const SESSION_LOGOUT_TIMEOUT = 'sessionIdleTimer';
+export const SESSION_LOGOUT_PING = 'sessionIdlePing';
