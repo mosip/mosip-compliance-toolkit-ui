@@ -103,3 +103,8 @@ export const REPORT_STATUS_APPROVED = "approved";
 export const REPORT_STATUS_REJECTED = "rejected";
 export const NO_DATA_AVAILABLE = 'no_data_available';
 export const LOADING = 'loading';
+
+//session idle values from config
+export const SESSION_LOGOUT_IDLE = "sessionIdleTimeout";
+export const SESSION_LOGOUT_TIMEOUT = 'sessionIdleTimer';
+export const SESSION_LOGOUT_PING = 'sessionIdlePing';

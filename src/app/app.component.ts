@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import {
   RouterEvent,
   NavigationStart,
@@ -9,6 +9,8 @@ import {
 } from '@angular/router';
 import { filter } from 'rxjs';
 import { AppConfigService } from './app-config.service';
+import { SessionLogoutService } from './core/services/session-logout.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -23,15 +25,24 @@ export class AppComponent {
 
   subscribed: any;
 
+  subscriptions: Subscription[] = [];
+
+
   constructor(
     private router: Router,
     private appConfigService: AppConfigService,
+    private sessionLogoutService: SessionLogoutService
 
   ) {
     this.subscribed = router.events.subscribe(event => {
       this.navigationInterceptor(event);
     });
     
+  }
+
+  ngOnInit() {
+    this.subscriptions.push(this.sessionLogoutService.currentMessageAutoLogout.subscribe(() => { }));
+    this.sessionLogoutService.changeMessage({ timerFired: false });
   }
 
   navigationInterceptor(event: any): void {
@@ -51,5 +62,18 @@ export class AppComponent {
     if (event instanceof NavigationError) {
       this.loading = false;
     }
+  }
+
+  @HostListener('mouseover')
+  @HostListener('keypress')
+  @HostListener('click')
+  @HostListener('document:keypress', ['$event'])
+  @HostListener('document:mousemove', ['$event'])
+  onMouseClick() {
+    this.sessionLogoutService.setisActive(true);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 }
