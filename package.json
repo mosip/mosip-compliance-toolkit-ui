@@ -38,7 +38,7 @@
     "crypto-js": "^4.2.0",
     "js-sha256": "0.9.0",
     "jwt-decode": "^3.1.2",
-    "moment": "^2.29.4", 
+    "moment": "^2.29.4",
     "mosip-sbi-capacitor-plugin": "^1.1.4",
     "ngx-cookie-service": "^13.2.0",
     "promise-polyfill": "8.1.3",
