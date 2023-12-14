@@ -26,7 +26,6 @@ export class LogoutService {
       return true;
     } else {
       window.location.href = `${this.appService.getConfig().SERVICES_BASE_URL}${this.appService.getConfig().logout}?redirecturi=` + btoa(window.location.href);
-      localStorage.removeItem('config');
     }
     //let adminUrl = this.appService.getConfig().toolkitUiUrl;
     /*
