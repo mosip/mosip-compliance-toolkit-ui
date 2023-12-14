@@ -64,11 +64,9 @@ export class AppComponent {
     }
   }
 
-  @HostListener('mouseover')
   @HostListener('keypress')
-  @HostListener('click')
+  @HostListener('document:mousedown', ['$event'])
   @HostListener('document:keypress', ['$event'])
-  @HostListener('document:mousemove', ['$event'])
   onMouseClick() {
     this.sessionLogoutService.setisActive(true);
   }
