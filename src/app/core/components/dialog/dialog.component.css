@@ -20,6 +20,12 @@ mat-dialog-content {
   vertical-align: middle;
 }
 
+.ok-button-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
 .formContainer {
   background-color: white;
   margin-top: 10px;

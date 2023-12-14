@@ -14,6 +14,7 @@ import { BreadcrumbService } from 'xng-breadcrumb';
 import { DialogComponent } from 'src/app/core/components/dialog/dialog.component';
 import { AppConfigService } from 'src/app/app-config.service';
 import { Subscription } from 'rxjs';
+import { SessionLogoutService } from 'src/app/core/services/session-logout.service';
 
 export interface ProjectData {
   id: string;
@@ -52,6 +53,8 @@ export class ProjectsDashboardComponent implements OnInit {
   buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : {'float': 'right'};
   resourceBundleJson: any = {};
   isAdmin: boolean = false;
+  message:any = {};
+  
   constructor(
     private appConfigService: AppConfigService,
     private router: Router,
@@ -59,7 +62,8 @@ export class ProjectsDashboardComponent implements OnInit {
     private breadcrumbService: BreadcrumbService,
     private dialog: MatDialog,
     private userProfileService: UserProfileService,
-    private dataService: DataService
+    private dataService: DataService,
+    private sessionLogoutService: SessionLogoutService
   ) {
   }
 
@@ -78,6 +82,22 @@ export class ProjectsDashboardComponent implements OnInit {
     }
     this.dataSource.sort = this.sort;
     this.dataLoaded = true;
+    this.sessionIdleTimeout();
+  }
+
+  sessionIdleTimeout() {
+    const subs = this.sessionLogoutService.currentMessageAutoLogout.subscribe(
+      (message) => (this.message = message)
+    );
+    this.subscriptions.push(subs);
+    if (!this.message["timerFired"]) {
+      this.sessionLogoutService.getValues();
+      this.sessionLogoutService.setValues();
+      this.sessionLogoutService.keepWatching();
+    } else {
+      this.sessionLogoutService.getValues();
+      this.sessionLogoutService.continueWatching();
+    }
   }
 
   initBreadCrumb() {
@@ -98,7 +118,6 @@ export class ProjectsDashboardComponent implements OnInit {
         this.dataService.getProjects(projectType).subscribe(
           (response: any) => {
             (async () => {
-                console.log(response);
                 let dataArr = response['response']['projects'];
                 let tableData = [];
                 for (let row of dataArr) {
