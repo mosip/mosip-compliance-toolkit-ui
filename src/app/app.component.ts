@@ -40,8 +40,7 @@ export class AppComponent {
     
   }
 
-  async ngOnInit() {
-    await this.appConfigService.loadAppConfig();
+  ngOnInit() {
     this.subscriptions.push(this.sessionLogoutService.currentMessageAutoLogout.subscribe(() => { }));
     this.sessionLogoutService.changeMessage({ timerFired: false });
   }
