@@ -38,7 +38,9 @@
 		"projectName": "Project Name",
 		"addProject": "Add Project",
 		"verifyMessage": "Verify the Hash and Website values before proceeding. If the values are correct, save the project.",
-		"saveBtn":  "Save"
+		"saveBtn":  "Save",
+		"sessionInactiveMessage": "You will be timed out in 60 secs due to inactivity. Please click anywhere to re-activate your session",
+		"sessionInactivityLogoutMessage": "You have been logged out due to inactivity."
 	},
 	"breadcrumb": {
 		"home": "Home",

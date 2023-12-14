@@ -305,4 +305,17 @@
         </div>
     </div>
 </div>
+<div *ngIf="input.case === 'SESSION_TIMEOUT_POPUP'">
+    <mat-dialog-content>
+        <p>{{ 'dialogMessages.sessionInactiveMessage' | translate }}</p>
+    </mat-dialog-content>
+</div>
+<div *ngIf="input.case === 'POSTLOGOUT_POPUP'">
+    <mat-dialog-content>
+        <p>{{ 'dialogMessages.sessionInactivityLogoutMessage' | translate }}</p>
+    </mat-dialog-content>
+    <mat-dialog-actions class="ok-button-container">
+        <button mat-flat-button color="accent" (click)="onOkClick()">{{ 'dialogMessages.close' | translate }}</button>
+    </mat-dialog-actions>
+</div>
 </div>

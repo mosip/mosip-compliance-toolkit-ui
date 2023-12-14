@@ -38,7 +38,9 @@
 		"projectName": "nom du projet",
 		"addProject": "Ajouter un projet",
 		"verifyMessage": "Vérifiez les valeurs de hachage et de site Web avant de continuer. Si les valeurs sont correctes, enregistrez le projet.",
-		"saveBtn":  "Sauvegarder"
+		"saveBtn":  "Sauvegarder",
+		"sessionInactiveMessage": "Votre temps sera écoulé dans 60 secondes en raison d'une inactivité. Veuillez cliquer n'importe où pour réactiver votre session",
+		"sessionInactivityLogoutMessage": "Vous avez été déconnecté pour cause d'inactivité."
 	},
 	"breadcrumb": {
 		"home": "Maison",
