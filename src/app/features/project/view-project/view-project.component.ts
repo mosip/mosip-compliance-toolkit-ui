@@ -143,10 +143,10 @@ export class ViewProjectComponent implements OnInit {
     this.allControls.forEach((controlId) => {
       this.projectForm.addControl(
         controlId,
-        new FormControl({ 
-          value: '', 
-          disabled: 
-          (controlId == 'sbiHash' && !this.isReportAlreadySubmitted) ? false : true,
+        new FormControl({
+          value: '',
+          disabled:
+            (controlId == 'sbiHash' && !this.isReportAlreadySubmitted) ? false : true,
         })
       );
     });
@@ -324,7 +324,9 @@ export class ViewProjectComponent implements OnInit {
       //Save the project in db
       console.log('valid');
       if (projectType == appConstants.SBI) {
-        const projectData = Utils.populateSbiProjectData(this.projectForm, this.projectFormData.id, this.projectFormData.deviceImage1, this.projectFormData.deviceImage2, this.projectFormData.deviceImage3, this.projectFormData.deviceImage4);
+        const projectData = Utils.populateSbiProjectData(this.projectForm, this.projectFormData.id,
+          this.projectFormData.deviceImage1, this.projectFormData.deviceImage2, this.projectFormData.deviceImage3, 
+          this.projectFormData.deviceImage4, this.isAndroidAppMode);
         let request = {
           id: appConstants.SBI_PROJECT_UPDATE_ID,
           version: appConstants.VERSION,

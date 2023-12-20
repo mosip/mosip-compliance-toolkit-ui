@@ -107,9 +107,10 @@ export class DataService {
     specVersion: string,
     purpose: string,
     deviceType: string,
-    deviceSubType: string
+    deviceSubType: string,
+    isAndroidAppMode: boolean
   ) {
-    let url = `${this.SERVICES_BASE_URL}getSbiTestCases?specVersion=${specVersion}&purpose=${purpose}&deviceType=${deviceType}&deviceSubType=${deviceSubType}`;
+    let url = `${this.SERVICES_BASE_URL}getSbiTestCases?specVersion=${specVersion}&purpose=${purpose}&deviceType=${deviceType}&deviceSubType=${deviceSubType}&isAndroid=${isAndroidAppMode}`;
     return this.httpClient.get(url);
   }
 

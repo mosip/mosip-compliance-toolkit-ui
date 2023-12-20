@@ -117,7 +117,8 @@ export class AddCollectionsComponent implements OnInit {
             this.sbiProjectData.sbiVersion,
             this.sbiProjectData.purpose,
             this.sbiProjectData.deviceType,
-            this.sbiProjectData.deviceSubType
+            this.sbiProjectData.deviceSubType,
+            this.isAndroidAppMode
           )
           .subscribe(
             (response: any) => {

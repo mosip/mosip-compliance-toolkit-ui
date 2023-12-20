@@ -7,6 +7,7 @@ export class SbiProjectModel {
     public purpose: string,
     public deviceType: string,
     public deviceSubType: string,
+    public isAndroidSbi: string,
     public deviceImage1: string,
     public deviceImage2: string,
     public deviceImage3: string,
