@@ -14,6 +14,7 @@ import { Subscription, flatMap } from 'rxjs';
 import Utils from 'src/app/app.utils';
 import { AppConfigService } from 'src/app/app-config.service';
 import { LogoutService } from '../../services/logout.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-dialog',
@@ -51,6 +52,7 @@ export class DialogComponent implements OnInit {
   adminApproveComments: string = '';
   adminRejectComments: string = '';
   rejectReport: boolean = false;
+  isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
 
   constructor(
     private router: Router,
@@ -210,7 +212,9 @@ export class DialogComponent implements OnInit {
           id: appConstants.SBI_PROJECT_UPDATE_ID,
           version: appConstants.VERSION,
           requesttime: new Date().toISOString(),
-          request: Utils.populateSbiProjectData(this.projectForm, this.projectFormData.id, this.deviceImage1, this.deviceImage2, this.deviceImage3, this.deviceImage4),
+          request: Utils.populateSbiProjectData(this.projectForm, this.projectFormData.id, 
+            this.deviceImage1, this.deviceImage2, this.deviceImage3, this.deviceImage4, 
+            this.isAndroidAppMode),
         };
         await this.updateSbiProject(request);
       }
