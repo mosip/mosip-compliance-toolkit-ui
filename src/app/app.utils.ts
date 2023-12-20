@@ -647,7 +647,7 @@ export default class Utils {
   }
 
   static populateSbiProjectData(projectForm: FormGroup, projectId: string, deviceImage1: any, deviceImage2: any,
-    deviceImage3: any, deviceImage4: any) {
+    deviceImage3: any, deviceImage4: any, isAndroidAppMode: boolean) {
     const projectData: SbiProjectModel = {
       id: projectId,
       name: projectForm.controls['name'].value,
@@ -656,6 +656,7 @@ export default class Utils {
       purpose: projectForm.controls['sbiPurpose'].value,
       deviceType: projectForm.controls['deviceType'].value,
       deviceSubType: projectForm.controls['deviceSubType'].value,
+      isAndroidSbi: isAndroidAppMode ? "yes" : "no",
       deviceImage1: deviceImage1,
       deviceImage2: deviceImage2,
       deviceImage3: deviceImage3,

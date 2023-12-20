@@ -5,15 +5,12 @@ import { Router } from '@angular/router';
 import { DataService } from '../../../core/services/data-service';
 import * as appConstants from 'src/app/app.constants';
 import { Subscription } from 'rxjs';
-import { SbiProjectModel } from 'src/app/core/models/sbi-project';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import Utils from 'src/app/app.utils';
-import { SdkProjectModel } from 'src/app/core/models/sdk-project';
 import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { BreadcrumbService } from 'xng-breadcrumb';
-import { AbisProjectModel } from 'src/app/core/models/abis-project';
 import { AppConfigService } from 'src/app/app-config.service';
 import { DialogComponent } from 'src/app/core/components/dialog/dialog.component';
 
@@ -217,7 +214,8 @@ export class AddProjectComponent implements OnInit {
                   id: appConstants.SBI_PROJECT_ADD_ID,
                   version: appConstants.VERSION,
                   requesttime: new Date().toISOString(),
-                  request: Utils.populateSbiProjectData(this.projectForm, '', this.deviceImage1, this.deviceImage2, this.deviceImage3, this.deviceImage4),
+                  request: Utils.populateSbiProjectData(this.projectForm, '', this.deviceImage1, this.deviceImage2, 
+                  this.deviceImage3, this.deviceImage4, this.isAndroidAppMode),
                 };
                 this.dataLoaded = false;
                 this.dataSubmitted = true;
