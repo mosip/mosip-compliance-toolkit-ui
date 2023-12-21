@@ -24,6 +24,7 @@ export interface ProjectData {
   crDate: Date;
   lastRunDt: Date;
   lastRunStatus: string;
+  isAndroidSbi: string;
   lastRunId: string;
 }
 
@@ -121,17 +122,27 @@ export class ProjectsDashboardComponent implements OnInit {
                 let dataArr = response['response']['projects'];
                 let tableData = [];
                 for (let row of dataArr) {
-                  if (row.lastRunId) {
-                    let runStatus = await this.getTestRunStatus(row.lastRunId);
-                    tableData.push({
-                      ...row,
-                      lastRunStatus: runStatus,
-                    });
-                  } else {
-                    tableData.push({
-                      ...row,
-                      lastRunStatus: '',
-                    });
+                  const isAndroidSbi = row["isAndroidSbi"];
+                  let proceed = false;
+                  if (this.isAndroidAppMode && "yes" == isAndroidSbi) {
+                    proceed = true;
+                  }
+                  else if (!this.isAndroidAppMode && "no" == isAndroidSbi) {
+                    proceed = true;
+                  }
+                  if (proceed) {
+                    if (row.lastRunId) {
+                      let runStatus = await this.getTestRunStatus(row.lastRunId);
+                      tableData.push({
+                        ...row,
+                        lastRunStatus: runStatus,
+                      });
+                    } else {
+                      tableData.push({
+                        ...row,
+                        lastRunStatus: '',
+                      });
+                    }
                   }
                 }
                 this.dataSource = new MatTableDataSource(tableData);
