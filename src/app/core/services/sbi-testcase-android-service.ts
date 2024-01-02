@@ -138,93 +138,92 @@ export class SbiTestCaseAndroidService {
   async callSBIMethodAndroid(testcaseMethodName: string, sbiDeviceType: string, callbackId: string, methodRequestStr: string) {
     console.log("in callSBIMethodAndroid method");
     return new Promise((resolve, reject) => {
-      MosipSbiCapacitorPlugin.startActivity({
-        methodType: appConstants.SBI_METHOD_DISCOVER,
-        action: appConstants.DISCOVERY_INTENT_ACTION,
-        requestKey: appConstants.SBI_INTENT_REQUEST_KEY,
-        requestValue: sbiDeviceType
-      }).then((discoverResult: any) => {
-        console.log("discover result recvd");
-        console.log(discoverResult);
-        const discoverStatus = discoverResult[appConstants.STATUS];
-        if (discoverStatus == appConstants.RESULT_OK) {
-          const discoverResp = JSON.parse(discoverResult[appConstants.RESPONSE]);
-          if (testcaseMethodName == appConstants.SBI_METHOD_DISCOVER) {
+      if (testcaseMethodName == appConstants.SBI_METHOD_DISCOVER) {
+        MosipSbiCapacitorPlugin.startActivity({
+          methodType: appConstants.SBI_METHOD_DISCOVER,
+          action: appConstants.DISCOVERY_INTENT_ACTION,
+          requestKey: appConstants.SBI_INTENT_REQUEST_KEY,
+          requestValue: sbiDeviceType
+        }).then((discoverResult: any) => {
+          console.log("discover result recvd");
+          console.log(discoverResult);
+          const discoverStatus = discoverResult[appConstants.STATUS];
+          if (discoverStatus == appConstants.RESULT_OK) {
+            const discoverResp = JSON.parse(discoverResult[appConstants.RESPONSE]);
             resolve({
               methodResponse: discoverResp,
               methodUrl: appConstants.DISCOVERY_INTENT_ACTION
             });
+          } else {
+            resolve(false);
           }
-          if (testcaseMethodName == appConstants.SBI_METHOD_DEVICE_INFO) {
-            MosipSbiCapacitorPlugin.startActivity({
-              methodType: appConstants.SBI_METHOD_DEVICE_INFO,
-              action: callbackId + appConstants.D_INFO_INTENT_ACTION
-            }).then((deviceInfoResult: any) => {
-              console.log("device info result recvd");
-              const deviceInfoStatus = deviceInfoResult[appConstants.STATUS];
-              if (deviceInfoStatus == appConstants.RESULT_OK) {
-                const deviceInfoResp = JSON.parse(deviceInfoResult[appConstants.RESPONSE]);
-                resolve({
-                  methodResponse: deviceInfoResp,
-                  methodUrl: callbackId + appConstants.D_INFO_INTENT_ACTION
-                });
-              } else {
-                resolve(false);
-              }
-            }).catch((error) => { reject(error) });
-          }
-          if (testcaseMethodName == appConstants.SBI_METHOD_RCAPTURE) {
-            MosipSbiCapacitorPlugin.startActivity({
-              methodType: appConstants.SBI_METHOD_RCAPTURE,
-              action: callbackId + appConstants.R_CAPTURE_INTENT_ACTION,
-              requestKey: appConstants.SBI_INTENT_REQUEST_KEY,
-              requestValue: methodRequestStr
-            }).then((rCaptureResult: any) => {
-              console.log("r capture result recvd");
-              const rCaptureStatus = rCaptureResult[appConstants.STATUS];
-              if (rCaptureStatus == appConstants.RESULT_OK) {
-                const rCaptureResp = JSON.parse(rCaptureResult[appConstants.RESPONSE]);
-                resolve({
-                  methodResponse: rCaptureResp,
-                  methodUrl: callbackId + appConstants.R_CAPTURE_INTENT_ACTION
-                });
-              } else {
-                resolve(false);
-              }
-            }).catch((error) => { reject(error) });
-          }
-          if (testcaseMethodName == appConstants.SBI_METHOD_CAPTURE) {
-            MosipSbiCapacitorPlugin.startActivity({
-              methodType: appConstants.SBI_METHOD_CAPTURE,
-              action: callbackId + appConstants.CAPTURE_INTENT_ACTION,
-              requestKey: appConstants.SBI_INTENT_REQUEST_KEY,
-              requestValue: methodRequestStr
-            }).then((captureResult: any) => {
-              console.log("capture result recvd");
-              const captureStatus = captureResult[appConstants.STATUS];
-              if (captureStatus == appConstants.RESULT_OK) {
-                const captureResp = JSON.parse(captureResult[appConstants.RESPONSE]);
-                resolve({
-                  methodResponse: captureResp,
-                  methodUrl: callbackId + appConstants.CAPTURE_INTENT_ACTION
-                });
-              } else {
-                resolve(false);
-              }
-            }).catch((error) => { reject(error) });
-          }
-        } else {
-          resolve(false);
-        }
-      })
-        .catch(async (err) => {
+        }).catch(async (err) => {
           resolve(false);
         })
-    });
+      }
+      if (testcaseMethodName == appConstants.SBI_METHOD_DEVICE_INFO) {
+        MosipSbiCapacitorPlugin.startActivity({
+          methodType: appConstants.SBI_METHOD_DEVICE_INFO,
+          action: callbackId + appConstants.D_INFO_INTENT_ACTION
+        }).then((deviceInfoResult: any) => {
+          console.log("device info result recvd");
+          const deviceInfoStatus = deviceInfoResult[appConstants.STATUS];
+          if (deviceInfoStatus == appConstants.RESULT_OK) {
+            const deviceInfoResp = JSON.parse(deviceInfoResult[appConstants.RESPONSE]);
+            resolve({
+              methodResponse: deviceInfoResp,
+              methodUrl: callbackId + appConstants.D_INFO_INTENT_ACTION
+            });
+          } else {
+            resolve(false);
+          }
+        }).catch((error) => { reject(error) });
+      }
+      if (testcaseMethodName == appConstants.SBI_METHOD_RCAPTURE) {
+        MosipSbiCapacitorPlugin.startActivity({
+          methodType: appConstants.SBI_METHOD_RCAPTURE,
+          action: callbackId + appConstants.R_CAPTURE_INTENT_ACTION,
+          requestKey: appConstants.SBI_INTENT_REQUEST_KEY,
+          requestValue: methodRequestStr
+        }).then((rCaptureResult: any) => {
+          console.log("r capture result recvd");
+          const rCaptureStatus = rCaptureResult[appConstants.STATUS];
+          if (rCaptureStatus == appConstants.RESULT_OK) {
+            const rCaptureResp = JSON.parse(rCaptureResult[appConstants.RESPONSE]);
+            resolve({
+              methodResponse: rCaptureResp,
+              methodUrl: callbackId + appConstants.R_CAPTURE_INTENT_ACTION
+            });
+          } else {
+            resolve(false);
+          }
+        }).catch((error) => { reject(error) });
+      }
+      if (testcaseMethodName == appConstants.SBI_METHOD_CAPTURE) {
+        MosipSbiCapacitorPlugin.startActivity({
+          methodType: appConstants.SBI_METHOD_CAPTURE,
+          action: callbackId + appConstants.CAPTURE_INTENT_ACTION,
+          requestKey: appConstants.SBI_INTENT_REQUEST_KEY,
+          requestValue: methodRequestStr
+        }).then((captureResult: any) => {
+          console.log("capture result recvd");
+          const captureStatus = captureResult[appConstants.STATUS];
+          if (captureStatus == appConstants.RESULT_OK) {
+            const captureResp = JSON.parse(captureResult[appConstants.RESPONSE]);
+            resolve({
+              methodResponse: captureResp,
+              methodUrl: callbackId + appConstants.CAPTURE_INTENT_ACTION
+            });
+          } else {
+            resolve(false);
+          }
+        }).catch((error) => { reject(error) });
+      }
+    })
   }
 
 
-  createRequest(testCase: TestCaseModel, sbiSelectedDevice: string, 
+  createRequest(testCase: TestCaseModel, sbiSelectedDevice: string,
     previousHash: string): any {
     const selectedSbiDevice: SbiDiscoverResponseModel =
       JSON.parse(sbiSelectedDevice);
