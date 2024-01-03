@@ -32,7 +32,7 @@ export class SbiTestCaseAndroidService {
     projectId: string
   ) {
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
-    const methodRequest = this.createRequest(testCase, sbiSelectedDevice, previousHash);
+    const methodRequest = this.createRequest(testCase, sbiSelectedDevice, previousHash, sbiDeviceType);
     let startExecutionTime = new Date().toISOString();
     let executeResponse: any = await this.executeMethod(
       testCase,
@@ -224,12 +224,13 @@ export class SbiTestCaseAndroidService {
 
 
   createRequest(testCase: TestCaseModel, sbiSelectedDevice: string,
-    previousHash: string): any {
+    previousHash: string, sbiDeviceType: string): any {
     const selectedSbiDevice: SbiDiscoverResponseModel =
       JSON.parse(sbiSelectedDevice);
     let request: any = {};
     if (testCase.methodName[0] == appConstants.SBI_METHOD_DISCOVER) {
       //will be taken from "sbiDeviceType"
+      request = {"type": sbiDeviceType};
     }
     if (testCase.methodName[0] == appConstants.SBI_METHOD_DEVICE_INFO) {
       //no params
