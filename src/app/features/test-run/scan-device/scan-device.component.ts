@@ -122,7 +122,6 @@ export class ScanDeviceComponent implements OnInit {
   async scanDevicesAndroid(sbiDeviceType: string) {
     this.scanComplete = false;
     console.log("in scanDevicesAndroid method");
-    console.log("calling mock sbi");
     return new Promise((resolve, reject) => {
       Toast.show({
         text: 'Searching for SBI devices for : ' + sbiDeviceType,
