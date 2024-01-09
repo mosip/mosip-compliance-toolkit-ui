@@ -367,6 +367,10 @@ export default class Utils {
           "newUnknownValue": "testing with newUnknownValue"
         }
         newRequest = request
+      } 
+      else if (invalidKey == 'biometricTypes') {
+        request['type'] = request['type'].toUpperCase();
+        newRequest = request;
       }
       else if (invalidKey == 'incorrectReferenceURL') {
         let correctVal = request["referenceURL"];

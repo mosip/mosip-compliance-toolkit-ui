@@ -1288,6 +1288,10 @@
 			"testName": "Quality Assessment for Auth capture - Single Iris - Right Iris - senior(60+) - 10 persons",
 			"testDescription": "Quality Assessment Testcase to validate the biometrics captured by Capture method for right iris for - senior(60+) - 10 persons <br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place your right iris infront of the iris scanner<br> 3. Repeat above steps , for next person, after clicking on Continue button."
 		},
+		"SBI1196": {
+			"testName": "Discover device - Invalid Biometric Types",
+			"testDescription": "Test to perform validation for the device discovery interface with invalid request"
+		},
 		"SDK2000": {
 			"testName": "Init Test",
 			"testDescription": "Initialise Bio SDK Services"
