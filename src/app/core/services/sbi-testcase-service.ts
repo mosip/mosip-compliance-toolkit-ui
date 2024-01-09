@@ -226,6 +226,7 @@ export class SbiTestCaseService {
       request = {
         type: selectedSbiDevice.digitalIdDecoded.type,
       };
+      request = Utils.handleInvalidRequestAttribute(testCase, request);
     }
     if (testCase.methodName[0] == appConstants.SBI_METHOD_DEVICE_INFO) {
       //no params
