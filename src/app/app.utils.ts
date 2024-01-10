@@ -368,6 +368,10 @@ export default class Utils {
         }
         newRequest = request
       }
+      else if (invalidKey == 'biometricTypes') {
+        request['type'] = request['type'].toUpperCase();
+        newRequest = request;
+      }
       else if (invalidKey == 'incorrectReferenceURL') {
         let correctVal = request["referenceURL"];
         let incorrectVal = correctVal.replace("datashare", "datashare1");

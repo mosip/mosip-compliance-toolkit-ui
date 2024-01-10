@@ -1288,6 +1288,10 @@
 			"testName": "Évaluation de la qualité pour la capture d'authentification - Iris unique - Iris droit - senior (60+) - 10 personnes",
 			"testDescription": "Test d'évaluation de la qualité pour valider les données biométriques capturées par la méthode de capture pour l'iris droit pour - senior (60+) - 10 personnes <br>Étapes :<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. 2. Placez votre iris droit devant le scanner d'iris<br> 3. Répétez les étapes ci-dessus, pour la personne suivante, après avoir cliqué sur le bouton Continuer."
 		},
+		"SBI1196": {
+			"testName": "Découvrir l'appareil - Types biométriques non valides",
+			"testDescription": "Test pour effectuer la validation de l'interface de découverte de périphérique avec une demande non valide"
+		},
 		"SDK2000": {
 			"testName": "Test d'initialisation",
 			"testDescription": "Initialise Bio SDK Services"
