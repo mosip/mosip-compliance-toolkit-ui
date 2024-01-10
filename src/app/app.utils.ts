@@ -62,14 +62,18 @@ export default class Utils {
   static getDecodedDiscoverDevice(deviceData: any) {
     try {
       //console.log(deviceData);
-      const digitalIdDecoded = JSON.parse(atob(deviceData.digitalId));
-      const deviceDataDecoded: SbiDiscoverResponseModel = {
-        ...deviceData,
-        digitalIdDecoded: digitalIdDecoded,
-      };
-      //console.log('decoded');
-      //console.log(deviceDataDecoded);
-      return deviceDataDecoded;
+      if (deviceData.digitalId) {
+        const digitalIdDecoded = JSON.parse(atob(deviceData.digitalId));
+        const deviceDataDecoded: SbiDiscoverResponseModel = {
+          ...deviceData,
+          digitalIdDecoded: digitalIdDecoded,
+        };
+        //console.log('decoded');
+        //console.log(deviceDataDecoded);
+        return deviceDataDecoded;
+      } else {
+        return deviceData;
+      }
     } catch (error) {
       console.log(error);
       return null;
