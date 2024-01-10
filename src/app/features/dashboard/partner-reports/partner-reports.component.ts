@@ -119,7 +119,6 @@ export class PartnerReportsComponent implements OnInit {
         'partnerComments',
         'reviewDtimes',
         'reportStatus',
-        'downloadButton',
         'runId',
         'adminComments',
         'approveRejectDtimes'
@@ -134,7 +133,6 @@ export class PartnerReportsComponent implements OnInit {
         'partnerComments',
         'reviewDtimes',
         'reportStatus',
-        'downloadButton',
         'runId',
         'approveButton',
         'rejectButton'

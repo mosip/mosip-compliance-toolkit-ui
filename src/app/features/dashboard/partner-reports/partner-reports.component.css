@@ -103,58 +103,60 @@ th {
 .mat-column-partnerId {
     word-wrap: break-word !important;
     white-space: unset !important;
-    flex: 0 0 6% !important;
-    width: 6% !important;
+    flex: 0 0 9% !important;
+    width: 9% !important;
     overflow-wrap: break-word;
 }
 .mat-column-orgName {
     word-wrap: break-word !important;
     white-space: unset !important;
-    flex: 0 0 6% !important;
-    width: 6% !important;
+    flex: 0 0 9% !important;
+    width: 9% !important;
     overflow-wrap: break-word;
+    padding: 15px;
 }
 .mat-column-projectType {
     word-wrap: break-word !important;
     white-space: unset !important;
-    flex: 0 0 5% !important;
-    width: 5% !important;
+    flex: 0 0 7% !important;
+    width: 7% !important;
     overflow-wrap: break-word;
+    padding: 15px;
 }
 .mat-column-projectName {
     word-wrap: break-word !important;
     white-space: unset !important;
-    flex: 0 0 8% !important;
-    width: 8% !important;
+    flex: 0 0 11% !important;
+    width: 11% !important;
     overflow-wrap: break-word;
 }
 .mat-column-reportStatus {
     word-wrap: break-word !important;
     white-space: unset !important;
-    flex: 0 0 8% !important;
-    width: 8% !important;
+    flex: 0 0 10% !important;
+    width: 10% !important;
     overflow-wrap: break-word;
 }
 .mat-column-reviewDtimes {
     word-wrap: break-word !important;
     white-space: unset !important;
-    flex: 0 0 12% !important;
-    width: 12% !important;
+    flex: 0 0 14% !important;
+    width: 14% !important;
     overflow-wrap: break-word;
+    padding: 15px;
 }
 .mat-column-approveRejectDtimes {
     word-wrap: break-word !important;
     white-space: unset !important;
-    flex: 0 0 12% !important;
-    width: 12% !important;
+    flex: 0 0 14% !important;
+    width: 14% !important;
     overflow-wrap: break-word;
 }
 .mat-column-runId {
-    word-wrap: break-word !important;
-    white-space: unset !important;
-    flex: 0 0 8% !important;
-    width: 8% !important;
-    overflow-wrap: break-word;
+    width: 15% !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .mat-column-approveButton {
     word-wrap: break-word !important;
@@ -170,7 +172,9 @@ th {
     width: 5% !important;
     overflow-wrap: break-word;
 }
-
+.mat-header-cell {
+    padding: 15px;
+}
 .link {
     text-decoration: underline;
     cursor: pointer;

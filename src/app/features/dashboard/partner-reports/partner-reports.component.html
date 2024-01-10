@@ -92,18 +92,6 @@
                     </span>
                 </td>
             </ng-container>
-
-            <ng-container matColumnDef="downloadButton">
-                <th mat-header-cell *matHeaderCellDef class="center-header-cell"> {{ "partnerReport.downloadReport" |
-                    translate }} </th>
-                <td mat-cell *matCellDef="let element">
-                    <div class="download-button-container">
-                        <button mat-flat-button (click)="fetchPartnerReport(element)">
-                            <mat-icon [ngStyle]="{color: 'grey'}">cloud_download</mat-icon>
-                        </button>
-                    </div>
-                </td>
-            </ng-container>
             <ng-container matColumnDef="approveButton">
                 <th mat-header-cell *matHeaderCellDef class="center-header-cell">
                     {{ "partnerReport.approveButton" | translate }}
@@ -136,12 +124,15 @@
                     <mat-icon>content_copy</mat-icon>
                 </button> -->
                 <a class="link" (click)="viewPartnerTestRun(element)">{{"partnerReport.viewTestRun"|translate}}</a>
+                <button mat-flat-button (click)="fetchPartnerReport(element)">
+                    <mat-icon [ngStyle]="{color: 'grey'}">cloud_download</mat-icon>
+                </button>
             </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" colspan="13"  *ngIf="dataLoaded">
+            <td class="mat-cell" colspan="12"  *ngIf="dataLoaded">
                 {{ "partnerReport.projectRow" | translate }}
             </td>
         </tr>
