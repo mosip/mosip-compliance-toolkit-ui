@@ -231,7 +231,6 @@ export class SbiTestCaseAndroidService {
     if (testCase.methodName[0] == appConstants.SBI_METHOD_DISCOVER) {
       //will be taken from "sbiDeviceType"
       request = {"type": sbiDeviceType};
-      request = Utils.handleInvalidRequestAttribute(testCase, request);
     }
     if (testCase.methodName[0] == appConstants.SBI_METHOD_DEVICE_INFO) {
       //no params
