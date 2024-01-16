@@ -1292,6 +1292,16 @@
 			"testName": "Discover device - Invalid Biometric Types",
 			"testDescription": "Test to perform validation for the device discovery interface with invalid request"
 		},
+		"SBI1197": {
+			"testName": "Registration capture - Left Slap - without bioSubTypes",
+			"testDescription": "Test to validate the RCapture interface for Left Slap Fingerprints without bioSubTypes<br><br>Steps:<br>1. Click on Start Streaming button. <br>2. Once streaming is done, click on Inititate Capture button to start the capture.  <br> 3. Place your left slap on the device until the capture completes",
+			"androidTestDescription": "Test to validate the RCapture interface for Left Slap Fingerprints without bioSubTypes<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture.  <br> 2. Place your left slap on the device until the capture completes"
+		},
+		"SBI1198": {
+			"testName": "Registration capture - Double Iris - without bioSubTypes",
+			"testDescription": "Test to validate RCapture interface for Two Iris without bioSubTypes<br><br>Steps:<br>1. Click on Start Streaming button.<br>2. Once streaming is done, click on Inititate Capture button to start the capture <br>3. Place both your iris on the device until the capture completes",
+			"androidTestDescription": "Test to validate RCapture interface for Two Iris without bioSubTypes<br><br>Steps:<br>1. Click on Inititate Capture button to start the capture <br>2. Place both your iris on the device until the capture completes"
+		},
 		"SDK2000": {
 			"testName": "Init Test",
 			"testDescription": "Initialise Bio SDK Services"
