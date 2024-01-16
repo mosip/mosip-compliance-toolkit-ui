@@ -1292,6 +1292,21 @@
 			"testName": "Découvrir l'appareil - Types biométriques non valides",
 			"testDescription": "Test pour effectuer la validation de l'interface de découverte de périphérique avec une demande non valide"
 		},
+		"SBI1197": {
+			"testName": "Capture d'enregistrement - Gifle gauche - sans bioSubTypes",
+			"testDescription": "Test pour valider l'interface RCapture pour les empreintes digitales Left Slap sans bioSubTypes<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture. <br> 3. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider l'interface RCapture pour les empreintes digitales Left Slap sans bioSubTypes<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture.  <br> 2. Placez votre claque gauche sur l'appareil jusqu'à ce que la capture soit terminée"
+		},
+		"SBI1198": {
+			"testName": "Capture d'enregistrement - Double Iris - sans bioSubTypes",
+			"testDescription": "Test pour valider l'interface RCapture pour Two Iris sans bioSubTypes<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez vos deux iris sur l'appareil jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider l'interface RCapture pour Two Iris sans bioSubTypes<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez vos deux iris sur l'appareil jusqu'à ce que la capture soit terminée"
+		},
+		"SBI1199": {
+			"testName": "Capture d'enregistrement - Visage - sans bioSubTypes",
+			"testDescription": "Test pour valider l'interface RCapture pour le visage sans bioSubTypes<br><br>Pas:<br>1. Cliquez sur le bouton Démarrer la diffusion.<br>2. Une fois la diffusion terminée, cliquez sur le bouton Lancer la capture pour démarrer la capture <br>3. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée",
+			"androidTestDescription": "Test pour valider l'interface RCapture pour le visage sans bioSubTypes<br><br>Pas:<br>1. Cliquez sur le bouton Lancer la capture pour démarrer la capture. <br>2. Placez votre visage devant la caméra jusqu'à ce que la capture soit terminée"
+		},
 		"SDK2000": {
 			"testName": "Test d'initialisation",
 			"testDescription": "Initialise Bio SDK Services"
