@@ -113,21 +113,20 @@ export class SbiTestCaseAndroidService {
     methodRequestStr: string
   ) {
     const methodName = testCase.methodName[0];
-
     if (methodName == appConstants.SBI_METHOD_DISCOVER) {
-      let executeResponse = await this.callSBIMethodAndroid(appConstants.SBI_METHOD_DISCOVER, sbiDeviceType, callbackId, methodRequestStr);
+      let executeResponse = await this.callSBIMethodAndroid(testCase, appConstants.SBI_METHOD_DISCOVER, sbiDeviceType, callbackId, methodRequestStr);
       return executeResponse;
     }
     else if (methodName == appConstants.SBI_METHOD_DEVICE_INFO) {
-      let executeResponse = await this.callSBIMethodAndroid(appConstants.SBI_METHOD_DEVICE_INFO, sbiDeviceType, callbackId, methodRequestStr);
+      let executeResponse = await this.callSBIMethodAndroid(testCase, appConstants.SBI_METHOD_DEVICE_INFO, sbiDeviceType, callbackId, methodRequestStr);
       return executeResponse;
     }
     else if (methodName == appConstants.SBI_METHOD_CAPTURE) {
-      let executeResponse = await this.callSBIMethodAndroid(appConstants.SBI_METHOD_CAPTURE, sbiDeviceType, callbackId, methodRequestStr);
+      let executeResponse = await this.callSBIMethodAndroid(testCase, appConstants.SBI_METHOD_CAPTURE, sbiDeviceType, callbackId, methodRequestStr);
       return executeResponse;
     }
     else if (methodName == appConstants.SBI_METHOD_RCAPTURE) {
-      let executeResponse = await this.callSBIMethodAndroid(appConstants.SBI_METHOD_RCAPTURE, sbiDeviceType, callbackId, methodRequestStr);
+      let executeResponse = await this.callSBIMethodAndroid(testCase, appConstants.SBI_METHOD_RCAPTURE, sbiDeviceType, callbackId, methodRequestStr);
       return executeResponse;
     }
     else {
@@ -135,10 +134,18 @@ export class SbiTestCaseAndroidService {
     }
   }
 
-  async callSBIMethodAndroid(testcaseMethodName: string, sbiDeviceType: string, callbackId: string, methodRequestStr: string) {
+  async callSBIMethodAndroid( testCase: TestCaseModel, testcaseMethodName: string, sbiDeviceType: string, 
+    callbackId: string, methodRequestStr: string) {
     console.log("in callSBIMethodAndroid method");
     return new Promise((resolve, reject) => {
       if (testcaseMethodName == appConstants.SBI_METHOD_DISCOVER) {
+        //Handle SBI1196 for android
+        if (testCase.otherAttributes.invalidRequestAttribute) {
+          let invalidKey = testCase.otherAttributes.invalidRequestAttribute;
+          if (invalidKey == 'biometricTypes') {
+            sbiDeviceType = sbiDeviceType.toUpperCase();
+          }
+        }  
         MosipSbiCapacitorPlugin.startActivity({
           methodType: appConstants.SBI_METHOD_DISCOVER,
           action: appConstants.DISCOVERY_INTENT_ACTION,
