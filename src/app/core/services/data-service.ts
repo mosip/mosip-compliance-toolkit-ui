@@ -276,8 +276,11 @@ export class DataService {
     return this.httpClient.post(url, body);
   }
 
-  generateDraftReport(body: any) {
+  generateDraftReport(body: any, isComplianceReport: boolean) {
     let url = `${this.SERVICES_BASE_URL}generateDraftReport`;
+    if (!isComplianceReport) {
+      url = `${this.SERVICES_BASE_URL}generateDraftQAReport`;
+    }
     return this.httpClient.post(url, body, { responseType: 'blob' });
   }
 

@@ -194,7 +194,7 @@ export class ViewProjectComponent implements OnInit {
       let tableData = [];
       for (let item of respArr) {
         let disableReportBtn = true;
-        if (appConstants.COMPLIANCE_COLLECTION == item.collectionType) {
+        if (appConstants.COMPLIANCE_COLLECTION == item.collectionType || appConstants.QUALITY_ASSESSMENT_COLLECTION == item.collectionType ) {
           try {
             let check = await Utils.isReportAlreadySubmitted(this.projectType, this.projectId, item.collectionId, this.dataService, this.resourceBundleJson, this.dialog);
             if (check) {

@@ -122,7 +122,7 @@ export class TestRunComponent implements OnInit {
       this.isAdmin, this.partnerId, this.collectionId, this.resourceBundleJson, this.dialog);
     await this.getTestRun();
     //enable download report button only for compliance collection
-    if (appConstants.COMPLIANCE_COLLECTION == this.collectionType) {
+    if (appConstants.COMPLIANCE_COLLECTION == this.collectionType || appConstants.QUALITY_ASSESSMENT_COLLECTION == this.collectionType) {
       let isReportAlreadySubmitted = await Utils.isReportAlreadySubmitted(this.projectType, this.projectId, this.collectionId, this.dataService, this.resourceBundleJson, this.dialog);
       if (!isReportAlreadySubmitted) {
         this.showGenerateReportBtn = true;
@@ -359,7 +359,6 @@ export class TestRunComponent implements OnInit {
       return "";
     }
   }
-
   getProjectName() {
     let name = "";
     if (this.sbiProjectData)
@@ -385,7 +384,12 @@ export class TestRunComponent implements OnInit {
       requesttime: new Date().toISOString(),
       request: reportRequest
     };
-    const subs = this.dataService.generateDraftReport(request).subscribe(
+  let isComplianceReport = true;
+    if (appConstants.QUALITY_ASSESSMENT_COLLECTION == this.collectionType) {
+      isComplianceReport = false;
+
+    }
+    const subs = this.dataService.generateDraftReport(request, isComplianceReport).subscribe(
       (res: any) => {
         this.dataLoaded = true;
         if (res) {

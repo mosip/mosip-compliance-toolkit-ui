@@ -95,6 +95,7 @@ export const REQUEST_ID = 'requestId';
 export const BLANK_STRING = "";
 export const UNDERSCORE = "_";
 export const COMPLIANCE_COLLECTION = "compliance_collection";
+export const QUALITY_ASSESSMENT_COLLECTION = "quality_assessment_collection";
 export const INCOMPLETE_STATUS = "incomplete";
 export const COMPLETE_STATUS = "complete";
 export const REPORT_STATUS_DRAFT = "draft";
