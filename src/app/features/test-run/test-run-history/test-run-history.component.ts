@@ -70,7 +70,7 @@ export class TestRunHistoryComponent implements OnInit {
     const collectionRes = await Utils.getCollectionNameAndType(this.subscriptions, this.dataService, this.collectionId, this.resourceBundleJson, this.dialog);
     this.collectionName = collectionRes.name;
     const collectionType = collectionRes.type;
-    if (appConstants.COMPLIANCE_COLLECTION == collectionType) {
+    if (appConstants.COMPLIANCE_COLLECTION == collectionType|| appConstants.QUALITY_ASSESSMENT_COLLECTION == collectionType) {
       this.deleteAllowed = false;
     }  
     if (this.projectType == appConstants.SBI) {
