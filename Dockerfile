@@ -38,6 +38,7 @@ RUN apt-get -y update \
 && useradd -u ${container_user_uid} -g ${container_user_group} -s /bin/sh -m ${container_user} \
 && mkdir -p /var/run/nginx /var/tmp/nginx \
 && chown -R ${container_user}:${container_user} /usr/share/nginx /var/run/nginx /var/tmp/nginx
+&& chown -R ${container_user}:${container_user} /home/${container_user}
 
 # set working directory for the user
 WORKDIR /home/${container_user}
@@ -50,7 +51,6 @@ ADD dist ${base_path}
 
 # change permissions of file inside working dir
 #RUN chown -R ${container_user}:${container_user} ${base_path}/assets/i18n
-RUN chown -R ${container_user}:${container_user} /home/${container_user}
 
 # select container user for all tasks
 USER ${container_user_uid}:${container_user_gid}
