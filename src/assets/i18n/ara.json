@@ -1806,6 +1806,7 @@
 		"BIOMETRIC_QUALITY_CHECK_002": "القياسات الحيوية",
 		"BIOMETRIC_QUALITY_CHECK_003": "غير قادر على الاتصال",
 		"BIOMETRIC_QUALITY_CHECK_004": "خياري",
+		"BIOMETRIC_QUALITY_CHECK_005": "لا يمكن الوصول إلى عنوان URL لـ Sdk.",
 		"ISO_VALIDATOR_001": "فشل ISOStandardsValidator بسبب المشكلات التالية: bioType غير صالح = {}",
 		"ISO_VALIDATOR_002": "فشل ISOStandardsValidator بسبب المشكلات التالية: isValidISOTemplate القيمة الحيوية فارغة أو خالية",
 		"ISO_VALIDATOR_003": "فشل ISOStandardsValidator [ISO19794-4: 2011] بسبب المشكلات التالية:",
