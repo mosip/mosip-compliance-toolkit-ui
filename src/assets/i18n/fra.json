@@ -1806,6 +1806,7 @@
 		"BIOMETRIC_QUALITY_CHECK_002": "Les validations BiometricsQualityCheckValidator sont réussies.",
 		"BIOMETRIC_QUALITY_CHECK_003": "Impossible de se connecter",
 		"BIOMETRIC_QUALITY_CHECK_004": "Facultatif",
+		"BIOMETRIC_QUALITY_CHECK_005": "L'URL du SDK n'est pas accessible.",
 		"ISO_VALIDATOR_001": "ISOStandardsValidator a échoué en raison des problèmes ci-dessous : bioType non valide = {}",
 		"ISO_VALIDATOR_002": "ISOStandardsValidator a échoué en raison des problèmes ci-dessous : isValidISOTemplate 'bioValue' is Empty or Null",
 		"ISO_VALIDATOR_003": "ISOStandardsValidator[ISO19794-4:2011] a échoué en raison des problèmes ci-dessous :",
