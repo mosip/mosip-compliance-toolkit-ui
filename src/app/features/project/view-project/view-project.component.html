@@ -651,17 +651,17 @@
                 <td mat-cell *matCellDef="let row" class="runCell">
                     <button mat-flat-button color="accent" (click)="runCollection(row)" *ngIf="projectType == 'SBI'"
                         [disabled]="!isScanComplete || row.testCaseCount == 0 || !row.disableReportBtn"
-                        title="{{!isScanComplete ? 'You cannot run till you scan device first.' : row.testCaseCount == 0 ? 'Add testcases first': !row.disableReportBtn? 'Report has been already submitted for this compliance collection.' :'Click to run the collection'}}">
+                        title="{{!isScanComplete ? 'You cannot run till you scan device first.' : row.testCaseCount == 0 ? 'Add testcases first': !row.disableReportBtn? 'Report has been already submitted for this collection.' :'Click to run the collection'}}">
                         {{"viewProject.run"|translate}}
                     </button>
                     <button mat-flat-button color="accent" (click)="runCollection(row)" *ngIf="projectType == 'SDK'"
                         [disabled]="row.testCaseCount == 0 || !row.disableReportBtn"
-                        title="{{row.testCaseCount == 0 ? 'Add testcases first':!row.disableReportBtn? 'Report has been already submitted for this compliance collection.' :'Click to run the collection'}}">
+                        title="{{row.testCaseCount == 0 ? 'Add testcases first':!row.disableReportBtn? 'Report has been already submitted for this collection.' :'Click to run the collection'}}">
                         {{"viewProject.run"|translate}}
                     </button>
                     <button mat-flat-button color="accent" (click)="runCollection(row)" *ngIf="projectType == 'ABIS'"
                         [disabled]="row.testCaseCount == 0 || !row.disableReportBtn"
-                        title="{{row.testCaseCount == 0 ? 'Add testcases first': !row.disableReportBtn? 'Report has been already submitted for this compliance collection.' :'Click to run the collection'}}">
+                        title="{{row.testCaseCount == 0 ? 'Add testcases first': !row.disableReportBtn? 'Report has been already submitted for this collection.' :'Click to run the collection'}}">
                         {{"viewProject.run"|translate}}
                     </button>
                 </td>
