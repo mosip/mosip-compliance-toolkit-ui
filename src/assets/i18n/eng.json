@@ -321,7 +321,9 @@
 		"approveRejectDtimes": "Approve /Reject Date",
 		"status": "Report Status",
 		"viewTestRun": "View Test Run",
-		"collectionType": "Collection Type"
+		"collectionType": "Collection Type",
+		"complianceCollection" : "Compliance Collection",
+		"qualityAssessmentCollection" : "Quality Assessment Collection"
 	},
 	"myReports": {
 		"tableDescription": "List of My Reports",

@@ -50,9 +50,15 @@
             </ng-container>
 
             <ng-container matColumnDef="collectionType">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "partnerReport.collectionType" | translate }}
-                </th>
-                <td mat-cell *matCellDef="let element"> {{element.collectionType}} </td>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "partnerReport.collectionType" | translate }} </th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="element.collectionType === 'compliance_collection'">
+                        {{ "partnerReport.complianceCollection" | translate }}
+                    </span>
+                    <span *ngIf="element.collectionType === 'quality_assessment_collection'">
+                        {{ "partnerReport.qualityAssessmentCollection" | translate }}
+                    </span>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="reviewDtimes">
