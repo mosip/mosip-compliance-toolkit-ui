@@ -10,6 +10,7 @@ export interface ReportModel {
   adminComments: string;
   partnerComments: string;
   collectionName: string;
+  collectionType: string;
   projectName: string;
   updDtimes: Date;
   updBy: string;

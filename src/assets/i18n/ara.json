@@ -320,7 +320,8 @@
 		"reviewDtimes": "مراجعة تاريخ الإرسال",
 		"approveRejectDtimes": "الموافقة/الرفض التاريخ",
 		"status": "وضع تقرير",
-		"viewTestRun": "عرض تشغيل الاختبار"
+		"viewTestRun": "عرض تشغيل الاختبار",
+		"collectionType": "نوع المجموعة"
 	},
 	"myReports": {
 		"tableDescription": "قائمة تقاريري",

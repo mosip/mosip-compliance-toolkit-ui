@@ -21,6 +21,7 @@ export class MyReportsComponent implements OnInit {
   displayedColumns: string[] = [
     'projectType',
     'projectName',
+    'collectionType',
     'partnerComments',
     'reviewDtimes',
     'approveRejectDtimes',
