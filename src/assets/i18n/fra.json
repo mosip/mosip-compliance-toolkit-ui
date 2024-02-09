@@ -320,7 +320,10 @@
 		"reviewDtimes": "Date de soumission de l'avis",
 		"approveRejectDtimes": "Date d'approbation/rejet",
 		"status": "Statut du rapport",
-		"viewTestRun": "Afficher l'exécution du test"
+		"viewTestRun": "Afficher l'exécution du test",
+		"collectionType": "Type de collecte",
+		"complianceCollection" : "Collecte de conformité",
+		"qualityAssessmentCollection" : "Collecte d'évaluation de la qualité"
 	},
 	"myReports": {
 		"tableDescription": "Liste de mes rapports",

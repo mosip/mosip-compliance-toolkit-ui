@@ -320,7 +320,10 @@
 		"reviewDtimes": "Review Submitted Date",
 		"approveRejectDtimes": "Approve /Reject Date",
 		"status": "Report Status",
-		"viewTestRun": "View Test Run"
+		"viewTestRun": "View Test Run",
+		"collectionType": "Collection Type",
+		"complianceCollection" : "Compliance Collection",
+		"qualityAssessmentCollection" : "Quality Assessment Collection"
 	},
 	"myReports": {
 		"tableDescription": "List of My Reports",

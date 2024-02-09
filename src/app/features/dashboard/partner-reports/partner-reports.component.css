@@ -172,6 +172,14 @@ th {
     width: 5% !important;
     overflow-wrap: break-word;
 }
+.mat-column-collectionType {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 5% !important;
+    width: 5% !important;
+    overflow-wrap: break-word;
+    padding-right: 12px !important;
+}
 .mat-header-cell {
     padding: 15px;
 }
