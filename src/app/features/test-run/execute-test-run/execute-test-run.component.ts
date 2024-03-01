@@ -27,6 +27,7 @@ import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { TranslateService } from '@ngx-translate/core';
 import Utils from 'src/app/app.utils';
 import { error } from 'console';
+import { sha256 } from 'js-sha256';
 
 declare const start_streaming: any;
 declare const stop_streaming: any;
@@ -68,7 +69,7 @@ export class ExecuteTestRunComponent implements OnInit {
   showResumeAgainBtn = false;
   showContinueBtn = false;
   beforeKeyRotationResp: any = null;
-  previousHash: string = "";
+  previousHash: string;
   errorsSummary: string[];
   testCasesList: any;
   testRunId: string;
@@ -138,6 +139,7 @@ export class ExecuteTestRunComponent implements OnInit {
     this.projectType = this.input.projectType;
     this.projectId = this.input.projectId;
     this.sbiDeviceType = this.input.sbiDeviceType;
+    this.previousHash = sha256("");
     this.basicTimer.start();
     localStorage.removeItem(appConstants.SDK_PROJECT_URL);
     if (await this.performValidations()) {
@@ -323,6 +325,7 @@ export class ExecuteTestRunComponent implements OnInit {
           let allValidatorsPassed = this.checkIfAllValidatorsPassed(res[appConstants.VALIDATIONS_RESPONSE]);
           if (!ignoreThisIteration) {
             if (testCaseComplete) {
+              this.previousHash = sha256("");
               //update updateSuccessFailureCount
               this.updateSuccessFailureCount(allValidatorsPassed, testCase);
             }
