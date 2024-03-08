@@ -1,0 +1,10 @@
+
+<div style="margin: 25px;" *ngIf="showLandingPage">
+    <h3>This is a dummy landing page!</h3>
+    <button (click)="doLogin()">
+        LOGIN
+    </button>
+</div>
+<div style="margin: 25px;" *ngIf="!showLandingPage">
+Loading..
+</div>

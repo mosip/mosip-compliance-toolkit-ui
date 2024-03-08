@@ -11,7 +11,7 @@ export class AppConfigService {
   constructor(private http: HttpClient) { }
 
   async loadAppConfig() {
-    //console.log('loadAppConfig');
+    console.log('loadAppConfig');
     this.appConfig = await this.http.get('./assets/config.json').toPromise();
     const isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
     if (isAndroidAppMode) {
