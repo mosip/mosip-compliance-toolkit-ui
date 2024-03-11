@@ -19,7 +19,7 @@ export class AppConfigService {
       console.log("updated SERVICES_BASE_URL: " + this.appConfig["SERVICES_BASE_URL"]);
     }
     //console.log(this.appConfig.SERVICES_BASE_URL + "configs");
-    this.http.get(this.appConfig.SERVICES_BASE_URL + "configs").subscribe(
+    this.http.get(this.appConfig.SERVICES_BASE_URL + "configs",{ withCredentials: true }).subscribe(
       (response: any) => {
         //console.log(response);
         this.appConfig = { ...this.appConfig, ...response["response"] };
