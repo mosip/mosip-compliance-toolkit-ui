@@ -20,6 +20,7 @@ export class LandingPageComponent implements OnInit {
     console.log(`LandingPageComponent: ngOnInit: this.showLandingPage : ${this.showLandingPage}`);
     let flag = await this.isUserAuthenticated();
     if (flag) {
+      this.appConfigService.loadAppConfig();
       await this.router.navigateByUrl(`toolkit`);
     }
     console.log(`LandingPageComponent: ngOnInit: complete`);
