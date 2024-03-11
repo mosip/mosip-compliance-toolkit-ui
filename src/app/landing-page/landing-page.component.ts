@@ -14,7 +14,7 @@ export class LandingPageComponent implements OnInit {
 
   async ngOnInit() {
     this.showLandingPage = false;
-    this.http
+    await this.http
       .get(
         `${this.appConfigService.getConfig().SERVICES_BASE_URL
         }authorize/admin/validateToken`
