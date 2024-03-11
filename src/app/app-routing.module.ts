@@ -1,47 +1,24 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
-import { MainLayoutComponent } from './core/components/main-layout/main-layout.component';
-import { AuthguardService } from './core/services/authguard.service';
-
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import { environment } from 'src/environments/environment';
 const routes: Routes = [
-  { path: '', redirectTo: 'toolkit', pathMatch: 'full' },
+  {
+    path: '',
+    redirectTo: environment.isAndroidAppMode == 'yes' ? 'toolkit' : 'landing', pathMatch: 'full',
+  },
+  {
+    path: 'landing',
+    component:
+      LandingPageComponent, pathMatch: 'full',
+  },
   {
     path: 'toolkit',
-    component: MainLayoutComponent,
-    data: { 
-      breadcrumb: {
-        alias: 'homeBreadCrumb',
-      }, 
-    },
-    children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      {
-        path: 'dashboard',
-        data: { breadcrumb: { label: 'dashboard', skip: true } },
-        loadChildren: () =>
-          import('./features/dashboard/dashboard.module').then(
-            (m) => m.DashboardModule
-          ),
-      },
-      {
-        path: 'project',
-        data: { breadcrumb: { label: 'Project', skip: true } },
-        loadChildren: () =>
-          import('./features/project/project.module').then(
-            (m) => m.ProjectModule
-          ),
-      },
-      {
-        path: 'biometrics',
-        data: { breadcrumb: { label: 'Biometrics', skip: true } },
-        loadChildren: () =>
-          import('./features/test-data/test-data.module').then(
-            (m) => m.TestDataModule
-          ),
-      },
-    ],
-    canActivateChild: [AuthguardService],
-  },
+    loadChildren: () =>
+      import('./main-app/main-app.module').then(
+        (m) => m.MainAppModule
+      )
+  }
 ];
 
 @NgModule({
@@ -55,4 +32,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
