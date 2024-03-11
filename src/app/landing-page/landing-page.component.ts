@@ -29,7 +29,7 @@ export class LandingPageComponent implements OnInit {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
         this.http.get(`${this.appConfigService.getConfig().SERVICES_BASE_URL
-          }authorize/admin/validateToken`).subscribe(
+          }authorize/admin/validateToken`,{ withCredentials: true }).subscribe(
             (res: any) => {
               console.log(res);
               if (res && res.errors && res.errors.length == 0) {
