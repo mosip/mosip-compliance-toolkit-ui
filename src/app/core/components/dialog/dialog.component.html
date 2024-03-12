@@ -318,10 +318,12 @@
         <button mat-flat-button color="accent" (click)="onOkClick()">{{ 'dialogMessages.close' | translate }}</button>
     </mat-dialog-actions>
 </div>
-<div *ngIf="input.case === 'PARTNER_BIOMETRIC_CONSENT'">
+<div *ngIf="input.case === 'PARTNER_BIOMETRIC_CONSENT'" class="consent-box">
     <h2 mat-dialog-title class="mat-dialog-title">{{'dialogMessages.consentHead'|translate}}</h2>
-    <div mat-dialog-content class="consent-box">
+    <div mat-dialog-content>
         <div [innerHTML]="consentTemplate"></div>
+    </div>
+    <div>
         <mat-checkbox [(ngModel)]="consentCheckbox" class="consent-checkbox">{{'dialogMessages.consentCheckbox'|translate}}</mat-checkbox>
     </div>
     <div class="button-container-box">
