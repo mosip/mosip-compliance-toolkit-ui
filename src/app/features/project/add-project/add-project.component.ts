@@ -209,17 +209,26 @@ export class AddProjectComponent implements OnInit {
         (closeBtn: boolean) => {
           (async () => {
             if (!closeBtn) {
-              if (projectType == appConstants.SBI) {
-                let request = {
-                  id: appConstants.SBI_PROJECT_ADD_ID,
-                  version: appConstants.VERSION,
-                  requesttime: new Date().toISOString(),
-                  request: Utils.populateSbiProjectData(this.projectForm, '', this.deviceImage1, this.deviceImage2, 
-                  this.deviceImage3, this.deviceImage4, this.isAndroidAppMode),
-                };
-                this.dataLoaded = false;
-                this.dataSubmitted = true;
-                await this.addSbiProject(request);
+              if (projectType === appConstants.SBI) {
+                let isSbiConsentGiven = await Utils.getSbiBiometricConsent(this.dataService, this.resourceBundleJson, this.dialog);
+                if (isSbiConsentGiven) {
+                  await this.addSbiProject();
+                } else {
+                  const dialogRef = this.dialog.open(DialogComponent, {
+                    width: '600px',
+                    data: {
+                      case: "PARTNER_BIOMETRIC_CONSENT",
+                      consentForSbiBiometrics: true,
+                    },
+                  });
+                  dialogRef.afterClosed().subscribe(dialogResult => {
+                    if (dialogResult) {
+                      this.addSbiProject();
+                    } else {
+                      console.log("Consent was not confirmed. Project not saved.");
+                    }
+                  });
+                }
               }
               if (projectType == appConstants.SDK) {
                 let request = {
@@ -255,7 +264,16 @@ export class AddProjectComponent implements OnInit {
     this.projectForm.controls['deviceSubType'].setValue('');
   }
 
-  async addSbiProject(request: any) {
+  async addSbiProject() {
+    let request = {
+      id: appConstants.SBI_PROJECT_ADD_ID,
+      version: appConstants.VERSION,
+      requesttime: new Date().toISOString(),
+      request: Utils.populateSbiProjectData(this.projectForm, '', this.deviceImage1, this.deviceImage2,
+        this.deviceImage3, this.deviceImage4, this.isAndroidAppMode),
+    };
+    this.dataLoaded = false;
+    this.dataSubmitted = true;
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
         this.dataService.addSbiProject(request).subscribe(
@@ -330,6 +348,7 @@ export class AddProjectComponent implements OnInit {
         this.dialog
       );
       dialogRef.afterClosed().subscribe((res) => {
+        this.dialog.closeAll();
         this.showDashboard()
           .catch((error) => {
             console.log(error);

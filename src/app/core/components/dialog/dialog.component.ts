@@ -53,6 +53,8 @@ export class DialogComponent implements OnInit {
   adminRejectComments: string = '';
   rejectReport: boolean = false;
   isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
+  consentCheckbox: boolean = false;
+  consentTemplate: string;
 
   constructor(
     private router: Router,
@@ -98,6 +100,7 @@ export class DialogComponent implements OnInit {
       this.imageUrls = this.data.selectedDeviceImagesUrl;
       this.getSelectedImageUrl();
     }
+    await this.getBiometricConsentTemplate();
     this.dataLoaded = true;
   }
 
@@ -478,4 +481,77 @@ export class DialogComponent implements OnInit {
     this.dialogRef.close();
     this.logoutservice.logout();
   }
+
+  getBiometricConsentTemplate() {
+    return new Promise((resolve, reject) => {
+      const subscription = this.dataService.getBiometricConsentTemplate().subscribe(
+        (response: any) => {
+          this.consentTemplate = response['response'];
+          resolve(true);
+        },
+        (errors: any) => {
+          console.error('Failed to fetch template:', errors);
+          Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
+          resolve(false);
+        }
+      );
+      this.subscriptions.push(subscription);
+    });
+  }
+  
+
+  saveBiometricConsent(consentForSbiBiometrics: boolean) {
+    const consentRequest = {
+      consentForSdkAbisBiometrics: consentForSbiBiometrics ? 'NO' : 'YES',
+      consentForSbiBiometrics: consentForSbiBiometrics ? 'YES' : 'NO'
+    };
+
+    const reqBody = {
+      id: appConstants.BIOMETRICS_CONSENT_DATA_ADD_ID,
+      version: appConstants.VERSION,
+      requesttime: new Date().toISOString(),
+      request: consentRequest
+    };
+
+    return new Promise((resolve, reject) => {
+      const subscription = this.dataService.saveBiometricConsent(reqBody).subscribe(
+        (response: any) => {
+          if (response.errors && response.errors.length > 0) {
+            this.dialogRef.close(false);
+            Utils.showErrorMessage(this.resourceBundleJson, response.errors, this.dialog);
+            this.dataLoaded = true;
+            resolve(true);
+          } else {
+            this.dataLoaded = true;
+            this.dialogRef.close(true);
+            const msg = 'addConsentDataSuccessMsg';
+            const resourceBundle = this.resourceBundleJson.dialogMessages;
+            const successMsg = 'success';
+            Utils.showSuccessMessage(resourceBundle, successMsg, msg, this.dialog);
+            resolve(true);
+          }
+        },
+        (errors) => {
+          this.dialogRef.close(false);
+          Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
+          resolve(false);
+        }
+      );
+      this.subscriptions.push(subscription);
+    });
+  }
+
+  async showDashboard() {
+    await this.router.navigate([`toolkit/dashboard`]);
+  }
+
+async closeConsent() {
+    this.dialogRef.close();
+    await this.showDashboard();
+    Utils.showErrorMessage(this.resourceBundleJson,
+      null,
+      this.dialog,
+      'Unable to proceed without biometric consent');
+  }
+
 }

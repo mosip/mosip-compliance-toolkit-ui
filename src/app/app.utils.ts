@@ -824,6 +824,22 @@ export default class Utils {
     });
   }
 
+  static getSbiBiometricConsent(dataService: DataService, resourceBundleJson: any, dialog: MatDialog) {
+    return new Promise((resolve, reject) => {
+      // fetch sbiPartner consent
+      dataService.isConsentGiven(true).subscribe(
+        (response: any) => {
+          console.log(response);
+          resolve(response['response']);
+        },
+        (errors: any) => {
+          this.showErrorMessage(resourceBundleJson, errors, dialog);
+          resolve(false);
+        }
+      )
+    });
+  }
+
   static convertBlobToBase64 = (blob: Blob) => new Promise((resolve, reject) => {
     const reader = new FileReader;
     reader.onerror = reject;

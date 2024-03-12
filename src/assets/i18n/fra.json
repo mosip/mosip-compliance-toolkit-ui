@@ -40,7 +40,11 @@
 		"verifyMessage": "Vérifiez les valeurs de hachage et de site Web avant de continuer. Si les valeurs sont correctes, enregistrez le projet.",
 		"saveBtn":  "Sauvegarder",
 		"sessionInactiveMessage": "Votre temps sera écoulé pour cause d'inactivité. Veuillez cliquer n'importe où pour réactiver votre session",
-		"sessionInactivityLogoutMessage": "Vous avez été déconnecté pour cause d'inactivité."
+		"sessionInactivityLogoutMessage": "Vous avez été déconnecté pour cause d'inactivité.",
+		"addConsentDataSuccessMsg": "Votre consentement a été reçu avec succès",
+		"consentHead": "Consentement",
+		"confirm": "Confirmer",
+		"consentCheckbox": "Je reconnais et accepte les termes et conditions"
 	},
 	"breadcrumb": {
 		"home": "Maison",

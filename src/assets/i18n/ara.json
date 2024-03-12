@@ -40,7 +40,11 @@
 		"verifyMessage": "تحقق من قيم التجزئة وموقع الويب قبل المتابعة. إذا كانت القيم صحيحة، فاحفظ المشروع.",
 		"saveBtn":  "يحفظ",
 		"sessionInactiveMessage": "سيتم مهلة لك بسبب عدم النشاط. الرجاء النقر في أي مكان لإعادة تنشيط جلستك",
-		"sessionInactivityLogoutMessage": "لقد تم تسجيل الخروج بسبب عدم النشاط."
+		"sessionInactivityLogoutMessage": "لقد تم تسجيل الخروج بسبب عدم النشاط.",
+		"addConsentDataSuccessMsg": "لقد تم استلام موافقتك بنجاح",
+		"consentHead": "موافقة",
+		"confirm": "يتأكد",
+		"consentCheckbox": "أقر وأوافق على الشروط والأحكام"
 	},
 	"breadcrumb": {
 		"home": "بيت",

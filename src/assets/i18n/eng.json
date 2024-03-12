@@ -40,7 +40,11 @@
 		"verifyMessage": "Verify the Hash and Website values before proceeding. If the values are correct, save the project.",
 		"saveBtn":  "Save",
 		"sessionInactiveMessage": "You will be timed out due to inactivity. Please click anywhere to re-activate your session",
-		"sessionInactivityLogoutMessage": "You have been logged out due to inactivity."
+		"sessionInactivityLogoutMessage": "You have been logged out due to inactivity.",
+		"addConsentDataSuccessMsg": "Your consent has been successfully received",
+		"consentHead": "Consent",
+		"confirm": "Confirm",
+		"consentCheckbox": "I acknowledge and accept the terms and conditions"
 	},
 	"breadcrumb": {
 		"home": "Home",

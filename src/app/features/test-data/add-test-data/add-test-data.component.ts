@@ -56,6 +56,7 @@ export class AddTestDataComponent implements OnInit {
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
+    this.displayBiometricConsentDialog();
     this.initForm();
     this.initBreadCrumb();
     this.getAllowedFileTypes(this.allowedFileTypes);
@@ -328,6 +329,36 @@ export class AddTestDataComponent implements OnInit {
 
   async showDashboard() {
     await this.router.navigate([`toolkit/dashboard`]);
+  }
+
+  async displayBiometricConsentDialog() {
+    let isSdkAbisConsentGiven = await this.getSdkAbisConsent();
+    if (!isSdkAbisConsentGiven) {
+      const dialogRef = this.dialog.open(DialogComponent, {
+        width: '600px',
+        data: {
+          case: "PARTNER_BIOMETRIC_CONSENT",
+          consentForSbiBiometrics: false,
+        },
+      });
+    }
+  }
+
+  async getSdkAbisConsent() {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.push(
+        //get sdkAbis consent
+        this.dataService.isConsentGiven(false).subscribe(
+          (response: any) => {
+            resolve(response['response']);
+          },
+          (errors) => {
+            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
+            resolve(false);
+          }
+        )
+      );
+    });
   }
 
   ngOnDestroy(): void {
