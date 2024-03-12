@@ -829,7 +829,6 @@ export default class Utils {
       // fetch sbiPartner consent
       dataService.isConsentGiven(true).subscribe(
         (response: any) => {
-          console.log(response);
           resolve(response['response']);
         },
         (errors: any) => {

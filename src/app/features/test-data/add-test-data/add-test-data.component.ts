@@ -56,7 +56,7 @@ export class AddTestDataComponent implements OnInit {
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
-    this.displayBiometricConsentDialog();
+    this.displaySdkAbisConsentDialog();
     this.initForm();
     this.initBreadCrumb();
     this.getAllowedFileTypes(this.allowedFileTypes);
@@ -331,7 +331,7 @@ export class AddTestDataComponent implements OnInit {
     await this.router.navigate([`toolkit/dashboard`]);
   }
 
-  async displayBiometricConsentDialog() {
+  async displaySdkAbisConsentDialog() {
     let isSdkAbisConsentGiven = await this.getSdkAbisConsent();
     if (!isSdkAbisConsentGiven) {
       const dialogRef = this.dialog.open(DialogComponent, {

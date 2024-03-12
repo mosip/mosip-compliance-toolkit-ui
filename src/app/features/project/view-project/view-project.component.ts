@@ -86,7 +86,7 @@ export class ViewProjectComponent implements OnInit {
     await this.initProjectIdAndType();
     await this.getCollections();
     if (this.projectType == appConstants.SBI) {
-      this.displayBiometricConsentDialog();
+      this.displaySbiBiometricConsentDialog();
       this.initSbiProjectForm();
       this.projectFormData = await Utils.getSbiProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
       Utils.populateSbiProjectForm(this.projectFormData, this.projectForm);
@@ -460,7 +460,7 @@ export class ViewProjectComponent implements OnInit {
     dialogRef.afterClosed();
   }
 
-  async displayBiometricConsentDialog() {
+  async displaySbiBiometricConsentDialog() {
     let isSbiConsentGiven = await Utils.getSbiBiometricConsent(this.dataService, this.resourceBundleJson, this.dialog);
     if (!isSbiConsentGiven) {
       const dialogRef = this.dialog.open(DialogComponent, {

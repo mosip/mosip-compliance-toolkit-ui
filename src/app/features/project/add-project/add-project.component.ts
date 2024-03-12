@@ -337,10 +337,11 @@ export class AddProjectComponent implements OnInit {
       Utils.showErrorMessage(this.resourceBundleJson, response.errors, this.dialog);
       return true;
     } else {
+      this.dataLoaded = true;
+      this.dialog.closeAll();
       let resourceBundle = this.resourceBundleJson.dialogMessages;
       let successMsg = 'success';
       let projectMsg = 'successMessage';
-      this.dataLoaded = true;
       const dialogRef = Utils.showSuccessMessage(
         resourceBundle,
         successMsg,
@@ -348,7 +349,6 @@ export class AddProjectComponent implements OnInit {
         this.dialog
       );
       dialogRef.afterClosed().subscribe((res) => {
-        this.dialog.closeAll();
         this.showDashboard()
           .catch((error) => {
             console.log(error);
