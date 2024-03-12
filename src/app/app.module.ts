@@ -8,12 +8,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './core/material.module';
 import { CookieService } from 'ngx-cookie-service';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AuthService } from './core/services/authservice.service';
 import { AuthguardService } from './core/services/authguard.service';
+import { CoreModule } from './core/core.module';
+import { environment } from 'src/environments/environment';
 
 const appInitialization = (appConfig: AppConfigService) => {
   return () => {
@@ -21,20 +23,26 @@ const appInitialization = (appConfig: AppConfigService) => {
   };
 };
 
+let imports = [
+  BrowserModule,
+  RouterModule,
+  AppRoutingModule,
+  BrowserAnimationsModule,
+  MaterialModule,
+  FormsModule,
+  ReactiveFormsModule,
+  I18nModule,
+  MatTabsModule,
+  HttpClientModule
+]
+
+if (environment.isAndroidAppMode == 'yes') {
+  imports.push(CoreModule);
+}
+
 @NgModule({
   declarations: [AppComponent, LandingPageComponent],
-  imports: [
-    BrowserModule,
-    RouterModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MaterialModule,
-    FormsModule,
-    ReactiveFormsModule,
-    I18nModule,
-    MatTabsModule,
-    HttpClientModule
-  ],
+  imports: imports,
   providers: [
     CookieService,
     AuthService,
