@@ -1,0 +1,365 @@
+/* @font-face {
+    font-family: 'Roboto';
+    src: url('src\assets\Roboto-font\Roboto-Black.ttf') format('woff2')
+} */
+
+#root {
+    margin: 0;
+    padding: 0;
+}
+
+.section1 {
+    padding: 2em 3em;
+    background: url('src\assets\images\background.png');
+    background-size: 100% 100%;
+    min-height: 100%;
+}
+
+.section1 nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4em;
+}
+
+.section1 nav .nav-section{
+    display: flex;
+    align-items: center;
+}
+
+.section1 .nav-section .nav-links {
+    margin-right: 1em;
+    letter-spacing: 0.5px;
+}
+
+.section1 .nav-section .nav-buttons .login-button{
+    color: #0B6A82;
+    font: normal normal bold 16px/26px Roboto;
+}
+
+.section1 .nav-section .nav-buttons .register-button{
+    color: #ffffff;
+    font: normal normal bold 16px/26px Roboto;
+    border: 2px solid #FFFFFF;
+    background-color: transparent;
+}
+
+.section1 .nav-section .nav-links a {
+    text-decoration: none;
+    color: #ffffff;
+    font: normal normal bold 16px/26px Roboto;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.section1 .nav-section .nav-buttons button  {
+    padding: 0.5em 3em;
+    margin-left: 0.25em;
+    margin-right: 0.25em;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border-radius: 10px;
+    border-color: transparent;
+    letter-spacing: 0.5px;
+}
+
+.section1 .nav-section .nav-buttons button:hover {
+    cursor: pointer;
+}
+
+.section1 .content-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+.section1 .content-section .content{
+    padding-left: 12vw;
+    padding-top: 3em;
+}
+
+.section1 .content-section .content .sub-content{
+    margin-top: 3em;
+    display: flex;
+    align-items: center;
+}
+
+.section1 .content-section .content .sub-content img{
+    width: 2em;
+    position: relative;
+    right: 5px;
+}
+
+.section1 .content-section .content .watch-video-button{
+    color: #0B6A82;
+    font: normal normal bold 16px/26px Roboto;
+    padding: 0.55em 1em;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border-radius: 50px;
+    border-color: transparent;
+    padding-right: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.section1 .content-section .content .watch-video-button:hover{
+    cursor: pointer;
+}
+
+.section1 .content-section .content p {
+    font: normal normal bold 16px/26px Roboto;
+    color: #93EAFF;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+.section1 .content-section .content h6 {
+    font: normal normal bold 40px/79px Roboto;
+    color: #FFFFFF;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    letter-spacing: 0.5px;
+}
+
+.section1 .content-section .content small {
+    font: normal normal normal 14px/24px Roboto;
+    color: #FFFFFF;
+}
+
+.section1 .content-section .content-image img {
+    width: 45vw;
+    height: 45vw;
+}
+
+.section1 .learn-more {
+    color: white;
+    text-decoration: none;
+    font: normal normal bold 16px/29px Roboto;
+    padding-left: 1em;
+    letter-spacing: 0.5px;
+}
+
+.section2 {
+    background: transparent linear-gradient(360deg, #F0FAFF 0%, #FFFFFF 100%) 0% 0% no-repeat padding-box;
+    padding-bottom: 2em;
+}
+
+.section2 h3 {
+    color: #023643;
+    font: normal normal bold 40px/79px Roboto;
+    margin: 0;
+    text-align: center;
+    padding-top: 2em;
+    padding-bottom: 2em;
+}
+
+.row1, .row2 {
+    display: flex;
+    justify-content: space-evenly;
+    text-align: center;
+    padding: 2em 5vw;
+}
+
+.row2 {
+    padding-left: 18vw;
+    padding-right: 18vw;
+}
+
+.row1 p[class= "description"],  .row2 p[class= "description"]{
+    color: #262626;
+    font: normal normal normal 14px/29px Roboto;
+}
+
+.row1 p[class= "title"],  .row2 p[class= "title"]{
+    color: #05404E;
+    font: normal normal bold 16px/32px Roboto;
+}
+
+.row1 .col1, .row1 .col2, .row1 .col3 {
+    width: 20%;
+}
+
+.row2 .col1, .row2 .col2 {
+    width: 25%;
+}
+
+.section2 .content .row1 .img-container,  .section2 .content .row2 .img-container{
+    height: 50px;
+}
+
+.section3 {
+    background: transparent url('src\assets\images\section3-bg.png') 0% 0% no-repeat padding-box;
+    background-size: 100% 100%;
+    padding: 3em;
+    background-color: #023643;
+    letter-spacing: 0.5px;
+}
+
+.section3 h3 {
+    font: normal normal bold 40px/79px Roboto;
+    color: #FFFFFF;
+    margin: 0;
+    margin-left: 12vw;
+    margin-top: 0.5em;
+}
+
+.section3 .info {
+    font: normal normal normal 14px/24px Roboto;
+    color: #FFFFFF;
+    margin-top: 0;
+    margin-left: 12vw;
+    margin-bottom: 4em;
+}
+
+.section3 .card1, .card2, .card3, .card4 {
+    display: flex;
+    margin-left: 12vw;
+    background: #0E3F4D 0% 0% no-repeat padding-box;
+    border: 1px solid #FFFFFF1A;
+    border-radius: 20px;
+    padding: 1.25em;
+    align-items: start;
+    margin-bottom: 1.5em;
+    width: 71.5%;
+}
+
+.section3 .card5 {
+    display: flex;
+    margin-left: 12vw;
+    background: #02303C 0% 0% no-repeat padding-box;
+    border: 1px solid #FFFFFF4D;
+    border-radius: 20px;
+    padding: 1.25em;
+    align-items: start;
+    justify-content: center;
+    margin-bottom: 2em;
+    width: 71.5%;
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+    color: #FFFFFF;
+    font: normal normal bold 16px/34px Roboto;
+    letter-spacing: 0.5px;
+}
+
+.section3 .card1 .image, .section3 .card2 .image, .section3 .card3 .image, .section3 .card4 .image{
+    width: 75px;
+    height: 75px;
+    background: #013542 0% 0% no-repeat padding-box;
+    border: 1px solid #538D9E;
+    border-radius: 10px;
+    margin-right: 1em;
+    text-align: center;
+    vertical-align: middle;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.section3 .card1 .content, .section3 .card2 .content, .section3 .card3 .content, .section3 .card4 .content{
+    width: 75%;
+}
+
+.section3 .card1 .content h4, .section3 .card2 .content h4, .section3 .card3 .content h4, .section3 .card4 .content h4{
+    margin-top: 0;
+    margin-bottom: 0;
+    font: normal normal bold 20px/45px Roboto;
+    color: #FFFFFF;
+}
+
+.section3 .card1 .content .description, .section3 .card2 .content .description, .section3 .card3 .content .description, .section3 .card4 .content .description{
+    font: normal normal normal 14px/29px Roboto;
+    color: #FFFFFF;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.section3 .card1 .content .description-group, .section3 .card2 .content .description-group, .section3 .card3 .content .description-group, .section3 .card4 .content .description-group{
+    position: relative;
+    bottom: 0.5em;
+}
+
+.section3 .card2 button {
+    background: #0EB2E0 0% 0% no-repeat padding-box;
+    border-radius: 40px;
+    border: 0;
+    padding: 0.5em;
+    padding-left: 1em;
+    padding-right: 1em;
+    font: normal normal bold 14px/26px Roboto;
+    line-height: 1.5;
+    text-decoration: underline;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+}
+
+.section3 .card2 button:hover {
+    cursor: pointer;
+}
+
+.section3 .card2 button span {
+    margin-left: 0.5em;
+}
+
+.section3 .card2 .card-footer {
+    margin-top: 1em;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+}
+
+.section3 .card2 .card-footer .info{
+    font: normal normal normal 14px/29px Roboto;
+    color: #83AAB5;
+    margin: 0;
+    margin-left: 1em;
+}
+
+.section4 {
+    background: #F4FBFF 0% 0% no-repeat padding-box;
+    padding: 2em;
+}
+
+.section4 h3 {
+    text-align: center;
+    color: #023643;
+    font: normal normal bold 40px/79px Roboto;
+}
+
+.section4 .contact-banner {
+    background-color: white;
+    display: flex;
+    justify-content: space-evenly;
+    margin: 3em 12.5vw;
+    margin-left: 13.25vw;
+    text-align: center;
+    align-items: center;
+    height: 13em;
+    box-shadow: 0px 3px 16px #0000000F;
+    border-radius: 20px;
+    width: 72.5%;
+}
+
+.section4 .contact-banner .borderLeft{
+    border: 2px solid #066D84;
+    opacity: 0.3;
+    height: 125px;
+}
+
+.section4 .contact-banner a {
+    color: #066D84;
+    font: normal normal bold 20px/39px Roboto;
+    display: block;
+}
+
+.footer {
+    background-color: white;
+    font: normal normal normal 16px/26px Roboto;
+    color: #727272;
+    text-align: center;
+}
+
+@media screen and (min-width: 1440px) {
+    .section1 {
+        height: 100vh;
+    }
+}

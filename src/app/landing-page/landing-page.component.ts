@@ -59,4 +59,12 @@ export class LandingPageComponent implements OnInit {
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
+
+  watchCtkVideo() {
+    window.open('https://www.youtube.com/playlist?list=PLJH-POb_55z8YYS_qAk_QNBQeiQ2VrtZD', '_blank');
+  }
+
+  downloadCtkApk() {
+    window.open('https://synergy.mosip.net/', '_blank')
+  }
 }
