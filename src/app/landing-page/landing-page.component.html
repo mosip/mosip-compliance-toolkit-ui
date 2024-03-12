@@ -1,10 +1,208 @@
-
-<div style="margin: 25px;" *ngIf="showLandingPage">
-    <h3>This is a dummy landing page!</h3>
-    <button (click)="doLogin()">
-        LOGIN
-    </button>
+<div *ngIf="showLandingPage">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <div class="section1">
+        <nav>
+            <img src="./assets/images/mosip-logo.png" alt="mosip-logo" />
+            <div class="nav-section">
+                <div class="nav-links">
+                    <a href="https://github.com/mosip/mosip-compliance-toolkit" target="_blank">Github</a>
+                    <a href="https://docs.mosip.io/compliance-tool-kit/" target="_blank">Documentation</a>
+                    <a href="https://community.mosip.io/" target="_blank">Community</a>
+                    <a href="https://mosip.io/technology_partners" target="_blank">Partners</a>
+                </div>
+                <div class="nav-buttons">
+                    <button type="button" class="login-button" (click)="doLogin()">
+                        Login
+                    </button>
+                    <button type="button" class="register-button" (click)="doLogin()">
+                        Register
+                    </button>
+                </div>
+            </div>
+        </nav>
+        <div class="content-section">
+            <div class="content">
+                <p>Introducing the Compliance Tool Kit (CTK)</p>
+                <h6>Ensure seamless integration with MOSIP standards</h6>
+                <small>Compliance Tool Kit (CTK) is an online portal provided by MOSIP that
+                    allows partners to test the compliance of their products with MOSIP
+                    specifications. It supports three key components: SBI (Secure
+                    Biometric Interface), SDK (Biometric Service Providers), and ABIS
+                    (Automated Biometric Identification System).</small>
+                <div class="sub-content">
+                    <button type="button" class="watch-video-button" (click)="watchCtkVideo()">
+                        <img src="./assets/images/watch.png" alt="watch-video" />
+                        <span>Watch Video</span>
+                    </button>
+                    <a href="https://docs.mosip.io/compliance-tool-kit/" class="learn-more" target="_blank">
+                        Learn more
+                    </a>
+                </div>
+            </div>
+            <div class="content-image">
+                <img src="./assets/images/network.png" alt="network-image" />
+            </div>
+        </div>
+    </div>
+    <div class="section2">
+        <h3>Discover CTK’s Powerful Features</h3>
+        <div class="content">
+            <div class="row1">
+                <div class="col1">
+                    <div class="img-container">
+                        <img src="./assets/images/predefined-test-cases.png" alt="predefined-test-cases" width="35px" />
+                    </div>
+                    <p class="title">Predefined Test Cases</p>
+                    <p class="description">
+                        Extensive library of tests covering all MOSIP specifications.
+                    </p>
+                </div>
+                <div class="col2">
+                    <div class="img-container">
+                        <img src="./assets/images/automated-validation.png" alt="automated-validation" width="35px" />
+                    </div>
+                    <p class="title">Automated Validation</p>
+                    <p class="description">
+                        Eliminate manual testing and ensure consistent results.
+                    </p>
+                </div>
+                <div class="col3">
+                    <div class="img-container">
+                        <img src="./assets/images/detailed-reporting.png" alt="detailed-reporting" width="35px" />
+                    </div>
+                    <p class="title">Detailed Reporting</p>
+                    <p class="description">
+                        Generate comprehensive reports for easy review and analysis.
+                    </p>
+                </div>
+            </div>
+            <div class="row2">
+                <div class="col1">
+                    <div class="img-container">
+                        <img src="./assets/images/customizable-configurations.png" alt="customizable-configurations"
+                            width="35px" />
+                    </div>
+                    <p class="title">Customizable Configurations</p>
+                    <p class="description">
+                        Tailor testing suite to specific project needs.
+                    </p>
+                </div>
+                <div class="col2">
+                    <div class="img-container">
+                        <img src="./assets/images/quality-assessment.png" alt="quality-assessment" width="35px" />
+                    </div>
+                    <p class="title">Quality Assessment (SBI only)</p>
+                    <p class="description">
+                        Evaluate biometric data quality for improved performance.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section3">
+        <h3>Simplify Compliance with CTK</h3>
+        <p class="info">
+            CTK supports compliance testing for these key specifications
+        </p>
+        <div>
+            <div class="card1">
+                <div class="image">
+                    <img src="./assets/images/sbi.png" alt="sbi" width="35px" />
+                </div>
+                <div class="content">
+                    <h4>SBI</h4>
+                    <p class="description description-group">
+                        - Ensures Secure Biometric Interface (SBI) compliance for unified
+                        communication and security protocols.
+                    </p>
+                </div>
+            </div>
+            <div class="card2">
+                <div class="image">
+                    <img src="./assets/images/android-sbi.png" alt="android-sbi" width="35px" />
+                </div>
+                <div class="content">
+                    <h4>Android SBI</h4>
+                    <div class="description-group">
+                        <p class="description">
+                            - Android SBI is developed to ensure consistent and secure
+                            communication between biometric devices and Android applications,
+                            Android SBI follows the same principles as the broader SBI
+                            specification.
+                        </p>
+                        <p class="description">
+                            - CTK provides a compliance testing toolkit specifically designed
+                            for Android SBI implementations
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <button (click)="downloadCtkApk()">
+                            <img src="./assets/images/download-icon.png" alt="download" width="15px" />
+                            <span>Download</span>
+                        </button>
+                        <span class="info">Compliance Toolkit APK</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card3">
+                <div class="image">
+                    <img src="./assets/images/biometric-sdk.png" alt="biometric-sdk" width="35px" />
+                </div>
+                <div class="content">
+                    <h4>Biometric SDKs</h4>
+                    <div class="description-group">
+                        <p class="description">
+                            - Verifies iBioAPI compliance for quality check, match,
+                            extraction, and conversion functions.
+                        </p>
+                        <p class="description">
+                            - Enables testing of independent HTTP service integration.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="card4">
+                <div class="image">
+                    <img src="./assets/images/abis.png" alt="abis" width="35px" />
+                </div>
+                <div class="content">
+                    <h4>ABIS</h4>
+                    <div class="description-group">
+                        <p class="description">
+                            - Guarantees 1:N deduplication accuracy through ABIS API
+                            compliance.
+                        </p>
+                        <p class="description">
+                            - Validates JSON message format for seamless communication.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="card5">
+                <p>
+                    CTK: Your trusted partner for confident and efficient biometric
+                    compliance solutions.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="section4">
+        <h3>Contact Support</h3>
+        <div class="contact-banner">
+            <div>
+                <img src="./assets/images/mail.png" alt="mail" width="35px" />
+                <a href="mailto:support@mosip.io" target="_blank">support@mosip.io</a>
+            </div>
+            <div class="borderLeft"></div>
+            <div>
+                <img src="./assets/images/groups.png" alt="groups" width="35px" />
+                <a href="https://community.mosip.io/" target="_blank">MOSIP Community</a>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <p>© 2024 All Rights Reserved By CTK - MOSIP</p>
+    </div>
 </div>
-<div style="margin: 25px;" *ngIf="!showLandingPage">
-Loading..
-</div>
+<div style="margin: 25px" *ngIf="!showLandingPage">Loading..</div>
