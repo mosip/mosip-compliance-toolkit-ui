@@ -320,14 +320,17 @@
 </div>
 <div *ngIf="input.case === 'PARTNER_BIOMETRIC_CONSENT'" class="consent-box">
     <h2 mat-dialog-title class="mat-dialog-title">{{'dialogMessages.consentHead'|translate}}</h2>
-    <div mat-dialog-content>
-        <div [innerHTML]="consentTemplate"></div>
-    </div>
-    <div>
-        <mat-checkbox [(ngModel)]="consentCheckbox" class="consent-checkbox">{{'dialogMessages.consentCheckbox'|translate}}</mat-checkbox>
+    <div class="text-box">
+        <div mat-dialog-content>
+            <div [innerHTML]="consentTemplate"></div>
+        </div>
+        <div class="consent-checkbox">
+            <mat-checkbox [(ngModel)]="consentCheckbox">{{'dialogMessages.consentCheckbox'|translate}}</mat-checkbox>
+        </div>
     </div>
     <div class="button-container-box">
-        <button mat-flat-button (click)="closeConsent()" class="back-button">{{'dialogMessages.close'|translate}}</button>
+        <button mat-flat-button (click)="closeConsent()"
+            class="back-button">{{'dialogMessages.close'|translate}}</button>
         <button mat-flat-button color="accent" [disabled]="!consentCheckbox"
             (click)="saveBiometricConsent(input.consentForSbiBiometrics)">{{'dialogMessages.confirm'|translate}}</button>
     </div>
