@@ -149,6 +149,7 @@ export class AddTestDataComponent implements OnInit {
         '(?:' + this.allowedFilesExtensions.replace(/,/g, '|') + ')'
       );
       const oldFileExtension = this.fileExtension;
+      const fileName = event.target.files[0].name;
       this.fileExtension = event.target.files[0].name.substring(
         event.target.files[0].name.indexOf('.') + 1
       );
@@ -161,6 +162,15 @@ export class AddTestDataComponent implements OnInit {
           this.dialog,
           'File extension is not allowed other than: ' +
             this.allowedFilesExtensions
+        );
+      } else if (fileName.includes('.') && fileName.split('.').length > 2) {
+        Utils.showErrorMessage(
+          this.resourceBundleJson,
+          null,
+          this.dialog,
+          'File name should not contain multiple extensions',
+          false,
+          'FILE_WITH_MULTIPLE_EXTENSIONS'
         );
       } else {
         if (event.target.files[0].name.length > this.allowedFileNameLegth) {

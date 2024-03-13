@@ -279,6 +279,15 @@ export class DialogComponent implements OnInit {
             this.dialog,
             'File type is not allowed other than image'
           );
+        } else if (file.name.includes('.') && file.name.split('.').length > 2) {
+          Utils.showErrorMessage(
+            this.resourceBundleJson,
+            null,
+            this.dialog,
+            'File name should not contain multiple extensions',
+            false,
+            'FILE_WITH_MULTIPLE_EXTENSIONS'
+          );
         } else {
           if (file.name.length > this.allowedFileNameLegth) {
             Utils.showErrorMessage(

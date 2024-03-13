@@ -228,7 +228,8 @@ export default class Utils {
     errorsList: any,
     dialog: MatDialog,
     customMsg?: string,
-    showErrCode?: boolean
+    showErrCode?: boolean,
+    customErrorCode?: string
   ) {
     const titleOnError = resourceBundle.serviceErrors['error'] ? resourceBundle.serviceErrors['error'] : 'Error';
     let message = '';
@@ -255,7 +256,7 @@ export default class Utils {
       }
     }
     if (customMsg) {
-      message = customMsg;
+      message = customErrorCode ? resourceBundle.serviceErrors[customErrorCode] : customMsg;
     }
     if (message == '') {
       message = 'Unexpected error occured.';
