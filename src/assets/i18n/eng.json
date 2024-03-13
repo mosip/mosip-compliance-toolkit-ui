@@ -2054,6 +2054,9 @@
 		"TOOLKIT_REPORT_004": "Error while changing report status",
 		"TOOLKIT_REPORT_005": "Error while fetching list of reports",
 		"TOOLKIT_REPORT_006": "Error while fetching list of reports. Invalid report status: ",
+		"TOOLKIT_PARTNER_CONSENT_ERR_001": "Error fetching biometric consent template.",
+		"TOOLKIT_PARTNER_CONSENT_ERR_002": "Error saving partner consent data.",
+		"TOOLKIT_PARTNER_CONSENT_ERR_003": "Error fetching partner consent status.",
 		"error": "Error"
 	}
 }
