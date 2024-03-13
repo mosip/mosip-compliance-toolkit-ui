@@ -348,7 +348,7 @@ export class AddTestDataComponent implements OnInit {
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
         //get sdkAbis consent
-        this.dataService.isConsentGiven(false).subscribe(
+        this.dataService.getPartnerConsent(false).subscribe(
           (response: any) => {
             resolve(response['response']);
           },

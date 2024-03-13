@@ -249,8 +249,8 @@ export class DataService {
   }
 
 
-  isConsentGiven(consentForSbiBiometrics: boolean) {
-    let url = `${this.SERVICES_BASE_URL}isConsentGiven?consentForSbiBiometrics=${consentForSbiBiometrics}`;
+  getPartnerConsent(consentForSbiBiometrics: boolean) {
+    let url = `${this.SERVICES_BASE_URL}getPartnerConsent?consentForSbiBiometrics=${consentForSbiBiometrics}`;
     return this.httpClient.get(url);
   }
 
