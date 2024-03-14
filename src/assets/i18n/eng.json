@@ -2012,6 +2012,8 @@
 		"TOOLKIT_REQ_ERR_037": "Invalid Image Compression Type for Face Modality, allowed values[JPEG_2000_LOSSY, JPEG_2000_LOSS_LESS]",
 		"TOOLKIT_REQ_ERR_038": "Auth Bio value decryption failed",
 		"TOOLKIT_REQ_ERR_039": "Unable to get the encryption certificate from KeyManager for the appId",
+		"TOOLKIT_REQ_ERR_043": "File name should not contain multiple extensions",
+		"TOOLKIT_REQ_ERR_044": "Unable to upload a file without extension",
 		"TOOLKIT_DB_ERR_001": "You have previously created a project with the same name",
 		"TOOLKIT_DB_ERR_002": "You have previously added biometric test data with the same name",
 		"TOOLKIT_DB_ERR_003": "You have previously created a collection with the same name",
