@@ -217,6 +217,7 @@ export default class Utils {
       message: message,
     };
     const dialogRef = dialog.open(DialogComponent, {
+      id: 'SUCCESS',
       width: '400px',
       data: body,
     });
