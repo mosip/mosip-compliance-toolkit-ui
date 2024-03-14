@@ -2018,6 +2018,7 @@
 		"TOOLKIT_REQ_ERR_039": "Impossible d'obtenir le certificat de chiffrement de KeyManager pour l'appId",
 		"TOOLKIT_REQ_ERR_043": "Le nom du fichier ne doit pas contenir plusieurs extensions",
 		"TOOLKIT_REQ_ERR_044": "Impossible de télécharger un fichier sans extension",
+		"TOOLKIT_REQ_ERR_045": "Impossible de télécharger le fichier malveillant",
 		"TOOLKIT_REQ_ERR_500": "Erreur technique",
 		"TOOLKIT_DB_ERR_001": "Vous avez précédemment créé un projet avec le nom",
 		"TOOLKIT_DB_ERR_002": "Vous avez précédemment ajouté des données de test biométrique avec le nom",
