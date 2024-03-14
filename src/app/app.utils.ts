@@ -824,10 +824,9 @@ export default class Utils {
     });
   }
 
-  static getSbiBiometricConsent(dataService: DataService, resourceBundleJson: any, dialog: MatDialog) {
+  static getPartnerBiometricConsent(dataService: DataService, resourceBundleJson: any, dialog: MatDialog) {
     return new Promise((resolve, reject) => {
-      // fetch sbiPartner consent
-      dataService.getPartnerConsent(true).subscribe(
+      dataService.getPartnerConsent().subscribe(
         (response: any) => {
           resolve(response['response']);
         },

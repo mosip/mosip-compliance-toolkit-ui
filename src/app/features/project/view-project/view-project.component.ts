@@ -69,6 +69,7 @@ export class ViewProjectComponent implements OnInit {
   resourceBundleJson: any = {};
   deviceImageUrls: string[] = [];
   isReportAlreadySubmitted = false;
+  consentResponse: any;
   constructor(
     public authService: AuthService,
     private dataService: DataService,
@@ -461,7 +462,15 @@ export class ViewProjectComponent implements OnInit {
   }
 
   async displaySbiBiometricConsentDialog() {
-    let isSbiConsentGiven = await Utils.getSbiBiometricConsent(this.dataService, this.resourceBundleJson, this.dialog);
+    this.consentResponse = await Utils.getPartnerBiometricConsent(this.dataService, this.resourceBundleJson, this.dialog);
+    let isSbiConsentGiven = false;
+    if (this.consentResponse['consentForSbiBiometrics'] === 'YES') {
+      isSbiConsentGiven = true;
+    } else if (this.consentResponse['consentForSbiBiometrics'] === 'NO') {
+      isSbiConsentGiven = false;
+    } else {
+      console.error("Invalid value for consentForSbiBiometrics:", this.consentResponse['consentForSbiBiometrics']);
+    }
     if (!isSbiConsentGiven) {
       const dialogRef = this.dialog.open(DialogComponent, {
         width: '600px',

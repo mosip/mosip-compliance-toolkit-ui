@@ -39,6 +39,7 @@ export class AddProjectComponent implements OnInit {
   deviceImage4: any = null;
   deviceImage5: any = null;
   imageUrls: any[] = [null, null, null, null];
+  consentResponse: any;
 
   constructor(
     public authService: AuthService,
@@ -210,7 +211,15 @@ export class AddProjectComponent implements OnInit {
           (async () => {
             if (!closeBtn) {
               if (projectType === appConstants.SBI) {
-                let isSbiConsentGiven = await Utils.getSbiBiometricConsent(this.dataService, this.resourceBundleJson, this.dialog);
+                this.consentResponse = await Utils.getPartnerBiometricConsent(this.dataService, this.resourceBundleJson, this.dialog);
+                let isSbiConsentGiven = false;
+                if (this.consentResponse['consentForSbiBiometrics'] === 'YES') {
+                  isSbiConsentGiven = true;
+                } else if (this.consentResponse['consentForSbiBiometrics'] === 'NO') {
+                  isSbiConsentGiven = false;
+                } else {
+                  console.error("Invalid value for consentForSbiBiometrics:", this.consentResponse['consentForSbiBiometrics']);
+                }
                 if (isSbiConsentGiven) {
                   await this.addSbiProject();
                 } else {

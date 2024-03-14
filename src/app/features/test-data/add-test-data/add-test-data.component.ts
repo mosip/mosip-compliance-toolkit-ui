@@ -41,6 +41,7 @@ export class AddTestDataComponent implements OnInit {
   allowedFileNameLegth =
     this.appConfigService.getConfig()['allowedFileNameLegth'];
   allowedFileSize = this.appConfigService.getConfig()['allowedFileSize'];
+  consentResponse: any;
 
   constructor(
     public authService: AuthService,
@@ -332,7 +333,15 @@ export class AddTestDataComponent implements OnInit {
   }
 
   async displaySdkAbisConsentDialog() {
-    let isSdkAbisConsentGiven = await this.getSdkAbisConsent();
+    this.consentResponse = await Utils.getPartnerBiometricConsent(this.dataService, this.resourceBundleJson, this.dialog);
+    let isSdkAbisConsentGiven = false;
+    if (this.consentResponse['consentForSdkAbisBiometrics'] === 'YES') {
+      isSdkAbisConsentGiven = true;
+    } else if (this.consentResponse['consentForSdkAbisBiometrics'] === 'NO') {
+      isSdkAbisConsentGiven = false;
+    } else {
+      console.error("Invalid value for consentForSdkAbisBiometrics:", this.consentResponse['consentForSdkAbisBiometrics']);
+    }
     if (!isSdkAbisConsentGiven) {
       const dialogRef = this.dialog.open(DialogComponent, {
         width: '600px',
@@ -342,23 +351,6 @@ export class AddTestDataComponent implements OnInit {
         },
       });
     }
-  }
-
-  async getSdkAbisConsent() {
-    return new Promise((resolve, reject) => {
-      this.subscriptions.push(
-        //get sdkAbis consent
-        this.dataService.getPartnerConsent(false).subscribe(
-          (response: any) => {
-            resolve(response['response']);
-          },
-          (errors) => {
-            Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
-            resolve(false);
-          }
-        )
-      );
-    });
   }
 
   ngOnDestroy(): void {
