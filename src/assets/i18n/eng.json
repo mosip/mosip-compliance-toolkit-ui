@@ -2057,6 +2057,7 @@
 		"TOOLKIT_PARTNER_CONSENT_ERR_001": "Error fetching biometric consent template.",
 		"TOOLKIT_PARTNER_CONSENT_ERR_002": "Error saving partner consent data.",
 		"TOOLKIT_PARTNER_CONSENT_ERR_003": "Error fetching partner consent status.",
-		"error": "Error"
+		"error": "Error",
+		"FILE_WITH_MULTIPLE_EXTENSIONS": "File name should not contain multiple extensions"
 	}
 }

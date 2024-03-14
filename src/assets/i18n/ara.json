@@ -2057,6 +2057,7 @@
 		"TOOLKIT_PARTNER_CONSENT_ERR_001": "حدث خطأ أثناء جلب نموذج الموافقة البيومترية.",
 		"TOOLKIT_PARTNER_CONSENT_ERR_002": "حدث خطأ أثناء حفظ بيانات موافقة الشريك.",
 		"TOOLKIT_PARTNER_CONSENT_ERR_003": "حدث خطأ أثناء جلب حالة موافقة الشريك.",
-		"error": "خطأ"
+		"error": "خطأ",
+		"FILE_WITH_MULTIPLE_EXTENSIONS": "يجب ألا يحتوي اسم الملف على امتدادات متعددة"
 	}
 }

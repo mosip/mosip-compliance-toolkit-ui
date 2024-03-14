@@ -147,7 +147,7 @@
 		"sdkHashIsRequired": "Le hachage SDK est requis",
 		"abisHash": "Hachage ABIS:",
 		"abisHashIsRequired": "Le hachage ABIS est requis",
-		"selectDeviceImages": "Télécharger des images de périphérique"
+		"selectDeviceImages": "Télécharger appareil images"
 	},
 	"addTestData": {
 		"name": "Nom",
@@ -2057,6 +2057,7 @@
 		"TOOLKIT_PARTNER_CONSENT_ERR_001": "Erreur lors de la récupération du modèle de consentement biométrique.",
 		"TOOLKIT_PARTNER_CONSENT_ERR_002": "Erreur lors de l'enregistrement des données de consentement du partenaire.",
 		"TOOLKIT_PARTNER_CONSENT_ERR_003": "Erreur lors de la récupération du statut de consentement du partenaire.",
-		"error": "Errorerreur"
+		"error": "Errorerreur",
+		"FILE_WITH_MULTIPLE_EXTENSIONS": "Le nom du fichier ne doit pas contenir plusieurs extensions"
 	}
 }
