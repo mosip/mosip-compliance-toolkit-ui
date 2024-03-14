@@ -39,6 +39,8 @@ export class AddProjectComponent implements OnInit {
   deviceImage4: any = null;
   deviceImage5: any = null;
   imageUrls: any[] = [null, null, null, null];
+  consentResponse: any;
+  isSbiConsentGiven = false;
 
   constructor(
     public authService: AuthService,
@@ -66,6 +68,7 @@ export class AddProjectComponent implements OnInit {
     if (projectType == appConstants.ABIS) {
       this.bioTestDataFileNames = await Utils.getBioTestDataNames(this.subscriptions, this.dataService, appConstants.ABIS, this.resourceBundleJson, this.dialog);
     } 
+    this.getSbiBiometricConsent();
     this.dataLoaded = true;
   }
 
@@ -210,6 +213,16 @@ export class AddProjectComponent implements OnInit {
           (async () => {
             if (!closeBtn) {
               if (projectType == appConstants.SBI) {
+                if (!this.isSbiConsentGiven) {
+                  const dialogRef = this.dialog.open(DialogComponent, {
+                      width: '600px',
+                      data: {
+                          case: "PARTNER_BIOMETRIC_CONSENT",
+                          consentForSbiBiometrics: true,
+                      },
+                  });
+                  await dialogRef.afterClosed().toPromise();
+              }
                 let request = {
                   id: appConstants.SBI_PROJECT_ADD_ID,
                   version: appConstants.VERSION,
@@ -313,6 +326,7 @@ export class AddProjectComponent implements OnInit {
   }
 
   getProjectResponse(response: any){
+    this.dialog.closeAll();
     if (response.errors && response.errors.length > 0) {
       this.dataLoaded = true;
       this.dataSubmitted = false;
@@ -374,5 +388,16 @@ export class AddProjectComponent implements OnInit {
         this.projectForm.controls[controlId].setValidators(Validators.required);
       });
     });
+  }
+
+  async getSbiBiometricConsent() {
+    this.consentResponse = await Utils.getPartnerBiometricConsent(this.dataService, this.resourceBundleJson, this.dialog);
+    if (this.consentResponse['consentForSbiBiometrics'] === 'YES') {
+      this.isSbiConsentGiven = true;
+    } else if (this.consentResponse['consentForSbiBiometrics'] === 'NO') {
+      this.isSbiConsentGiven = false;
+    } else {
+      console.error("Invalid value for consentForSbiBiometrics:", this.consentResponse['consentForSbiBiometrics']);
+    }
   }
 }

@@ -248,6 +248,21 @@ export class DataService {
     return this.httpClient.get(url, { responseType: 'blob' });
   }
 
+  getBiometricConsentTemplate() {
+    let url = `${this.SERVICES_BASE_URL}getBiometricsConsentTemplate`;
+    return this.httpClient.get(url);
+  }
+
+  saveBiometricConsent(body: any) {
+    let url = `${this.SERVICES_BASE_URL}savePartnerBiometricConsent`;
+    return this.httpClient.post(url, body);
+  }
+
+  getPartnerConsent() {
+    let url = `${this.SERVICES_BASE_URL}getPartnerConsent`;
+    return this.httpClient.get(url);
+  }
+
   getEncryptionKey() {
     let url = `${this.SERVICES_BASE_URL}getEncryptionKey`;
     return this.httpClient.get(url);

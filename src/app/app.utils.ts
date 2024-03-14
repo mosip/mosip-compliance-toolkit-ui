@@ -899,4 +899,18 @@ export default class Utils {
     }
   }
 
+  static getPartnerBiometricConsent(dataService: DataService, resourceBundleJson: any, dialog: MatDialog) {
+    return new Promise((resolve, reject) => {
+      dataService.getPartnerConsent().subscribe(
+        (response: any) => {
+          resolve(response['response']);
+        },
+        (errors: any) => {
+          this.showErrorMessage(resourceBundleJson, errors, dialog);
+          resolve(false);
+        }
+      )
+    });
+  }
+
 }

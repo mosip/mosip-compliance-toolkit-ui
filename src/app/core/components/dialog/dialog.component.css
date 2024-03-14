@@ -188,6 +188,16 @@ img {
   margin-left: 10px;
 }
 
+.consent-checkbox {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  margin-left: 10px;
+}
+
+.consent-checkbox ::ng-deep .mat-checkbox-layout {
+  white-space: normal;
+}
+
 .reviewMessage {
   margin-top: -3px;
 }
@@ -275,7 +285,7 @@ ul.reviewMessage li:before {
     margin-top: 15px;
     margin-bottom: 3px;
   }
-  ::ng-deep .mat-dialog-container{
+  :not(.consent-box) ::ng-deep .mat-dialog-container{
     display: flex;
     justify-content: center;
   }
