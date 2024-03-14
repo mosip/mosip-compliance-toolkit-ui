@@ -39,6 +39,7 @@ export class AddProjectComponent implements OnInit {
   deviceImage4: any = null;
   deviceImage5: any = null;
   imageUrls: any[] = [null, null, null, null];
+  consentResponse: any;
 
   constructor(
     public authService: AuthService,
@@ -209,17 +210,34 @@ export class AddProjectComponent implements OnInit {
         (closeBtn: boolean) => {
           (async () => {
             if (!closeBtn) {
-              if (projectType == appConstants.SBI) {
-                let request = {
-                  id: appConstants.SBI_PROJECT_ADD_ID,
-                  version: appConstants.VERSION,
-                  requesttime: new Date().toISOString(),
-                  request: Utils.populateSbiProjectData(this.projectForm, '', this.deviceImage1, this.deviceImage2, 
-                  this.deviceImage3, this.deviceImage4, this.isAndroidAppMode),
-                };
-                this.dataLoaded = false;
-                this.dataSubmitted = true;
-                await this.addSbiProject(request);
+              if (projectType === appConstants.SBI) {
+                this.consentResponse = await Utils.getPartnerBiometricConsent(this.dataService, this.resourceBundleJson, this.dialog);
+                let isSbiConsentGiven = false;
+                if (this.consentResponse['consentForSbiBiometrics'] === 'YES') {
+                  isSbiConsentGiven = true;
+                } else if (this.consentResponse['consentForSbiBiometrics'] === 'NO') {
+                  isSbiConsentGiven = false;
+                } else {
+                  console.error("Invalid value for consentForSbiBiometrics:", this.consentResponse['consentForSbiBiometrics']);
+                }
+                if (isSbiConsentGiven) {
+                  await this.addSbiProject();
+                } else {
+                  const dialogRef = this.dialog.open(DialogComponent, {
+                    width: '600px',
+                    data: {
+                      case: "PARTNER_BIOMETRIC_CONSENT",
+                      consentForSbiBiometrics: true,
+                    },
+                  });
+                  dialogRef.afterClosed().subscribe(dialogResult => {
+                    if (dialogResult) {
+                      this.addSbiProject();
+                    } else {
+                      console.log("Consent was not confirmed. Project not saved.");
+                    }
+                  });
+                }
               }
               if (projectType == appConstants.SDK) {
                 let request = {
@@ -255,7 +273,16 @@ export class AddProjectComponent implements OnInit {
     this.projectForm.controls['deviceSubType'].setValue('');
   }
 
-  async addSbiProject(request: any) {
+  async addSbiProject() {
+    let request = {
+      id: appConstants.SBI_PROJECT_ADD_ID,
+      version: appConstants.VERSION,
+      requesttime: new Date().toISOString(),
+      request: Utils.populateSbiProjectData(this.projectForm, '', this.deviceImage1, this.deviceImage2,
+        this.deviceImage3, this.deviceImage4, this.isAndroidAppMode),
+    };
+    this.dataLoaded = false;
+    this.dataSubmitted = true;
     return new Promise((resolve, reject) => {
       this.subscriptions.push(
         this.dataService.addSbiProject(request).subscribe(
@@ -319,10 +346,11 @@ export class AddProjectComponent implements OnInit {
       Utils.showErrorMessage(this.resourceBundleJson, response.errors, this.dialog);
       return true;
     } else {
+      this.dataLoaded = true;
+      this.dialog.closeAll();
       let resourceBundle = this.resourceBundleJson.dialogMessages;
       let successMsg = 'success';
       let projectMsg = 'successMessage';
-      this.dataLoaded = true;
       const dialogRef = Utils.showSuccessMessage(
         resourceBundle,
         successMsg,

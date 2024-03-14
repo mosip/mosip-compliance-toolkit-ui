@@ -825,6 +825,20 @@ export default class Utils {
     });
   }
 
+  static getPartnerBiometricConsent(dataService: DataService, resourceBundleJson: any, dialog: MatDialog) {
+    return new Promise((resolve, reject) => {
+      dataService.getPartnerConsent().subscribe(
+        (response: any) => {
+          resolve(response['response']);
+        },
+        (errors: any) => {
+          this.showErrorMessage(resourceBundleJson, errors, dialog);
+          resolve(false);
+        }
+      )
+    });
+  }
+
   static convertBlobToBase64 = (blob: Blob) => new Promise((resolve, reject) => {
     const reader = new FileReader;
     reader.onerror = reject;

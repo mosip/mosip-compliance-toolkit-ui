@@ -40,7 +40,11 @@
 		"verifyMessage": "Vérifiez les valeurs de hachage et de site Web avant de continuer. Si les valeurs sont correctes, enregistrez le projet.",
 		"saveBtn":  "Sauvegarder",
 		"sessionInactiveMessage": "Votre temps sera écoulé pour cause d'inactivité. Veuillez cliquer n'importe où pour réactiver votre session",
-		"sessionInactivityLogoutMessage": "Vous avez été déconnecté pour cause d'inactivité."
+		"sessionInactivityLogoutMessage": "Vous avez été déconnecté pour cause d'inactivité.",
+		"addConsentDataSuccessMsg": "Votre consentement a été reçu avec succès",
+		"consentHead": "Consentement",
+		"confirm": "Confirmer",
+		"consentCheckbox": "Je reconnais et accepte les termes et conditions"
 	},
 	"breadcrumb": {
 		"home": "Maison",
@@ -2050,6 +2054,9 @@
 		"TOOLKIT_REPORT_004": "Erreur lors de la modification de l'état du rapport",
 		"TOOLKIT_REPORT_005": "Erreur lors de la récupération de la liste des rapports.",
 		"TOOLKIT_REPORT_006": "Erreur lors de la récupération de la liste des rapports. Statut du rapport invalide : ",
+		"TOOLKIT_PARTNER_CONSENT_ERR_001": "Erreur lors de la récupération du modèle de consentement biométrique.",
+		"TOOLKIT_PARTNER_CONSENT_ERR_002": "Erreur lors de l'enregistrement des données de consentement du partenaire.",
+		"TOOLKIT_PARTNER_CONSENT_ERR_003": "Erreur lors de la récupération du statut de consentement du partenaire.",
 		"error": "Errorerreur",
 		"FILE_WITH_MULTIPLE_EXTENSIONS": "Le nom du fichier ne doit pas contenir plusieurs extensions"
 	}
