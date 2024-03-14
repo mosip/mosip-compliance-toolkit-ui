@@ -2018,6 +2018,7 @@
 		"TOOLKIT_REQ_ERR_039": "Unable to get the encryption certificate from KeyManager for the appId",
 		"TOOLKIT_REQ_ERR_043": "File name should not contain multiple extensions",
 		"TOOLKIT_REQ_ERR_044": "Unable to upload a file without extension",
+		"TOOLKIT_REQ_ERR_045": "Unable to upload malware file",
 		"TOOLKIT_DB_ERR_001": "You have previously created a project with the same name",
 		"TOOLKIT_DB_ERR_002": "You have previously added biometric test data with the same name",
 		"TOOLKIT_DB_ERR_003": "You have previously created a collection with the same name",
