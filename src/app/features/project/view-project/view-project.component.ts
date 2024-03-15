@@ -19,6 +19,7 @@ import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { DialogComponent } from 'src/app/core/components/dialog/dialog.component';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Toast } from '@capacitor/toast';
+import { AppConfigService } from 'src/app/app-config.service';
 
 export interface CollectionsData {
   collectionId: string;
@@ -69,11 +70,13 @@ export class ViewProjectComponent implements OnInit {
   resourceBundleJson: any = {};
   deviceImageUrls: string[] = [];
   isReportAlreadySubmitted = false;
+  isBiometricConsentEnabled = this.appConfigService.getConfig()['isBiometricConsentEnabled'];
   consentResponse: any;
   isSbiConsentGiven = false;
   constructor(
     public authService: AuthService,
     private dataService: DataService,
+    private appConfigService: AppConfigService,
     private router: Router,
     private dialog: MatDialog,
     private breadcrumbService: BreadcrumbService,
@@ -89,7 +92,6 @@ export class ViewProjectComponent implements OnInit {
     await this.getCollections();
     if (this.projectType == appConstants.SBI) {
       this.initSbiProjectForm();
-      this.getSbiBiometricConsent();
       this.projectFormData = await Utils.getSbiProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
       Utils.populateSbiProjectForm(this.projectFormData, this.projectForm);
       this.getDeviceImageUrl();
@@ -269,9 +271,9 @@ export class ViewProjectComponent implements OnInit {
       );
   }
   async runCollection(row: any) {
-    if (this.projectType == appConstants.SBI) {
+    if (this.isBiometricConsentEnabled === 'true' && this.projectType == appConstants.SBI) {
+      await this.getSbiBiometricConsent();
       if (!this.isSbiConsentGiven) {
-        console.log(this.dialog);
         const dialogRef = this.dialog.open(DialogComponent, {
           width: '600px',
           data: {

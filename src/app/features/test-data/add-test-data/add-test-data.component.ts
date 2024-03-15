@@ -42,6 +42,7 @@ export class AddTestDataComponent implements OnInit {
     this.appConfigService.getConfig()['allowedFileNameLegth'];
   allowedFileSize = this.appConfigService.getConfig()['allowedFileSize'];
   consentResponse: any;
+  isBiometricConsentEnabled = this.appConfigService.getConfig()['isBiometricConsentEnabled'];
 
   constructor(
     public authService: AuthService,
@@ -343,23 +344,25 @@ export class AddTestDataComponent implements OnInit {
   }
 
   async displaySdkAbisConsentDialog() {
-    this.consentResponse = await Utils.getPartnerBiometricConsent(this.dataService, this.resourceBundleJson, this.dialog);
-    let isSdkAbisConsentGiven = false;
-    if (this.consentResponse['consentForSdkAbisBiometrics'] === 'YES') {
-      isSdkAbisConsentGiven = true;
-    } else if (this.consentResponse['consentForSdkAbisBiometrics'] === 'NO') {
-      isSdkAbisConsentGiven = false;
-    } else {
-      console.error("Invalid value for consentForSdkAbisBiometrics:", this.consentResponse['consentForSdkAbisBiometrics']);
-    }
-    if (!isSdkAbisConsentGiven) {
-      const dialogRef = this.dialog.open(DialogComponent, {
-        width: '600px',
-        data: {
-          case: "PARTNER_BIOMETRIC_CONSENT",
-          consentForSbiBiometrics: false,
-        },
-      });
+    if (this.isBiometricConsentEnabled === 'true') {
+      this.consentResponse = await Utils.getPartnerBiometricConsent(this.dataService, this.resourceBundleJson, this.dialog);
+      let isSdkAbisConsentGiven = false;
+      if (this.consentResponse['consentForSdkAbisBiometrics'] === 'YES') {
+        isSdkAbisConsentGiven = true;
+      } else if (this.consentResponse['consentForSdkAbisBiometrics'] === 'NO') {
+        isSdkAbisConsentGiven = false;
+      } else {
+        console.error("Invalid value for consentForSdkAbisBiometrics:", this.consentResponse['consentForSdkAbisBiometrics']);
+      }
+      if (!isSdkAbisConsentGiven) {
+        const dialogRef = this.dialog.open(DialogComponent, {
+          width: '600px',
+          data: {
+            case: "PARTNER_BIOMETRIC_CONSENT",
+            consentForSbiBiometrics: false,
+          },
+        });
+      }
     }
   }
 
