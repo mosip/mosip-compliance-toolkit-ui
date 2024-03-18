@@ -82,20 +82,22 @@ export class DialogComponent implements OnInit {
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     this.projectId = this.input.id;
     this.projectType = this.input.projectType;
-    if (this.projectType == appConstants.SBI) {
-      this.initSbiProjectForm();
-      this.projectFormData = await Utils.getSbiProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
-      Utils.populateSbiProjectForm(this.projectFormData, this.projectForm);
-    }
-    if (this.projectType == appConstants.SDK) {
-      this.initSdkProjectForm();
-      this.projectFormData = await Utils.getSdkProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
-      Utils.populateSdkProjectForm(this.projectFormData, this.projectForm);
-    }
-    if (this.projectType == appConstants.ABIS) {
-      this.initAbisProjectForm();
-      this.projectFormData = await Utils.getAbisProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
-      Utils.populateAbisProjectForm(this.projectFormData, this.projectForm);
+    if(this.projectId) {
+      if (this.projectType == appConstants.SBI) {
+        this.initSbiProjectForm();
+        this.projectFormData = await Utils.getSbiProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
+        Utils.populateSbiProjectForm(this.projectFormData, this.projectForm);
+      }
+      if (this.projectType == appConstants.SDK) {
+        this.initSdkProjectForm();
+        this.projectFormData = await Utils.getSdkProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
+        Utils.populateSdkProjectForm(this.projectFormData, this.projectForm);
+      }
+      if (this.projectType == appConstants.ABIS) {
+        this.initAbisProjectForm();
+        this.projectFormData = await Utils.getAbisProjectDetails(this.projectId, this.dataService, this.resourceBundleJson, this.dialog);
+        Utils.populateAbisProjectForm(this.projectFormData, this.projectForm);
+      }
     }
     if (this.data.selectedDeviceImagesUrl) {
       this.imageUrls = this.data.selectedDeviceImagesUrl;
