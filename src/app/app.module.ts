@@ -16,6 +16,7 @@ import { AuthService } from './core/services/authservice.service';
 import { AuthguardService } from './core/services/authguard.service';
 import { CoreModule } from './core/core.module';
 import { environment } from 'src/environments/environment';
+import { ErrorPageComponent } from './error-page/error-page.component';
 
 const appInitialization = (appConfig: AppConfigService) => {
   return () => {
@@ -41,7 +42,7 @@ if (environment.isAndroidAppMode == 'yes') {
 }
 
 @NgModule({
-  declarations: [AppComponent, LandingPageComponent],
+  declarations: [AppComponent, LandingPageComponent, ErrorPageComponent],
   imports: imports,
   providers: [
     CookieService,

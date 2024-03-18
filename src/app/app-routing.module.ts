@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { environment } from 'src/environments/environment';
+import { ErrorPageComponent } from './error-page/error-page.component';
 const routes: Routes = [
   {
     path: '',
@@ -18,6 +19,10 @@ const routes: Routes = [
       import('./main-app/main-app.module').then(
         (m) => m.MainAppModule
       )
+  },
+  {
+    path: '**',
+    component: ErrorPageComponent
   }
 ];
 

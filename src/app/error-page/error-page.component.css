@@ -1,0 +1,16 @@
+.error-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.error-heading {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.error-message {
+    font-size: 18px;
+    text-align: center;
+}
