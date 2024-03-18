@@ -43,6 +43,8 @@ export class AddTestDataComponent implements OnInit {
   allowedFileSize = this.appConfigService.getConfig()['allowedFileSize'];
   consentResponse: any;
   isBiometricConsentEnabled = this.appConfigService.getConfig()['isBiometricConsentEnabled'];
+  isAbisPartner = this.appConfigService.getConfig()['abisPartnerType'] == "ABIS_PARTNER" ? true : false;
+  invalidPartnerType: string = '';
 
   constructor(
     public authService: AuthService,
@@ -58,6 +60,9 @@ export class AddTestDataComponent implements OnInit {
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
+    this.invalidPartnerType = this.isAbisPartner
+      ? ''
+      : this.resourceBundleJson.addTestData['invalidPartnerTypeMsg'];
     this.displaySdkAbisConsentDialog();
     this.initForm();
     this.initBreadCrumb();
