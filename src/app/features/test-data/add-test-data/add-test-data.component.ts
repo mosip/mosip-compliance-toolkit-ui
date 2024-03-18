@@ -117,7 +117,8 @@ export class AddTestDataComponent implements OnInit {
     }
   }
 
-  handleProjectTypeChange(projectType: string) {
+  handleProjectTypeChange() {
+    const projectType = this.testDataForm.controls['type'].value;
     if (projectType == appConstants.ABIS) {
       this.showSdkPurpose = false;
       this.testDataForm.controls['purpose'].setValidators(null);

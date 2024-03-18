@@ -32,9 +32,10 @@
                 </span>
                 <span class="fieldContainer">
                     <div class="projectTypeOptions">
-                        <mat-radio-group aria-label="Select an option" formControlName="type" appearance="legacy">
-                            <mat-radio-button value="SDK" (click)=" handleProjectTypeChange('SDK')">SDK</mat-radio-button>
-                            <mat-radio-button value="ABIS" [disabled]="!isAbisPartner" [title]="invalidPartnerType" (click)=" handleProjectTypeChange('ABIS')" [ngStyle]="buttonPosition">ABIS</mat-radio-button>
+                        <mat-radio-group aria-label="Select an option" formControlName="type" appearance="legacy" 
+                        (change)=" handleProjectTypeChange()">
+                            <mat-radio-button value="SDK">SDK</mat-radio-button>
+                            <mat-radio-button value="ABIS" [disabled]="!isAbisPartner" [title]="invalidPartnerType" [ngStyle]="buttonPosition">ABIS</mat-radio-button>
                         </mat-radio-group>
                         <mat-error *ngIf="testDataForm.controls['type'].touched && testDataForm.controls['type'].hasError('required')">
                             {{"addTestData.projectTypeIsRequired"|translate}}
