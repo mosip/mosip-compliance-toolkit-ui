@@ -31,8 +31,8 @@ export class AddProjectComponent implements OnInit {
   hidePassword = true;
   dataLoaded = false;
   dataSubmitted = false;
-  isAbisPartner = this.appConfigService.getConfig()['abisPartnerType'] == "ABIS_PARTNER" ? true : false;
-  invalidPartnerType: string = '';
+  isAbisPartner = this.appConfigService.getConfig()['isAbisPartner'] == "YES" ? true : false;
+  abisOptionTitle: string = '';
   deviceImage1: any = null;
   deviceImage2: any = null;
   deviceImage3: any = null;
@@ -54,9 +54,9 @@ export class AddProjectComponent implements OnInit {
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
-    this.invalidPartnerType = this.isAbisPartner
+    this.abisOptionTitle = this.isAbisPartner
       ? ''
-      : this.resourceBundleJson.addProject['invalidPartnerTypeMsg'];
+      : this.resourceBundleJson.addProject['abisOptionTitle'];
     this.initForm();
     this.initBreadCrumb();
     const projectType = this.projectForm.controls['projectType'].value;
