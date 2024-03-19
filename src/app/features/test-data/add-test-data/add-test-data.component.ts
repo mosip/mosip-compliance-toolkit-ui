@@ -335,9 +335,6 @@ export class AddTestDataComponent implements OnInit {
     await this.router.navigate([`toolkit/dashboard/biometric`]);
   }
 
-  async showDashboard() {
-    await this.router.navigate([`toolkit/dashboard`]);
-  }
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
