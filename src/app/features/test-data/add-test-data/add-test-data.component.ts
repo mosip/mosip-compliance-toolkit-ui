@@ -60,7 +60,7 @@ export class AddTestDataComponent implements OnInit {
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     this.abisOptionTitle = this.isAbisPartner
       ? ''
-      : this.resourceBundleJson.addTestData['invalidPartnerTypeMsg'];
+      : this.resourceBundleJson.addTestData['abisOptionTitle'];
     this.initForm();
     this.initBreadCrumb();
     this.getAllowedFileTypes(this.allowedFileTypes);

@@ -56,7 +56,7 @@ export class AddProjectComponent implements OnInit {
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     this.abisOptionTitle = this.isAbisPartner
       ? ''
-      : this.resourceBundleJson.addProject['invalidPartnerTypeMsg'];
+      : this.resourceBundleJson.addProject['abisOptionTitle'];
     this.initForm();
     this.initBreadCrumb();
     const projectType = this.projectForm.controls['projectType'].value;
