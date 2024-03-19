@@ -41,8 +41,8 @@ export class AddTestDataComponent implements OnInit {
   allowedFileNameLegth =
     this.appConfigService.getConfig()['allowedFileNameLegth'];
   allowedFileSize = this.appConfigService.getConfig()['allowedFileSize'];
-  isAbisPartner = this.appConfigService.getConfig()['abisPartnerType'] == "ABIS_PARTNER" ? true : false;
-  invalidPartnerType: string = '';
+  isAbisPartner = this.appConfigService.getConfig()['isAbisPartner'] == "YES" ? true : false;
+  abisOptionTitle: string = '';
 
   constructor(
     public authService: AuthService,
@@ -58,7 +58,7 @@ export class AddTestDataComponent implements OnInit {
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
-    this.invalidPartnerType = this.isAbisPartner
+    this.abisOptionTitle = this.isAbisPartner
       ? ''
       : this.resourceBundleJson.addTestData['invalidPartnerTypeMsg'];
     this.initForm();
