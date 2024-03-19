@@ -41,8 +41,6 @@ export class AddTestDataComponent implements OnInit {
   allowedFileNameLegth =
     this.appConfigService.getConfig()['allowedFileNameLegth'];
   allowedFileSize = this.appConfigService.getConfig()['allowedFileSize'];
-  consentResponse: any;
-  isBiometricConsentEnabled = this.appConfigService.getConfig()['isBiometricConsentEnabled'];
   isAbisPartner = this.appConfigService.getConfig()['abisPartnerType'] == "ABIS_PARTNER" ? true : false;
   invalidPartnerType: string = '';
 
@@ -63,7 +61,6 @@ export class AddTestDataComponent implements OnInit {
     this.invalidPartnerType = this.isAbisPartner
       ? ''
       : this.resourceBundleJson.addTestData['invalidPartnerTypeMsg'];
-    this.displaySdkAbisConsentDialog();
     this.initForm();
     this.initBreadCrumb();
     this.getAllowedFileTypes(this.allowedFileTypes);
@@ -343,33 +340,6 @@ export class AddTestDataComponent implements OnInit {
 
   async showBiometricDashboard() {
     await this.router.navigate([`toolkit/dashboard/biometric`]);
-  }
-
-  async showDashboard() {
-    await this.router.navigate([`toolkit/dashboard`]);
-  }
-
-  async displaySdkAbisConsentDialog() {
-    if (this.isBiometricConsentEnabled === 'true') {
-      this.consentResponse = await Utils.getPartnerBiometricConsent(this.dataService, this.resourceBundleJson, this.dialog);
-      let isSdkAbisConsentGiven = false;
-      if (this.consentResponse['consentForSdkAbisBiometrics'] === 'YES') {
-        isSdkAbisConsentGiven = true;
-      } else if (this.consentResponse['consentForSdkAbisBiometrics'] === 'NO') {
-        isSdkAbisConsentGiven = false;
-      } else {
-        console.error("Invalid value for consentForSdkAbisBiometrics:", this.consentResponse['consentForSdkAbisBiometrics']);
-      }
-      if (!isSdkAbisConsentGiven) {
-        const dialogRef = this.dialog.open(DialogComponent, {
-          width: '600px',
-          data: {
-            case: "PARTNER_BIOMETRIC_CONSENT",
-            consentForSbiBiometrics: false,
-          },
-        });
-      }
-    }
   }
 
   ngOnDestroy(): void {

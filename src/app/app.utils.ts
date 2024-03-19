@@ -217,7 +217,6 @@ export default class Utils {
       message: message,
     };
     const dialogRef = dialog.open(DialogComponent, {
-      id: 'SUCCESS',
       width: '400px',
       data: body,
     });
@@ -898,20 +897,6 @@ export default class Utils {
         dialog,
         'Unable to download PDF file. Try Again!');
     }
-  }
-
-  static getPartnerBiometricConsent(dataService: DataService, resourceBundleJson: any, dialog: MatDialog) {
-    return new Promise((resolve, reject) => {
-      dataService.getPartnerConsent().subscribe(
-        (response: any) => {
-          resolve(response['response']);
-        },
-        (errors: any) => {
-          this.showErrorMessage(resourceBundleJson, errors, dialog);
-          resolve(false);
-        }
-      )
-    });
   }
 
 }

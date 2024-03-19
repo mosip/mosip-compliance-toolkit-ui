@@ -40,11 +40,7 @@
 		"verifyMessage": "Verify the Hash and Website values before proceeding. If the values are correct, save the project.",
 		"saveBtn":  "Save",
 		"sessionInactiveMessage": "You will be timed out due to inactivity. Please click anywhere to re-activate your session",
-		"sessionInactivityLogoutMessage": "You have been logged out due to inactivity.",
-		"addConsentDataSuccessMsg": "Your consent has been successfully received",
-		"consentHead": "Consent",
-		"confirm": "Confirm",
-		"consentCheckbox": "I acknowledge and accept the terms and conditions"
+		"sessionInactivityLogoutMessage": "You have been logged out due to inactivity."
 	},
 	"breadcrumb": {
 		"home": "Home",
@@ -2058,9 +2054,6 @@
 		"TOOLKIT_REPORT_004": "Error while changing report status",
 		"TOOLKIT_REPORT_005": "Error while fetching list of reports",
 		"TOOLKIT_REPORT_006": "Error while fetching list of reports. Invalid report status: ",
-		"TOOLKIT_PARTNER_CONSENT_ERR_001": "Error fetching biometric consent template.",
-		"TOOLKIT_PARTNER_CONSENT_ERR_002": "Error saving partner consent data.",
-		"TOOLKIT_PARTNER_CONSENT_ERR_003": "Error fetching partner consent status.",
 		"error": "Error",
 		"FILE_WITH_MULTIPLE_EXTENSIONS": "File name should not contain multiple extensions"
 	}

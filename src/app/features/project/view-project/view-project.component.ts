@@ -70,9 +70,7 @@ export class ViewProjectComponent implements OnInit {
   resourceBundleJson: any = {};
   deviceImageUrls: string[] = [];
   isReportAlreadySubmitted = false;
-  isBiometricConsentEnabled = this.appConfigService.getConfig()['isBiometricConsentEnabled'];
-  consentResponse: any;
-  isSbiConsentGiven = false;
+
   constructor(
     public authService: AuthService,
     private dataService: DataService,
@@ -271,22 +269,6 @@ export class ViewProjectComponent implements OnInit {
       );
   }
   async runCollection(row: any) {
-    if (this.isBiometricConsentEnabled === 'true' && this.projectType == appConstants.SBI) {
-      await this.getSbiBiometricConsent();
-      if (!this.isSbiConsentGiven) {
-        const dialogRef = this.dialog.open(DialogComponent, {
-          width: '600px',
-          data: {
-            case: 'PARTNER_BIOMETRIC_CONSENT',
-            consentForSbiBiometrics: true,
-          },
-        });
-        console.log(this.dialog);
-        await dialogRef.afterClosed().toPromise();
-        const successDialog = this.dialog.getDialogById('SUCCESS');
-        await successDialog?.afterClosed().toPromise();
-      }
-    }
     const body = {
       collectionId: row.collectionId,
       projectType: this.projectType,
@@ -478,17 +460,6 @@ export class ViewProjectComponent implements OnInit {
       },
     });
     dialogRef.afterClosed();
-  }
-
-  async getSbiBiometricConsent() {
-    this.consentResponse = await Utils.getPartnerBiometricConsent(this.dataService, this.resourceBundleJson, this.dialog);
-    if (this.consentResponse['consentForSbiBiometrics'] === 'YES') {
-      this.isSbiConsentGiven = true;
-    } else if (this.consentResponse['consentForSbiBiometrics'] === 'NO') {
-      this.isSbiConsentGiven = false;
-    } else {
-      console.error("Invalid value for consentForSbiBiometrics:", this.consentResponse['consentForSbiBiometrics']);
-    }
   }
 
 }
