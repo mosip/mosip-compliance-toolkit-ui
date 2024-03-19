@@ -15,14 +15,8 @@ ENV i18n_path=${base_path}/assets/i18n
 
 # can be passed during Docker build as build time environment for github branch to pickup configuration from.
 ARG container_user=mosip
-
-# can be passed during Docker build as build time environment for github branch to pickup configuration from.
 ARG container_user_group=mosip
-
-# can be passed during Docker build as build time environment for github branch to pickup configuration from.
 ARG container_user_uid=1001
-
-# can be passed during Docker build as build time environment for github branch to pickup configuration from.
 ARG container_user_gid=1001
 
 # can be passed during Docker build as build time environment for github branch to pickup configuration from.
@@ -37,7 +31,8 @@ RUN apt-get -y update \
 && groupadd -g ${container_user_gid} ${container_user_group} \
 && useradd -u ${container_user_uid} -g ${container_user_group} -s /bin/sh -m ${container_user} \
 && mkdir -p /var/run/nginx /var/tmp/nginx \
-&& chown -R ${container_user}:${container_user} /usr/share/nginx /var/run/nginx /var/tmp/nginx
+&& chown -R ${container_user}:${container_user} /home/${container_user} /usr/share/nginx /var/run/nginx /var/tmp/nginx 
+
 
 # set working directory for the user
 WORKDIR /home/${container_user}
