@@ -39,8 +39,6 @@ export class AddProjectComponent implements OnInit {
   deviceImage4: any = null;
   deviceImage5: any = null;
   imageUrls: any[] = [null, null, null, null];
-  consentResponse: any;
-  isSbiConsentGiven = false;
 
   constructor(
     public authService: AuthService,
@@ -68,7 +66,6 @@ export class AddProjectComponent implements OnInit {
     if (projectType == appConstants.ABIS) {
       this.bioTestDataFileNames = await Utils.getBioTestDataNames(this.subscriptions, this.dataService, appConstants.ABIS, this.resourceBundleJson, this.dialog);
     } 
-    this.getSbiBiometricConsent();
     this.dataLoaded = true;
   }
 
@@ -177,20 +174,6 @@ export class AddProjectComponent implements OnInit {
       websiteUrl = this.projectForm.controls['websiteUrl'].value;
     }
     if (projectType == appConstants.SBI) {
-      if (!this.isSbiConsentGiven) {
-        console.log(this.dialog);
-        const dialogRef = this.dialog.open(DialogComponent, {
-          width: '600px',
-          data: {
-            case: 'PARTNER_BIOMETRIC_CONSENT',
-            consentForSbiBiometrics: true,
-          },
-        });
-        console.log(this.dialog);
-        await dialogRef.afterClosed().toPromise();
-        const successDialog = this.dialog.getDialogById('SUCCESS');
-        await successDialog?.afterClosed().toPromise();
-      }
       appConstants.SBI_CONTROLS.forEach((controlId) => {
         this.projectForm.controls[controlId].markAsTouched();
       });
@@ -392,16 +375,5 @@ export class AddProjectComponent implements OnInit {
         this.projectForm.controls[controlId].setValidators(Validators.required);
       });
     });
-  }
-
-  async getSbiBiometricConsent() {
-    this.consentResponse = await Utils.getPartnerBiometricConsent(this.dataService, this.resourceBundleJson, this.dialog);
-    if (this.consentResponse['consentForSbiBiometrics'] === 'YES') {
-      this.isSbiConsentGiven = true;
-    } else if (this.consentResponse['consentForSbiBiometrics'] === 'NO') {
-      this.isSbiConsentGiven = false;
-    } else {
-      console.error("Invalid value for consentForSbiBiometrics:", this.consentResponse['consentForSbiBiometrics']);
-    }
   }
 }
