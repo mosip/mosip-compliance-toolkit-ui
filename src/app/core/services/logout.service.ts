@@ -25,7 +25,9 @@ export class LogoutService {
       });
       return true;
     } else {
-      window.location.href = `${this.appService.getConfig().SERVICES_BASE_URL}${this.appService.getConfig().logout}?redirecturi=` + btoa(window.location.href);
+      let url = `${this.appService.getConfig().SERVICES_BASE_URL}${this.appService.getConfig().logout}?redirecturi=${btoa(window.location.href)}`
+      console.log('logout url ' + url);
+      window.location.href = url;
     }
     //let adminUrl = this.appService.getConfig().toolkitUiUrl;
     /*
