@@ -53,6 +53,8 @@ export class DialogComponent implements OnInit {
   adminRejectComments: string = '';
   rejectReport: boolean = false;
   isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
+  consentCheckbox: boolean;
+  consentTemplate: string;
 
   constructor(
     private router: Router,
@@ -79,6 +81,9 @@ export class DialogComponent implements OnInit {
     this.resourceBundleJson = await Utils.getResourceBundle(this.userProfileService.getUserPreferredLanguage(), this.dataService);
     this.projectId = this.input.id;
     this.projectType = this.input.projectType;
+    if (this.input.case == 'PARTNER_CONSENT'){
+      this.consentTemplate = this.input.consentTemplate;
+    }
     if(this.projectId) {
       if (this.projectType == appConstants.SBI) {
         this.initSbiProjectForm();
@@ -488,5 +493,39 @@ export class DialogComponent implements OnInit {
   onOkClick(): void {
     this.dialogRef.close();
     this.logoutservice.logout();
+  }
+
+  saveBiometricConsent() {
+    return new Promise((resolve, reject) => {
+      const subscription = this.dataService.savePartnerConsent().subscribe(
+        (response: any) => {
+          this.dialogRef.close();
+          if (response.errors && response.errors.length > 0) {
+            Utils.showErrorMessage(this.resourceBundleJson, response.errors, this.dialog);
+            resolve(false);
+          } else {
+            const msg = 'addConsentDataSuccessMsg';
+            const resourceBundle = this.resourceBundleJson.dialogMessages;
+            const successMsg = 'success';
+            Utils.showSuccessMessage(resourceBundle, successMsg, msg, this.dialog);
+            resolve(true);
+          }
+        },
+        (errors) => {
+          this.dialogRef.close();
+          Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
+          resolve(false);
+        }
+      );
+      this.subscriptions.push(subscription);
+    });
+  }
+
+  async closeConsentDialog() {
+    this.dialogRef.close();
+    const msg = 'consentNotApproved';
+    const resourceBundle = this.resourceBundleJson.dialogMessages;
+    const consentMsg = 'Consent';
+    Utils.showConsentPrompt(resourceBundle, consentMsg, msg, this.dialog);
   }
 }

@@ -55,6 +55,7 @@ export class ProjectsDashboardComponent implements OnInit {
   resourceBundleJson: any = {};
   isAdmin: boolean = false;
   message:any = {};
+  isConsentEnabled = this.appConfigService.getConfig()['isConsentEnabled'];
   
   constructor(
     private appConfigService: AppConfigService,
@@ -83,7 +84,30 @@ export class ProjectsDashboardComponent implements OnInit {
     }
     this.dataSource.sort = this.sort;
     this.dataLoaded = true;
+    if (this.isConsentEnabled === 'true') {
+      this.initConsent();
+    }
     this.sessionIdleTimeout();
+  }
+
+  async initConsent() {
+    let langCode = this.userProfileService.getUserPreferredLanguage();
+    let templateName = appConstants.TERMS_AND_CONDITIONS;
+    try {
+      let isConsentGiven = await Utils.getPartnerConsent(this.dataService, this.resourceBundleJson, this.dialog, templateName);
+      if (!isConsentGiven) {
+        let template = await Utils.getConsentTemplate(this.dataService, this.resourceBundleJson, this.dialog, langCode, templateName);
+        const dialogRef = this.dialog.open(DialogComponent, {
+          width: '600px',
+          data: {
+            case: "PARTNER_CONSENT",
+            consentTemplate: template,
+          },
+        });
+      }
+    } catch (errors: any) {
+      console.error(errors[0].message);
+    }
   }
 
   sessionIdleTimeout() {

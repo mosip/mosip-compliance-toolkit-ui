@@ -40,7 +40,12 @@
 		"verifyMessage": "Verify the Hash and Website values before proceeding. If the values are correct, save the project.",
 		"saveBtn":  "Save",
 		"sessionInactiveMessage": "You will be timed out due to inactivity. Please click anywhere to re-activate your session",
-		"sessionInactivityLogoutMessage": "You have been logged out due to inactivity."
+		"sessionInactivityLogoutMessage": "You have been logged out due to inactivity.",
+		"consentNotApproved": "Unable to proceed without consent approval.",
+		"consentCheckbox": "I agree to terms and conditions",
+		"confirm": "Confirm",
+		"consent": "Consent",
+		"addConsentDataSuccessMsg": "Your Consent has been successfully received."
 	},
 	"breadcrumb": {
 		"home": "Home",
@@ -2016,6 +2021,8 @@
 		"TOOLKIT_REQ_ERR_043": "File name should not contain multiple extensions",
 		"TOOLKIT_REQ_ERR_044": "Unable to upload a file without extension",
 		"TOOLKIT_REQ_ERR_045": "Unable to upload malware file",
+		"TOOLKIT_REQ_ERR_046": "Template not found. Upload template and try again!",
+		"TOOLKIT_REQ_ERR_047": "Error while fetching template",
 		"TOOLKIT_DB_ERR_001": "You have previously created a project with the same name",
 		"TOOLKIT_DB_ERR_002": "You have previously added biometric test data with the same name",
 		"TOOLKIT_DB_ERR_003": "You have previously created a collection with the same name",
@@ -2054,6 +2061,8 @@
 		"TOOLKIT_REPORT_004": "Error while changing report status",
 		"TOOLKIT_REPORT_005": "Error while fetching list of reports",
 		"TOOLKIT_REPORT_006": "Error while fetching list of reports. Invalid report status: ",
+	    "TOOLKIT_CONSENT_ERR_001": "Error while fetching partner consent.",
+        "TOOLKIT_CONSENT_ERR_002": "Error while saving partner consent.",
 		"error": "Error",
 		"FILE_WITH_MULTIPLE_EXTENSIONS": "File name should not contain multiple extensions"
 	}

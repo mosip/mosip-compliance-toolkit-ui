@@ -199,6 +199,21 @@ export default class Utils {
   }
 
   static showSuccessMessage(resourceBundle: any, titleKey: string, messageKey: string, dialog: MatDialog, customMsg?: string) {
+    let msgbody = this.setMessage(resourceBundle, titleKey, messageKey, customMsg);
+    const body = {
+      case: 'SUCCESS',
+      title: msgbody.title,
+      message: msgbody.message,
+    };
+    const dialogRef = dialog.open(DialogComponent, {
+      width: '400px',
+      data: body,
+    });
+    return dialogRef;
+  }
+
+
+  static setMessage(resourceBundle: any, titleKey: string, messageKey: string, customMsg?: string) {
     let title: any;
     let message: any;
     if (resourceBundle && resourceBundle[titleKey] && resourceBundle[messageKey]) {
@@ -211,16 +226,11 @@ export default class Utils {
     if (customMsg) {
       message = message + " " + customMsg;
     }
-    const body = {
-      case: 'SUCCESS',
+    const msgbody = {
       title: title,
       message: message,
     };
-    const dialogRef = dialog.open(DialogComponent, {
-      width: '400px',
-      data: body,
-    });
-    return dialogRef;
+    return msgbody;
   }
 
   static showErrorMessage(
@@ -231,6 +241,20 @@ export default class Utils {
     showErrCode?: boolean,
     customErrorCode?: string
   ) {
+    const msgbody = this.setErrorMessage(resourceBundle, errorsList, customMsg, showErrCode, customErrorCode)
+    const body = {
+      case: 'ERROR',
+      title: msgbody.title,
+      message: msgbody.message,
+    };
+    const dialogRef = dialog.open(DialogComponent, {
+      width: '400px',
+      data: body,
+    });
+    return dialogRef;
+  }
+
+  static setErrorMessage(resourceBundle: any, errorsList: any, customMsg?: string, showErrCode?: boolean, customErrorCode?: string) {
     const titleOnError = resourceBundle.serviceErrors['error'] ? resourceBundle.serviceErrors['error'] : 'Error';
     let message = '';
     if (errorsList && errorsList.length > 0) {
@@ -261,16 +285,11 @@ export default class Utils {
     if (message == '') {
       message = 'Unexpected error occured.';
     }
-    const body = {
-      case: 'ERROR',
+    const msgbody = {
       title: titleOnError,
       message: message,
     };
-    const dialogRef = dialog.open(DialogComponent, {
-      width: '400px',
-      data: body,
-    });
-    return dialogRef;
+    return msgbody;
   }
 
   static getTranslatedMessage(resourceBundleMessages: any, messageKey: string) {
@@ -897,6 +916,79 @@ export default class Utils {
         dialog,
         'Unable to download PDF file. Try Again!');
     }
+  }
+
+  static getPartnerConsent(dataService: DataService, resourceBundleJson: any, dialog: MatDialog, templateName: string) {
+    return new Promise((resolve, reject) => {
+      dataService.getPartnerConsent(templateName).subscribe(
+        (response: any) => {
+          if (response.errors && response.errors.length > 0) {
+            Utils.showConsentError(resourceBundleJson, response.errors, dialog);
+            reject(response.errors);
+          } else {
+            resolve(response['response']);
+          }
+        },
+        (errors: any) => {
+          this.showConsentError(resourceBundleJson, errors, dialog);
+          reject(errors);
+        }
+      )
+    });
+  }
+
+  static getConsentTemplate(dataService: DataService, resourceBundleJson: any, dialog: MatDialog, langCode: string, templateName: string) {
+    return new Promise((resolve, reject) => {
+      dataService.getConsentTemplate(langCode, templateName).subscribe(
+        (response: any) => {
+          if (response.errors && response.errors.length > 0) {
+            Utils.showConsentError(resourceBundleJson, response.errors, dialog);
+            reject(response.errors);
+          } else {
+            resolve(response['response']['template']);
+          }
+        },
+        (errors: any) => {
+          Utils.showConsentError(resourceBundleJson, errors, dialog);
+          reject(errors);
+        }
+      );
+    });
+  }
+
+  static showConsentError(
+    resourceBundle: any,
+    errorsList: any,
+    dialog: MatDialog,
+    customMsg?: string,
+    showErrCode?: boolean,
+    customErrorCode?: string
+  ) {
+    const msgbody = this.setErrorMessage(resourceBundle, errorsList, customMsg, showErrCode, customErrorCode)
+    const body = {
+      case: 'CONSENT_ERROR',
+      title: msgbody.title,
+      message: msgbody.message,
+    };
+    const dialogRef = dialog.open(DialogComponent, {
+      width: '400px',
+      data: body,
+    });
+    return dialogRef;
+  }
+
+  static showConsentPrompt(resourceBundle: any, titleKey: string, messageKey: string, dialog: MatDialog, customMsg?: string) {
+    let msgbody = this.setMessage(resourceBundle, titleKey, messageKey, customMsg);
+    const body = {
+      case: 'CONSENT_ERROR',
+      title: msgbody.title,
+      message: msgbody.message,
+    };
+    const dialogRef = dialog.open(DialogComponent, {
+      width: '400px',
+      data: body,
+    });
+    return dialogRef;
   }
 
 }

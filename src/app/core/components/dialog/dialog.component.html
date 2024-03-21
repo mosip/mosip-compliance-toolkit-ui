@@ -318,4 +318,34 @@
         <button mat-flat-button color="accent" (click)="onOkClick()">{{ 'dialogMessages.close' | translate }}</button>
     </mat-dialog-actions>
 </div>
+<div *ngIf="input.case === 'PARTNER_CONSENT'" class="consent-box">
+    <h2 mat-dialog-title class="mat-dialog-title">{{'dialogMessages.consent'|translate}}</h2>
+    <div class="spinner" *ngIf="!dataLoaded">
+        <mat-spinner diameter="50"></mat-spinner>
+    </div>
+    <div *ngIf="dataLoaded">
+        <div mat-dialog-content>
+            <div [innerHTML]="consentTemplate"></div>
+        </div>
+    </div>
+    <div class="consent-checkbox">
+        <mat-checkbox [(ngModel)]="consentCheckbox" [disabled]="!dataLoaded">{{'dialogMessages.consentCheckbox'|translate}}</mat-checkbox>
+    </div>
+    <div class="button-container-box">
+        <button mat-flat-button (click)="closeConsentDialog()" class="back-button">{{'dialogMessages.close'|translate}}</button>
+        <button mat-flat-button color="accent" [disabled]="!consentCheckbox"
+            (click)="saveBiometricConsent()">{{'dialogMessages.confirm'|translate}}</button>
+    </div>
+</div>
+<div *ngIf="input.case === 'CONSENT_ERROR'">
+    <h2 mat-dialog-title class="mat-dialog-title" *ngIf="input && input.title">{{ input.title }}</h2>
+    <mat-dialog-content style="white-space: pre-line;">
+        <div class="custom-class">
+            <mat-icon [ngStyle]="{color: 'red'}">clear</mat-icon> {{ input.message }}
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-flat-button color="accent" (click)="onOkClick()">{{"dialogMessages.close" | translate}}</button>
+    </mat-dialog-actions>
+</div>
 </div>
