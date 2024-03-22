@@ -32,7 +32,11 @@
                     <div class="filter-container">
                         <mat-form-field appearance="legacy" class="filter">
                             <mat-label>{{ "projectDashboard.filter" | translate }}</mat-label>
-                            <input matInput (keyup)="applyFilter($event)" placeholder="Search columns" #input>
+                            <input matInput (keyup)="applyFilter($event)" placeholder="Search columns" #input 
+                                [formControl]="filterCtrl" maxlength="64">
+                            <mat-error *ngIf="filterCtrl.hasError('pattern')">
+                                {{ "projectDashboard.filterIsInvalid" | translate }}
+                            </mat-error>
                         </mat-form-field>
                         <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 50, 100]"
                             aria-label="Select page of projects"></mat-paginator>

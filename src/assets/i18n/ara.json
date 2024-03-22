@@ -22,6 +22,7 @@
 		"reviewMessage3": "بمجرد إرسالها، لا يمكن إعادة تشغيل مجموعة التوافق لهذا المشروع.",
 		"reviewMessage4": "سيقوم مسؤول CTK بمراجعة التقرير والموافقة عليه أو رفضه.",
 		"comment": "تعليقات اختيارية",
+		"commentIsInvalid": "التعليق غير صالح",
 		"mandatoryComment": "التعليقات الإلزامية",
 		"checkBox": "جاهز للإرسال للمراجعة",
 		"approveMessage1": "يرجى التحقق من مسودة التقرير التي تم تنزيلها.",
@@ -76,7 +77,8 @@
 		"projectRow": "لا توجد مشاريع متاحة.",
 		"tableDescription": "قائمة المشاريع",
 		"title": "تحديث تفاصيل المشروع",
-		"message": "أضف الحقول التالية المطلوبة للمشروع ، للمتابعة."
+		"message": "أضف الحقول التالية المطلوبة للمشروع ، للمتابعة.",
+		"filterIsInvalid": "إدخال التصفية غير صالح"
 	},
 	"biometricDashboard": {
 		"projectDashboard": "لوحة تحكم المشاريع",
@@ -107,6 +109,7 @@
 		"password": "كلمة المرور",
 		"queueName": "اسم قائمة الانتظار",
 		"projectNameIsRequired": "اسم المشروع مطلوب",
+		"projectNameIsInvalid": "اسم المشروع غير صالح",
 		"projectTypeIsRequired": "نوع المشروع مطلوب",
 		"baseUrlIsRequired": "مطلوب URL الأساسي",
 		"baseUrlIsInvalid": "عنوان URL الأساسي غير صالح",
@@ -139,6 +142,7 @@
 		"sbiHashIsRequired": "مطلوب تجزئة SBI",
 		"websiteUrl": "موقع إلكتروني URL",
 		"websiteUrlIsRequired": "مطلوب عنوان URL لموقع الويب",
+		"websiteUrlIsInvalid": "عنوان URL لموقع الويب غير صالح",
 		"sdkHash": "تجزئة SDK:",
 		"sdkHashIsRequired": "مطلوب تجزئة SDK",
 		"abisHash": "تجزئة ABIS:",
@@ -153,6 +157,7 @@
 		"browse": "تصفح",
 		"downloadSampleFile": "تنزيل نموذج ملف",
 		"nameIsRequired": "مطلوب اسم",
+		"nameIsInvalid": "الاسم غير صالح",
 		"projectTypeIsRequired": "نوع المشروع مطلوب",
 		"purposeIsRequired": "الغرض مطلوب",
 		"back": "يعود",
@@ -256,6 +261,7 @@
 	"addCollections": {
 		"collectionName": "اسم المجموعة:",
 		"collectionNameRequired": "اسم المجموعة مطلوب",
+		"collectionNameIsInvalid": "اسم المجموعة غير صالح",
 		"selectMsg": "حدد حالات الاختبار لإضافتها إلى المجموعة:",
 		"id": "بطاقة تعريف",
 		"name": "اسم",

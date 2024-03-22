@@ -11,6 +11,7 @@ import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { ReportModel } from 'src/app/core/models/report-model';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-my-reports',
@@ -39,6 +40,8 @@ export class MyReportsComponent implements OnInit {
   dataLoaded = false;
   subscriptions: Subscription[] = [];
   isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
+  filterCtrl = new FormControl('', [Validators.pattern(/^[a-zA-Z0-9\/\- ,]*$/)]);
+  
   constructor(
     private translate: TranslateService,
     private router: Router,

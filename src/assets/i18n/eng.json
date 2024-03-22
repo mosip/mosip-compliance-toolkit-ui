@@ -22,6 +22,7 @@
 		"reviewMessage3": "Once submitted, the Compliance Collection cannot be rerun for this project.",
 		"reviewMessage4": "CTK admin will Review the Report and Approve or Reject the same.",
 		"comment": "Optional comments",
+		"commentIsInvalid": "Comment is invalid",
 		"mandatoryComment": "Mandatory Comments",
 		"checkBox": "Ready to send for Review",
 		"approveMessage1": "Please check the downloaded Draft Report.",
@@ -76,7 +77,8 @@
 		"projectRow": "There are no projects available.",
 		"tableDescription": "List of Projects",
 		"title": "Update Project Details",
-		"message": "Add the following fields required for the Project, to proceed."
+		"message": "Add the following fields required for the Project, to proceed.",
+		"filterIsInvalid": "Filter input is invalid"
 	},
 	"biometricDashboard": {
 		"projectDashboard": "Projects Dashboard",
@@ -107,6 +109,7 @@
 		"password": "Password:",
 		"queueName": "Queue Name:",
 		"projectNameIsRequired": "Project Name is required",
+		"projectNameIsInvalid": "Project Name is invalid",
 		"projectTypeIsRequired": "Project Type is required",
 		"baseUrlIsRequired": "Base URL is required",
 		"baseUrlIsInvalid": "Base URL is invalid",
@@ -139,6 +142,7 @@
 		"sbiHashIsRequired": "SBI Hash is required",
 		"websiteUrl": "Website URL:",
 		"websiteUrlIsRequired": "Website URL is required",
+		"websiteUrlIsInvalid": "Website URL is invalid",
 		"sdkHash": "SDK Hash:",
 		"sdkHashIsRequired": "SDK Hash is required",
 		"abisHash": "ABIS Hash:",
@@ -153,6 +157,7 @@
 		"browse": "Browse",
 		"downloadSampleFile": "Download Sample File",
 		"nameIsRequired": "Name is required",
+		"nameIsInvalid": "Name is invalid",
 		"projectTypeIsRequired": "Project Type is required",
 		"purposeIsRequired": "Purpose is required",
 		"back": "Back",
@@ -256,6 +261,7 @@
 	"addCollections": {
 		"collectionName": "Collection Name:",
 		"collectionNameRequired": "Collection Name is required",
+		"collectionNameIsInvalid": "Collection Name is invalid",
 		"selectMsg": "Select the testcases to add to the collection :",
 		"id": "ID",
 		"name": "Name",

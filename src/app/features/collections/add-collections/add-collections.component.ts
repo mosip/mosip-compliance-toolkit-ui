@@ -96,7 +96,7 @@ export class AddCollectionsComponent implements OnInit {
   initForm() {
     this.collectionForm.addControl(
       'name',
-      new FormControl('', [Validators.required])
+      new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9-_ ]*$')])
     );
   }
   initProjectIdAndType() {

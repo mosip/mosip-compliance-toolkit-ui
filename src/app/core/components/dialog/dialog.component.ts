@@ -46,6 +46,7 @@ export class DialogComponent implements OnInit {
   allowedFileNameLegth =
     this.appConfigService.getConfig()['allowedFileNameLegth'];
   allowedFileSize = this.appConfigService.getConfig()['allowedFileSize'];
+  commentCtrl = new FormControl('', [Validators.pattern(/^[a-zA-Z0-9\-_\s]*$/)]);
   sendForReview: boolean = false;
   reviewComment: string = '';
   approveReport: boolean = false;

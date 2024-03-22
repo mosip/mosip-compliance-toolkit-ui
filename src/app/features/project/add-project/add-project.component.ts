@@ -88,7 +88,14 @@ export class AddProjectComponent implements OnInit {
       this.projectForm.addControl(controlId, new FormControl(''));
     });
     appConstants.COMMON_CONTROLS.forEach((controlId) => {
-      this.projectForm.controls[controlId].setValidators(Validators.required);
+      if (controlId == 'name') {
+        this.projectForm.controls[controlId].setValidators([
+          Validators.required,
+          Validators.pattern('^[a-zA-Z0-9-_ ]*$')
+        ]);
+      } else {
+        this.projectForm.controls[controlId].setValidators(Validators.required);
+      }
     });
     this.projectForm.patchValue({
       abisUrl: 'wss://{base_URL}/ws',
@@ -99,6 +106,7 @@ export class AddProjectComponent implements OnInit {
 
   async handleProjectTypeChange() {
     const projectType = this.projectForm.controls['projectType'].value;
+    this.projectForm.controls['websiteUrl'].reset();
     if (projectType == appConstants.SDK) {
       appConstants.SDK_CONTROLS.forEach((controlId) => {
         this.projectForm.controls[controlId].setValidators(Validators.required);

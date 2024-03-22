@@ -46,9 +46,12 @@
                     <span class="fieldContainer">
                         <mat-form-field appearance="legacy" class="fieldContainerBox">
                             <mat-label>{{ "addProject.projectName" | translate }}</mat-label>
-                            <input matInput formControlName="name" #keyboardRef #input />
+                            <input matInput formControlName="name" #keyboardRef #input maxlength="64"/>
                             <mat-error *ngIf="projectForm.controls['name'].hasError('required')">
                                 {{"addProject.projectNameIsRequired"|translate}}
+                            </mat-error>
+                            <mat-error *ngIf="projectForm.controls['name'].hasError('pattern')">
+                                {{"addProject.projectNameIsInvalid"|translate}}
                             </mat-error>
                         </mat-form-field>
                     </span>
@@ -65,7 +68,7 @@
                         <span class="fieldContainer">
                             <mat-form-field appearance="legacy" class="fieldContainerBox">
                                 <mat-label>{{"addProject.baseUrl" | translate }}</mat-label>
-                                <input matInput formControlName="sdkUrl" #keyboardRef #input />
+                                <input matInput formControlName="sdkUrl" #keyboardRef #input maxlength="256"/>
                                 <mat-error *ngIf="projectForm.controls['sdkUrl'].hasError('required')">
                                     {{"addProject.baseUrlIsRequired" | translate}}
                                 </mat-error>
@@ -156,9 +159,13 @@
                         <span class="fieldContainer">
                             <mat-form-field appearance="legacy" class="fieldContainerBox">
                                 <mat-label>{{"addProject.websiteUrl"|translate}}</mat-label>
-                                <input matInput formControlName="websiteUrl" #keyboardRef #input required/>
+                                <input matInput formControlName="websiteUrl" #keyboardRef #input required 
+                                    pattern="^(http|https)://(.*)" maxlength="256"/>
                                 <mat-error *ngIf="projectForm.controls['websiteUrl'].hasError('required')">
                                     {{"addProject.websiteUrlIsRequired"|translate}}
+                                </mat-error>
+                                <mat-error *ngIf="projectForm.controls['websiteUrl'].hasError('pattern')">
+                                    {{"addProject.websiteUrlIsInvalid"|translate}}
                                 </mat-error>
                             </mat-form-field>
                         </span>
@@ -337,9 +344,13 @@
                         <span class="fieldContainer">
                             <mat-form-field appearance="legacy" class="fieldContainerBox">
                                 <mat-label>{{ "addProject.websiteUrl" | translate }}</mat-label>
-                                <input matInput formControlName="websiteUrl" #keyboardRef #input required/>
+                                <input matInput formControlName="websiteUrl" #keyboardRef #input required 
+                                    pattern="^(http|https)://(.*)" maxlength="256"/>
                                 <mat-error *ngIf="projectForm.controls['websiteUrl'].hasError('required')">
                                     {{"addProject.websiteUrlIsRequired"|translate}}
+                                </mat-error>
+                                <mat-error *ngIf="projectForm.controls['websiteUrl'].hasError('pattern')">
+                                    {{"addProject.websiteUrlIsInvalid"|translate}}
                                 </mat-error>
                             </mat-form-field>
                         </span>
@@ -405,7 +416,7 @@
                         <span class="fieldContainer">
                             <mat-form-field appearance="legacy" class="fieldContainerBox">
                                 <mat-label>{{"addProject.baseUrl" | translate }}</mat-label>
-                                <input matInput formControlName="abisUrl" #keyboardRef #input />
+                                <input matInput formControlName="abisUrl" #keyboardRef #input maxlength="256" />
                                 <mat-error *ngIf="projectForm.controls['abisUrl'].hasError('required')">
                                     {{"addProject.baseUrlIsRequired" | translate}}
                                 </mat-error>
@@ -426,7 +437,7 @@
                         <span class="fieldContainer">
                             <mat-form-field appearance="legacy" class="fieldContainerBox">
                                 <mat-label>{{"addProject.username"|translate}}</mat-label>
-                                <input matInput formControlName="username" #keyboardRef #input />
+                                <input matInput formControlName="username" #keyboardRef #input maxlength="256"/>
                                 <mat-error *ngIf="projectForm.controls['username'].hasError('required')">
                                     {{"addProject.usernameIsRequired"|translate}}
                                 </mat-error>
@@ -443,7 +454,7 @@
                             <mat-form-field appearance="legacy" class="fieldContainerBox">
                                 <mat-label>{{"addProject.password"|translate}}</mat-label>
                                 <input matInput placeholder="Password" [type]="hidePassword ? 'password' : 'text'"
-                                    formControlName="password">
+                                    formControlName="password" maxlength="256">
                                 <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ?
                                     'visibility_off'
                                     : 'visibility'}}</mat-icon>
@@ -464,7 +475,7 @@
                         <span class="fieldContainer">
                             <mat-form-field appearance="legacy" class="fieldContainerBox">
                                 <mat-label>{{"addProject.outboundQueueName"|translate}}</mat-label>
-                                <input matInput formControlName="outboundQueueName" #keyboardRef #input />
+                                <input matInput formControlName="outboundQueueName" #keyboardRef #input maxlength="256"/>
                                 <mat-error *ngIf="projectForm.controls['outboundQueueName'].hasError('required')">
                                     {{"addProject.outboundQueueNameIsRequired"|translate}}
                                 </mat-error>
@@ -480,7 +491,7 @@
                         <span class="fieldContainer">
                             <mat-form-field appearance="legacy" class="fieldContainerBox">
                                 <mat-label>{{"addProject.inboundQueueName"|translate}}</mat-label>
-                                <input matInput formControlName="inboundQueueName" #keyboardRef #input />
+                                <input matInput formControlName="inboundQueueName" #keyboardRef #input maxlength="256"/>
                                 <mat-error *ngIf="projectForm.controls['inboundQueueName'].hasError('required')">
                                     {{"addProject.inboundQueueNameIsRequired"|translate}}
                                 </mat-error>
@@ -514,9 +525,13 @@
                         <span class="fieldContainer">
                             <mat-form-field appearance="legacy" class="fieldContainerBox">
                                 <mat-label>{{"addProject.websiteUrl"|translate}}</mat-label>
-                                <input matInput formControlName="websiteUrl" #keyboardRef #input required/>
+                                <input matInput formControlName="websiteUrl" #keyboardRef #input required 
+                                    pattern="^(http|https)://(.*)" maxlength="256"/>
                                 <mat-error *ngIf="projectForm.controls['websiteUrl'].hasError('required')">
                                     {{"addProject.websiteUrlIsRequired"|translate}}
+                                </mat-error>
+                                <mat-error *ngIf="projectForm.controls['websiteUrl'].hasError('pattern')">
+                                    {{"addProject.websiteUrlIsInvalid"|translate}}
                                 </mat-error>
                             </mat-form-field>
                         </span>
