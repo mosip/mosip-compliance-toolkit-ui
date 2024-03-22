@@ -35,7 +35,7 @@
                             <input matInput (keyup)="applyFilter($event)" placeholder="Search columns" #input 
                                 [formControl]="filterCtrl" maxlength="64">
                             <mat-error *ngIf="filterCtrl.hasError('pattern')">
-                                {{ "projectDashboard.filterIsInvalid" | translate }}
+                                {{ "dialogMessages.invalidPattern" | translate }}
                             </mat-error>
                         </mat-form-field>
                         <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 50, 100]"

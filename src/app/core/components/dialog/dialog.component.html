@@ -218,7 +218,7 @@
             <label for="reviewComment">{{"dialogMessages.comment"|translate}}:</label>
             <textarea id="reviewComment" maxlength="600" class="commentBox" [(ngModel)]="reviewComment" rows="4" cols="50" [formControl]="commentCtrl"></textarea>
             <mat-error *ngIf="commentCtrl.hasError('pattern')">
-                {{"dialogMessages.commentIsInvalid"|translate}}
+                {{"dialogMessages.invalidPattern"|translate}}
             </mat-error>
         </div>
     </div>
@@ -245,7 +245,7 @@
             <label for="adminApproveComments">{{"dialogMessages.comment"|translate}}:</label>
             <textarea id="adminApproveComments" maxlength="600" class="commentBox" [(ngModel)]="adminApproveComments" rows="4" cols="50" [formControl]="commentCtrl"></textarea>
             <mat-error *ngIf="commentCtrl.hasError('pattern')">
-                {{"dialogMessages.commentIsInvalid"|translate}}
+                {{"dialogMessages.invalidPattern"|translate}}
             </mat-error>
         </div>
     </div>
@@ -274,7 +274,7 @@
             <label for="adminRejectComments">{{"dialogMessages.mandatoryComment"|translate}}:</label>
             <textarea id="adminRejectComments" maxlength="600" class="commentBox" [(ngModel)]="adminRejectComments" rows="4" cols="50" [formControl]="commentCtrl"></textarea>
             <mat-error *ngIf="commentCtrl.hasError('pattern')">
-                {{"dialogMessages.commentIsInvalid"|translate}}
+                {{"dialogMessages.invalidPattern"|translate}}
             </mat-error>
         </div>
     </div>

@@ -51,7 +51,7 @@
                                 {{"addProject.projectNameIsRequired"|translate}}
                             </mat-error>
                             <mat-error *ngIf="projectForm.controls['name'].hasError('pattern')">
-                                {{"addProject.projectNameIsInvalid"|translate}}
+                                {{ "dialogMessages.invalidPattern" | translate }}
                             </mat-error>
                         </mat-form-field>
                     </span>
@@ -73,7 +73,7 @@
                                     {{"addProject.baseUrlIsRequired" | translate}}
                                 </mat-error>
                                 <mat-error *ngIf="projectForm.controls['sdkUrl'].hasError('pattern')">
-                                    {{"addProject.baseUrlIsInvalid" | translate}}
+                                    {{"addProject.urlIsInvalid"|translate}}
                                 </mat-error>
                             </mat-form-field>
                         </span>
@@ -165,7 +165,7 @@
                                     {{"addProject.websiteUrlIsRequired"|translate}}
                                 </mat-error>
                                 <mat-error *ngIf="projectForm.controls['websiteUrl'].hasError('pattern')">
-                                    {{"addProject.websiteUrlIsInvalid"|translate}}
+                                    {{"addProject.urlIsInvalid"|translate}}
                                 </mat-error>
                             </mat-form-field>
                         </span>
@@ -350,7 +350,7 @@
                                     {{"addProject.websiteUrlIsRequired"|translate}}
                                 </mat-error>
                                 <mat-error *ngIf="projectForm.controls['websiteUrl'].hasError('pattern')">
-                                    {{"addProject.websiteUrlIsInvalid"|translate}}
+                                    {{"addProject.urlIsInvalid"|translate}}
                                 </mat-error>
                             </mat-form-field>
                         </span>
@@ -531,7 +531,7 @@
                                     {{"addProject.websiteUrlIsRequired"|translate}}
                                 </mat-error>
                                 <mat-error *ngIf="projectForm.controls['websiteUrl'].hasError('pattern')">
-                                    {{"addProject.websiteUrlIsInvalid"|translate}}
+                                    {{"addProject.urlIsInvalid"|translate}}
                                 </mat-error>
                             </mat-form-field>
                         </span>

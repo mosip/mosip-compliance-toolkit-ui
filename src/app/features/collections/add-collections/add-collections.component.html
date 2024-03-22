@@ -22,7 +22,7 @@
                             {{ "addCollections.collectionNameRequired" | translate }}
                         </mat-error>
                         <mat-error *ngIf="collectionForm.controls['name'].hasError('pattern')">
-                            {{ "addCollections.collectionNameIsInvalid" | translate }}
+                            {{ "dialogMessages.invalidPattern" | translate }}
                         </mat-error>
                     </mat-form-field>
                 </span>

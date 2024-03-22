@@ -20,7 +20,7 @@
                 <input matInput [(ngModel)]="selectedFilter" (keyup)="applyFilter($event)" placeholder="Search columns" #input 
                     [formControl]="filterCtrl" maxlength="64">
                 <mat-error *ngIf="filterCtrl.hasError('pattern')">
-                    {{ "projectDashboard.filterIsInvalid" | translate }}
+                    {{ "dialogMessages.invalidPattern" | translate }}
                 </mat-error>
             </mat-form-field>
         </div>

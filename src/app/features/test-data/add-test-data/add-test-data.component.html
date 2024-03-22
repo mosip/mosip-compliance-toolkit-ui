@@ -22,7 +22,7 @@
                             {{"addTestData.nameIsRequired"|translate}}
                         </mat-error>
                         <mat-error *ngIf="testDataForm.controls['name'].touched && testDataForm.controls['name'].hasError('pattern')">
-                            {{"addTestData.nameIsInvalid"|translate}}
+                            {{ "dialogMessages.invalidPattern" | translate }}
                         </mat-error>
                     </mat-form-field>
                 </span>

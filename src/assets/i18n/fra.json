@@ -22,7 +22,7 @@
 		"reviewMessage3": "Une fois soumise, la collecte de conformité ne peut pas être réexécutée pour ce projet.",
 		"reviewMessage4": "L'administrateur CTK examinera le rapport et l'approuvera ou le rejettera.",
 		"comment": "Commentaires facultatifs",
-		"commentIsInvalid": "Le commentaire n'est pas valide",
+		"invalidPattern": "Les caractères invalides ne sont pas autorisés",
 		"mandatoryComment": "Commentaires obligatoires",
 		"checkBox": "Prêt à envoyer pour examen.",
 		"approveMessage1": "Veuillez vérifier le projet de rapport téléchargé.",
@@ -77,8 +77,7 @@
 		"projectRow": "Il n'y a pas de projets disponibles.",
 		"tableDescription": "Liste des projets",
 		"title": "Mettre à jour les détails du projet",
-		"message": "Ajoutez les champs suivants requis pour le projet, pour continuer.",
-		"filterIsInvalid": "L'entrée du filtre n'est pas valide"
+		"message": "Ajoutez les champs suivants requis pour le projet, pour continuer."
 	},
 	"biometricDashboard": {
 		"projectDashboard": "Tableau de bord des projets",
@@ -109,7 +108,6 @@
 		"password": "Mot de passe",
 		"queueName": "Nom de la file d'attente",
 		"projectNameIsRequired": "Le nom du projet est requis",
-		"projectNameIsInvalid": "Le nom du projet n'est pas valide",
 		"projectTypeIsRequired": "Le type de projet est requis",
 		"baseUrlIsRequired": "L'URL de base est requise",
 		"baseUrlIsInvalid": "L'URL de base n'est pas valide",
@@ -142,7 +140,7 @@
 		"sbiHashIsRequired": "Le hachage SBI est requis",
 		"websiteUrl": "URL de site web:",
 		"websiteUrlIsRequired": "L'URL du site Web est requise",
-		"websiteUrlIsInvalid": "L'URL du site Web n'est pas valide",
+		"urlIsInvalid": "Une URL invalide n'est pas autorisée",
 		"sdkHash": "Hachage SDK:",
 		"sdkHashIsRequired": "Le hachage SDK est requis",
 		"abisHash": "Hachage ABIS:",
@@ -157,7 +155,6 @@
 		"browse": "parcourir",
 		"downloadSampleFile": "Télécharger un exemple de fichier",
 		"nameIsRequired": "Le nom est requis",
-		"nameIsInvalid": "Le nom n'est pas valide",
 		"projectTypeIsRequired": "Le type de projet est requis",
 		"purposeIsRequired": "Le but est requis",
 		"back": "retour",
@@ -261,7 +258,6 @@
 	"addCollections": {
 		"collectionName": "Nom de la collection:",
 		"collectionNameRequired": "Le nom de la collection est requis",
-		"collectionNameIsInvalid": "Le nom de la collection n'est pas valide",
 		"selectMsg": "Sélectionnez les cas de test à ajouter à la collection :",
 		"id": "identifiant",
 		"name": "Nom",
