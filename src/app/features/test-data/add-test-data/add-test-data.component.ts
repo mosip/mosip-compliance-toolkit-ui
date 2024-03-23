@@ -79,7 +79,14 @@ export class AddTestDataComponent implements OnInit {
     this.allControls = [...appConstants.TEST_DATA_CONTROLS];
     this.allControls.forEach((controlId) => {
       this.testDataForm.addControl(controlId, new FormControl(''));
-      this.testDataForm.controls[controlId].setValidators(Validators.required);
+      if (controlId == 'name') {
+        this.testDataForm.controls[controlId].setValidators([
+          Validators.required,
+          Validators.pattern('^[a-zA-Z0-9-_ ]*$')
+        ]);
+      } else {
+        this.testDataForm.controls[controlId].setValidators(Validators.required);
+      }
     });
     this.testDataForm.controls['type'].setValue('SDK');
   }

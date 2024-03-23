@@ -15,6 +15,7 @@ import { DialogComponent } from 'src/app/core/components/dialog/dialog.component
 import { AppConfigService } from 'src/app/app-config.service';
 import { Subscription } from 'rxjs';
 import { SessionLogoutService } from 'src/app/core/services/session-logout.service';
+import { FormControl, Validators } from '@angular/forms';
 
 export interface ProjectData {
   id: string;
@@ -55,6 +56,7 @@ export class ProjectsDashboardComponent implements OnInit {
   resourceBundleJson: any = {};
   isAdmin: boolean = false;
   message:any = {};
+  filterCtrl = new FormControl('', [Validators.pattern(/^[a-zA-Z0-9\/\- ,]*$/)]);
   
   constructor(
     private appConfigService: AppConfigService,

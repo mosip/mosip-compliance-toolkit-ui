@@ -14,6 +14,7 @@ import { AppConfigService } from 'src/app/app-config.service';
 import { DialogComponent } from 'src/app/core/components/dialog/dialog.component';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-partner-reports',
@@ -47,6 +48,7 @@ export class PartnerReportsComponent implements OnInit {
   isAdmin: boolean = false;
   selectedReportStatus = appConstants.REPORT_STATUS_REVIEW;
   selectedFilter: '';
+  filterCtrl = new FormControl('', [Validators.pattern(/^[a-zA-Z0-9\/\- ,]*$/)]);
 
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());

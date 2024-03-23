@@ -17,9 +17,12 @@
                 <span class="fieldContainer">
                     <mat-form-field appearance="legacy" class="namefield">
                         <mat-label>{{"addTestData.name"|translate}}</mat-label>
-                        <input matInput formControlName="name" #keyboardRef #input />
+                        <input matInput formControlName="name" #keyboardRef #input maxlength="64" />
                         <mat-error *ngIf="testDataForm.controls['name'].touched && testDataForm.controls['name'].hasError('required')">
                             {{"addTestData.nameIsRequired"|translate}}
+                        </mat-error>
+                        <mat-error *ngIf="testDataForm.controls['name'].touched && testDataForm.controls['name'].hasError('pattern')">
+                            {{ "dialogMessages.invalidPattern" | translate }}
                         </mat-error>
                     </mat-form-field>
                 </span>
