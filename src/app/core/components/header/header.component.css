@@ -42,6 +42,14 @@
   bottom: -30px;
 }
 
+[dir*="rtl"] .mosip-logo img {
+  padding-right: 20px;
+}
+
+[dir*="rtl"] .version-txt {
+  left: 65px;
+}
+
 [dir*="rtl"] .profile {
   text-align: end !important;
 }
