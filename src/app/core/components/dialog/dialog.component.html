@@ -119,12 +119,13 @@
                 <span class="fieldContainer">
                     <mat-form-field appearance="legacy" class="fieldContainerBox">
                         <mat-label>{{"viewProject.websiteUrl"|translate}}</mat-label>
-                        <input matInput formControlName="websiteUrl" #keyboardRef #input />
+                        <input matInput formControlName="websiteUrl" #keyboardRef #input 
+                            pattern="^(http|https)://(.*)" maxlength="256"/>
                         <mat-error *ngIf="projectForm.controls['websiteUrl'].hasError('required')">
                             {{"viewProject.websiteUrlIsRequired"|translate}}
                         </mat-error>
-                        <mat-error *ngIf="projectForm.controls['websiteUrl'].hasError('toBeAddedPattern')">
-                            {{"dialogMessages.websiteUrlIsInvalid"|translate}}
+                        <mat-error *ngIf="projectForm.controls['websiteUrl'].hasError('pattern')">
+                            {{"addProject.urlIsInvalid"|translate}}
                         </mat-error>
                     </mat-form-field>
                 </span>

@@ -236,7 +236,8 @@ export default class Utils {
     if (errorsList && errorsList.length > 0) {
       let error = errorsList[0];
       //check if translation is available
-      const translatedMsg = resourceBundle.serviceErrors[error.errorCode];
+      const serviceErrorMessages = resourceBundle['serviceErrors'];
+      const translatedMsg = Utils.getTranslatedMessage(serviceErrorMessages, error.errorCode);
       if (!showErrCode) {
         if (translatedMsg) {
           message = translatedMsg;
