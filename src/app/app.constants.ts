@@ -109,3 +109,6 @@ export const LOADING = 'loading';
 export const SESSION_IDLE_TIMEOUT = "sessionIdleTimeout";
 export const SESSION_IDLE_TIMER = 'sessionIdleTimer';
 export const SESSION_IDLE_PING = 'sessionIdlePing';
+
+//
+export const TERMS_AND_CONDTIONS_TEMPLATE = 'terms_and_conditions_template';
