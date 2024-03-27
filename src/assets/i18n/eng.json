@@ -2024,7 +2024,7 @@
 		"TOOLKIT_REQ_ERR_051": "Template not found. Upload template and try again!",
 		"TOOLKIT_REQ_ERR_052": "Error while fetching template",
 		"TOOLKIT_REQ_ERR_053": "Invalid template version format.",
-	    "TOOLKIT_REQ_ERR_054": "Error while fetching template version.",
+		"TOOLKIT_REQ_ERR_054": "Error while fetching template version.",
 		"TOOLKIT_DB_ERR_001": "You have previously created a project with the same name",
 		"TOOLKIT_DB_ERR_002": "You have previously added biometric test data with the same name",
 		"TOOLKIT_DB_ERR_003": "You have previously created a collection with the same name",
@@ -2063,8 +2063,8 @@
 		"TOOLKIT_REPORT_004": "Error while changing report status",
 		"TOOLKIT_REPORT_005": "Error while fetching list of reports",
 		"TOOLKIT_REPORT_006": "Error while fetching list of reports. Invalid report status: ",
-	    "TOOLKIT_CONSENT_ERR_001": "Error while fetching partner consent.",
-        "TOOLKIT_CONSENT_ERR_002": "Error while saving partner consent.",
+		"TOOLKIT_CONSENT_ERR_001": "Error while fetching partner consent.",
+		"TOOLKIT_CONSENT_ERR_002": "Error while saving partner consent.",
 		"error": "Error",
 		"FILE_WITH_MULTIPLE_EXTENSIONS": "File name should not contain multiple extensions"
 	}

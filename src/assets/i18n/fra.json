@@ -2024,7 +2024,7 @@
 		"TOOLKIT_REQ_ERR_051": "Modèle introuvable. Téléchargez le modèle et réessayez !",
 		"TOOLKIT_REQ_ERR_052": "Erreur lors de la récupération du modèle",
 		"TOOLKIT_REQ_ERR_053": "Format de version de modèle non valide.",
-	    "TOOLKIT_REQ_ERR_054": "Erreur lors de la récupération de la version du modèle.",
+		"TOOLKIT_REQ_ERR_054": "Erreur lors de la récupération de la version du modèle.",
 		"TOOLKIT_REQ_ERR_500": "Erreur technique",
 		"TOOLKIT_DB_ERR_001": "Vous avez précédemment créé un projet avec le nom",
 		"TOOLKIT_DB_ERR_002": "Vous avez précédemment ajouté des données de test biométrique avec le nom",
@@ -2064,7 +2064,7 @@
 		"TOOLKIT_REPORT_005": "Erreur lors de la récupération de la liste des rapports.",
 		"TOOLKIT_REPORT_006": "Erreur lors de la récupération de la liste des rapports. Statut du rapport invalide : ",
 		"TOOLKIT_CONSENT_ERR_001": "Erreur lors de la récupération du consentement du partenaire.",
-        "TOOLKIT_CONSENT_ERR_002": "Erreur lors de l'enregistrement du consentement du partenaire.",
+		"TOOLKIT_CONSENT_ERR_002": "Erreur lors de l'enregistrement du consentement du partenaire.",
 		"error": "Eerreur",
 		"FILE_WITH_MULTIPLE_EXTENSIONS": "Le nom du fichier ne doit pas contenir plusieurs extensions"
 	}
