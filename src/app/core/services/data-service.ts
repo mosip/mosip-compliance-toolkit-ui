@@ -248,6 +248,26 @@ export class DataService {
     return this.httpClient.get(url, { responseType: 'blob' });
   }
 
+  getTemplate(langCode: string, templateName: string, version: string) {
+    const url = `${this.SERVICES_BASE_URL}getTemplate?langCode=${langCode}&templateName=${templateName}&version=${version}`;
+    return this.httpClient.get(url);
+  }
+
+  getLatestTemplateVersion(templateName: string) {
+    const url = `${this.SERVICES_BASE_URL}getLatestTemplateVersion?templateName=${templateName}`;
+    return this.httpClient.get(url);
+  }
+
+  setConsent() {
+    const url = `${this.SERVICES_BASE_URL}setConsent`;
+    return this.httpClient.post(url, {});
+  }
+
+  isConsentGiven(version: string) {
+    let url = `${this.SERVICES_BASE_URL}isConsentGiven?version=${version}`;
+    return this.httpClient.get(url);
+  }
+
   getEncryptionKey() {
     let url = `${this.SERVICES_BASE_URL}getEncryptionKey`;
     return this.httpClient.get(url);

@@ -899,4 +899,134 @@ export default class Utils {
     }
   }
 
+  static isConsentGiven(dataService: DataService, resourceBundleJson: any, dialog: MatDialog, version: string) {
+    return new Promise((resolve, reject) => {
+      dataService.isConsentGiven(version).subscribe(
+        (response: any) => {
+          if (response.errors && response.errors.length > 0) {
+            Utils.showConsentError(resourceBundleJson, response.errors, dialog);
+            reject(response.errors);
+          } else {
+            resolve(response['response']);
+          }
+        },
+        (errors: any) => {
+          this.showConsentError(resourceBundleJson, errors, dialog);
+          reject(errors);
+        }
+      )
+    });
+  }
+
+  static getTemplate(dataService: DataService, resourceBundleJson: any, dialog: MatDialog, langCode: string, templateName: string, version: string) {
+    return new Promise((resolve, reject) => {
+      dataService.getTemplate(langCode, templateName, version).subscribe(
+        (response: any) => {
+          if (response.errors && response.errors.length > 0) {
+            Utils.showConsentError(resourceBundleJson, response.errors, dialog);
+            reject(response.errors);
+          } else {
+            resolve(response['response']['template']);
+          }
+        },
+        (errors: any) => {
+          Utils.showConsentError(resourceBundleJson, errors, dialog);
+          reject(errors);
+        }
+      );
+    });
+  }
+
+  static getLatestTemplateVersion(dataService: DataService, resourceBundleJson: any, dialog: MatDialog, templateName: string) {
+    return new Promise<string>((resolve, reject) => {
+      dataService.getLatestTemplateVersion(templateName).subscribe(
+        (response: any) => {
+          if (response.errors && response.errors.length > 0) {
+            Utils.showConsentError(resourceBundleJson, response.errors, dialog);
+            reject(response.errors);
+          } else {
+            resolve(response['response']);
+          }
+        },
+        (errors: any) => {
+          Utils.showConsentError(resourceBundleJson, errors, dialog);
+          reject(errors);
+        }
+      );
+    });
+  }
+
+  static showConsentError(
+    resourceBundle: any,
+    errorsList: any,
+    dialog: MatDialog,
+    customMsg?: string,
+    showErrCode?: boolean,
+    customErrorCode?: string
+  ) {
+    const titleOnError = resourceBundle.serviceErrors['error'] ? resourceBundle.serviceErrors['error'] : 'Error';
+    let message = '';
+    if (errorsList && errorsList.length > 0) {
+      let error = errorsList[0];
+      const translatedMsg = resourceBundle.serviceErrors[error.errorCode];
+      if (!showErrCode) {
+        if (translatedMsg) {
+          message = translatedMsg;
+        } else {
+          message = error.message;
+        }
+      } else {
+        if (translatedMsg) {
+          message = error.errorCode
+            ? error.errorCode + ' - ' + translatedMsg
+            : translatedMsg;
+        } else {
+          message = error.errorCode
+            ? error.errorCode + ' - ' + error.message
+            : error.message;
+        }
+      }
+    }
+    if (customMsg) {
+      message = customErrorCode ? resourceBundle.serviceErrors[customErrorCode] : customMsg;
+    }
+    if (message == '') {
+      message = 'Unexpected error occured.';
+    }
+    const body = {
+      case: 'TERMS_AND_CONDITIONS_CONSENT_ERROR',
+      title: titleOnError,
+      message: message,
+    };
+    const dialogRef = dialog.open(DialogComponent, {
+      width: '400px',
+      data: body,
+    });
+    return dialogRef;
+  }
+
+  static showConsentPrompt(resourceBundle: any, titleKey: string, messageKey: string, dialog: MatDialog, customMsg?: string) {
+    let title: any;
+    let message: any;
+    if (resourceBundle && resourceBundle[titleKey] && resourceBundle[messageKey]) {
+      title = resourceBundle[titleKey];
+      message = resourceBundle[messageKey];
+    } else {
+      title = titleKey;
+      message = messageKey;
+    }
+    if (customMsg) {
+      message = message + " " + customMsg;
+    }
+    const body = {
+      case: 'TERMS_AND_CONDITIONS_CONSENT_ERROR',
+      title: title,
+      message: message,
+    };
+    const dialogRef = dialog.open(DialogComponent, {
+      width: '400px',
+      data: body,
+    });
+    return dialogRef;
+  }
 }

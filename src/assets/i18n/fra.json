@@ -40,7 +40,12 @@
 		"verifyMessage": "Vérifiez les valeurs de hachage et de site Web avant de continuer. Si les valeurs sont correctes, enregistrez le projet.",
 		"saveBtn":  "Sauvegarder",
 		"sessionInactiveMessage": "Votre temps sera écoulé pour cause d'inactivité. Veuillez cliquer n'importe où pour réactiver votre session",
-		"sessionInactivityLogoutMessage": "Vous avez été déconnecté pour cause d'inactivité."
+		"sessionInactivityLogoutMessage": "Vous avez été déconnecté pour cause d'inactivité.",
+		"consentNotApproved": "Impossible de continuer sans l'approbation du consentement.",
+		"consentCheckbox": "J'accepte les termes et conditions",
+		"confirm": "Confirmer",
+		"consent": "Consentement",
+		"addConsentDataSuccessMsg": "Votre consentement a été reçu avec succès."
 	},
 	"breadcrumb": {
 		"home": "Maison",
@@ -2016,6 +2021,10 @@
 		"TOOLKIT_REQ_ERR_043": "Le nom du fichier ne doit pas contenir plusieurs extensions",
 		"TOOLKIT_REQ_ERR_044": "Impossible de télécharger un fichier sans extension",
 		"TOOLKIT_REQ_ERR_045": "Impossible de télécharger le fichier malveillant",
+		"TOOLKIT_REQ_ERR_051": "Modèle introuvable. Téléchargez le modèle et réessayez !",
+		"TOOLKIT_REQ_ERR_052": "Erreur lors de la récupération du modèle",
+		"TOOLKIT_REQ_ERR_053": "Format de version de modèle non valide.",
+	    "TOOLKIT_REQ_ERR_054": "Erreur lors de la récupération de la version du modèle.",
 		"TOOLKIT_REQ_ERR_500": "Erreur technique",
 		"TOOLKIT_DB_ERR_001": "Vous avez précédemment créé un projet avec le nom",
 		"TOOLKIT_DB_ERR_002": "Vous avez précédemment ajouté des données de test biométrique avec le nom",
@@ -2054,7 +2063,9 @@
 		"TOOLKIT_REPORT_004": "Erreur lors de la modification de l'état du rapport",
 		"TOOLKIT_REPORT_005": "Erreur lors de la récupération de la liste des rapports.",
 		"TOOLKIT_REPORT_006": "Erreur lors de la récupération de la liste des rapports. Statut du rapport invalide : ",
-		"error": "Errorerreur",
+		"TOOLKIT_CONSENT_ERR_001": "Erreur lors de la récupération du consentement du partenaire.",
+        "TOOLKIT_CONSENT_ERR_002": "Erreur lors de l'enregistrement du consentement du partenaire.",
+		"error": "Eerreur",
 		"FILE_WITH_MULTIPLE_EXTENSIONS": "Le nom du fichier ne doit pas contenir plusieurs extensions"
 	}
 }

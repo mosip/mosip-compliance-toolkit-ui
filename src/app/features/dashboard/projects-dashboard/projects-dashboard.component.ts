@@ -82,8 +82,30 @@ export class ProjectsDashboardComponent implements OnInit {
       this.sort.sort(({ id: 'lastRunDt', start: 'desc'}) as MatSortable);
     }
     this.dataSource.sort = this.sort;
+    this.initConsent();
     this.dataLoaded = true;
     this.sessionIdleTimeout();
+  }
+
+  async initConsent() {
+    let langCode = this.userProfileService.getUserPreferredLanguage();
+    let templateName = appConstants.TERMS_AND_CONDTIONS_TEMPLATE;
+    try {
+      let latestTemplateVersion = await Utils.getLatestTemplateVersion(this.dataService, this.resourceBundleJson, this.dialog, templateName);
+      let isConsentGiven = await Utils.isConsentGiven(this.dataService, this.resourceBundleJson, this.dialog, latestTemplateVersion);
+      if (!isConsentGiven) {
+        let template = await Utils.getTemplate(this.dataService, this.resourceBundleJson, this.dialog, langCode, templateName, latestTemplateVersion);
+        const dialogRef = this.dialog.open(DialogComponent, {
+          width: '600px',
+          data: {
+            case: "TERMS_AND_CONDITIONS_CONSENT",
+            consentTemplate: template,
+          },
+        });
+      }
+    } catch (errors: any) {
+      console.error(errors[0].message);
+    }
   }
 
   sessionIdleTimeout() {
