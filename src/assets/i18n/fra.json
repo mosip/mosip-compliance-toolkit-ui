@@ -1956,7 +1956,9 @@
 		"HASH_VALIDATOR_003": "Échec de la validation du hachage en raison de : {}",
 		"ABIS_TOKEN_VALIDATOR_001": "La validation du jeton est réussie. Vérifié qu'ABIS ne génère pas de nouveaux jetons pour chaque demande d'insertion.",
 		"ABIS_TOKEN_VALIDATOR_002": "La validation du jeton a échoué, ABIS génère de NOUVEAUX jetons pour chaque demande d'insertion.",
-		"ABIS_TOKEN_VALIDATOR_003": "Échec de la validation du jeton, car aucune donnée correspondante n'est disponible dans le tableau pour l'ID de cas de test : {}, testRunId : {} et partnerId : {}"
+		"ABIS_TOKEN_VALIDATOR_003": "Échec de la validation du jeton, car aucune donnée correspondante n'est disponible dans le tableau pour l'ID de cas de test : {}, testRunId : {} et partnerId : {}",
+		"ABIS_TOKEN_VALIDATOR_004": "La validation du jeton est réussie. Vérification qu'ABIS doit générer un nouveau jeton lorsque le jeton précédent a expiré, sans envoyer de réponse d'erreur.",
+		"ABIS_TOKEN_VALIDATOR_005": "La validation du jeton a échoué, ABIS n'est pas en mesure de générer un nouveau jeton lorsque le jeton précédent a expiré, sans envoyer de réponse d'erreur."
 	},
 	"serviceErrors": {
 		"TOOLKIT_SUCCESS_000": "Succès",

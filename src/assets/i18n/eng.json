@@ -1956,7 +1956,9 @@
 		"HASH_VALIDATOR_003": "Hash validation failure due to: {}",
 		"ABIS_TOKEN_VALIDATOR_001": "Token validation is successful. Verified that ABIS is not generating new tokens for every insert request.",
 		"ABIS_TOKEN_VALIDATOR_002": "Token validation failed, ABIS is generating NEW tokens for every insert request.",
-		"ABIS_TOKEN_VALIDATOR_003": "Token validation failed, since no matching data is available in table for testcase id: {}, testRunId: {} and partnerId: {}"
+		"ABIS_TOKEN_VALIDATOR_003": "Token validation failed, since no matching data is available in table for testcase id: {}, testRunId: {} and partnerId: {}",
+		"ABIS_TOKEN_VALIDATOR_004": "Token validation is successful. Verified that ABIS is to generate a new token when earlier token has expired, without sending error response.",
+		"ABIS_TOKEN_VALIDATOR_005": "Token validation failed, ABIS is not able to generate a new token when earlier token has expired, without sending error response."
 	},
 	"serviceErrors": {
 		"TOOLKIT_SUCCESS_000": "Success",
