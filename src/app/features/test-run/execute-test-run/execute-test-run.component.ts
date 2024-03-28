@@ -897,8 +897,9 @@ export class ExecuteTestRunComponent implements OnInit {
       if (this.isCombinationAbisTestcase && this.currentAbisMethod == appConstants.ABIS_METHOD_IDENTIFY) {
         methodIndex = 1;
       }
-      const validatorsResp = await this.abisTestCaseService.runValidators(testCase, this.abisProjectData, this.currentAbisMethod,
-        this.abisSentMessage, this.abisRecvdMessage, this.abisSentDataSource, methodIndex, this.testRunId);
+      
+      const validatorsResp = await this.abisTestCaseService.runValidators(testCase, this.checkIfTestCaseExecutionIsDone(testCase), this.abisProjectData, 
+      this.currentAbisMethod, this.abisSentMessage, this.abisRecvdMessage, this.abisSentDataSource, methodIndex, this.testRunId);
       if (this.currentAbisMethod == appConstants.ABIS_METHOD_IDENTIFY) {
         this.isCombinationAbisTestcase = false;
         this.currentAbisMethod = appConstants.BLANK_STRING;

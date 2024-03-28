@@ -103,6 +103,7 @@ export class AbisTestCaseService {
 
   async runValidators(
     testCase: TestCaseModel,
+    isTestCaseComplete: boolean,
     abisProjectData: AbisProjectModel,
     methodName: string,
     methodRequest: string,
@@ -114,6 +115,7 @@ export class AbisTestCaseService {
     // now validate the method response against all the validators
     let validationResponse = await this.validateResponse(
       testCase,
+      isTestCaseComplete,
       methodRequest,
       methodResponse,
       methodName,
@@ -247,6 +249,7 @@ export class AbisTestCaseService {
 
   async validateResponse(
     testCase: TestCaseModel,
+    isTestCaseComplete: boolean,
     methodRequest: any,
     methodResponse: any,
     method: string,
@@ -266,7 +269,8 @@ export class AbisTestCaseService {
         expectedFailureReason: testCase.otherAttributes.expectedFailureReason,
         expectedDuplicateCount: testCase.otherAttributes.expectedDuplicateCount,
         testcaseId: testCase.testId,
-        testRunId: testRunId
+        testRunId: testRunId,
+        isTestCaseComplete: isTestCaseComplete
       }),
       methodResponse: methodResponse,
       methodRequest: methodRequest,
