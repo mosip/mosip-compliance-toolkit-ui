@@ -19,9 +19,6 @@
 ::ng-deep .span .mat-radio-button:nth-child(2) {
   margin-left: 0;
 }
-.android-sdk{
-  margin-left: 36px !important;
-}
 .rowContainer {
   display: flex;
   flex-direction: row;
@@ -51,9 +48,6 @@
 }
 .mat-radio-button ~ .mat-radio-button {
   margin-left: 0px;
-}
-.mat-radio-button ~ .mat-radio-button ~ .mat-radio-button {
-  margin-left: 40px; 
 }
 .required-annotation {
   color: red;
@@ -108,6 +102,11 @@
 }
 .deviceImgFieldWrapper{
   width: 30%;
+}
+.addProjectType{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 @media screen and (max-width: 2560px) {
   .fieldContainerBox {
