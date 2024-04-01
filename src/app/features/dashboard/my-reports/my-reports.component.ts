@@ -40,7 +40,7 @@ export class MyReportsComponent implements OnInit {
   dataLoaded = false;
   subscriptions: Subscription[] = [];
   isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
-  filterCtrl = new FormControl('', [Validators.pattern(/^[a-zA-Z0-9\/\- ,]*$/)]);
+  filterCtrl = new FormControl('', [Validators.pattern(/^[a-zA-Z0-9_\/\- ]*$/)]);
   
   constructor(
     private translate: TranslateService,

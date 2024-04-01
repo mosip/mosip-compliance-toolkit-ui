@@ -48,7 +48,7 @@ export class PartnerReportsComponent implements OnInit {
   isAdmin: boolean = false;
   selectedReportStatus = appConstants.REPORT_STATUS_REVIEW;
   selectedFilter: '';
-  filterCtrl = new FormControl('', [Validators.pattern(/^[a-zA-Z0-9\/\- ,]*$/)]);
+  filterCtrl = new FormControl('', [Validators.pattern(/^[a-zA-Z0-9_\/\- ]*$/)]);
 
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());

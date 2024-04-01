@@ -10,6 +10,7 @@ import Utils from 'src/app/app.utils';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { TranslateService } from '@ngx-translate/core';
+import { FormControl, Validators } from '@angular/forms';
 
 export interface BiometricsData {
   id: string;
@@ -43,6 +44,7 @@ export class BiometricDashboardComponent implements OnInit {
   textDirection: any = this.userProfileService.getTextDirection();
   buttonPosition: any = this.textDirection == 'rtl' ? {'float': 'left'} : {'float': 'right'};
   resourceBundleJson: any = {};
+  filterCtrl = new FormControl('', [Validators.pattern(/^[a-zA-Z0-9_\/\- ]*$/)]);
 
   constructor(
     private router: Router,

@@ -29,7 +29,11 @@
         <div class="filter-container">
             <mat-form-field appearance="legacy" *ngIf="dataLoaded">
                 <mat-label>{{ "biometricDashboard.filter" | translate }}</mat-label>
-                <input matInput (keyup)="applyFilter($event)" placeholder="Search columns" #input>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Search columns" #input 
+                    [formControl]="filterCtrl" maxlength="64">
+                <mat-error *ngIf="filterCtrl.hasError('pattern')">
+                    {{ "dialogMessages.invalidPattern" | translate }}
+                </mat-error>
             </mat-form-field>
             <mat-paginator [pageSizeOptions]="[5, 10, 25, 50, 100]" aria-label="Select page of users"></mat-paginator>
         </div>

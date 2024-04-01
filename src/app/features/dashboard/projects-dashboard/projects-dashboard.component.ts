@@ -56,7 +56,7 @@ export class ProjectsDashboardComponent implements OnInit {
   resourceBundleJson: any = {};
   isAdmin: boolean = false;
   message:any = {};
-  filterCtrl = new FormControl('', [Validators.pattern(/^[a-zA-Z0-9\/\- ,]*$/)]);
+  filterCtrl = new FormControl('', [Validators.pattern(/^[a-zA-Z0-9_\/\- ]*$/)]);
   
   constructor(
     private appConfigService: AppConfigService,
