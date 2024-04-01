@@ -442,7 +442,12 @@ export class DialogComponent implements OnInit {
       (res: any) => {
         this.dataLoaded = true;
         if (res) {
-          this.dialogRef.close(false);
+          if (res.errors && res.errors.length > 0) {
+            this.dialogRef.close(true);
+            Utils.showErrorMessage(this.resourceBundleJson, res.errors, this.dialog);
+          } else {
+            this.dialogRef.close(false);
+          }
         } else {
           Utils.showErrorMessage(this.resourceBundleJson,
             null,
@@ -471,7 +476,12 @@ export class DialogComponent implements OnInit {
       (res: any) => {
         this.dataLoaded = true;
         if (res) {
-          this.dialogRef.close(false);
+          if (res.errors && res.errors.length > 0) {
+            this.dialogRef.close(true);
+            Utils.showErrorMessage(this.resourceBundleJson, res.errors, this.dialog);
+          } else {
+            this.dialogRef.close(false);
+          }
         } else {
           Utils.showErrorMessage(this.resourceBundleJson,
             null,
