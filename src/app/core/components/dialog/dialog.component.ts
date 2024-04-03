@@ -412,8 +412,13 @@ export class DialogComponent implements OnInit {
       (res: any) => {
         this.dataLoaded = true;
         if (res) {
-          this.closeMe();
-          window.location.reload();
+          if (res.errors && res.errors.length > 0) {
+            this.dialogRef.close();
+            Utils.showErrorMessage(this.resourceBundleJson, res.errors, this.dialog);
+          } else {
+            this.closeMe();
+            window.location.reload();
+          }
         } else {
           Utils.showErrorMessage(this.resourceBundleJson,
             null,
