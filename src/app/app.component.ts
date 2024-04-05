@@ -22,7 +22,7 @@ export class AppComponent {
   @HostListener('document:mousedown', ['$event'])
   @HostListener('document:keypress', ['$event'])
   onMouseClick() {
-    this.sessionLogoutService.setisActive(true);
+    this.sessionLogoutService.setisActive(true); 
   }
 
   ngOnInit() {
