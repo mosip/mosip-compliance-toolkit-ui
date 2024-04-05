@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   NavigationStart,
   NavigationEnd,
@@ -7,8 +7,6 @@ import {
   Router  
 } from '@angular/router';
 import { AppConfigService } from '../app-config.service';
-import { SessionLogoutService } from '../core/services/session-logout.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'main-app-root',
@@ -23,14 +21,9 @@ export class MainAppComponent {
 
   subscribed: any;
 
-  subscriptions: Subscription[] = [];
-
-
   constructor(
     private router: Router,
     private appConfigService: AppConfigService,
-    private sessionLogoutService: SessionLogoutService
-
   ) {
     this.subscribed = router.events.subscribe(event => {
       this.navigationInterceptor(event);
@@ -39,8 +32,6 @@ export class MainAppComponent {
   }
 
   ngOnInit() {
-    this.subscriptions.push(this.sessionLogoutService.currentMessageAutoLogout.subscribe(() => { }));
-    this.sessionLogoutService.changeMessage({ timerFired: false });
   }
 
   navigationInterceptor(event: any): void {
@@ -62,14 +53,6 @@ export class MainAppComponent {
     }
   }
 
-  @HostListener('keypress')
-  @HostListener('document:mousedown', ['$event'])
-  @HostListener('document:keypress', ['$event'])
-  onMouseClick() {
-    this.sessionLogoutService.setisActive(true);
-  }
-
   ngOnDestroy(): void {
-    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 }
