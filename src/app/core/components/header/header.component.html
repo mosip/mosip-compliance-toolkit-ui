@@ -3,11 +3,11 @@
   <div class="mosip-logo">
     <a *ngIf="!authService.isAuthenticated()" href="./" mat-list-item>
       <span><img src="./assets/images/logo-final.png" width="120" height="50" alt="Logo" /></span>&nbsp;
-    <span><b class="version-txt">Compliance Toolkit {{ appVersion }}</b></span>
+    <span><strong class="version-txt">Compliance Toolkit {{ appVersion }}</strong></span>
     </a>
     <a *ngIf="authService.isAuthenticated()" (click)="onLogoClick()" style="position: relative;" mat-list-item>
       <span><img src="./assets/images/logo-final.png" width="120" height="50" alt="Logo" /></span>&nbsp;
-    <span><b class="version-txt">Compliance Toolkit {{ appVersion }}</b></span>
+    <span><strong class="version-txt">Compliance Toolkit {{ appVersion }}</strong></span>
     </a>
     
   </div>
