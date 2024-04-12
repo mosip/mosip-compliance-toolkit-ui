@@ -33,31 +33,31 @@
               The actual rendered columns are set as a property on the row definition" -->
             <!-- Test Order Sequence Column -->
             <ng-container matColumnDef="testId">
-                <th mat-header-cell *matHeaderCellDef> {{ "viewCollection.id" | translate }} </th>
+                <th mat-header-cell *matHeaderCellDef id="collectionHeader"> {{ "viewCollection.id" | translate }} </th>
                 <td mat-cell *matCellDef="let element">
                     {{element.testId}} </td>
             </ng-container>
             <ng-container matColumnDef="testName">
-                <th mat-header-cell *matHeaderCellDef> {{ "viewCollection.name" | translate }} </th>
+                <th mat-header-cell *matHeaderCellDef id="collectionHeader"> {{ "viewCollection.name" | translate }} </th>
                 <td mat-cell *matCellDef="let element"> <div [innerHTML]="element.testName"></div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="testDescription">
-                <th mat-header-cell *matHeaderCellDef> {{ "viewCollection.description" | translate }} </th>
+                <th mat-header-cell *matHeaderCellDef id="collectionHeader"> {{ "viewCollection.description" | translate }} </th>
                 <td mat-cell *matCellDef="let element"> <div [innerHTML]="element.testDescription"></div></td>
             </ng-container>
             <ng-container matColumnDef="validatorDefs">
-                <th mat-header-cell *matHeaderCellDef> {{ "viewCollection.validators" | translate }} </th>
+                <th mat-header-cell *matHeaderCellDef id="collectionHeader"> {{ "viewCollection.validators" | translate }} </th>
                 <td mat-cell *matCellDef="let element"> 
                     <span *ngFor="let itemArr of element.validatorDefs;let indexOfelement=index;">
-                        <b>{{element.methodName[indexOfelement]}}:</b><br/>
+                        <strong>{{element.methodName[indexOfelement]}}:</strong><br/>
                         <span *ngFor="let item of itemArr">
                         <span class="cell-list">{{item.name + ' - ' + item.description}}</span><br />
                         </span>
                     </span>
             </ng-container>
             <ng-container matColumnDef="scrollIcon" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef style="padding-left: 20px;"></th>
+                <th mat-header-cell *matHeaderCellDef style="padding-left: 20px;" id="collectionHeader"></th>
                     <td mat-cell *matCellDef>
                     </td>
             </ng-container>
