@@ -378,6 +378,6 @@ mat-panel-title {
   word-wrap: break-word !important;
   white-space: unset !important;
   flex: 0 0 10% !important;
-  width: 1cap !important;
+  width: 1% !important;
   overflow-wrap: break-word;
 }
