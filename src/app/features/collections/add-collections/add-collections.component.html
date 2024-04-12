@@ -38,20 +38,20 @@
             <!--- Note that these columns can be defined in any order.
               The actual rendered columns are set as a property on the row definition" -->
             <ng-container matColumnDef="testId">
-                <th mat-header-cell *matHeaderCellDef class="idHeader" id="collectionHeader"> {{ "addCollections.id" | translate }} </th>
+                <th mat-header-cell *matHeaderCellDef class="idHeader" id="testIdHeader"> {{ "addCollections.id" | translate }} </th>
                 <td mat-cell *matCellDef="let element" class="idCell">
                     {{element.testId}} </td>
             </ng-container>
             <ng-container matColumnDef="testName">
-                <th mat-header-cell *matHeaderCellDef class="nameHeader" id="collectionHeader"> {{ "addCollections.name" | translate }} </th>
+                <th mat-header-cell *matHeaderCellDef class="nameHeader" id="testcaseNameHeader"> {{ "addCollections.name" | translate }} </th>
                 <td mat-cell *matCellDef="let element" class="nameCell"> <div [innerHTML]="element.testName"></div> </td>
             </ng-container>
             <ng-container matColumnDef="testDescription">
-                <th mat-header-cell *matHeaderCellDef class="descHeader" id="collectionHeader"> {{ "addCollections.description" | translate }} </th>
+                <th mat-header-cell *matHeaderCellDef class="descHeader" id="testcaseDescriptionHeader"> {{ "addCollections.description" | translate }} </th>
                 <td mat-cell *matCellDef="let element" class="descCell"><div [innerHTML]="element.testDescription"></div> </td>
             </ng-container>
             <ng-container matColumnDef="validatorDefs">
-                <th mat-header-cell *matHeaderCellDef class="validatorsHeader" id="collectionHeader"> {{ "addCollections.validators" | translate }} </th>
+                <th mat-header-cell *matHeaderCellDef class="validatorsHeader" id="testcasevalidatorsHeader"> {{ "addCollections.validators" | translate }} </th>
                 <td mat-cell *matCellDef="let element" class="validatorsCell">
                     <span *ngFor="let itemArr of element.validatorDefs;let indexOfelement=index;">
                         <strong>{{element.methodName[indexOfelement]}}:</strong><br/>
@@ -61,12 +61,12 @@
                     </span>
             </ng-container>
             <ng-container matColumnDef="scrollIcon" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef style="padding-left: 20px;" id="collectionHeader"></th>
+                <th mat-header-cell *matHeaderCellDef style="padding-left: 20px;" id="scrollHeader"></th>
                     <td mat-cell *matCellDef>
                     </td>
             </ng-container>
             <ng-container matColumnDef="actions">
-                <th mat-header-cell *matHeaderCellDef id="collectionHeader">
+                <th mat-header-cell *matHeaderCellDef id="actionHeader">
                     <mat-checkbox (change)="$event ? toggleAllRows() : null"
                         [checked]="selection.hasValue() && isAllSelected()"
                         [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">

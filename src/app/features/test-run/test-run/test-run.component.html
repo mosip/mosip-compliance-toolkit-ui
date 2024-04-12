@@ -19,20 +19,20 @@
                 The actual rendered columns are set as a property on the row definition" -->
                 <!-- Test Order Sequence Column -->
                 <ng-container matColumnDef="testId">
-                    <th mat-header-cell *matHeaderCellDef  mat-sort-header class="testIDHeader" id="testRunHeader"> {{"viewTestRun.id"|translate}} </th>
+                    <th mat-header-cell *matHeaderCellDef  mat-sort-header class="testIDHeader" id="idHeader"> {{"viewTestRun.id"|translate}} </th>
                     <td mat-cell *matCellDef="let element" class="testIDCell">
                         {{element.testId}}<span *ngIf="element.methodId != '' && element.methodId !== 'Not_Available'">
                             - ( {{element.methodId}} )</span>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="testName">
-                    <th mat-header-cell *matHeaderCellDef class="testNameHeader" id="testRunHeader"> {{"viewTestRun.name"|translate}} </th>
+                    <th mat-header-cell *matHeaderCellDef class="testNameHeader" id="nameHeader"> {{"viewTestRun.name"|translate}} </th>
                     <td mat-cell *matCellDef="let element" class="testNameCell">
                         <div [innerHTML]="element.testName"></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="resultStatus">
-                    <th mat-header-cell *matHeaderCellDef  mat-sort-header class="resultStatusHeader" id="testRunHeader"> {{"viewTestRun.status"|translate}}
+                    <th mat-header-cell *matHeaderCellDef  mat-sort-header class="resultStatusHeader" id="resultHeader"> {{"viewTestRun.status"|translate}}
                     </th>
                     <td mat-cell *matCellDef="let element" class="resultStatusCell">
                         <span class="custom-class" *ngIf="element.resultStatus == 'success'">
@@ -46,7 +46,7 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="executionStatus">
-                    <th mat-header-cell *matHeaderCellDef  mat-sort-header class="executionStatusHeader" id="testRunHeader">
+                    <th mat-header-cell *matHeaderCellDef  mat-sort-header class="executionStatusHeader" id="executionHeader">
                         {{"viewTestRun.executionStatus"|translate}} </th>
                     <td mat-cell *matCellDef="let element" class="executionStatusCell">
                         <span class="custom-class" *ngIf="element.executionStatus == 'complete'">
@@ -58,7 +58,7 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="expand" stickyEnd>
-                    <th mat-header-cell *matHeaderCellDef aria-label="row actions" class="expandHeader" id="testRunHeader">&nbsp;</th>
+                    <th mat-header-cell *matHeaderCellDef aria-label="row actions" class="expandHeader" id="testRunExpandHeader">&nbsp;</th>
                     <td mat-cell *matCellDef="let element" class="expandCell">
                         <button mat-icon-button aria-label="expand row"
                             (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
@@ -186,7 +186,7 @@
                     (click)="expandedElement = expandedElement === row ? null : row">
                 <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="expanded-row"></tr>
                 <ng-container matColumnDef="scrollIcon" stickyEnd>
-                    <th mat-header-cell *matHeaderCellDef id="testRunHeader"></th>
+                    <th mat-header-cell *matHeaderCellDef id="scrollIconHeader"></th>
                     <td mat-cell *matCellDef>
                     </td>
                 </ng-container>
