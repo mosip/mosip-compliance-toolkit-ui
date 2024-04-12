@@ -34,12 +34,12 @@
 
 .section1 .nav-section .nav-buttons .login-button{
     color: #0B6A82;
-    font: normal normal bold 16px/26px Roboto;
+    font: normal normal bold 16px/26px Roboto, Arial, sans-serif;
 }
 
 .section1 .nav-section .nav-buttons .register-button{
     color: #ffffff;
-    font: normal normal bold 16px/26px Roboto;
+    font: normal normal bold 16px/26px Roboto, Arial, sans-serif;
     border: 2px solid #FFFFFF;
     background-color: transparent;
     margin-top: 5px;
@@ -48,7 +48,7 @@
 .section1 .nav-section .nav-links a {
     text-decoration: none;
     color: #ffffff;
-    font: normal normal bold 16px/26px Roboto;
+    font: normal normal bold 16px/26px Roboto, Arial, sans-serif;
     padding-left: 1em;
     padding-right: 1em;
 }
@@ -91,7 +91,7 @@
 
 .section1 .content-section .content .watch-video-button{
     color: #0B6A82;
-    font: normal normal bold 16px/26px Roboto;
+    font: normal normal bold 16px/26px Roboto, Arial, sans-serif;
     padding: 0.55em 1em;
     background: #ffffff 0% 0% no-repeat padding-box;
     border-radius: 50px;
@@ -107,14 +107,14 @@
 }
 
 .section1 .content-section .content p {
-    font: normal normal bold 16px/26px Roboto;
+    font: normal normal bold 16px/26px Roboto, Arial, sans-serif;
     color: #93EAFF;
     margin: 0;
     letter-spacing: 0.5px;
 }
 
 .section1 .content-section .content h6 {
-    font: normal normal bold 40px/79px Roboto;
+    font: normal normal bold 40px/79px Roboto, Arial, sans-serif;
     color: #FFFFFF;
     margin-top: 0;
     margin-bottom: 0.5em;
@@ -122,7 +122,7 @@
 }
 
 .section1 .content-section .content small {
-    font: normal normal normal 14px/24px Roboto;
+    font: normal normal normal 14px/24px Roboto, Arial, sans-serif;
     color: #FFFFFF;
 }
 
@@ -134,7 +134,7 @@
 .section1 .learn-more {
     color: white;
     text-decoration: none;
-    font: normal normal bold 16px/29px Roboto;
+    font: normal normal bold 16px/29px Roboto, Arial, sans-serif;
     padding-left: 1em;
     letter-spacing: 0.5px;
 }
@@ -146,7 +146,7 @@
 
 .section2 h3 {
     color: #023643;
-    font: normal normal bold 40px/79px Roboto;
+    font: normal normal bold 40px/79px Roboto, Arial, sans-serif;
     margin: 0;
     text-align: center;
     padding-top: 2em;
@@ -167,12 +167,12 @@
 
 .row1 p[class= "description"],  .row2 p[class= "description"]{
     color: #262626;
-    font: normal normal normal 14px/29px Roboto;
+    font: normal normal normal 14px/29px Roboto, Arial, sans-serif;
 }
 
 .row1 p[class= "title"],  .row2 p[class= "title"]{
     color: #05404E;
-    font: normal normal bold 16px/32px Roboto;
+    font: normal normal bold 16px/32px Roboto, Arial, sans-serif;
 }
 
 .row1 .col1, .row1 .col2, .row1 .col3 {
@@ -196,7 +196,7 @@
 }
 
 .section3 h3 {
-    font: normal normal bold 40px/79px Roboto;
+    font: normal normal bold 40px/79px Roboto, Arial, sans-serif;
     color: #FFFFFF;
     margin: 0;
     margin-left: 12vw;
@@ -204,7 +204,7 @@
 }
 
 .section3 .info {
-    font: normal normal normal 14px/24px Roboto;
+    font: normal normal normal 14px/24px Roboto, Arial, sans-serif;
     color: #FFFFFF;
     margin-top: 0;
     margin-left: 12vw;
@@ -237,7 +237,7 @@
     padding-top: 0.25em;
     padding-bottom: 0.25em;
     color: #FFFFFF;
-    font: normal normal bold 16px/34px Roboto;
+    font: normal normal bold 16px/34px Roboto, Arial, sans-serif;
     letter-spacing: 0.5px;
 }
 
@@ -262,12 +262,12 @@
 .section3 .card1 .content h4, .section3 .card2 .content h4, .section3 .card3 .content h4, .section3 .card4 .content h4{
     margin-top: 0;
     margin-bottom: 0;
-    font: normal normal bold 20px/45px Roboto;
+    font: normal normal bold 20px/45px Roboto, Arial, sans-serif;
     color: #FFFFFF;
 }
 
 .section3 .card1 .content .description, .section3 .card2 .content .description, .section3 .card3 .content .description, .section3 .card4 .content .description{
-    font: normal normal normal 14px/29px Roboto;
+    font: normal normal normal 14px/29px Roboto, Arial, sans-serif;
     color: #FFFFFF;
     margin: 0;
     line-height: 1.5;
@@ -285,7 +285,7 @@
     padding: 0.5em;
     padding-left: 1em;
     padding-right: 1em;
-    font: normal normal bold 14px/26px Roboto;
+    font: normal normal bold 14px/26px Roboto, Arial, sans-serif;
     line-height: 1.5;
     text-decoration: underline;
     color: #FFFFFF;
@@ -309,7 +309,7 @@
 }
 
 .section3 .card2 .card-footer .info{
-    font: normal normal normal 14px/29px Roboto;
+    font: normal normal normal 14px/29px Roboto, Arial, sans-serif;
     color: #83AAB5;
     margin: 0;
     margin-left: 1em;
@@ -323,7 +323,7 @@
 .section4 h3 {
     text-align: center;
     color: #023643;
-    font: normal normal bold 40px/79px Roboto;
+    font: normal normal bold 40px/79px Roboto, Arial, sans-serif;
 }
 
 .section4 .contact-banner {
@@ -348,13 +348,13 @@
 
 .section4 .contact-banner a {
     color: #066D84;
-    font: normal normal bold 20px/39px Roboto;
+    font: normal normal bold 20px/39px Roboto, Arial, sans-serif;
     display: block;
 }
 
 .footer {
     background-color: white;
-    font: normal normal normal 16px/26px Roboto;
+    font: normal normal normal 16px/26px Roboto, Arial, sans-serif;
     color: #727272;
     text-align: center;
 }
