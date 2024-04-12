@@ -32,29 +32,29 @@
         <table mat-table [dataSource]="dataSource" matSort class="dashboard-table" >
             <caption *ngIf="dataLoaded"> {{ "partnerReport.tableDescription" | translate }} </caption>
             <ng-container matColumnDef="partnerId">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header id="partnerReportsHeader"> {{ "partnerReport.partnerName" | translate }} </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header id="partnerIdHeader"> {{ "partnerReport.partnerName" | translate }} </th>
                 <td mat-cell *matCellDef="let element"> {{element.partnerId}} </td>
             </ng-container>
 
             <ng-container matColumnDef="orgName">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header id="partnerReportsHeader"> {{ "partnerReport.orgName" | translate }} </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header id="orgNameHeader"> {{ "partnerReport.orgName" | translate }} </th>
                 <td mat-cell *matCellDef="let element"> {{element.orgName}} </td>
             </ng-container>
 
             <ng-container matColumnDef="projectType">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header id="partnerReportsHeader"> {{ "partnerReport.projectType" | translate }}
+                <th mat-header-cell *matHeaderCellDef mat-sort-header id="projectTypeHeader"> {{ "partnerReport.projectType" | translate }}
                 </th>
                 <td mat-cell *matCellDef="let element"> {{element.projectType}} </td>
             </ng-container>
 
             <ng-container matColumnDef="projectName">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header id="partnerReportsHeader"> {{ "partnerReport.projectName" | translate }}
+                <th mat-header-cell *matHeaderCellDef mat-sort-header id="projectNameHeader"> {{ "partnerReport.projectName" | translate }}
                 </th>
                 <td mat-cell *matCellDef="let element"> {{element.projectName}} </td>
             </ng-container>
 
             <ng-container matColumnDef="collectionType">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header id="partnerReportsHeader"> {{ "partnerReport.collectionType" | translate }} </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header id="collectionTypeHeader"> {{ "partnerReport.collectionType" | translate }} </th>
                 <td mat-cell *matCellDef="let element">
                     <span *ngIf="element.collectionType === 'compliance_collection'">
                         {{ "partnerReport.complianceCollection" | translate }}
@@ -66,31 +66,31 @@
             </ng-container>
 
             <ng-container matColumnDef="reviewDtimes">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header id="partnerReportsHeader"> {{ "partnerReport.reviewDtimes" | translate }}
+                <th mat-header-cell *matHeaderCellDef mat-sort-header id="reviewDtimesHeader"> {{ "partnerReport.reviewDtimes" | translate }}
                 </th>
                 <td mat-cell *matCellDef="let element"> {{element.reviewDtimes | date: 'short'}} </td>
             </ng-container>
 
             <ng-container matColumnDef="approveRejectDtimes">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header id="partnerReportsHeader"> {{ "partnerReport.approveRejectDtimes" | translate }}
+                <th mat-header-cell *matHeaderCellDef mat-sort-header id="approveRejectDtimesHeader"> {{ "partnerReport.approveRejectDtimes" | translate }}
                 </th>
                 <td mat-cell *matCellDef="let element"> {{element.approveRejectDtimes | date: 'short'}} </td>
             </ng-container>
 
             <ng-container matColumnDef="partnerComments">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header id="partnerReportsHeader"> {{ "partnerReport.partnerComments" | translate }}
+                <th mat-header-cell *matHeaderCellDef mat-sort-header id="partnerCommentsHeader"> {{ "partnerReport.partnerComments" | translate }}
                 </th>
                 <td mat-cell *matCellDef="let element"> {{element.partnerComments}} </td>
             </ng-container>
 
             <ng-container matColumnDef="adminComments">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header id="partnerReportsHeader"> {{ "partnerReport.adminComments" | translate }}
+                <th mat-header-cell *matHeaderCellDef mat-sort-header id="adminCommentsHeader"> {{ "partnerReport.adminComments" | translate }}
                 </th>
                 <td mat-cell *matCellDef="let element"> {{element.adminComments}} </td>
             </ng-container>
 
             <ng-container matColumnDef="reportStatus">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="center-header-cell" id="partnerReportsHeader">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="center-header-cell" id="reportStatusHeader">
                     {{ "partnerReport.status" | translate }}
                 </th>
                 <td mat-cell *matCellDef="let element">
@@ -109,7 +109,7 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="approveButton">
-                <th mat-header-cell *matHeaderCellDef class="center-header-cell" id="partnerReportsHeader">
+                <th mat-header-cell *matHeaderCellDef class="center-header-cell" id="approveButtonHeader">
                     {{ "partnerReport.approveButton" | translate }}
                 </th>
                 <td mat-cell *matCellDef="let element">
@@ -121,7 +121,7 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="rejectButton">
-                <th mat-header-cell *matHeaderCellDef class="center-header-cell" id="partnerReportsHeader">
+                <th mat-header-cell *matHeaderCellDef class="center-header-cell" id="rejectButtonHeader">
                     {{ "partnerReport.rejectButton" | translate }}
                 </th>
                 <td mat-cell *matCellDef="let element">
@@ -133,7 +133,7 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="runId">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header id="partnerReportsHeader"> {{ "partnerReport.viewTestRun" | translate }}
+            <th mat-header-cell *matHeaderCellDef mat-sort-header id="runIdHeader"> {{ "partnerReport.viewTestRun" | translate }}
             </th>
             <td mat-cell *matCellDef="let element">
                 <!-- <button [cdkCopyToClipboard]="element.runId" mat-button>
