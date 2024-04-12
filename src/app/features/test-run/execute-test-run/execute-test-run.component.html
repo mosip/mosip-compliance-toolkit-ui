@@ -37,7 +37,7 @@
             </span>
             <span *ngIf="!errorsInGettingTestcases">
                 <span *ngIf="!runComplete">
-                    {{ "executeTestRun.execution" | translate }} {{testCasesList.length}} {{ "executeTestRun.testcasesForCollection" | translate }} <b>{{collectionName}}</b> {{ "executeTestRun.hasStarted" | translate }}
+                    {{ "executeTestRun.execution" | translate }} {{testCasesList.length}} {{ "executeTestRun.testcasesForCollection" | translate }} <strong>{{collectionName}}</strong> {{ "executeTestRun.hasStarted" | translate }}
                     <p></p>
                     <div style="position: relative">
                         <mat-progress-bar color="accent" mode="determinate" [value]="progressDone"></mat-progress-bar>
@@ -52,8 +52,8 @@
                         </span>
                     </div>
                     <div *ngIf="abisRecvdMessage != ''">
-                        <p></p><b>{{ "executeTestRun.abisResponseRecvd" | translate }}
-                        </b>
+                        <p></p><strong>{{ "executeTestRun.abisResponseRecvd" | translate }}
+                        </strong>
                     </div>
                     <div *ngIf="abisRequestSendFailure">
                         <p></p><span [ngStyle]="{color: '#fd518c'}">{{ "executeTestRun.abisRequestSentFail" | translate }}
