@@ -410,8 +410,8 @@ export class DialogComponent implements OnInit {
     };
     const subs = this.dataService.submitReportForReview(submitRequest).subscribe(
       (res: any) => {
-        const msg = "submit";
-        this.getReportResponse(res, msg)
+        const msg = "Unable to submit report for review. Try Again!";
+        this.getReportResponse(res, msg, true);
       },
       (errors) => {
         Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
@@ -433,8 +433,8 @@ export class DialogComponent implements OnInit {
     };
     const subs = this.dataService.approvePartnerReport(this.input.partnerId, approveRequest).subscribe(
       (res: any) => {
-        const msg = "approve";
-        this.getReportResponse(res, msg)
+        const msg = "Unable to approve report. Try Again!";
+        this.getReportResponse(res, msg, false);
       },
       (errors) => {
         Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
@@ -456,8 +456,8 @@ export class DialogComponent implements OnInit {
     };
     const subs = this.dataService.rejectPartnerReport(this.input.partnerId, rejectRequest).subscribe(
       (res: any) => {
-        const msg = "reject";
-        this.getReportResponse(res, msg)
+        const msg = "Unable to reject report. Try Again!";
+        this.getReportResponse(res, msg, false);
       },
       (errors) => {
         Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
@@ -466,14 +466,14 @@ export class DialogComponent implements OnInit {
     this.subscriptions.push(subs);
   }
 
-  getReportResponse(res: any, msg: string) {
+  getReportResponse(res: any, msg: string, isSubmitForReview: boolean) {
     this.dataLoaded = true;
     if (res) {
       if (res.errors && res.errors.length > 0) {
         this.dialogRef.close(true);
         Utils.showErrorMessage(this.resourceBundleJson, res.errors, this.dialog);
       } else {
-        if (msg == "submit") {
+        if (isSubmitForReview) {
           this.closeMe();
           window.location.reload();
         } else {
@@ -484,7 +484,7 @@ export class DialogComponent implements OnInit {
       Utils.showErrorMessage(this.resourceBundleJson,
         null,
         this.dialog,
-        'Unable to ' + msg + ' report. Try Again!');
+        msg);
     }
   }
 
