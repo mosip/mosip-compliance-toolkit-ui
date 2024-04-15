@@ -410,21 +410,8 @@ export class DialogComponent implements OnInit {
     };
     const subs = this.dataService.submitReportForReview(submitRequest).subscribe(
       (res: any) => {
-        this.dataLoaded = true;
-        if (res) {
-          if (res.errors && res.errors.length > 0) {
-            this.dialogRef.close();
-            Utils.showErrorMessage(this.resourceBundleJson, res.errors, this.dialog);
-          } else {
-            this.closeMe();
-            window.location.reload();
-          }
-        } else {
-          Utils.showErrorMessage(this.resourceBundleJson,
-            null,
-            this.dialog,
-            'Unable to submit report for review. Try Again!');
-        }
+        const msg = "submit";
+        this.getReportResponse(res, msg)
       },
       (errors) => {
         Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
@@ -432,6 +419,7 @@ export class DialogComponent implements OnInit {
     );
     this.subscriptions.push(subs);
   }
+
   approvePartnerReport(adminApproveComments: String) {
     let newRequest = {
       ...this.input.approveRequest,
@@ -445,20 +433,8 @@ export class DialogComponent implements OnInit {
     };
     const subs = this.dataService.approvePartnerReport(this.input.partnerId, approveRequest).subscribe(
       (res: any) => {
-        this.dataLoaded = true;
-        if (res) {
-          if (res.errors && res.errors.length > 0) {
-            this.dialogRef.close(true);
-            Utils.showErrorMessage(this.resourceBundleJson, res.errors, this.dialog);
-          } else {
-            this.dialogRef.close(false);
-          }
-        } else {
-          Utils.showErrorMessage(this.resourceBundleJson,
-            null,
-            this.dialog,
-            'Unable to approve report. Try Again!');
-        }
+        const msg = "approve";
+        this.getReportResponse(res, msg)
       },
       (errors) => {
         Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
@@ -466,6 +442,7 @@ export class DialogComponent implements OnInit {
     );
     this.subscriptions.push(subs);
   }
+
   rejectPartnerReport(adminRejectComments: String) {
     let newRequest = {
       ...this.input.rejectRequest,
@@ -479,26 +456,36 @@ export class DialogComponent implements OnInit {
     };
     const subs = this.dataService.rejectPartnerReport(this.input.partnerId, rejectRequest).subscribe(
       (res: any) => {
-        this.dataLoaded = true;
-        if (res) {
-          if (res.errors && res.errors.length > 0) {
-            this.dialogRef.close(true);
-            Utils.showErrorMessage(this.resourceBundleJson, res.errors, this.dialog);
-          } else {
-            this.dialogRef.close(false);
-          }
-        } else {
-          Utils.showErrorMessage(this.resourceBundleJson,
-            null,
-            this.dialog,
-            'Unable to reject report. Try Again!');
-        }
+        const msg = "reject";
+        this.getReportResponse(res, msg)
       },
       (errors) => {
         Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
       }
     );
     this.subscriptions.push(subs);
+  }
+
+  getReportResponse(res: any, msg: string) {
+    this.dataLoaded = true;
+    if (res) {
+      if (res.errors && res.errors.length > 0) {
+        this.dialogRef.close(true);
+        Utils.showErrorMessage(this.resourceBundleJson, res.errors, this.dialog);
+      } else {
+        if (msg == "submit") {
+          this.closeMe();
+          window.location.reload();
+        } else {
+          this.dialogRef.close(false);
+        }
+      }
+    } else {
+      Utils.showErrorMessage(this.resourceBundleJson,
+        null,
+        this.dialog,
+        'Unable to ' + msg + ' report. Try Again!');
+    }
   }
 
   checkHashAndWebsiteUrl() {
