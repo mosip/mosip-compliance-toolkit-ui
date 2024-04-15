@@ -411,7 +411,7 @@ export class DialogComponent implements OnInit {
     const subs = this.dataService.submitReportForReview(submitRequest).subscribe(
       (res: any) => {
         const msg = "Unable to submit report for review. Try Again!";
-        this.getReportResponse(res, msg, true);
+        this.handleReportErrResponse(res, msg, true);
       },
       (errors) => {
         Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
@@ -434,7 +434,7 @@ export class DialogComponent implements OnInit {
     const subs = this.dataService.approvePartnerReport(this.input.partnerId, approveRequest).subscribe(
       (res: any) => {
         const msg = "Unable to approve report. Try Again!";
-        this.getReportResponse(res, msg, false);
+        this.handleReportErrResponse(res, msg, false);
       },
       (errors) => {
         Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
@@ -457,7 +457,7 @@ export class DialogComponent implements OnInit {
     const subs = this.dataService.rejectPartnerReport(this.input.partnerId, rejectRequest).subscribe(
       (res: any) => {
         const msg = "Unable to reject report. Try Again!";
-        this.getReportResponse(res, msg, false);
+        this.handleReportErrResponse(res, msg, false);
       },
       (errors) => {
         Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
@@ -466,7 +466,7 @@ export class DialogComponent implements OnInit {
     this.subscriptions.push(subs);
   }
 
-  getReportResponse(res: any, msg: string, isSubmitForReview: boolean) {
+  handleReportErrResponse(res: any, msg: string, isSubmitForReview: boolean) {
     this.dataLoaded = true;
     if (res) {
       if (res.errors && res.errors.length > 0) {
