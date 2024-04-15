@@ -65,13 +65,7 @@ export class PartnerReportsComponent implements OnInit {
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value
-      .trim()
-      .toLowerCase();
-    this.dataSource.filter = filterValue;
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+    Utils.applyFilter(event, this.dataSource);
     this.dataSource.filterPredicate = this.customFilterPredicate;
   }
 
