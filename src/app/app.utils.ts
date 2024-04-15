@@ -13,7 +13,7 @@ import { SbiProjectModel } from './core/models/sbi-project';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Toast } from '@capacitor/toast';
 import { sha256 } from 'js-sha256';
-
+import { MatTableDataSource } from '@angular/material/table';
 export default class Utils {
   static getCurrentDate() {
     let now = new Date();
@@ -1029,5 +1029,13 @@ export default class Utils {
       data: body,
     });
     return dialogRef;
+  }
+
+  static applyFilter<T>(event: Event, dataSource: MatTableDataSource<T>): void {
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    dataSource.filter = filterValue;
+    if (dataSource.paginator) {
+      dataSource.paginator.firstPage();
+    }
   }
 }
