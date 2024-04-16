@@ -14,6 +14,8 @@ import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Toast } from '@capacitor/toast';
 import { sha256 } from 'js-sha256';
 import { MatTableDataSource } from '@angular/material/table';
+import { App } from '@capacitor/app';
+import { environment } from 'src/environments/environment';
 export default class Utils {
   static getCurrentDate() {
     let now = new Date();
@@ -1038,4 +1040,25 @@ export default class Utils {
       dataSource.paginator.firstPage();
     }
   }
+
+  static androidAppExit(resourceBundleJson: any, dialog: MatDialog) {
+    const isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
+    if (isAndroidAppMode) {
+      let resourceBundle = resourceBundleJson.dialogMessages;
+      let successMsg = 'success';
+      let logoutMsg = 'logoutMessage';
+      const dialogRef = Utils.showSuccessMessage(
+        resourceBundle,
+        successMsg,
+        logoutMsg,
+        dialog
+      );
+      dialogRef.afterClosed().subscribe((res) => {
+        App.exitApp().catch((error) => {
+          console.log(error);
+        });
+      });
+    }
+  }
+
 }

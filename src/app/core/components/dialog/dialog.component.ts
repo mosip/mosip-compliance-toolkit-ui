@@ -493,9 +493,10 @@ export class DialogComponent implements OnInit {
   }
 
   // Close the dialog when the user clicks on the "OK" button, and initiate the logout process.
-  onOkClick(): void {
+  async onOkClick() {
     this.dialogRef.close();
-    this.logoutservice.logout();
+    await this.logoutservice.logout();
+    Utils.androidAppExit(this.resourceBundleJson, this.dialog);
   }
 
   setConsent() {
