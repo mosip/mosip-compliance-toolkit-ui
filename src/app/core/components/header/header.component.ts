@@ -49,23 +49,7 @@ export class HeaderComponent implements OnInit {
   }
   async onItem() {
     await this.logoutService.logout();
-    const isAndroidAppMode = environment.isAndroidAppMode == 'yes' ? true : false;
-    if (isAndroidAppMode) {
-      let resourceBundle = this.resourceBundleJson.dialogMessages;
-      let successMsg = 'success';
-      let logoutMsg = 'logoutMessage';
-      const dialogRef = Utils.showSuccessMessage(
-        resourceBundle,
-        successMsg,
-        logoutMsg,
-        this.dialog
-      );
-      dialogRef.afterClosed().subscribe((res) => {
-        App.exitApp().catch((error) => {
-          console.log(error);
-        });
-      });
-    }
+    Utils.androidAppExit(this.resourceBundleJson, this.dialog);
   }
   async ngOnInit() {
     this.translate.use(this.userProfileService.getUserPreferredLanguage());
