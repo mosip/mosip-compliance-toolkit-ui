@@ -67,6 +67,17 @@
 .custom-class mat-icon {
   vertical-align: middle;
 }
+
+.disabled-row {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.disabled-link {
+  pointer-events: none;
+  color: gray;
+}
+
 @media screen and (max-width: 604px) {
   .table-scroll{
     overflow-x:auto;

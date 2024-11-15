@@ -187,7 +187,13 @@ export class ProjectsDashboardComponent implements OnInit {
       this.subscriptions.push(
         this.dataService.getTestRunStatus(runId).subscribe(
           (response: any) => {
-            resolve(response['response']['resultStatus']);
+            console.log(response);
+            if (response['response']){
+              resolve(response['response']['resultStatus']);
+            } 
+            else {
+              resolve("status_not_available");
+            }
           },
           (errors) => {
             Utils.showErrorMessage(this.resourceBundleJson, errors, this.dialog);
