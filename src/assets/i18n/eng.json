@@ -82,7 +82,8 @@
 		"projectRow": "There are no projects available.",
 		"tableDescription": "List of Projects",
 		"title": "Update Project Details",
-		"message": "Add the following fields required for the Project, to proceed."
+		"message": "Add the following fields required for the Project, to proceed.",
+		"notAvailable": "Not Available"
 	},
 	"biometricDashboard": {
 		"projectDashboard": "Projects Dashboard",
