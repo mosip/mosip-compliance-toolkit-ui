@@ -82,8 +82,7 @@
 		"projectRow": "Il n'y a pas de projets disponibles.",
 		"tableDescription": "Liste des projets",
 		"title": "Mettre à jour les détails du projet",
-		"message": "Ajoutez les champs suivants requis pour le projet, pour continuer.",
-		"notAvailable": "Pas disponible"
+		"message": "Ajoutez les champs suivants requis pour le projet, pour continuer."
 	},
 	"biometricDashboard": {
 		"projectDashboard": "Tableau de bord des projets",
