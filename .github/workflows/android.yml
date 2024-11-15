@@ -58,7 +58,7 @@ jobs:
       run: cd ../
       
     - name: Upload APK
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: CTK-Android
         path: ./android/app/build/outputs/apk/debug/app-debug.apk
