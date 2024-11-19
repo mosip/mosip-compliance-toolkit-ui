@@ -48,7 +48,7 @@ jobs:
   sonar-analysis:
     needs: build-mosip-compliance-toolkit-ui
     if: "${{ github.event_name != 'pull_request' }}"
-    uses: mosip/kattu/.github/workflows/npm-sonar-analysis.yml@master
+    uses: mosip/kattu/.github/workflows/npm-sonar-analysis.yml@develop
     with:
       SERVICE_LOCATION: ./
       SONAR_URL: 'https://sonarcloud.io'
