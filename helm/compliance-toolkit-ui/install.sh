@@ -7,7 +7,7 @@ if [ $# -ge 1 ] ; then
 fi
 
 NS=compliance-toolkit
-CHART_VERSION=1.4.0
+CHART_VERSION=1.4.1
 
 echo Create $NS namespace
 kubectl create ns $NS
