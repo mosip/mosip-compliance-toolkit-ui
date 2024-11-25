@@ -45,12 +45,12 @@
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "uuid": "^8.3.2",
-    "webpack": "^5.75.0",
+    "webpack": "^5.96.1",
     "xng-breadcrumb": "^7.2.0",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~13.3.2",
+    "@angular-devkit/build-angular": "~19.0.1",
     "@angular/cli": "~13.3.2",
     "@angular/compiler-cli": "~13.3.0",
     "@nrwl/angular": "^15.8.5",
