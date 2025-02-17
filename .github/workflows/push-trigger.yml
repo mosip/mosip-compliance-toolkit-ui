@@ -31,6 +31,7 @@ jobs:
             SERVICE_NAME: 'compliance-toolkit-ui'
             NPM_BUILD: true
             BUILD_ARTIFACT: 'mosip-compliance-toolkit-ui'
+            SQUASH_LAYERS: '7'
       fail-fast: false
     name: ${{ matrix.SERVICE_NAME }}
     uses: mosip/kattu/.github/workflows/docker-build.yml@master
@@ -39,6 +40,7 @@ jobs:
       SERVICE_NAME: ${{ matrix.SERVICE_NAME }}
       NPM_BUILD: ${{ matrix.NPM_BUILD }}
       BUILD_ARTIFACT: ${{ matrix.BUILD_ARTIFACT }}
+      SQUASH_LAYERS: ${{ matrix.SQUASH_LAYERS }}
     secrets:
       DEV_NAMESPACE_DOCKER_HUB: ${{ secrets.DEV_NAMESPACE_DOCKER_HUB }}
       ACTOR_DOCKER_HUB: ${{ secrets.ACTOR_DOCKER_HUB }}
