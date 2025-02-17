@@ -754,6 +754,28 @@ export class ExecuteTestRunComponent implements OnInit {
     }
 
   }
+  
+  convertToUUIDFormat(nonUuidStr: string): string {
+    console.log(`before ${nonUuidStr}`);
+    //replace all underscores
+    nonUuidStr = nonUuidStr.replace(/_/g, "");
+    //slice to last 36 chars in string
+    const getChar = (s:string, n:number) => s.slice(-n);
+    let strWith36Chars = nonUuidStr;
+    if (nonUuidStr.length > 36) {
+      strWith36Chars = getChar(nonUuidStr, 36);
+    }
+    let part1 = strWith36Chars.substring(0,8);
+    let part2 = strWith36Chars.substring(9,13);
+    let part3 = strWith36Chars.substring(14,18);
+    let part4 = strWith36Chars.substring(19,23);
+    let part5 = strWith36Chars.substring(24,36);
+    
+    let uuidStr = part1 + "-" +  part2 + "-" + part3 + "-" + part4 + "-" + part5;
+    console.log(`after ${uuidStr}`);
+    
+    return uuidStr;
+  }
 
   async executeABISTestCase(testCase: TestCaseModel) {
     this.isCombinationAbisTestcase = testCase.methodName.length > 1 ? true : false;
@@ -791,13 +813,14 @@ export class ExecuteTestRunComponent implements OnInit {
           insertCount = Number.parseInt(testCase.otherAttributes.insertCount);
         }
         //ABIS requestId is unique per request so set to testRunId_testcaseId
-        requestId = this.testRunId + appConstants.UNDERSCORE + testCase.testId;
+        requestId = this.convertToUUIDFormat(this.testRunId + appConstants.UNDERSCORE + testCase.testId);
+        
         if (insertCount > 1) {
           //cbeffFileSuffix keeps track of the current CBEFF file index for a testcase
           if (this.cbeffFileSuffix == 0) {
             this.cbeffFileSuffix = 1;
           }
-          requestId = requestId + appConstants.UNDERSCORE + this.cbeffFileSuffix;
+          requestId = this.convertToUUIDFormat(this.testRunId + appConstants.UNDERSCORE + testCase.testId + appConstants.UNDERSCORE + this.cbeffFileSuffix);
         }
         //ABIS referenceId is unique per set of biometrics so set to testRunId_testcaseId
         referenceId = requestId;
@@ -806,14 +829,14 @@ export class ExecuteTestRunComponent implements OnInit {
       let galleryIds: { referenceId: string; }[] = [];
       //if testcase defines identifyReferenceId, then it is used 
       if (this.currentAbisMethod == appConstants.ABIS_METHOD_IDENTIFY) {
-        requestId = this.testRunId + appConstants.UNDERSCORE + testCase.testId + appConstants.UNDERSCORE + appConstants.ABIS_METHOD_IDENTIFY;
+        requestId = this.convertToUUIDFormat(this.testRunId + appConstants.UNDERSCORE + testCase.testId + appConstants.UNDERSCORE + appConstants.ABIS_METHOD_IDENTIFY);
         if (testCase.otherAttributes.identifyReferenceId) {
-          referenceId = this.testRunId + appConstants.UNDERSCORE + testCase.otherAttributes.identifyReferenceId;
+          referenceId = this.convertToUUIDFormat(this.testRunId + appConstants.UNDERSCORE + testCase.otherAttributes.identifyReferenceId);
         }
         if (testCase.otherAttributes.identifyGalleryIds) {
           testCase.otherAttributes.identifyGalleryIds.forEach((galleryId: string) => {
             galleryIds.push({
-              "referenceId": this.testRunId + appConstants.UNDERSCORE + galleryId
+              "referenceId": this.convertToUUIDFormat(this.testRunId + appConstants.UNDERSCORE + galleryId)
             });
           });
         }
@@ -821,7 +844,7 @@ export class ExecuteTestRunComponent implements OnInit {
       //if testcase defines insertReferenceId, overwrite the above referenceId
       if (this.currentAbisMethod == appConstants.ABIS_METHOD_INSERT) {
         if (testCase.otherAttributes.insertReferenceId) {
-          referenceId = this.testRunId + appConstants.UNDERSCORE + testCase.otherAttributes.insertReferenceId;
+          referenceId = this.convertToUUIDFormat(this.testRunId + appConstants.UNDERSCORE + testCase.otherAttributes.insertReferenceId);
         }
       }
       console.log(`requestId: ${requestId}`);
