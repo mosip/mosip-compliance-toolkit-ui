@@ -756,29 +756,6 @@ export class ExecuteTestRunComponent implements OnInit {
 
   }
 
-  convertToUUIDFormat(nonUuidStr: string): string {
-    console.log(`before ${nonUuidStr}`);
-    //replace all underscores
-    nonUuidStr = nonUuidStr.replace(/_/g, "");
-    //slice to last 36 chars in string
-    const getChar = (s: string, n: number) => s.slice(-n);
-    let strWith36Chars = nonUuidStr;
-    if (nonUuidStr.length > 36) {
-      strWith36Chars = getChar(nonUuidStr, 36);
-    }
-
-    let part1 = strWith36Chars.substring(0, 8);
-    let part2 = strWith36Chars.substring(9, 13);
-    let part3 = strWith36Chars.substring(14, 18);
-    let part4 = strWith36Chars.substring(19, 23);
-    let part5 = strWith36Chars.substring(24, 36);
-
-    let uuidStr = part1 + "-" + part2 + "-" + part3 + "-" + part4 + "-" + part5;
-    console.log(`after ${uuidStr}`);
-
-    return uuidStr;
-  }
-
   async executeABISTestCase(testCase: TestCaseModel) {
     this.isCombinationAbisTestcase = testCase.methodName.length > 1 ? true : false;
     if (this.isCombinationAbisTestcase && this.currentAbisMethod == appConstants.BLANK_STRING) {
