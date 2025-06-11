@@ -26,7 +26,7 @@ import { Message } from '@stomp/stompjs';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { TranslateService } from '@ngx-translate/core';
 import Utils from 'src/app/app.utils';
-import { error } from 'console';
+import { v4 as uuidv4 } from 'uuid';
 import { sha256 } from 'js-sha256';
 
 declare const start_streaming: any;
@@ -111,6 +111,7 @@ export class ExecuteTestRunComponent implements OnInit {
   currentAbisMethod: string = appConstants.BLANK_STRING;
   textDirection: any = this.userProfileService.getTextDirection();
   resourceBundleJson: any = {};
+  previousReferenceId = new Map();
 
   constructor(
     private dialogRef: MatDialogRef<ExecuteTestRunComponent>,
@@ -315,7 +316,7 @@ export class ExecuteTestRunComponent implements OnInit {
         const res: any = await this.executeCurrentTestCase(testCase);
         if (res) {
           startingForLoop = this.handleErr(res);
-          
+
           let ignoreThisIteration = false;
           if (this.projectType == appConstants.SBI && testCase.otherAttributes.keyRotationTestCase
             && this.currentMethodIndex == 0) {
@@ -754,26 +755,27 @@ export class ExecuteTestRunComponent implements OnInit {
     }
 
   }
-  
+
   convertToUUIDFormat(nonUuidStr: string): string {
     console.log(`before ${nonUuidStr}`);
     //replace all underscores
     nonUuidStr = nonUuidStr.replace(/_/g, "");
     //slice to last 36 chars in string
-    const getChar = (s:string, n:number) => s.slice(-n);
+    const getChar = (s: string, n: number) => s.slice(-n);
     let strWith36Chars = nonUuidStr;
     if (nonUuidStr.length > 36) {
       strWith36Chars = getChar(nonUuidStr, 36);
     }
-    let part1 = strWith36Chars.substring(0,8);
-    let part2 = strWith36Chars.substring(9,13);
-    let part3 = strWith36Chars.substring(14,18);
-    let part4 = strWith36Chars.substring(19,23);
-    let part5 = strWith36Chars.substring(24,36);
-    
-    let uuidStr = part1 + "-" +  part2 + "-" + part3 + "-" + part4 + "-" + part5;
+
+    let part1 = strWith36Chars.substring(0, 8);
+    let part2 = strWith36Chars.substring(9, 13);
+    let part3 = strWith36Chars.substring(14, 18);
+    let part4 = strWith36Chars.substring(19, 23);
+    let part5 = strWith36Chars.substring(24, 36);
+
+    let uuidStr = part1 + "-" + part2 + "-" + part3 + "-" + part4 + "-" + part5;
     console.log(`after ${uuidStr}`);
-    
+
     return uuidStr;
   }
 
@@ -785,6 +787,7 @@ export class ExecuteTestRunComponent implements OnInit {
     if (!this.isCombinationAbisTestcase) {
       this.currentAbisMethod = testCase.methodName[0];
     }
+
     if (this.abisRecvdMessage == appConstants.BLANK_STRING) {
       this.showLoader = true;
       if (!this.abisProjectData) {
@@ -802,49 +805,97 @@ export class ExecuteTestRunComponent implements OnInit {
       }
       //setup connection as per project configuration
       this.rxStompService = this.activeMqService.setUpConfig(this.abisProjectData);
-      let requestId = "";
-      let referenceId = "";
+      let requestId = uuidv4();
+      let referenceId = uuidv4();
       let insertCount = 0;
-
+      console.log(`currentAbisMethod ${this.currentAbisMethod}`);
       if (this.currentAbisMethod == appConstants.ABIS_METHOD_INSERT) {
         //ABIS testcase can have multiple CBEFF files, for each CBEFF file, same processing is reqd
         //this will help in cases where multiple sets of biometrics are to be inserted in ABIS in same testcase
         if (testCase.otherAttributes.bulkInsert && testCase.otherAttributes.insertCount) {
           insertCount = Number.parseInt(testCase.otherAttributes.insertCount);
         }
-        //ABIS requestId is unique per request so set to testRunId_testcaseId
-        requestId = this.convertToUUIDFormat(this.testRunId + appConstants.UNDERSCORE + testCase.testId);
-        
         if (insertCount > 1) {
           //cbeffFileSuffix keeps track of the current CBEFF file index for a testcase
           if (this.cbeffFileSuffix == 0) {
             this.cbeffFileSuffix = 1;
           }
-          requestId = this.convertToUUIDFormat(this.testRunId + appConstants.UNDERSCORE + testCase.testId + appConstants.UNDERSCORE + this.cbeffFileSuffix);
         }
-        //ABIS referenceId is unique per set of biometrics so set to testRunId_testcaseId
-        referenceId = requestId;
+      }
+      console.log(`cbeffFileSuffix ${this.cbeffFileSuffix}`);
+      if (this.currentAbisMethod == appConstants.ABIS_METHOD_INSERT) {
+        //if testcase defines insertReferenceId, save the  previousReferenceId
+        const insertReferenceId = testCase.otherAttributes.insertReferenceId;
+        if (insertReferenceId) {
+          const savedPreviousReferenceId = this.previousReferenceId.get(insertReferenceId);
+          if (savedPreviousReferenceId) {
+            console.log(`using the previously saved reference id ${savedPreviousReferenceId}`);
+            referenceId = savedPreviousReferenceId;
+            //reset the previousReferenceId
+            this.previousReferenceId.set(insertReferenceId, '');
+          } else {
+            console.log(`saving the reference id ${referenceId}`);
+            //save the previousReferenceId
+            this.previousReferenceId.set(insertReferenceId, referenceId);
+          }
+        }
+        const identifyReferenceId = testCase.otherAttributes.identifyReferenceId;
+        if (identifyReferenceId) {
+          let savedPreviousReferenceId = this.previousReferenceId.get(identifyReferenceId);
+          if (!savedPreviousReferenceId) {
+            let index = 0;
+            let arr = identifyReferenceId.split("_");
+            if (arr.length > 0 && !isNaN(arr[1])) {
+              index = Number(arr[1]);
+            }
+            if (this.cbeffFileSuffix == index) {
+              //save the previousReferenceId
+              this.previousReferenceId.set(identifyReferenceId, referenceId);
+              console.log(`saving the reference id ${referenceId}`);
+            }
+          }
+        }
+        const identifyGalleryIds = testCase.otherAttributes.identifyGalleryIds;
+        if (identifyGalleryIds) {
+          identifyGalleryIds.forEach((galleryId: string) => {
+            let savedPreviousReferenceId = this.previousReferenceId.get(galleryId);
+            if (!savedPreviousReferenceId) {
+              let index = 0;
+              let arr = galleryId.split("_");
+              if (arr.length > 0) {
+                index = Number(arr[1]);
+              }
+              if (this.cbeffFileSuffix == index) {
+                //save the previousReferenceId
+                this.previousReferenceId.set(galleryId, referenceId);
+                console.log(`saving the reference id ${referenceId}`);
+              }
+            }
+          });
+        }
       }
 
       let galleryIds: { referenceId: string; }[] = [];
       //if testcase defines identifyReferenceId, then it is used 
       if (this.currentAbisMethod == appConstants.ABIS_METHOD_IDENTIFY) {
-        requestId = this.convertToUUIDFormat(this.testRunId + appConstants.UNDERSCORE + testCase.testId + appConstants.UNDERSCORE + appConstants.ABIS_METHOD_IDENTIFY);
-        if (testCase.otherAttributes.identifyReferenceId) {
-          referenceId = this.convertToUUIDFormat(this.testRunId + appConstants.UNDERSCORE + testCase.otherAttributes.identifyReferenceId);
+        const identifyReferenceId = testCase.otherAttributes.identifyReferenceId;
+        const savedPreviousReferenceId = this.previousReferenceId.get(identifyReferenceId);
+        if (identifyReferenceId && savedPreviousReferenceId) {
+          console.log(`using the previously saved reference id ${savedPreviousReferenceId}`);
+          referenceId = savedPreviousReferenceId;
         }
-        if (testCase.otherAttributes.identifyGalleryIds) {
-          testCase.otherAttributes.identifyGalleryIds.forEach((galleryId: string) => {
+        const identifyGalleryIds = testCase.otherAttributes.identifyGalleryIds;
+        if (identifyGalleryIds) {
+          identifyGalleryIds.forEach((galleryId: string) => {
+            let savedPreviousReferenceId = this.previousReferenceId.get(galleryId);
+            if (!savedPreviousReferenceId) {
+              savedPreviousReferenceId = uuidv4();
+            }
             galleryIds.push({
-              "referenceId": this.convertToUUIDFormat(this.testRunId + appConstants.UNDERSCORE + galleryId)
+              "referenceId": savedPreviousReferenceId
             });
+            console.log(`galleryId ${savedPreviousReferenceId}`);
           });
-        }
-      }
-      //if testcase defines insertReferenceId, overwrite the above referenceId
-      if (this.currentAbisMethod == appConstants.ABIS_METHOD_INSERT) {
-        if (testCase.otherAttributes.insertReferenceId) {
-          referenceId = this.convertToUUIDFormat(this.testRunId + appConstants.UNDERSCORE + testCase.otherAttributes.insertReferenceId);
         }
       }
       console.log(`requestId: ${requestId}`);
@@ -906,6 +957,7 @@ export class ExecuteTestRunComponent implements OnInit {
       } else {
         console.log("INSERT REQUEST FAILED");
         this.cbeffFileSuffix = 0;
+        this.previousReferenceId.clear();
         this.abisRequestSendFailure = true;
         this.abisSentMessage = appConstants.BLANK_STRING;
         this.abisSentDataSource = appConstants.BLANK_STRING;
@@ -920,9 +972,8 @@ export class ExecuteTestRunComponent implements OnInit {
       if (this.isCombinationAbisTestcase && this.currentAbisMethod == appConstants.ABIS_METHOD_IDENTIFY) {
         methodIndex = 1;
       }
-      
-      const validatorsResp = await this.abisTestCaseService.runValidators(testCase, this.checkIfTestCaseExecutionIsDone(testCase), this.abisProjectData, 
-      this.currentAbisMethod, this.abisSentMessage, this.abisRecvdMessage, this.abisSentDataSource, methodIndex, this.testRunId);
+      const validatorsResp = await this.abisTestCaseService.runValidators(testCase, this.checkIfTestCaseExecutionIsDone(testCase), this.abisProjectData,
+        this.currentAbisMethod, this.abisSentMessage, this.abisRecvdMessage, this.abisSentDataSource, methodIndex, this.testRunId);
       if (this.currentAbisMethod == appConstants.ABIS_METHOD_IDENTIFY) {
         this.isCombinationAbisTestcase = false;
         this.currentAbisMethod = appConstants.BLANK_STRING;
