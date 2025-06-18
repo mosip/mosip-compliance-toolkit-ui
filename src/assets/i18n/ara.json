@@ -409,7 +409,7 @@
 		"IdentifyDuplicateFoundValidator": "يتحقق من صحة عدد التكرارات التي تم العثور عليها بواسطة ABIS للمرجع المرجعي المحدد",
 		"ExpectedDuplicateCountValidator": "يتحقق من صحة التكرارات التي تم العثور عليها لمطابقة القيمة المتوقعة",
 		"ABISTokenValidator": "يتحقق من أن ABIS لا يُنشئ رمزًا جديدًا لكل طلب إدراج ، إلا إذا انتهت صلاحية الرمز المميز",
-		"ExceptionResponseValidator": "يتحقق من أن SDK يُرجع خطأً مناسبًا عندما تكون بيانات BDB فارغة أو null أو مفقودة وكان حقل EXCEPTION مضبوطًا على false في بيانات الإدخال.",
+		"ExceptionResponseValidator": "يتحقق من أن SDK يُرجع خطأً مناسبًا عندما تكون بيانات <BDB> فارغة أو null أو مفقودة وكان حقل EXCEPTION مضبوطًا على false في بيانات الإدخال.",
 		"ValidResponseValidator": "يتحقق من أن SDK يُرجع BIR عندما تكون الوسمة <BDB> فارغة أو null أو مفقودة وكان حقل EXCEPTION مضبوطًا على true في بيانات الإدخال."
 	},
 	"testcases": {
@@ -1625,76 +1625,76 @@
 			"testDescription": "أيريس تحويل أي فشل الإدخال"
 		},
 		"SDK2076": {
-			"testName": "التحقق من تدفق EXCEPTION - نمط الوجه - مع وسم <bdb> فارغ وEXCEPTION true في بيانات الإدخال",
-			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع BIR عندما يكون وسم <bdb> فارغًا و<others><entry key='EXCEPTION'>true</entry></others> في بيانات الإدخال."
+			"testName": "التحقق من تدفق EXCEPTION – نمط الوجه – مع وسم &lt;BDB&gt; فارغ وEXCEPTION true في بيانات الإدخال",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع BIR عندما يكون الوسم &lt;BDB&gt; فارغًا و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
 		},
 		"SDK2077": {
-			"testName": "التحقق من تدفق EXCEPTION - نمط الوجه - مع وسم <bdb> فارغ وEXCEPTION false في بيانات الإدخال",
-			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأ عندما يكون وسم <bdb> فارغًا و<others><entry key='EXCEPTION'>false</entry></others> في بيانات الإدخال."
+			"testName": "التحقق من تدفق EXCEPTION – نمط الوجه – مع وسم &lt;BDB&gt; فارغ وEXCEPTION false في بيانات الإدخال",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأ عندما يكون الوسم &lt;BDB&gt; فارغًا و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;false&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
 		},
 		"SDK2078": {
-			"testName": "التحقق من تدفق EXCEPTION - نمط الوجه - مع وسم <bdb> بقيمة null وEXCEPTION true",
-			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع BIR عندما يكون وسم <bdb> null و<others><entry key='EXCEPTION'>true</entry></others> في بيانات الإدخال."
+			"testName": "التحقق من تدفق EXCEPTION – نمط الوجه – مع وسم &lt;BDB&gt; بقيمة null وEXCEPTION true",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع BIR عندما يكون الوسم &lt;BDB&gt; null و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
 		},
 		"SDK2079": {
-			"testName": "التحقق من تدفق EXCEPTION - نمط الوجه - مع وسم <bdb> null وEXCEPTION false",
-			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأ عندما يكون وسم <bdb> null و<others><entry key='EXCEPTION'>false</entry></others> في بيانات الإدخال."
+			"testName": "التحقق من تدفق EXCEPTION – نمط الوجه – مع وسم &lt;BDB&gt; null وEXCEPTION false",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأ عندما يكون الوسم &lt;BDB&gt; null و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;false&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
 		},
 		"SDK2080": {
-			"testName": "التحقق من تدفق EXCEPTION - نمط الوجه - مع غياب وسم <bdb> وEXCEPTION true",
-			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع BIR عندما يكون وسم <bdb> مفقود و<others><entry key='EXCEPTION'>true</entry></others> في بيانات الإدخال."
+			"testName": "التحقق من تدفق EXCEPTION – نمط الوجه – مع غياب وسم &lt;BDB&gt; وEXCEPTION true",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع BIR عندما يكون الوسم &lt;BDB&gt; مفقود و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
 		},
 		"SDK2081": {
-			"testName": "التحقق من تدفق EXCEPTION - نمط الوجه - مع غياب وسم <bdb> وEXCEPTION false",
-			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأ عندما يكون وسم <bdb> مفقود و<others><entry key='EXCEPTION'>false</entry></others> في بيانات الإدخال."
+			"testName": "التحقق من تدفق EXCEPTION – نمط الوجه – مع غياب وسم &lt;BDB&gt; وEXCEPTION false",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأ عندما يكون الوسم &lt;BDB&gt; مفقود و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;false&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
 		},
 		"SDK2082": {
-			"testName": "التحقق من تدفق EXCEPTION - نمط القزحية - مع وسم <bdb> فارغ وEXCEPTION true",
-			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع BIR عندما يكون وسم <bdb> فارغًا و<others><entry key='EXCEPTION'>true</entry></others> في بيانات الإدخال."
+			"testName": "التحقق من تدفق EXCEPTION – نمط القزحية – مع وسم &lt;BDB&gt; فارغ وEXCEPTION true",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع BIR عندما يكون الوسم &lt;BDB&gt; فارغًا و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
 		},
 		"SDK2083": {
-			"testName": "التحقق من تدفق EXCEPTION - نمط القزحية - مع وسم <bdb> فارغ وEXCEPTION false",
-			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأ عندما يكون وسم <bdb> فارغًا و<others><entry key='EXCEPTION'>false</entry></others> في بيانات الإدخال."
+			"testName": "التحقق من تدفق EXCEPTION – نمط القزحية – مع وسم &lt;BDB&gt; فارغ وEXCEPTION false",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأ عندما يكون الوسم &lt;BDB&gt; فارغًا و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;false&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
 		},
 		"SDK2084": {
-			"testName": "التحقق من تدفق EXCEPTION - نمط القزحية - مع وسم <bdb> null وEXCEPTION true",
-			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع BIR عندما يكون وسم <bdb> null و<others><entry key='EXCEPTION'>true</entry></others> في بيانات الإدخال."
+			"testName": "التحقق من تدفق EXCEPTION – نمط القزحية – مع وسم &lt;BDB&gt; null وEXCEPTION true",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع BIR عندما يكون الوسم &lt;BDB&gt; null و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
 		},
 		"SDK2085": {
-			"testName": "التحقق من تدفق EXCEPTION - نمط القزحية - مع وسم <bdb> null وEXCEPTION false",
-			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأ عندما يكون وسم <bdb> null و<others><entry key='EXCEPTION'>false</entry></others> في بيانات الإدخال."
+			"testName": "التحقق من تدفق EXCEPTION – نمط القزحية – مع وسم &lt;BDB&gt; null وEXCEPTION false",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأ عندما يكون الوسم &lt;BDB&gt; null و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;false&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
 		},
 		"SDK2086": {
-			"testName": "التحقق من تدفق EXCEPTION - نمط القزحية - مع غياب وسم <bdb> وEXCEPTION true",
-			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع BIR عندما يكون وسم <bdb> مفقود و<others><entry key='EXCEPTION'>true</entry></others> في بيانات الإدخال."
+			"testName": "التحقق من تدفق EXCEPTION – نمط القزحية – مع غياب وسم &lt;BDB&gt; وEXCEPTION true",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع BIR عندما يكون الوسم &lt;BDB&gt; مفقود و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
 		},
 		"SDK2087": {
-			"testName": "التحقق من تدفق EXCEPTION - نمط القزحية - مع غياب وسم <bdb> وEXCEPTION false",
-			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأ عندما يكون وسم <bdb> مفقود و<others><entry key='EXCEPTION'>false</entry></others> في بيانات الإدخال."
+			"testName": "التحقق من تدفق EXCEPTION – نمط القزحية – مع غياب وسم &lt;BDB&gt; وEXCEPTION false",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأ عندما يكون الوسم &lt;BDB&gt; مفقود و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;false&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
 		},
 		"SDK2088": {
-			"testName": "التحقق من تدفق EXCEPTION - نمط البصمة - مع <bdb> فارغ وEXCEPTION true",
-			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع BIR عندما يكون وسم <bdb> فارغًا و<others><entry key='EXCEPTION'>true</entry></others> في بيانات الإدخال."
+			"testName": "التحقق من تدفق EXCEPTION – نمط البصمة – مع وسم &lt;BDB&gt; فارغ وEXCEPTION true",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع BIR عندما يكون الوسم &lt;BDB&gt; فارغًا و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
 		},
 		"SDK2089": {
-			"testName": "التحقق من تدفق EXCEPTION - نمط البصمة - مع <bdb> فارغ وEXCEPTION false",
-			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأ عندما يكون وسم <bdb> فارغًا و<others><entry key='EXCEPTION'>false</entry></others> في بيانات الإدخال."
+			"testName": "التحقق من تدفق EXCEPTION – نمط البصمة – مع وسم &lt;BDB&gt; فارغ وEXCEPTION false",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأ عندما يكون الوسم &lt;BDB&gt; فارغًا و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;false&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
 		},
 		"SDK2090": {
-			"testName": "التحقق من تدفق EXCEPTION - نمط البصمة - مع <bdb> null وEXCEPTION true",
-			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع BIR عندما يكون وسم <bdb> null و<others><entry key='EXCEPTION'>true</entry></others> في بيانات الإدخال."
+			"testName": "التحقق من تدفق EXCEPTION – نمط البصمة – مع وسم &lt;BDB&gt; null وEXCEPTION true",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع BIR عندما يكون الوسم &lt;BDB&gt; null و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
 		},
 		"SDK2091": {
-			"testName": "التحقق من تدفق EXCEPTION - نمط البصمة - مع <bdb> null وEXCEPTION false",
-			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأ عندما يكون وسم <bdb> null و<others><entry key='EXCEPTION'>false</entry></others> في بيانات الإدخال."
+			"testName": "التحقق من تدفق EXCEPTION – نمط البصمة – مع وسم &lt;BDB&gt; null وEXCEPTION false",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأ عندما يكون الوسم &lt;BDB&gt; null و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;false&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
 		},
 		"SDK2092": {
-			"testName": "التحقق من تدفق EXCEPTION - نمط البصمة - مع غياب <bdb> وEXCEPTION true",
-			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع BIR عندما يكون وسم <bdb> مفقود و<others><entry key='EXCEPTION'>true</entry></others> في بيانات الإدخال."
+			"testName": "التحقق من تدفق EXCEPTION – نمط البصمة – مع غياب وسم &lt;BDB&gt; وEXCEPTION true",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع BIR عندما يكون الوسم &lt;BDB&gt; مفقود و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
 		},
 		"SDK2093": {
-			"testName": "التحقق من تدفق EXCEPTION - نمط البصمة - مع غياب <bdb> وEXCEPTION false",
-			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأ عندما يكون وسم <bdb> مفقود و<others><entry key='EXCEPTION'>false</entry></others> في بيانات الإدخال."
+			"testName": "التحقق من تدفق EXCEPTION – نمط البصمة – مع غياب وسم &lt;BDB&gt; وEXCEPTION false",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأ عندما يكون الوسم &lt;BDB&gt; مفقود و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;false&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
 		},
 		"ABIS3000": {
 			"testName": "أدخل النظام الحيوي لشخص واحد في ABIS",
