@@ -408,7 +408,9 @@
 		"ExpectedFailureReasonValidator": "Valide la raison de l'échec pour correspondre à la valeur attendue",
 		"IdentifyDuplicateFoundValidator": "Valide le nombre de doublons trouvés par ABIS pour le referenceId donné",
 		"ExpectedDuplicateCountValidator": "Valide les doublons trouvés pour correspondre à la valeur attendue",
-		"ABISTokenValidator": "Valide qu'ABIS ne génère pas de nouveau jeton pour chaque demande d'insertion, sauf si le jeton a expiré"
+		"ABISTokenValidator": "Valide qu'ABIS ne génère pas de nouveau jeton pour chaque demande d'insertion, sauf si le jeton a expiré",
+		"ExceptionResponseValidator": "Vérifie que le SDK renvoie une erreur appropriée lorsque les données BDB sont vides, nulles ou manquantes et que le champ EXCEPTION est défini sur false dans les données d'entrée.",
+		"ValidResponseValidator": "Vérifie que le SDK renvoie un BIR lorsque la balise <BDB> est vide, nulle ou manquante et que le champ EXCEPTION est défini sur true dans les données d'entrée."
 	},
 	"testcases": {
 		"SBI1000": {
@@ -1622,6 +1624,78 @@
 			"testName": "Conversion d'iris sans échec d'entrée",
 			"testDescription": "Conversion d'iris sans échec d'entrée"
 		},
+		"SDK2076": {
+			"testName": "Vérification du flux EXCEPTION - Modalité visage - avec balise <bdb> vide et EXCEPTION true dans les données d’entrée",
+			"testDescription": "Vérifie que le SDK traite la requête et renvoie un BIR lorsque la balise <bdb> est vide et <others><entry key='EXCEPTION'>true</entry></others> est dans les données d’entrée."
+		},
+		"SDK2077": {
+			"testName": "Vérification du flux EXCEPTION - Modalité visage - avec balise <bdb> vide et EXCEPTION false",
+			"testDescription": "Vérifie que le SDK traite la requête et renvoie une erreur lorsque la balise <bdb> est vide et <others><entry key='EXCEPTION'>false</entry></others> est dans les données d’entrée."
+		},
+		"SDK2078": {
+			"testName": "Vérification du flux EXCEPTION - Modalité visage - avec balise <bdb> nulle et EXCEPTION true",
+			"testDescription": "Vérifie que le SDK traite la requête et renvoie un BIR lorsque la balise <bdb> est nulle et <others><entry key='EXCEPTION'>true</entry></others> est dans les données d’entrée."
+		},
+		"SDK2079": {
+			"testName": "Vérification du flux EXCEPTION - Modalité visage - avec balise <bdb> nulle et EXCEPTION false",
+			"testDescription": "Vérifie que le SDK traite la requête et renvoie une erreur lorsque la balise <bdb> est nulle et <others><entry key='EXCEPTION'>false</entry></others> est dans les données d’entrée."
+		},
+		"SDK2080": {
+			"testName": "Vérification du flux EXCEPTION - Modalité visage - avec balise <bdb> manquante et EXCEPTION true",
+			"testDescription": "Vérifie que le SDK traite la requête et renvoie un BIR lorsque la balise <bdb> est manquante et <others><entry key='EXCEPTION'>true</entry></others> est dans les données d’entrée."
+		},
+		"SDK2081": {
+			"testName": "Vérification du flux EXCEPTION - Modalité visage - avec balise <bdb> manquante et EXCEPTION false",
+			"testDescription": "Vérifie que le SDK traite la requête et renvoie une erreur lorsque la balise <bdb> est manquante et <others><entry key='EXCEPTION'>false</entry></others> est dans les données d’entrée."
+		},
+		"SDK2082": {
+			"testName": "Vérification du flux EXCEPTION - Modalité iris - avec balise <bdb> vide et EXCEPTION true",
+			"testDescription": "Vérifie que le SDK traite la requête et renvoie un BIR lorsque la balise <bdb> est vide et <others><entry key='EXCEPTION'>true</entry></others> est dans les données d’entrée."
+		},
+		"SDK2083": {
+			"testName": "Vérification du flux EXCEPTION - Modalité iris - avec balise <bdb> vide et EXCEPTION false",
+			"testDescription": "Vérifie que le SDK traite la requête et renvoie une erreur lorsque la balise <bdb> est vide et <others><entry key='EXCEPTION'>false</entry></others> est dans les données d’entrée."
+		},
+		"SDK2084": {
+			"testName": "Vérification du flux EXCEPTION - Modalité iris - avec balise <bdb> nulle et EXCEPTION true",
+			"testDescription": "Vérifie que le SDK traite la requête et renvoie un BIR lorsque la balise <bdb> est nulle et <others><entry key='EXCEPTION'>true</entry></others> est dans les données d’entrée."
+		},
+		"SDK2085": {
+			"testName": "Vérification du flux EXCEPTION - Modalité iris - avec balise <bdb> nulle et EXCEPTION false",
+			"testDescription": "Vérifie que le SDK traite la requête et renvoie une erreur lorsque la balise <bdb> est nulle et <others><entry key='EXCEPTION'>false</entry></others> est dans les données d’entrée."
+		},
+		"SDK2086": {
+			"testName": "Vérification du flux EXCEPTION - Modalité iris - avec balise <bdb> manquante et EXCEPTION true",
+			"testDescription": "Vérifie que le SDK traite la requête et renvoie un BIR lorsque la balise <bdb> est manquante et <others><entry key='EXCEPTION'>true</entry></others> est dans les données d’entrée."
+		},
+		"SDK2087": {
+			"testName": "Vérification du flux EXCEPTION - Modalité iris - avec balise <bdb> manquante et EXCEPTION false",
+			"testDescription": "Vérifie que le SDK traite la requête et renvoie une erreur lorsque la balise <bdb> est manquante et <others><entry key='EXCEPTION'>false</entry></others> est dans les données d’entrée."
+		},
+		"SDK2088": {
+			"testName": "Vérification du flux EXCEPTION - Modalité empreinte - avec <bdb> vide et EXCEPTION true",
+			"testDescription": "Vérifie que le SDK traite la requête et renvoie un BIR lorsque la balise <bdb> est vide et <others><entry key='EXCEPTION'>true</entry></others> est dans les données d’entrée."
+		},
+		"SDK2089": {
+			"testName": "Vérification du flux EXCEPTION - Modalité empreinte - avec <bdb> vide et EXCEPTION false",
+			"testDescription": "Vérifie que le SDK traite la requête et renvoie une erreur lorsque la balise <bdb> est vide et <others><entry key='EXCEPTION'>false</entry></others> est dans les données d’entrée."
+		},
+		"SDK2090": {
+			"testName": "Vérification du flux EXCEPTION - Modalité empreinte - avec <bdb> null et EXCEPTION true",
+			"testDescription": "Vérifie que le SDK traite la requête et renvoie un BIR lorsque la balise <bdb> est null et <others><entry key='EXCEPTION'>true</entry></others> est dans les données d’entrée."
+		},
+		"SDK2091": {
+			"testName": "Vérification du flux EXCEPTION - Modalité empreinte - avec <bdb> null et EXCEPTION false",
+			"testDescription": "Vérifie que le SDK traite la requête et renvoie une erreur lorsque la balise <bdb> est null et <others><entry key='EXCEPTION'>false</entry></others> est dans les données d’entrée."
+		},
+		"SDK2092": {
+			"testName": "Vérification du flux EXCEPTION - Modalité empreinte - avec balise <bdb> manquante et EXCEPTION true",
+			"testDescription": "Vérifie que le SDK traite la requête et renvoie un BIR lorsque la balise <bdb> est manquante et <others><entry key='EXCEPTION'>true</entry></others> est dans les données d’entrée."
+		},
+		"SDK2093": {
+			"testName": "Vérification du flux EXCEPTION - Modalité empreinte - مع balise <bdb> manquante et EXCEPTION false",
+			"testDescription": "Vérifie que le SDK traite la requête et renvoie une erreur lorsque la balise <bdb> هي manquante et <others><entry key='EXCEPTION'>false</entry></others> est dans les données d’entrée."
+		},
 		"ABIS3000": {
 			"testName": "Insérer les données biométriques d'une personne dans ABIS",
 			"testDescription": "Insérer les données biométriques d'une personne dans ABIS"
@@ -1788,6 +1862,10 @@
 		"TIMECHECK_VALIDATOR_002": "La validation de la vérification de l'heure a échoué. Intervalle d'horodatage donné : {} m. Réponse reçue dans : {} m",
 		"EXTRACT_TEMPLATE_VALIDATOR_001": "La validation du modèle d'extraction est réussie",
 		"EXTRACT_TEMPLATE_VALIDATOR_002": "Échec de l'extraction du code d'état du modèle, reçu : {}",
+		"VALID_RESPONSE_VALIDATOR_001": "La validation de la réponse a réussi.",
+		"VALID_RESPONSE_VALIDATOR_002": "Échec de la validation de la réponse, code de statut reçu : {}",
+		"EXCEPTION_RESPONSE_VALIDATOR_001": "Validation de la réponse d'exception réussie, code de statut valide reçu : {}",
+		"EXCEPTION_RESPONSE_VALIDATOR_002": "Échec de la validation de la réponse d'exception, code de statut invalide reçu : {}",
 		"INVALID_DATA_VALIDATOR_001": "Pour les données non valides, code d'état attendu reçu : {}",
 		"INVALID_DATA_VALIDATOR_002": "Pour les données non valides, code d'état inattendu reçu : {}",
 		"MATCH_VALIDATOR_001": "Correspondance positive pour ",

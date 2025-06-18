@@ -90,6 +90,14 @@
   font-size: smaller;
   word-wrap: break-word;
 }
+.descHeader{
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.descCell{
+  padding-left: 15px;
+  padding-right: 15px;
+}
 @media screen and (max-width:480px) {
   .add-button{
     margin-right: 10px;
