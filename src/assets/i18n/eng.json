@@ -1741,8 +1741,8 @@
 			"testDescription": "CBEFF has no data /No biometric available for deduplication"
 		},
 		"ABIS3011": {
-			"testName": "Invalid Insert request - invalid version",
-			"testDescription": "Invalid Insert request - invalid version"
+			"testName": "Invalid Insert request - invalid version attribute name",
+			"testDescription": "Invalid Insert request - invalid version attribute name"
 		},
 		"ABIS3012": {
 			"testName": "Invalid Insert request - invalid id",
@@ -1789,8 +1789,8 @@
 			"testDescription": "Invalid Identify request - missing request time"
 		},
 		"ABIS3023": {
-			"testName": "Invalid Identify request - invalid version",
-			"testDescription": "Invalid Identify request - invalid version"
+			"testName": "Invalid Identify request - invalid version attribute name",
+			"testDescription": "Invalid Identify request - invalid version attribute name"
 		},
 		"ABIS3024": {
 			"testName": "Invalid Identify request - invalid id",

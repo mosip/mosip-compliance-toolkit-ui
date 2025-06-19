@@ -1725,8 +1725,8 @@
 			"testDescription": "Le CBEFF n'a pas de données/Pas de données biométriques disponibles pour la déduplication"
 		},
 		"ABIS3011": {
-			"testName": "Demande d'insertion invalide - version invalide",
-			"testDescription": "Demande d'insertion invalide - version invalide"
+			"testName": "Requête d'insertion invalide - nom d'attribut de version incorrect",
+			"testDescription": "Requête d'insertion invalide - nom d'attribut de version incorrect"
 		},
 		"ABIS3012": {
 			"testName": "Demande d'insertion non valide - ID non valide",
@@ -1773,8 +1773,8 @@
 			"testDescription": "Demande d'identification non valide : heure de la demande manquante"
 		},
 		"ABIS3023": {
-			"testName": "Demande d'identification non valide - version non valide",
-			"testDescription": "Demande d'identification non valide - version non valide"
+			"testName": "Requête d'identification invalide - nom d'attribut de version incorrect",
+			"testDescription": "Requête d'identification invalide - nom d'attribut de version incorrect"
 		},
 		"ABIS3024": {
 			"testName": "Demande d'identification non valide - ID non valide",
