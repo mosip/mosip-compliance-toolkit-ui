@@ -408,7 +408,9 @@
 		"ExpectedFailureReasonValidator": "Validates the failure reason to match the expected value",
 		"IdentifyDuplicateFoundValidator": "Validates the count of duplicates found by ABIS for the given referenceId",
 		"ExpectedDuplicateCountValidator": "Validates the duplicates found to match the expected value",
-		"ABISTokenValidator": "Validates that ABIS is not generating a new token for every insert request, unless token has expired"
+		"ABISTokenValidator": "Validates that ABIS is not generating a new token for every insert request, unless token has expired",
+		"ExceptionResponseValidator": "Validates that the SDK returns an appropriate error when the <BDB> tag is empty, null, or missing and the EXCEPTION is set to false in the input data.",
+		"ValidResponseValidator": "Validates that the SDK returns a BIR when the <BDB> tag is empty, null, or missing and the EXCEPTION is set to true in the input data."
 	},
 	"testcases": {
 		"SBI1000": {
@@ -1622,6 +1624,78 @@
 			"testName": "Iris convert no input failure",
 			"testDescription": "Iris convert no input failure"
 		},
+		"SDK2076": {
+			"testName": "Checking EXCEPTION flow - Face modality - with empty &lt;BDB&gt; tag and EXCEPTION as true in the input data",
+			"testDescription": "Validates that the SDK processes the request and returns a BIR when the &lt;BDB&gt; tag is empty and &lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; is in the input data."
+		},
+		"SDK2077": {
+			"testName": "Checking EXCEPTION flow - Face modality - with empty &lt;BDB&gt; tag and EXCEPTION as false in the input data",
+			"testDescription": "Validates that the SDK processes the request and returns an error when the &lt;BDB&gt; tag is empty and &lt;others&gt;&lt;entry key='EXCEPTION'&gt;false&lt;/entry&gt;&lt;/others&gt; is in the input data."
+		},
+		"SDK2078": {
+			"testName": "Checking EXCEPTION flow - Face modality - with null &lt;BDB&gt; tag and EXCEPTION as true in the input data",
+			"testDescription": "Validates that the SDK processes the request and returns a BIR when the &lt;BDB&gt; tag is null and &lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; is in the input data."
+		},
+		"SDK2079": {
+			"testName": "Checking EXCEPTION flow - Face modality - with null &lt;BDB&gt; tag and EXCEPTION as false in the input data",
+			"testDescription": "Validates that the SDK processes the request and returns an error when the &lt;BDB&gt; tag is null and &lt;others&gt;&lt;entry key='EXCEPTION'&gt;false&lt;/entry&gt;&lt;/others&gt; is in the input data."
+		},
+		"SDK2080": {
+			"testName": "Checking EXCEPTION flow - Face modality - with missing &lt;BDB&gt; tag and EXCEPTION as true in the input data",
+			"testDescription": "Validates that the SDK processes the request and returns a BIR when the &lt;BDB&gt; tag is missing and &lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; is in the input data."
+		},
+		"SDK2081": {
+			"testName": "Checking EXCEPTION flow - Face modality - with missing &lt;BDB&gt; tag and EXCEPTION as false in the input data",
+			"testDescription": "Validates that the SDK processes the request and returns an error when the &lt;BDB&gt; tag is missing and &lt;others&gt;&lt;entry key='EXCEPTION'&gt;false&lt;/entry&gt;&lt;/others&gt; is in the input data."
+		},
+		"SDK2082": {
+			"testName": "Checking EXCEPTION flow - Iris modality - with empty &lt;BDB&gt; tag and EXCEPTION as true in the input data",
+			"testDescription": "Validates that the SDK processes the request and returns a BIR when the &lt;BDB&gt; tag is empty and &lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; is in the input data."
+		},
+		"SDK2083": {
+			"testName": "Checking EXCEPTION flow - Iris modality - with empty &lt;BDB&gt; tag and EXCEPTION as false in the input data",
+			"testDescription": "Validates that the SDK processes the request and returns an error when the &lt;BDB&gt; tag is empty and &lt;others&gt;&lt;entry key='EXCEPTION'&gt;false&lt;/entry&gt;&lt;/others&gt; is in the input data."
+		},
+		"SDK2084": {
+			"testName": "Checking EXCEPTION flow - Iris modality - with null &lt;BDB&gt; tag and EXCEPTION as true in the input data",
+			"testDescription": "Validates that the SDK processes the request and returns a BIR when the &lt;BDB&gt; tag is null and &lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; is in the input data."
+		},
+		"SDK2085": {
+			"testName": "Checking EXCEPTION flow - Iris modality - with null &lt;BDB&gt; tag and EXCEPTION as false in the input data",
+			"testDescription": "Validates that the SDK processes the request and returns an error when the &lt;BDB&gt; tag is null and &lt;others&gt;&lt;entry key='EXCEPTION'&gt;false&lt;/entry&gt;&lt;/others&gt; is in the input data."
+		},
+		"SDK2086": {
+			"testName": "Checking EXCEPTION flow - Iris modality - with missing &lt;BDB&gt; tag and EXCEPTION as true in the input data",
+			"testDescription": "Validates that the SDK processes the request and returns a BIR when the &lt;BDB&gt; tag is missing and &lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; is in the input data."
+		},
+		"SDK2087": {
+			"testName": "Checking EXCEPTION flow - Iris modality - with missing &lt;BDB&gt; tag and EXCEPTION as false in the input data",
+			"testDescription": "Validates that the SDK processes the request and returns an error when the &lt;BDB&gt; tag is missing and &lt;others&gt;&lt;entry key='EXCEPTION'&gt;false&lt;/entry&gt;&lt;/others&gt; is in the input data."
+		},
+		"SDK2088": {
+			"testName": "Checking EXCEPTION flow - Finger modality - with empty &lt;BDB&gt; tag and EXCEPTION as true in the input data",
+			"testDescription": "Validates that the SDK processes the request and returns a BIR when the &lt;BDB&gt; tag is empty and &lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; is in the input data."
+		},
+		"SDK2089": {
+			"testName": "Checking EXCEPTION flow - Finger modality - with empty &lt;BDB&gt; tag and EXCEPTION as false in the input data",
+			"testDescription": "Validates that the SDK processes the request and returns an error when the &lt;BDB&gt; tag is empty and &lt;others&gt;&lt;entry key='EXCEPTION'&gt;false&lt;/entry&gt;&lt;/others&gt; is in the input data."
+		},
+		"SDK2090": {
+			"testName": "Checking EXCEPTION flow - Finger modality - with null &lt;BDB&gt; tag and EXCEPTION as true in the input data",
+			"testDescription": "Validates that the SDK processes the request and returns a BIR when the &lt;BDB&gt; tag is null and &lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; is in the input data."
+		},
+		"SDK2091": {
+			"testName": "Checking EXCEPTION flow - Finger modality - with null &lt;BDB&gt; tag and EXCEPTION as false in the input data",
+			"testDescription": "Validates that the SDK processes the request and returns an error when the &lt;BDB&gt; tag is null and &lt;others&gt;&lt;entry key='EXCEPTION'&gt;false&lt;/entry&gt;&lt;/others&gt; is in the input data."
+		},
+		"SDK2092": {
+			"testName": "Checking EXCEPTION flow - Finger modality - with missing &lt;BDB&gt; tag and EXCEPTION as true in the input data",
+			"testDescription": "Validates that the SDK processes the request and returns a BIR when the &lt;BDB&gt; tag is missing and &lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; is in the input data."
+		},
+		"SDK2093": {
+			"testName": "Checking EXCEPTION flow - Finger modality - with missing &lt;BDB&gt; tag and EXCEPTION as false in the input data",
+			"testDescription": "Validates that the SDK processes the request and returns an error when the &lt;BDB&gt; tag is missing and &lt;others&gt;&lt;entry key='EXCEPTION'&gt;false&lt;/entry&gt;&lt;/others&gt; is in the input data."
+		},
 		"ABIS3000": {
 			"testName": "Insert one person's biomterics in ABIS",
 			"testDescription": "Insert one person's biomterics in ABIS"
@@ -1667,8 +1741,8 @@
 			"testDescription": "CBEFF has no data /No biometric available for deduplication"
 		},
 		"ABIS3011": {
-			"testName": "Invalid Insert request - invalid version",
-			"testDescription": "Invalid Insert request - invalid version"
+			"testName": "Invalid Insert request - invalid version attribute name",
+			"testDescription": "Invalid Insert request - invalid version attribute name"
 		},
 		"ABIS3012": {
 			"testName": "Invalid Insert request - invalid id",
@@ -1715,8 +1789,8 @@
 			"testDescription": "Invalid Identify request - missing request time"
 		},
 		"ABIS3023": {
-			"testName": "Invalid Identify request - invalid version",
-			"testDescription": "Invalid Identify request - invalid version"
+			"testName": "Invalid Identify request - invalid version attribute name",
+			"testDescription": "Invalid Identify request - invalid version attribute name"
 		},
 		"ABIS3024": {
 			"testName": "Invalid Identify request - invalid id",
@@ -1788,6 +1862,10 @@
 		"TIMECHECK_VALIDATOR_002": "Time Check validation failed. Timestamp interval given: {} m. Response received in: {} m",
 		"EXTRACT_TEMPLATE_VALIDATOR_001": "Extract Template validation is successful",
 		"EXTRACT_TEMPLATE_VALIDATOR_002": "Extract Template status code failed, received: {}",
+		"VALID_RESPONSE_VALIDATOR_001": "Response validation is successful.",
+		"VALID_RESPONSE_VALIDATOR_002": "Response validation failed, received status code: {}",
+		"EXCEPTION_RESPONSE_VALIDATOR_001": "Exception response validation is successful, received valid status code: {}",
+		"EXCEPTION_RESPONSE_VALIDATOR_002": "Exception response validation failed, received invalid status code: {}",
 		"INVALID_DATA_VALIDATOR_001": "For invalid data, expected status code received: {}",
 		"INVALID_DATA_VALIDATOR_002": "For invalid data, unexpected status code received: {}",
 		"MATCH_VALIDATOR_001": "Positive Match for ",

@@ -408,7 +408,9 @@
 		"ExpectedFailureReasonValidator": "يتحقق من سبب الفشل لمطابقة القيمة المتوقعة",
 		"IdentifyDuplicateFoundValidator": "يتحقق من صحة عدد التكرارات التي تم العثور عليها بواسطة ABIS للمرجع المرجعي المحدد",
 		"ExpectedDuplicateCountValidator": "يتحقق من صحة التكرارات التي تم العثور عليها لمطابقة القيمة المتوقعة",
-		"ABISTokenValidator": "يتحقق من أن ABIS لا يُنشئ رمزًا جديدًا لكل طلب إدراج ، إلا إذا انتهت صلاحية الرمز المميز"
+		"ABISTokenValidator": "يتحقق من أن ABIS لا يُنشئ رمزًا جديدًا لكل طلب إدراج ، إلا إذا انتهت صلاحية الرمز المميز",
+		"ExceptionResponseValidator": "يتحقق من أن SDK يُرجع خطأً مناسبًا عندما تكون بيانات <BDB> فارغة أو null أو مفقودة وكان حقل EXCEPTION مضبوطًا على false في بيانات الإدخال.",
+		"ValidResponseValidator": "يتحقق من أن SDK يُرجع BIR عندما تكون الوسمة <BDB> فارغة أو null أو مفقودة وكان حقل EXCEPTION مضبوطًا على true في بيانات الإدخال."
 	},
 	"testcases": {
 		"SBI1000": {
@@ -1622,6 +1624,78 @@
 			"testName": "أيريس تحويل أي فشل الإدخال",
 			"testDescription": "أيريس تحويل أي فشل الإدخال"
 		},
+		"SDK2076": {
+			"testName": "التحقق من تدفق EXCEPTION – نمط الوجه – مع وسم &lt;BDB&gt; فارغ وEXCEPTION true في بيانات الإدخال",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع BIR عندما يكون الوسم &lt;BDB&gt; فارغًا و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
+		},
+		"SDK2077": {
+			"testName": "التحقق من تدفق EXCEPTION – نمط الوجه – مع وسم &lt;BDB&gt; فارغ وEXCEPTION false في بيانات الإدخال",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأ عندما يكون الوسم &lt;BDB&gt; فارغًا و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;false&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
+		},
+		"SDK2078": {
+			"testName": "التحقق من تدفق EXCEPTION – نمط الوجه – مع وسم &lt;BDB&gt; بقيمة null وEXCEPTION true",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع BIR عندما يكون الوسم &lt;BDB&gt; null و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
+		},
+		"SDK2079": {
+			"testName": "التحقق من تدفق EXCEPTION – نمط الوجه – مع وسم &lt;BDB&gt; null وEXCEPTION false",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأ عندما يكون الوسم &lt;BDB&gt; null و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;false&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
+		},
+		"SDK2080": {
+			"testName": "التحقق من تدفق EXCEPTION – نمط الوجه – مع غياب وسم &lt;BDB&gt; وEXCEPTION true",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع BIR عندما يكون الوسم &lt;BDB&gt; مفقود و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
+		},
+		"SDK2081": {
+			"testName": "التحقق من تدفق EXCEPTION – نمط الوجه – مع غياب وسم &lt;BDB&gt; وEXCEPTION false",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأ عندما يكون الوسم &lt;BDB&gt; مفقود و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;false&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
+		},
+		"SDK2082": {
+			"testName": "التحقق من تدفق EXCEPTION – نمط القزحية – مع وسم &lt;BDB&gt; فارغ وEXCEPTION true",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع BIR عندما يكون الوسم &lt;BDB&gt; فارغًا و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
+		},
+		"SDK2083": {
+			"testName": "التحقق من تدفق EXCEPTION – نمط القزحية – مع وسم &lt;BDB&gt; فارغ وEXCEPTION false",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأ عندما يكون الوسم &lt;BDB&gt; فارغًا و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;false&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
+		},
+		"SDK2084": {
+			"testName": "التحقق من تدفق EXCEPTION – نمط القزحية – مع وسم &lt;BDB&gt; null وEXCEPTION true",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع BIR عندما يكون الوسم &lt;BDB&gt; null و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
+		},
+		"SDK2085": {
+			"testName": "التحقق من تدفق EXCEPTION – نمط القزحية – مع وسم &lt;BDB&gt; null وEXCEPTION false",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأ عندما يكون الوسم &lt;BDB&gt; null و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;false&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
+		},
+		"SDK2086": {
+			"testName": "التحقق من تدفق EXCEPTION – نمط القزحية – مع غياب وسم &lt;BDB&gt; وEXCEPTION true",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع BIR عندما يكون الوسم &lt;BDB&gt; مفقود و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
+		},
+		"SDK2087": {
+			"testName": "التحقق من تدفق EXCEPTION – نمط القزحية – مع غياب وسم &lt;BDB&gt; وEXCEPTION false",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأ عندما يكون الوسم &lt;BDB&gt; مفقود و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;false&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
+		},
+		"SDK2088": {
+			"testName": "التحقق من تدفق EXCEPTION – نمط البصمة – مع وسم &lt;BDB&gt; فارغ وEXCEPTION true",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع BIR عندما يكون الوسم &lt;BDB&gt; فارغًا و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
+		},
+		"SDK2089": {
+			"testName": "التحقق من تدفق EXCEPTION – نمط البصمة – مع وسم &lt;BDB&gt; فارغ وEXCEPTION false",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأ عندما يكون الوسم &lt;BDB&gt; فارغًا و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;false&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
+		},
+		"SDK2090": {
+			"testName": "التحقق من تدفق EXCEPTION – نمط البصمة – مع وسم &lt;BDB&gt; null وEXCEPTION true",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع BIR عندما يكون الوسم &lt;BDB&gt; null و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
+		},
+		"SDK2091": {
+			"testName": "التحقق من تدفق EXCEPTION – نمط البصمة – مع وسم &lt;BDB&gt; null وEXCEPTION false",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأ عندما يكون الوسم &lt;BDB&gt; null و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;false&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
+		},
+		"SDK2092": {
+			"testName": "التحقق من تدفق EXCEPTION – نمط البصمة – مع غياب وسم &lt;BDB&gt; وEXCEPTION true",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع BIR عندما يكون الوسم &lt;BDB&gt; مفقود و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
+		},
+		"SDK2093": {
+			"testName": "التحقق من تدفق EXCEPTION – نمط البصمة – مع غياب وسم &lt;BDB&gt; وEXCEPTION false",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأ عندما يكون الوسم &lt;BDB&gt; مفقود و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;false&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
+		},
 		"ABIS3000": {
 			"testName": "أدخل النظام الحيوي لشخص واحد في ABIS",
 			"testDescription": "أدخل النظام الحيوي لشخص واحد في ABIS"
@@ -1667,8 +1741,8 @@
 			"testDescription": "لا يوجد لدى CBEFF بيانات / لا توجد مقاييس حيوية متاحة لإزالة البيانات المكررة"
 		},
 		"ABIS3011": {
-			"testName": "طلب إدراج غير صالح - نسخة غير صالحة",
-			"testDescription": "طلب إدراج غير صالح - نسخة غير صالحة"
+			"testName": "طلب إدراج غير صالح - اسم سمة الإصدار غير صحيح",
+			"testDescription": "طلب إدراج غير صالح - اسم سمة الإصدار غير صحيح"
 		},
 		"ABIS3012": {
 			"testName": "طلب إدخال غير صالح - معرف غير صالح",
@@ -1715,8 +1789,8 @@
 			"testDescription": "طلب تعريف غير صالح - وقت الطلب مفقود"
 		},
 		"ABIS3023": {
-			"testName": "طلب تعريف غير صالح - نسخة غير صالحة",
-			"testDescription": "طلب تعريف غير صالح - نسخة غير صالحة"
+			"testName": "طلب تحقق غير صالح - اسم سمة الإصدار غير صحيح",
+			"testDescription": "طلب تحقق غير صالح - اسم سمة الإصدار غير صحيح"
 		},
 		"ABIS3024": {
 			"testName": "طلب تعريف غير صالح - معرف غير صالح",
@@ -1788,6 +1862,10 @@
 		"TIMECHECK_VALIDATOR_002": "فشل التحقق من صحة الوقت. الفاصل الزمني للطابع الزمني: {} م. تم استلام الرد في: {} م",
 		"EXTRACT_TEMPLATE_VALIDATOR_001": "تم التحقق من صحة قالب الاستخراج بنجاح",
 		"EXTRACT_TEMPLATE_VALIDATOR_002": "فشل استخراج رمز حالة القالب ، تم استلامه: {}",
+		"VALID_RESPONSE_VALIDATOR_001": "تم التحقق من صحة الاستجابة بنجاح.",
+		"VALID_RESPONSE_VALIDATOR_002": "فشل التحقق من صحة الاستجابة، تم استلام رمز الحالة: {}",
+		"EXCEPTION_RESPONSE_VALIDATOR_001": "تم التحقق من استجابة الاستثناء بنجاح، تم استلام رمز الحالة الصحيح: {}",
+		"EXCEPTION_RESPONSE_VALIDATOR_002": "فشل التحقق من استجابة الاستثناء، تم استلام رمز الحالة غير الصحيح: {}",
 		"INVALID_DATA_VALIDATOR_001": "بالنسبة للبيانات غير الصالحة ، تم استلام رمز الحالة المتوقع: {}",
 		"INVALID_DATA_VALIDATOR_002": "بالنسبة للبيانات غير الصالحة ، تم استلام رمز حالة غير متوقع: {}",
 		"MATCH_VALIDATOR_001": "تطابق إيجابي لـ ",
