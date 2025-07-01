@@ -409,7 +409,7 @@
 		"IdentifyDuplicateFoundValidator": "Validates the count of duplicates found by ABIS for the given referenceId",
 		"ExpectedDuplicateCountValidator": "Validates the duplicates found to match the expected value",
 		"ABISTokenValidator": "Validates that ABIS is not generating a new token for every insert request, unless token has expired",
-		"ExceptionResponseValidator": "Validates that the SDK returns an appropriate error when the <BDB> tag is empty, null, or missing and the EXCEPTION is set to false in the input data.",
+		"ExceptionResponseValidator": "Validates that the SDK returns an appropriate error when the <BDB> tag is empty, null, or missing and EXCEPTION is set to false, or when the BDB is valid and EXCEPTION is set to true in the input data.",
 		"ValidResponseValidator": "Validates that the SDK returns a BIR when the <BDB> tag is empty, null, or missing and the EXCEPTION is set to true in the input data."
 	},
 	"testcases": {
@@ -1696,6 +1696,18 @@
 			"testName": "Checking EXCEPTION flow - Finger modality - with missing &lt;BDB&gt; tag and EXCEPTION as false in the input data",
 			"testDescription": "Validates that the SDK processes the request and returns an error when the &lt;BDB&gt; tag is missing and &lt;others&gt;&lt;entry key='EXCEPTION'&gt;false&lt;/entry&gt;&lt;/others&gt; is in the input data."
 		},
+		"SDK2094": {
+            "testName": "Checking EXCEPTION flow - Face modality - with valid &lt;BDB&gt; and EXCEPTION as true in the input data",
+            "testDescription": "Validates that the SDK processes the request and returns an error when a valid &lt;BDB&gt; is provided and &lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; is in the input data."
+        },
+        "SDK2095": {
+            "testName": "Checking EXCEPTION flow - Iris modality - with valid &lt;BDB&gt; and EXCEPTION as true in the input data",
+            "testDescription": "Validates that the SDK processes the request and returns an error when valid &lt;BDB&gt; is provided and &lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; is in the input data."
+        },
+        "SDK2096": {
+            "testName": "Checking EXCEPTION flow - Finger modality - with missing &lt;BDB&gt; tag and EXCEPTION as true in the input data",
+            "testDescription": "Validates that the SDK processes the request and returns an error when a valid &lt;BDB&gt; is provided and &lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; is in the input data."
+        },
 		"ABIS3000": {
 			"testName": "Insert one person's biomterics in ABIS",
 			"testDescription": "Insert one person's biomterics in ABIS"

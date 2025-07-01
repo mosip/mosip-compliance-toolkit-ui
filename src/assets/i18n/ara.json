@@ -409,7 +409,7 @@
 		"IdentifyDuplicateFoundValidator": "يتحقق من صحة عدد التكرارات التي تم العثور عليها بواسطة ABIS للمرجع المرجعي المحدد",
 		"ExpectedDuplicateCountValidator": "يتحقق من صحة التكرارات التي تم العثور عليها لمطابقة القيمة المتوقعة",
 		"ABISTokenValidator": "يتحقق من أن ABIS لا يُنشئ رمزًا جديدًا لكل طلب إدراج ، إلا إذا انتهت صلاحية الرمز المميز",
-		"ExceptionResponseValidator": "يتحقق من أن SDK يُرجع خطأً مناسبًا عندما تكون بيانات <BDB> فارغة أو null أو مفقودة وكان حقل EXCEPTION مضبوطًا على false في بيانات الإدخال.",
+		"ExceptionResponseValidator": "يتحقق من أن SDK يُرجع خطأً مناسبًا عندما تكون وسم <BDB> فارغة أو null أو مفقودة وEXCEPTION تساوي false، أو عندما تكون BDB صالحة وEXCEPTION تساوي true في بيانات الإدخال.",
 		"ValidResponseValidator": "يتحقق من أن SDK يُرجع BIR عندما تكون الوسمة <BDB> فارغة أو null أو مفقودة وكان حقل EXCEPTION مضبوطًا على true في بيانات الإدخال."
 	},
 	"testcases": {
@@ -1695,6 +1695,18 @@
 		"SDK2093": {
 			"testName": "التحقق من تدفق EXCEPTION – نمط البصمة – مع غياب وسم &lt;BDB&gt; وEXCEPTION false",
 			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأ عندما يكون الوسم &lt;BDB&gt; مفقود و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;false&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
+		},
+		"SDK2094": {
+			"testName": "التحقق من تدفق EXCEPTION - نمط الوجه - مع <BDB> صالح وEXCEPTION تساوي true في بيانات الإدخال",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويرجع خطأ عند توفير <BDB> صالح ووجود <others><entry key='EXCEPTION'>true</entry></others> في بيانات الإدخال."
+		},
+		"SDK2095": {
+			"testName": "التحقق من تدفق EXCEPTION - نمط القزحية - مع <BDB> صالح وEXCEPTION تساوي true في بيانات الإدخال",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويرجع خطأ عند توفير <BDB> صالح ووجود <others><entry key='EXCEPTION'>true</entry></others> في بيانات الإدخال."
+		},
+		"SDK2096": {
+			"testName": "التحقق من تدفق EXCEPTION - نمط البصمة - بدون وسم <BDB> وEXCEPTION تساوي true في بيانات الإدخال",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويرجع خطأ عند عدم وجود <BDB> ووجود <others><entry key='EXCEPTION'>true</entry></others> في بيانات الإدخال."
 		},
 		"ABIS3000": {
 			"testName": "أدخل النظام الحيوي لشخص واحد في ABIS",
