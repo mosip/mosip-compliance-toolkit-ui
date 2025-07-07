@@ -1681,16 +1681,16 @@
 			"testDescription": "Vérifie que le SDK traite la requête et renvoie une erreur lorsque la balise &lt;BDB&gt; est vide و that &lt;others&gt;&lt;entry key='EXCEPTION'&gt;false&lt;/entry&gt;&lt;/others&gt; se trouve dans les données d’entrée."
 		},
 		"SDK2094": {
-			"testName": "Vérification du flux EXCEPTION - Modalité visage - avec &lt;BDB&gt; valide et EXCEPTION à true dans les données d’entrée",
-			"testDescription": "Vérifie que le SDK traite la requête et retourne une erreur lorsqu’un &lt;BDB&gt; valide est fourni et que &lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; est présent dans les données d’entrée."
+			"testName": "Vérification du flux EXCEPTION - Modalité Face - avec &lt;BDB&gt; valide et EXCEPTION à true dans les données d'entrée",
+			"testDescription": "Valide que le SDK traite la requête et renvoie une erreur lorsqu'un &lt;BDB&gt; valide est fourni et que &lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; est présent dans les données d'entrée."
 		},
 		"SDK2095": {
-			"testName": "Vérification du flux EXCEPTION - Modalité iris - avec &lt;BDB&gt; valide et EXCEPTION à true dans les données d’entrée",
-			"testDescription": "Vérifie que le SDK traite la requête et retourne une erreur lorsqu’un &lt;BDB&gt; valide est fourni et que &lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; est présent dans les données d’entrée."
+			"testName": "Vérification du flux EXCEPTION - Modalité Iris - avec &lt;BDB&gt; valide et EXCEPTION à true dans les données d'entrée",
+			"testDescription": "Valide que le SDK traite la requête et renvoie une erreur lorsqu'un &lt;BDB&gt; valide est fourni et que &lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; est présent dans les données d'entrée."
 		},
 		"SDK2096": {
-			"testName": "Vérification du flux EXCEPTION - Modalité empreinte digitale - avec &lt;BDB&gt; valide et EXCEPTION à true dans les données d’entrée",
-			"testDescription": "Vérifie que le SDK traite la requête et retourne une erreur lorsqu’un &lt;BDB&gt; valide est fourni et que &lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; est présent dans les données d’entrée."
+			"testName": "Vérification du flux EXCEPTION - Modalité Finger - avec balise &lt;BDB&gt; valide et EXCEPTION à true dans les données d'entrée",
+			"testDescription": "Valide que le SDK traite la requête et renvoie une erreur lorsqu'un &lt;BDB&gt; valide est fourni et que &lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; est présent dans les données d'entrée."
 		},
 		"ABIS3000": {
 			"testName": "Insérer les données biométriques d'une personne dans ABIS",
