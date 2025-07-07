@@ -1697,16 +1697,16 @@
 			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأ عندما يكون الوسم &lt;BDB&gt; مفقود و&lt;others&gt;&lt;entry key='EXCEPTION'&gt;false&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
 		},
 		"SDK2094": {
-			"testName": "التحقق من تدفق EXCEPTION - نمط الوجه - مع &lt;BDB&gt; صالح و EXCEPTION بقيمة true في بيانات الإدخال",
-			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأً عند تقديم &lt;BDB&gt; صالح ووجود &lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
+			"testName": "التحقق من تدفق EXCEPTION - نمط Face - مع &lt;BDB&gt; صالح و EXCEPTION على أنه true في بيانات الإدخال",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويعيد خطأ عند تقديم &lt;BDB&gt; صالح ووجود &lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
 		},
 		"SDK2095": {
-			"testName": "التحقق من تدفق EXCEPTION - نمط القزحية - مع &lt;BDB&gt; صالح و EXCEPTION بقيمة true في بيانات الإدخال",
-			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأً عند تقديم &lt;BDB&gt; صالح ووجود &lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
+			"testName": "التحقق من تدفق EXCEPTION - نمط Iris - مع &lt;BDB&gt; صالح و EXCEPTION على أنه true في بيانات الإدخال",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويعيد خطأ عند تقديم &lt;BDB&gt; صالح ووجود &lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
 		},
 		"SDK2096": {
-			"testName": "التحقق من تدفق EXCEPTION - نمط الإصبع - مع &lt;BDB&gt; صالح و EXCEPTION بقيمة true في بيانات الإدخال",
-			"testDescription": "يتحقق من أن SDK يعالج الطلب ويُرجع خطأً عند تقديم &lt;BDB&gt; صالح ووجود &lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
+			"testName": "التحقق من تدفق EXCEPTION - نمط Finger - مع وسم &lt;BDB&gt; صالح و EXCEPTION على أنه true في بيانات الإدخال",
+			"testDescription": "يتحقق من أن SDK يعالج الطلب ويعيد خطأ عند تقديم &lt;BDB&gt; صالح ووجود &lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; في بيانات الإدخال."
 		},
 		"ABIS3000": {
 			"testName": "أدخل النظام الحيوي لشخص واحد في ABIS",
