@@ -1705,7 +1705,7 @@
             "testDescription": "Validates that the SDK processes the request and returns an error when valid &lt;BDB&gt; is provided and &lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; is in the input data."
         },
         "SDK2096": {
-            "testName": "Checking EXCEPTION flow - Finger modality - with missing &lt;BDB&gt; tag and EXCEPTION as true in the input data",
+            "testName": "Checking EXCEPTION flow - Finger modality - with valid &lt;BDB&gt; tag and EXCEPTION as true in the input data",
             "testDescription": "Validates that the SDK processes the request and returns an error when a valid &lt;BDB&gt; is provided and &lt;others&gt;&lt;entry key='EXCEPTION'&gt;true&lt;/entry&gt;&lt;/others&gt; is in the input data."
         },
 		"ABIS3000": {
