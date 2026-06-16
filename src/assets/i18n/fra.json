@@ -2009,6 +2009,7 @@
 		"ISO_VALIDATOR_115": "<BR>Longueur des données d'image non valide pour la modalité de visage, valeurs attendues entre [0x00000001 et 0xFFFFFFFF], mais valeur d'entrée reçue[{}]",
 		"ISO_VALIDATOR_116": "<BR>Données d'image non valides pour la modalité de visage, valeurs attendues[JPEG_2000_LOSSY(Auth), JPEG_2000_LOSS_LESS(Registration)]",
 		"ISO_VALIDATOR_117": "La validation des normes ISO est réussie",
+		"ISO_VALIDATOR_118": "<BR>Espace colorimétrique d'image non valide pour la modalité Visage, attendu RGB[24 bits], mais reçu colorSpace[{}], profondeur[{}]",
 		"EXPECTED_FAILURE_REASON_VALIDATOR_001": "Raison de l'échec attendu : {} validé avec succès.",
 		"EXPECTED_FAILURE_REASON_VALIDATOR_002": "La raison de l'échec attendue était : {}, mais reçue : {}",
 		"IDENTIFY_DUPLICATE_FOUND_VALIDATOR_001": "Identifier - trouvé {} doublon pour étant donné le referenceId.",
