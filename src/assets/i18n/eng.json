@@ -2025,6 +2025,7 @@
 		"ISO_VALIDATOR_115": "<BR>Invalid Image Data Length for Face Modality, expected values between[0x00000001 and 0xFFFFFFFF], but received input value[{}]",
 		"ISO_VALIDATOR_116": "<BR>Invalid Image Data for Face Modality, expected values[JPEG_2000_LOSSY(Auth), JPEG_2000_LOSS_LESS(Registration)]",
 		"ISO_VALIDATOR_117": "ISO Standards Validation is successful",
+		"ISO_VALIDATOR_118": "<BR>Invalid Image Color Space for Face Modality, expected RGB[24 bit], but received colorSpace[{}], depth[{}]",
 		"EXPECTED_FAILURE_REASON_VALIDATOR_001": "Expected failure reason: {} successfully validated.",
 		"EXPECTED_FAILURE_REASON_VALIDATOR_002": "The failure reason expected was: {}, but received: {}",
 		"IDENTIFY_DUPLICATE_FOUND_VALIDATOR_001": "Identify - found {} duplicate for given the referenceId.",
