@@ -1,5 +1,13 @@
 # AGENTS.md
 
+## Guide index
+
+| Area | Path | Guide |
+|------|------|-------|
+| Angular web app (this file) | `src/` | § below |
+| Kubernetes Helm chart | `helm/` | [`helm/AGENTS.md`](helm/AGENTS.md) |
+| Android (Capacitor) native project | `android/` | [`android/AGENTS.md`](android/AGENTS.md) |
+
 ## Repository Overview
 
 This repository contains the **Angular web (and Android) front-end for the MOSIP Compliance Toolkit (CTK)** — the "Compliance Toolkit Portal". CTK lets technology partners test whether their biometric products comply with MOSIP specifications, and lets MOSIP administrators review and approve the resulting compliance reports.
@@ -95,7 +103,9 @@ Key core services under `src/app/core/services/`:
 - `sdk-testcase-service.ts` — orchestrates SDK test cases against `biosdk-service`
 - `abis-testcase-service.ts` + `activemq-service.ts` / `rx-stomp*.ts` — orchestrate ABIS test cases over STOMP/ActiveMQ
 
-`android/` contains the Capacitor-generated native Android project (synced via `npx cap sync`); it is a tracked part of the repo, not a build artifact — don't delete or regenerate it casually.
+`android/` contains the Capacitor-generated native Android project (synced via `npx cap sync`); it is a tracked part of the repo, not a build artifact — don't delete or regenerate it casually. See [`android/AGENTS.md`](android/AGENTS.md) for the Android build/run guide.
+
+`helm/` contains the Kubernetes Helm chart used to deploy the built UI image; see [`helm/AGENTS.md`](helm/AGENTS.md) for install/upgrade commands.
 
 ## Development Workflow
 
