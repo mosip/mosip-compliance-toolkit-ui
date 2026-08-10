@@ -50,8 +50,15 @@ already exist in the source namespaces it copies from (`copy_cm.sh` handles the 
 up `compliance.apiHost` and the Istio `hosts` value.
 
 Chart lint/publish itself is CI-driven — see `.github/workflows/chart-lint-publish.yml`
-(`mosip/kattu` reusable workflow); there is no local `helm lint` wrapper script in this folder, run
-`helm lint compliance-toolkit-ui` directly if you need a local check.
+(`mosip/kattu` reusable workflow, `CHARTS_DIR: ./helm`); there is no local `helm lint` wrapper
+script in this folder. For a local check, run from `helm/` (not from inside
+`helm/compliance-toolkit-ui/`):
+
+```shell
+cd helm
+helm lint compliance-toolkit-ui
+helm template compliance-toolkit-ui compliance-toolkit-ui
+```
 
 ## 4. Agent rules — Do / Do not
 
@@ -61,7 +68,7 @@ Chart lint/publish itself is CI-driven — see `.github/workflows/chart-lint-pub
   release-affecting way, and keep `install.sh`'s `CHART_VERSION` in sync.
 - Keep `image.repository`/`tag` in `values.yaml` pointed at the same image the Dockerfile in the
   repo root produces.
-- Test template changes with `helm template compliance-toolkit-ui` before committing.
+- Test template changes with `helm template compliance-toolkit-ui compliance-toolkit-ui` (run from `helm/`) before committing.
 - Reference the parent guide ([`../AGENTS.md`](../AGENTS.md)) for how the UI itself is built and
   configured (`src/assets/config.json`, environment files) — this chart only deploys the built
   artifact, it does not configure app behavior beyond env/configmap wiring.
@@ -71,7 +78,7 @@ Chart lint/publish itself is CI-driven — see `.github/workflows/chart-lint-pub
 - Do not hardcode environment-specific hosts (`api-internal.sandbox.xyz.net`,
   `compliance.sandbox.xyz.net`) as anything other than sample defaults in `values.yaml` — real
   values come from `--set` overrides in `install.sh`, sourced from cluster configmaps.
-  Copy real deployment secrets or per-environment host names into git.
+  Do not copy real deployment secrets or per-environment host names into git.
 - Do not remove or rename `copy_cm.sh` / `copy_cm_func.sh` without also updating `install.sh`,
   which calls them by relative path.
 - Do not run `delete.sh` against a shared/production namespace without confirming with the

@@ -42,11 +42,14 @@ inside `android/`:
 # 1. Install JS deps (repo root)
 npm install --ignore-scripts
 
-# 2. Set the Android-specific runtime config as env vars (consumed by environment.android.ts / .env)
-export NX_APP_SERVICES_BASE_URL="https://api-internal.dev.mosip.net/v1/toolkit/"
-export NX_APP_IAM_URL="https://iam.dev.mosip.net/auth"
-export NX_APP_IAM_REALM="mosip"
-export NX_APP_IAM_CLIENT_ID="mosip-toolkit-android-client"
+# 2. Set the Android-specific runtime config as env vars (consumed by environment.android.ts / .env).
+#    Values below are .github/workflows/android.yml's *default* inputs, pointing at MOSIP's shared
+#    dev environment — override all four with your own target environment's values unless you
+#    specifically intend to test against that shared environment.
+export NX_APP_SERVICES_BASE_URL="<services-base-url>"   # CI default: https://api-internal.dev.mosip.net/v1/toolkit/
+export NX_APP_IAM_URL="<iam-url>"                        # CI default: https://iam.dev.mosip.net/auth
+export NX_APP_IAM_REALM="<iam-realm>"                    # CI default: mosip
+export NX_APP_IAM_CLIENT_ID="<android-client-id>"        # CI default: mosip-toolkit-android-client
 
 # 3. Build the Angular app in Android mode
 ng build -c=android
